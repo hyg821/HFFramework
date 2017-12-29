@@ -41,6 +41,8 @@ public class HFGlobal : MonoBehaviour {
     /// </summary>
     public GameObject notificationCenter;
 
+    public GameObject appDomainManager;
+
     void Awake()
     {
         if (self==null)
@@ -73,8 +75,10 @@ public class HFGlobal : MonoBehaviour {
 
             //8   资源加载   
             resourcesManager = new GameObject("ResourcesManager");
-            resourcesManager.AddComponent<HAResourceManager>();
+            HAResourceManager r = resourcesManager.AddComponent<HAResourceManager>();
+            r.InitWithRootPath(Application.persistentDataPath + "/AssetBundles", Application.streamingAssetsPath + "/AssetBundles", "AssetBundles");
             DontDestroyOnLoad(resourcesManager);
+
 
             //6   游戏设置控制器
             inputManager = new GameObject("InputManager");
@@ -85,9 +89,11 @@ public class HFGlobal : MonoBehaviour {
             notificationCenter = new GameObject("NotificationCenter");
             notificationCenter.AddComponent<InputManager>();
             DontDestroyOnLoad(notificationCenter);
-            
 
-            //
+            //6   通知中心
+            appDomainManager = new GameObject("AppDomainManager");
+            appDomainManager.AddComponent<AppDomainManager>();
+            DontDestroyOnLoad(appDomainManager);
         }
     }
 

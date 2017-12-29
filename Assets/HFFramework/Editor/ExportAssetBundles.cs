@@ -9,6 +9,9 @@ using LitJson;
 
 public class ExportAssetBundles
 {
+
+    public static List<string> assetbundleNameList = new List<string>();
+
     /// <summary>
     /// 资源打包
     /// </summary>
@@ -17,17 +20,17 @@ public class ExportAssetBundles
     {
         Caching.CleanCache();
 
-        BuildDLL();
+        SetAssetbundlesNames();
 
         BuildTarget target;
 #if UNITY_STANDALONE_WIN
-        target = BuildTarget.StandaloneWindows;
+            target = BuildTarget.StandaloneWindows;
 #elif UNITY_STANDALONE_OSX
             target = BuildTarget.StandaloneOSXIntel;
 #elif UNITY_IPHONE
             target = BuildTarget.iOS;
 #elif UNITY_ANDROID
-        target = BuildTarget.Android;
+            target = BuildTarget.Android;
 #endif
 
         string AssetBundlesPath = Application.dataPath + "/StreamingAssets/AssetBundles";
@@ -36,6 +39,7 @@ public class ExportAssetBundles
             Directory.CreateDirectory(AssetBundlesPath);
         }
         AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", BuildAssetBundleOptions.ChunkBasedCompression, target);
+
         BuildZip();
         if (abm)
         {
@@ -55,11 +59,6 @@ public class ExportAssetBundles
 
             string json = JsonMapper.ToJson(config);
             WriteMD5Diff(json);
-    
-
-            string outStreaming = Application.dataPath + "/" + "ReNameDLL" + "/";
-            DirectoryInfo isx = new DirectoryInfo(outStreaming);
-            isx.Delete(true);
         }
      
         //刷新编辑器
@@ -82,6 +81,29 @@ public class ExportAssetBundles
         fs.Flush();
         fs.Close();
     }
+
+    /// <summary>
+    ///  MD5写入本地
+    /// </summary>
+    /// <param name="date"></param>
+    public static void WriteAssetbundleNames(List<string> lx)
+    {
+        string str="";
+        foreach (var item in lx)
+        {
+            str +=( item+"\n");
+        }
+        string path = Application.dataPath + "/GameResources" + "/AssetbundleNames.txt";
+        FileStream fs = new FileStream(path, FileMode.Create);
+        //获得字节数组
+        byte[] data = Encoding.Default.GetBytes(str);
+        //开始写入
+        fs.Write(data, 0, data.Length);
+        //清空缓冲区、关闭流
+        fs.Flush();
+        fs.Close();
+    }
+
 
     /// <summary>
     ///  对文件校验MD5
@@ -117,10 +139,7 @@ public class ExportAssetBundles
     //[MenuItem("Game Editor/Build zip")]
     private static void BuildZip()
     {
-        //M_BuildZip(Application.streamingAssetsPath + "/AssetBundles", "", "");
-        //M_BuildZip(Application.streamingAssetsPath + "/Config", "", "");
         GoCompress(Application.streamingAssetsPath + "/AssetBundles", Application.streamingAssetsPath +"/HotFixResources"+ "/AssetBundles");
-        GoCompress(Application.streamingAssetsPath + "/Config", Application.streamingAssetsPath + "/HotFixResources"+ "/Config");
     }
 
 
@@ -153,9 +172,6 @@ public class ExportAssetBundles
                 using (FileStream fs = File.OpenRead(file))
                 {
                     byte[] buffer = new byte[4 * 1024];
-                    // 此处去掉盘符，如D:\123\1.txt 去掉D:
-                    //ZipEntry entry = new ZipEntry(file.Replace(Path.GetPathRoot(file), ""));
-                    //  Debug.Log("===============:"+file.Replace(Path.GetPathRoot(file), ""));
                     ZipEntry entry = new ZipEntry(Path.GetFileName(file));
                     entry.DateTime = DateTime.Now;
                     s.PutNextEntry(entry);
@@ -168,46 +184,6 @@ public class ExportAssetBundles
                 }
             }
         }
-    }
-
-    //[MenuItem("Game Editor/Build DLL")]
-    public static void BuildDLL()
-    {
-        string streaming = Application.streamingAssetsPath + "/";
-        string outStreaming = Application.dataPath + "/"+"ReNameDLL"+"/";
-        string[] dllPath = new  string[] { streaming+"jiejigamehotfix.dll"};
-        string[] outdllPath = new string[] { outStreaming + "jiejigamehotfix.dll.bytes"};
-        string[] dllAssetbundleName = new string[] { "jiejigamehotfix_dll"};
-
-        //如果不存在就创建file文件夹
-        if (!Directory.Exists(outStreaming) )
-        {
-            Directory.CreateDirectory(outStreaming);
-        }
-
-        for (int i = 0; i < outdllPath.Length; i++)
-        {
-            string sourceFile = dllPath[i];
-            string destinationFile = outdllPath[i];
-            bool isrewrite = true; // true=覆盖已存在的同名文件,false则反之
-            File.Copy(sourceFile, destinationFile, isrewrite);
-            EditorUtility.DisplayProgressBar("重新命名dll", "", (i +1+0.0f)/ outdllPath.Length);
-        }
-
-        //刷新编辑器
-        AssetDatabase.Refresh();
-
-        for (int i = 0; i < outdllPath.Length; i++)
-        {
-            string destinationFile = outdllPath[i];
-            destinationFile = destinationFile.Substring(destinationFile.IndexOf("Assets"));
-            AssetImporter assetImporter = AssetImporter.GetAtPath(destinationFile);
-            assetImporter.assetBundleName = dllAssetbundleName[i];
-        }
-
-        EditorUtility.ClearProgressBar();
-        //刷新编辑器
-        AssetDatabase.Refresh();
     }
 
     /// <summary>
@@ -273,70 +249,9 @@ public class ExportAssetBundles
     }
 
 
-    [MenuItem("游戏辅助工具HYG/构建 AssetBundles 排除小游戏")]
-    static void BuildAssetBundlesExcludeMiniGame()
-    {
-        string AssetBundlesPath = Application.dataPath + "/StreamingAssets/AssetBundles";
-        string AssetBundlesExcludeMiniGamePath = Application.dataPath + "/StreamingAssets/AssetBundlesExcludeMiniGame";
-        CopyDirectory(AssetBundlesPath, AssetBundlesExcludeMiniGamePath);
-
-        JsonData jList = ReadMiniGameConfing();
-        for (int i = 0; i < jList.Count; i++)
-        {
-            Debug.Log(i);
-            File.Delete(Application.dataPath + "/StreamingAssets/AssetBundlesExcludeMiniGame/" + "AssetBundles/" + jList[i]);
-            File.Delete(Application.dataPath + "/StreamingAssets/AssetBundlesExcludeMiniGame/" + "AssetBundles/" + jList[i] + ".meta");
-            File.Delete(Application.dataPath + "/StreamingAssets/AssetBundlesExcludeMiniGame/" + "AssetBundles/" + jList[i] + ".manifest");
-            File.Delete(Application.dataPath + "/StreamingAssets/AssetBundlesExcludeMiniGame/" + "AssetBundles/" + jList[i] + ".manifest.meta");
-        }
-
-        //刷新编辑器
-        AssetDatabase.Refresh();
-
-    }
-
-
-    static void CopyDirectory(string sourcePath, string destPath)
-    {
-        //刷新编辑器
-        AssetDatabase.Refresh();
-        EditorUtility.DisplayProgressBar("复制assetbundle", "AssetBundlesExcludeMiniGame", 0);
-      
-
-        //刷新编辑器
-        AssetDatabase.Refresh();
-
-        string floderName = Path.GetFileName(sourcePath);
-        DirectoryInfo di = Directory.CreateDirectory(Path.Combine(destPath, floderName));
-        string[] files = Directory.GetFileSystemEntries(sourcePath);
-
-        foreach (string file in files)
-        {
-            if (Directory.Exists(file))
-            {
-                CopyDirectory(file, di.FullName);
-            }
-            else
-            {
-                File.Copy(file, Path.Combine(di.FullName, Path.GetFileName(file)), true);
-            }
-        }
-
-        EditorUtility.DisplayProgressBar("复制assetbundle", "啦啦啦啦", 0.5f);
-
-
-        EditorUtility.ClearProgressBar();
-
-        //刷新编辑器
-        AssetDatabase.Refresh();
-
-    }
-
-    [MenuItem("游戏辅助工具HYG/构建 小游戏 AssetBundles")]
+    [MenuItem("游戏辅助工具HYG/构建 单个Assetbundle")]
     static void BuildMiniGameAssetBundles()
     {
-        BuildDLL();
-
         List<AssetBundleBuild> list = new List<AssetBundleBuild>();
         JsonData jList = ReadMiniGameConfing();
         for (int i = 0; i < jList.Count; i++)
@@ -347,11 +262,7 @@ public class ExportAssetBundles
             list.Add(a);
         }
 
-        BuildSomeAssetBundles(Application.dataPath + "/StreamingAssets/AssetBundlesMiniGame", list.ToArray());
-
-        string outStreaming = Application.dataPath + "/" + "ReNameDLL" + "/";
-        DirectoryInfo isx = new DirectoryInfo(outStreaming);
-        isx.Delete(true);
+        BuildSomeAssetBundles(Application.dataPath + "/StreamingAssets/SimpleAssetBundles", list.ToArray());
 
         AssetDatabase.Refresh();
 
@@ -417,15 +328,18 @@ public class ExportAssetBundles
     }
 
 
-    [MenuItem("Tools/SetAssetbundlesNames")]
+    [MenuItem("游戏辅助工具HYG/设置AssetbundleName")]
     public static void SetAssetbundlesNames()
     {
-        ClearAssetBundlesName();
-        string resourcesPath = Application.dataPath + "/MyResources";
+        //ClearAssetBundlesName();
+        string resourcesPath = Application.dataPath + "/GameResources";
+        assetbundleNameList.Clear();
         m_SetAssetbundlesNames(resourcesPath);
+        WriteAssetbundleNames(assetbundleNameList);
+        assetbundleNameList.Clear();
     }
 
-
+    [MenuItem("游戏辅助工具HYG/清除所有的AssetbundleName")]
     static void ClearAssetBundlesName()
     {
         int length = AssetDatabase.GetAllAssetBundleNames().Length;
@@ -446,7 +360,6 @@ public class ExportAssetBundles
 
     public static void m_SetAssetbundlesNames(string path)
     {
-
         if (!Directory.Exists(path))//若文件夹不存在则新建文件夹   
         {
             Directory.CreateDirectory(path); //新建文件夹   
@@ -456,54 +369,76 @@ public class ExportAssetBundles
 
         DirectoryInfo folder = new DirectoryInfo(path);
 
-        FileInfo[] f = folder.GetFiles();
-
-        foreach (FileInfo NextFile in f)
+        if (folder.Name.Contains("_@!"))
         {
+            FileInfo[] f = folder.GetFiles();
 
-            string ex = Path.GetExtension(NextFile.FullName);
-            if (ex != ".meta")
+            foreach (FileInfo NextFile in f)
             {
+                string ex = Path.GetExtension(NextFile.FullName);
+                if (ex != ".meta")
+                {
+                    string newItem = NextFile.FullName.Replace("\\", "/");
 
-                string newItem = NextFile.FullName.Replace("\\", "/");
-                Debug.Log("普通文件=" + newItem);
+                    newItem = newItem.Substring(newItem.IndexOf("Assets"));
 
-                newItem = newItem.Substring(newItem.IndexOf("Assets"));
+                    //先在编辑器里拿到对象
+                    //UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(newItem);
 
-                UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(newItem);
-                Debug.Log("文件对象=" + obj.name);
+                    //再拿到他的AssetImporter
+                    AssetImporter assetImporter = AssetImporter.GetAtPath(newItem);
 
-                Debug.Log("路径=" + newItem);
+                    newItem = newItem.Substring(newItem.IndexOf("GameResources"));
 
-                AssetImporter assetImporter = AssetImporter.GetAtPath(newItem);
+                    newItem = newItem.Replace(@"/", "_");
 
-                newItem = newItem.Substring(newItem.IndexOf("Assetbundles"));
-                string[] pp = newItem.Split(new string[] { "." }, StringSplitOptions.RemoveEmptyEntries);
+                    int last_ = newItem.LastIndexOf("_");
 
-                // 通过文件路径 设置assetbundle 
-                assetImporter.assetBundleName = pp[0];
+                    newItem =  newItem.Substring(0, last_);
 
 
-                // 通过文件夹设置 assetbundle 
-                string folderPath = path.Replace("\\", "/");
-                string folderRelativePath = folderPath.Substring(folderPath.IndexOf("Assets"));
-                assetImporter.assetBundleName = folderRelativePath;
+                    string md5Str = ExportAssetBundles.GetMD5(newItem);
+
+                    // 通过文件路径 设置assetbundle 
+                    assetImporter.assetBundleName = md5Str;
+
+                    string temp = newItem + "   " + md5Str;
+                    if (assetbundleNameList.Contains(temp)==false)
+                    {
+                        assetbundleNameList.Add(temp);
+                    }
+                }
             }
         }
+   
 
         DirectoryInfo[] d = folder.GetDirectories();
-        if (d.Length == 0)
+        if (d.Length!=0)
         {
-            return;
-        }
-
-        foreach (DirectoryInfo NextFolder in d)
-        {
-            string newItem = NextFolder.FullName.Replace("\\", "/");
-            Debug.Log("文件夹=" + newItem);
-            m_SetAssetbundlesNames(newItem);
+            foreach (DirectoryInfo NextFolder in d)
+            {
+                string newItem = NextFolder.FullName.Replace("\\", "/");
+                m_SetAssetbundlesNames(newItem);
+            }
         }
     }
+
+
+    public static string GetMD5(string sDataIn)
+    {
+        System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+        byte[] bytValue, bytHash;
+        bytValue =Encoding.UTF8.GetBytes(sDataIn);
+        bytHash = md5.ComputeHash(bytValue);
+        md5.Clear();
+        string sTemp = "";
+        for (int i = 0; i < bytHash.Length; i++)
+        {
+            sTemp += bytHash[i].ToString("X").PadLeft(2, '0');
+        }
+        return sTemp.ToLower();
+    }
+
 }
 
 

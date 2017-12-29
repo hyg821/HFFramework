@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+using System.IO;
+using Mono.Cecil.Pdb;
 
-public class HAResourceManager : MonoBehaviour {
+public class HAResourceManager : MonoBehaviour
+{
 
     //注意  所有的 AssetBundlePackage读取 只能同步读取 因为牵扯到递归加载 
     //但是 AssetBundlePackage的每一个 具体的 asset资源 可以使用异步加载 
@@ -15,6 +18,7 @@ public class HAResourceManager : MonoBehaviour {
     ///  assetbundle位置的根目录   默认的是所有的assetbundle 都放在一个文件夹下   
     /// </summary>
     public string ResourceRootPath;
+    public string ResourceSpareRootPath;
     public string MainfestName;
 
     /// <summary>
@@ -38,18 +42,79 @@ public class HAResourceManager : MonoBehaviour {
     }
 
     /// <summary>
+    ///  自动寻找Assetbundle 在 persistentDataPath文件夹下（优先）  或者 StreamingAssets 文件夹下
+    /// </summary>
+    /// <param name="path"> 基础路径 </param>
+    /// <param name="isWWW"> 是否通过www读取</param>
+    /// <returns></returns>
+    public string AutoGetResourcePath(string path, bool isWWW)
+    {
+        string newPath;
+        if (isWWW)
+        {
+            //如果持久化路径有 就直接用
+            if (File.Exists(ResourceRootPath + path))
+            {
+                newPath = "file://" + ResourceRootPath + path;
+            }
+            //否则使用 StreamingAssets 文件夹下的
+            else
+            {
+                if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+                {
+                    newPath = ResourceSpareRootPath + path;
+                }
+                else
+                {
+                    newPath = "file://" + ResourceSpareRootPath + path;
+                }
+                Debug.Log("StreamingAssets读取");
+            }
+        }
+        else
+        {
+            //如果持久化路径有 就直接用
+            if (File.Exists(ResourceRootPath + path))
+            {
+                newPath = ResourceRootPath + path;
+            }
+            //否则使用 StreamingAssets 文件夹下的
+            else
+            {
+                newPath = ResourceSpareRootPath + path;
+                Debug.Log("StreamingAssets读取");
+            }
+        }
+
+        Debug.Log("newPath=" + newPath);
+
+        return newPath;
+    }
+
+    /// <summary>
     ///  初始化方法 一般只执行一次
     /// </summary>
     /// <param name="path"></param>
-    public void InitWithRootPath(string resourceRootPath,string mainfestName)
+    public void InitWithRootPath(string resourceRootPath, string resourceSpareRootPath, string mainfestName)
     {
-        if (!string.IsNullOrEmpty(resourceRootPath))
+
+        Debug.Log("正式资源地址" + resourceRootPath);
+        Debug.Log("备用资源地址" + resourceSpareRootPath);
+
+        if (!string.IsNullOrEmpty(resourceRootPath) && !string.IsNullOrEmpty(resourceSpareRootPath))
         {
             if (!string.Equals(resourceRootPath.Substring(resourceRootPath.Length - 1), @"/"))
             {
                 resourceRootPath = resourceRootPath + @"/";
             }
+
+            if (!string.Equals(resourceSpareRootPath.Substring(resourceSpareRootPath.Length - 1), @"/"))
+            {
+                resourceSpareRootPath = resourceSpareRootPath + @"/";
+            }
+
             ResourceRootPath = resourceRootPath;
+            ResourceSpareRootPath = resourceSpareRootPath;
             MainfestName = mainfestName;
             GetAssetBundleManifest();
         }
@@ -60,8 +125,8 @@ public class HAResourceManager : MonoBehaviour {
     /// </summary>
     private void GetAssetBundleManifest()
     {
-        AssetBundle manifestAB = AssetBundle.LoadFromFile(ResourceRootPath+ MainfestName);  // 加载总ManifestAssetBundle
-        if (manifestAB!=null)
+        AssetBundle manifestAB = AssetBundle.LoadFromFile(AutoGetResourcePath(MainfestName, false));  // 加载总ManifestAssetBundle
+        if (manifestAB != null)
         {
             manifest = (AssetBundleManifest)manifestAB.LoadAsset("AssetBundleManifest");
             manifestAB.Unload(false);  // 释放AssetBundle
@@ -129,9 +194,9 @@ public class HAResourceManager : MonoBehaviour {
     /// <param name="autoJump"></param>
     /// <param name="sceneName"></param>
     /// <param name="finishCallBack"></param>
-    public void LoadScene(string assetBundleName,bool autoJump, string sceneName, Action<AssetBundlePackage> finishCallBack)
+    public void LoadScene(string assetBundleName, bool autoJump, string sceneName, Action<AssetBundlePackage> finishCallBack)
     {
-         StartCoroutine(m_LoadScene(assetBundleName,autoJump,sceneName, finishCallBack));
+        StartCoroutine(m_LoadScene(assetBundleName, autoJump, sceneName, finishCallBack));
     }
 
     /// <summary>
@@ -142,25 +207,25 @@ public class HAResourceManager : MonoBehaviour {
     /// <returns></returns>
     private IEnumerator m_LoadScene(string assetBundleName, bool autoJump, string sceneName, Action<AssetBundlePackage> finishCallBack)
     {
-        //DebugTools.Log("## Loading hall scene 1 " + sceneName);
         assetBundleName = assetBundleName.ToLower();
         if (!allAssetBundleDic.ContainsKey(assetBundleName))
         {
-            WWW w = WWW.LoadFromCacheOrDownload("file://" + ResourceRootPath + assetBundleName, 0);
+            WWW w = WWW.LoadFromCacheOrDownload(AutoGetResourcePath(assetBundleName, true), 0);
             yield return w;
+
             AssetBundle bundle = w.assetBundle;
             if (finishCallBack != null && autoJump && !string.IsNullOrEmpty(sceneName))
             {
                 //这里会报错主要出现在加载大厅场景和中发白场景的时候
                 //报错提示 Assertion failed on expression: 'Thread::CurrentThreadIsMainThread()' 可以查一下问题
-                AsyncOperation ab =SceneManager.LoadSceneAsync(sceneName);
+                AsyncOperation ab = SceneManager.LoadSceneAsync(sceneName);
                 yield return ab;
                 Resources.UnloadUnusedAssets();
-                finishCallBack(null);         
+                finishCallBack(null);
                 if (lastSceneBundle != null)
                 {
                     lastSceneBundle.Unload(true);
-                    lastSceneBundle = null;         
+                    lastSceneBundle = null;
                 }
                 lastSceneBundle = bundle;
             }
@@ -202,8 +267,8 @@ public class HAResourceManager : MonoBehaviour {
     public AssetBundlePackage LoadAssetBundleFromFile(string assetBundleName)
     {
         assetBundleName = assetBundleName.ToLower();
-        string[] list =self.GetAssetBundleDependencies(assetBundleName);
-        if (list.Length!=0)
+        string[] list = self.GetAssetBundleDependencies(assetBundleName);
+        if (list.Length != 0)
         {
             for (int i = 0; i < list.Length; i++)
             {
@@ -213,7 +278,7 @@ public class HAResourceManager : MonoBehaviour {
 
         if (!allAssetBundleDic.ContainsKey(assetBundleName))
         {
-            AssetBundle bundle = AssetBundle.LoadFromFile(ResourceRootPath + assetBundleName);
+            AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(assetBundleName, false));
             AssetBundlePackage tmpAssetBundle = new AssetBundlePackage(bundle, assetBundleName);
             AddAssetBundleToDic(tmpAssetBundle);
             return tmpAssetBundle;
@@ -229,13 +294,13 @@ public class HAResourceManager : MonoBehaviour {
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    public List<AssetBundlePackage> LoadAssetsBundlesFromFile(string [] list,Action<float> progressCallback)
+    public List<AssetBundlePackage> LoadAssetsBundlesFromFile(string[] list, Action<float> progressCallback)
     {
         List<AssetBundlePackage> bundles = new List<AssetBundlePackage>();
         for (int i = 0; i < list.Length; i++)
         {
             AssetBundlePackage bundle = LoadAssetBundleFromFile(list[i]);
-            if (bundle!=null)
+            if (bundle != null)
             {
                 bundles.Add(bundle);
             }
@@ -253,7 +318,7 @@ public class HAResourceManager : MonoBehaviour {
     }
 
     private IEnumerator m_LoadAssetsBundlesFromFileAsyc(string[] list, Action<float> progressCallback)
-    {     
+    {
         List<AssetBundlePackage> bundles = new List<AssetBundlePackage>();
         for (int i = 0; i < list.Length; i++)
         {
@@ -267,6 +332,21 @@ public class HAResourceManager : MonoBehaviour {
             {
                 progressCallback((bundles.Count + 0.0f) / list.Length);
             }
+        }
+    }
+
+    public void LoadHotFixAssembly(string dllName, ILRuntime.Runtime.Enviorment.AppDomain appdomain, Action<bool> cbAction)
+    {
+        AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(dllName + "_dll");
+        TextAsset text = ab.LoadAssetWithCache<TextAsset>(dllName + ".dll");
+        byte[] dll = text.bytes;
+        using (MemoryStream fs = new MemoryStream(dll))
+        {
+            appdomain.LoadAssembly(fs, null, new PdbReaderProvider());
+        }
+        if (cbAction != null)
+        {
+            cbAction(true);
         }
     }
 
@@ -298,11 +378,11 @@ public class HAResourceManager : MonoBehaviour {
     /// </summary>
     /// <param name="name"></param>
     /// <param name="b">是否卸载压出来的的东西</param>
-    public void UnloadAssetBundle(string name,bool b = true)
+    public void UnloadAssetBundle(string name, bool b = true)
     {
         name = name.ToLower();
         AssetBundlePackage bundle = GetAssetBundleWithName(name);
-        if (bundle!=null)
+        if (bundle != null)
         {
             bundle.Unload(b);
             allAssetBundleDic.Remove(name);
@@ -326,10 +406,10 @@ public class HAResourceManager : MonoBehaviour {
         }
     }
 
-    
+
     public void UnloadAssetBundle(AssetBundlePackage bundle, bool b = true)
     {
-        if (bundle!=null&&!string.IsNullOrEmpty(bundle.name))
+        if (bundle != null && !string.IsNullOrEmpty(bundle.name))
         {
             allAssetBundleDic.Remove(bundle.name);
             bundle.Unload(b);
@@ -347,7 +427,7 @@ public class HAResourceManager : MonoBehaviour {
             item.Unload(true);
         }
         allAssetBundleDic.Clear();
-        Resources.UnloadUnusedAssets();    
+        Resources.UnloadUnusedAssets();
     }
 
 
@@ -383,15 +463,15 @@ public class AssetBundlePackage
         }
         get
         {
-            if (cacheDic==null)
+            if (cacheDic == null)
             {
-                cacheDic = new Dictionary<string, UnityEngine.Object>();            
+                cacheDic = new Dictionary<string, UnityEngine.Object>();
             }
             return cacheDic;
         }
     }
 
-    public AssetBundlePackage(AssetBundle bundle,string n)
+    public AssetBundlePackage(AssetBundle bundle, string n)
     {
         n = n.ToLower();
         name = n;
@@ -400,7 +480,7 @@ public class AssetBundlePackage
 
     public void Unload(bool t)
     {
-        if (assetBundle!=null)
+        if (assetBundle != null)
         {
             if (t)
             {
@@ -412,6 +492,7 @@ public class AssetBundlePackage
             }
             else
             {
+                Debug.Log("卸载？");
                 assetBundle.Unload(t);
                 CacheDic = null;
                 assetBundle = null;
@@ -426,7 +507,7 @@ public class AssetBundlePackage
     /// <typeparam name="T"></typeparam>
     /// <param name="name"></param>
     /// <returns></returns>
-    public T LoadAssetWithCache<T>(string name) where T:UnityEngine.Object
+    public T LoadAssetWithCache<T>(string name) where T : UnityEngine.Object
     {
         //
         if (CacheDic.ContainsKey(name))
@@ -436,7 +517,7 @@ public class AssetBundlePackage
         else
         {
             T t1 = assetBundle.LoadAsset<T>(name);
-            if (t1!=null)
+            if (t1 != null)
             {
                 CacheDic.Add(name, t1);
                 return t1;
@@ -477,13 +558,13 @@ public class AssetBundlePackage
     }
 
 
-    public void LoadAssetWithCacheAsyc<T>(string name,Action<T> callback) where T : UnityEngine.Object
+    public void LoadAssetWithCacheAsyc<T>(string name, Action<T> callback) where T : UnityEngine.Object
     {
-        HAResourceManager.self.StartCoroutine(m_LoadAssetWithCacheAsyc(name, callback));
+        MainUpdate.self.StartCoroutine(m_LoadAssetWithCacheAsyc(name, callback));
     }
 
-    
-    private IEnumerator  m_LoadAssetWithCacheAsyc<T>(string name, Action<T> callback) where T : UnityEngine.Object
+
+    private IEnumerator m_LoadAssetWithCacheAsyc<T>(string name, Action<T> callback) where T : UnityEngine.Object
     {
         if (CacheDic.ContainsKey(name))
         {
@@ -493,7 +574,7 @@ public class AssetBundlePackage
         {
             AssetBundleRequest request = assetBundle.LoadAssetAsync<T>(name);
             yield return request;
-            T t1 = request.asset as T;    
+            T t1 = request.asset as T;
             if (t1 != null)
             {
                 CacheDic.Add(name, t1);
@@ -513,10 +594,10 @@ public class AssetBundlePackage
     /// </summary>
     public void CacheAllAsset()
     {
-        UnityEngine.Object[] assetArray = assetBundle.LoadAllAssets();       
+        UnityEngine.Object[] assetArray = assetBundle.LoadAllAssets();
         for (int i = 0; i < assetArray.Length; i++)
         {
-            UnityEngine.Object asset =  assetArray[i];
+            UnityEngine.Object asset = assetArray[i];
             if (!CacheDic.ContainsKey(asset.name))
             {
                 CacheDic.Add(asset.name, asset);

@@ -20,26 +20,53 @@ public enum SoundType
     Free
 }
 
-public class AudioManager : MonoBehaviour {
+public class AudioManager : MonoBehaviour
+{
 
+    /// <summary>
+    ///  标记背景音乐
+    /// </summary>
     public const string MusicVolumeDefine = "MusicVolume";
+
+    /// <summary>
+    ///  标记效果音乐
+    /// </summary>
     public const string EffectVolumeDefine = "EffectVolume";
+
+    /// <summary>
+    ///  标记自由音乐
+    /// </summary>
     public const string FreeVolumeDefine = "FreeVolume";
 
+    /// <summary>
+    /// 自己
+    /// </summary>
     public static AudioManager self;
 
-    public static int Identifi =0;
+    /// <summary>
+    ///  生成标记
+    /// </summary>
+    public static int identifier = 0;
 
+    /// <summary>
+    ///  主音乐缓存字典
+    /// </summary>
     public Dictionary<string, AudioPlayer> audioDic = new Dictionary<string, AudioPlayer>();
+
+    /// <summary>
+    ///  效果音乐缓存字典
+    /// </summary>
     public Dictionary<string, AudioPlayer> audioEffectDic = new Dictionary<string, AudioPlayer>();
 
+    /// <summary>
+    ///  自由player 对象池
+    /// </summary>
     public List<AudioPlayer> audioPlayerPool = new List<AudioPlayer>();
 
-
     private float musicVolume;
-    private float effectVolume;
-    private float freeVolume;
-
+    /// <summary>
+    ///  主音乐音量
+    /// </summary>
     public float MusicVolume
     {
         set
@@ -57,6 +84,10 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
+    private float effectVolume;
+    /// <summary>
+    /// 效果声音音量
+    /// </summary>
     public float EffectVolume
     {
         set
@@ -80,6 +111,10 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
+    private float freeVolume;
+    /// <summary>
+    ///  自有声音音量
+    /// </summary>
     public float FreeVolume
     {
         set
@@ -97,7 +132,6 @@ public class AudioManager : MonoBehaviour {
             return freeVolume;
         }
     }
-
 
     void Awake()
     {
@@ -122,9 +156,9 @@ public class AudioManager : MonoBehaviour {
     }
 
 
-    public AudioPlayer  CreateAudioSource(string name, GameObject parent, SoundType type)
+    public AudioPlayer CreateAudioSource(string name, GameObject parent, SoundType type)
     {
-        Identifi++;
+        identifier++;
         GameObject g = new GameObject();
         g.name = name;
         AudioSource a = g.AddComponent<AudioSource>();
@@ -182,17 +216,17 @@ public class AudioManager : MonoBehaviour {
     public AudioPlayer GetFreeAudioPlayer()
     {
         int i = 0;
-        while (i<audioPlayerPool.Count)
+        while (i < audioPlayerPool.Count)
         {
-            AudioPlayer p =  audioPlayerPool[i];
-            if (p.source==null)
+            AudioPlayer p = audioPlayerPool[i];
+            if (p.source == null)
             {
                 p.DestorySelf();
                 audioPlayerPool.Remove(p);
             }
             else
             {
-                if (p.IsPlaying==false)
+                if (p.IsPlaying == false)
                 {
                     return p;
                 }
@@ -200,7 +234,7 @@ public class AudioManager : MonoBehaviour {
             i++;
         }
 
-        AudioPlayer player = CreateAudioSource("FreeAudio" + Identifi, gameObject, SoundType.Free);
+        AudioPlayer player = CreateAudioSource("FreeAudio" + identifier, gameObject, SoundType.Free);
         return player;
     }
 
@@ -235,14 +269,6 @@ public class AudioManager : MonoBehaviour {
         DestoryPlayer(GetAudioSource(name, type));
     }
 
-    /// <summary>
-    ///  FXK 专用方法
-    /// </summary>
-    /// <param name="str"></param>
-    public static void Play(string assetPackage, string audioName)
-    {
-        AudioManager.self.GetFreeAudioPlayer().SetAudioClipAndPlay(assetPackage,audioName);
-    }
 
     public void DestoryAllAudioPlayer()
     {
@@ -264,6 +290,12 @@ public class AudioManager : MonoBehaviour {
         audioDic.Clear();
         audioEffectDic.Clear();
         audioPlayerPool.Clear();
-        Identifi=0;
+        identifier = 0;
+    }
+
+    void OnDestroy()
+    {
+        self = null;
+        DestoryAllAudioPlayer();
     }
 }

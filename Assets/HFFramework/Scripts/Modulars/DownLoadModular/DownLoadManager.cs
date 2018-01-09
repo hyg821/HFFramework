@@ -7,20 +7,26 @@ using System;
 
 public class DownLoadManager:MonoBehaviour {
 
-    private static DownLoadManager i;
+    public static DownLoadManager self;
 
-    private Dictionary<int , Sprite> cacheDic = new Dictionary<int , Sprite>();
+    /// <summary>
+    ///  图片缓存字典
+    /// </summary>
+    private Dictionary<int, Sprite> cacheDic = new Dictionary<int, Sprite>();
 
-    public static DownLoadManager self
+    public void Awake()
     {
-        get
-        {
-            if (i == null)
-            {
-                i = new DownLoadManager();
-            }
-            return i;
-        }
+        self = this;
+    }
+
+    /// <summary>
+    ///  下载图片
+    /// </summary>
+    /// <param name="url">URL</param>
+    /// <param name="c">Image组件</param>
+    public static void DownLoadImage(string url, Image c)
+    {
+        DownLoadManager.self.m_LoadImage(url, c);
     }
 
     private void m_LoadImage(string url, Image c)
@@ -75,11 +81,6 @@ public class DownLoadManager:MonoBehaviour {
         }
     }
 
-    public static void LoadImage(string url,Image c)
-    {
-        DownLoadManager.self.m_LoadImage(url, c);
-    }
-
     public static void SetDefaultImage(string url,Image c)
     {
         Sprite s = new Sprite();
@@ -87,5 +88,21 @@ public class DownLoadManager:MonoBehaviour {
         {
             c.sprite = s;
         }
+    }
+
+    public static void ClearCache()
+    {
+        foreach (var item in self.cacheDic.Values)
+        {
+            Resources.UnloadAsset(item);
+        }
+
+        self.cacheDic.Clear();
+        self = null;
+    }
+
+    void OnDestroy()
+    {
+        ClearCache();
     }
 }

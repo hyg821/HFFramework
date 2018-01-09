@@ -5,36 +5,18 @@ using UnityEngine;
 public class MainStateChecker : MonoBehaviour {
 
     //客户端内部通信 基础消息号
-    public const int GAME_MESSAGE_BASE = -100000;
-    public const int GAME_MESSAGE_HALL_BASE = -200000;
-    public const int GAME_MESSAGE_FISHGAME_BASE = -300000;
-    public const int GAME_MESSAGE_JIEJI_BASE = -400000;
-    public const int GAME_MESSAGE_POKER = -500000;
+    public const long GAME_MESSAGE_BASE = -123456;
 
     /// <summary>
     ///  网络无法连接
     /// </summary>
-    public const int MESSAGE_NETWORK_UNUSE = GAME_MESSAGE_BASE + 1;
-
-    /// <summary>
-    ///  跳转回登录页面
-    /// </summary>
-    public const int MESSAGE_POPTOLOGIN = GAME_MESSAGE_BASE + 2;
-
-    /// <summary>
-    ///  显示吐司
-    /// </summary>
-    public const int MESSAGE_SHOWTOAST = GAME_MESSAGE_BASE + 3;
+    public const long MESSAGE_NETWORK_UNUSE = GAME_MESSAGE_BASE + 1;
 
     /// <summary>
     ///  程序暂停
     /// </summary>
-    public const int MESSAGE_APPPAUSE = GAME_MESSAGE_BASE + 4;
+    public const long MESSAGE_APPPAUSE = GAME_MESSAGE_BASE + 2;
 
-    /// <summary>
-    ///  SDK 支付回调
-    /// </summary>
-    public const int MESSAGE_HOOLAI_SDK_CALLBACK = GAME_MESSAGE_BASE + 5;
 
     public static MainStateChecker self;
 
@@ -46,7 +28,7 @@ public class MainStateChecker : MonoBehaviour {
         set
         {
             isPaused = value;
-            NotificationCenter.DefaultCenter().PostNotification(new NotificationMessage(MESSAGE_APPPAUSE , this, isPaused));
+            NotificationCenter.self.PostNotification(new NotificationMessage(MESSAGE_APPPAUSE , this, isPaused));
         }
         get
         {
@@ -71,7 +53,7 @@ public class MainStateChecker : MonoBehaviour {
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             networkCanUsed = false;
-            NotificationCenter.DefaultCenter().PostNotification(new NotificationMessage(MESSAGE_NETWORK_UNUSE, this, null));
+            NotificationCenter.self.PostNotification(new NotificationMessage(MESSAGE_NETWORK_UNUSE, this, null));
         }
         else
         {

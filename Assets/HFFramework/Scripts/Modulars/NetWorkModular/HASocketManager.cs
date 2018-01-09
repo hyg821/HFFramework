@@ -4,40 +4,38 @@ using UnityEngine;
 
 public class HASocketManager : MonoBehaviour {
 
-    private static HASocketManager instance = null;
-    public static HASocketManager Instance
-    {
-        set
-        {
-            instance = value;
-        }
-        get
-        {
-            return instance;
-        }
-    }
+    public static HASocketManager self;
 
-    public GameObject socketManagerGameObject;
-
-    public Dictionary<string, HASocket> socketCache = new Dictionary<string, HASocket>();   
+    /// <summary>
+    ///  socket 缓存
+    /// </summary>
+    private Dictionary<string, HASocket> socketCache = new Dictionary<string, HASocket>();   
 
     public void Awake()
     {
-        Instance = this;
+        self = this;
     }
 
-    public HASocket GetSocket(string tag)
+    /// <summary>
+    ///  通过一个tag 获取对应的Socket
+    /// </summary>
+    /// <param name="socketTag"></param>
+    /// <returns></returns>
+    public HASocket GetSocket(string socketTag)
     {
         HASocket socket;
         if (!socketCache.TryGetValue(tag, out socket))
         {
-            socket = socketManagerGameObject.AddComponent<HASocket>();
+            socket = gameObject.AddComponent<HASocket>();
             socket.SetName(tag);
             socketCache.Add(tag, socket);
         }
         return socket;
     }  
 
+    /// <summary>
+    ///  关闭所有的Socket
+    /// </summary>
     public void CloseAllSocket()
     {
         foreach (var item in socketCache.Values)
@@ -46,4 +44,9 @@ public class HASocketManager : MonoBehaviour {
         }
     }
 
+    void OnDestroy()
+    {
+        self = null;
+        CloseAllSocket();
+    }
 }

@@ -131,7 +131,6 @@
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\SpriteLighting.cginc" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SlotBlendModes\Spine-Skeleton-PMA-Screen.shader" />
      <None Include="Assets\OtherPlugins\protobuf-net\Web\TODO.txt" />
-     <None Include="Assets\GameResources\AssetbundleNames.txt" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpriteUnlit.cginc" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\SpriteUnlit.cginc" />
      <None Include="Assets\OtherPlugins\Graph_Maker\Shaders\AreaShading_SF.shader" />
@@ -250,6 +249,9 @@
  </Reference>
  <Reference Include="DOTweenEditor">
  <HintPath>F:/GitHubGit/HFFramework/Assets/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="HFFrameworkHotFix">
+ <HintPath>F:/GitHubGit/HFFramework/Assets/GameResources/Game/TestGameA/DLL_@!/HFFrameworkHotFix.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.SharpZipLib">
  <HintPath>F:/GitHubGit/HFFramework/Assets/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>

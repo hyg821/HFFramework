@@ -1,18 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public delegate void NotificationCallBack(NotificationMessage msg) ;
+using System;
 
 public class ObserverDelegate
 {
+    /// <summary>
+    ///  接收者
+    /// </summary>
 	public object receiver;
 
-	public int msgID;
+    /// <summary>
+    ///  消息号
+    /// </summary>
+	public long msgID;
 
-	public NotificationCallBack callBack;
+    /// <summary>
+    ///  消息回调
+    /// </summary>
+	public Action<NotificationMessage> callBack;
 
-	public ObserverDelegate (object receiver,int msgID, NotificationCallBack call)
+	public ObserverDelegate (object receiver, long msgID, Action<NotificationMessage> call)
     {
 		this.receiver = receiver;
 		this.msgID = msgID;
@@ -22,25 +30,23 @@ public class ObserverDelegate
 	
 public class NotificationCenter : MonoBehaviour
 {
-	private static NotificationCenter self;
+	public static NotificationCenter self;
 
-	private Dictionary<int , List<ObserverDelegate>> dic = new Dictionary<int, List<ObserverDelegate>>();
+	private Dictionary<long , List<ObserverDelegate>> dic = new Dictionary<long, List<ObserverDelegate>>();
 
-	public static NotificationCenter DefaultCenter()
+    public void Awake()
     {
-		if (self==null) {
-            self = new NotificationCenter();
-            self.dic = new Dictionary<int, List<ObserverDelegate>>();
-        }
-		return self;
-	}
-
-    private NotificationCenter()
-    {
-
+        self = this;
+        self.dic = new Dictionary<long, List<ObserverDelegate>>();
     }
 
-	public void AddObserver(object receiver,int msgID,NotificationCallBack callback)
+    /// <summary>
+    ///  添加一个观察者
+    /// </summary>
+    /// <param name="receiver"></param>
+    /// <param name="msgID"></param>
+    /// <param name="callback"></param>
+	public void AddObserver(object receiver,int msgID, Action<NotificationMessage> callback)
     {
         ObserverDelegate o = new ObserverDelegate(receiver, msgID, callback);
         List<ObserverDelegate> list;
@@ -59,6 +65,10 @@ public class NotificationCenter : MonoBehaviour
         }
 	}
 		
+    /// <summary>
+    ///  发消息
+    /// </summary>
+    /// <param name="msg"></param>
 	public void PostNotification(NotificationMessage msg)
     {
         List<ObserverDelegate> l;
@@ -79,6 +89,11 @@ public class NotificationCenter : MonoBehaviour
         }
 	}
 
+    /// <summary>
+    ///  移除观察者
+    /// </summary>
+    /// <param name="receiver"></param>
+    /// <param name="msgID"></param>
     public void RemoveObserver(object receiver, int msgID)
     {
         List<ObserverDelegate> l;
@@ -111,12 +126,12 @@ public class NotificationCenter : MonoBehaviour
         }
     }
 
-    public void Destory()
+    void OnDestroy()
     {
         self = null;
         dic.Clear();
-        dic = null;
     }
+
 }
 
 

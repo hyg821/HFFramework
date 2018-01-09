@@ -9,8 +9,7 @@ using LitJson;
 
 public class ExportAssetBundles
 {
-
-    public static List<string> assetbundleNameList = new List<string>();
+    public static Dictionary<string, string> assetbundleNameDic = new Dictionary<string, string>();
 
     /// <summary>
     /// 资源打包
@@ -18,6 +17,7 @@ public class ExportAssetBundles
     [MenuItem("游戏辅助工具HYG/构建 所有 AssetBundles")]
     static void BuildAllAssetBundles()
     {
+
         Caching.CleanCache();
 
         SetAssetbundlesNames();
@@ -86,17 +86,17 @@ public class ExportAssetBundles
     ///  MD5写入本地
     /// </summary>
     /// <param name="date"></param>
-    public static void WriteAssetbundleNames(List<string> lx)
+    public static void WriteAssetbundleNames(Dictionary<string,string> lx)
     {
-        string str="";
+        JsonData js = new JsonData();
         foreach (var item in lx)
         {
-            str +=( item+"\n");
+            js[item.Key] = item.Value;
         }
-        string path = Application.dataPath + "/GameResources" + "/AssetbundleNames.txt";
+        string path = Application.dataPath + "/GameResources" + "/AssetbundleNames.json";
         FileStream fs = new FileStream(path, FileMode.Create);
         //获得字节数组
-        byte[] data = Encoding.Default.GetBytes(str);
+        byte[] data = Encoding.Default.GetBytes(js.ToJson());
         //开始写入
         fs.Write(data, 0, data.Length);
         //清空缓冲区、关闭流
@@ -333,10 +333,20 @@ public class ExportAssetBundles
     {
         //ClearAssetBundlesName();
         string resourcesPath = Application.dataPath + "/GameResources";
-        assetbundleNameList.Clear();
+        ReNameDLL();
+        assetbundleNameDic.Clear();
         m_SetAssetbundlesNames(resourcesPath);
-        WriteAssetbundleNames(assetbundleNameList);
-        assetbundleNameList.Clear();
+        WriteAssetbundleNames(assetbundleNameDic);
+        assetbundleNameDic.Clear();
+    }
+
+    public static void ReNameDLL()
+    {
+        string str = "/GameResources/Game/TestGameA/DLL_@!/";
+        string target = "HFFrameworkHotFix.dll";
+        string sourcePath = Application.dataPath + str + target;
+        string reNamePath = Application.dataPath + str + target +".bytes";
+        File.Copy(sourcePath, reNamePath, true);
     }
 
     [MenuItem("游戏辅助工具HYG/清除所有的AssetbundleName")]
@@ -382,36 +392,30 @@ public class ExportAssetBundles
 
                     newItem = newItem.Substring(newItem.IndexOf("Assets"));
 
-                    //先在编辑器里拿到对象
-                    //UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(newItem);
-
                     //再拿到他的AssetImporter
                     AssetImporter assetImporter = AssetImporter.GetAtPath(newItem);
 
                     newItem = newItem.Substring(newItem.IndexOf("GameResources"));
-
                     newItem = newItem.Replace(@"/", "_");
-
                     int last_ = newItem.LastIndexOf("_");
-
                     newItem =  newItem.Substring(0, last_);
 
+                    //assetImporter.assetBundleName = newItem;
 
                     string md5Str = ExportAssetBundles.GetMD5(newItem);
 
                     // 通过文件路径 设置assetbundle 
                     assetImporter.assetBundleName = md5Str;
 
-                    string temp = newItem + "   " + md5Str;
-                    if (assetbundleNameList.Contains(temp)==false)
+                    string md5;
+                    if (assetbundleNameDic.TryGetValue(newItem, out md5)==false)
                     {
-                        assetbundleNameList.Add(temp);
+                        assetbundleNameDic.Add(newItem, md5Str);
                     }
                 }
             }
         }
    
-
         DirectoryInfo[] d = folder.GetDirectories();
         if (d.Length!=0)
         {
@@ -438,7 +442,6 @@ public class ExportAssetBundles
         }
         return sTemp.ToLower();
     }
-
 }
 
 

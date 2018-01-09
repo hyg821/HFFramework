@@ -9,8 +9,19 @@ using System.Collections;
 
 public enum HASocketState
 {
+    /// <summary>
+    ///  未知
+    /// </summary>
     UnKnow=-1,
+
+    /// <summary>
+    ///  正确
+    /// </summary>
     OK = 0,
+
+    /// <summary>
+    ///  错误
+    /// </summary>
     Error = -999
 }
 

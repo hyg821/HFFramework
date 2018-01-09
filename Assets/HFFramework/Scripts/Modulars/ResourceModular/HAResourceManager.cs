@@ -68,7 +68,6 @@ public class HAResourceManager : MonoBehaviour
                 {
                     newPath = "file://" + ResourceSpareRootPath + path;
                 }
-                Debug.Log("StreamingAssets读取");
             }
         }
         else
@@ -82,11 +81,8 @@ public class HAResourceManager : MonoBehaviour
             else
             {
                 newPath = ResourceSpareRootPath + path;
-                Debug.Log("StreamingAssets读取");
             }
         }
-
-        Debug.Log("newPath=" + newPath);
 
         return newPath;
     }
@@ -335,9 +331,9 @@ public class HAResourceManager : MonoBehaviour
         }
     }
 
-    public void LoadHotFixAssembly(string dllName, ILRuntime.Runtime.Enviorment.AppDomain appdomain, Action<bool> cbAction)
+    public void LoadHotFixAssembly(string assetbundleName,string dllName, ILRuntime.Runtime.Enviorment.AppDomain appdomain, Action<bool> cbAction)
     {
-        AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(dllName + "_dll");
+        AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(assetbundleName);
         TextAsset text = ab.LoadAssetWithCache<TextAsset>(dllName + ".dll");
         byte[] dll = text.bytes;
         using (MemoryStream fs = new MemoryStream(dll))
@@ -431,9 +427,10 @@ public class HAResourceManager : MonoBehaviour
     }
 
 
-    public void OnDestroy()
+    void OnDestroy()
     {
         self = null;
+        UnloadAllAssetBundle();
     }
 
     /*
@@ -492,7 +489,6 @@ public class AssetBundlePackage
             }
             else
             {
-                Debug.Log("卸载？");
                 assetBundle.Unload(t);
                 CacheDic = null;
                 assetBundle = null;
@@ -537,7 +533,6 @@ public class AssetBundlePackage
     /// <returns></returns>
     public UnityEngine.Object LoadAssetWithCache(string name)
     {
-        //
         if (CacheDic.ContainsKey(name))
         {
             return CacheDic[name];
@@ -560,7 +555,7 @@ public class AssetBundlePackage
 
     public void LoadAssetWithCacheAsyc<T>(string name, Action<T> callback) where T : UnityEngine.Object
     {
-        MainUpdate.self.StartCoroutine(m_LoadAssetWithCacheAsyc(name, callback));
+        GameLooper.self.StartCoroutine(m_LoadAssetWithCacheAsyc(name, callback));
     }
 
 

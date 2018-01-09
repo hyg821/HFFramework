@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NotificationMessage
 {
-	public int msgID;
+	public long msgID;
 
 	public object sender;
 
@@ -14,7 +14,7 @@ public class NotificationMessage
 		
 	}
 
-	public NotificationMessage(int msgID,Object sender ,object obj)
+	public NotificationMessage(long msgID,Object sender ,object obj)
     {
 		this.msgID = msgID;
 		this.sender = sender;

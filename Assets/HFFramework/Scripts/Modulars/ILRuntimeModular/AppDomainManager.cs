@@ -3,34 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using DG.Tweening;
-using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 using Object = UnityEngine.Object;
-using ILRuntime.CLR.Utils;
 using Spine;
 using Assets.Game.Scripts.HotFix;
 
 
 public class AppDomainManager : MonoBehaviour
 {
-    private static AppDomainManager instance = null;
-    public static AppDomainManager Instance
-    {
-        set
-        {
-            instance = value;
-        }
-        get
-        {
-            return instance;
-        }
-    }
+    public static AppDomainManager self;
 
     //AppDomain是ILRuntime的入口，最好是在一个单例类中保存，整个游戏全局就一个，这里为了示例方便，每个例子里面都单独做了一个
     //大家在正式项目中请全局只创建一个AppDomain
@@ -40,55 +26,49 @@ public class AppDomainManager : MonoBehaviour
     public string DllName;
     public string MainClassName;
 
+    public void Awake()
+    {
+        self = this;
+    }
 
-    public void Init(int gameType, string dllName, string mainClass)
+    /// <summary>
+    ///  跳转到 对应热更新DLL
+    /// </summary>
+    /// <param name="gameType">游戏类型</param>
+    /// <param name="dllName">dll名字</param>
+    /// <param name="mainClass">dll被调用的方法</param>
+    public void Jump(int gameType,string assetbundleName,string dllName, string mainClass)
     {
         GameType = gameType;
         DllName = dllName;
         MainClassName = mainClass;
 
-        if (appdomain != null)
+        if (appdomain == null)
         {
             appdomain = new AppDomain();
-            HAResourceManager.self.LoadHotFixAssembly(dllName, appdomain, OnHotFixLoaded);
+            HAResourceManager.self.LoadHotFixAssembly(assetbundleName, dllName, appdomain, InitHotFix);
         }
 
-        UpdateGame();
+        HotFixAwake();
     }
 
     /// <summary>
     /// 初始化ilruntime
     /// </summary>
-    public unsafe void UpdateGame()
+    public unsafe void InitHotFix(bool isOK)
     {
-        try
+        if (isOK)
         {
-            appdomain.Invoke(MainClassName, "UpdateGame", null, null);
-        }
-        catch (Exception e)
-        {
-            throw;
-        }
-    }
-
-    /// <summary>
-    /// 初始化ilruntime
-    /// </summary>
-    public unsafe void OnHotFixLoaded(bool boo)
-    {
-        if (!boo) return;
-
-        InitializeILRuntime();
-        //        DebugTools.Log("OnHotFixLoaded");
-        try
-        {
+            InitializeILRuntime();
             appdomain.Invoke(MainClassName, "InitMonoBehaviour", null, GameObject.Find("AppDomainManager"));
         }
-        catch (Exception e)
-        {
-            throw;
-        }
     }
+
+    public unsafe void HotFixAwake()
+    {
+        appdomain.Invoke(MainClassName, "EnterDLL", null, null);
+    }
+
 
     /// <summary>
     /// 初始化一下ILRuntime框架的东西
@@ -98,7 +78,6 @@ public class AppDomainManager : MonoBehaviour
     {
         // 注册litjson
         LitJson.JsonMapper.RegisterILRuntimeCLRRedirection(appdomain);
-        //        DebugTools.Log("这里做一些ILRuntime的注册");
         appdomain.RegisterCrossBindingAdaptor(new MonoBehaviourAdapter());
         //使用Couroutine时，C#编译器会自动生成一个实现了IEnumerator，IEnumerator<object>，IDisposable接口的类，因为这是跨域继承，所以需要写CrossBindAdapter（详细请看04_Inheritance教程），Demo已经直接写好，直接注册即可
         appdomain.RegisterCrossBindingAdaptor(new CoroutineAdapter());
@@ -162,13 +141,6 @@ public class AppDomainManager : MonoBehaviour
             return new UnityAction<BaseEventData>((p) => { ((Action<BaseEventData>)action)(p); });
         });
 
-
-
-        appdomain.DelegateManager.RegisterDelegateConvertor<NotificationCallBack>((action) =>
-        {
-            return new NotificationCallBack((p) => { ((Action<NotificationMessage>)action)(p); });
-        });
-
         appdomain.DelegateManager.RegisterDelegateConvertor<Spine.AnimationState.TrackEntryDelegate>((action) =>
         {
             return new Spine.AnimationState.TrackEntryDelegate((p) => { ((Action<TrackEntry>)action)(p); });
@@ -178,5 +150,15 @@ public class AppDomainManager : MonoBehaviour
         ILRuntime.Runtime.Generated.CLRBindings.Initialize(appdomain);
 
         AppDomainCommonSetting.Instance.SetupCLRRedirection(appdomain);
+    }
+
+    void OnDestroy()
+    {
+        if (appdomain!=null)
+        {
+            appdomain.Invoke(MainClassName, "Destory", null, GameObject.Find("AppDomainManager"));
+            appdomain = null;
+        }
+        self = this;
     }
 }

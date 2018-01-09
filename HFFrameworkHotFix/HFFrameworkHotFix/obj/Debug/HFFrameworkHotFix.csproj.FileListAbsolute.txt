@@ -1,0 +1,14 @@
+F:\GitHubGit\HFFrameworkHotFix\HFFrameworkHotFix\bin\Debug\HFFrameworkHotFix.dll
+F:\GitHubGit\HFFrameworkHotFix\HFFrameworkHotFix\bin\Debug\HFFrameworkHotFix.pdb
+F:\GitHubGit\HFFrameworkHotFix\HFFrameworkHotFix\obj\Debug\HFFrameworkHotFix.csprojResolveAssemblyReference.cache
+F:\GitHubGit\HFFrameworkHotFix\HFFrameworkHotFix\obj\Debug\HFFrameworkHotFix.dll
+F:\GitHubGit\HFFrameworkHotFix\HFFrameworkHotFix\obj\Debug\HFFrameworkHotFix.pdb
+F:\GitHubGit\HFFramework\Assets\StreamingAssets\DLL\HFFrameworkHotFix.dll
+F:\GitHubGit\HFFramework\Assets\StreamingAssets\DLL\HFFrameworkHotFix.pdb
+F:\GitHubGit\HFFramework\Assets\GameResources\Game\TestGameA\DLL_@!\HFFrameworkHotFix.dll
+F:\GitHubGit\HFFramework\Assets\GameResources\Game\TestGameA\DLL_@!\HFFrameworkHotFix.pdb
+F:\GitHubGit\HFFramework\HFFramework\Assets\GameResources\Game\TestGameA\DLL_@!\HFFrameworkHotFix.dll
+F:\GitHubGit\HFFramework\HFFramework\Assets\GameResources\Game\TestGameA\DLL_@!\HFFrameworkHotFix.pdb
+F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Debug\HFFrameworkHotFix.csprojResolveAssemblyReference.cache
+F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Debug\HFFrameworkHotFix.dll
+F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Debug\HFFrameworkHotFix.pdb

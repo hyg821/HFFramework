@@ -1,13 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{37EF6869-2825-C116-7DBA-4ADDF051AA8D}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HFFramework", "Assembly-CSharp.csproj", "{37EF6869-2825-C116-7DBA-4ADDF051AA8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{39E214BC-C6A7-A279-33CA-C1C242FE1966}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HFFrameworkHotFix", "HFFrameworkHotFix\HFFrameworkHotFix\HFFrameworkHotFix.csproj", "{D2FB3CD5-6901-4C7A-B2A3-C526287B001B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HFFramework", "Assembly-CSharp-Editor.csproj", "{39E214BC-C6A7-A279-33CA-C1C242FE1966}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +19,6 @@ Global
 		{39E214BC-C6A7-A279-33CA-C1C242FE1966}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39E214BC-C6A7-A279-33CA-C1C242FE1966}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39E214BC-C6A7-A279-33CA-C1C242FE1966}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2FB3CD5-6901-4C7A-B2A3-C526287B001B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2FB3CD5-6901-4C7A-B2A3-C526287B001B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2FB3CD5-6901-4C7A-B2A3-C526287B001B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2FB3CD5-6901-4C7A-B2A3-C526287B001B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -96,6 +96,7 @@ public class HAResourceManager : MonoBehaviour
 
         Debug.Log("正式资源地址" + resourceRootPath);
         Debug.Log("备用资源地址" + resourceSpareRootPath);
+        Caching.CleanCache();
 
         if (!string.IsNullOrEmpty(resourceRootPath) && !string.IsNullOrEmpty(resourceSpareRootPath))
         {

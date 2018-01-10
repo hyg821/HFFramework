@@ -141,72 +141,6 @@ public static class ExtensionMethod
         return format;
     }
 
-    public static float UnitAB(this float f)
-    {
-        return f / 100;
-    }
-
-    public static float UnitBA(this float f)
-    {
-        return f * 100;
-    }
-
-
-    public static double UnitAB(this double f)
-    {
-        return f / 100;
-    }
-
-    public static double UnitBA(this double f)
-    {
-        return f * 100;
-    }
-
-    public static Vector3 ClientToServer(this Vector3 vx)
-    {
-        return new Vector3(-vx.x, vx.y, 0);
-    }
-
-    public static Vector3 ServerToClient(this Vector3 vx)
-    {
-        return new Vector3(-vx.x, vx.y, 0);
-    }
-
-    public static Vector3 FlipX(this Vector3 vx)
-    {
-        return new Vector3(-vx.x, vx.y, 0);
-    }
-
-    public static Vector3 FlipY(this Vector3 vx)
-    {
-        return new Vector3(vx.x, -vx.y, 0);
-    }
-
-    public static Vector3 FlipXY(this Vector3 vx)
-    {
-        return new Vector3(-vx.x, -vx.y, 0);
-    }
-
-    /// <summary>
-    ///  除100
-    /// </summary>
-    /// <param name="vx"></param>
-    /// <returns></returns>
-    public static Vector3 UnitAB(this Vector3 vx)
-    {
-        return new Vector3(vx.x/100.0f, vx.y/100.0f, 0);
-    }
-
-    /// <summary>
-    ///  乘100
-    /// </summary>
-    /// <param name="vx"></param>
-    /// <returns></returns>
-    public static Vector3 UnitBA(this Vector3 vx)
-    {
-        return new Vector3(vx.x * 100.0f, vx.y * 100.0f, 0);
-    }
-
     /// <summary>
     /// 秒数转  10：19  倒计时
     /// </summary>
@@ -247,55 +181,5 @@ public static class ExtensionMethod
             str += "...";
         }
         return str;
-
-    }
-    /// <summary>
-    /// 检测JsonData是否已经有key属性
-    /// </summary>
-    /// <param name="data"></param>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    public static bool JsonDataContainsKey(JsonData data, string key)
-    {
-        bool result = false;
-        if (data == null)
-            return result;
-        if (!data.IsObject)
-        {
-            return result;
-        }
-        IDictionary tdictionary = data as IDictionary;
-        if (tdictionary == null)
-            return result;
-        if (tdictionary.Contains(key))
-        {
-            result = true;
-        }
-        return result;
-    }
-
-    /// <summary>
-    /// 获得 JsonData key 对应 Value
-    /// </summary>
-    /// <param name="data"></param>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    public static string GetJsonDataValueByKey(JsonData data, string key)
-    {
-        string result = "";
-        if (data == null)
-            return result;
-        if (!data.IsObject)
-        {
-            return result;
-        }
-        IDictionary tdictionary = data as IDictionary;
-        if (tdictionary == null)
-            return result;
-        if (tdictionary.Contains(key))
-        {
-            result = data[key].ToString();
-        }
-        return result;
     }
 }

@@ -26,6 +26,8 @@ public class GameLooper : MonoBehaviour {
     /// </summary>
     private Queue<Action> eventQueue = new Queue<Action>();
 
+    public int eventQueueCount = 0;
+
     void Awake()
     {
         self = this;
@@ -37,6 +39,7 @@ public class GameLooper : MonoBehaviour {
         while (eventQueue.Count > 0)
         {
             //吐出所有的 delegate
+            eventQueueCount = eventQueue.Count;
             Action e = eventQueue.Dequeue();
             e();
         }

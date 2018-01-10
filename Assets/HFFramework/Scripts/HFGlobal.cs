@@ -54,7 +54,6 @@ public class HFGlobal : MonoBehaviour {
         if (self == null)
         {
             self = this;
-            gameObject.AddComponent<GameLooper>();
             gameObject.name = "HFGlobal";
             DontDestroyOnLoad(gameObject);
 
@@ -98,6 +97,16 @@ public class HFGlobal : MonoBehaviour {
             GameObject appDomainManagerObj = new GameObject("AppDomainManager");
             appDomainManager = appDomainManagerObj.AddComponent<AppDomainManager>();
             DontDestroyOnLoad(appDomainManagerObj);
+
+            //添加游戏循环者
+            gameObject.AddComponent<GameLooper>();
+
+            //添加设置游戏者
+            gameObject.AddComponent<GameSetter>();
+
+            //添加状态检查者
+            gameObject.AddComponent<GameStateChecker>();
+
         }
     }
 }

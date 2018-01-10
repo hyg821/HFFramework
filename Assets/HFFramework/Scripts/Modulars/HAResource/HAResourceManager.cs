@@ -243,17 +243,34 @@ public class HAResourceManager : MonoBehaviour
     }
 
     /// <summary>
-    ///  获取资源 在callback 之后自动销毁解压出来的各种资源 一般适用于只创建一次的预设体 
+    ///  获取资源 在callback 之后自动卸载assetbundle 
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="packageName"></param>
     /// <param name="assetName"></param>
     /// <param name="callBack"></param>
-    public void GetAssetWithAutoKill<T>(string packageName, string assetName, Action<T> callBack) where T : UnityEngine.Object
+    public void LoadAssetWithAutoKill<T>(string packageName, string assetName, Action<T> callBack) where T : UnityEngine.Object
     {
         AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(packageName);
         T ta = ab.assetBundle.LoadAsset<T>(assetName);
         callBack(ta);
+        UnloadAssetBundle(ab, false);
+    }
+
+    /// <summary>
+    ///  获取资源 在callback 之后自动卸载assetbundle 并且销毁对应的prefab
+    /// </summary>
+    /// <param name="packageName"></param>
+    /// <param name="assetName"></param>
+    /// <param name="autoKillPrefab"></param>
+    /// <param name="callBack"></param>
+    public void LoadPrefabWithAutoKill(string packageName, string assetName, bool autoKillPrefab, Action<GameObject> callBack)
+    {
+        AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(packageName);
+        GameObject ta = ab.assetBundle.LoadAsset<GameObject>(assetName);
+        callBack(ta);
+        Destroy(ta);
+        ta = null;
         UnloadAssetBundle(ab, false);
     }
 

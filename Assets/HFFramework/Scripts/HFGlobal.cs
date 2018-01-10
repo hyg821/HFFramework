@@ -17,7 +17,7 @@ public class HFGlobal : MonoBehaviour {
     /// <summary>
     ///  通知中心
     /// </summary>
-    public NotificationCenter NotificationCenter;
+    public NotificationCenter notificationCenter;
 
     /// <summary>
     ///  网络管理器
@@ -65,7 +65,7 @@ public class HFGlobal : MonoBehaviour {
 
             //2通知中心
             GameObject notificationCenterObj = new GameObject("NotificationCenter");
-            NotificationCenter = notificationCenterObj.AddComponent<NotificationCenter>();
+            notificationCenter = notificationCenterObj.AddComponent<NotificationCenter>();
             DontDestroyOnLoad(notificationCenterObj);
 
             //3网络

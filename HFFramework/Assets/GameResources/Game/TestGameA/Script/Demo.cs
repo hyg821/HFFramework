@@ -5,6 +5,7 @@ using HFFramework;
 
 public class Demo : MonoBehaviour
 {
+
     public void AssetBundleTest()
     {
         GameObject prefab = HAResourceManager.self.GetGameObject("Prefab", "Cube");

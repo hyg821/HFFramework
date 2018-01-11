@@ -5,6 +5,7 @@ using UnityEngine;
 using ProtoBuf;
 using System.Collections.Generic;
 using System.Collections;
+using System.Net;
 
 namespace HFFramework
 {
@@ -140,18 +141,31 @@ namespace HFFramework
         {
             serverIP = ip;
             serverPort = port;
+
+            // 判断 ipv4 || ipv6
+            AddressFamily ipv;
+            IPAddress[] address = Dns.GetHostAddresses(serverIP);
+            if (address[0].AddressFamily == AddressFamily.InterNetworkV6)
+            {
+                ipv = AddressFamily.InterNetworkV6;
+            }
+            else
+            {
+                ipv = AddressFamily.InterNetwork;
+            }
+
             this.beginConnectedCallback = BeginConnected;
             this.relayBeginConnectedCallback = relayBeginConnectedCallback;
             this.connectErrorCallback = connectErrorCallback;
             this.messageDispatchProtoActionDelegate = dispatchAction;
-            Init();
+            Init(ipv);
         }
 
-        public void Init()
+        public void Init(AddressFamily ipv)
         {
             if (socketClient == null)
             {
-                socketClient = new ClientSocket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                socketClient = new ClientSocket(ipv, SocketType.Stream, ProtocolType.Tcp);
                 socketClient.beginConnectedCallback = beginConnectedCallback;
                 socketClient.connectErrorCallback = connectErrorCallback;
                 socketClient.MessageDispatchReceiveDelegate += DispatchProto;

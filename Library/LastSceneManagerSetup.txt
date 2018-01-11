@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/GameResources/Game/TestGameA/Scene_@!/hyg.unity
-  isLoaded: 1
-  isActive: 1

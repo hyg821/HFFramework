@@ -9,7 +9,7 @@ public class HotFixEnter
 
     public static void EnterDLL()
     {
-        Debug.Log("进入DLL");
+        Debug.Log("进入DLL  啦啦啦啦啦啦");
     }
 }
 

@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 3584748467
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: 515d001d15fb43d829e61f09a189036e
+      Dependencies: {}
+    Info_1:
+      Name: hotfixdll
+      Dependencies: {}
+    Info_2:
+      Name: prefab
+      Dependencies: {}
+    Info_3:
+      Name: scene
+      Dependencies: {}

@@ -12,3 +12,5 @@ F:\GitHubGit\HFFramework\HFFramework\Assets\GameResources\Game\TestGameA\DLL_@!\
 F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Debug\HFFrameworkHotFix.csprojResolveAssemblyReference.cache
 F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Debug\HFFrameworkHotFix.dll
 F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Debug\HFFrameworkHotFix.pdb
+F:\GitHubGit\HFFramework\HFFramework\Assets\StreamingAssets\DLL\HFFrameworkHotFix.dll
+F:\GitHubGit\HFFramework\HFFramework\Assets\StreamingAssets\DLL\HFFrameworkHotFix.pdb

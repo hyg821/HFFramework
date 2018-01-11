@@ -95,8 +95,8 @@ namespace HFFramework
         public void InitWithRootPath(string resourceRootPath, string resourceSpareRootPath, string mainfestName)
         {
 
-            Debug.Log("正式资源地址" + resourceRootPath);
-            Debug.Log("备用资源地址" + resourceSpareRootPath);
+            HFLog.C("正式资源地址" + resourceRootPath);
+            HFLog.C("备用资源地址" + resourceSpareRootPath);
             Caching.CleanCache();
 
             if (!string.IsNullOrEmpty(resourceRootPath) && !string.IsNullOrEmpty(resourceSpareRootPath))

@@ -16,9 +16,9 @@ namespace  HFFramework
         Android,
         iOS,
         Web,
-        Editor,
         Windows,
-        Mac
+        Mac,
+        Editor
     } 
 
     public class GameEnvironment : MonoBehaviour
@@ -35,11 +35,22 @@ namespace  HFFramework
         /// </summary>
         public  GamePlatform runtimePlatform;
 
+        /// <summary>
+        ///  是否开启Log
+        /// </summary>
+        public bool log;
+
         public void Awake()
         {
             self = this;
-            runtimeEnvironment = GameEnvironmentEnum.Develop;
+            SetRuntimeEnvironment(GameEnvironmentEnum.Develop);
             SwitchPlatform();
+            Log(true);
+        }
+
+        public void SetRuntimeEnvironment(GameEnvironmentEnum e)
+        {
+            runtimeEnvironment = e;
         }
 
         /// <summary>
@@ -74,5 +85,17 @@ namespace  HFFramework
                     break;
             }
         }
+
+        /// <summary>
+        ///  设置debug的开启和关闭
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public bool Log(bool b)
+        {
+            log = b;
+            return log;
+        }
+
     }
 }

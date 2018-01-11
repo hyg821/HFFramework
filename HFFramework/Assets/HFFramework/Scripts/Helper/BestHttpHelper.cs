@@ -58,7 +58,7 @@ namespace HFFramework
         {
             DownLoadFileAndWriteToLocal("Task" + currentTaskIndex, webUrl[currentTaskIndex], localPath[currentTaskIndex], delegate (string taskName)
             {
-                Debug.Log("单个下载完成");
+                HFLog.L("单个下载完成");
                 if (currentTaskIndex < maxTaskCount - 1)
                 {
                     if (progress != null)
@@ -71,11 +71,11 @@ namespace HFFramework
                 else
                 {
                     progress(1);
-                    Debug.Log("所有下载队列下载完成");
+                    HFLog.L("所有下载队列下载完成");
                 }
             }, delegate (string taskName)
             {
-                Debug.Log("下载出现错误");
+                HFLog.L("下载出现错误");
             });
         }
 
@@ -91,7 +91,7 @@ namespace HFFramework
 
         public BestHttpDownLoadTask(string taskName, string webUrl, string localPath, Action<string> success, Action<string> fail)
         {
-            Debug.Log(taskName + "被创建了");
+            HFLog.L(taskName + "被创建了");
             this.taskName = taskName;
             this.webUrl = webUrl;
             this.localPath = localPath;
@@ -108,7 +108,7 @@ namespace HFFramework
 
             if (File.Exists(localPath))
             {
-                Debug.Log(taskName + "-----------------------文件存在 删除！" + localPath);
+                HFLog.L(taskName + "-----------------------文件存在 删除！" + localPath);
                 File.Delete(localPath);
             }
 
@@ -143,12 +143,12 @@ namespace HFFramework
                             break;
                         case HTTPRequestStates.Processing:
 
-                            Debug.Log(taskName + "开始返回数据");
+                            HFLog.L(taskName + "开始返回数据");
                             break;
                         case HTTPRequestStates.Finished:
                             break;
                         case HTTPRequestStates.Error:
-                            Debug.Log("下载出现错误 开始重新下载");
+                            HFLog.L("下载出现错误 开始重新下载");
                             StartDownLoad();
                             if (fail != null)
                             {
@@ -156,13 +156,13 @@ namespace HFFramework
                             }
                             break;
                         case HTTPRequestStates.Aborted:
-                            Debug.Log("下载出现错误 开始重新下载");
+                            HFLog.L("下载出现错误 开始重新下载");
                             break;
                         case HTTPRequestStates.ConnectionTimedOut:
-                            Debug.Log("下载出现错误 开始重新下载");
+                            HFLog.L("下载出现错误 开始重新下载");
                             break;
                         case HTTPRequestStates.TimedOut:
-                            Debug.Log("下载出现错误 开始重新下载");
+                            HFLog.L("下载出现错误 开始重新下载");
                             if (fail != null)
                             {
                                 fail(taskName);

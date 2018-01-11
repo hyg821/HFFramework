@@ -1,21 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-
 namespace HFFramework
 {
-
     public class NotificationMessage
     {
+        /// <summary>
+        ///  消息id
+        /// </summary>
         public long msgID;
 
+        /// <summary>
+        ///  发送者
+        /// </summary>
         public object sender;
 
+        /// <summary>
+        ///  消息的内容 需要as 转换成对应的类
+        /// </summary>
         public object obj;
 
-        public NotificationMessage(long msgID, UnityEngine.Object sender, object obj)
+        public NotificationMessage(long msgID, object sender, object obj)
         {
             this.msgID = msgID;
             this.sender = sender;

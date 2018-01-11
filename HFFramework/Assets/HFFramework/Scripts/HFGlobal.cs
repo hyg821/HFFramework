@@ -60,6 +60,9 @@ namespace HFFramework
                 gameObject.name = "HFGlobal";
                 DontDestroyOnLoad(gameObject);
 
+                //添加游戏运行环境
+                gameObject.AddComponent<GameEnvironment>();
+
                 //1资源加载   
                 GameObject resourcesManagerObj = new GameObject("ResourcesManager");
                 resourcesManager = resourcesManagerObj.AddComponent<HAResourceManager>();
@@ -109,10 +112,6 @@ namespace HFFramework
 
                 //添加状态检查者
                 gameObject.AddComponent<GameStateChecker>();
-
-                //添加游戏运行环境
-                gameObject.AddComponent<GameEnvironment>();
-
             }
         }
     }

@@ -20,11 +20,11 @@ public class ExportAssetBundles
 
         Caching.CleanCache();
 
-        SetAssetbundlesNames();
+        //SetAssetbundlesNames();
 
         BuildTarget target;
 #if UNITY_STANDALONE_WIN
-            target = BuildTarget.StandaloneWindows;
+        target = BuildTarget.StandaloneWindows;
 #elif UNITY_STANDALONE_OSX
             target = BuildTarget.StandaloneOSXIntel;
 #elif UNITY_IPHONE
@@ -41,6 +41,7 @@ public class ExportAssetBundles
         AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", BuildAssetBundleOptions.ChunkBasedCompression, target);
 
         BuildZip();
+
         if (abm)
         {
             string[] assetBundles = abm.GetAllAssetBundles();
@@ -60,9 +61,11 @@ public class ExportAssetBundles
             string json = JsonMapper.ToJson(config);
             WriteMD5Diff(json);
         }
-     
+
+
         //刷新编辑器
         AssetDatabase.Refresh();
+        Debug.Log("Assetbundle Build 完成");
     }
 
     /// <summary>
@@ -86,7 +89,7 @@ public class ExportAssetBundles
     ///  MD5写入本地
     /// </summary>
     /// <param name="date"></param>
-    public static void WriteAssetbundleNames(Dictionary<string,string> lx)
+    public static void WriteAssetbundleNames(Dictionary<string, string> lx)
     {
         JsonData js = new JsonData();
         foreach (var item in lx)
@@ -117,6 +120,7 @@ public class ExportAssetBundles
             FileStream file = new FileStream(fileName, FileMode.Open);
             System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
             byte[] retVal = md5.ComputeHash(file);
+            file.Dispose();
             file.Close();
 
             StringBuilder sb = new StringBuilder();
@@ -139,14 +143,14 @@ public class ExportAssetBundles
     //[MenuItem("Game Editor/Build zip")]
     private static void BuildZip()
     {
-        GoCompress(Application.streamingAssetsPath + "/AssetBundles", Application.streamingAssetsPath +"/HotFixResources"+ "/AssetBundles");
+        GoCompress(Application.streamingAssetsPath + "/AssetBundles", Application.streamingAssetsPath + "/HotFixResources" + "/AssetBundles");
     }
 
 
     public static void GoCompress(string SourceFile, string TartgetFile)
     {
         string Source = SourceFile;
-        string Tartget = TartgetFile+".zip";
+        string Tartget = TartgetFile + ".zip";
         Directory.CreateDirectory(Path.GetDirectoryName(Tartget));
         using (ZipOutputStream s = new ZipOutputStream(File.Create(Tartget)))
         {
@@ -279,7 +283,7 @@ public class ExportAssetBundles
 
     static JsonData ReadMiniGameConfing()
     {
-        string str =  File.ReadAllText(Application.streamingAssetsPath + "/Config/Hall/ShieldGame.json", Encoding.UTF8);
+        string str = File.ReadAllText(Application.streamingAssetsPath + "/Config/Hall/ShieldGame.json", Encoding.UTF8);
         JsonData j = JsonMapper.ToObject(str);
         return j["Shield"];
     }
@@ -317,7 +321,7 @@ public class ExportAssetBundles
     static string[] GetAllAssetBundlesName()
     {
         AssetDatabase.RemoveUnusedAssetBundleNames();
-        string[] assetBundleNames =  AssetDatabase.GetAllAssetBundleNames();
+        string[] assetBundleNames = AssetDatabase.GetAllAssetBundleNames();
         int i = 0;
         foreach (var item in assetBundleNames)
         {
@@ -345,7 +349,7 @@ public class ExportAssetBundles
         string str = "/GameResources/Game/TestGameA/DLL_@!/";
         string target = "HFFrameworkHotFix.dll";
         string sourcePath = Application.dataPath + str + target;
-        string reNamePath = Application.dataPath + str + target +".bytes";
+        string reNamePath = Application.dataPath + str + target + ".bytes";
         File.Copy(sourcePath, reNamePath, true);
     }
 
@@ -353,19 +357,19 @@ public class ExportAssetBundles
     static void ClearAssetBundlesName()
     {
         int length = AssetDatabase.GetAllAssetBundleNames().Length;
-        Debug.Log(length);
         string[] oldAssetBundleNames = new string[length];
         for (int i = 0; i < length; i++)
         {
             oldAssetBundleNames[i] = AssetDatabase.GetAllAssetBundleNames()[i];
         }
+        Debug.Log("删除之前的所有AssetBundleNames个数  " + length);
 
         for (int j = 0; j < oldAssetBundleNames.Length; j++)
         {
             AssetDatabase.RemoveAssetBundleName(oldAssetBundleNames[j], true);
         }
         length = AssetDatabase.GetAllAssetBundleNames().Length;
-        Debug.Log(length);
+        Debug.Log("删除之后的所有AssetBundleNames个数  " + length);
     }
 
     public static void m_SetAssetbundlesNames(string path)
@@ -383,41 +387,75 @@ public class ExportAssetBundles
         {
             FileInfo[] f = folder.GetFiles();
 
+
+            
+            //先找出AssetbundleConfig
+            HFAssetbundleConfig config=null;
             foreach (FileInfo NextFile in f)
             {
-                string ex = Path.GetExtension(NextFile.FullName);
-                if (ex != ".meta")
+                if (NextFile.Name== "AssetbundleConfig.json")
                 {
-                    string newItem = NextFile.FullName.Replace("\\", "/");
-
-                    newItem = newItem.Substring(newItem.IndexOf("Assets"));
-
-                    //再拿到他的AssetImporter
-                    AssetImporter assetImporter = AssetImporter.GetAtPath(newItem);
-
-                    newItem = newItem.Substring(newItem.IndexOf("GameResources"));
-                    newItem = newItem.Replace(@"/", "_");
-                    int last_ = newItem.LastIndexOf("_");
-                    newItem =  newItem.Substring(0, last_);
-
-                    //assetImporter.assetBundleName = newItem;
-
-                    string md5Str = ExportAssetBundles.GetMD5(newItem);
-
-                    // 通过文件路径 设置assetbundle 
-                    assetImporter.assetBundleName = md5Str;
-
-                    string md5;
-                    if (assetbundleNameDic.TryGetValue(newItem, out md5)==false)
+                    using (StreamReader sr = NextFile.OpenText())
                     {
-                        assetbundleNameDic.Add(newItem, md5Str);
+                        string  str = sr.ReadToEnd();
+                        HFAssetbundleConfigRoot root = JsonMapper.ToObject<HFAssetbundleConfigRoot>(str);
+                        config = root.HFAssetbundleConfig;
+                        sr.Dispose();
+                        sr.Close();
+                    }
+                    break;
+                }
+            }
+            
+
+            foreach (FileInfo NextFile in f)
+            {
+                if (NextFile.Name != "AssetbundleConfig.json")
+                {
+                    string ex = Path.GetExtension(NextFile.FullName);
+                    if (ex != ".meta")
+                    {
+                        string newItem = NextFile.FullName.Replace("\\", "/");
+
+                        newItem = newItem.Substring(newItem.IndexOf("Assets"));
+
+                        //再拿到他的AssetImporter
+                        AssetImporter assetImporter = AssetImporter.GetAtPath(newItem);
+
+                        newItem = newItem.Substring(newItem.IndexOf("GameResources"));
+                        newItem = newItem.Replace(@"/", "_");
+                        int last_ = newItem.LastIndexOf("_");
+                        newItem = newItem.Substring(0, last_);
+                   
+                        if (config!=null&&config.assetbundleNameType== "Default")
+                        {
+                            string md5Str = ExportAssetBundles.GetMD5(newItem);
+                            // 通过文件路径 设置assetbundle 
+                            assetImporter.assetBundleName = md5Str;
+
+                            string md5;
+                            if (assetbundleNameDic.TryGetValue(newItem, out md5) == false)
+                            {
+                                assetbundleNameDic.Add(newItem, md5Str);
+                            }
+                        }
+                        if (config != null && config.assetbundleNameType == "Custom")
+                        {
+                            assetImporter.assetBundleName = config.assetbundleName;
+
+                            string md5;
+                            if (assetbundleNameDic.TryGetValue(newItem, out md5) == false)
+                            {
+                                assetbundleNameDic.Add(newItem, config.assetbundleName);
+                            }
+                        }
                     }
                 }
             }
         }
-   
+
         DirectoryInfo[] d = folder.GetDirectories();
-        if (d.Length!=0)
+        if (d.Length != 0)
         {
             foreach (DirectoryInfo NextFolder in d)
             {
@@ -432,7 +470,7 @@ public class ExportAssetBundles
     {
         System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
         byte[] bytValue, bytHash;
-        bytValue =Encoding.UTF8.GetBytes(sDataIn);
+        bytValue = Encoding.UTF8.GetBytes(sDataIn);
         bytHash = md5.ComputeHash(bytValue);
         md5.Clear();
         string sTemp = "";
@@ -441,6 +479,14 @@ public class ExportAssetBundles
             sTemp += bytHash[i].ToString("X").PadLeft(2, '0');
         }
         return sTemp.ToLower();
+    }
+
+
+    [MenuItem("游戏辅助工具HYG/删除 所有 AssetBundles")]
+    public static void DeleteAllAssetbundle()
+    {
+        AssetDatabase.DeleteAsset("Assets/StreamingAssets/AssetBundles");
+        Debug.Log("删除所有 AssetBundles 完成");
     }
 }
 
@@ -459,12 +505,29 @@ public class AssetsBundleMD5
 
 public class MD5Diff
 {
-
     /// <summary>
     /// 
     /// </summary>
     public List<AssetsBundleMD5> AssetsBundleMD5List { get; set; }
 }
 
+public class HFAssetbundleConfig
+{
+    /// <summary>
+    /// Default 代表使用 默认MD5创建的assetbundleName 
+    /// Custom 代表使用 自定义的assetbundleName
+    /// </summary>
+    public string assetbundleNameType { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string assetbundleName { get; set; }
+}
 
-
+public class HFAssetbundleConfigRoot
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public HFAssetbundleConfig HFAssetbundleConfig { get; set; }
+}

@@ -1,0 +1,14 @@
+ManifestFileVersion: 0
+CRC: 2767812452
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 409192fea10bf1f7f50a82b56f12fd65
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
+HashAppended: 0
+ClassTypes: []
+Assets:
+- Assets/GameResources/Game/TestGameA/Scene_@!/hyg.unity
+Dependencies: []

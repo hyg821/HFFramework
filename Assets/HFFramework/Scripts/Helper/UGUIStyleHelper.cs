@@ -65,7 +65,8 @@ public class UGUIStyleHelper : MonoBehaviour {
             textColorList.Add(item.color);
         }
 
-        grayMaterial = HAResourceManager.self.GetMatial("common_material", "UIGrayETC");
+        AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile("common_material");
+        grayMaterial = ab.LoadAssetWithCache<Material>("UIGrayETC");
     }
 
 

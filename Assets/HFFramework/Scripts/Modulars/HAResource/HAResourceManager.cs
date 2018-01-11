@@ -140,7 +140,6 @@ public class HAResourceManager : MonoBehaviour
         return manifest.GetAllDependencies(assetbundleName);  // 结果 sprite1.ab 
     }
 
-
     /// <summary>
     /// 获取 GameObject 通过缓存 不会自动销毁
     /// </summary>
@@ -150,13 +149,6 @@ public class HAResourceManager : MonoBehaviour
     {
         AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(packageName);
         GameObject g = ab.LoadAssetWithCache<GameObject>(abName);
-        return g;
-    }
-
-    public Material GetMatial(string packageName, string abName)
-    {
-        AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(packageName);
-        Material g = ab.LoadAssetWithCache<Material>(abName);
         return g;
     }
 

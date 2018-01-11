@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_4;UNITY_5_6;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_ANDROID;ENABLE_SUBSTANCE;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;ENABLE_VR;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE;UNITY_HAS_GOOGLEVR;ENABLE_DUCK_TYPING</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_4;UNITY_5_6;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -46,24 +46,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\HFFramework\Editor\EditorHelper.cs" />
      <Compile Include="Assets\HFFramework\Editor\ExportAssetBundles.cs" />
      <Compile Include="Assets\HFFramework\HotFix\ILRuntime\Adapters\Editor\ILRuntimeCLRBinding.cs" />
      <Compile Include="Assets\OtherPlugins\BitmapFontImporter\Editor\BFImporter.cs" />
      <Compile Include="Assets\OtherPlugins\BitmapFontImporter\Editor\BFMenuTool.cs" />
      <Compile Include="Assets\OtherPlugins\BitmapFontImporter\Editor\FntParse.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Examples\X_Plot_Overtime\Editor\WMG_X_Plot_Overtime_E.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Scripts\Editor\WMG_Axis_Graph_E.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Scripts\Editor\WMG_Bezier_Band_Graph_E.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Scripts\Editor\WMG_E_Util.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Scripts\Editor\WMG_EnumFlagDrawer.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Scripts\Editor\WMG_Hierarchical_Tree_E.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Scripts\Editor\WMG_Legend_E.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Scripts\Editor\WMG_Pie_Graph_E.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Scripts\Editor\WMG_Pie_Graph_Slice_E.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Scripts\Editor\WMG_Prefab_Gen.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Scripts\Editor\WMG_Radar_Graph_E.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Scripts\Editor\WMG_Ring_Graph_E.cs" />
-     <Compile Include="Assets\OtherPlugins\Graph_Maker\Scripts\Editor\WMG_Series_E.cs" />
      <Compile Include="Assets\OtherPlugins\LoopScrollRect\Scripts\Editor\LoopScrollRectInspector.cs" />
      <Compile Include="Assets\OtherPlugins\LoopScrollRect\Scripts\Editor\SGDefaultControls.cs" />
      <Compile Include="Assets\OtherPlugins\LoopScrollRect\Scripts\Editor\SGMenuOptions.cs" />
@@ -125,7 +113,6 @@
      <None Include="Assets\OtherPlugins\Best HTTP (Pro)\link_android_subset.xml" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\ShaderShared.cginc" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\CustomMaterials\SkeletonRendererCustomMaterials.txt" />
-     <None Include="Assets\OtherPlugins\Graph_Maker\Shaders\AreaShading.shader" />
      <None Include="Assets\HFFramework\Shader\UIShine.shader" />
      <None Include="Assets\OtherPlugins\Best HTTP (Pro)\ReleaseNotes.txt" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\SpriteLighting.cginc" />
@@ -133,7 +120,6 @@
      <None Include="Assets\OtherPlugins\protobuf-net\Web\TODO.txt" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpriteUnlit.cginc" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\SpriteUnlit.cginc" />
-     <None Include="Assets\OtherPlugins\Graph_Maker\Shaders\AreaShading_SF.shader" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\version.txt" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpritesPixelLit.shader" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Spine-Skeleton-Tint.shader" />
@@ -149,7 +135,6 @@
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SkeletonGraphic\Shaders\Spine-SkeletonGraphic.shader" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Shaders\Spine-Skeleton.shader" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CameraNormalsTexture.shader" />
-     <None Include="Assets\OtherPlugins\Graph_Maker\ReadMe-1.5.7.txt" />
      <None Include="Assets\Demigiant\DOTween\DOTween43.xml" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CameraDepthTexture.shader" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SlotBlendModes\Spine-Skeleton-PMA-Multiply.shader" />
@@ -157,7 +142,6 @@
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\ShaderMaths.cginc" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SkeletonRenderSeparator\SkeletonRenderSeparator.txt" />
      <None Include="Assets\HFFramework\Shader\UIGrayETCDefault.shader" />
-     <None Include="Assets\OtherPlugins\Graph_Maker\Shaders\ComputeLineGraph.compute" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpriteDepthNormalsTexture.shader" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Shaders\Spine-SkeletonLit.shader" />
      <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\SpriteSpecular.cginc" />

@@ -24,11 +24,17 @@ namespace HFFramework
         public void Awake()
         {
             ServerSceneWidth = 1280.0f;
+
             ServerSceneHeight = 720.0f;
+
             targetFrame = 60;
+
             Application.runInBackground = true;
+
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
             Application.targetFrameRate = targetFrame;
+
             Time.fixedDeltaTime = 1.0f / Application.targetFrameRate;
         }
     }

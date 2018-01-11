@@ -110,6 +110,9 @@ namespace HFFramework
                 //添加状态检查者
                 gameObject.AddComponent<GameStateChecker>();
 
+                //添加游戏运行环境
+                gameObject.AddComponent<GameEnvironment>();
+
             }
         }
     }

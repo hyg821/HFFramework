@@ -46,6 +46,11 @@ namespace HFFramework
         public int serverPort;
 
         /// <summary>
+        ///  当前网络是ipv4 还是 ipv6
+        /// </summary>
+        public AddressFamily ipvType;
+
+        /// <summary>
         ///  连接的状态
         /// </summary>
         public HASocketState state = HASocketState.UnKnow;
@@ -148,10 +153,12 @@ namespace HFFramework
             if (address[0].AddressFamily == AddressFamily.InterNetworkV6)
             {
                 ipv = AddressFamily.InterNetworkV6;
+                ipvType = AddressFamily.InterNetworkV6;
             }
             else
             {
                 ipv = AddressFamily.InterNetwork;
+                ipvType = AddressFamily.InterNetwork;
             }
 
             this.beginConnectedCallback = BeginConnected;

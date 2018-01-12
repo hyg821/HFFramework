@@ -16,6 +16,9 @@ public class Demo : MonoBehaviour
         GameObject.Instantiate(g);
 
         HAResourceManager.self.UnloadAssetBundle(ab, false);
+
+        GameObject ob = new GameObject();
+        HFLog.L(ob.GetInstanceID().ToString());
     }
 
     public void HotFixJump()

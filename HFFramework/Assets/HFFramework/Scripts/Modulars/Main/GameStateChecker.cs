@@ -6,7 +6,6 @@ namespace HFFramework
 {
     public class GameStateChecker : MonoBehaviour
     {
-
         //客户端内部通信 基础消息号
         public const long GAME_MESSAGE_BASE = -123456;
 
@@ -20,12 +19,22 @@ namespace HFFramework
         /// </summary>
         public const long MESSAGE_APPPAUSE = GAME_MESSAGE_BASE + 2;
 
-
         public static GameStateChecker self;
 
-        public bool networkCanUsed = false;
+        /// <summary>
+        ///  检测间隔
+        /// </summary>
+        private WaitForSeconds wait;
+
+        /// <summary>
+        ///  网络是否可以使用
+        /// </summary>
+        public bool networkCanUse = false;
 
         private bool isPaused = false;
+        /// <summary>
+        ///  是否暂停
+        /// </summary>
         public bool IsPaused
         {
             set
@@ -42,37 +51,24 @@ namespace HFFramework
         void Awake()
         {
             self = this;
-            CheckNetWork();
+            wait = new WaitForSeconds(5);
+            StartCoroutine(CheckNetWork());
         }
 
-
-        // Update is called once per frame
-        void Update()
-        {
-            CheckNetWork(6);
-        }
-
-        public void CheckNetWork()
+        public IEnumerator CheckNetWork()
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                networkCanUsed = false;
+                networkCanUse = false;
                 NotificationCenter.self.PostNotification(new NotificationMessage(MESSAGE_NETWORK_UNUSE, this, null));
             }
             else
             {
-                networkCanUsed = true;
+                networkCanUse = true;
             }
+            yield return wait;
         }
 
-        void CheckNetWork(int sec)
-        {
-            //每10秒检测一次 网络是否能连接（物理层面）
-            if (Time.frameCount % sec * 100 == 0)
-            {
-                CheckNetWork();
-            }
-        }
 
         void OnApplicationFocus(bool hasFocus)
         {

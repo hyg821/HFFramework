@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using HFFramework;
+using System.Reflection;
+using System;
 
 public class Demo : BaseMonoBehaviour
 {
@@ -25,7 +27,7 @@ public class Demo : BaseMonoBehaviour
 
     public void HotFixJump()
     {
-        AppDomainManager.self.Jump(0, "HotFixDll", "HFFrameworkHotFix", "HotFixEnter");
+        HFFramework.AppDomainManager.self.Jump(0, "HotFixDll", "HFFrameworkHotFix", "HotFixEnter");
     }
 
     public void OpenUpdate()
@@ -72,6 +74,9 @@ public class Demo : BaseMonoBehaviour
     public void 发送消息()
     {
         SendNotificationMessage(100, "天下无敌");
+
+        Assembly asb = Assembly.LoadFile(Application.streamingAssetsPath + "/" + "DLL/"+ "HFFrameworkHotFix.dll");
+        object oo = asb.CreateInstance("HotFixEnter");
     }
 
 }

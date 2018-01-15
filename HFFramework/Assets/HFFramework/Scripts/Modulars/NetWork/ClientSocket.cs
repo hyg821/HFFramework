@@ -175,7 +175,6 @@ namespace HFFramework
                 {
                     break;
                 }
-                //            DebugTools.Log("ReceiveMessage -----读取头部-----  " + Available + " : " + dataBuffer.Length);
                 //如果没读取过头部并且可读取
                 Thread.Sleep(1);
                 if (!_isReadHead && Available >= MSG_HEAD_LEN)
@@ -222,6 +221,7 @@ namespace HFFramework
                     if (Connected && Available >= MSG_HEAD_LEN)
                     {
                         ReceiveMessage();
+                        break;
                     }
                 }
             }

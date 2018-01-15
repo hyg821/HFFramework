@@ -217,12 +217,16 @@ namespace HFFramework
                     }
                     _isReadHead = false;
 
+
+                    //继续下一次循环接收
+                    /* 
                     //如果socket中仍然有数据可以处理
                     if (Connected && Available >= MSG_HEAD_LEN)
                     {
                         ReceiveMessage();
                         break;
                     }
+                    */
                 }
             }
         }

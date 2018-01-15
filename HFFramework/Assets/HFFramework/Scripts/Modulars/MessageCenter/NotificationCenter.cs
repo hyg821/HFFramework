@@ -152,11 +152,12 @@ namespace HFFramework
             }
         }
 
-        void OnDestroy()
+        public void DestroyManager()
         {
-            self = null;
             dic.Clear();
+            self = null;
         }
+
     }
 }
 

@@ -85,6 +85,12 @@ namespace HFFramework
        IsPaused = pauseStatus;
 #endif
         }
+
+        public void DestroyManager()
+        {
+            self = null;
+        }
+
     }
 }
 

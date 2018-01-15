@@ -46,10 +46,10 @@ namespace HFFramework
             }
         }
 
-        void OnDestroy()
+        public void DestroyManager()
         {
-            self = null;
             CloseAllSocket();
+            self = null;
         }
     }
 }

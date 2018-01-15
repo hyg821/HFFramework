@@ -37,6 +37,11 @@ namespace HFFramework
 
             Time.fixedDeltaTime = 1.0f / Application.targetFrameRate;
         }
+
+        public void DestroyManager()
+        {
+
+        }
     }
 }
 

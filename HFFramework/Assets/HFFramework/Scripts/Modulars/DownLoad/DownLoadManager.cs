@@ -102,7 +102,7 @@ namespace HFFramework
             self = null;
         }
 
-        void OnDestroy()
+        public void DestroyManager()
         {
             ClearCache();
         }

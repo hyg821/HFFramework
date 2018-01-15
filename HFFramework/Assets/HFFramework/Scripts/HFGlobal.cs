@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 namespace HFFramework
 {
@@ -66,7 +67,7 @@ namespace HFFramework
                 //1资源加载   
                 GameObject resourcesManagerObj = new GameObject("ResourcesManager");
                 resourcesManager = resourcesManagerObj.AddComponent<HAResourceManager>();
-                resourcesManager.InitWithRootPath(Application.persistentDataPath + "/AssetBundles", Application.streamingAssetsPath + "/AssetBundles", "AssetBundles");
+                resourcesManager.InitWithRootPath(PathManager.self.PersistentDataPath + "AssetBundles", PathManager.self.StreamingAssetsPath + "AssetBundles", "AssetBundles");
                 DontDestroyOnLoad(resourcesManagerObj);
 
                 //2通知中心
@@ -113,6 +114,26 @@ namespace HFFramework
                 //添加状态检查者
                 gameObject.AddComponent<GameStateChecker>();
             }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        public void OnApplicationQuit()
+        {
+            GameEnvironment.self = null;
+            HAResourceManager.self.DestroyManager();
+            NotificationCenter.self.DestroyManager();
+            HASocketManager.self.DestroyManager();
+            AudioManager.self.DestroyManager();
+            UIManager.self.DestroyManager();
+            DownLoadManager.self.DestroyManager();
+            InputManager.self.DestroyManager();
+            AppDomainManager.self.DestroyManager();
+            GameLooper.self.DestroyManager();
+            GameStateChecker.self.DestroyManager();
+            Debug.Log("应用退出");
         }
     }
 }

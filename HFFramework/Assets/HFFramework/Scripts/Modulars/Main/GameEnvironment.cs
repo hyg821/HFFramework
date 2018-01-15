@@ -19,7 +19,7 @@ namespace  HFFramework
         Windows,
         Mac,
         Editor
-    } 
+    }
 
     public class GameEnvironment : MonoBehaviour
     {
@@ -28,12 +28,12 @@ namespace  HFFramework
         /// <summary>
         ///  运行环境
         /// </summary>
-        public  GameEnvironmentEnum runtimeEnvironment;
+        public GameEnvironmentEnum runtimeEnvironment;
 
         /// <summary>
         ///  运行环境的平台
         /// </summary>
-        public  GamePlatform runtimePlatform;
+        public GamePlatform runtimePlatform;
 
         /// <summary>
         ///  是否开启Log
@@ -43,9 +43,15 @@ namespace  HFFramework
         public void Awake()
         {
             self = this;
+            AddPathManager();
             SetRuntimeEnvironment(GameEnvironmentEnum.Develop);
             SwitchPlatform();
             Log(true);
+        }
+
+        public void AddPathManager()
+        {
+            gameObject.AddComponent<PathManager>();
         }
 
         public void SetRuntimeEnvironment(GameEnvironmentEnum e)

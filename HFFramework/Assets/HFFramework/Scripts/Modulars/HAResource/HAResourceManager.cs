@@ -438,10 +438,10 @@ namespace HFFramework
         }
 
 
-        void OnDestroy()
+        public void DestroyManager()
         {
-            self = null;
             UnloadAllAssetBundle();
+            self = null;
         }
 
         /*

@@ -293,10 +293,11 @@ namespace HFFramework
             identifier = 0;
         }
 
-        void OnDestroy()
+        public void DestroyManager()
         {
-            self = null;
             DestoryAllAudioPlayer();
+            self = null;
         }
+
     }
 }

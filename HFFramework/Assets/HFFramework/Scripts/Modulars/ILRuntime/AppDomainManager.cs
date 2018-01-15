@@ -150,7 +150,8 @@ namespace HFFramework
             AppDomainCommonSetting.Instance.SetupCLRRedirection(appdomain);
         }
 
-        void OnDestroy()
+
+        public void DestroyManager()
         {
             if (appdomain != null)
             {
@@ -159,6 +160,7 @@ namespace HFFramework
             }
             self = null;
         }
+
     }
 
 }

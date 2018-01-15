@@ -55,7 +55,11 @@ namespace HFFramework
 
             foreach (var item in updateDic)
             {
-                item.Value.action();
+                Action a = item.Value.action;
+                if (a != null)
+                {
+                    a();
+                }
             }
         }
 
@@ -63,7 +67,11 @@ namespace HFFramework
         {
             foreach (var item in fixedUpdateDic)
             {
-                item.Value.action();
+                Action a = item.Value.action;
+                if (a != null)
+                {
+                    a();
+                }
             }
         }
 
@@ -71,11 +79,15 @@ namespace HFFramework
         {
             foreach (var item in lateUpdateDic)
             {
-                item.Value.action();
+                Action a = item.Value.action;
+                if (a != null)
+                {
+                    a();
+                }
             }
         }
 
-        void OnDestroy()
+        public void DestroyManager()
         {
             updateDic.Clear();
             fixedUpdateDic.Clear();
@@ -106,11 +118,15 @@ namespace HFFramework
                     self.updateDic.Add(looper.instanceID, looper);
                 }
             }
+            else
+            {
+                looper.action += update;
+            }
         }
 
-        public static void SubUpdate(GameObject gm)
+        public static void SubUpdate(Action update,GameObject gm)
         {
-            self.updateDic.Remove(gm.GetInstanceID());
+            self.updateDic[gm.GetInstanceID()].action-= update;
         }
 
         public static void AddFixedUpdate(Action update, GameObject gm)
@@ -124,11 +140,15 @@ namespace HFFramework
                     self.fixedUpdateDic.Add(looper.instanceID, looper);
                 }
             }
+            else
+            {
+                looper.action += update;
+            }
         }
 
         public static void SubFixedUpdate(Action update, GameObject gm)
         {
-            self.fixedUpdateDic.Remove(gm.GetInstanceID());
+            self.fixedUpdateDic[gm.GetInstanceID()].action -= update;
         }
 
         public static void AddLateUpdate(Action update, GameObject gm)
@@ -142,11 +162,15 @@ namespace HFFramework
                     self.lateUpdateDic.Add(looper.instanceID, looper);
                 }
             }
+            else
+            {
+                looper.action += update;
+            }
         }
 
         public static void SubLateUpdate(Action update, GameObject gm)
         {
-            self.lateUpdateDic.Remove(gm.GetInstanceID());
+            self.lateUpdateDic[gm.GetInstanceID()].action -= update;
         }
     }
 }

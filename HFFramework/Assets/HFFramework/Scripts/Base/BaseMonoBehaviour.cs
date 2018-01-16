@@ -38,6 +38,12 @@ namespace HFFramework
         public void Awake()
         {
             myTransform = gameObject.transform;
+            MyAwake();
+        }
+
+        public virtual void MyAwake()
+        {
+
         }
 
         /// <summary>
@@ -77,6 +83,16 @@ namespace HFFramework
         public GameObject FindChild(string path)
         {
             return myTransform.Find(path).gameObject;
+        }
+
+        /// <summary>
+        ///  设置父物体
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="worldPositionStays"></param>
+        public void SetParent(GameObject parent, bool worldPositionStays = false)
+        {
+            myTransform.SetParent(parent.transform, worldPositionStays);
         }
 
         bool isNeedUpdate = false;

@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+CRC: 1186728673
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c7778c6313ed72aae4cb75f2ee05d496
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 6443aca7650a94b67d224a5739bab62f
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8620aa2f452080943af4675dc76d67c2, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+Assets:
+- Assets/GameResources/HFCommonResources/UISystem_@!/UISystem.prefab
+- Assets/GameResources/HFCommonResources/UISystem_@!/UICanvas.prefab
+Dependencies: []

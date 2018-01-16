@@ -28,7 +28,7 @@ namespace HFFramework
 
         public string SetStreamingAssetsPath()
         {
-            return Application.streamingAssetsPath + "/"; ;
+            return Application.streamingAssetsPath + "/";
         }
     }
 }

@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 260454005
+CRC: 3758906706
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/GameResources/Config/ConfigA_@!/ErrorCode.json
+- Assets/GameResources/Game/TestGameA/ConfigA_@!/ErrorCode.json
 Dependencies: []

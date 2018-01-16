@@ -388,9 +388,6 @@ namespace HFFramework
             if (folder.Name.Contains("_@!"))
             {
                 FileInfo[] f = folder.GetFiles();
-
-
-
                 //先找出AssetbundleConfig
                 HFAssetbundleConfig config = null;
                 foreach (FileInfo NextFile in f)
@@ -412,7 +409,7 @@ namespace HFFramework
 
                 foreach (FileInfo NextFile in f)
                 {
-                    if (NextFile.Name != "AssetbundleConfig.json")
+                    if (NextFile.Name != "AssetbundleConfig.json"&& NextFile.Extension!=".cs")
                     {
                         string ex = Path.GetExtension(NextFile.FullName);
                         if (ex != ".meta")

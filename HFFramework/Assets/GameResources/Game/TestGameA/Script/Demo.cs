@@ -21,8 +21,6 @@ public class Demo : BaseMonoBehaviour
 
         HAResourceManager.self.UnloadAssetBundle(ab, false);
 
-        GameObject ob = new GameObject();
-        HFLog.L(ob.GetInstanceID().ToString());
     }
 
     public void HotFixJump()
@@ -74,9 +72,11 @@ public class Demo : BaseMonoBehaviour
     public void 发送消息()
     {
         SendNotificationMessage(100, "天下无敌");
+    }
 
-        Assembly asb = Assembly.LoadFile(Application.streamingAssetsPath + "/" + "DLL/"+ "HFFrameworkHotFix.dll");
-        object oo = asb.CreateInstance("HotFixEnter");
+    public void 代码添加Canvas()
+    {
+        UIManager.self.AddCanvas(0);
     }
 
 }

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 881636091
+CRC: 2035973239
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: 515d001d15fb43d829e61f09a189036e
+      Name: d8d08cd83b93afa4c355b0e9399426d2
       Dependencies: {}
     Info_1:
       Name: hotfixdll
@@ -13,4 +13,7 @@ AssetBundleManifest:
       Dependencies: {}
     Info_3:
       Name: scene
+      Dependencies: {}
+    Info_4:
+      Name: hfui
       Dependencies: {}

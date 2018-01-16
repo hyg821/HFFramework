@@ -6,6 +6,7 @@ namespace HFFramework
 {
     public class GameSetter : MonoBehaviour
     {
+        public static GameSetter self;
         /// <summary>
         ///  模拟设备宽度
         /// </summary>
@@ -23,6 +24,8 @@ namespace HFFramework
 
         public void Awake()
         {
+            self = this;
+
             ServerSceneWidth = 1280.0f;
 
             ServerSceneHeight = 720.0f;
@@ -40,7 +43,7 @@ namespace HFFramework
 
         public void DestroyManager()
         {
-
+            self = null;
         }
     }
 }

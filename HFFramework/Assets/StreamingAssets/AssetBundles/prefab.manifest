@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 422377697
+CRC: 2611196919
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5281b492a33749e1a876da112eb0dabd
+    Hash: 1645606d836589da987e2ba60b45c44f
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 64b1779569a329052a5dce2de52d7629
+    Hash: 3e9f52a3da045a093c4f6e3f1c13810e
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,9 +25,18 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 65
   Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
 - Class: 135
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
   Script: {instanceID: 0}
 Assets:
 - Assets/GameResources/Game/TestGameA/Prefab_@!/Cube.prefab
+- Assets/GameResources/Game/TestGameA/Prefab_@!/VC.prefab
 - Assets/GameResources/Game/TestGameA/Prefab_@!/Sphere.prefab
 Dependencies: []

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,30 +19,30 @@ namespace HFFramework
             myRectTransform = myTransform as RectTransform;
         }
 
-        public virtual void DoShowAnimation()
+        public virtual void DoShowAnimation(Action callback)
         {
 
         }
 
-        public virtual void DoHideAnimation()
+        public virtual void DoHideAnimation(Action callback)
         {
 
         }
 
-        public virtual void Show()
+        public virtual void Show(Action callback)
         {
             if (gameObject.activeSelf==false)
             {
                 gameObject.SetActive(true);
-                DoShowAnimation();
             }
+            DoShowAnimation(callback);
         }
 
-        public virtual void Hide()
+        public virtual void Hide(Action callback)
         {
             if (gameObject.activeSelf == true)
             {
-                DoHideAnimation();
+                DoHideAnimation(callback);
                 gameObject.SetActive(false);
             }
         }

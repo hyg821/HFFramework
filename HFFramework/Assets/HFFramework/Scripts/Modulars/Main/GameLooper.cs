@@ -4,31 +4,13 @@ using System.Collections.Generic;
 
 namespace HFFramework
 {
-
-    public class SimpleLooper
-    {
-        public int instanceID;
-        public Action action;
-        public GameObject obj;
-
-        public SimpleLooper(Action action, GameObject obj)
-        {
-            this.instanceID = obj.GetInstanceID();
-            this.action = action;
-            this.obj = obj;
-        }
-    }
-
     public class GameLooper : MonoBehaviour
     {
-
         public static GameLooper self;
 
-        public Dictionary<int, SimpleLooper> updateDic = new Dictionary<int, SimpleLooper>();
-
-        public Dictionary<int, SimpleLooper> fixedUpdateDic = new Dictionary<int, SimpleLooper>();
-
-        public Dictionary<int, SimpleLooper> lateUpdateDic = new Dictionary<int, SimpleLooper>();
+        public Action updateAction;
+        public Action fixedUpdateAction;
+        public Action lateUpdateAction;
 
         /// <summary>
         ///  event队列
@@ -53,45 +35,33 @@ namespace HFFramework
                 e();
             }
 
-            foreach (var item in updateDic)
+            if (updateAction!=null)
             {
-                Action a = item.Value.action;
-                if (a != null)
-                {
-                    a();
-                }
+                updateAction();
             }
         }
 
         void FixedUpdate()
         {
-            foreach (var item in fixedUpdateDic)
+            if (fixedUpdateAction != null)
             {
-                Action a = item.Value.action;
-                if (a != null)
-                {
-                    a();
-                }
+                fixedUpdateAction();
             }
         }
 
         void LateUpdate()
         {
-            foreach (var item in lateUpdateDic)
+            if (lateUpdateAction != null)
             {
-                Action a = item.Value.action;
-                if (a != null)
-                {
-                    a();
-                }
+                lateUpdateAction();
             }
         }
 
         public void DestroyManager()
         {
-            updateDic.Clear();
-            fixedUpdateDic.Clear();
-            lateUpdateDic.Clear();
+            updateAction = null;
+            fixedUpdateAction = null;
+            lateUpdateAction = null;
             eventQueue.Clear();
             self = null;
         }
@@ -107,70 +77,52 @@ namespace HFFramework
             }
         }
 
-        public static void AddUpdate(Action update,GameObject gm)
+        public static void AddUpdate(Action update)
         {
-            SimpleLooper looper;
-            if (self.updateDic.TryGetValue(gm.GetInstanceID(), out looper) == false)
+            if (self!=null)
             {
-                if (update!=null&&gm!=null)
-                {
-                    looper = new SimpleLooper(update, gm);
-                    self.updateDic.Add(looper.instanceID, looper);
-                }
-            }
-            else
-            {
-                looper.action += update;
+                self.updateAction += update;
             }
         }
 
-        public static void SubUpdate(Action update,GameObject gm)
+        public static void SubUpdate(Action update)
         {
-            self.updateDic[gm.GetInstanceID()].action-= update;
-        }
-
-        public static void AddFixedUpdate(Action update, GameObject gm)
-        {
-            SimpleLooper looper;
-            if (self.fixedUpdateDic.TryGetValue(gm.GetInstanceID(), out looper) == false)
+            if (self != null)
             {
-                if (update != null && gm != null)
-                {
-                    looper = new SimpleLooper(update, gm);
-                    self.fixedUpdateDic.Add(looper.instanceID, looper);
-                }
-            }
-            else
-            {
-                looper.action += update;
+                self.updateAction -= update;
             }
         }
 
-        public static void SubFixedUpdate(Action update, GameObject gm)
+        public static void AddFixedUpdate(Action update)
         {
-            self.fixedUpdateDic[gm.GetInstanceID()].action -= update;
-        }
-
-        public static void AddLateUpdate(Action update, GameObject gm)
-        {
-            SimpleLooper looper;
-            if (self.lateUpdateDic.TryGetValue(gm.GetInstanceID(), out looper) == false)
+            if (self != null)
             {
-                if (update != null && gm != null)
-                {
-                    looper = new SimpleLooper(update, gm);
-                    self.lateUpdateDic.Add(looper.instanceID, looper);
-                }
-            }
-            else
-            {
-                looper.action += update;
+                self.fixedUpdateAction += update;
             }
         }
 
-        public static void SubLateUpdate(Action update, GameObject gm)
+        public static void SubFixedUpdate(Action update)
         {
-            self.lateUpdateDic[gm.GetInstanceID()].action -= update;
+            if (self != null)
+            {
+                self.fixedUpdateAction -= update;
+            }
+        }
+
+        public static void AddLateUpdate(Action update)
+        {
+            if (self != null)
+            {
+                self.lateUpdateAction += update;
+            }
+        }
+
+        public static void SubLateUpdate(Action update)
+        {
+            if (self != null)
+            {
+                self.lateUpdateAction -= update;
+            }
         }
     }
 }

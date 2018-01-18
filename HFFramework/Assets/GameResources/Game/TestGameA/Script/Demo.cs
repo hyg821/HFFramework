@@ -7,6 +7,9 @@ using System;
 
 public class Demo : BaseMonoBehaviour
 {
+    public UICanvas myCanvas;
+
+    public List<UIController> testList = new List<UIController>();
 
     public bool isOpenUpdate = false;
 
@@ -76,7 +79,25 @@ public class Demo : BaseMonoBehaviour
 
     public void 代码添加Canvas()
     {
-        UIManager.self.AddCanvas(0);
+        myCanvas = UIManager.self.AddCanvas(0);
+    }
+
+    public void push添加ViewController()
+    {
+        GameObject prefab = HAResourceManager.self.GetGameObject("Prefab", "VC");
+        GameObject gx = GameObject.Instantiate(prefab);
+        UIController testController = UIManager.GameObjectBindUIController<TestController, TestView, TestModel>(gx);
+        myCanvas.PushController(testController,PushType.Navigation);
+        testList.Add(testController);
+    }
+
+    public void pop移除ViewController()
+    {
+        if (testList.Count - 1>=0)
+        {
+            myCanvas.PopController(testList[testList.Count - 1], PopType.Cache);
+            testList.RemoveAt(testList.Count - 1);
+        }
     }
 
 }

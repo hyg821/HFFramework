@@ -4,12 +4,6 @@ using UnityEngine;
 
 namespace HFFramework
 {
-
-    public enum ViewTransformType
-    {
-        
-    }
-
     public class UIManager : MonoBehaviour
     {
         /// <summary>
@@ -41,22 +35,23 @@ namespace HFFramework
             UIRoot = uiRootObj.GetComponent<UIRoot>();
         }
 
-        public void AddCanvas(int canvasLayerIndex)
+        public UICanvas AddCanvas(int canvasLayerIndex)
         {
-            GameObject g;
-            if (canvasDic.TryGetValue(canvasLayerIndex, out g)==false)
+            GameObject canvas;
+            if (canvasDic.TryGetValue(canvasLayerIndex, out canvas) ==false)
             {
                 GameObject prefab = HFUIPackage.LoadAssetWithCache<GameObject>("UICanvas");
-                GameObject canvas = Instantiate(prefab);
+                canvas = Instantiate(prefab);
                 UICanvas uiCanvas = canvas.AddComponent<UICanvas>();
-                canvas.AddComponent<CanvasSizeFit>();
+                uiCanvas.AutoSizeFitter();
                 uiCanvas.SetSortingLayer(canvasLayerIndex);
                 uiCanvas.SetParent(UIRoot.gameObject);
                 canvasDic.Add(canvasLayerIndex, canvas);
             }
+            return canvas.GetComponent<UICanvas>();
         }
 
-        public static C GameObjectBindUIController<C, V, M>(GameObject g) where C:UIController<V,M>  where V : UIView where M : UIModel
+        public static C GameObjectBindUIController<C, V, M>(GameObject g) where C:UIController  where V : UIView where M : UIModel
         {
             C c= g.AddComponent<C>();
             V v = g.AddComponent<V>();

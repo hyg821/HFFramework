@@ -7,6 +7,10 @@ namespace HFFramework
 {
     public class BaseMonoBehaviour : MonoBehaviour
     {
+        /// <summary>
+        ///  每一个gameObject 独有的 id
+        /// </summary>
+        public int myInstanceID;
 
         /// <summary>
         ///  缓存的transform
@@ -33,17 +37,32 @@ namespace HFFramework
             }
         }
 
-
+        private bool isShow;
+        public virtual bool IsShow
+        {
+            set
+            {
+                isShow = value;
+                if (gameObject.activeSelf != value)
+                {
+                    gameObject.SetActive(isShow);
+                }
+            }
+            get
+            {
+                return isShow;
+            }
+        }
 
         public void Awake()
         {
-            myTransform = gameObject.transform;
             MyAwake();
         }
 
         public virtual void MyAwake()
         {
-
+            myTransform = gameObject.transform;
+            myInstanceID = gameObject.GetInstanceID();
         }
 
         /// <summary>
@@ -108,11 +127,11 @@ namespace HFFramework
                     isNeedUpdate = value;
                     if (value == true)
                     {
-                        GameLooper.AddUpdate(MyUpdate, gameObject);
+                        GameLooper.AddUpdate(MyUpdate);
                     }
                     else
                     {
-                        GameLooper.SubUpdate(MyUpdate,gameObject);
+                        GameLooper.SubUpdate(MyUpdate);
                     }
                 }
             }
@@ -135,11 +154,11 @@ namespace HFFramework
                     isNeedFixedUpdate = value;
                     if (value == true)
                     {
-                        GameLooper.AddFixedUpdate(MyFixedUpdate, gameObject);
+                        GameLooper.AddFixedUpdate(MyFixedUpdate);
                     }
                     else
                     {
-                        GameLooper.SubFixedUpdate(MyFixedUpdate, gameObject);
+                        GameLooper.SubFixedUpdate(MyFixedUpdate);
                     }
                 }
             }
@@ -162,11 +181,11 @@ namespace HFFramework
                     isNeedLateUpdate = value;
                     if (value == true)
                     {
-                        GameLooper.AddLateUpdate(MyLateUpdate, gameObject);
+                        GameLooper.AddLateUpdate(MyLateUpdate);
                     }
                     else
                     {
-                        GameLooper.SubLateUpdate(MyLateUpdate, gameObject);
+                        GameLooper.SubLateUpdate(MyLateUpdate);
                     }
                 }
             }
@@ -198,6 +217,22 @@ namespace HFFramework
         public virtual void MyLateUpdate()
         {
 
+        }
+
+        public void BringSelfToFront()
+        {
+            myTransform.SetAsLastSibling();
+        }
+
+        public void BringSelfToBack()
+        {
+            myTransform.SetAsFirstSibling();
+        }
+
+        public void MyDestory()
+        {
+            HFLog.L("销毁销毁");
+            Destroy(gameObject);
         }
 
         public void OnDestroy()

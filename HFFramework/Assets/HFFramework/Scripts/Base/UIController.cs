@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,10 +10,13 @@ namespace HFFramework
     /// </summary>
     /// <typeparam name="V"></typeparam>
     /// <typeparam name="M"></typeparam>
-    public class UIController<V,M> : BaseMonoBehaviour where V : UIView where M : UIModel
+    public class UIController : BaseMonoBehaviour 
     {
-        public V view;
-        public M model;
+
+        public string controllerTag; 
+
+        public UIView view;
+        public UIModel model;
 
         public override void MyAwake()
         {
@@ -24,7 +28,7 @@ namespace HFFramework
 
         }
 
-        public virtual void ViewViewDisAppear()
+        public virtual void ViewWillDisAppear()
         {
 
         }
@@ -45,17 +49,17 @@ namespace HFFramework
 
         }
 
-        public virtual void Open()
+        public virtual void Open(Action callback)
         {
             ViewWillAppear();
-            view.Show();
+            view.Show(callback);
             ViewDidAppear();
         }
 
-        public virtual void Close()
+        public virtual void Close(Action callback)
         {
-            ViewViewDisAppear();
-            view.Hide();
+            ViewWillDisAppear();
+            view.Hide(callback);
             ViewDidDisAppear();
         }
     }

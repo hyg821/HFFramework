@@ -311,16 +311,7 @@ namespace HFFramework
         /// <returns></returns>
         public static object GetMessageObjectByType(Type type, MemoryStream stream)
         {
-            object msg = null;
-            try
-            {
-                msg = Serializer.Deserialize(type, stream);
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-            return msg;
+            return Serializer.Deserialize(type, stream);
         }
     }
 }

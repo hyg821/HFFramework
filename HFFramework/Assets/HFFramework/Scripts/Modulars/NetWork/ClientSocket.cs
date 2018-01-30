@@ -96,20 +96,12 @@ namespace HFFramework
         /// <param name="messageType">消息号</param>
         void readResponse(byte[] data, int messageType)
         {
-            try
+            MemoryStream stream = new MemoryStream();
+            stream.Write(data, 0, data.Length);
+            stream.Position = 0;
+            if (MessageDispatchReceiveDelegate != null)
             {
-                MemoryStream stream = new MemoryStream();
-                stream.Write(data, 0, data.Length);
-                stream.Position = 0;
-
-                if (MessageDispatchReceiveDelegate != null)
-                {
-                    MessageDispatchReceiveDelegate(messageType, stream);
-                }
-            }
-            catch (Exception e)
-            {
-                throw;
+                MessageDispatchReceiveDelegate(messageType, stream);
             }
         }
 
@@ -154,13 +146,7 @@ namespace HFFramework
                 writer.Write(msg);
                 writer.Flush();
 
-                try
-                {
-                    Send(stream.ToArray());
-                }
-                catch (Exception e)
-                {
-                }
+                Send(stream.ToArray());
             }
         }
 

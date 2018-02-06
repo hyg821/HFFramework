@@ -80,6 +80,7 @@ namespace Spine.Unity.Editor {
 			public static Texture2D skeletonUtility;
 			public static Texture2D hingeChain;
 			public static Texture2D subMeshRenderer;
+			public static Texture2D skeletonDataAssetIcon;
 
 			public static Texture2D info;
 
@@ -126,6 +127,7 @@ namespace Spine.Unity.Editor {
 				hingeChain = LoadIcon("icon-hingeChain.png");
 				subMeshRenderer = LoadIcon("icon-subMeshRenderer.png");
 
+				skeletonDataAssetIcon = LoadIcon("SkeletonDataAsset Icon.png");
 
 				info = EditorGUIUtility.FindTexture("console.infoicon.sml");
 				unity = EditorGUIUtility.FindTexture("SceneAsset Icon");
@@ -188,6 +190,8 @@ namespace Spine.Unity.Editor {
 		const string SHOW_HIERARCHY_ICONS_KEY = "SPINE_SHOW_HIERARCHY_ICONS";
 		public static bool showHierarchyIcons = DEFAULT_SHOW_HIERARCHY_ICONS;
 
+		internal const float DEFAULT_MIPMAPBIAS = -0.5f;
+
 		public const float DEFAULT_SCENE_ICONS_SCALE = 1f;
 		public const string SCENE_ICONS_SCALE_KEY = "SPINE_SCENE_ICONS_SCALE";
 
@@ -228,9 +232,16 @@ namespace Spine.Unity.Editor {
 			EditorApplication.hierarchyWindowItemOnGUI += HierarchyDragAndDrop;
 
 			// Hierarchy Icons
+			#if UNITY_2017_2_OR_NEWER
+			EditorApplication.playModeStateChanged -= HierarchyIconsOnPlaymodeStateChanged;
+			EditorApplication.playModeStateChanged += HierarchyIconsOnPlaymodeStateChanged;
+			HierarchyIconsOnPlaymodeStateChanged(PlayModeStateChange.EnteredEditMode);
+			#else
 			EditorApplication.playmodeStateChanged -= HierarchyIconsOnPlaymodeStateChanged;
 			EditorApplication.playmodeStateChanged += HierarchyIconsOnPlaymodeStateChanged;
 			HierarchyIconsOnPlaymodeStateChanged();
+			#endif
+
 
 			initialized = true;
 		}
@@ -253,7 +264,11 @@ namespace Spine.Unity.Editor {
 			showHierarchyIcons = EditorGUILayout.Toggle(new GUIContent("Show Hierarchy Icons", "Show relevant icons on GameObjects with Spine Components on them. Disable this if you have large, complex scenes."), showHierarchyIcons);
 			if (EditorGUI.EndChangeCheck()) {
 				EditorPrefs.SetBool(SHOW_HIERARCHY_ICONS_KEY, showHierarchyIcons);
+				#if UNITY_2017_2_OR_NEWER
+				HierarchyIconsOnPlaymodeStateChanged(PlayModeStateChange.EnteredEditMode);
+				#else
 				HierarchyIconsOnPlaymodeStateChanged();
+				#endif
 			}
 
 			EditorGUILayout.Separator();
@@ -329,7 +344,7 @@ namespace Spine.Unity.Editor {
 		static void SceneViewDragAndDrop (SceneView sceneview) {
 			var current = UnityEngine.Event.current;
 			var references = DragAndDrop.objectReferences;
-			if (current.type == EventType.Repaint || current.type == EventType.Layout) return;
+			if (current.type == EventType.Layout) return;
 
 			// Allow drag and drop of one SkeletonDataAsset.
 			if (references.Length == 1) {
@@ -347,7 +362,7 @@ namespace Spine.Unity.Editor {
 					} else {
 						DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
 						Handles.BeginGUI();
-						GUI.Label(new Rect(mousePos + new Vector2(20f, 20f), new Vector2(400f, 20f)), new GUIContent(string.Format("Create Spine GameObject ({0})", skeletonDataAsset.skeletonJSON.name), SpineEditorUtilities.Icons.spine));
+						GUI.Label(new Rect(mousePos + new Vector2(20f, 20f), new Vector2(400f, 20f)), new GUIContent(string.Format("Create Spine GameObject ({0})", skeletonDataAsset.skeletonJSON.name), SpineEditorUtilities.Icons.skeletonDataAssetIcon));
 						Handles.EndGUI();
 
 						if (current.type == EventType.DragPerform) {
@@ -494,7 +509,11 @@ namespace Spine.Unity.Editor {
 		#endregion
 
 		#region Hierarchy
+		#if UNITY_2017_2_OR_NEWER
+		static void HierarchyIconsOnPlaymodeStateChanged (PlayModeStateChange stateChange) {
+		#else
 		static void HierarchyIconsOnPlaymodeStateChanged () {
+		#endif
 			skeletonRendererTable.Clear();
 			skeletonUtilityBoneTable.Clear();
 			boundingBoxFollowerTable.Clear();
@@ -1020,13 +1039,18 @@ namespace Spine.Unity.Editor {
 					pageFiles.Add(atlasLines[i + 1].Trim());
 			}
 
-			atlasAsset.materials = new Material[pageFiles.Count];
+			var populatingMaterials = new List<Material>(pageFiles.Count);//atlasAsset.materials = new Material[pageFiles.Count];
 
 			for (int i = 0; i < pageFiles.Count; i++) {
 				string texturePath = assetPath + "/" + pageFiles[i];
 				Texture2D texture = (Texture2D)AssetDatabase.LoadAssetAtPath(texturePath, typeof(Texture2D));
 
 				TextureImporter texImporter = (TextureImporter)TextureImporter.GetAtPath(texturePath);
+				if (texImporter == null) {
+					Debug.LogWarning(string.Format("{0} ::: Texture asset \"{1}\" not found. Skipping. Please check your atlas file for renamed files.", atlasAsset.name, texturePath));
+					continue;
+				}
+
 				#if UNITY_5_5_OR_NEWER
 				texImporter.textureCompression = TextureImporterCompression.Uncompressed;
 				texImporter.alphaSource = TextureImporterAlphaSource.FromInput;
@@ -1038,7 +1062,6 @@ namespace Spine.Unity.Editor {
 				texImporter.alphaIsTransparency = false; // Prevent the texture importer from applying bleed to the transparent parts.
 				texImporter.spriteImportMode = SpriteImportMode.None;
 				texImporter.maxTextureSize = 2048;
-
 
 				EditorUtility.SetDirty(texImporter);
 				AssetDatabase.ImportAsset(texturePath);
@@ -1064,8 +1087,10 @@ namespace Spine.Unity.Editor {
 				EditorUtility.SetDirty(mat);
 				AssetDatabase.SaveAssets();
 
-				atlasAsset.materials[i] = mat;
+				populatingMaterials.Add(mat); //atlasAsset.materials[i] = mat;
 			}
+
+			atlasAsset.materials = populatingMaterials.ToArray();
 
 			for (int i = 0; i < vestigialMaterials.Count; i++)
 				AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(vestigialMaterials[i]));
@@ -1077,6 +1102,11 @@ namespace Spine.Unity.Editor {
 
 			EditorUtility.SetDirty(atlasAsset);
 			AssetDatabase.SaveAssets();
+
+			if (pageFiles.Count != atlasAsset.materials.Length)
+				Debug.LogWarning(string.Format("{0} ::: Not all atlas pages were imported. If you rename your image files, please make sure you also edit the filenames specified in the atlas file.", atlasAsset.name));
+			else
+				Debug.Log(string.Format("{0} ::: Imported with {1} material", atlasAsset.name, atlasAsset.materials.Length));
 
 			// Iterate regions and bake marked.
 			Atlas atlas = atlasAsset.GetAtlas();
@@ -1213,7 +1243,7 @@ namespace Spine.Unity.Editor {
 		#endregion
 
 		#region Checking Methods
-		static int[][] compatibleVersions = { new[] {3, 6, 0} };
+		static int[][] compatibleVersions = { new[] {3, 6, 0}, new[] {3, 5, 0} };
 		//static bool isFixVersionRequired = false;
 
 		static bool CheckForValidSkeletonData (string skeletonJSONPath) {
@@ -1251,7 +1281,7 @@ namespace Spine.Unity.Editor {
 			} else {
 				var obj = Json.Deserialize(new StringReader(asset.text));
 				if (obj == null) {
-					//Debug.LogErrorFormat("'{0}' is not valid JSON.", asset.name);
+					Debug.LogErrorFormat("'{0}' is not valid JSON.", asset.name);
 					return false;
 				}
 
@@ -1272,10 +1302,10 @@ namespace Spine.Unity.Editor {
 
 			// Version warning
 			if (isSpineData) {
-				string runtimeVersion = compatibleVersions[0][0] + "." + compatibleVersions[0][1];
+				string runtimeVersionDebugString = compatibleVersions[0][0] + "." + compatibleVersions[0][1];
 
 				if (string.IsNullOrEmpty(rawVersion)) {
-					Debug.LogWarningFormat("Skeleton '{0}' has no version information. It may be incompatible with your runtime version: spine-unity v{1}", asset.name, runtimeVersion);
+					Debug.LogWarningFormat("Skeleton '{0}' has no version information. It may be incompatible with your runtime version: spine-unity v{1}", asset.name, runtimeVersionDebugString);
 				} else {
 					string[] versionSplit = rawVersion.Split('.');
 					bool match = false;
@@ -1292,7 +1322,7 @@ namespace Spine.Unity.Editor {
 					}
 
 					if (!match)
-						Debug.LogWarningFormat("Skeleton '{0}' (exported with Spine {1}) may be incompatible with your runtime version: spine-unity v{2}", asset.name, rawVersion, runtimeVersion);
+						Debug.LogWarningFormat("Skeleton '{0}' (exported with Spine {1}) may be incompatible with your runtime version: spine-unity v{2}", asset.name, rawVersion, runtimeVersionDebugString);
 				}
 			}
 
@@ -1476,11 +1506,18 @@ namespace Spine.Unity.Editor {
 		#region TK2D Support
 		const string SPINE_TK2D_DEFINE = "SPINE_TK2D";
 
+		static bool IsInvalidGroup (BuildTargetGroup group) {
+			int gi = (int)group;
+			return
+				gi == 15 || gi == 16
+				||
+				group == BuildTargetGroup.Unknown;
+		}
+
 		static void EnableTK2D () {
 			bool added = false;
 			foreach (BuildTargetGroup group in System.Enum.GetValues(typeof(BuildTargetGroup))) {				
-				int gi = (int)group;
-				if (gi == 15 || gi == 16 || group == BuildTargetGroup.Unknown)
+				if (IsInvalidGroup(group))
 					continue;
 
 				string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
@@ -1506,8 +1543,7 @@ namespace Spine.Unity.Editor {
 		static void DisableTK2D () {
 			bool removed = false;
 			foreach (BuildTargetGroup group in System.Enum.GetValues(typeof(BuildTargetGroup))) {
-				int gi = (int)group;
-				if (gi == 15 || gi == 16 || group == BuildTargetGroup.Unknown)
+				if (IsInvalidGroup(group))
 					continue;
 				
 				string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);

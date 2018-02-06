@@ -35,7 +35,7 @@ using Spine;
 namespace Spine.Unity {
 	[ExecuteInEditMode, RequireComponent(typeof(CanvasRenderer), typeof(RectTransform)), DisallowMultipleComponent]
 	[AddComponentMenu("Spine/SkeletonGraphic (Unity UI Canvas)")]
-	public class SkeletonGraphic : MaskableGraphic, ISkeletonComponent, IAnimationStateComponent, ISkeletonAnimation {
+	public class SkeletonGraphic : MaskableGraphic, ISkeletonComponent, IAnimationStateComponent, ISkeletonAnimation, IHasSkeletonDataAsset {
 
 		#region Inspector
 		public SkeletonDataAsset skeletonDataAsset;
@@ -80,14 +80,16 @@ namespace Spine.Unity {
 							
 					}
 
+					// Only provide visual feedback to inspector changes in Unity Editor Edit mode.
 					if (!Application.isPlaying) {
 						skeleton.flipX = this.initialFlipX;
 						skeleton.flipY = this.initialFlipY;
+
+						skeleton.SetToSetupPose();
+						if (!string.IsNullOrEmpty(startingAnimation))
+							skeleton.PoseWithAnimation(startingAnimation, 0f, false);
 					}
 
-					skeleton.SetToSetupPose();
-					if (!string.IsNullOrEmpty(startingAnimation))
-						skeleton.PoseWithAnimation(startingAnimation, 0f, false);
 				}
 			} else {
 				if (skeletonDataAsset != null)
@@ -126,8 +128,8 @@ namespace Spine.Unity {
 		public Texture OverrideTexture {
 			get { return overrideTexture; }
 			set {
-				canvasRenderer.SetTexture(value);
 				overrideTexture = value;
+				canvasRenderer.SetTexture(this.mainTexture); // Refresh canvasRenderer's texture. Make sure it handles null.
 			}
 		}
 		public override Texture mainTexture {
@@ -236,6 +238,7 @@ namespace Spine.Unity {
 			};
 
 			meshBuffers = new DoubleBuffered<MeshRendererBuffers.SmartMesh>();
+			canvasRenderer.SetTexture(this.mainTexture); // Needed for overwriting initializations.
 
 			// Set the initial Skin and Animation
 			if (!string.IsNullOrEmpty(initialSkinName))

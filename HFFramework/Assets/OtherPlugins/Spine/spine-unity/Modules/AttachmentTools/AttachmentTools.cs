@@ -37,13 +37,9 @@ namespace Spine.Unity.Modules.AttachmentTools {
 		/// <summary>
 		/// Tries to get the region (image) of a renderable attachment. If the attachment is not renderable, it returns null.</summary>
 		public static AtlasRegion GetRegion (this Attachment attachment) {
-			var regionAttachment = attachment as RegionAttachment;
-			if (regionAttachment != null)
-				return regionAttachment.RendererObject as AtlasRegion;
-
-			var meshAttachment = attachment as MeshAttachment;
-			if (meshAttachment != null)
-				return meshAttachment.RendererObject as AtlasRegion;
+			var renderableAttachment = attachment as IHasRendererObject;
+			if (renderableAttachment != null)
+				return renderableAttachment.RendererObject as AtlasRegion;
 
 			return null;
 		}
@@ -113,37 +109,37 @@ namespace Spine.Unity.Modules.AttachmentTools {
 		#region Runtime RegionAttachments
 		/// <summary>
 		/// Creates a RegionAttachment based on a sprite. This method creates a real, usable AtlasRegion. That AtlasRegion uses a new AtlasPage with the Material provided./// </summary>
-		public static RegionAttachment ToRegionAttachment (this Sprite sprite, Material material) {
-			return sprite.ToRegionAttachment(material.ToSpineAtlasPage());
+		public static RegionAttachment ToRegionAttachment (this Sprite sprite, Material material, float rotation = 0f) {
+			return sprite.ToRegionAttachment(material.ToSpineAtlasPage(), rotation);
 		}
 
 		/// <summary>
 		/// Creates a RegionAttachment based on a sprite. This method creates a real, usable AtlasRegion. That AtlasRegion uses the AtlasPage provided./// </summary>
-		public static RegionAttachment ToRegionAttachment (this Sprite sprite, AtlasPage page) {
+		public static RegionAttachment ToRegionAttachment (this Sprite sprite, AtlasPage page, float rotation = 0f) {
 			if (sprite == null) throw new System.ArgumentNullException("sprite");
 			if (page == null) throw new System.ArgumentNullException("page");
 			var region = sprite.ToAtlasRegion(page);
 			var unitsPerPixel = 1f / sprite.pixelsPerUnit;
-			return region.ToRegionAttachment(sprite.name, unitsPerPixel);
+			return region.ToRegionAttachment(sprite.name, unitsPerPixel, rotation);
 		}
 
 		/// <summary>
 		/// Creates a Spine.AtlasRegion that uses a premultiplied alpha duplicate texture of the Sprite's texture data. Returns a RegionAttachment that uses it. Use this if you plan to use a premultiply alpha shader such as "Spine/Skeleton"</summary>
-		public static RegionAttachment ToRegionAttachmentPMAClone (this Sprite sprite, Shader shader, TextureFormat textureFormat = SpriteAtlasRegionExtensions.SpineTextureFormat, bool mipmaps = SpriteAtlasRegionExtensions.UseMipMaps, Material materialPropertySource = null) {
+		public static RegionAttachment ToRegionAttachmentPMAClone (this Sprite sprite, Shader shader, TextureFormat textureFormat = AtlasUtilities.SpineTextureFormat, bool mipmaps = AtlasUtilities.UseMipMaps, Material materialPropertySource = null, float rotation = 0f) {
 			if (sprite == null) throw new System.ArgumentNullException("sprite");
 			if (shader == null) throw new System.ArgumentNullException("shader");
 			var region = sprite.ToAtlasRegionPMAClone(shader, textureFormat, mipmaps, materialPropertySource);
 			var unitsPerPixel = 1f / sprite.pixelsPerUnit;
-			return region.ToRegionAttachment(sprite.name, unitsPerPixel);
+			return region.ToRegionAttachment(sprite.name, unitsPerPixel, rotation);
 		}
 
-		public static RegionAttachment ToRegionAttachmentPMAClone (this Sprite sprite, Material materialPropertySource, TextureFormat textureFormat = SpriteAtlasRegionExtensions.SpineTextureFormat, bool mipmaps = SpriteAtlasRegionExtensions.UseMipMaps) {
-			return sprite.ToRegionAttachmentPMAClone(materialPropertySource.shader, textureFormat, mipmaps, materialPropertySource);
+		public static RegionAttachment ToRegionAttachmentPMAClone (this Sprite sprite, Material materialPropertySource, TextureFormat textureFormat = AtlasUtilities.SpineTextureFormat, bool mipmaps = AtlasUtilities.UseMipMaps, float rotation = 0f) {
+			return sprite.ToRegionAttachmentPMAClone(materialPropertySource.shader, textureFormat, mipmaps, materialPropertySource, rotation);
 		}
 
 		/// <summary>
 		/// Creates a new RegionAttachment from a given AtlasRegion.</summary>
-		public static RegionAttachment ToRegionAttachment (this AtlasRegion region, string attachmentName, float scale = 0.01f) {
+		public static RegionAttachment ToRegionAttachment (this AtlasRegion region, string attachmentName, float scale = 0.01f, float rotation = 0f) {
 			if (string.IsNullOrEmpty(attachmentName)) throw new System.ArgumentException("attachmentName can't be null or empty.", "attachmentName");
 			if (region == null) throw new System.ArgumentNullException("region");
 
@@ -162,13 +158,12 @@ namespace Spine.Unity.Modules.AttachmentTools {
 			attachment.Path = region.name;
 			attachment.scaleX = 1;
 			attachment.scaleY = 1;
-			attachment.rotation = 0;
+			attachment.rotation = rotation;
 
 			attachment.r = 1;
 			attachment.g = 1;
 			attachment.b = 1;
 			attachment.a = 1;
-
 
 			// pass OriginalWidth and OriginalHeight because UpdateOffset uses it in its calculation.
 			attachment.width = attachment.regionOriginalWidth * scale;
@@ -210,8 +205,9 @@ namespace Spine.Unity.Modules.AttachmentTools {
 		#endregion
 	}
 
-	public static class SpriteAtlasRegionExtensions {
+	public static class AtlasUtilities {
 		internal const TextureFormat SpineTextureFormat = TextureFormat.RGBA32;
+		internal const float DefaultMipmapBias = -0.5f;
 		internal const bool UseMipMaps = false;
 		internal const float DefaultScale = 0.01f;
 
@@ -394,16 +390,99 @@ namespace Spine.Unity.Modules.AttachmentTools {
 
 		#region Runtime Repacking
 		/// <summary>
-		/// Creates and populates a duplicate skin with cloned attachments that are backed by a new packed texture atlas comprised of all the regions from the original skin.</summary>
-		/// <remarks>No Spine.Atlas object is created so there is no way to find AtlasRegions except through the Attachments using them.</remarks>
-		public static Skin GetRepackedSkin (this Skin o, string newName, Material materialPropertySource, out Material m, out Texture2D t, int maxAtlasSize = 1024, int padding = 2, TextureFormat textureFormat = SpineTextureFormat, bool mipmaps = UseMipMaps) {
-			return GetRepackedSkin(o, newName, materialPropertySource.shader, out m, out t, maxAtlasSize, padding, textureFormat, mipmaps, materialPropertySource);
+		/// Fills the outputAttachments list with new attachment objects based on the attachments in sourceAttachments, but mapped to a new single texture using the same material.</summary>
+		/// <param name="sourceAttachments">The list of attachments to be repacked.</param>
+		/// <param name = "outputAttachments">The List(Attachment) to populate with the newly created Attachment objects.</param>
+		/// 
+		/// <param name="materialPropertySource">May be null. If no Material property source is provided, no special </param>
+		public static void GetRepackedAttachments (List<Attachment> sourceAttachments, List<Attachment> outputAttachments, Material materialPropertySource, out Material outputMaterial, out Texture2D outputTexture, int maxAtlasSize = 1024, int padding = 2, TextureFormat textureFormat = SpineTextureFormat, bool mipmaps = UseMipMaps, string newAssetName = "Repacked Attachments", bool clearCache = false) {
+			if (sourceAttachments == null) throw new System.ArgumentNullException("sourceAttachments");
+			if (outputAttachments == null) throw new System.ArgumentNullException("outputAttachments");
+
+			// Use these to detect and use shared regions.
+			var existingRegions = new Dictionary<AtlasRegion, int>();
+			var regionIndexes = new List<int>();
+			var texturesToPack = new List<Texture2D>();
+			var originalRegions = new List<AtlasRegion>();
+
+			outputAttachments.Clear();
+			outputAttachments.AddRange(sourceAttachments);
+
+			int newRegionIndex = 0;
+			for (int i = 0, n = sourceAttachments.Count; i < n; i++) {
+				var originalAttachment = sourceAttachments[i];
+				var newAttachment = originalAttachment.GetClone(true);
+				if (IsRenderable(newAttachment)) {
+
+					var region = newAttachment.GetRegion();
+					int existingIndex;
+					if (existingRegions.TryGetValue(region, out existingIndex)) {
+						regionIndexes.Add(existingIndex); // Store the region index for the eventual new attachment.
+					} else {
+						originalRegions.Add(region);
+						texturesToPack.Add(region.ToTexture()); // Add the texture to the PackTextures argument
+						existingRegions.Add(region, newRegionIndex); // Add the region to the dictionary of known regions
+						regionIndexes.Add(newRegionIndex); // Store the region index for the eventual new attachment.
+						newRegionIndex++;
+					}
+
+					outputAttachments[i] = newAttachment;
+				}
+			}
+
+			// Fill a new texture with the collected attachment textures.
+			var newTexture = new Texture2D(maxAtlasSize, maxAtlasSize, textureFormat, mipmaps);
+			newTexture.mipMapBias = AtlasUtilities.DefaultMipmapBias;
+			newTexture.anisoLevel = texturesToPack[0].anisoLevel;
+			newTexture.name = newAssetName;
+			var rects = newTexture.PackTextures(texturesToPack.ToArray(), padding, maxAtlasSize);
+
+			// Rehydrate the repacked textures as a Material, Spine atlas and Spine.AtlasAttachments
+			Shader shader = materialPropertySource == null ? Shader.Find("Spine/Skeleton") : materialPropertySource.shader;
+			var newMaterial = new Material(shader);
+			if (materialPropertySource != null) {
+				newMaterial.CopyPropertiesFromMaterial(materialPropertySource);
+				newMaterial.shaderKeywords = materialPropertySource.shaderKeywords;
+			}
+
+			newMaterial.name = newAssetName;
+			newMaterial.mainTexture = newTexture;
+			var page = newMaterial.ToSpineAtlasPage();
+			page.name = newAssetName;
+
+			var repackedRegions = new List<AtlasRegion>();
+			for (int i = 0, n = originalRegions.Count; i < n; i++) {
+				var oldRegion = originalRegions[i];
+				var newRegion = UVRectToAtlasRegion(rects[i], oldRegion.name, page, oldRegion.offsetX, oldRegion.offsetY, oldRegion.rotate);
+				repackedRegions.Add(newRegion);
+			}
+
+			// Map the cloned attachments to the repacked atlas.
+			for (int i = 0, n = outputAttachments.Count; i < n; i++) {
+				var a = outputAttachments[i];
+				a.SetRegion(repackedRegions[regionIndexes[i]]);
+			}
+
+			// Clean up.
+			if (clearCache)
+				AtlasUtilities.ClearCache();
+
+			outputTexture = newTexture;
+			outputMaterial = newMaterial;
 		}
 
 		/// <summary>
 		/// Creates and populates a duplicate skin with cloned attachments that are backed by a new packed texture atlas comprised of all the regions from the original skin.</summary>
 		/// <remarks>No Spine.Atlas object is created so there is no way to find AtlasRegions except through the Attachments using them.</remarks>
-		public static Skin GetRepackedSkin (this Skin o, string newName, Shader shader, out Material m, out Texture2D t, int maxAtlasSize = 1024, int padding = 2, TextureFormat textureFormat = SpineTextureFormat, bool mipmaps = UseMipMaps, Material materialPropertySource = null) {
+		public static Skin GetRepackedSkin (this Skin o, string newName, Material materialPropertySource, out Material outputMaterial, out Texture2D outputTexture, int maxAtlasSize = 1024, int padding = 2, TextureFormat textureFormat = SpineTextureFormat, bool mipmaps = UseMipMaps) {
+			return GetRepackedSkin(o, newName, materialPropertySource.shader, out outputMaterial, out outputTexture, maxAtlasSize, padding, textureFormat, mipmaps, materialPropertySource);
+		}
+
+		/// <summary>
+		/// Creates and populates a duplicate skin with cloned attachments that are backed by a new packed texture atlas comprised of all the regions from the original skin.</summary>
+		/// <remarks>No Spine.Atlas object is created so there is no way to find AtlasRegions except through the Attachments using them.</remarks>
+		public static Skin GetRepackedSkin (this Skin o, string newName, Shader shader, out Material outputMaterial, out Texture2D outputTexture, int maxAtlasSize = 1024, int padding = 2, TextureFormat textureFormat = SpineTextureFormat, bool mipmaps = UseMipMaps, Material materialPropertySource = null, bool clearCache = false) {
+			if (o == null) throw new System.NullReferenceException("Skin was null");
 			var skinAttachments = o.Attachments;
 			var newSkin = new Skin(newName);
 
@@ -420,7 +499,7 @@ namespace Spine.Unity.Modules.AttachmentTools {
 				var newAttachment = kvp.Value.GetClone(true);
 				if (IsRenderable(newAttachment)) {
 
-					var region = newAttachment.GetAtlasRegion();
+					var region = newAttachment.GetRegion();
 					int existingIndex;
 					if (existingRegions.TryGetValue(region, out existingIndex)) {
 						regionIndexes.Add(existingIndex); // Store the region index for the eventual new attachment.
@@ -440,6 +519,7 @@ namespace Spine.Unity.Modules.AttachmentTools {
 
 			// Fill a new texture with the collected attachment textures.
 			var newTexture = new Texture2D(maxAtlasSize, maxAtlasSize, textureFormat, mipmaps);
+			newTexture.mipMapBias = AtlasUtilities.DefaultMipmapBias;
 			newTexture.anisoLevel = texturesToPack[0].anisoLevel;
 			newTexture.name = newName;
 			var rects = newTexture.PackTextures(texturesToPack.ToArray(), padding, maxAtlasSize);
@@ -469,12 +549,12 @@ namespace Spine.Unity.Modules.AttachmentTools {
 				a.SetRegion(repackedRegions[regionIndexes[i]]);
 			}
 
-			// Clean up
-			foreach (var ttp in texturesToPack)
-				UnityEngine.Object.Destroy(ttp);
+			// Clean up.
+			if (clearCache)
+				AtlasUtilities.ClearCache();
 
-			t = newTexture;
-			m = newMaterial;
+			outputTexture = newTexture;
+			outputMaterial = newMaterial;
 			return newSkin;
 		}
 
@@ -482,20 +562,38 @@ namespace Spine.Unity.Modules.AttachmentTools {
 			return Sprite.Create(ar.GetMainTexture(), ar.GetUnityRect(), new Vector2(0.5f, 0.5f), pixelsPerUnit);
 		}
 
+		static Dictionary<AtlasRegion, Texture2D> CachedRegionTextures = new Dictionary<AtlasRegion, Texture2D>();
+		static List<Texture2D> CachedRegionTexturesList = new List<Texture2D>();
+
+		public static void ClearCache () {
+			foreach (var t in CachedRegionTexturesList) {
+				UnityEngine.Object.Destroy(t);
+			}
+			CachedRegionTextures.Clear();
+			CachedRegionTexturesList.Clear();
+		}
+
 		/// <summary>Creates a new Texture2D object based on an AtlasRegion.
 		/// If applyImmediately is true, Texture2D.Apply is called immediately after the Texture2D is filled with data.</summary>
 		public static Texture2D ToTexture (this AtlasRegion ar, bool applyImmediately = true, TextureFormat textureFormat = SpineTextureFormat, bool mipmaps = UseMipMaps) {
-			Texture2D sourceTexture = ar.GetMainTexture();
-			Rect r = ar.GetUnityRect(sourceTexture.height);
-			int width = (int)r.width;
-			int height = (int)r.height;
-			Texture2D output = new Texture2D(width, height, textureFormat, mipmaps);
-			output.name = ar.name;
-			Color[] pixelBuffer = sourceTexture.GetPixels((int)r.x, (int)r.y, width, height);
-			output.SetPixels(pixelBuffer);
+			Texture2D output;
 
-			if (applyImmediately)
-				output.Apply();
+			CachedRegionTextures.TryGetValue(ar, out output);
+			if (output == null) {
+				Texture2D sourceTexture = ar.GetMainTexture();
+				Rect r = ar.GetUnityRect(sourceTexture.height);
+				int width = (int)r.width;
+				int height = (int)r.height;
+				output = new Texture2D(width, height, textureFormat, mipmaps);
+				output.name = ar.name;
+				Color[] pixelBuffer = sourceTexture.GetPixels((int)r.x, (int)r.y, width, height);
+				output.SetPixels(pixelBuffer);
+				CachedRegionTextures.Add(ar, output);
+				CachedRegionTexturesList.Add(output);
+
+				if (applyImmediately)
+					output.Apply();
+			}
 
 			return output;
 		}
@@ -525,7 +623,7 @@ namespace Spine.Unity.Modules.AttachmentTools {
 		}
 
 		static bool IsRenderable (Attachment a) {
-			return a is RegionAttachment || a is MeshAttachment;
+			return a is IHasRendererObject;
 		}
 
 		/// <summary>
@@ -618,20 +716,6 @@ namespace Spine.Unity.Modules.AttachmentTools {
 		}
 
 		/// <summary>
-		/// Tries to get the backing AtlasRegion of an attachment if it is renderable. Returns null for non-renderable attachments.</summary>
-		static AtlasRegion GetAtlasRegion (this Attachment a) {
-			var regionAttachment = a as RegionAttachment;
-			if (regionAttachment != null)
-				return (regionAttachment.RendererObject) as AtlasRegion;
-
-			var meshAttachment = a as MeshAttachment;
-			if (meshAttachment != null)
-				return (meshAttachment.RendererObject) as AtlasRegion;
-
-			return null;
-		}
-
-		/// <summary>
 		/// Convenience method for getting the main texture of the material of the page of the region.</summary>
 		static Texture2D GetMainTexture (this AtlasRegion region) {
 			var material = (region.page.rendererObject as Material);
@@ -659,7 +743,7 @@ namespace Spine.Unity.Modules.AttachmentTools {
 		}
 	}
 
-	public static class SkinExtensions {
+	public static class SkinUtilities {
 
 		#region Skeleton Skin Extensions
 		/// <summary>

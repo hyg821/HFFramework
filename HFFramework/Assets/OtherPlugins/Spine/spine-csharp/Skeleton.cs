@@ -135,24 +135,24 @@ namespace Spine {
 					IkConstraint constraint = ikConstraints.Items[ii];
 					if (constraint.data.order == i) {
 						SortIkConstraint(constraint);
-						goto outer; //continue outer;
+						goto continue_outer; //continue outer;
 					}
 				}
 				for (int ii = 0; ii < transformCount; ii++) {
 					TransformConstraint constraint = transformConstraints.Items[ii];
 					if (constraint.data.order == i) {
 						SortTransformConstraint(constraint);
-						goto outer; //continue outer;
+						goto continue_outer; //continue outer;
 					}
 				}
 				for (int ii = 0; ii < pathCount; ii++) {
 					PathConstraint constraint = pathConstraints.Items[ii];
 					if (constraint.data.order == i) {
 						SortPathConstraint(constraint);
-						goto outer; //continue outer;
+						goto continue_outer; //continue outer;
 					}
 				}
-				outer: {}
+				continue_outer: {}
 			}
 
 			for (int i = 0, n = bones.Count; i < n; i++)
@@ -389,9 +389,14 @@ namespace Spine {
 			SetSkin(foundSkin);
 		}
 
-		/// <summary>Sets the skin used to look up attachments before looking in the {@link SkeletonData#getDefaultSkin() default 
-		/// skin}. Attachmentsfrom the new skin are attached if the corresponding attachment from the old skin was attached. If 
-		/// there was no old skin, each slot's setup mode attachment is attached from the new skin.</summary>
+		/// <summary>
+		/// <para>Attachments from the new skin are attached if the corresponding attachment from the old skin was attached. 
+		/// If there was no old skin, each slot's setup mode attachment is attached from the new skin.</para>
+		/// <para>After changing the skin, the visible attachments can be reset to those attached in the setup pose by calling 
+		/// <see cref="Skeleton.SetSlotsToSetupPose()"/>. 
+		/// Also, often <see cref="AnimationState.Apply(Skeleton)"/> is called before the next time the 
+		/// skeleton is rendered to allow any attachment keys in the current animation(s) to hide or show attachments from the new skin.</para>
+		/// </summary>
 		/// <param name="newSkin">May be null.</param>
 		public void SetSkin (Skin newSkin) {
 			if (newSkin != null) {

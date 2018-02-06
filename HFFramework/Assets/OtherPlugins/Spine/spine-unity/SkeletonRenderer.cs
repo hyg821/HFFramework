@@ -38,7 +38,7 @@ namespace Spine.Unity {
 	/// <summary>Renders a skeleton.</summary>
 	[ExecuteInEditMode, RequireComponent(typeof(MeshFilter), typeof(MeshRenderer)), DisallowMultipleComponent]
 	[HelpURL("http://esotericsoftware.com/spine-unity-documentation#Rendering")]
-	public class SkeletonRenderer : MonoBehaviour, ISkeletonComponent {
+	public class SkeletonRenderer : MonoBehaviour, ISkeletonComponent, IHasSkeletonDataAsset {
 
 		public delegate void SkeletonRendererDelegate (SkeletonRenderer skeletonRenderer);
 		public event SkeletonRendererDelegate OnRebuild;
@@ -61,13 +61,14 @@ namespace Spine.Unity {
 		public bool useClipping = true;
 		public bool immutableTriangles = false;
 		public bool pmaVertexColors = true;
+		/// <summary>Clears the state when this component or its GameObject is disabled. This prevents previous state from being retained when it is enabled again. When pooling your skeleton, setting this to true can be helpful.</summary>
 		public bool clearStateOnDisable = false;
 		public bool tintBlack = false;
 		public bool singleSubmesh = false;
 
 		[UnityEngine.Serialization.FormerlySerializedAs("calculateNormals")]
-		public bool addNormals;
-		public bool calculateTangents;
+		public bool addNormals = false;
+		public bool calculateTangents = false;
 
 		public bool logErrors = false;
 
@@ -134,6 +135,18 @@ namespace Spine.Unity {
 			}
 			return c;
 		}
+
+		/// <summary>Applies MeshGenerator settings to the SkeletonRenderer and its internal MeshGenerator.</summary>
+		public void SetMeshSettings (MeshGenerator.Settings settings) {
+			this.calculateTangents = settings.calculateTangents;
+			this.immutableTriangles = settings.immutableTriangles;
+			this.pmaVertexColors = settings.pmaVertexColors;
+			this.tintBlack = settings.tintBlack;
+			this.useClipping = settings.useClipping;
+			this.zSpacing = settings.zSpacing;
+
+			this.meshGenerator.settings = settings;
+		}
 		#endregion
 
 		public virtual void Awake () {
@@ -147,14 +160,20 @@ namespace Spine.Unity {
 
 		void OnDestroy () {
 			rendererBuffers.Dispose();
+			valid = false;
 		}
 
+		/// <summary>
+		/// Clears the previously generated mesh and resets the skeleton's pose.</summary>
 		public virtual void ClearState () {
 			meshFilter.sharedMesh = null;
 			currentInstructions.Clear();
 			if (skeleton != null) skeleton.SetToSetupPose();
 		}
 
+		/// <summary>
+		/// Initialize this component. Attempts to load the SkeletonData and creates the internal Skeleton object and buffers.</summary>
+		/// <param name="overwrite">If set to <c>true</c>, it will overwrite internal objects if they were already generated. Otherwise, the initialized component will ignore subsequent calls to initialize.</param>
 		public virtual void Initialize (bool overwrite) {
 			if (valid && !overwrite)
 				return;
@@ -199,12 +218,14 @@ namespace Spine.Unity {
 			for (int i = 0; i < separatorSlotNames.Length; i++)
 				separatorSlots.Add(skeleton.FindSlot(separatorSlotNames[i]));
 
-			LateUpdate();
+			LateUpdate(); // Generate mesh for the first frame it exists.
 
 			if (OnRebuild != null)
 				OnRebuild(this);
 		}
 
+		/// <summary>
+		/// Generates a new UnityEngine.Mesh from the internal Skeleton.</summary>
 		public virtual void LateUpdate () {
 			if (!valid) return;
 
@@ -291,9 +312,9 @@ namespace Spine.Unity {
 			rendererBuffers.UpdateSharedMaterials(workingSubmeshInstructions);
 			if (updateTriangles) { // Check if the triangles should also be updated.
 				meshGenerator.FillTriangles(currentMesh);
-				meshRenderer.sharedMaterials = rendererBuffers.GetUpdatedShaderdMaterialsArray();
+				meshRenderer.sharedMaterials = rendererBuffers.GetUpdatedSharedMaterialsArray();
 			} else if (rendererBuffers.MaterialsChangedInLastUpdate()) {
-				meshRenderer.sharedMaterials = rendererBuffers.GetUpdatedShaderdMaterialsArray();
+				meshRenderer.sharedMaterials = rendererBuffers.GetUpdatedSharedMaterialsArray();
 			}
 
 

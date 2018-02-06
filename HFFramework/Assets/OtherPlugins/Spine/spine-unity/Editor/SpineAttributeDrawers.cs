@@ -74,28 +74,34 @@ namespace Spine.Unity.Editor {
 				return;
 			}
 
-			var dataField = property.FindBaseOrSiblingProperty(TargetAttribute.dataField);
+			SerializedProperty dataField = property.FindBaseOrSiblingProperty(TargetAttribute.dataField);
 			if (dataField != null) {
-				if (dataField.objectReferenceValue is SkeletonDataAsset) {
-					skeletonDataAsset = (SkeletonDataAsset)dataField.objectReferenceValue;
-				} else if (dataField.objectReferenceValue is ISkeletonComponent) {
-					var skeletonComponent = (ISkeletonComponent)dataField.objectReferenceValue;
-					if (skeletonComponent != null)
-						skeletonDataAsset = skeletonComponent.SkeletonDataAsset;
-				} else {
+				var objectReferenceValue = dataField.objectReferenceValue;
+				if (objectReferenceValue is SkeletonDataAsset) {
+					skeletonDataAsset = (SkeletonDataAsset)objectReferenceValue;
+				} else if (objectReferenceValue is IHasSkeletonDataAsset) {
+					var hasSkeletonDataAsset = (IHasSkeletonDataAsset)objectReferenceValue;
+					if (hasSkeletonDataAsset != null)
+						skeletonDataAsset = hasSkeletonDataAsset.SkeletonDataAsset;
+				} else if (objectReferenceValue != null) {
 					EditorGUI.LabelField(position, "ERROR:", "Invalid reference type");
 					return;
 				}
 
 			} else if (property.serializedObject.targetObject is Component) {
 				var component = (Component)property.serializedObject.targetObject;
-				var skeletonComponent = component.GetComponentInChildren(typeof(ISkeletonComponent)) as ISkeletonComponent;
-				if (skeletonComponent != null)
-					skeletonDataAsset = skeletonComponent.SkeletonDataAsset;
+				var hasSkeletonDataAsset = component.GetComponentInChildren(typeof(IHasSkeletonDataAsset)) as IHasSkeletonDataAsset;
+				if (hasSkeletonDataAsset != null)
+					skeletonDataAsset = hasSkeletonDataAsset.SkeletonDataAsset;
 			}
 
 			if (skeletonDataAsset == null) {
-				EditorGUI.LabelField(position, "ERROR:", "Must have reference to a SkeletonDataAsset");
+				if (TargetAttribute.fallbackToTextField) {
+					EditorGUI.PropertyField(position, property); //EditorGUI.TextField(position, label, property.stringValue);
+				} else {
+					EditorGUI.LabelField(position, "ERROR:", "Must have reference to a SkeletonDataAsset");
+				}
+
 				skeletonDataAsset = property.serializedObject.targetObject as SkeletonDataAsset;
 				if (skeletonDataAsset == null) return;
 			}
@@ -375,12 +381,10 @@ namespace Spine.Unity.Editor {
 			ISkeletonComponent skeletonComponent = GetTargetSkeletonComponent(property);
 			var validSkins = new List<Skin>();
 
-
-
 			if (skeletonComponent != null && targetAttribute.currentSkinOnly) {
 				Skin currentSkin = null;
 
-				var skinProperty = property.FindPropertyRelative(targetAttribute.skinField);
+				var skinProperty = property.FindBaseOrSiblingProperty(targetAttribute.skinField);
 				if (skinProperty != null) currentSkin = skeletonComponent.Skeleton.Data.FindSkin(skinProperty.stringValue);
 
 				currentSkin = currentSkin ?? skeletonComponent.Skeleton.Skin;

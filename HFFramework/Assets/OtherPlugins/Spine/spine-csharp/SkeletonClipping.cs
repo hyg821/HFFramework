@@ -47,7 +47,7 @@ namespace Spine {
 		public ExposedList<int> ClippedTriangles { get { return clippedTriangles; } }
 		public ExposedList<float> ClippedUVs { get { return clippedUVs; } }
 
-		public bool IsClipping () { return clipAttachment != null; }
+		public bool IsClipping { get { return clipAttachment != null; } }
 
 		public int ClipStart (Slot slot, ClippingAttachment clip) {
 			if (clipAttachment != null) return 0;
@@ -89,7 +89,7 @@ namespace Spine {
 			clippedVertices.Clear();
 			clippedUVs.Clear();
 			clippedTriangles.Clear();
-			//outer: // libgdx
+			//outer:
 			for (int i = 0; i < trianglesLength; i += 3) {
 				int vertexOffset = triangles[i] << 1;
 				float x1 = vertices[vertexOffset], y1 = vertices[vertexOffset + 1];
@@ -154,7 +154,7 @@ namespace Spine {
 						clippedUVsItems[s + 2] = u2;
 						clippedUVsItems[s + 3] = v2;
 						clippedUVsItems[s + 4] = u3;
-						clippedUVsItems[s + 5] = v3;					
+						clippedUVsItems[s + 5] = v3;
 
 						s = clippedTriangles.Count;
 						int[] clippedTrianglesItems = clippedTriangles.Resize(s + 3).Items;
@@ -180,9 +180,9 @@ namespace Spine {
 			if (clippingArea.Count % 4 >= 2) {
 				input = output;
 				output = scratch;
-			}
-			else
+			} else {
 				input = scratch;
+			}
 
 			input.Clear();
 			input.Add(x1);
@@ -251,9 +251,9 @@ namespace Spine {
 				for (int i = 0, n = output.Count - 2; i < n; i++) {
 					originalOutput.Add(output.Items[i]);
 				}
-			}
-			else
+			} else {
 				originalOutput.Resize(originalOutput.Count - 2);
+			}
 
 			return clipped;
 		}

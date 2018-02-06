@@ -73,7 +73,7 @@ namespace Spine.Unity {
 		bool skeletonTransformIsParent;
 
 		/// <summary>
-		/// Sets the target bone by its bone name. Returns false if no bone was found.</summary>
+		/// Sets the target bone by its bone name. Returns false if no bone was found. To set the bone by reference, use BoneFollower.bone directly.</summary>
 		public bool SetBone (string name) {
 			bone = skeletonRenderer.skeleton.FindBone(name);
 			if (bone == null) {
@@ -137,7 +137,16 @@ namespace Spine.Unity {
 			if (skeletonTransformIsParent) {
 				// Recommended setup: Use local transform properties if Spine GameObject is the immediate parent
 				thisTransform.localPosition = new Vector3(bone.worldX, bone.worldY, followZPosition ? 0f : thisTransform.localPosition.z);
-				if (followBoneRotation) thisTransform.localRotation = bone.GetQuaternion();
+				if (followBoneRotation) {
+					float halfRotation = Mathf.Atan2(bone.c, bone.a) * 0.5f;
+					if (followLocalScale && bone.scaleX < 0) // Negate rotation from negative scaleX. Don't use negative determinant. local scaleY doesn't factor into used rotation.
+						halfRotation += Mathf.PI * 0.5f;
+
+					var q = default(Quaternion);
+					q.z = Mathf.Sin(halfRotation);
+					q.w = Mathf.Cos(halfRotation);
+					thisTransform.localRotation = q;
+				}
 			} else {
 				// For special cases: Use transform world properties if transform relationship is complicated
 				Vector3 targetWorldPosition = skeletonTransform.TransformPoint(new Vector3(bone.worldX, bone.worldY, 0f));
@@ -154,11 +163,12 @@ namespace Spine.Unity {
 
 				if (followBoneRotation) {
 					Vector3 worldRotation = skeletonTransform.rotation.eulerAngles;
+					if (followLocalScale && bone.scaleX < 0) boneWorldRotation += 180f;
 					#if UNITY_5_6_OR_NEWER
-					thisTransform.SetPositionAndRotation(targetWorldPosition, Quaternion.Euler(worldRotation.x, worldRotation.y, skeletonTransform.rotation.eulerAngles.z + boneWorldRotation));
+					thisTransform.SetPositionAndRotation(targetWorldPosition, Quaternion.Euler(worldRotation.x, worldRotation.y, worldRotation.z + boneWorldRotation));
 					#else
 					thisTransform.position = targetWorldPosition;
-					thisTransform.rotation = Quaternion.Euler(worldRotation.x, worldRotation.y, skeletonTransform.rotation.eulerAngles.z + bone.WorldRotationX);
+					thisTransform.rotation = Quaternion.Euler(worldRotation.x, worldRotation.y, worldRotation.z + bone.WorldRotationX);
 					#endif
 				} else {
 					thisTransform.position = targetWorldPosition;

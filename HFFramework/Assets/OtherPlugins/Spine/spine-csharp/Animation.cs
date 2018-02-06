@@ -436,11 +436,11 @@ namespace Spine {
 				}
 				// Mixing out uses sign of setup or current pose, else use sign of key.
 				if (direction == MixDirection.Out) {
-					x = Math.Abs(x) * Math.Sign(bx);
-					y = Math.Abs(y) * Math.Sign(by);
+					x = (x >= 0 ? x : -x) * (bx >= 0 ? 1 : -1);
+					y = (y >= 0 ? y : -y) * (by >= 0 ? 1 : -1);
 				} else {
-					bx = Math.Abs(bx) * Math.Sign(x);
-					by = Math.Abs(by) * Math.Sign(y);
+					bx = (bx >= 0 ? bx : -bx) * (x >= 0 ? 1 : -1);
+					by = (by >= 0 ? by : -by) * (y >= 0 ? 1 : -1);
 				}
 				bone.scaleX = bx + (x - bx) * alpha;
 				bone.scaleY = by + (y - by) * alpha;
@@ -797,8 +797,6 @@ namespace Spine {
 	}
 
 	public class DeformTimeline : CurveTimeline {
-		static float[] zeros = new float[64];
-
 		internal int slotIndex;
 		internal float[] frames;
 		internal float[][] frameVertices;
@@ -831,30 +829,30 @@ namespace Spine {
 			if (vertexAttachment == null || !vertexAttachment.ApplyDeform(attachment)) return;
 
 			var verticesArray = slot.attachmentVertices;
+			if (verticesArray.Count == 0) alpha = 1;
+
 			float[][] frameVertices = this.frameVertices;
 			int vertexCount = frameVertices[0].Length;
-			if (verticesArray.Capacity < vertexCount) verticesArray.Capacity = vertexCount;	// verticesArray.SetSize(vertexCount) // Ensure size and preemptively set count.
-			verticesArray.Count = vertexCount;
-			float[] vertices = verticesArray.Items;
-
 			float[] frames = this.frames;
+			float[] vertices;
+
 			if (time < frames[0]) {
 				
 				switch (pose) {
 				case MixPose.Setup:
-					float[] zeroVertices;
-					if (vertexAttachment.bones == null) {
-						// Unweighted vertex positions (setup pose).
-						zeroVertices = vertexAttachment.vertices;
-					} else {
-						// Weighted deform offsets (zeros).
-						zeroVertices = DeformTimeline.zeros;
-						if (zeroVertices.Length < vertexCount) DeformTimeline.zeros = zeroVertices = new float[vertexCount];
-					}
-					Array.Copy(zeroVertices, 0, vertices, 0, vertexCount);
+					verticesArray.Clear();
 					return;
 				case MixPose.Current:
-					if (alpha == 1) return;
+					if (alpha == 1) {
+						verticesArray.Clear();
+						return;
+					}
+
+					// verticesArray.SetSize(vertexCount) // Ensure size and preemptively set count.
+					if (verticesArray.Capacity < vertexCount) verticesArray.Capacity = vertexCount;	
+					verticesArray.Count = vertexCount;
+					vertices = verticesArray.Items;
+
 					if (vertexAttachment.bones == null) {
 						// Unweighted vertex positions.
 						float[] setupVertices = vertexAttachment.vertices;
@@ -872,6 +870,11 @@ namespace Spine {
 				}
 
 			}
+
+			// verticesArray.SetSize(vertexCount) // Ensure size and preemptively set count.
+			if (verticesArray.Capacity < vertexCount) verticesArray.Capacity = vertexCount;	
+			verticesArray.Count = vertexCount;
+			vertices = verticesArray.Items;
 
 			if (time >= frames[frames.Length - 1]) { // Time is after last frame.
 				float[] lastVertices = frameVertices[frames.Length - 1];

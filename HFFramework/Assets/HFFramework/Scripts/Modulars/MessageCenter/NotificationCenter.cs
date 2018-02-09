@@ -4,7 +4,7 @@ using System;
 
 namespace HFFramework
 {
-    public class NotificationMessage
+    public struct NotificationMessage
     {
         /// <summary>
         ///  消息id
@@ -157,7 +157,6 @@ namespace HFFramework
             dic.Clear();
             self = null;
         }
-
     }
 }
 

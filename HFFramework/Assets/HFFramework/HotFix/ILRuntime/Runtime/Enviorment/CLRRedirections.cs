@@ -772,7 +772,7 @@ namespace ILRuntime.Runtime.Enviorment
             intp.Free(param);
 
             param = ILIntepreter.Minus(esp, 3);
-            object instance = StackObject.ToObject(param, domain, mStack);
+            object instance = CheckCrossBindingAdapter(StackObject.ToObject(param, domain, mStack));
             intp.Free(param);
 
             if (instance is ILRuntimeMethodInfo)
@@ -786,15 +786,40 @@ namespace ILRuntime.Runtime.Enviorment
                     object[] arr = (object[])p;
                     foreach (var i in arr)
                     {
-                        esp = ILIntepreter.PushObject(esp, mStack, i);
+                        esp = ILIntepreter.PushObject(esp, mStack, CheckCrossBindingAdapter(i));
                     }
                 }
                 bool unhandled;
                 var ilmethod = ((ILRuntimeMethodInfo)instance).ILMethod;
-                return intp.Execute(ilmethod, esp, out unhandled);
+                ret = intp.Execute(ilmethod, esp, out unhandled);
+                ILRuntimeMethodInfo imi = (ILRuntimeMethodInfo)instance;
+                var rt = imi.ReturnType;
+                if (rt != domain.VoidType)
+                {
+                    var res = ret - 1;
+                    if (res->ObjectType < ObjectTypes.Object)
+                    {
+                        if (rt is ILRuntimeWrapperType)
+                            rt = ((ILRuntimeWrapperType)rt).CLRType.TypeForCLR;
+                        return ILIntepreter.PushObject(res, mStack, rt.CheckCLRTypes(StackObject.ToObject(res, domain, mStack)), true);
+                    }
+                    else
+                        return ret;
+                }
+                else
+                    return ret;                
             }
             else
                 return ILIntepreter.PushObject(ret, mStack, ((MethodInfo)instance).Invoke(obj, (object[])p));
+        }
+
+        static object CheckCrossBindingAdapter(object obj)
+        {
+            if(obj is CrossBindingAdaptorType)
+            {
+                return ((CrossBindingAdaptorType)obj).ILInstance;
+            }
+            return obj;
         }
 
         /*public unsafe static object MethodInfoInvoke(ILContext ctx, object instance, object[] param, IType[] genericArguments)

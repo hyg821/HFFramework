@@ -218,7 +218,14 @@ namespace ILRuntime.Runtime.Stack
                     {
                         if (ft.IsValueType)
                         {
-                            AllocValueType(val, ft);
+                            if (ft is ILType || ((CLRType)ft).ValueTypeBinder != null)
+                                AllocValueType(val, ft);
+                            else
+                            {
+                                val->ObjectType = ObjectTypes.Object;
+                                val->Value = managedStack.Count;
+                                managedStack.Add(((CLRType)ft).CreateDefaultInstance());
+                            }
                         }
                         else
                         {
@@ -321,7 +328,7 @@ namespace ILRuntime.Runtime.Stack
                             case ObjectTypes.ValueTypeObjectReference:
                                 {
                                     var dst = *(StackObject**)&val->Value;
-                                    ClearValueTypeObject(vt, *(StackObject**)&val->Value);
+                                    ClearValueTypeObject(vt, dst);
                                 }
                                 break;
                             default:

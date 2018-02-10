@@ -1,14 +1,80 @@
-﻿
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 
 namespace HFFramework
 {
+    // 说明  和后端的通讯 发送逻辑 和 解析逻辑
+    //  一个完整的数据  =  数据头  （12字节 4+4+4)   +  数据体 （proto包字节+8冗余字节）
+    // 数据头 =  数据体字段长度4字节（数组反转） + 数据体类型字段长度4字节（数组反转） + 数据头冗余字段长度4字节（数组反转）
+    // 数据体 =  （proto包字节 + 数据体冗余字段长度8字节 ）（数组反转）
+
+    /// <summary>
+    /// socket前端
+    /// </summary>
     public class ClientSocket : Socket
     {
-        public const int ErrorPort = -9999;
+        /// <summary>
+        ///  数据体字段长度
+        /// </summary>
+        private const int MSG_BODY_LEN = 4;
+
+        /// <summary>
+        ///  数据体类型字段长度
+        /// </summary>
+        private const int MSG_BODY_TYPE = 4;
+
+        /// <summary>
+        /// 数据头冗余字段长度
+        /// </summary>
+        private const int MSG_EX = 4;
+
+        /// <summary>
+        ///  数据体冗余字段长度
+        /// </summary>
+        private const int MSG_BODY_EX = 8;
+
+        /// <summary>
+        ///  数据头长度
+        /// </summary>
+        private const int MSG_HEAD_LEN = MSG_BODY_LEN + MSG_BODY_TYPE + MSG_EX;
+
+        /// <summary>
+        ///  最大缓冲长度
+        /// </summary>
+        private const int MAX_BUFFER_LEN = 2048;
+
+        /// <summary>
+        /// 错误号
+        /// </summary>
+        private const int ERROR_PORT = -999999;
+
+        /// <summary>
+        ///  超时
+        /// </summary>
+        public TimeSpan outTimeSpan = new TimeSpan(0, 0, 5);
+
+        /// <summary>
+        ///  服务器 ip
+        /// </summary>
+        public string ServerIP { get; set; }
+
+        /// <summary>
+        ///  服务器端口
+        /// </summary>
+        public int ServerPort { get; set; }
+
+        /// <summary>
+        ///  缓冲数据容器
+        /// </summary>
+        private byte[] dataBuffer = new byte[MAX_BUFFER_LEN];
+
+        /// <summary>
+        ///  接收数据线程
+        /// </summary>
+        private Thread receiveThread;
+
         /// <summary>
         ///  开始连接
         /// </summary>
@@ -22,31 +88,39 @@ namespace HFFramework
         /// <summary>
         /// 数据委托
         /// </summary>
-        public Action<int, MemoryStream> MessageDispatchReceiveDelegate;
+        public Action<int, MemoryStream> messageDispatchReceiveDelegate;
 
-        private Thread thread;
-        private const int MAX_READ = 8192;
-        private byte[] dataBuffer = new byte[MAX_READ];//这个是一个数据容器
+        /// <summary>
+        ///  是否读取过数据头
+        /// </summary>
+        private bool isReadHead = false;
 
-        private const int MSG_HEAD_LEN = 12;
-        private bool _isReadHead = false;
-        private int _dataLen = 0;
-        private int _msgType;
+        /// <summary>
+        ///  数据体的长度
+        /// </summary>
+        private int dataLength = 0;
 
-        public string serverIp { get; set; }
-        public int serverPort { get; set; }
+        /// <summary>
+        ///  消息类型
+        /// </summary>
+        private int msgType;
 
-
+        /// <summary>
+        ///  构造方法
+        /// </summary>
+        /// <param name="addressFamily"></param>
+        /// <param name="socketType"></param>
+        /// <param name="protocolType"></param>
         public ClientSocket(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType) : base(addressFamily, socketType, protocolType)
         {
 
         }
 
-        public ClientSocket(SocketInformation socketInformation) : base(socketInformation)
-        {
-
-        }
-
+        /// <summary>
+        ///  开始连接
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="port"></param>
         public void Connecting(string ip, int port)
         {
             if (Connected == true && beginConnectedCallback != null)
@@ -56,23 +130,25 @@ namespace HFFramework
             }
             else
             {
-                serverIp = ip;
-                serverPort = port;
+                ServerIP = ip;
+                ServerPort = port;
+                HFLog.E("ClientSocket开始连接： ip： " + ip + "  port:  " + port);
                 //这是一个异步的建立连接，当连接建立成功时调用connectCallback方法
-                IAsyncResult result = BeginConnect(serverIp, serverPort, new AsyncCallback(ConnectSuccess), null);
+                IAsyncResult result = BeginConnect(ServerIP, ServerPort, new AsyncCallback(ConnectSuccess), null);
                 //这里做一个超时的监测，当连接超过5秒还没成功表示超时
-                bool success = result.AsyncWaitHandle.WaitOne(10000, true);
+                bool success = result.AsyncWaitHandle.WaitOne(outTimeSpan, true);
                 if (success == false)
                 {
                     //超时
                     CloseSocket();
+                    HFLog.E("连接超时");
                 }
                 else
                 {
                     //与socket建立连接成功，开启线程接受服务端数据。
-                    thread = new Thread(new ThreadStart(ReceiveMessage));
-                    thread.IsBackground = true;
-                    thread.Start();
+                    receiveThread = new Thread(new ThreadStart(ReceiveMessage));
+                    receiveThread.IsBackground = true;
+                    receiveThread.Start();
                 }
             }
         }
@@ -85,6 +161,7 @@ namespace HFFramework
         {
             if (beginConnectedCallback != null)
             {
+                HFLog.E("ClientSocket 连接" + Connected);
                 beginConnectedCallback(Connected);
             }
         }
@@ -99,9 +176,10 @@ namespace HFFramework
             MemoryStream stream = new MemoryStream();
             stream.Write(data, 0, data.Length);
             stream.Position = 0;
-            if (MessageDispatchReceiveDelegate != null)
+
+            if (messageDispatchReceiveDelegate != null)
             {
-                MessageDispatchReceiveDelegate(messageType, stream);
+                messageDispatchReceiveDelegate(messageType, stream);
             }
         }
 
@@ -128,25 +206,28 @@ namespace HFFramework
                 BinaryWriter writer = new BinaryWriter(stream);
 
                 //消息长度
-                byte[] temp = BitConverter.GetBytes(msg.Length + 4 + 4);
+                byte[] temp = BitConverter.GetBytes(msg.Length + MSG_BODY_EX);
                 Array.Reverse(temp);
-                writer.Write(BitConverter.ToInt32(temp, 0));
+                writer.Write(temp);
 
                 //消息号
                 temp = BitConverter.GetBytes(msgType);
                 Array.Reverse(temp);
-                writer.Write(BitConverter.ToInt32(temp, 0));
+                writer.Write(temp);
 
                 //消息编号
                 temp = BitConverter.GetBytes(msgType);
                 Array.Reverse(temp);
-                writer.Write(BitConverter.ToInt32(temp, 0));
+                writer.Write(temp);
 
                 //消息体
                 writer.Write(msg);
                 writer.Flush();
 
                 Send(stream.ToArray());
+
+                stream.Dispose();
+                writer.Close();
             }
         }
 
@@ -157,69 +238,59 @@ namespace HFFramework
         {
             while (true)
             {
-                if (Connected == false)
+                if (Connected)
+                {
+                    if (!isReadHead && Available >= MSG_HEAD_LEN)
+                    {
+                        int len = Receive(dataBuffer, MSG_HEAD_LEN, 0);
+
+                        MemoryStream stream = new MemoryStream(dataBuffer);
+                        BinaryReader reader = new BinaryReader(stream);
+
+                        byte[] temp = reader.ReadBytes(MSG_BODY_LEN);
+                        Array.Reverse(temp);
+                        dataLength = BitConverter.ToInt32(temp, 0) - MSG_BODY_EX;
+
+                        temp = reader.ReadBytes(MSG_BODY_TYPE);
+                        Array.Reverse(temp);
+                        msgType = BitConverter.ToInt32(temp, 0);
+
+                        //DebugTools.Log("-----读取头部----- 数据长度： " + dataLength +  "   消息号:   " + msgType + "   可用长度：  " + Available);
+                        isReadHead = true;
+                    }
+
+                    //如果已经读取过头部并且当前消息大于等于包长度
+                    if (isReadHead && Available >= dataLength)
+                    {
+                        //DebugTools.Log("-----读取消息-----  " + Available + "  len:  " + _dataLen);
+                        if (dataLength > 0)
+                        {
+                            byte[] msgBufferBytes = new byte[dataLength];
+                            int lenData = Receive(msgBufferBytes, dataLength, 0);
+                            //DebugTools.Log("-----读取消息-----  " + Available + "  len:  " + lenData);
+                            readResponse(msgBufferBytes, msgType);
+                        }
+                        else
+                        {
+                            readResponse(new byte[0], msgType);
+                        }
+                        isReadHead = false;
+                    }
+
+                    // 休眠2毫秒
+                    Thread.Sleep(2);
+                }
+                else
                 {
                     break;
-                }
-                //如果没读取过头部并且可读取
-                Thread.Sleep(1);
-                if (!_isReadHead && Available >= MSG_HEAD_LEN)
-                {
-                    int len = Receive(dataBuffer, MSG_HEAD_LEN, 0);
-
-                    MemoryStream stream = new MemoryStream(dataBuffer);
-                    BinaryReader reader = new BinaryReader(stream);
-
-                    byte[] temp = BitConverter.GetBytes(reader.ReadInt32());
-                    Array.Reverse(temp);
-                    _dataLen = BitConverter.ToInt32(temp, 0) - 8;
-
-                    temp = BitConverter.GetBytes(reader.ReadInt32());
-                    Array.Reverse(temp);
-                    _msgType = BitConverter.ToInt32(temp, 0);
-
-                    temp = BitConverter.GetBytes(reader.ReadInt32());
-                    Array.Reverse(temp);
-                    int bId = BitConverter.ToInt32(temp, 0);
-                    //DebugTools.Log("-----读取头部----- 数据长度： " + _dataLen + "  编号:  " + bId + "   消息号:   " + _msgType + "   可用长度：  " + Available);
-                    _isReadHead = true;
-                }
-
-                //如果已经读取过头部并且当前消息大于等于包长度
-                if (_isReadHead && Available >= _dataLen)
-                {
-                    //DebugTools.Log("-----读取消息-----  " + Available + "  len:  " + _dataLen);
-                    if (_dataLen > 0)
-                    {
-                        byte[] msgBufferBytes = new byte[_dataLen];
-                        int lenData = Receive(msgBufferBytes, _dataLen, 0);
-
-                        //DebugTools.Log("-----读取消息-----  " + Available + "  len:  " + lenData);
-                        readResponse(msgBufferBytes, _msgType);
-                    }
-                    else
-                    {
-                        readResponse(new byte[0], _msgType);
-                    }
-                    _isReadHead = false;
-
-
-                    //继续下一次循环接收
-                    /* 
-                    //如果socket中仍然有数据可以处理
-                    if (Connected && Available >= MSG_HEAD_LEN)
-                    {
-                        ReceiveMessage();
-                        break;
-                    }
-                    */
                 }
             }
         }
 
         public void CloseSocket()
         {
-            Close();//关闭连接
+            HFLog.E("Socket关闭");
+            Close();
         }
     }
 }

@@ -58,7 +58,7 @@ namespace HFFramework
         /// <summary>
         /// 真正的socket 
         /// </summary>
-        private ClientSocket socketClient;
+        private ClientSocket socket;
 
         /// <summary>
         ///  监测网络状态的间隔时间
@@ -82,7 +82,7 @@ namespace HFFramework
                 {
                     isDispatch = value;
                     enabled = isDispatch;
-                    sEvents.Clear();
+                    eventQueue.Clear();
                 }
             }
             get
@@ -98,9 +98,9 @@ namespace HFFramework
         {
             get
             {
-                if (socketClient != null)
+                if (socket != null)
                 {
-                    return socketClient.Connected;
+                    return socket.Connected;
                 }
                 else
                 {
@@ -113,7 +113,7 @@ namespace HFFramework
         /// <summary>
         /// 线程同步
         /// </summary>
-        private Queue<KeyValuePair<int, MemoryStream>> sEvents = new Queue<KeyValuePair<int, MemoryStream>>();
+        private Queue<KeyValuePair<int, MemoryStream>> eventQueue = new Queue<KeyValuePair<int, MemoryStream>>();
 
         /// <summary>
         /// 消息派发委托
@@ -170,12 +170,12 @@ namespace HFFramework
 
         public void Init(AddressFamily ipv)
         {
-            if (socketClient == null)
+            if (socket == null)
             {
-                socketClient = new ClientSocket(ipv, SocketType.Stream, ProtocolType.Tcp);
-                socketClient.beginConnectedCallback = beginConnectedCallback;
-                socketClient.connectErrorCallback = connectErrorCallback;
-                socketClient.MessageDispatchReceiveDelegate += DispatchProto;
+                socket = new ClientSocket(ipv, SocketType.Stream, ProtocolType.Tcp);
+                socket.beginConnectedCallback = beginConnectedCallback;
+                socket.connectErrorCallback = connectErrorCallback;
+                socket.messageDispatchReceiveDelegate = DispatchProto;
                 IsDispatch = true;
 
                 if (checkNetCoroutine == null)
@@ -184,7 +184,7 @@ namespace HFFramework
                 }
             }
             //发送链接请求
-            socketClient.Connecting(serverIP, serverPort);
+            socket.Connecting(serverIP, serverPort);
         }
 
         public void BeginConnected(bool b)
@@ -209,7 +209,7 @@ namespace HFFramework
         /// </summary>
         public void SendMessage(int messageType, MemoryStream obj)
         {
-            socketClient.SendMessage(messageType, obj);
+            socket.SendMessage(messageType, obj);
             //DebugTools.Log("发送消息：  " + "消息号： " + messageType);
             //DebugTools.Log("发送消息：  " + "消息号： " + messageType + "  消息体：  " + JsonMapper.ToJson(obj));
         }
@@ -236,7 +236,7 @@ namespace HFFramework
         {
             //string json = JsonMapper.ToJson(msg);
             //DebugTools.TestLog("-----读取消息-----  消息号：  " + messageType + " DispatchProto len: " + msg.Length);
-            sEvents.Enqueue(new KeyValuePair<int, MemoryStream>(messageType, msg));
+            eventQueue.Enqueue(new KeyValuePair<int, MemoryStream>(messageType, msg));
         }
 
         /// <summary>
@@ -244,10 +244,10 @@ namespace HFFramework
         /// </summary>
         public void Update()
         {
-            while (sEvents.Count > 0)
+            while (eventQueue.Count > 0)
             {
-                KeyValuePair<int, MemoryStream> _event = sEvents.Dequeue();
-                messageDispatchProtoActionDelegate(_event.Key, _event.Value);
+                KeyValuePair<int, MemoryStream> e = eventQueue.Dequeue();
+                messageDispatchProtoActionDelegate(e.Key, e.Value);
             }
         }
 
@@ -262,11 +262,11 @@ namespace HFFramework
 
         public void CheckError()
         {
-            if (socketClient == null)
+            if (socket == null)
             {
                 state = HASocketState.Error;
             }
-            else if (socketClient.Connected == false)
+            else if (socket.Connected == false)
             {
                 state = HASocketState.Error;
             }
@@ -289,10 +289,10 @@ namespace HFFramework
         /// </summary>
         public void CloseSocket(bool isCloseCkeckNet)
         {
-            if (socketClient != null)
+            if (socket != null)
             {
-                socketClient.CloseSocket();
-                socketClient = null;
+                socket.CloseSocket();
+                socket = null;
                 IsDispatch = false;
 
                 if (isCloseCkeckNet == true)

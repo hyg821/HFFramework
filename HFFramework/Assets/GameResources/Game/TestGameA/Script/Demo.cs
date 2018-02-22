@@ -99,4 +99,39 @@ public class Demo : BaseMonoBehaviour
             testList.RemoveAt(testList.Count - 1);
         }
     }
+
+    public void 创建文件夹()
+    {
+        UtilsManager.CreateFolder("侯英格");
+    }
+
+    public void 删除文件夹()
+    {
+        UtilsManager.DeleteFolder("侯英格");
+    }
+
+    public void 写入一个文件()
+    {
+        UtilsManager.CreateFile("HYG.txt", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    }
+
+    public void 同步读取一个文件()
+    {
+        string str =  UtilsManager.SyncReadFile("HYG.txt");
+        print(str);
+    }
+
+    public void 异步读取一个文件()
+    {
+        UtilsManager.ASyncReadFile("HYG.txt", delegate (string str)
+        {
+            print(str);
+        });
+    }
+
+    public void 删除一个文件()
+    {
+        UtilsManager.DeleteFile("HYG.txt");
+    }
+
 }

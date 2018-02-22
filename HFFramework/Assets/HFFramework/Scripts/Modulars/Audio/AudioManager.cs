@@ -161,7 +161,7 @@ namespace HFFramework
             identifier++;
             GameObject g = new GameObject();
             g.name = name;
-            AudioSource a = g.AddComponent<AudioSource>();
+            g.AddComponent<AudioSource>();
             AudioPlayer player = g.AddComponent<AudioPlayer>();
             player.audioPlayerName = name;
             player.Type = type;

@@ -64,6 +64,8 @@ namespace HFFramework
                 //添加游戏运行环境
                 gameObject.AddComponent<GameEnvironment>();
 
+                gameObject.AddComponent<UtilsManager>();
+
                 //1资源加载   
                 GameObject resourcesManagerObj = new GameObject("ResourcesManager");
                 resourcesManager = resourcesManagerObj.AddComponent<HAResourceManager>();

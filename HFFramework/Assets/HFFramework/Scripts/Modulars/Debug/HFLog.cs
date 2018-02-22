@@ -30,7 +30,7 @@ namespace HFFramework
         {
             if (GameEnvironment.self.log == true)
             {
-                Debug.Log(Utils.SetColor(str, constColor));
+                Debug.Log(UtilsManager.SetColor(str, constColor));
             }
         }
 

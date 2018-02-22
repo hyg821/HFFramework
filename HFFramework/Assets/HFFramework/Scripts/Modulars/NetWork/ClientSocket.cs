@@ -242,7 +242,7 @@ namespace HFFramework
                 {
                     if (!isReadHead && Available >= MSG_HEAD_LEN)
                     {
-                        int len = Receive(dataBuffer, MSG_HEAD_LEN, 0);
+                        Receive(dataBuffer, MSG_HEAD_LEN, 0);
 
                         MemoryStream stream = new MemoryStream(dataBuffer);
                         BinaryReader reader = new BinaryReader(stream);
@@ -266,7 +266,7 @@ namespace HFFramework
                         if (dataLength > 0)
                         {
                             byte[] msgBufferBytes = new byte[dataLength];
-                            int lenData = Receive(msgBufferBytes, dataLength, 0);
+                            Receive(msgBufferBytes, dataLength, 0);
                             //DebugTools.Log("-----读取消息-----  " + Available + "  len:  " + lenData);
                             readResponse(msgBufferBytes, msgType);
                         }

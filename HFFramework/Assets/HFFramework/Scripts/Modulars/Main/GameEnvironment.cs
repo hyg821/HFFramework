@@ -46,7 +46,7 @@ namespace  HFFramework
             AddPathManager();
             SetRuntimeEnvironment(GameEnvironmentEnum.Develop);
             SwitchPlatform();
-            Log(true);
+            OpenLog(true);
         }
 
         public void AddPathManager()
@@ -97,7 +97,7 @@ namespace  HFFramework
         /// </summary>
         /// <param name="b"></param>
         /// <returns></returns>
-        public bool Log(bool b)
+        public bool OpenLog(bool b)
         {
             log = b;
             return log;

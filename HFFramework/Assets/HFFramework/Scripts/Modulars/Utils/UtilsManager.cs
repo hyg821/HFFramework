@@ -128,7 +128,7 @@ namespace HFFramework
         /// <param name="folderName"></param>
         /// <param name="isRelative"></param>
         /// <returns></returns>
-        public static void ASyncReadFile(string folderName, Action<string> callback, bool isRelative = true)
+        public static void AsyncReadFile(string folderName, Action<string> callback, bool isRelative = true)
         {
             string path = GetPath(folderName, isRelative);
             UtilsManager.self.StartCoroutine(UtilsManager.self.AsyncRead(path, callback));

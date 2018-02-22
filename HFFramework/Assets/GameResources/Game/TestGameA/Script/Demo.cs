@@ -123,7 +123,7 @@ public class Demo : BaseMonoBehaviour
 
     public void 异步读取一个文件()
     {
-        UtilsManager.ASyncReadFile("HYG.txt", delegate (string str)
+        UtilsManager.AsyncReadFile("HYG.txt", delegate (string str)
         {
             print(str);
         });

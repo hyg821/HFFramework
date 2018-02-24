@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 1612831303
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: b9373b9243dbabc6a18cc4fcbed520ef
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: e85e615244f2a888dcbfc4f4b3b69e54
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6cc2c9167417f2643948942d4e2880e0, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/GameResources/Game/TestGameA/ConfigA_@!/ScriptObjectConfigTestA.asset
+- Assets/GameResources/Game/TestGameA/ConfigA_@!/ErrorCode.json
+Dependencies: []

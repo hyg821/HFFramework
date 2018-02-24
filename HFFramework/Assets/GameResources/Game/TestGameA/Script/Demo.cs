@@ -134,4 +134,11 @@ public class Demo : BaseMonoBehaviour
         UtilsManager.DeleteFile("HYG.txt");
     }
 
+    public void 读取ScriptableObject配置文件()
+    {
+        AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile("Config");
+        ScriptableObjectTestA g = ab.LoadAssetWithCache<ScriptableObjectTestA>("ScriptObjectConfigTestA");
+        print("付希凯的岁数是" + g.peopleAge);
+    }
+
 }

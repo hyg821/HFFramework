@@ -9,7 +9,7 @@ namespace HFFramework
 {
     public class EditorHelper
     {
-        [MenuItem("Assets/Create/创建一个Assetbundle 打包配置文件", false, 80)]
+        [MenuItem("Assets/Create/HFFramework/创建一个Assetbundle 打包配置文件", false, 80)]
         public static void CreateAssetbundleConfig()
         {
             ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, ScriptableObject.CreateInstance<CreateScriptAssetAction>(), GetSelectedPathOrFallback() + "/AssetbundleConfig.json", null, "Assets/HFFramework/Template/AssetbundleConfig.json");

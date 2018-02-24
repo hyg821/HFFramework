@@ -139,6 +139,8 @@ public class Demo : BaseMonoBehaviour
         AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile("Config");
         ScriptableObjectTestA g = ab.LoadAssetWithCache<ScriptableObjectTestA>("ScriptObjectConfigTestA");
         print("付希凯的岁数是" + g.peopleAge);
+        print("付希凯的城市是" + g.address[0].city);
+        g.peopleAge = 10;
     }
 
 }

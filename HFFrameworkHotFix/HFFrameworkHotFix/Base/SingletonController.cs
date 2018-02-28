@@ -2,7 +2,6 @@
 {
     public class SingletonController<T> where T : ElementBase, new()
     {
-
         /// <summary>
         ///  私有
         /// </summary>

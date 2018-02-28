@@ -10,6 +10,13 @@ namespace HotFix
 {
     public class ElementBase
     {
+        
+        public static Vector3 showVector = new Vector3(1, 1, 1);
+
+        public static Vector3 hideVector = Vector3.zero;
+
+        public static float FadeTime = 0.25f;
+
         /// <summary>
         ///  全局控制 标记
         /// </summary>
@@ -25,7 +32,20 @@ namespace HotFix
         /// </summary>
         public GameObject gameObject;
 
+        /// <summary>
+        ///  gameObject 的 transform
+        /// </summary>
+        public Transform transform;
+
+        /// <summary>
+        ///  预设体
+        /// </summary>
         public GameObject prefab;
+
+        /// <summary>
+        ///  父element
+        /// </summary>
+        public ElementBase parent;
 
         /// <summary>
         ///  管理子物体的字典
@@ -70,13 +90,6 @@ namespace HotFix
 
         public List<IEnumerator> coroutineList = new List<IEnumerator>();
 
-        /// <summary>
-        ///  父element
-        /// </summary>
-        public ElementBase parent;
-
-
-
         private bool isShow;
         public virtual bool IsShow
         {
@@ -102,27 +115,10 @@ namespace HotFix
             }
         }
 
-
-
-        public static Vector3 showVector = new Vector3(1, 1, 1);
-        public static Vector3 hideVector = Vector3.zero;
-        public static float FadeTime = 0.25f;
-
-
         public ElementBase()
         {
 
         }
-
-        public static T CreateElementWithPath<T>(string path) where T : ElementBase, new()
-        {
-            GlobalIdControl++;
-            T t1 = new T();
-            t1.elementID = GlobalIdControl;
-            t1.Awake();
-            return t1;
-        }
-
 
         public static T CreatElementWithGameObject<T>(GameObject g = null) where T : ElementBase, new()
         {
@@ -130,6 +126,7 @@ namespace HotFix
             T t1 = new T();
             t1.elementID = GlobalIdControl;
             t1.gameObject = g;
+            t1.transform = g.transform;
             t1.Awake();
             return t1;
         }
@@ -142,11 +139,10 @@ namespace HotFix
             t1.elementID = GlobalIdControl;
             t1.parent = parent;
             t1.gameObject = g;
+            t1.transform = g.transform;
             t1.Awake();
             return t1;
         }
-
-
 
         public static T CreatElement<T>() where T : ElementBase, new()
         {
@@ -163,6 +159,7 @@ namespace HotFix
         /// </summary>
         public virtual void Awake()
         {
+
         }
 
         /// <summary>
@@ -218,7 +215,7 @@ namespace HotFix
         /// <returns></returns>
         public GameObject FindChild(string path)
         {
-            return gameObject.transform.Find(path).gameObject;
+            return transform.Find(path).gameObject;
         }
 
 
@@ -237,7 +234,7 @@ namespace HotFix
         /// <returns></returns>
         public T FindChild<T>(string path)
         {
-            return gameObject.transform.Find(path).GetComponent<T>();
+            return transform.Find(path).GetComponent<T>();
         }
 
 
@@ -252,7 +249,7 @@ namespace HotFix
         {
             if (gameObject != null)
             {
-                gameObject.transform.SetAsLastSibling();
+                transform.SetAsLastSibling();
             }
         }
 
@@ -260,8 +257,7 @@ namespace HotFix
         {
             if (gameObject != null)
             {
-                gameObject.transform.SetAsFirstSibling();
-
+                transform.SetAsFirstSibling();
             }
         }
 
@@ -273,7 +269,7 @@ namespace HotFix
         {
             if (gameObject!=null)
             {
-                gameObject.transform.SetSiblingIndex(i);
+                transform.SetSiblingIndex(i);
             }
         }
 
@@ -289,22 +285,15 @@ namespace HotFix
             }
         }
 
-        /// <summary>
-        ///  设置父物体
-        /// </summary>
-        /// <param name="e"></param>
-        /// <param name="g"></param>
-        public void SetParent(ElementBase e, GameObject g)
-        {
-            e.gameObject.transform.SetParent(g.transform, false);
-        }
-
-
-
-
         public void SetParent(GameObject g)
         {
-            gameObject.transform.SetParent(g.transform, false);
+            transform.SetParent(g.transform, false);
+        }
+
+        public void SetParent(ElementBase g)
+        {
+            parent = g;
+            transform.SetParent(g.transform, false);
         }
 
 
@@ -319,38 +308,25 @@ namespace HotFix
             e.gameObject.transform.SetParent(gameObject.transform, false);
         }
 
-        public void ShowViewInView(ElementBase e, GameObject g)
-        {
-            if (e != this)
-            {
-                AddSubElement(e);
-            }
-            e.gameObject.SetActive(true);
-            e.gameObject.transform.SetParent(g.transform, false);
-        }
-
 
         /// <summary>
         ///  开启协程
         /// </summary>
         /// <param name="coroutine"></param>
-        public Coroutine StartCoroutine(IEnumerator coroutine)
+        public Coroutine StartCoroutine(IEnumerator c)
         {
-            coroutineList.Add(coroutine);
-            return null;
-            //return MainUpdate.self.StartCoroutine(coroutine);
+            return GameLooper.self.StartCoroutine(c);
         }
 
         /// <summary>
         ///  关闭协程
         /// </summary>
         /// <param name="coroutine"></param>
-        public void StopCoroutine(IEnumerator coroutine)
+        public void StopCoroutine(IEnumerator c)
         {
-            if (coroutine != null)
+            if (c != null)
             {
-                coroutineList.Remove(coroutine);
-                //MainUpdate.self.StopCoroutine(coroutine);
+                GameLooper.self.StopCoroutine(c);
             }
         }
 
@@ -358,7 +334,7 @@ namespace HotFix
         {
             if (c != null)
             {
-                //MainUpdate.self.StopCoroutine(c);
+                GameLooper.self.StopCoroutine(c);
             }
         }
 
@@ -564,10 +540,6 @@ namespace HotFix
                 });
             }
         }
-
-
-
-
 
         /// <summary>
         ///  发送网络请求 

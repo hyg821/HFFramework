@@ -18,7 +18,8 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_GameObject_Binding.Register(app);
             UnityEngine_Transform_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);
-            System_Collections_Generic_List_1_IEnumerator_Binding.Register(app);
+            HFFramework_GameLooper_Binding.Register(app);
+            UnityEngine_MonoBehaviour_Binding.Register(app);
             UnityEngine_Vector3_Binding.Register(app);
             DG_Tweening_ShortcutExtensions_Binding.Register(app);
             DG_Tweening_TweenSettingsExtensions_Binding.Register(app);
@@ -26,6 +27,7 @@ namespace ILRuntime.Runtime.Generated
             HFFramework_NotificationMessage_Binding.Register(app);
             HFFramework_AudioManager_Binding.Register(app);
             HFFramework_AudioPlayer_Binding.Register(app);
+            System_Collections_Generic_List_1_IEnumerator_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_ValueCollection_Int32_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_ValueCollection_Int32_ILTypeInstance_Binding_Enumerator_Int32_ILTypeInstance_Binding.Register(app);
             System_IDisposable_Binding.Register(app);

@@ -120,7 +120,7 @@ namespace HFFramework
             appdomain.Invoke(MainClassName, "EnterDLL", null, null);
         }
 
-        public void Update()
+        public unsafe void Update()
         {
             if (appdomain!=null&& updateMethod!=null)
             {
@@ -209,17 +209,6 @@ namespace HFFramework
 
             AppDomainCommonSetting.Instance.SetupCLRRedirection(appdomain);
         }
-
-        public IMethod GetMethod(string type, string method, object instance, params object[] p)
-        {
-            IType t = appdomain.GetType(type);
-            if (t != null)
-            {
-                return t.GetMethod(method, p != null ? p.Length : 0);
-            }
-            return null;
-        }
-
 
         public void DestroyManager()
         {

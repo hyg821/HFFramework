@@ -35,7 +35,7 @@ public class ILRuntimeCLRBinding
 
         //所有DLL内的类型的真实C#类型都是ILTypeInstance
         types.Add(typeof(List<ILRuntime.Runtime.Intepreter.ILTypeInstance>));
-        ILRuntime.Runtime.CLRBinding.BindingCodeGenerator.GenerateBindingCode(types, "Assets/Game/Scripts/Libs/ILRuntime/Generated");
+        ILRuntime.Runtime.CLRBinding.BindingCodeGenerator.GenerateBindingCode(types, "Assets/HFFramework/HotFix/ILRuntime/Generated");
     }
 
     [MenuItem("ILRuntime/Generate CLR Binding Code by Analysis")]
@@ -43,28 +43,16 @@ public class ILRuntimeCLRBinding
     {
         Debug.Log("开始自动分析");
         //用新的分析热更dll调用引用来生成绑定代码
-        //ILRuntime.Runtime.Enviorment.AppDomain domain = new ILRuntime.Runtime.Enviorment.AppDomain();
-        /*
-        using (System.IO.FileStream fs = new System.IO.FileStream("Assets/StreamingAssets/fishgamehall.dll", System.IO.FileMode.Open, System.IO.FileAccess.Read))
-        {
-            domain.LoadAssembly(fs);
-        }
-        using (System.IO.FileStream fs = new System.IO.FileStream("Assets/StreamingAssets/fishgamehotfix.dll", System.IO.FileMode.Open, System.IO.FileAccess.Read))
-        {
-            domain.LoadAssembly(fs);
-        }
-        using (System.IO.FileStream fs = new System.IO.FileStream("Assets/StreamingAssets/jiejigamehotfix.dll", System.IO.FileMode.Open, System.IO.FileAccess.Read))
-        {
-            domain.LoadAssembly(fs);
-        }
-        using (System.IO.FileStream fs = new System.IO.FileStream("Assets/StreamingAssets/texaspokerhotfix.dll", System.IO.FileMode.Open, System.IO.FileAccess.Read))
+        ILRuntime.Runtime.Enviorment.AppDomain domain = new ILRuntime.Runtime.Enviorment.AppDomain();
+        using (System.IO.FileStream fs = new System.IO.FileStream("Assets/StreamingAssets/DLL/HFFrameworkHotFix.dll", System.IO.FileMode.Open, System.IO.FileAccess.Read))
         {
             domain.LoadAssembly(fs);
         }
         //Crossbind Adapter is needed to generate the correct binding code
         InitILRuntime(domain);
-        ILRuntime.Runtime.CLRBinding.BindingCodeGenerator.GenerateBindingCode(domain, "Assets/Game/Scripts/Libs/ILRuntime/Generated");
-        */
+        ILRuntime.Runtime.CLRBinding.BindingCodeGenerator.GenerateBindingCode(domain, "Assets/HFFramework/HotFix/ILRuntime/Generated");
+        AssetDatabase.Refresh();
+        Debug.Log("开始自动结束");
     }
 
     static void InitILRuntime(ILRuntime.Runtime.Enviorment.AppDomain domain)

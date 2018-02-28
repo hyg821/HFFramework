@@ -14,3 +14,4 @@ F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Debug\HFFramewo
 F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Debug\HFFrameworkHotFix.pdb
 F:\GitHubGit\HFFramework\HFFramework\Assets\StreamingAssets\DLL\HFFrameworkHotFix.dll
 F:\GitHubGit\HFFramework\HFFramework\Assets\StreamingAssets\DLL\HFFrameworkHotFix.pdb
+F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Debug\HFFrameworkHotFix.csproj.CoreCompileInputs.cache

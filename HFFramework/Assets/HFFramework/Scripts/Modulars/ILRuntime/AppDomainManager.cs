@@ -9,24 +9,71 @@ using UnityEngine.SceneManagement;
 using Spine;
 using Assets.Game.Scripts.HotFix;
 using HFFramework;
+using ILRuntime.CLR.Method;
+using ILRuntime.CLR.TypeSystem;
 
 namespace HFFramework
 {
     public class AppDomainManager : MonoBehaviour
     {
+
+        public string updateMethodName = "Update";
+        public string fixedUpdateMethodName = "FixedUpdate";
+
+        /// <summary>
+        ///  单例
+        /// </summary>
         public static AppDomainManager self;
 
-        //AppDomain是ILRuntime的入口，最好是在一个单例类中保存，整个游戏全局就一个，这里为了示例方便，每个例子里面都单独做了一个
-        //大家在正式项目中请全局只创建一个AppDomain
+        /// <summary>
+        ///  全局app作用域
+        /// </summary>
         private ILRuntime.Runtime.Enviorment.AppDomain appdomain;
 
+        /// <summary>
+        ///  游戏类型
+        /// </summary>
         public int GameType;
+
+        /// <summary>
+        ///  dll名字
+        /// </summary>
         public string DllName;
+
+        /// <summary>
+        ///  dll入口类名字
+        /// </summary>
         public string MainClassName;
+
+        /// <summary>
+        ///  空参数
+        /// </summary>
+        private object[] p0 = new object[0];
+
+        /// <summary>
+        ///  update缓存方法
+        /// </summary>
+        private IMethod updateMethod;
+
+        /// <summary>
+        ///  是否激活 mono的反射方法
+        /// </summary>
+        public bool IsActiveMonoMethod
+        {
+            set
+            {
+                enabled = value;
+            }
+            get
+            {
+                return enabled;
+            }
+        }
 
         public void Awake()
         {
             self = this;
+            IsActiveMonoMethod = false;
         }
 
         /// <summary>
@@ -35,18 +82,17 @@ namespace HFFramework
         /// <param name="gameType">游戏类型</param>
         /// <param name="dllName">dll名字</param>
         /// <param name="mainClass">dll被调用的方法</param>
+        ///   HFFramework.AppDomainManager.self.Jump(0, "HotFixDll", "HFFrameworkHotFix", "HotFixEnter");
         public void Jump(int gameType, string assetbundleName, string dllName, string mainClass)
         {
             GameType = gameType;
             DllName = dllName;
             MainClassName = mainClass;
-
             if (appdomain == null)
             {
                 appdomain = new ILRuntime.Runtime.Enviorment.AppDomain();
                 HAResourceManager.self.LoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
             }
-
             HotFixAwake();
         }
 
@@ -58,8 +104,15 @@ namespace HFFramework
             if (isOK)
             {
                 InitializeILRuntime();
-                appdomain.Invoke(MainClassName, "InitMonoBehaviour", null, GameObject.Find("AppDomainManager"));
+                appdomain.Invoke(MainClassName, "InitMonoBehaviour", null, null);
+                CacheMethod();
+                IsActiveMonoMethod = true;
             }
+        }
+
+        public void CacheMethod()
+        {
+            updateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(updateMethodName, 0);
         }
 
         public unsafe void HotFixAwake()
@@ -67,6 +120,13 @@ namespace HFFramework
             appdomain.Invoke(MainClassName, "EnterDLL", null, null);
         }
 
+        public void Update()
+        {
+            if (appdomain!=null&& updateMethod!=null)
+            {
+                appdomain.Invoke(updateMethod, null, p0);
+            }
+        }
 
         /// <summary>
         /// 初始化一下ILRuntime框架的东西
@@ -150,12 +210,22 @@ namespace HFFramework
             AppDomainCommonSetting.Instance.SetupCLRRedirection(appdomain);
         }
 
+        public IMethod GetMethod(string type, string method, object instance, params object[] p)
+        {
+            IType t = appdomain.GetType(type);
+            if (t != null)
+            {
+                return t.GetMethod(method, p != null ? p.Length : 0);
+            }
+            return null;
+        }
+
 
         public void DestroyManager()
         {
             if (appdomain != null)
             {
-                appdomain.Invoke(MainClassName, "Destory", null, GameObject.Find("AppDomainManager"));
+                appdomain.Invoke(MainClassName, "Destory", null, null);
                 appdomain = null;
             }
             self = null;

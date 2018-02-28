@@ -1,0 +1,8 @@
+F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\bin\Release\HFFrameworkHotFix.dll
+F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\bin\Release\HFFrameworkHotFix.pdb
+F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Release\HFFrameworkHotFix.csproj.CoreCompileInputs.cache
+F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Release\HFFrameworkHotFix.dll
+F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Release\HFFrameworkHotFix.pdb
+F:\GitHubGit\HFFramework\HFFrameworkHotFix\HFFrameworkHotFix\obj\Release\HFFrameworkHotFix.csprojResolveAssemblyReference.cache
+F:\GitHubGit\HFFramework\HFFramework\Assets\StreamingAssets\DLL\HFFrameworkHotFix.dll
+F:\GitHubGit\HFFramework\HFFramework\Assets\StreamingAssets\DLL\HFFrameworkHotFix.pdb

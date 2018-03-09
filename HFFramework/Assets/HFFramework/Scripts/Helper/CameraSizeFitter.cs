@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class CameraSizeFit : MonoBehaviour
+    public class CameraSizeFitter : MonoBehaviour
     {
 
         private Camera m_Camera;

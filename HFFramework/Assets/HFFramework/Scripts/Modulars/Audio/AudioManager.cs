@@ -161,7 +161,6 @@ namespace HFFramework
             identifier++;
             GameObject g = new GameObject();
             g.name = name;
-            g.AddComponent<AudioSource>();
             AudioPlayer player = g.AddComponent<AudioPlayer>();
             player.audioPlayerName = name;
             player.Type = type;
@@ -212,7 +211,6 @@ namespace HFFramework
             }
         }
 
-
         public AudioPlayer GetFreeAudioPlayer()
         {
             int i = 0;
@@ -233,18 +231,15 @@ namespace HFFramework
                 }
                 i++;
             }
-
             AudioPlayer player = CreateAudioSource("FreeAudio" + identifier, gameObject, SoundType.Free);
             return player;
         }
-
 
         public void Recovery(AudioPlayer player)
         {
             player.Stop();
             player.CurrentAudioClip = null;
         }
-
 
         public void DestoryPlayer(AudioPlayer player)
         {
@@ -268,7 +263,6 @@ namespace HFFramework
         {
             DestoryPlayer(GetAudioSource(name, type));
         }
-
 
         public void DestoryAllAudioPlayer()
         {
@@ -298,6 +292,5 @@ namespace HFFramework
             DestoryAllAudioPlayer();
             self = null;
         }
-
     }
 }

@@ -15,8 +15,6 @@ namespace HFFramework
 
         private Coroutine coroutine;
 
-        //private IEnumerator autoRecovery;
-
         private bool isAutoRecovery = true;
         public bool IsAutoRecovery
         {
@@ -73,7 +71,6 @@ namespace HFFramework
             }
         }
 
-
         public bool IsPlaying
         {
             get
@@ -81,7 +78,6 @@ namespace HFFramework
                 return source.isPlaying;
             }
         }
-
 
         /// <summary>
         ///  播放声音列表
@@ -104,7 +100,6 @@ namespace HFFramework
             }
         }
 
-
         public float Volume
         {
             set
@@ -117,30 +112,13 @@ namespace HFFramework
             }
         }
 
-
-
         public void Awake()
-        {
-            AudioSource a = GetComponent<AudioSource>();
-            //autoRecovery = AutoRecovery();
-            if (a != null)
+        {        
+            if (gameObject.GetComponent<AudioSource>() == null)
             {
-                source = a;
-            }
-            if (type == SoundType.Music)
-            {
-                Volume = AudioManager.self.MusicVolume;
-            }
-            else if (type == SoundType.Free)
-            {
-                Volume = AudioManager.self.MusicVolume;
-            }
-            else if (type == SoundType.Effect)
-            {
-                Volume = AudioManager.self.EffectVolume;
+                source = gameObject.AddComponent<AudioSource>();
             }
         }
-
 
         void ResetAutoRecovery()
         {
@@ -160,8 +138,6 @@ namespace HFFramework
             }
         }
 
-
-
         /// <summary>
         ///  给播放器设置一个 播放列表
         /// </summary>
@@ -179,7 +155,6 @@ namespace HFFramework
             }
         }
 
-
         /// <summary>
         ///  通过音频名字 获取一个音乐片段
         /// </summary>
@@ -195,9 +170,7 @@ namespace HFFramework
             {
                 return null;
             }
-
         }
-
 
         /// <summary>
         ///  设置音频片段 并且播放
@@ -212,15 +185,6 @@ namespace HFFramework
         public void SetAudioClipAndPlay(string packageName, string audioName)
         {
             SetAudioClipAndPlay(HAResourceManager.self.GetAudio(packageName, audioName));
-        }
-
-        IEnumerator dalyPlay()
-        {
-            for (int i = 0; i < 1; i++)
-            {
-                yield return null;
-            }
-            Play();
         }
 
         public void Play()

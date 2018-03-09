@@ -431,17 +431,16 @@ namespace HFFramework
                                 string md5Str = AssetBundleCreater.GetMD5(newItem);
                                 // 通过文件路径 设置assetbundle 
                                 assetImporter.assetBundleName = md5Str;
-
                                 string md5;
                                 if (assetbundleNameDic.TryGetValue(newItem, out md5) == false)
                                 {
                                     assetbundleNameDic.Add(newItem, md5Str);
                                 }
                             }
+
                             if (config != null && config.assetbundleNameType == "Custom")
                             {
                                 assetImporter.assetBundleName = config.assetbundleName;
-
                                 string md5;
                                 if (assetbundleNameDic.TryGetValue(newItem, out md5) == false)
                                 {

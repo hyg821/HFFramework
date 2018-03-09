@@ -1,10 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using UnityEngine.SceneManagement;
-using System.IO;
 using Mono.Cecil.Pdb;
+
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 
 namespace HFFramework
 {
@@ -377,6 +381,21 @@ namespace HFFramework
                 return allAssetBundleDic[name];
             }
             return null;
+        }
+
+        /// <summary>
+        ///  在编辑器开发的时候使用的加载方式  在正式运行的时候需要改回正规写法
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        public T EditorLoadAsset<T>(string name) where T:UnityEngine.Object
+        {
+            T tx = null;
+            if (GameEnvironment.self.runtimePlatform== GamePlatform.Editor)
+            {
+               tx =  AssetDatabase.LoadAssetAtPath<T>(name);
+            }
+            return tx;
         }
 
 

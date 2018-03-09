@@ -1,1 +1,7 @@
-{"GameResources_Game_TestGameA_ConfigA_@!":"Config","GameResources_Game_TestGameA_DLL_@!":"HotFixDll","GameResources_Game_TestGameA_Prefab_@!":"Prefab","GameResources_Game_TestGameA_Scene_@!":"Scene","GameResources_HFCommonResources_UISystem_@!":"HFUI"}
+{
+  "GameResources_Game_TestGameA_ConfigA_@!": "Config",
+  "GameResources_Game_TestGameA_DLL_@!": "HotFixDll",
+  "GameResources_Game_TestGameA_Prefab_@!": "Prefab",
+  "GameResources_Game_TestGameA_Scene_@!": "Scene",
+  "GameResources_HFCommonResources_UISystem_@!": "HFUI"
+}

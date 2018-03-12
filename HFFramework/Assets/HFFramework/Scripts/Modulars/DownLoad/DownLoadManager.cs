@@ -100,6 +100,7 @@ namespace HFFramework
             }
             self.cacheDic.Clear();
             self = null;
+            Resources.UnloadUnusedAssets();
         }
 
         public void DestroyManager()

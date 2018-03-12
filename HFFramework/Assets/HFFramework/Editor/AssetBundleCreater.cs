@@ -22,7 +22,7 @@ namespace HFFramework
 
             Caching.CleanCache();
 
-            //SetAssetbundlesNames();
+            SetAssetbundlesNames();
 
             BuildTarget target;
 #if UNITY_STANDALONE_WIN

@@ -157,6 +157,7 @@ namespace HFFramework
         {
             // 注册litjson
             LitJson.JsonMapper.RegisterILRuntimeCLRRedirection(appdomain);
+
             appdomain.RegisterCrossBindingAdaptor(new MonoBehaviourAdapter());
             //使用Couroutine时，C#编译器会自动生成一个实现了IEnumerator，IEnumerator<object>，IDisposable接口的类，因为这是跨域继承，所以需要写CrossBindAdapter（详细请看04_Inheritance教程），Demo已经直接写好，直接注册即可
             appdomain.RegisterCrossBindingAdaptor(new CoroutineAdapter());
@@ -226,7 +227,7 @@ namespace HFFramework
             });
 
             //不要注释  否则会开启大量反射方法
-            //ILRuntime.Runtime.Generated.CLRBindings.Initialize(appdomain);
+            ILRuntime.Runtime.Generated.CLRBindings.Initialize(appdomain);
             AppDomainCommonSetting.Instance.SetupCLRRedirection(appdomain);
         }
 

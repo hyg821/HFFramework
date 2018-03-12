@@ -8,9 +8,20 @@ namespace HFFramework
     {
         public static GameLooper self;
 
-        public Action updateAction;
-        public Action fixedUpdateAction;
-        public Action lateUpdateAction;
+        /// <summary>
+        ///  需要update的 列表
+        /// </summary>
+        private List<BaseMonoBehaviour> updateList = new List<BaseMonoBehaviour>();
+
+        /// <summary>
+        ///  需要fixedUpdate的 列表
+        /// </summary>
+        private List<BaseMonoBehaviour> fixedUpdateList = new List<BaseMonoBehaviour>();
+
+        /// <summary>
+        ///  需要lateUpdate的 列表
+        /// </summary>
+        private List<BaseMonoBehaviour> lateUpdateList = new List<BaseMonoBehaviour>();
 
         /// <summary>
         ///  event队列
@@ -35,93 +46,99 @@ namespace HFFramework
                 e();
             }
 
-            if (updateAction!=null)
+            for (int i = 0; i < updateList.Count; i++)
             {
-                updateAction();
+                updateList[i].MyUpdate(Time.deltaTime);
             }
         }
 
         void FixedUpdate()
         {
-            if (fixedUpdateAction != null)
+            for (int i = 0; i < fixedUpdateList.Count; i++)
             {
-                fixedUpdateAction();
+                fixedUpdateList[i].MyFixedUpdate(Time.deltaTime);
             }
         }
 
         void LateUpdate()
         {
-            if (lateUpdateAction != null)
+            for (int i = 0; i < lateUpdateList.Count; i++)
             {
-                lateUpdateAction();
+                lateUpdateList[i].MyLateUpdate(Time.deltaTime);
             }
         }
 
         public void DestroyManager()
         {
-            updateAction = null;
-            fixedUpdateAction = null;
-            lateUpdateAction = null;
+            updateList.Clear();
+            fixedUpdateList.Clear();
+            lateUpdateList.Clear();
             eventQueue.Clear();
             self = null;
         }
 
         public static void BackToMainThread(Action e)
         {
-            if (e != null)
+            if (e != null&& self != null)
             {
-                if (self != null)
+                self.eventQueue.Enqueue(e);
+            }
+        }
+
+        public static void AddUpdate(BaseMonoBehaviour b)
+        {
+            if (self!=null)
+            {
+                if (self.updateList.Contains(b)==false)
                 {
-                    self.eventQueue.Enqueue(e);
+                    self.updateList.Add(b);
                 }
             }
         }
 
-        public static void AddUpdate(Action update)
-        {
-            if (self!=null)
-            {
-                self.updateAction += update;
-            }
-        }
-
-        public static void SubUpdate(Action update)
+        public static void SubUpdate(BaseMonoBehaviour b)
         {
             if (self != null)
             {
-                self.updateAction -= update;
+                self.updateList.Remove(b);
             }
         }
 
-        public static void AddFixedUpdate(Action update)
+        public static void AddFixedUpdate(BaseMonoBehaviour b)
         {
             if (self != null)
             {
-                self.fixedUpdateAction += update;
+                if (self.fixedUpdateList.Contains(b) == false)
+                {
+                    self.fixedUpdateList.Add(b);
+                }
             }
         }
 
-        public static void SubFixedUpdate(Action update)
+        public static void SubFixedUpdate(BaseMonoBehaviour b)
         {
             if (self != null)
             {
-                self.fixedUpdateAction -= update;
+                self.fixedUpdateList.Remove(b);
             }
         }
 
-        public static void AddLateUpdate(Action update)
+        public static void AddLateUpdate(BaseMonoBehaviour b)
         {
             if (self != null)
             {
-                self.lateUpdateAction += update;
+                if (self.lateUpdateList.Contains(b) == false)
+                {
+                    self.lateUpdateList.Add(b);
+                }
             }
         }
 
-        public static void SubLateUpdate(Action update)
+        public static void SubLateUpdate(BaseMonoBehaviour b)
         {
             if (self != null)
             {
-                self.lateUpdateAction -= update;
+                self.lateUpdateList.Remove(b);
             }
         }
     }

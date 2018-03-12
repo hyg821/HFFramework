@@ -46,21 +46,21 @@ public class Demo : BaseMonoBehaviour
         IsNeedLateUpdate = !IsNeedLateUpdate;
     }
 
-    public override void MyUpdate()
+    public override void MyUpdate(float f)
     {
-        base.MyUpdate();
+        base.MyUpdate(f);
         Debug.Log("MyUpdate");
     }
 
-    public override void MyFixedUpdate()
+    public override void MyFixedUpdate(float f)
     {
-        base.MyFixedUpdate();
+        base.MyFixedUpdate(f);
         Debug.Log("MyFixedUpdate");
     }
 
-    public override void MyLateUpdate()
+    public override void MyLateUpdate(float f)
     {
-        base.MyLateUpdate();
+        base.MyLateUpdate(f);
         Debug.Log("MyLateUpdate");
     }
 

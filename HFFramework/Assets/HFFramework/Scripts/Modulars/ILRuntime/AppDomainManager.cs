@@ -19,6 +19,7 @@ namespace HFFramework
 
         public string updateMethodName = "Update";
         public string fixedUpdateMethodName = "FixedUpdate";
+        public string lateUpdateMethodName = "LateUpdate";
 
         /// <summary>
         ///  单例
@@ -54,6 +55,8 @@ namespace HFFramework
         ///  update缓存方法
         /// </summary>
         private IMethod updateMethod;
+        private IMethod fixedUpdateMethod;
+        private IMethod lateUpdateMethod;
 
         /// <summary>
         ///  是否激活 mono的反射方法
@@ -113,6 +116,8 @@ namespace HFFramework
         public void CacheMethod()
         {
             updateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(updateMethodName, 0);
+            fixedUpdateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(fixedUpdateMethodName, 0);
+            lateUpdateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(lateUpdateMethodName, 0);
         }
 
         public unsafe void HotFixAwake()
@@ -120,11 +125,27 @@ namespace HFFramework
             appdomain.Invoke(MainClassName, "EnterDLL", null, null);
         }
 
-        public unsafe void Update()
+        public  void Update()
         {
             if (appdomain!=null&& updateMethod!=null)
             {
                 appdomain.Invoke(updateMethod, null, p0);
+            }
+        }
+
+        public void FixedUpdate()
+        {
+            if (appdomain != null && updateMethod != null)
+            {
+                appdomain.Invoke(fixedUpdateMethod, null, p0);
+            }
+        }
+
+        public void LateUpdate()
+        {
+            if (appdomain != null && updateMethod != null)
+            {
+                appdomain.Invoke(lateUpdateMethod, null, p0);
             }
         }
 
@@ -206,7 +227,6 @@ namespace HFFramework
 
             //不要注释  否则会开启大量反射方法
             //ILRuntime.Runtime.Generated.CLRBindings.Initialize(appdomain);
-
             AppDomainCommonSetting.Instance.SetupCLRRedirection(appdomain);
         }
 
@@ -219,7 +239,5 @@ namespace HFFramework
             }
             self = null;
         }
-
     }
-
 }

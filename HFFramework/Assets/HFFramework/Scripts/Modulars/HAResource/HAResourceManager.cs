@@ -6,10 +6,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mono.Cecil.Pdb;
 
-#if UNITY_EDITOR
-    using UnityEditor;
-#endif
-
 namespace HFFramework
 {
     public class HAResourceManager : MonoBehaviour
@@ -383,6 +379,7 @@ namespace HFFramework
             return null;
         }
 
+        /*
         /// <summary>
         ///  在编辑器开发的时候使用的加载方式  在正式运行的时候需要改回正规写法
         /// </summary>
@@ -397,6 +394,7 @@ namespace HFFramework
             }
             return tx;
         }
+        */
 
 
         /// <summary>

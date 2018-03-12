@@ -11,14 +11,23 @@ public class HotFixEnter
     public static void EnterDLL()
     {
         Debug.Log("进入DLL  啦啦啦啦啦啦");
-        Debug.Log("进入DLL  啦啦啦啦啦啦");
-        Debug.Log("进入DLL  啦啦啦啦啦啦");
     }
 
     public static void Update()
     {
         //Debug.Log("热更新执行Update");
     }
+
+    public static void FixedUpdate()
+    {
+        //Debug.Log("热更新执行FixedUpdate");
+    }
+
+    public static void LateUpdate()
+    {
+        //Debug.Log("热更新执行LateUpdate");
+    }
+
 }
 
 

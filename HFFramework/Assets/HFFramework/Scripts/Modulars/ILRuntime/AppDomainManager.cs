@@ -162,6 +162,11 @@ namespace HFFramework
             //使用Couroutine时，C#编译器会自动生成一个实现了IEnumerator，IEnumerator<object>，IDisposable接口的类，因为这是跨域继承，所以需要写CrossBindAdapter（详细请看04_Inheritance教程），Demo已经直接写好，直接注册即可
             appdomain.RegisterCrossBindingAdaptor(new CoroutineAdapter());
 
+            //添加值绑定
+            appdomain.RegisterValueTypeBinder(typeof(Vector3), new Vector3Binder());
+            appdomain.RegisterValueTypeBinder(typeof(Quaternion), new QuaternionBinder());
+            appdomain.RegisterValueTypeBinder(typeof(Vector2), new Vector2Binder());
+
             //==============================如果将委托实例传出给ILRuntime外部使用=============================================
             appdomain.DelegateManager.RegisterMethodDelegate<int>();
             appdomain.DelegateManager.RegisterMethodDelegate<int, MemoryStream>();

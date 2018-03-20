@@ -36,19 +36,19 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>..\..\HFFramework\Assets\Demigiant\DOTween\DOTween.dll</HintPath>
+      <HintPath>..\..\..\..\UnderGroundGit\Underground\Assets\OtherPlugins\Demigiant\DOTween\DOTween.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DOTween43">
-      <HintPath>..\..\HFFramework\Assets\Demigiant\DOTween\DOTween43.dll</HintPath>
+      <HintPath>..\..\..\..\UnderGroundGit\Underground\Assets\OtherPlugins\Demigiant\DOTween\DOTween43.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DOTween46">
-      <HintPath>..\..\HFFramework\Assets\Demigiant\DOTween\DOTween46.dll</HintPath>
+      <HintPath>..\..\..\..\UnderGroundGit\Underground\Assets\OtherPlugins\Demigiant\DOTween\DOTween46.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DOTween50">
-      <HintPath>..\..\HFFramework\Assets\Demigiant\DOTween\DOTween50.dll</HintPath>
+      <HintPath>..\..\..\..\UnderGroundGit\Underground\Assets\OtherPlugins\Demigiant\DOTween\DOTween50.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

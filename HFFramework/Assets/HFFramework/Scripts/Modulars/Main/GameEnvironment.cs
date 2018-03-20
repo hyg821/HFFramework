@@ -36,6 +36,16 @@ namespace  HFFramework
         public GamePlatform runtimePlatform;
 
         /// <summary>
+        ///  app版本
+        /// </summary>
+        public string AppVersion;
+
+        /// <summary>
+        ///  资源版本
+        /// </summary>
+        public string ResourceVersion;
+
+        /// <summary>
         ///  是否开启Log
         /// </summary>
         public bool log;
@@ -45,6 +55,8 @@ namespace  HFFramework
             self = this;
             AddPathManager();
             SetRuntimeEnvironment(GameEnvironmentEnum.Develop);
+            SetAppVersion();
+            SetResourceVersion("0.0.0");
             SwitchPlatform();
             OpenLog(true);
         }
@@ -90,6 +102,16 @@ namespace  HFFramework
                 default:
                     break;
             }
+        }
+
+        public void SetAppVersion()
+        {
+            AppVersion = Application.version;
+        }
+
+        public void SetResourceVersion(string s)
+        {
+            ResourceVersion = s;
         }
 
         /// <summary>

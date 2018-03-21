@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3955957192
+CRC: 4212379880
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -10,7 +10,8 @@ AssetBundleManifest:
       Dependencies: {}
     Info_2:
       Name: prefab
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: material
     Info_3:
       Name: scene1
       Dependencies: {}
@@ -19,4 +20,11 @@ AssetBundleManifest:
       Dependencies: {}
     Info_5:
       Name: hfui
+      Dependencies: {}
+    Info_6:
+      Name: material
+      Dependencies:
+        Dependency_0: textrure
+    Info_7:
+      Name: textrure
       Dependencies: {}

@@ -15,21 +15,14 @@ public class Demo : BaseMonoBehaviour
 
     public void AssetBundleTest()
     {
-        //GameObject prefab = HAResourceManager.self.GetGameObject("Prefab", "Cube");
-        //GameObject.Instantiate(prefab);
+        GameObject prefab = HAResourceManager.self.GetGameObject("Prefab", "Cube");
+        GameObject.Instantiate(prefab);
 
-        //AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile("Prefab");
-        //GameObject g = ab.LoadAssetWithCache<GameObject>("Sphere");
-        //GameObject.Instantiate(g);
+        AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile("Prefab");
+        GameObject g = ab.LoadAssetWithCache<GameObject>("Sphere");
+        GameObject.Instantiate(g);
 
-        //HAResourceManager.self.UnloadAssetBundle(ab, false);
-
-        HAResourceManager.self.LoadAssetBundleFromFileAsync("Prefab", delegate (AssetBundlePackage ab)
-        {
-            GameObject gg = ab.LoadAssetWithCache<GameObject>("Cube");
-            GameObject.Instantiate(gg);
-        });
-
+        HAResourceManager.self.UnloadAssetBundle(ab, false);
     }
 
     public void HotFixJump()

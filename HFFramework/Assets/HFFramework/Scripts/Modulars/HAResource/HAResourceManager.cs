@@ -270,6 +270,7 @@ namespace HFFramework
             if (!allAssetBundleDic.ContainsKey(assetBundleName))
             {
                 AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(assetBundleName, false));
+                HFLog.L("同步加载AssetBundle   " + assetBundleName);
                 AssetBundlePackage tmpAssetBundle = new AssetBundlePackage(bundle, assetBundleName);
                 AddAssetBundleToDic(tmpAssetBundle);
                 return tmpAssetBundle;
@@ -314,6 +315,7 @@ namespace HFFramework
             if (!allAssetBundleDic.ContainsKey(assetBundleName))
             {
                 AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(AutoGetResourcePath(assetBundleName, false));
+                HFLog.L("异步加载AssetBundle   " + assetBundleName);
                 yield return request;
                 if (!allAssetBundleDic.ContainsKey(assetBundleName))
                 {
@@ -494,6 +496,7 @@ namespace HFFramework
             {
                 allAssetBundleDic.Remove(bundle.name);
                 bundle.Unload(b);
+                HFLog.L("卸载Assetbundle  " + bundle.name);
             }
         }
 

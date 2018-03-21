@@ -1,0 +1,14 @@
+ManifestFileVersion: 0
+CRC: 3591067644
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 451ddca01bdff225ad3c793b58c4de4d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
+HashAppended: 0
+ClassTypes: []
+Assets:
+- Assets/GameResources/Game/TestGameA/Scene1_@!/BBB.unity
+Dependencies: []

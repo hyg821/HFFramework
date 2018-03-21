@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1727247410
+CRC: 2444890434
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -16,6 +16,6 @@ ClassTypes:
 - Class: 48
   Script: {instanceID: 0}
 Assets:
-- Assets/GameResources/Game/TestGameA/Material_@!/avc.mat
+- Assets/GameResources/Game/TestGameA/Material_[A]/avc.mat
 Dependencies:
 - F:/GitHubGit/HFFramework/HFFramework/Assets/StreamingAssets/AssetBundles/textrure

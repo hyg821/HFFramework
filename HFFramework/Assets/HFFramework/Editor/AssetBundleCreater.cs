@@ -11,18 +11,20 @@ namespace HFFramework
 {
     public class AssetBundleCreater
     {
+
+        public const string AssetFolderIde = "_[A]";
+
         public static Dictionary<string, string> assetbundleNameDic = new Dictionary<string, string>();
 
         /// <summary>
         /// 资源打包
         /// </summary>
-        [MenuItem("游戏辅助工具HYG/AssetBundles/构建 所有 AssetBundles")]
+        [MenuItem("游戏辅助工具/AssetBundles/构建 所有 AssetBundles")]
         static void BuildAllAssetBundles()
         {
-
             Caching.CleanCache();
 
-            SetAssetbundlesNames();
+            ReNameDLL();
 
             BuildTarget target;
 #if UNITY_STANDALONE_WIN
@@ -34,16 +36,13 @@ namespace HFFramework
 #elif UNITY_ANDROID
             target = BuildTarget.Android;
 #endif
-
             string AssetBundlesPath = Application.dataPath + "/StreamingAssets/AssetBundles";
             if (!Directory.Exists(AssetBundlesPath))
             {
                 Directory.CreateDirectory(AssetBundlesPath);
             }
             AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", BuildAssetBundleOptions.ChunkBasedCompression, target);
-
             BuildZip();
-
             if (abm)
             {
                 string[] assetBundles = abm.GetAllAssetBundles();
@@ -56,18 +55,21 @@ namespace HFFramework
                     item.key = assetBundles[i];
                     configList.Add(item);
                 }
-
                 MD5Diff config = new MD5Diff();
                 config.AssetsBundleMD5List = configList;
-
                 string json = JsonMapper.ToJson(config);
                 WriteMD5Diff(json);
             }
-
-
             //刷新编辑器
             AssetDatabase.Refresh();
             Debug.Log("Assetbundle Build 完成");
+        }
+
+        [MenuItem("游戏辅助工具/AssetBundles/构建 所有 AssetBundles  并且自动命名 ")]
+        static void SetAssetBundleNameAndBuildAllAssetBundles()
+        {
+            SetAssetbundlesNames();
+            BuildAllAssetBundles();
         }
 
         /// <summary>
@@ -255,7 +257,7 @@ namespace HFFramework
         }
 
 
-        [MenuItem("游戏辅助工具HYG/AssetBundles/构建 单个Assetbundle")]
+        [MenuItem("游戏辅助工具/AssetBundles/构建 单个Assetbundle")]
         static void BuildMiniGameAssetBundles()
         {
             List<AssetBundleBuild> list = new List<AssetBundleBuild>();
@@ -334,7 +336,7 @@ namespace HFFramework
         }
 
 
-        [MenuItem("游戏辅助工具HYG/AssetBundles/设置AssetbundleName")]
+        [MenuItem("游戏辅助工具/AssetBundles/设置AssetbundleName")]
         public static void SetAssetbundlesNames()
         {
             //ClearAssetBundlesName();
@@ -346,10 +348,10 @@ namespace HFFramework
             assetbundleNameDic.Clear();
         }
 
-        [MenuItem("游戏辅助工具HYG/AssetBundles/设置DLL到具体资源目录")]
+        [MenuItem("游戏辅助工具/AssetBundles/设置DLL到具体资源目录")]
         public static void ReNameDLL()
         {
-            string str = "/GameResources/Game/TestGameA/DLL_@!/";
+            string str = "/GameResources/Game/TestGameA/DLL"+AssetFolderIde+"/";
             string target = "HFFrameworkHotFix.dll";
             string sourcePath = Application.streamingAssetsPath + "/DLL/" + target;
             string reNamePath = Application.dataPath + str + target + ".bytes";
@@ -357,7 +359,7 @@ namespace HFFramework
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("游戏辅助工具HYG/AssetBundles/清除所有的AssetbundleName")]
+        [MenuItem("游戏辅助工具/AssetBundles/清除所有的AssetbundleName")]
         static void ClearAssetBundlesName()
         {
             int length = AssetDatabase.GetAllAssetBundleNames().Length;
@@ -387,7 +389,7 @@ namespace HFFramework
 
             DirectoryInfo folder = new DirectoryInfo(path);
 
-            if (folder.Name.Contains("_@!"))
+            if (folder.Name.Contains(AssetFolderIde))
             {
                 FileInfo[] f = folder.GetFiles();
                 //先找出AssetbundleConfig
@@ -479,7 +481,7 @@ namespace HFFramework
         }
 
 
-        [MenuItem("游戏辅助工具HYG/AssetBundles/删除 所有 AssetBundles")]
+        [MenuItem("游戏辅助工具/AssetBundles/删除 所有 AssetBundles")]
         public static void DeleteAllAssetbundle()
         {
             AssetDatabase.DeleteAsset("Assets/StreamingAssets/AssetBundles");

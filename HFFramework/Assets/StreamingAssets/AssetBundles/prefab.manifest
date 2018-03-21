@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 107313493
+CRC: 1197880863
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -36,9 +36,9 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/GameResources/Game/TestGameA/Prefab_@!/Cube.prefab
-- Assets/GameResources/Game/TestGameA/Prefab_@!/VC.prefab
-- Assets/GameResources/Game/TestGameA/Prefab_@!/Sphere.prefab
-- Assets/GameResources/Game/TestGameA/Prefab_@!/Cube1.prefab
+- Assets/GameResources/Game/TestGameA/Prefab_[A]/Cube.prefab
+- Assets/GameResources/Game/TestGameA/Prefab_[A]/VC.prefab
+- Assets/GameResources/Game/TestGameA/Prefab_[A]/Sphere.prefab
+- Assets/GameResources/Game/TestGameA/Prefab_[A]/Cube1.prefab
 Dependencies:
 - F:/GitHubGit/HFFramework/HFFramework/Assets/StreamingAssets/AssetBundles/material

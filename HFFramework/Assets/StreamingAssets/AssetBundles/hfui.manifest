@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3016191561
+CRC: 3102984293
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -28,6 +28,6 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/GameResources/HFCommonResources/UISystem_@!/UISystem.prefab
-- Assets/GameResources/HFCommonResources/UISystem_@!/UICanvas.prefab
+- Assets/GameResources/HFCommonResources/UISystem_[A]/UISystem.prefab
+- Assets/GameResources/HFCommonResources/UISystem_[A]/UICanvas.prefab
 Dependencies: []

@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1040492060
+CRC: 856216364
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -10,5 +10,5 @@ Hashes:
 HashAppended: 0
 ClassTypes: []
 Assets:
-- Assets/GameResources/Game/TestGameA/Scene_@!/hyg.unity
+- Assets/GameResources/Game/TestGameA/Scene_[A]/hyg.unity
 Dependencies: []

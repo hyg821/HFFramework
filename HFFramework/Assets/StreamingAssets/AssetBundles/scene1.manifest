@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3968545547
+CRC: 105561194
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -10,5 +10,5 @@ Hashes:
 HashAppended: 0
 ClassTypes: []
 Assets:
-- Assets/GameResources/Game/TestGameA/Scene1_@!/BBB.unity
+- Assets/GameResources/Game/TestGameA/Scene1_[A]/BBB.unity
 Dependencies: []

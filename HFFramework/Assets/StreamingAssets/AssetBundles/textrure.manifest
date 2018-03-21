@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1701355265
+CRC: 2533936973
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 28
   Script: {instanceID: 0}
 Assets:
-- Assets/GameResources/Game/TestGameA/Texture_@!/avc.png
+- Assets/GameResources/Game/TestGameA/Texture_[A]/avc.png
 Dependencies: []

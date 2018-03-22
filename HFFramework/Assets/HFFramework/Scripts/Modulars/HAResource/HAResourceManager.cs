@@ -197,28 +197,15 @@ namespace HFFramework
             AssetBundle bundle = www.assetBundle;
             if (finishCallback != null && autoJump && !string.IsNullOrEmpty(sceneName))
             {
-                yield return StartCoroutine(LoadSceneAsync(sceneName));
-                bundle.Unload(false);
-                www.Dispose();
-                Resources.UnloadUnusedAssets();
+                yield return SceneManager.LoadSceneAsync(sceneName);
+            }
+            bundle.Unload(false);
+            www.Dispose();
+            Resources.UnloadUnusedAssets();
+            if (finishCallback != null)
+            {
                 finishCallback();
             }
-            else
-            {
-                bundle.Unload(false);
-                www.Dispose();
-                Resources.UnloadUnusedAssets();
-                if (finishCallback != null)
-                {
-                    finishCallback();
-                }
-            }
-        }
-
-        private IEnumerator LoadSceneAsync(string sceneName)
-        {
-            AsyncOperation ab = SceneManager.LoadSceneAsync(sceneName);
-            yield return ab;
         }
 
         /// <summary>

@@ -1,59 +1,70 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public delegate void OnState();
-
-public enum StateEnum
+namespace HFFramework
 {
-	OnStateEnter,
-	OnStateStay,
-	OnStateExit
-}
+    public enum StateEnum
+    {
+        StateEnter,
+        StateStay,
+        StateExit
+    }
 
-public class HYGBaseState  {
+    public class HYGBaseState
+    {
+        public string stateName;
+        public bool isRun = false;
+        public StateEnum current;
 
-	public GameObject obj;
+        public Action onStateEnter;
+        public Action onStateStay;
+        public Action onStateExit;
 
-	public bool isRun = false;
+        public HYGBaseState()
+        {
+            Init();
+        }
 
-	public string stateName;
+        public virtual void Init()
+        {
 
-	public OnState onStateEnter;
-	public OnState onStateStay;
-	public OnState onStateExit;
+        }
 
-	public StateEnum current;
+        public virtual void OnStateInvoke(StateEnum s)
+        {
+            switch (s)
+            {
+                case StateEnum.StateEnter:
 
+                    if (onStateEnter != null)
+                    {
+                        isRun = true;
+                        onStateEnter();
+                    }
 
-	public HYGBaseState(){
-		Init ();
-	}
+                    break;
+                case StateEnum.StateStay:
 
+                    if (onStateStay != null)
+                    {
+                        onStateStay();
+                    }
 
-	public virtual void Init(){
-		
-	}
+                    break;
+                case StateEnum.StateExit:
 
+                    if (onStateExit != null)
+                    {
+                        onStateExit();
+                        isRun = false;
+                    }
 
-	public virtual void OnStateInvoke(StateEnum s){
-		if (s == StateEnum.OnStateEnter) {
-			if (onStateEnter!=null) {
-				isRun = true;
-				onStateEnter ();
-			}
-		}
-		if (s == StateEnum.OnStateStay) {
-			if (onStateStay!=null) {
-				onStateStay ();
-			}
-		}
-		if (s == StateEnum.OnStateExit) {
-			if (onStateExit!=null) {
-				onStateExit ();
-				isRun = false;
-			}
-		}
-	}
-
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }

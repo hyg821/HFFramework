@@ -133,23 +133,10 @@ namespace HFFramework
                 ServerIP = ip;
                 ServerPort = port;
                 HFLog.E("ClientSocket开始连接： ip： " + ip + "  port:  " + port);
-                //这是一个异步的建立连接，当连接建立成功时调用connectCallback方法
-                IAsyncResult result = BeginConnect(ServerIP, ServerPort, new AsyncCallback(ConnectSuccess), null);
-                //这里做一个超时的监测，当连接超过5秒还没成功表示超时
-                bool success = result.AsyncWaitHandle.WaitOne(outTimeSpan, true);
-                if (success == false)
-                {
-                    //超时
-                    CloseSocket();
-                    HFLog.E("连接超时");
-                }
-                else
-                {
-                    //与socket建立连接成功，开启线程接受服务端数据。
-                    receiveThread = new Thread(new ThreadStart(ReceiveMessage));
-                    receiveThread.IsBackground = true;
-                    receiveThread.Start();
-                }
+                BeginConnect(ServerIP, ServerPort, new AsyncCallback(ConnectSuccess), null);
+                receiveThread = new Thread(new ThreadStart(ReceiveMessage));
+                receiveThread.IsBackground = true;
+                receiveThread.Start();
             }
         }
 

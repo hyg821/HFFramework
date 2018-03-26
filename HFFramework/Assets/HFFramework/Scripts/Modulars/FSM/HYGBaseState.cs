@@ -14,16 +14,36 @@ namespace HFFramework
 
     public class HYGBaseState
     {
-        public string stateName;
-        public bool isRun = false;
-        public StateEnum current;
+        public const string RootState = "Root";
 
-        public Action onStateEnter;
-        public Action onStateStay;
-        public Action onStateExit;
+        /// <summary>
+        ///  状态名称
+        /// </summary>
+        public string stateName;
+
+        /// <summary>
+        ///  是否正在运行
+        /// </summary>
+        public bool isRunning = false;
+
+        /// <summary>
+        ///  当前的状态类型 是 正在进入 还是持续中 还是已经退出
+        /// </summary>
+        public StateEnum currentState;
+
+
+        public Action OnStateEnterCallback;
+        public Action OnStateStayCallback;
+        public Action OnStateExitCallback;
 
         public HYGBaseState()
         {
+
+        }
+
+        public HYGBaseState(string name)
+        {
+            stateName = name;
             Init();
         }
 
@@ -34,31 +54,32 @@ namespace HFFramework
 
         public virtual void OnStateInvoke(StateEnum s)
         {
+            currentState = s;
             switch (s)
             {
                 case StateEnum.StateEnter:
-
-                    if (onStateEnter != null)
+                    OnStateEnter();
+                    if (OnStateEnterCallback != null)
                     {
-                        isRun = true;
-                        onStateEnter();
+                        isRunning = true;
+                        OnStateEnterCallback();
                     }
-
                     break;
+
                 case StateEnum.StateStay:
-
-                    if (onStateStay != null)
+                    OnStateStay();
+                    if (OnStateStayCallback != null)
                     {
-                        onStateStay();
+                        OnStateStayCallback();
                     }
-
                     break;
-                case StateEnum.StateExit:
 
-                    if (onStateExit != null)
+                case StateEnum.StateExit:
+                    OnStateExit();
+                    if (OnStateExitCallback != null)
                     {
-                        onStateExit();
-                        isRun = false;
+                        OnStateExitCallback();
+                        isRunning = false;
                     }
 
                     break;
@@ -66,5 +87,21 @@ namespace HFFramework
                     break;
             }
         }
+
+        public virtual void OnStateEnter()
+        {
+
+        }
+
+        public virtual void OnStateStay()
+        {
+
+        }
+
+        public virtual void OnStateExit()
+        {
+
+        }
+
     }
 }

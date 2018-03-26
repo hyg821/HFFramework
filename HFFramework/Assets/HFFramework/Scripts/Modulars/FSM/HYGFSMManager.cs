@@ -5,11 +5,16 @@ using UnityEngine;
 namespace HFFramework
 {
     public class HYGFSMManager
-    {
-        
-        Dictionary<string, HYGBaseState> allStateDic = new Dictionary<string, HYGBaseState>();
+    {   
+        /// <summary>
+        ///  缓存状态的字典
+        /// </summary>
+        private Dictionary<string, HYGBaseState> allStateDic = new Dictionary<string, HYGBaseState>();
 
         private HYGBaseState currentState;
+        /// <summary>
+        ///  获取当前正在执行的状态
+        /// </summary>
         public HYGBaseState CurrentState
         {
             set
@@ -22,6 +27,20 @@ namespace HFFramework
             }
         }
 
+        /// <summary>
+        ///  构造方法
+        /// </summary>
+        public HYGFSMManager()
+        {
+            HYGBaseState rootState = new HYGBaseState(HYGBaseState.RootState);
+            AddState(rootState);
+            TranslateToState(HYGBaseState.RootState);
+        }
+
+        /// <summary>
+        ///  添加一个状态
+        /// </summary>
+        /// <param name="state"></param>
         public void AddState(HYGBaseState state)
         {
             if (!allStateDic.ContainsKey(state.stateName))
@@ -30,6 +49,10 @@ namespace HFFramework
             }
         }
 
+        /// <summary>
+        ///  转移到某个状态
+        /// </summary>
+        /// <param name="stateName"></param>
         public void TranslateToState(string stateName)
         {
             if (CurrentState != null)
@@ -48,15 +71,6 @@ namespace HFFramework
             }
         }
 
-        public HYGFSMManager()
-        {
-            HYGBaseState rootState = new HYGBaseState();
-            rootState.stateName = "Root";
-            AddState(rootState);
-            TranslateToState("Root");
-        }
-
-        // Update is called once per frame
         public void Update()
         {
             if (CurrentState != null)

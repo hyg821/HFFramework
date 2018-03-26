@@ -56,7 +56,7 @@ namespace HFFramework
                 //否则使用 StreamingAssets 文件夹下的
                 else
                 {
-                    if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+                    if (GameEnvironment.self.runtimePlatform == GamePlatform.Android || GameEnvironment.self.runtimePlatform == GamePlatform.iOS)
                     {
                         newPath = ResourceSpareRootPath + path;
                     }
@@ -192,20 +192,34 @@ namespace HFFramework
         /// <returns></returns>
         private IEnumerator m_LoadScene(string assetBundleName, bool autoJump, string sceneName, Action finishCallback)
         {
+            assetBundleName = assetBundleName.ToLower();
             WWW www = WWW.LoadFromCacheOrDownload(AutoGetResourcePath(assetBundleName, true), 0);
             yield return www;
             AssetBundle bundle = www.assetBundle;
             if (finishCallback != null && autoJump && !string.IsNullOrEmpty(sceneName))
             {
-                yield return SceneManager.LoadSceneAsync(sceneName);
-            }
-            bundle.Unload(false);
-            www.Dispose();
-            Resources.UnloadUnusedAssets();
-            if (finishCallback != null)
-            {
+                yield return StartCoroutine(LoadSceneAsync(sceneName));
+                bundle.Unload(false);
+                www.Dispose();
+                Resources.UnloadUnusedAssets();
                 finishCallback();
             }
+            else
+            {
+                bundle.Unload(false);
+                www.Dispose();
+                Resources.UnloadUnusedAssets();
+                if (finishCallback != null)
+                {
+                    finishCallback();
+                }
+            }
+        }
+
+        private IEnumerator LoadSceneAsync(string sceneName)
+        {
+            AsyncOperation ab = SceneManager.LoadSceneAsync(sceneName);
+            yield return ab;
         }
 
         /// <summary>
@@ -282,7 +296,7 @@ namespace HFFramework
         {
             assetBundleName = assetBundleName.ToLower();
             yield return StartCoroutine(m_LoadAssetBundleFromFileAsync(assetBundleName));
-            if (finishCallback!=null)
+            if (finishCallback != null)
             {
                 finishCallback(allAssetBundleDic[assetBundleName]);
             }

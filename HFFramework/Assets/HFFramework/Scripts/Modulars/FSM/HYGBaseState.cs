@@ -16,6 +16,8 @@ namespace HFFramework
     {
         public const string RootState = "Root";
 
+        public HYGFSMManager manager;
+
         /// <summary>
         ///  状态名称
         /// </summary>
@@ -41,8 +43,9 @@ namespace HFFramework
 
         }
 
-        public HYGBaseState(string name)
+        public HYGBaseState(string name,HYGFSMManager m)
         {
+            manager = m;
             stateName = name;
             Init();
         }

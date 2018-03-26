@@ -32,7 +32,7 @@ namespace HFFramework
         /// </summary>
         public HYGFSMManager()
         {
-            HYGBaseState rootState = new HYGBaseState(HYGBaseState.RootState);
+            HYGBaseState rootState = new HYGBaseState(HYGBaseState.RootState,this);
             AddState(rootState);
             TranslateToState(HYGBaseState.RootState);
         }

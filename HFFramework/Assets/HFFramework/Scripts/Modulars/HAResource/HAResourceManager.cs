@@ -10,8 +10,11 @@ namespace HFFramework
 {
     public class HAResourceManager : MonoBehaviour
     {
+        // 注意 
         // 必须每一个场景一个包 并且场景不可以和别的资源放在同一个包里
-        // 1场景的包  2热更新代码的包  3Manifest包 不被管理
+        // 场景的包  热更新代码的包  Manifest包 不被管理  
+        // 场景不可以依赖别的包里的资源 因为场景没有做依赖递归加载 
+        // 如果有依赖请把依赖做成预设体 通过加载预设体的方式 实现
 
         public static HAResourceManager self;
 
@@ -244,12 +247,11 @@ namespace HFFramework
         /// <param name="assetName"></param>
         /// <param name="autoKillPrefab"></param>
         /// <param name="callBack"></param>
-        public void LoadPrefabWithAutoKill(string packageName, string assetName, bool autoKillPrefab, Action<GameObject> callback)
+        public void LoadPrefabWithAutoKill(string packageName, string assetName, Action<GameObject> callback)
         {
             AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(packageName);
             GameObject prefab = ab.assetBundle.LoadAsset<GameObject>(assetName);
             callback(prefab);
-            Destroy(prefab);
             UnloadAssetBundle(ab, false);
         }
 

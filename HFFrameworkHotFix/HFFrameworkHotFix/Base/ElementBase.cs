@@ -1,31 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
-using DG.Tweening;
 using HFFramework;
 
 namespace HotFix
 {
     public class ElementBase
     {
-        
-        public static Vector3 showVector = new Vector3(1, 1, 1);
-
-        public static Vector3 hideVector = Vector3.zero;
-
-        public static float FadeTime = 0.25f;
-
         /// <summary>
         ///  全局控制 标记
         /// </summary>
-        static int GlobalIdControl = 0;
+        static long GlobalID = 0;
 
         /// <summary>
         ///  标记每一个元素 的 id  通过GlobalIdControl 每次创建都+1
         /// </summary>
-        public int elementID;
+        public long elementID;
 
         /// <summary>
         ///  element 对应的 游戏物体
@@ -38,11 +29,6 @@ namespace HotFix
         public Transform transform;
 
         /// <summary>
-        ///  预设体
-        /// </summary>
-        public GameObject prefab;
-
-        /// <summary>
         ///  父element
         /// </summary>
         public ElementBase parent;
@@ -50,8 +36,8 @@ namespace HotFix
         /// <summary>
         ///  管理子物体的字典
         /// </summary>
-        private Dictionary<int, ElementBase> subElementDic;
-        public Dictionary<int, ElementBase> SubElementDic
+        private Dictionary<long, ElementBase> subElementDic;
+        public Dictionary<long, ElementBase> SubElementDic
         {
             set
             {
@@ -61,7 +47,7 @@ namespace HotFix
             {
                 if (subElementDic == null)
                 {
-                    subElementDic = new Dictionary<int, ElementBase>();
+                    subElementDic = new Dictionary<long, ElementBase>();
                 }
                 return subElementDic;
             }
@@ -115,6 +101,11 @@ namespace HotFix
             }
         }
 
+        private static long GetGlobalID()
+        {
+            return GlobalID++;
+        }
+
         public ElementBase()
         {
 
@@ -122,9 +113,8 @@ namespace HotFix
 
         public static T CreatElementWithGameObject<T>(GameObject g = null) where T : ElementBase, new()
         {
-            GlobalIdControl++;
             T t1 = new T();
-            t1.elementID = GlobalIdControl;
+            t1.elementID = GetGlobalID();
             t1.gameObject = g;
             t1.transform = g.transform;
             t1.Awake();
@@ -134,9 +124,8 @@ namespace HotFix
 
         public static T CreatElementWithGameObjectAndParent<T>(GameObject g = null, ElementBase parent = null) where T : ElementBase, new()
         {
-            GlobalIdControl++;
             T t1 = new T();
-            t1.elementID = GlobalIdControl;
+            t1.elementID = GetGlobalID();
             t1.parent = parent;
             t1.gameObject = g;
             t1.transform = g.transform;
@@ -146,9 +135,8 @@ namespace HotFix
 
         public static T CreatElement<T>() where T : ElementBase, new()
         {
-            GlobalIdControl++;
             T t1 = new T();
-            t1.elementID = GlobalIdControl;
+            t1.elementID = GetGlobalID();
             t1.Awake();
             return t1;
         }
@@ -178,7 +166,6 @@ namespace HotFix
 
         }
 
-
         /// <summary>
         ///  加载资源 重载方法
         /// </summary>
@@ -192,21 +179,19 @@ namespace HotFix
         /// </summary>
         public virtual void FindElement()
         {
+
         }
-
-
 
         public GameObject Instantiate(GameObject p)
         {
             if (p != null)
             {
-                prefab = p;
-                gameObject = GameObject.Instantiate(prefab);
-                gameObject.name = prefab.name;
+                gameObject = GameObject.Instantiate(p);
+                gameObject.name = p.name;
+                transform = gameObject.transform;
             }
             return gameObject;
         }
-
 
         /// <summary>
         ///  寻找 子游戏物体 
@@ -218,14 +203,6 @@ namespace HotFix
             return transform.Find(path).gameObject;
         }
 
-
-
-        public GameObject FindChild(GameObject g, string path)
-        {
-            return g.transform.Find(path).gameObject;
-        }
-
-
         /// <summary>
         ///  寻找子物体组件方法
         /// </summary>
@@ -236,14 +213,6 @@ namespace HotFix
         {
             return transform.Find(path).GetComponent<T>();
         }
-
-
-
-        public T FindChild<T>(GameObject g, string path)
-        {
-            return g.transform.Find(path).GetComponent<T>();
-        }
-
 
         public void BringSelfToFront()
         {
@@ -267,7 +236,7 @@ namespace HotFix
         /// <param name="i"></param>
         public void SetSiblingIndex(int i)
         {
-            if (gameObject!=null)
+            if (gameObject != null)
             {
                 transform.SetSiblingIndex(i);
             }
@@ -296,18 +265,24 @@ namespace HotFix
             transform.SetParent(g.transform, false);
         }
 
+        /// <summary>
+        ///  显示一个 element  并且把他 作为自己的子物体
+        /// </summary>
+        /// <param name="e"></param>
+        public void SetChild(ElementBase child)
+        {
+            AddSubElement(child);
+            child.transform.SetParent(transform, false);
+        }
 
         /// <summary>
         ///  显示一个 element  并且把他 作为自己的子物体
         /// </summary>
         /// <param name="e"></param>
-        public void ShowSubView(ElementBase e)
+        public void SetChild(GameObject child)
         {
-            AddSubElement(e);
-            e.gameObject.SetActive(true);
-            e.gameObject.transform.SetParent(gameObject.transform, false);
+            child.transform.SetParent(transform, false);
         }
-
 
         /// <summary>
         ///  开启协程
@@ -338,8 +313,6 @@ namespace HotFix
             }
         }
 
-
-
         bool isNeedUpdate = false;
         public bool IsNeedUpdate
         {
@@ -350,11 +323,11 @@ namespace HotFix
                     isNeedUpdate = value;
                     if (value == true)
                     {
-                        //MainUpdate.self.updateAction += Update;
+                        //GameUpdate.AddUpdate(this);
                     }
                     else
                     {
-                        //MainUpdate.self.updateAction -= Update;
+                        //GameUpdate.SubUpdate(this);
                     }
                 }
             }
@@ -364,11 +337,10 @@ namespace HotFix
             }
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
-            M_Update();
+            MyUpdate(deltaTime);
         }
-
 
         bool isNeedFixedUpdate = false;
         public bool IsNeedFixedUpdate
@@ -380,11 +352,11 @@ namespace HotFix
                     isNeedFixedUpdate = value;
                     if (value == true)
                     {
-                        //MainUpdate.self.fixedUpdateAction += FixedUpdate;
+                        //GameUpdate.AddFixedUpdate(this);
                     }
                     else
                     {
-                        //MainUpdate.self.fixedUpdateAction -= FixedUpdate;
+                        //GameUpdate.SubFixedUpdate(this);
                     }
                 }
             }
@@ -394,13 +366,10 @@ namespace HotFix
             }
         }
 
-
-
-        public void FixedUpdate()
+        public void FixedUpdate(float deltaTime)
         {
-            M_FixedUpdate();
+            MyFixedUpdate(deltaTime);
         }
-
 
         bool isNeedLateUpdate = false;
         public bool IsNeedLateUpdate
@@ -412,11 +381,11 @@ namespace HotFix
                     isNeedLateUpdate = value;
                     if (value == true)
                     {
-                        //MainUpdate.self.lateUpdateAction += LateUpdate;
+                        //GameUpdate.AddLateUpdate(this);
                     }
                     else
                     {
-                        //MainUpdate.self.lateUpdateAction -= LateUpdate;
+                        //GameUpdate.SubLateUpdate(this);
                     }
                 }
             }
@@ -426,9 +395,9 @@ namespace HotFix
             }
         }
 
-        public void LateUpdate()
+        public void LateUpdate(float deltaTime)
         {
-            M_LateUpdate();
+            MyLateUpdate(deltaTime);
         }
 
         public virtual void M_Start()
@@ -436,11 +405,10 @@ namespace HotFix
 
         }
 
-
         /// <summary>
         ///  如果需要 开启update 方法 只需要设置 IsNeedLateUpdate=true 并且重载M_Update 方法
         /// </summary>
-        public virtual void M_Update()
+        public virtual void MyUpdate(float deltaTime)
         {
 
         }
@@ -448,7 +416,7 @@ namespace HotFix
         /// <summary>
         ///  同理 update 
         /// </summary>
-        public virtual void M_FixedUpdate()
+        public virtual void MyFixedUpdate(float deltaTime)
         {
 
         }
@@ -456,7 +424,7 @@ namespace HotFix
         /// <summary>
         /// 同理 update
         /// </summary>
-        public virtual void M_LateUpdate()
+        public virtual void MyLateUpdate(float deltaTime)
         {
 
         }
@@ -475,70 +443,6 @@ namespace HotFix
         public virtual void ElementDidDisAppear()
         {
 
-        }
-
-        /// <summary>
-        ///  显示一个view  
-        /// </summary>
-        /// <param name="maskView">灰色蒙版</param>
-        /// <param name="view">真正的负责显示的元素</param>
-        /// <param name="animation">是否要动画</param>
-        /// <param name="finishCallback">执行完的回调</param>
-        public void Show(GameObject maskView, GameObject view, bool animation, Action finishCallback = null)
-        {
-            IsShow = true;
-            if (animation == false)
-            {
-                maskView.SetActive(IsShow);
-                view.SetActive(IsShow);
-                if (finishCallback != null)
-                {
-                    finishCallback();
-                }
-            }
-            else
-            {
-                maskView.SetActive(IsShow);
-                view.SetActive(true);
-                view.transform.localScale = new Vector3(0, 0, 1);
-                view.transform.DOScale(Vector3.one, FadeTime).SetEase(Ease.OutBack).OnComplete(delegate ()
-                {
-                    if (finishCallback != null)
-                    {
-                        finishCallback();
-                    }
-                });
-            }
-        }
-
-        public void Hide(GameObject maskView, GameObject view, bool animation, Action finishCallback = null)
-        {
-            if (animation == false)
-            {
-                maskView.SetActive(false);
-                view.SetActive(false);
-                if (finishCallback != null)
-                {
-                    finishCallback();
-                }
-                IsShow = false;
-            }
-            else
-            {
-        
-                view.transform.localScale = new Vector3(1, 1, 1);
-                view.transform.DOScale(new Vector3(0, 0, 1), FadeTime).SetEase(Ease.InBack).OnComplete(delegate ()
-                {
-                    if (finishCallback != null)
-                    {
-                        finishCallback();
-
-                    }
-                    view.SetActive(false);
-                    maskView.SetActive(false);
-                    IsShow = false;
-                });
-            }
         }
 
         /// <summary>
@@ -584,7 +488,7 @@ namespace HotFix
 
         public void ShowToast(string text)
         {
-            
+
         }
 
         /// <summary>
@@ -592,7 +496,7 @@ namespace HotFix
         /// </summary>
         public virtual void Destory()
         {
-            if (coroutineList!=null)
+            if (coroutineList != null)
             {
                 for (int i = 0; i < coroutineList.Count; i++)
                 {
@@ -602,7 +506,7 @@ namespace HotFix
                 coroutineList = null;
             }
 
-            if (SubElementDic!=null)
+            if (SubElementDic != null)
             {
                 if (SubElementDic.Values.Count != 0)
                 {
@@ -615,7 +519,7 @@ namespace HotFix
                 SubElementDic = null;
             }
 
-            if (MessageTypeDic!=null)
+            if (MessageTypeDic != null)
             {
                 if (MessageTypeDic.Keys.Count != 0)
                 {
@@ -630,7 +534,6 @@ namespace HotFix
 
             parent = null;
             gameObject = null;
-            prefab = null;
 
 
             if (IsNeedUpdate == true)
@@ -653,7 +556,7 @@ namespace HotFix
         ///  销毁游戏物体
         /// </summary>
         public void DestoryGameObject()
-        {          
+        {
             GameObject.Destroy(gameObject);
         }
     }

@@ -68,6 +68,7 @@
     <Compile Include="Base\SingletonController.cs" />
     <Compile Include="Base\TabBar\BaseTabBarController.cs" />
     <Compile Include="Base\TabBar\BaseTabBarItem.cs" />
+    <Compile Include="Base\UIElement.cs" />
     <Compile Include="HotFixEnter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

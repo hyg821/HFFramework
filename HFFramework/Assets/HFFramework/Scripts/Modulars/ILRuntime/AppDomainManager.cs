@@ -94,9 +94,17 @@ namespace HFFramework
             if (appdomain == null)
             {
                 appdomain = new ILRuntime.Runtime.Enviorment.AppDomain();
-                HAResourceManager.self.LoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
+                //如果是debug  那么就从streamAsset读取
+                if (GameEnvironment.self.runtimeEnvironment == GameEnvironmentEnum.Develop)
+                {
+                    HAResourceManager.self.EditorLoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
+                }
+                //否则 从assetbundle 里读取
+                else
+                {
+                    HAResourceManager.self.LoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
+                }
             }
-            HotFixAwake();
         }
 
         /// <summary>
@@ -107,9 +115,9 @@ namespace HFFramework
             if (isOK)
             {
                 InitializeILRuntime();
-                appdomain.Invoke(MainClassName, "InitMonoBehaviour", null, null);
                 CacheMethod();
                 IsActiveMonoMethod = true;
+                HotFixAwake();
             }
         }
 
@@ -122,7 +130,7 @@ namespace HFFramework
 
         public unsafe void HotFixAwake()
         {
-            appdomain.Invoke(MainClassName, "EnterDLL", null, null);
+            appdomain.Invoke(MainClassName, "AwakeDLL", null, null);
         }
 
         public  void Update()

@@ -569,20 +569,11 @@ namespace HFFramework
         {
             if (assetBundle != null)
             {
-                if (t)
-                {
-                    CacheDic.Clear();
-                    assetBundle.Unload(t);
-                    CacheDic = null;
-                    assetBundle = null;
-                    name = null;
-                }
-                else
-                {
-                    assetBundle.Unload(t);
-                    CacheDic = null;
-                    assetBundle = null;
-                }
+                CacheDic.Clear();
+                assetBundle.Unload(t);
+                CacheDic = null;
+                assetBundle = null;
+                name = null;
             }
         }
 

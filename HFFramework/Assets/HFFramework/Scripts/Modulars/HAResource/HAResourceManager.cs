@@ -470,6 +470,7 @@ namespace HFFramework
             AssetBundlePackage bundle = GetAssetBundleWithName(name);
             if (bundle != null)
             {
+                HFLog.L("卸载Assetbundle  " + bundle.name);
                 bundle.Unload(b);
                 allAssetBundleDic.Remove(name);
             }
@@ -497,9 +498,9 @@ namespace HFFramework
         {
             if (bundle != null && !string.IsNullOrEmpty(bundle.name))
             {
+                HFLog.L("卸载Assetbundle  " + bundle.name);
                 allAssetBundleDic.Remove(bundle.name);
                 bundle.Unload(b);
-                HFLog.L("卸载Assetbundle  " + bundle.name);
             }
         }
 

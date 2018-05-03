@@ -68,6 +68,11 @@
     <Compile Include="Base\SingletonController.cs" />
     <Compile Include="Base\TabBar\BaseTabBarController.cs" />
     <Compile Include="Base\TabBar\BaseTabBarItem.cs" />
+    <Compile Include="Base\TableView\BigList.cs" />
+    <Compile Include="Base\TableView\EnhancedScroller.cs" />
+    <Compile Include="Base\TableView\EnhancedScrollerCellView.cs" />
+    <Compile Include="Base\TableView\IEnhancedScrollerDelegate.cs" />
+    <Compile Include="Base\TableView\SmallList.cs" />
     <Compile Include="Base\UIElement.cs" />
     <Compile Include="HotFixEnter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

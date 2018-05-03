@@ -111,7 +111,7 @@ namespace HotFix
 
         }
 
-        public static T CreatElementWithGameObject<T>(GameObject g = null) where T : ElementBase, new()
+        public static T CreateElementWithGameObject<T>(GameObject g = null) where T : ElementBase, new()
         {
             T t1 = new T();
             t1.elementID = GetGlobalID();
@@ -122,7 +122,7 @@ namespace HotFix
         }
 
 
-        public static T CreatElementWithGameObjectAndParent<T>(GameObject g = null, ElementBase parent = null) where T : ElementBase, new()
+        public static T CreateElementWithGameObjectAndParent<T>(GameObject g = null, ElementBase parent = null) where T : ElementBase, new()
         {
             T t1 = new T();
             t1.elementID = GetGlobalID();
@@ -133,7 +133,7 @@ namespace HotFix
             return t1;
         }
 
-        public static T CreatElement<T>() where T : ElementBase, new()
+        public static T CreateElement<T>() where T : ElementBase, new()
         {
             T t1 = new T();
             t1.elementID = GetGlobalID();

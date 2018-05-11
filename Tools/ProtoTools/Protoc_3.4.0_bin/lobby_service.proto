@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package lobbyservice.protobuf;
+
+option java_package = "com.hoolai.commonapp.protobuf";
+option java_outer_classname = "LobbyServiceProto";
+
+//用户登录响应信息
+message LoginResponse{
+	int32 code = 1;		 // 登录码
+	int64 gold = 2;		 // 金币
+	int64 silver = 3;	 // 银币
+	int64 bronze = 4;	 // 铜币
+}

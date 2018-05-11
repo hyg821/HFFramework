@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package centersdk.protobuf;
+
+option java_package = "com.hoolai.centersdk.protobuf";
+option java_outer_classname = "ItemProto";
+
+import "equipment.proto";
+
+message Item {
+    int32 item_id = 1; // 道具id
+    int32 item_count = 2; // 道具数量
+    int64 unique_id = 3; // 特殊宝石唯一ID
+    string attr = 4; // 特殊宝石额外属性，例如 "101:10;102:13;"
+}
+
+message PackGrid {
+    int32 type = 1; // 格子类型，1 = 道具，2 = 装备
+    Item item = 2; // 道具
+    centersdk.protobuf.Equipment equip = 3; // 装备
+}
+
+message UserPack {
+    int64 user_id = 1; // 玩家id
+    string kind = 2; // 背包分类
+    repeated PackGrid data = 3; // 背包数据，每个格子一条数据，空格子按道具算
+}
+
+// 在邮件界面操作
+message GiveReq {
+    int64 receiver_id = 1; // 接受者id
+    int32 item_id = 2; // 道具id
+    int32 item_count = 3; // 道具数量
+}
+
+message CommonReq {
+    string kind = 1; // 背包种类
+    int32 index = 2; // 背包格子索引
+    int32 item_id = 3; // 道具ID，如果有前两个字段，这个字段不生效
+    int32 item_count = 4; // 道具数量
+    string kind2 = 5; // 同时涉及背包仓库时候才用到，作为目标
+}
+
+message ExpandResp {
+    string kind = 1; // 背包种类
+    int32 coin_type = 2; // 消耗货币类型
+    int64 coin_count = 3; // 消耗货币数量
+    int64 coin_total = 4; // 当前货币持有总量
+}
+
+message SellResp {
+    int32 item_id = 1; // 道具id
+    int32 item_count = 2; // 道具数量
+    int32 coin_type = 3; // 获得货币类型
+    int64 coin_count = 4; // 获得货币数量
+    int64 coin_total = 5; // 当前货币持有总量
+}
+
+message JoinResp {
+    int32 item_id = 1; // 合成后的道具id
+    int32 item_count = 2; // 合成道具数量
+}
+
+message BreakResp {
+    repeated int32 item_id = 1; // 分解获得的道具id
+    repeated int32 item_count = 2; // 分解获得的道具数量
+}
+
+message NewWarehouseResp {
+    string kind = 1; // 仓库分类
+    int64 cost_bronze = 2; // 消耗铜币
+    int64 bronze = 3; // 当前铜币
+}

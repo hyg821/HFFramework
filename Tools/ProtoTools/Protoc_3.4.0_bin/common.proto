@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+package centersdk.protobuf;
+
+option java_package = "com.hoolai.centersdk.protobuf";
+option java_outer_classname = "CommonProto";
+
+//通用数组参数类
+message ParamsArray {
+	repeated Params params = 1;
+	Params param = 2;
+	int32 code = 3;
+	int32 type = 4;
+}
+//通用参数类。此类目的。避免重复定义VO
+message Params{
+	int64 userId = 1;
+	int64 roleId = 2;
+	int32 id = 3;
+	int32 code = 4;
+	int32 count = 5;
+	int64 amount = 6;
+	int32 value = 7;
+	int32 index = 8;
+	int32 status = 9;
+	bool statusB = 10;
+	int32 type = 11;
+	int32 itemId = 12;
+	int32 gold = 13;
+	int64 time = 14;
+	string text = 15;
+	string content = 16;
+	repeated int64 userIds = 17;	//用户ID数组
+	repeated int32 intVals = 18;	//整形数组参数
+	repeated int64 longVals = 19;	//长整型数组参数
+	repeated string strVals = 20;	//字符数组参数
+	repeated float floatVals = 21;	//float类型参数
+}
+message Empty {
+
+}
+
+// 服务器之间跳转时使用
+message QuickLoginInfo {
+	int64 user_Id = 1;         // 玩家ID
+	int64 role_id = 2;         // 角色ID
+	int64 key = 3;             // 登录key
+	string server_id = 4;      // 服务器ID
+	string ip = 5;             // 服务器域名
+	int32 port = 6;            // 服务器端口
+	string type = 7;           // 服务器类别
+	string param = 8;          // 特有参数，一般由子服务器和前端协商定义。建议使用json格式。方便拓展
+	int32 code = 9;           // 消息码，前后端协商定义
+	string group_id = 10;      // 玩法的分类ID
+	string version = 11;	   // 用户登录版本号
+	int64 roomId = 12;	       // 房间ID
+}
+
+// int数组
+message IntegerValues {
+	int32 id = 1; // id
+	repeated int32 vals = 2; // 整数数组参数
+	int32 val1 = 3; // 扩展参数1
+}
+
+message IntegerValue {
+	int32 val = 1;              // 整型参数
+}
+
+message LongValue { // 长整型参数
+	int64 val = 1;
+}
+
+message LongValues {
+	repeated int64 vals = 1;
+	int32 id = 2;
+	int32 val1 = 3; // int类型扩展参数1
+}
+
+message TwoIntegerValue{
+	int32 intVal1 = 1;
+	int32 intVal2 = 2;
+}
+
+message TwoIntegerValues {
+	repeated TwoIntegerValue vals = 1;
+	int32 intVal1 = 2;
+}
+
+message TwoIntegerAndLongValue { // 两个整型和一个长整型
+	int64 longVal = 1;
+	int32 intVal1 = 2;
+	int32 intVal2 = 3;
+}
+
+message StringValue {
+	string val = 1;              // 字符串参数
+}
+
+message FloatValue {
+	float val = 1;              // float参数
+}
+
+message StringValues {
+	repeated string vals = 1;              // 字符数组参数
+}
+
+message Status {
+    int32 code = 1;
+    string message = 2;
+}

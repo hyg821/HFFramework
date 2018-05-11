@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package loginservice.protobuf;
+
+option java_package = "com.hoolai.newgame.login.protobuf";
+option java_outer_classname = "LoginServiceProto";
+
+//用户登录请求信息
+message LoginRequest{
+	string openId = 1;		// 用户唯一标识。(一般是用户登录后，游戏客户端获取的uid)
+	string product_id = 2;  // 该产品的产品id (客户端代码:FastSdk.getChannelInterface().getChannelInfo().getProductId())
+	string pf = 3;			// 平台信息
+	string channel = 4;	 	// 用户登录后，游戏客户端获取的channel
+	string channel_uid = 5; // 用户登录后，游戏客户端获取的channelUid
+	string access_token = 6;// 用户登录后，游戏客户端获取的登陆令牌
+	string channelId = 7;	// 渠道ID
+	string version = 8;		// 用户登录版本号
+	string phone_type = 9;	// 手机型号
+	string idfa = 10; 		// 广告标示符
+	string idfv = 11; 		// Vindor标示符
+	string imei = 12; 		// 手机的唯一识别号码
+}
+//用户登录响应信息
+message LoginResponse{
+	int32 code = 1;		 // 登录码
+	Server server = 2;	 // 上次登录服务器信息
+}
+message ServerArray{
+	repeated Server servers = 1;//服务列表
+}
+message Server{
+	int32 zoneId = 1;		//大区ID
+	string zoneName = 2;	//大区名称
+	int32 serverId = 3;		//服务器ID
+	string serverName = 4;	//服务器名称
+	int32 status = 5;		//服务器状态
+	int32 userCount = 6;	//在线用户数
+}

@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+    using UnityEditor;
+#endif
+using UnityEngine;
 
 #if NETFX_CORE || BUILD_FOR_WP8
     using System.Threading.Tasks;
@@ -89,8 +92,8 @@ namespace BestHTTP
                         UnityEditor.EditorApplication.update += Instance.Update;
                     }
 
-                    UnityEditor.EditorApplication.playmodeStateChanged -= Instance.OnPlayModeStateChanged;
-                    UnityEditor.EditorApplication.playmodeStateChanged += Instance.OnPlayModeStateChanged;
+                    UnityEditor.EditorApplication.playModeStateChanged -= Instance.OnPlayModeStateChanged;
+                    UnityEditor.EditorApplication.playModeStateChanged += Instance.OnPlayModeStateChanged;
 #endif
                 }
             }
@@ -167,7 +170,7 @@ namespace BestHTTP
         }
 
 #if UNITY_EDITOR
-        void OnPlayModeStateChanged()
+        void OnPlayModeStateChanged(PlayModeStateChange p)
         {
             if (UnityEditor.EditorApplication.isPlaying)
                 UnityEditor.EditorApplication.update -= Update;
@@ -213,7 +216,7 @@ namespace BestHTTP
 
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.update -= Update;
-            UnityEditor.EditorApplication.playmodeStateChanged -= OnPlayModeStateChanged;
+            UnityEditor.EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 #endif
         }
     }

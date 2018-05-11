@@ -22,7 +22,7 @@ namespace HFFramework
         [MenuItem("游戏辅助工具/AssetBundles/构建 所有 AssetBundles")]
         static void BuildAllAssetBundles()
         {
-            Caching.CleanCache();
+            Caching.ClearCache();
 
             ReNameDLL();
 
@@ -295,7 +295,7 @@ namespace HFFramework
 
         static void BuildSomeAssetBundles(string outPath, AssetBundleBuild[] builds)
         {
-            Caching.CleanCache();
+            Caching.ClearCache();
             BuildTarget target;
 #if UNITY_STANDALONE_WIN
             target = BuildTarget.StandaloneWindows;

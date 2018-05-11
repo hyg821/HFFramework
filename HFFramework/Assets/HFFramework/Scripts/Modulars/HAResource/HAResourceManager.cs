@@ -95,7 +95,7 @@ namespace HFFramework
 
             HFLog.C("正式资源地址" + resourceRootPath);
             HFLog.C("备用资源地址" + resourceSpareRootPath);
-            Caching.CleanCache();
+            Caching.ClearCache();
 
             if (!string.IsNullOrEmpty(resourceRootPath) && !string.IsNullOrEmpty(resourceSpareRootPath))
             {

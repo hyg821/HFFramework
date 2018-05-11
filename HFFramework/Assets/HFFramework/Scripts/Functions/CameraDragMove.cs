@@ -14,13 +14,8 @@ namespace HFFramework
 
     public class CameraDragMove : BaseMonoBehaviour
     {
-        public const int rate = 1600;
-        public float errorValue;
-        public float maxSpeed;
-
+        private const int rate = 1600;
         public DragType dragType;
-
-        public bool isBeginUp = false;
 
         private Vector2 startTouchPosition;
         private Vector2 endTouchPosition;
@@ -30,15 +25,18 @@ namespace HFFramework
         private float endTime;
         private float deltaTime;
 
-        public Vector2 deceleration;
+        public int decelerationFrameCount;
+        public float errorValue;
+        public float maxSpeed;
+        public bool isBeginUp = false;
         public Vector2 speed;
 
-        public int frameCount;
 
         private void Start()
         {
-            errorValue = 0.001f;
-            maxSpeed = 0.5f;
+            errorValue = 0.002f;
+            maxSpeed = 1f;
+            decelerationFrameCount = 15;
         }
 
         private void Update()
@@ -84,7 +82,6 @@ namespace HFFramework
                 startTouchPosition = Input.mousePosition;
                 startTime = Time.realtimeSinceStartup;
                 isBeginUp = true;
-                Re();
             }
             else
             {
@@ -109,15 +106,9 @@ namespace HFFramework
             isBeginUp = false;
         }
 
-        public void Re()
-        {
-            frameCount = 1;
-            deceleration = new Vector2(0.001f, 0.001f);
-        }
-
         private void LateUpdate()
         {
-            if (speed != Vector2.zero)
+            if (speed!=Vector2.zero)
             {
                 if (speed.x > maxSpeed)
                 {
@@ -128,7 +119,6 @@ namespace HFFramework
                     speed.x = -maxSpeed;
                 }
 
-
                 if (speed.y > maxSpeed)
                 {
                     speed.y = maxSpeed;
@@ -138,30 +128,10 @@ namespace HFFramework
                     speed.y = -maxSpeed;
                 }
 
+                speed -= (speed / decelerationFrameCount);
 
-                deceleration = new Vector2(deceleration.x/frameCount/50,deceleration.y/frameCount/50);
-
-                float x = 0;
-                if (speed.x > 0)
-                {
-                    x = speed.x - deceleration.x;
-                }
-
-                if (speed.x < 0)
-                {
-                    x = speed.x + deceleration.x;
-                }
-
-                float y = 0;
-                if (speed.y > 0)
-                {
-                    y = speed.y - deceleration.y;
-                }
-
-                if (speed.y < 0)
-                {
-                    y = speed.y + deceleration.y;
-                }
+                float x = speed.x;
+                float y = speed.y;
 
                 if ((x < errorValue && x > 0) || (x > -errorValue && x < 0))
                 {
@@ -176,13 +146,6 @@ namespace HFFramework
                 speed = new Vector2(x, y);
                 Vector3 temp = speed;
                 myTransform.position -= temp;
-
-
-                frameCount++;
-            }
-            else
-            {
-                Re();
             }
         }
     }

@@ -23,7 +23,7 @@ namespace  HFFramework
 
     public class GameEnvironment : MonoBehaviour
     {
-        public static GameEnvironment self;
+        public static GameEnvironment Instance;
 
         /// <summary>
         ///  运行环境
@@ -52,7 +52,7 @@ namespace  HFFramework
 
         public void Awake()
         {
-            self = this;
+            Instance = this;
             AddPathManager();
             SetRuntimeEnvironment(GameEnvironmentEnum.Develop);
             SetAppVersion();

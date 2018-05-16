@@ -68,7 +68,7 @@ namespace HFFramework
                 textColorList.Add(item.color);
             }
 
-            AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile("common_material");
+            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile("common_material");
             grayMaterial = ab.LoadAssetWithCache<Material>("UIGrayETC");
         }
 

@@ -6,7 +6,7 @@ namespace HFFramework
 {
     public class GameLooper : MonoBehaviour
     {
-        public static GameLooper self;
+        public static GameLooper Instance;
 
         /// <summary>
         ///  需要update的 列表
@@ -32,7 +32,7 @@ namespace HFFramework
 
         void Awake()
         {
-            self = this;
+            Instance = this;
         }
 
         void Update()
@@ -74,71 +74,71 @@ namespace HFFramework
             fixedUpdateList.Clear();
             lateUpdateList.Clear();
             eventQueue.Clear();
-            self = null;
+            Instance = null;
         }
 
         public static void BackToMainThread(Action e)
         {
-            if (e != null&& self != null)
+            if (e != null&& Instance != null)
             {
-                self.eventQueue.Enqueue(e);
+                Instance.eventQueue.Enqueue(e);
             }
         }
 
         public static void AddUpdate(BaseMonoBehaviour b)
         {
-            if (self!=null)
+            if (Instance != null)
             {
-                if (self.updateList.Contains(b)==false)
+                if (Instance.updateList.Contains(b)==false)
                 {
-                    self.updateList.Add(b);
+                    Instance.updateList.Add(b);
                 }
             }
         }
 
         public static void SubUpdate(BaseMonoBehaviour b)
         {
-            if (self != null)
+            if (Instance != null)
             {
-                self.updateList.Remove(b);
+                Instance.updateList.Remove(b);
             }
         }
 
         public static void AddFixedUpdate(BaseMonoBehaviour b)
         {
-            if (self != null)
+            if (Instance != null)
             {
-                if (self.fixedUpdateList.Contains(b) == false)
+                if (Instance.fixedUpdateList.Contains(b) == false)
                 {
-                    self.fixedUpdateList.Add(b);
+                    Instance.fixedUpdateList.Add(b);
                 }
             }
         }
 
         public static void SubFixedUpdate(BaseMonoBehaviour b)
         {
-            if (self != null)
+            if (Instance != null)
             {
-                self.fixedUpdateList.Remove(b);
+                Instance.fixedUpdateList.Remove(b);
             }
         }
 
         public static void AddLateUpdate(BaseMonoBehaviour b)
         {
-            if (self != null)
+            if (Instance != null)
             {
-                if (self.lateUpdateList.Contains(b) == false)
+                if (Instance.lateUpdateList.Contains(b) == false)
                 {
-                    self.lateUpdateList.Add(b);
+                    Instance.lateUpdateList.Add(b);
                 }
             }
         }
 
         public static void SubLateUpdate(BaseMonoBehaviour b)
         {
-            if (self != null)
+            if (Instance != null)
             {
-                self.lateUpdateList.Remove(b);
+                Instance.lateUpdateList.Remove(b);
             }
         }
     }

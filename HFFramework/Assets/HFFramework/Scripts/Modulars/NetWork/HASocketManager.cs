@@ -6,7 +6,7 @@ namespace HFFramework
 {
     public class HASocketManager : MonoBehaviour
     {
-        public static HASocketManager self;
+        public static HASocketManager Instance;
 
         /// <summary>
         ///  socket 缓存
@@ -15,7 +15,7 @@ namespace HFFramework
 
         public void Awake()
         {
-            self = this;
+            Instance = this;
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace HFFramework
         public void DestroyManager()
         {
             CloseAllSocket();
-            self = null;
+            Instance = null;
         }
     }
 }

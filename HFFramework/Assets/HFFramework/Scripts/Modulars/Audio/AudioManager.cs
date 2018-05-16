@@ -41,7 +41,7 @@ namespace HFFramework
         /// <summary>
         /// 自己
         /// </summary>
-        public static AudioManager self;
+        public static AudioManager Instance;
 
         /// <summary>
         ///  生成标记
@@ -135,7 +135,7 @@ namespace HFFramework
 
         void Awake()
         {
-            self = this;
+            Instance = this;
             if (!PlayerPrefs.HasKey(EffectVolumeDefine))
             {
                 EffectVolume = 1;
@@ -290,7 +290,7 @@ namespace HFFramework
         public void DestroyManager()
         {
             DestoryAllAudioPlayer();
-            self = null;
+            Instance = null;
         }
     }
 }

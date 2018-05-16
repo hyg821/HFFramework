@@ -11,24 +11,24 @@ namespace HFFramework
         /// </summary>
         public const string RootName = "UISystem";
 
-        public static UIManager self;
+        public static UIManager Instance;
 
         public UIRoot UIRoot;
 
-        public Dictionary<int, GameObject> canvasDic = new Dictionary<int, GameObject>();
+        public Dictionary<int, UICanvas> canvasDic = new Dictionary<int, UICanvas>();
 
         public AssetBundlePackage HFUIPackage;
 
         void Awake()
         {
-            self = this;
+            Instance = this;
             LoadScene();
         }
 
         public void LoadScene()
         {
             ClearScene();
-            HFUIPackage = HAResourceManager.self.LoadAssetBundleFromFile("hfui");
+            HFUIPackage = HAResourceManager.Instance.LoadAssetBundleFromFile("hfui");
             GameObject  prefab= HFUIPackage.LoadAssetWithCache<GameObject>("UISystem");
             GameObject uiRootObj = Instantiate(prefab);
             uiRootObj.name = RootName;
@@ -37,18 +37,18 @@ namespace HFFramework
 
         public UICanvas AddCanvas(int canvasLayerIndex)
         {
-            GameObject canvas;
-            if (canvasDic.TryGetValue(canvasLayerIndex, out canvas) ==false)
+            UICanvas uiCanvas;
+            if (!canvasDic.TryGetValue(canvasLayerIndex, out uiCanvas))
             {
-                GameObject prefab = HFUIPackage.LoadAssetWithCache<GameObject>("UICanvas");
-                canvas = Instantiate(prefab);
-                UICanvas uiCanvas = canvas.AddComponent<UICanvas>();
+                GameObject canvasPrefab = HFUIPackage.LoadAssetWithCache<GameObject>("UICanvas");
+                GameObject canvasObject = Instantiate(canvasPrefab);
+                uiCanvas = canvasObject.AddComponent<UICanvas>();
                 uiCanvas.AutoSizeFitter();
                 uiCanvas.SetSortingLayer(canvasLayerIndex);
                 uiCanvas.SetParent(UIRoot.gameObject);
-                canvasDic.Add(canvasLayerIndex, canvas);
+                canvasDic.Add(canvasLayerIndex, uiCanvas);
             }
-            return canvas.GetComponent<UICanvas>();
+            return uiCanvas;
         }
 
         public static C GameObjectBindUIController<C, V, M>(GameObject g) where C:UIController  where V : UIView where M : UIModel
@@ -71,7 +71,7 @@ namespace HFFramework
         public void DestroyManager()
         {
             ClearScene();
-            self = null;
+            Instance = null;
         }
     }
 }

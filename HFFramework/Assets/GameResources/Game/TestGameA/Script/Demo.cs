@@ -15,19 +15,19 @@ public class Demo : BaseMonoBehaviour
 
     public void AssetBundleTest()
     {
-        GameObject prefab = HAResourceManager.self.GetGameObject("Prefab", "Cube");
+        GameObject prefab = HAResourceManager.Instance.GetGameObject("Prefab", "Cube");
         GameObject.Instantiate(prefab);
 
-        AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile("Prefab");
+        AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile("Prefab");
         GameObject g = ab.LoadAssetWithCache<GameObject>("Sphere");
         GameObject.Instantiate(g);
 
-        HAResourceManager.self.UnloadAssetBundle(ab, false);
+        HAResourceManager.Instance.UnloadAssetBundle(ab, false);
     }
 
     public void HotFixJump()
     {
-        HFFramework.AppDomainManager.self.Jump(0, "HotFixDll", "HFFrameworkHotFix", "HotFixEnter");
+        HFFramework.AppDomainManager.Instance.Jump(0, "HotFixDll", "HFFrameworkHotFix", "HotFixEnter");
     }
 
     public void OpenUpdate()
@@ -78,12 +78,12 @@ public class Demo : BaseMonoBehaviour
 
     public void 代码添加Canvas()
     {
-        myCanvas = UIManager.self.AddCanvas(0);
+        myCanvas = UIManager.Instance.AddCanvas(0);
     }
 
     public void push添加ViewController()
     {
-        GameObject prefab = HAResourceManager.self.GetGameObject("Prefab", "VC");
+        GameObject prefab = HAResourceManager.Instance.GetGameObject("Prefab", "VC");
         GameObject gx = GameObject.Instantiate(prefab);
         UIController testController = UIManager.GameObjectBindUIController<TestController, TestView, TestModel>(gx);
         myCanvas.PushController(testController,PushType.Navigation);
@@ -135,7 +135,7 @@ public class Demo : BaseMonoBehaviour
 
     public void 读取ScriptableObject配置文件()
     {
-        AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile("Config");
+        AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile("Config");
         ScriptableObjectTestA g = ab.LoadAssetWithCache<ScriptableObjectTestA>("ScriptObjectConfigTestA");
         print("付希凯的岁数是" + g.peopleAge);
         print("付希凯的城市是" + g.address[0].city);
@@ -144,7 +144,7 @@ public class Demo : BaseMonoBehaviour
 
     public void 跳转到场景1()
     {
-        HAResourceManager.self.LoadScene("Scene1", true, "BBB", delegate ()
+        HAResourceManager.Instance.LoadScene("Scene1", true, "BBB", delegate ()
         {
             print("跳转完成");
         });

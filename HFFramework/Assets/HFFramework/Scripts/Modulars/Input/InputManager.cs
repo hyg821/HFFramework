@@ -6,11 +6,11 @@ namespace HFFramework
 {
     public class InputManager : MonoBehaviour
     {
-        public static InputManager self;
+        public static InputManager Instance;
 
         void Awake()
         {
-            self = this;
+            Instance = this;
         }
 
         // Use this for initialization
@@ -21,7 +21,7 @@ namespace HFFramework
 
         public void DestroyManager()
         {
-            self = null;
+            Instance = null;
         }
     }
 }

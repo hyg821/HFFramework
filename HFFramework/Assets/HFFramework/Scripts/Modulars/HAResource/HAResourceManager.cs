@@ -16,7 +16,7 @@ namespace HFFramework
         // 场景不可以依赖别的包里的资源 因为场景没有做依赖递归加载 
         // 如果有依赖请把依赖做成预设体 通过加载预设体的方式 实现
 
-        public static HAResourceManager self;
+        public static HAResourceManager Instance;
 
         /// <summary>
         ///  assetbundle位置的根目录   默认的是所有的assetbundle 都放在一个文件夹下   
@@ -37,7 +37,7 @@ namespace HFFramework
 
         public void Awake()
         {
-            self = this;
+            Instance = this;
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace HFFramework
                 //否则使用 StreamingAssets 文件夹下的
                 else
                 {
-                    if (GameEnvironment.self.runtimePlatform == GamePlatform.Android || GameEnvironment.self.runtimePlatform == GamePlatform.iOS)
+                    if (GameEnvironment.Instance.runtimePlatform == GamePlatform.Android || GameEnvironment.Instance.runtimePlatform == GamePlatform.iOS)
                     {
                         newPath = ResourceSpareRootPath + path;
                     }
@@ -146,7 +146,7 @@ namespace HFFramework
         /// <returns></returns>
         public GameObject GetGameObject(string packageName, string abName)
         {
-            AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             GameObject g = ab.LoadAssetWithCache<GameObject>(abName);
             return g;
         }
@@ -158,7 +158,7 @@ namespace HFFramework
         /// <returns></returns>
         public Sprite GetSprite(string packageName, string abName)
         {
-            AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             Sprite sp = ab.LoadAssetWithCache<Sprite>(abName);
             return sp;
         }
@@ -170,7 +170,7 @@ namespace HFFramework
         /// <returns></returns>
         public AudioClip GetAudio(string packageName, string abName)
         {
-            AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             AudioClip audio = ab.LoadAssetWithCache<AudioClip>(abName);
             return audio;
         }
@@ -234,7 +234,7 @@ namespace HFFramework
         /// <param name="callBack"></param>
         public void LoadAssetWithAutoKill<T>(string packageName, string assetName, Action<T> callback) where T : UnityEngine.Object
         {
-            AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             T ta = ab.assetBundle.LoadAsset<T>(assetName);
             callback(ta);
             UnloadAssetBundle(ab, false);
@@ -249,7 +249,7 @@ namespace HFFramework
         /// <param name="callBack"></param>
         public void LoadPrefabWithAutoKill(string packageName, string assetName, Action<GameObject> callback)
         {
-            AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             GameObject prefab = ab.assetBundle.LoadAsset<GameObject>(assetName);
             callback(prefab);
             UnloadAssetBundle(ab, false);
@@ -261,7 +261,7 @@ namespace HFFramework
         public AssetBundlePackage LoadAssetBundleFromFile(string assetBundleName)
         {
             assetBundleName = assetBundleName.ToLower();
-            string[] list = self.GetAssetBundleDependencies(assetBundleName);
+            string[] list = Instance.GetAssetBundleDependencies(assetBundleName);
             if (list.Length != 0)
             {
                 for (int i = 0; i < list.Length; i++)
@@ -306,7 +306,7 @@ namespace HFFramework
 
         private IEnumerator m_LoadAssetBundleFromFileAsync(string assetBundleName)
         {
-            string[] list = self.GetAssetBundleDependencies(assetBundleName);
+            string[] list = Instance.GetAssetBundleDependencies(assetBundleName);
             if (list.Length != 0)
             {
                 for (int i = 0; i < list.Length; i++)
@@ -386,7 +386,7 @@ namespace HFFramework
 
         public void LoadHotFixAssembly(string assetbundleName, string dllName, ILRuntime.Runtime.Enviorment.AppDomain appdomain, Action<bool> cbAction)
         {
-            AssetBundlePackage ab = HAResourceManager.self.LoadAssetBundleFromFile(assetbundleName);
+            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(assetbundleName);
             TextAsset text = ab.LoadAssetWithCache<TextAsset>(dllName + ".dll");
             byte[] dll = text.bytes;
             using (MemoryStream fs = new MemoryStream(dll))
@@ -521,7 +521,7 @@ namespace HFFramework
         public void DestroyManager()
         {
             UnloadAllAssetBundle();
-            self = null;
+            Instance = null;
         }
 
         /*
@@ -641,7 +641,7 @@ namespace HFFramework
         /// <param name="callback"></param>
         public void LoadAssetWithCacheAsync<T>(string name, Action<T> callback) where T : UnityEngine.Object
         {
-            GameLooper.self.StartCoroutine(m_LoadAssetWithCacheAsync(name, callback));
+            GameLooper.Instance.StartCoroutine(m_LoadAssetWithCacheAsync(name, callback));
         }
 
         private IEnumerator m_LoadAssetWithCacheAsync<T>(string name, Action<T> callback) where T : UnityEngine.Object

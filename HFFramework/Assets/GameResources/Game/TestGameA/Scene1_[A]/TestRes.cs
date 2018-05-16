@@ -7,7 +7,7 @@ public class TestRes : MonoBehaviour {
 
 	public void 异步递归加载assetbundle()
     {
-        HAResourceManager.self.LoadAssetBundleFromFileAsync("Prefab", delegate (AssetBundlePackage pg)
+        HAResourceManager.Instance.LoadAssetBundleFromFileAsync("Prefab", delegate (AssetBundlePackage pg)
          {
              pg.LoadAssetWithCacheAsync<GameObject>("Cube1", delegate (GameObject gx)
               {

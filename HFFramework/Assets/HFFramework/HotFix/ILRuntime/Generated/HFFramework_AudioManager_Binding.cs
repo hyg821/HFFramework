@@ -19,16 +19,11 @@ namespace ILRuntime.Runtime.Generated
         {
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
-            FieldInfo field;
             Type[] args;
             Type type = typeof(HFFramework.AudioManager);
             args = new Type[]{};
             method = type.GetMethod("GetFreeAudioPlayer", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, GetFreeAudioPlayer_0);
-
-            field = type.GetField("self", flag);
-            app.RegisterCLRFieldGetter(field, get_self_0);
-            app.RegisterCLRFieldSetter(field, set_self_0);
 
 
         }
@@ -54,15 +49,6 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-
-        static object get_self_0(ref object o)
-        {
-            return HFFramework.AudioManager.self;
-        }
-        static void set_self_0(ref object o, object v)
-        {
-            HFFramework.AudioManager.self = (HFFramework.AudioManager)v;
-        }
 
 
     }

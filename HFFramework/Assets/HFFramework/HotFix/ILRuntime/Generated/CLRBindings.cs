@@ -20,7 +20,6 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_GameObject_Binding.Register(app);
             UnityEngine_Transform_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);
-            HFFramework_GameLooper_Binding.Register(app);
             UnityEngine_MonoBehaviour_Binding.Register(app);
             HFFramework_NotificationCenter_Binding.Register(app);
             HFFramework_NotificationMessage_Binding.Register(app);

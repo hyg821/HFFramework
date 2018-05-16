@@ -35,19 +35,19 @@ namespace HFFramework
             {
                 if (value == SoundType.Effect)
                 {
-                    Volume = AudioManager.self.EffectVolume;
+                    Volume = AudioManager.Instance.EffectVolume;
                     Loop = false;
                     IsAutoRecovery = true;
                 }
                 else if (value == SoundType.Music)
                 {
-                    Volume = AudioManager.self.MusicVolume;
+                    Volume = AudioManager.Instance.MusicVolume;
                     Loop = true;
                     IsAutoRecovery = false;
                 }
                 else if (value == SoundType.Free)
                 {
-                    Volume = AudioManager.self.EffectVolume;
+                    Volume = AudioManager.Instance.EffectVolume;
                     Loop = false;
                     IsAutoRecovery = true;
                 }
@@ -125,19 +125,6 @@ namespace HFFramework
             //coroutine = StartCoroutine(AutoRecovery());
         }
 
-        IEnumerator AutoRecovery()
-        {
-            while (true)
-            {
-                yield return null;
-                if (IsPlaying == false)
-                {
-                    AudioManager.self.Recovery(this);
-                    break;
-                }
-            }
-        }
-
         /// <summary>
         ///  给播放器设置一个 播放列表
         /// </summary>
@@ -184,7 +171,7 @@ namespace HFFramework
 
         public void SetAudioClipAndPlay(string packageName, string audioName)
         {
-            SetAudioClipAndPlay(HAResourceManager.self.GetAudio(packageName, audioName));
+            SetAudioClipAndPlay(HAResourceManager.Instance.GetAudio(packageName, audioName));
         }
 
         public void Play()

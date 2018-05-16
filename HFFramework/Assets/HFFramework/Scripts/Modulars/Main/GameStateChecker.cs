@@ -19,7 +19,7 @@ namespace HFFramework
         /// </summary>
         public const long MESSAGE_APPPAUSE = GAME_MESSAGE_BASE + 2;
 
-        public static GameStateChecker self;
+        public static GameStateChecker Instance;
 
         /// <summary>
         ///  检测间隔
@@ -50,7 +50,7 @@ namespace HFFramework
 
         void Awake()
         {
-            self = this;
+            Instance = this;
             wait = new WaitForSeconds(5);
             StartCoroutine(CheckNetWork());
         }
@@ -88,7 +88,7 @@ namespace HFFramework
 
         public void DestroyManager()
         {
-            self = null;
+            Instance = null;
         }
 
     }

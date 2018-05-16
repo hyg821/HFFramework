@@ -10,13 +10,13 @@ namespace HFFramework
     {
         public const string customPath = "GameData";
 
-        public static UtilsManager self;
+        public static UtilsManager Instance;
 
         public static string RootPath;
 
         public void Awake()
         {
-            self = this;
+            Instance = this;
             CreateCustomFilePathFolder();
         }
 
@@ -131,7 +131,7 @@ namespace HFFramework
         public static void AsyncReadFile(string folderName, Action<string> callback, bool isRelative = true)
         {
             string path = GetPath(folderName, isRelative);
-            UtilsManager.self.StartCoroutine(UtilsManager.self.AsyncRead(path, callback));
+            UtilsManager.Instance.StartCoroutine(UtilsManager.Instance.AsyncRead(path, callback));
         }
 
       

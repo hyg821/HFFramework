@@ -127,17 +127,17 @@ namespace HFFramework
 
         public void OnApplicationQuit()
         {
-            GameEnvironment.self = null;
-            HAResourceManager.self.DestroyManager();
+            GameEnvironment.Instance = null;
+            HAResourceManager.Instance.DestroyManager();
             NotificationCenter.self.DestroyManager();
-            HASocketManager.self.DestroyManager();
-            AudioManager.self.DestroyManager();
-            UIManager.self.DestroyManager();
-            DownLoadManager.self.DestroyManager();
-            InputManager.self.DestroyManager();
-            AppDomainManager.self.DestroyManager();
-            GameLooper.self.DestroyManager();
-            GameStateChecker.self.DestroyManager();
+            HASocketManager.Instance.DestroyManager();
+            AudioManager.Instance.DestroyManager();
+            UIManager.Instance.DestroyManager();
+            DownLoadManager.Instance.DestroyManager();
+            InputManager.Instance.DestroyManager();
+            AppDomainManager.Instance.DestroyManager();
+            GameLooper.Instance.DestroyManager();
+            GameStateChecker.Instance.DestroyManager();
             Debug.Log("应用退出");
         }
     }

@@ -9,7 +9,7 @@ namespace HFFramework
 {
     public class DownLoadManager : MonoBehaviour
     {
-        public static DownLoadManager self;
+        public static DownLoadManager Instance;
 
         /// <summary>
         ///  图片缓存字典
@@ -18,7 +18,7 @@ namespace HFFramework
 
         public void Awake()
         {
-            self = this;
+            Instance = this;
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace HFFramework
         /// <param name="c">Image组件</param>
         public static void DownLoadImage(string url, Image c)
         {
-            DownLoadManager.self.m_LoadImage(url, c);
+            DownLoadManager.Instance.m_LoadImage(url, c);
         }
 
         private void m_LoadImage(string url, Image c)
@@ -94,12 +94,12 @@ namespace HFFramework
 
         public static void ClearCache()
         {
-            foreach (var item in self.cacheDic.Values)
+            foreach (var item in Instance.cacheDic)
             {
-                Resources.UnloadAsset(item);
+                Resources.UnloadAsset(item.Value);
             }
-            self.cacheDic.Clear();
-            self = null;
+            Instance.cacheDic.Clear();
+            Instance = null;
             Resources.UnloadUnusedAssets();
         }
 

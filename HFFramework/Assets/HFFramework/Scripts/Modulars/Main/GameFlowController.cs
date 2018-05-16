@@ -6,11 +6,11 @@ namespace HFFramework
 {
     public class GameFlowController : MonoBehaviour
     {
-        public static GameFlowController self;
+        public static GameFlowController Instance;
 
         private void Awake()
         {
-            self = this;
+            Instance = this;
         }
     }
 }

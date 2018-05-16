@@ -24,7 +24,7 @@ namespace HFFramework
         /// <summary>
         ///  单例
         /// </summary>
-        public static AppDomainManager self;
+        public static AppDomainManager Instance;
 
         /// <summary>
         ///  全局app作用域
@@ -75,7 +75,7 @@ namespace HFFramework
 
         public void Awake()
         {
-            self = this;
+            Instance = this;
             IsActiveMonoMethod = false;
         }
 
@@ -95,14 +95,14 @@ namespace HFFramework
             {
                 appdomain = new ILRuntime.Runtime.Enviorment.AppDomain();
                 //如果是debug  那么就从streamAsset读取
-                if (GameEnvironment.self.runtimeEnvironment == GameEnvironmentEnum.Develop)
+                if (GameEnvironment.Instance.runtimeEnvironment == GameEnvironmentEnum.Develop)
                 {
-                    HAResourceManager.self.EditorLoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
+                    HAResourceManager.Instance.EditorLoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
                 }
                 //否则 从assetbundle 里读取
                 else
                 {
-                    HAResourceManager.self.LoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
+                    HAResourceManager.Instance.LoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
                 }
             }
         }
@@ -251,7 +251,7 @@ namespace HFFramework
                 appdomain.Invoke(MainClassName, "Destory", null, null);
                 appdomain = null;
             }
-            self = null;
+            Instance = null;
         }
     }
 }

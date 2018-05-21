@@ -218,7 +218,7 @@ namespace HotFix
 
         public T GetTemp()
         {
-            return  ElementBase.CreateElement<T>();
+            return  BaseElement.CreateElement<T>();
         }
 
     }

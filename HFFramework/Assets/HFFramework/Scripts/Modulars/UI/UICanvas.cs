@@ -64,11 +64,14 @@ namespace HFFramework
         public override void MyAwake()
         {
             base.MyAwake();
-            cachePool = FindChild<UICachePool>("CachePool");
-            mainCamera = Camera.main;
+
             canvas = gameObject.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceCamera;
-            SetMainCamera(mainCamera);
+
+            SetMainCamera(Camera.main);
+
+            cachePool = FindChild<UICachePool>("CachePool");
+
             canvasScaler = gameObject.GetComponent<CanvasScaler>();
             canvasScaler.referenceResolution = new Vector2(GameSetter.Instance.ServerSceneWidth, GameSetter.Instance.ServerSceneHeight);
             canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
@@ -152,7 +155,7 @@ namespace HFFramework
                     {
                         if (pushType == PushType.Navigation)
                         {
-                            controllerList[count - 2].IsShow = false;
+                            controllerList[count - 2].IsActive = false;
                         }
                     }
                 });
@@ -168,12 +171,12 @@ namespace HFFramework
                 {
                     if (count - 2 >= 0)
                     {
-                        controllerList[count - 2].IsShow = true;
+                        controllerList[count - 2].IsActive = true;
                     }
 
                     if (popType == PopType.Destory)
                     {
-                        controllerList[count - 1].MyDestory();
+                        controllerList[count - 1].Destory();
                     }
                 });
             }

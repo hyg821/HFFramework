@@ -6,12 +6,12 @@ using HFFramework;
 
 namespace HotFix
 {
-    public class ElementBase
+    public class BaseElement
     {
         /// <summary>
         ///  全局控制 标记
         /// </summary>
-        static long GlobalID = 0;
+        protected static long GlobalID = 0;
 
         /// <summary>
         ///  标记每一个元素 的 id  通过GlobalIdControl 每次创建都+1
@@ -31,7 +31,7 @@ namespace HotFix
         /// <summary>
         ///  父element
         /// </summary>
-        public ElementBase parent;
+        public BaseElement parent;
 
         /// <summary>
         ///  获取唯一标识
@@ -42,17 +42,17 @@ namespace HotFix
             return GlobalID++;
         }
 
-        private List<ElementBase> compomentList;
+        private List<BaseElement> compomentList;
         /// <summary>
         /// 组件数组
         /// </summary>
-        public List<ElementBase> CompomentList
+        public List<BaseElement> CompomentList
         {
             get
             {
                 if (compomentList == null)
                 {
-                    compomentList = new List<ElementBase>();
+                    compomentList = new List<BaseElement>();
                 }
                 return compomentList;
             }
@@ -61,8 +61,8 @@ namespace HotFix
         /// <summary>
         ///  管理子物体的字典
         /// </summary>
-        private Dictionary<long, ElementBase> subElementDic;
-        public Dictionary<long, ElementBase> SubElementDic
+        private Dictionary<long, BaseElement> subElementDic;
+        public Dictionary<long, BaseElement> SubElementDic
         {
             set
             {
@@ -72,7 +72,7 @@ namespace HotFix
             {
                 if (subElementDic == null)
                 {
-                    subElementDic = new Dictionary<long, ElementBase>();
+                    subElementDic = new Dictionary<long, BaseElement>();
                 }
                 return subElementDic;
             }
@@ -98,18 +98,15 @@ namespace HotFix
             }
         }
 
-
-        public List<IEnumerator> coroutineList = new List<IEnumerator>();
-
-        private bool isShow;
-        public virtual bool IsShow
+        private bool isActive;
+        public virtual bool IsActive
         {
             set
             {
-                isShow = value;
+                isActive = value;
                 if (gameObject != null && gameObject.activeSelf != value)
                 {
-                    gameObject.SetActive(isShow);
+                    gameObject.SetActive(isActive);
                 }
                 if (value == true)
                 {
@@ -122,16 +119,26 @@ namespace HotFix
             }
             get
             {
-                return isShow;
+                return isActive;
             }
         }
 
-        public ElementBase()
+        public List<IEnumerator> coroutineList = new List<IEnumerator>();
+
+        public BaseElement()
         {
 
         }
 
-        public static T CreateElementWithGameObject<T>(GameObject g = null) where T : ElementBase, new()
+        public static T CreateElement<T>() where T : BaseElement, new()
+        {
+            T t1 = new T();
+            t1.elementID = GetGlobalID();
+            t1.Awake();
+            return t1;
+        }
+
+        public static T CreateElementWithGameObject<T>(GameObject g = null) where T : BaseElement, new()
         {
             T t1 = new T();
             t1.elementID = GetGlobalID();
@@ -145,7 +152,7 @@ namespace HotFix
         }
 
 
-        public static T CreateElementWithGameObjectAndParent<T>(GameObject g = null, ElementBase parent = null) where T : ElementBase, new()
+        public static T CreateElementWithGameObjectAndParent<T>(GameObject g = null, BaseElement parent = null) where T : BaseElement, new()
         {
             T t1 = new T();
             t1.elementID = GetGlobalID();
@@ -155,15 +162,6 @@ namespace HotFix
             t1.Awake();
             return t1;
         }
-
-        public static T CreateElement<T>() where T : ElementBase, new()
-        {
-            T t1 = new T();
-            t1.elementID = GetGlobalID();
-            t1.Awake();
-            return t1;
-        }
-
 
         /// <summary>
         ///  脚本被生成重载方法
@@ -237,18 +235,18 @@ namespace HotFix
             return transform.Find(path).GetComponent<T>();
         }
 
-        public T AddCompoment<T>() where T : ElementBase ,new()
+        public T AddCompoment<T>() where T : BaseElement ,new()
         {
-            T t1 = ElementBase.CreateElementWithGameObject<T>(gameObject);
+            T t1 = BaseElement.CreateElementWithGameObject<T>(gameObject);
             CompomentList.Add(t1);
             return t1;
         }
 
-        public T GetCompoment<T>() where T : ElementBase
+        public T GetCompoment<T>() where T : BaseElement
         {
             for (int i = 0; i < CompomentList.Count; i++)
             {
-                ElementBase e = CompomentList[i];
+                BaseElement e = CompomentList[i];
                 if (typeof(T)==e.GetType())
                 {
                     return e as T;
@@ -257,11 +255,11 @@ namespace HotFix
             return null;
         }
 
-        public void RemoveCompoment<T>(T t1) where T : ElementBase
+        public void RemoveCompoment<T>(T t1) where T : BaseElement
         {
             for (int i = 0; i < CompomentList.Count; i++)
             {
-                ElementBase e1 = CompomentList[i];
+                BaseElement e1 = CompomentList[i];
                 if (e1.elementID == t1.elementID)
                 {
                     e1.Destory();
@@ -302,7 +300,7 @@ namespace HotFix
         ///  添加子元素 方法
         /// </summary>
         /// <param name="ele"></param>
-        public void AddSubElement(ElementBase ele)
+        public void AddSubElement(BaseElement ele)
         {
             if (!SubElementDic.ContainsKey(ele.elementID))
             {
@@ -315,7 +313,7 @@ namespace HotFix
             transform.SetParent(g.transform, false);
         }
 
-        public void SetParent(ElementBase g)
+        public void SetParent(BaseElement g)
         {
             parent = g;
             transform.SetParent(g.transform, false);
@@ -325,7 +323,7 @@ namespace HotFix
         ///  显示一个 element  并且把他 作为自己的子物体
         /// </summary>
         /// <param name="e"></param>
-        public void SetChild(ElementBase child)
+        public void SetChild(BaseElement child)
         {
             AddSubElement(child);
             child.transform.SetParent(transform, false);
@@ -456,11 +454,6 @@ namespace HotFix
             MyLateUpdate(deltaTime);
         }
 
-        public virtual void M_Start()
-        {
-
-        }
-
         /// <summary>
         ///  如果需要 开启update 方法 只需要设置 IsNeedLateUpdate=true 并且重载M_Update 方法
         /// </summary>
@@ -548,7 +541,7 @@ namespace HotFix
         }
 
         /// <summary>
-        ///  销毁elementBase 重载方法
+        ///  销毁BaseElement 重载方法
         /// </summary>
         public virtual void Destory()
         {
@@ -573,30 +566,30 @@ namespace HotFix
                 coroutineList = null;
             }
 
-            if (SubElementDic != null)
+            if (subElementDic != null)
             {
-                if (SubElementDic.Values.Count != 0)
+                if (subElementDic.Count != 0)
                 {
-                    foreach (ElementBase val in SubElementDic.Values)
+                    foreach (var item in subElementDic)
                     {
-                        val.Destory();
+                        item.Value.Destory();
                     }
                 }
-                SubElementDic.Clear();
-                SubElementDic = null;
+                subElementDic.Clear();
+                subElementDic = null;
             }
 
-            if (MessageTypeDic != null)
+            if (messageTypeDic != null)
             {
-                if (MessageTypeDic.Keys.Count != 0)
+                if (messageTypeDic.Count != 0)
                 {
-                    foreach (var item in MessageTypeDic.Keys)
+                    foreach (var item in messageTypeDic)
                     {
-                        NotificationCenter.self.RemoveObserver(this, item);
+                        NotificationCenter.self.RemoveObserver(this, item.Key);
                     }
                 }
-                MessageTypeDic.Clear();
-                MessageTypeDic = null;
+                messageTypeDic.Clear();
+                messageTypeDic = null;
             }
 
             parent = null;

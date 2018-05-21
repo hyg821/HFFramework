@@ -44,13 +44,20 @@ namespace HFFramework
         /// <summary>
         ///  消息回调
         /// </summary>
-        public Action<NotificationMessage> callBack;
+        public Action<NotificationMessage> callback;
 
-        public ObserverDelegate(object receiver, long msgID, Action<NotificationMessage> call)
+        public ObserverDelegate(object receiver, long msgID, Action<NotificationMessage> callback)
         {
             this.receiver = receiver;
             this.msgID = msgID;
-            callBack += call;
+            this.callback = callback;
+        }
+
+        public void Destroy()
+        {
+            receiver = null;
+            callback = null;
+            msgID = 0;
         }
     }
 
@@ -58,12 +65,12 @@ namespace HFFramework
     {
         public static NotificationCenter self;
 
-        private Dictionary<long, List<ObserverDelegate>> dic = new Dictionary<long, List<ObserverDelegate>>();
+        private Dictionary<long, List<ObserverDelegate>> messagePool = new Dictionary<long, List<ObserverDelegate>>();
 
         public void Awake()
         {
             self = this;
-            self.dic = new Dictionary<long, List<ObserverDelegate>>();
+            self.messagePool = new Dictionary<long, List<ObserverDelegate>>();
         }
 
         /// <summary>
@@ -76,7 +83,7 @@ namespace HFFramework
         {
             ObserverDelegate o = new ObserverDelegate(receiver, msgID, callback);
             List<ObserverDelegate> list;
-            if (dic.TryGetValue(msgID, out list))
+            if (messagePool.TryGetValue(msgID, out list))
             {
                 if (list != null)
                 {
@@ -85,9 +92,9 @@ namespace HFFramework
             }
             else
             {
-                List<ObserverDelegate> l = new List<ObserverDelegate>();
-                l.Add(o);
-                dic.Add(msgID, l);
+                list = new List<ObserverDelegate>();
+                list.Add(o);
+                messagePool.Add(msgID, list);
             }
         }
 
@@ -97,19 +104,19 @@ namespace HFFramework
         /// <param name="msg"></param>
         public void PostNotification(NotificationMessage msg)
         {
-            List<ObserverDelegate> l;
-            if (dic.TryGetValue(msg.msgID, out l))
+            List<ObserverDelegate> list;
+            if (messagePool.TryGetValue(msg.msgID, out list))
             {
-                for (int i = 0; i < l.Count; i++)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    ObserverDelegate o = l[i];
-                    if (o.receiver != null || o.callBack != null)
+                    ObserverDelegate o = list[i];
+                    if (o.receiver != null || o.callback != null)
                     {
-                        o.callBack(msg);
+                        o.callback(msg);
                     }
                     else
                     {
-                        l.Remove(o);
+                        list.Remove(o);
                     }
                 }
             }
@@ -122,23 +129,21 @@ namespace HFFramework
         /// <param name="msgID"></param>
         public void RemoveObserver(object receiver, int msgID)
         {
-            List<ObserverDelegate> l;
-            if (dic.TryGetValue(msgID, out l))
+            List<ObserverDelegate> list;
+            if (messagePool.TryGetValue(msgID, out list))
             {
-                if (l != null)
+                if (list != null)
                 {
                     int i = 0;
                     while (true)
                     {
-                        if (i < l.Count)
+                        if (i < list.Count)
                         {
-                            ObserverDelegate o = l[i];
+                            ObserverDelegate o = list[i];
                             if (o.receiver == receiver)
                             {
-                                o.receiver = null;
-                                o.callBack = null;
-                                o.msgID = 0;
-                                l.Remove(o);
+                                o.Destroy();
+                                list.Remove(o);
                                 break;
                             }
                             i++;
@@ -154,7 +159,7 @@ namespace HFFramework
 
         public void DestroyManager()
         {
-            dic.Clear();
+            messagePool.Clear();
             self = null;
         }
     }

@@ -14,7 +14,7 @@ namespace HFFramework
         public override void MyAwake()
         {
             base.MyAwake();
-            IsShow = false;
+            IsActive = false;
         }
 
         /// <summary>

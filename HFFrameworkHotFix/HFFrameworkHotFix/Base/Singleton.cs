@@ -1,6 +1,6 @@
 ﻿namespace HotFix
 {
-    public class SingletonController<T> where T : ElementBase, new()
+    public class Singleton<T> where T : BaseElement, new()
     {
         /// <summary>
         ///  私有

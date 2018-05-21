@@ -37,20 +37,20 @@ namespace HFFramework
             }
         }
 
-        private bool isShow;
-        public virtual bool IsShow
+        private bool isActive;
+        public virtual bool IsActive
         {
             set
             {
-                isShow = value;
+                isActive = value;
                 if (gameObject.activeSelf != value)
                 {
-                    gameObject.SetActive(isShow);
+                    gameObject.SetActive(isActive);
                 }
             }
             get
             {
-                return isShow;
+                return isActive;
             }
         }
 
@@ -197,7 +197,8 @@ namespace HFFramework
 
         public void ReceiveNotificationMessage(object receiver, int messageType, Action<NotificationMessage> callback)
         {
-            if (!MessageTypeDic.ContainsKey(messageType))
+            object temp;
+            if (!MessageTypeDic.TryGetValue(messageType, out temp))
             {
                 MessageTypeDic.Add(messageType, null);
                 NotificationCenter.self.AddObserver(receiver, messageType, callback);
@@ -229,31 +230,30 @@ namespace HFFramework
             myTransform.SetAsFirstSibling();
         }
 
-        public void MyDestory()
-        {
-            HFLog.L("销毁销毁");
-            Destroy(gameObject);
-        }
-
         public void OnDestroy()
         {
-            //关闭对应的update
+            Destory();
+        }
+
+        /// <summary>
+        ///  销毁对应的重载方法 具体是否销毁对象自行决定 
+        ///  OnDestroy（Unity反射方法） 会自动调用一次 Destory
+        ///  也可以手动调用
+        /// </summary>
+        public virtual void Destory()
+        {
             IsNeedUpdate = false;
             IsNeedLateUpdate = false;
             IsNeedFixedUpdate = false;
 
-            //销毁所有的对应通知
-            if (MessageTypeDic != null)
+            if (messageTypeDic != null)
             {
-                if (NotificationCenter.self!=null)
+                foreach (var item in messageTypeDic)
                 {
-                    foreach (var item in MessageTypeDic)
-                    {
-                        NotificationCenter.self.RemoveObserver(this, item.Key);
-                    }
+                    NotificationCenter.self.RemoveObserver(this, item.Key);
                 }
-                MessageTypeDic.Clear();
-                MessageTypeDic = null;
+                messageTypeDic.Clear();
+                messageTypeDic = null;
             }
         }
     }

@@ -14,6 +14,8 @@ namespace HFFramework
 
     public class UGUIStyleHelper : MonoBehaviour
     {
+        public string assetBundleName;
+        public string assetName;
 
         public List<Image> imageList;
 
@@ -68,8 +70,8 @@ namespace HFFramework
                 textColorList.Add(item.color);
             }
 
-            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile("common_material");
-            grayMaterial = ab.LoadAssetWithCache<Material>("UIGrayETC");
+            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(assetBundleName);
+            grayMaterial = ab.LoadAssetWithCache<Material>(assetName);
         }
 
 

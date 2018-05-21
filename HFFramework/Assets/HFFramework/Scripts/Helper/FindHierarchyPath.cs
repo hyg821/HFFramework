@@ -6,7 +6,9 @@ namespace HFFramework
 {
     public class FindHierarchyPath : MonoBehaviour
     {
+
         public List<string> pathList = new List<string>();
+
         public string path = "";
 
         void Start()

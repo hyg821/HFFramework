@@ -34,9 +34,9 @@ namespace HFFramework
 
             Application.runInBackground = true;
 
-            Screen.sleepTimeout = SleepTimeout.NeverSleep;
-
             Application.targetFrameRate = targetFrame;
+
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
             Time.fixedDeltaTime = 1.0f / Application.targetFrameRate;
         }

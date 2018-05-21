@@ -40,9 +40,9 @@ namespace HFFramework
         /// </summary>
         public void CloseAllSocket()
         {
-            foreach (var item in socketCache.Values)
+            foreach (var item in socketCache)
             {
-                item.CloseSocket(true);
+                item.Value.CloseSocket(true);
             }
         }
 

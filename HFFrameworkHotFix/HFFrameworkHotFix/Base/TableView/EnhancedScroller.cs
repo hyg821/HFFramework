@@ -53,7 +53,7 @@ namespace HotFix
     /// that using only a handful of views, you can display thousands of rows. This will save memory and processing
     /// power in your application.
     /// </summary>
-    public class EnhancedScroller : ElementBase
+    public class EnhancedScroller : BaseElement
     {
         #region Public
 
@@ -483,7 +483,7 @@ namespace HotFix
             {
                 // no recyleable cell found, so we create a new view
                 // and attach it to our container
-                cellView = ElementBase.CreateElement<TV>();
+                cellView = BaseElement.CreateElement<TV>();
                 cellView.cellIdentifier = id;
                 cellView.SetParent(_container.gameObject);
             }

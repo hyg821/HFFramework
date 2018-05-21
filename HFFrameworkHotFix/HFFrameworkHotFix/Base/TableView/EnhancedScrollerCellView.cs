@@ -7,7 +7,7 @@ namespace HotFix
     /// <summary>
     /// This is the base class that all cell views should derive from
     /// </summary>
-    public class EnhancedScrollerCellView : ElementBase
+    public class EnhancedScrollerCellView : BaseElement
     {
         /// <summary>
         /// The cellIdentifier is a unique string that allows the scroller

@@ -41,7 +41,7 @@ namespace HFFramework
         /// <summary>
         ///  下载图片管理器
         /// </summary>
-        public DownLoadManager downLoadManager;
+        public WebImageManager webImageManager;
 
         /// <summary>
         ///  输入管理器
@@ -93,9 +93,9 @@ namespace HFFramework
                 DontDestroyOnLoad(uiManagerObj);
 
                 //6下载
-                GameObject downLoadManagerObj = new GameObject("DownLoadManager");
-                downLoadManager = downLoadManagerObj.AddComponent<DownLoadManager>();
-                DontDestroyOnLoad(downLoadManagerObj);
+                GameObject webImageManagerObj = new GameObject("WebImageManager");
+                webImageManager = webImageManagerObj.AddComponent<WebImageManager>();
+                DontDestroyOnLoad(webImageManagerObj);
 
                 //7游戏设置控制器
                 GameObject inputManagerObj = new GameObject("InputManager");
@@ -133,7 +133,7 @@ namespace HFFramework
             HASocketManager.Instance.DestroyManager();
             AudioManager.Instance.DestroyManager();
             UIManager.Instance.DestroyManager();
-            DownLoadManager.Instance.DestroyManager();
+            WebImageManager.Instance.DestroyManager();
             InputManager.Instance.DestroyManager();
             AppDomainManager.Instance.DestroyManager();
             GameLooper.Instance.DestroyManager();

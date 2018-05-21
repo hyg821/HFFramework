@@ -12,11 +12,11 @@ namespace HFFramework
         StateExit
     }
 
-    public class HYGBaseState
+    public class FSMBaseState
     {
         public const string RootState = "Root";
 
-        public HYGFSMManager manager;
+        public FSMManager manager;
 
         /// <summary>
         ///  状态名称
@@ -38,12 +38,12 @@ namespace HFFramework
         public Action OnStateStayCallback;
         public Action OnStateExitCallback;
 
-        public HYGBaseState()
+        public FSMBaseState()
         {
 
         }
 
-        public HYGBaseState(string name,HYGFSMManager m)
+        public FSMBaseState(string name, FSMManager m)
         {
             manager = m;
             stateName = name;

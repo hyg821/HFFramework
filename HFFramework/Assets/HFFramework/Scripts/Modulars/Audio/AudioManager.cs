@@ -22,7 +22,6 @@ namespace HFFramework
 
     public class AudioManager : MonoBehaviour
     {
-
         /// <summary>
         ///  标记背景音乐
         /// </summary>
@@ -92,9 +91,9 @@ namespace HFFramework
         {
             set
             {
-                foreach (AudioPlayer player in audioEffectDic.Values)
+                foreach (var item in audioEffectDic)
                 {
-                    player.Volume = value;
+                    item.Value.Volume = value;
                 }
 
                 for (int i = 0; i < audioPlayerPool.Count; i++)
@@ -159,12 +158,12 @@ namespace HFFramework
         public AudioPlayer CreateAudioSource(string name, GameObject parent, SoundType type)
         {
             identifier++;
-            GameObject g = new GameObject();
-            g.name = name;
-            AudioPlayer player = g.AddComponent<AudioPlayer>();
+            GameObject temp = new GameObject();
+            AudioPlayer player = temp.AddComponent<AudioPlayer>();
+            temp.name = name;
             player.audioPlayerName = name;
-            player.Type = type;
-            g.transform.SetParent(parent.transform, false);
+            player.SoundType = type;
+            temp.transform.SetParent(parent.transform);
 
             if (type == SoundType.Music)
             {
@@ -183,67 +182,52 @@ namespace HFFramework
 
         public AudioPlayer GetAudioSource(string name, SoundType type)
         {
+            AudioPlayer player = null;
             if (type == SoundType.Music)
             {
-                if (audioDic.ContainsKey(name))
-                {
-                    return audioDic[name];
-                }
-                else
-                {
-                    return null;
-                }
+                audioDic.TryGetValue(name, out player);
             }
             else if (type == SoundType.Effect)
             {
-                if (audioEffectDic.ContainsKey(name))
-                {
-                    return audioDic[name];
-                }
-                else
-                {
-                    return null;
-                }
+                audioEffectDic.TryGetValue(name, out player);
             }
-            else
+            else if (type == SoundType.Free)
             {
-                return null;
+                for (int i = 0; i < audioPlayerPool.Count; i++)
+                {
+                    AudioPlayer temp = audioPlayerPool[i];
+                    if (temp.audioPlayerName == name)
+                    {
+                        player = temp;
+                    }
+                }
             }
+            return player;
         }
 
         public AudioPlayer GetFreeAudioPlayer()
         {
-            int i = 0;
-            while (i < audioPlayerPool.Count)
+            AudioPlayer player = null;
+            for (int i = 0; i < audioPlayerPool.Count; i++)
             {
-                AudioPlayer p = audioPlayerPool[i];
-                if (p.source == null)
+                AudioPlayer temp = audioPlayerPool[i];
+                if (temp.IsPlaying == false)
                 {
-                    p.DestorySelf();
-                    audioPlayerPool.Remove(p);
+                    player = temp;
                 }
-                else
-                {
-                    if (p.IsPlaying == false)
-                    {
-                        return p;
-                    }
-                }
-                i++;
             }
-            AudioPlayer player = CreateAudioSource("FreeAudio" + identifier, gameObject, SoundType.Free);
-            return player;
-        }
 
-        public void Recovery(AudioPlayer player)
-        {
-            player.Stop();
-            player.CurrentAudioClip = null;
+            if (player==null)
+            {
+                player = CreateAudioSource("FreeAudio" + identifier, gameObject, SoundType.Free);
+            }
+
+            return player;
         }
 
         public void DestoryPlayer(AudioPlayer player)
         {
-            SoundType type = player.Type;
+            SoundType type = player.SoundType;
             if (type == SoundType.Effect)
             {
                 audioEffectDic.Remove(player.audioPlayerName);
@@ -256,7 +240,7 @@ namespace HFFramework
             {
                 audioPlayerPool.Remove(player);
             }
-            player.DestorySelf();
+            player.Destory();
         }
 
         public void DestoryPlayer(string name, SoundType type)
@@ -266,19 +250,19 @@ namespace HFFramework
 
         public void DestoryAllAudioPlayer()
         {
-            foreach (AudioPlayer player in audioDic.Values)
+            foreach (var item in audioDic)
             {
-                player.DestorySelf();
+                item.Value.Destory();
             }
 
-            foreach (AudioPlayer player in audioEffectDic.Values)
+            foreach (var item in audioEffectDic)
             {
-                player.DestorySelf();
+                item.Value.Destory();
             }
 
-            foreach (AudioPlayer player in audioPlayerPool)
+            foreach (var item in audioPlayerPool)
             {
-                player.DestorySelf();
+                item.Destory();
             }
 
             audioDic.Clear();

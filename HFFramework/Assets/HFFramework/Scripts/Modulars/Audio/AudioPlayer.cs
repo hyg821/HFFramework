@@ -4,58 +4,52 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class AudioPlayer : MonoBehaviour
+
+    public enum AudioCacheType
+    {
+        Cache,
+        Destroy
+    }
+
+    public class AudioPlayer : BaseMonoBehaviour
     {
         /// <summary>
         /// 标记 每一个 player 的名字
         /// </summary>
         public string audioPlayerName;
 
-        public AudioSource source;
+        public AudioSource audioSource;
 
-        private Coroutine coroutine;
+        public AudioCacheType cacheType;
 
-        private bool isAutoRecovery = true;
-        public bool IsAutoRecovery
+        private SoundType soundType;
+        public SoundType SoundType
         {
             set
             {
-                isAutoRecovery = value;
-            }
-            get
-            {
-                return isAutoRecovery;
-            }
-        }
-
-        private SoundType type;
-        public SoundType Type
-        {
-            set
-            {
+                soundType = value;
                 if (value == SoundType.Effect)
                 {
                     Volume = AudioManager.Instance.EffectVolume;
                     Loop = false;
-                    IsAutoRecovery = true;
+                    cacheType = AudioCacheType.Cache;
                 }
                 else if (value == SoundType.Music)
                 {
                     Volume = AudioManager.Instance.MusicVolume;
                     Loop = true;
-                    IsAutoRecovery = false;
+                    cacheType = AudioCacheType.Destroy;
                 }
                 else if (value == SoundType.Free)
                 {
                     Volume = AudioManager.Instance.EffectVolume;
                     Loop = false;
-                    IsAutoRecovery = true;
+                    cacheType = AudioCacheType.Cache;
                 }
-                type = value;
             }
             get
             {
-                return type;
+                return soundType;
             }
         }
 
@@ -63,11 +57,11 @@ namespace HFFramework
         {
             set
             {
-                source.loop = value;
+                audioSource.loop = value;
             }
             get
             {
-                return source.loop;
+                return audioSource.loop;
             }
         }
 
@@ -75,7 +69,7 @@ namespace HFFramework
         {
             get
             {
-                return source.isPlaying;
+                return audioSource.isPlaying;
             }
         }
 
@@ -88,15 +82,15 @@ namespace HFFramework
         {
             set
             {
-                if (source.isPlaying)
+                if (audioSource.isPlaying)
                 {
                     Stop();
                 }
-                source.clip = value;
+                audioSource.clip = value;
             }
             get
             {
-                return source.clip;
+                return audioSource.clip;
             }
         }
 
@@ -104,25 +98,22 @@ namespace HFFramework
         {
             set
             {
-                source.volume = value;
+                audioSource.volume = value;
             }
             get
             {
-                return source.volume;
+                return audioSource.volume;
             }
         }
 
-        public void Awake()
-        {        
-            if (gameObject.GetComponent<AudioSource>() == null)
-            {
-                source = gameObject.AddComponent<AudioSource>();
-            }
-        }
-
-        void ResetAutoRecovery()
+        public override void MyAwake()
         {
-            //coroutine = StartCoroutine(AutoRecovery());
+            base.MyAwake();
+            audioSource = gameObject.GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
         }
 
         /// <summary>
@@ -149,14 +140,14 @@ namespace HFFramework
         /// <returns></returns>
         public AudioClip GetAudioClip(string name)
         {
-            if (audioClipDic.ContainsKey(name))
-            {
-                return audioClipDic[name];
-            }
-            else
-            {
-                return null;
-            }
+            AudioClip clip;
+            audioClipDic.TryGetValue(name, out clip);
+            return clip;
+        }
+
+        public void SetAudioClipAndPlay(string packageName, string audioName)
+        {
+            SetAudioClipAndPlay(HAResourceManager.Instance.GetAudio(packageName, audioName));
         }
 
         /// <summary>
@@ -169,47 +160,34 @@ namespace HFFramework
             Play();
         }
 
-        public void SetAudioClipAndPlay(string packageName, string audioName)
-        {
-            SetAudioClipAndPlay(HAResourceManager.Instance.GetAudio(packageName, audioName));
-        }
-
         public void Play()
         {
-            if (source.isPlaying == false)
+            if (audioSource.isPlaying == false)
             {
-                source.Play();
-                if (IsAutoRecovery)
-                {
-                    ResetAutoRecovery();
-                }
+                audioSource.Play();
             }
         }
 
         public void Pause()
         {
-            source.Pause();
+            audioSource.Pause();
         }
 
         public void UnPause()
         {
-            source.UnPause();
+            audioSource.UnPause();
         }
 
         public void Stop()
         {
-            source.Stop();
+            audioSource.Stop();
         }
 
-        public void DestorySelf()
+        public override void Destory()
         {
-            if (coroutine != null)
-            {
-                StopCoroutine(coroutine);
-                coroutine = null;
-            }
-            source.Stop();
-            Destroy(source);
+            base.Destory();
+            audioSource.Stop();
+            CurrentAudioClip = null;
             Destroy(gameObject);
         }
     }

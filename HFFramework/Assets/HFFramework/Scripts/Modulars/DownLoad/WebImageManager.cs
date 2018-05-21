@@ -7,9 +7,9 @@ using System;
 
 namespace HFFramework
 {
-    public class DownLoadManager : MonoBehaviour
+    public class WebImageManager : MonoBehaviour
     {
-        public static DownLoadManager Instance;
+        public static WebImageManager Instance;
 
         /// <summary>
         ///  图片缓存字典
@@ -28,7 +28,7 @@ namespace HFFramework
         /// <param name="c">Image组件</param>
         public static void DownLoadImage(string url, Image c)
         {
-            DownLoadManager.Instance.m_LoadImage(url, c);
+            WebImageManager.Instance.m_LoadImage(url, c);
         }
 
         private void m_LoadImage(string url, Image c)
@@ -99,13 +99,13 @@ namespace HFFramework
                 Resources.UnloadAsset(item.Value);
             }
             Instance.cacheDic.Clear();
-            Instance = null;
             Resources.UnloadUnusedAssets();
         }
 
         public void DestroyManager()
         {
             ClearCache();
+            Instance = null;
         }
     }
 }

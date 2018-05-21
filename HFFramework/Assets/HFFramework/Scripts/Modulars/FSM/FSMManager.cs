@@ -4,18 +4,18 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class HYGFSMManager
+    public class FSMManager
     {   
         /// <summary>
         ///  缓存状态的字典
         /// </summary>
-        private Dictionary<string, HYGBaseState> allStateDic = new Dictionary<string, HYGBaseState>();
+        private Dictionary<string, FSMBaseState> allStateDic = new Dictionary<string, FSMBaseState>();
 
-        private HYGBaseState currentState;
+        private FSMBaseState currentState;
         /// <summary>
         ///  获取当前正在执行的状态
         /// </summary>
-        public HYGBaseState CurrentState
+        public FSMBaseState CurrentState
         {
             set
             {
@@ -30,18 +30,18 @@ namespace HFFramework
         /// <summary>
         ///  构造方法
         /// </summary>
-        public HYGFSMManager()
+        public FSMManager()
         {
-            HYGBaseState rootState = new HYGBaseState(HYGBaseState.RootState,this);
+            FSMBaseState rootState = new FSMBaseState(FSMBaseState.RootState,this);
             AddState(rootState);
-            TranslateToState(HYGBaseState.RootState);
+            TranslateToState(FSMBaseState.RootState);
         }
 
         /// <summary>
         ///  添加一个状态
         /// </summary>
         /// <param name="state"></param>
-        public void AddState(HYGBaseState state)
+        public void AddState(FSMBaseState state)
         {
             if (!allStateDic.ContainsKey(state.stateName))
             {
@@ -84,7 +84,7 @@ namespace HFFramework
         /// 索引器
         /// </summary>
         /// <param name="name">Name.</param>
-        public HYGBaseState this[string name]
+        public FSMBaseState this[string name]
         {
             get
             {

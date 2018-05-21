@@ -34,6 +34,31 @@ namespace HotFix
         public ElementBase parent;
 
         /// <summary>
+        ///  获取唯一标识
+        /// </summary>
+        /// <returns></returns>
+        private static long GetGlobalID()
+        {
+            return GlobalID++;
+        }
+
+        private List<ElementBase> compomentList;
+        /// <summary>
+        /// 组件数组
+        /// </summary>
+        public List<ElementBase> CompomentList
+        {
+            get
+            {
+                if (compomentList == null)
+                {
+                    compomentList = new List<ElementBase>();
+                }
+                return compomentList;
+            }
+        }
+
+        /// <summary>
         ///  管理子物体的字典
         /// </summary>
         private Dictionary<long, ElementBase> subElementDic;
@@ -101,11 +126,6 @@ namespace HotFix
             }
         }
 
-        private static long GetGlobalID()
-        {
-            return GlobalID++;
-        }
-
         public ElementBase()
         {
 
@@ -115,8 +135,11 @@ namespace HotFix
         {
             T t1 = new T();
             t1.elementID = GetGlobalID();
-            t1.gameObject = g;
-            t1.transform = g.transform;
+            if (g!=null)
+            {
+                t1.gameObject = g;
+                t1.transform = g.transform;
+            }
             t1.Awake();
             return t1;
         }
@@ -214,6 +237,39 @@ namespace HotFix
             return transform.Find(path).GetComponent<T>();
         }
 
+        public T AddCompoment<T>() where T : ElementBase ,new()
+        {
+            T t1 = ElementBase.CreateElementWithGameObject<T>(gameObject);
+            CompomentList.Add(t1);
+            return t1;
+        }
+
+        public T GetCompoment<T>() where T : ElementBase
+        {
+            for (int i = 0; i < CompomentList.Count; i++)
+            {
+                ElementBase e = CompomentList[i];
+                if (typeof(T)==e.GetType())
+                {
+                    return e as T;
+                }
+            }
+            return null;
+        }
+
+        public void RemoveCompoment<T>(T t1) where T : ElementBase
+        {
+            for (int i = 0; i < CompomentList.Count; i++)
+            {
+                ElementBase e1 = CompomentList[i];
+                if (e1.elementID == t1.elementID)
+                {
+                    e1.Destory();
+                    CompomentList[i] = null;
+                }
+            }
+        }
+
         public void BringSelfToFront()
         {
             if (gameObject != null)
@@ -290,7 +346,7 @@ namespace HotFix
         /// <param name="coroutine"></param>
         public Coroutine StartCoroutine(IEnumerator c)
         {
-            return GameLooper.self.StartCoroutine(c);
+            return GameLooper.Instance.StartCoroutine(c);
         }
 
         /// <summary>
@@ -301,7 +357,7 @@ namespace HotFix
         {
             if (c != null)
             {
-                GameLooper.self.StopCoroutine(c);
+                GameLooper.Instance.StopCoroutine(c);
             }
         }
 
@@ -309,7 +365,7 @@ namespace HotFix
         {
             if (c != null)
             {
-                GameLooper.self.StopCoroutine(c);
+                GameLooper.Instance.StopCoroutine(c);
             }
         }
 
@@ -466,7 +522,7 @@ namespace HotFix
 
         public void PlayMusic(string assetBundlePackageName, string musicName)
         {
-            AudioPlayer player = AudioManager.self.GetFreeAudioPlayer();
+            AudioPlayer player = AudioManager.Instance.GetFreeAudioPlayer();
             player.SetAudioClipAndPlay(assetBundlePackageName, musicName);
         }
 
@@ -496,6 +552,17 @@ namespace HotFix
         /// </summary>
         public virtual void Destory()
         {
+            if (compomentList != null)
+            {
+                for (int i = 0; i < compomentList.Count; i++)
+                {
+                    compomentList[i].Destory();
+                }
+                compomentList.Clear();
+                compomentList = null;
+            }
+
+
             if (coroutineList != null)
             {
                 for (int i = 0; i < coroutineList.Count; i++)

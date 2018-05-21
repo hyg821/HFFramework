@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using HotFix;
 
 public class HotFixEnter
 {

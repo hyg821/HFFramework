@@ -17,7 +17,7 @@ namespace HFFramework
 
         public Dictionary<int, UICanvas> canvasDic = new Dictionary<int, UICanvas>();
 
-        public AssetBundlePackage HFUIPackage;
+        public AssetBundlePackage assetBundlePackage;
 
         void Awake()
         {
@@ -28,8 +28,8 @@ namespace HFFramework
         public void LoadScene()
         {
             ClearScene();
-            HFUIPackage = HAResourceManager.Instance.LoadAssetBundleFromFile("hfui");
-            GameObject  prefab= HFUIPackage.LoadAssetWithCache<GameObject>("UISystem");
+            assetBundlePackage = HAResourceManager.Instance.LoadAssetBundleFromFile("hfui");
+            GameObject  prefab= assetBundlePackage.LoadAssetWithCache<GameObject>("UISystem");
             GameObject uiRootObj = Instantiate(prefab);
             uiRootObj.name = RootName;
             UIRoot = uiRootObj.GetComponent<UIRoot>();
@@ -40,7 +40,7 @@ namespace HFFramework
             UICanvas uiCanvas;
             if (!canvasDic.TryGetValue(canvasLayerIndex, out uiCanvas))
             {
-                GameObject canvasPrefab = HFUIPackage.LoadAssetWithCache<GameObject>("UICanvas");
+                GameObject canvasPrefab = assetBundlePackage.LoadAssetWithCache<GameObject>("UICanvas");
                 GameObject canvasObject = Instantiate(canvasPrefab);
                 uiCanvas = canvasObject.AddComponent<UICanvas>();
                 uiCanvas.AutoSizeFitter();
@@ -64,7 +64,7 @@ namespace HFFramework
         public void ClearScene()
         {
             canvasDic.Clear();
-            HFUIPackage = null;
+            assetBundlePackage = null;
             UIRoot = null;
         }
 

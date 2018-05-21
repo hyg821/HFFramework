@@ -26,7 +26,7 @@ namespace HFFramework
         /// <summary>
         ///  网络管理器
         /// </summary>
-        public HASocketManager socketManager;
+        public HFSocketManager socketManager;
 
         /// <summary>
         ///  声音管理器
@@ -79,7 +79,7 @@ namespace HFFramework
 
                 //3网络
                 GameObject socketManagerObj = new GameObject("SocketManager");
-                socketManager = socketManagerObj.AddComponent<HASocketManager>();
+                socketManager = socketManagerObj.AddComponent<HFSocketManager>();
                 DontDestroyOnLoad(socketManagerObj);
 
                 //4声音
@@ -130,7 +130,7 @@ namespace HFFramework
             GameEnvironment.Instance = null;
             HAResourceManager.Instance.DestroyManager();
             NotificationCenter.self.DestroyManager();
-            HASocketManager.Instance.DestroyManager();
+            HFSocketManager.Instance.DestroyManager();
             AudioManager.Instance.DestroyManager();
             UIManager.Instance.DestroyManager();
             WebImageManager.Instance.DestroyManager();

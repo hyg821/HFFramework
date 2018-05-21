@@ -31,19 +31,19 @@ namespace HFFramework
 
         public virtual void Show(Action callback)
         {
-            if (gameObject.activeSelf==false)
+            if (IsActive==false)
             {
-                gameObject.SetActive(true);
+                IsActive = true;
             }
             DoShowAnimation(callback);
         }
 
         public virtual void Hide(Action callback)
         {
-            if (gameObject.activeSelf == true)
+            if (IsActive==true)
             {
                 DoHideAnimation(callback);
-                gameObject.SetActive(false);
+                IsActive = false;
             }
         }
     }

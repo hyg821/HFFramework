@@ -47,6 +47,16 @@ namespace HFFramework
                 {
                     gameObject.SetActive(isActive);
                 }
+
+                if (value == true)
+                {
+                    ElementDidAppear();
+                }
+                else
+                {
+                    ElementDidDisAppear();
+                }
+
             }
             get
             {
@@ -216,6 +226,22 @@ namespace HFFramework
         }
 
         public virtual void MyLateUpdate(float deltaTime)
+        {
+
+        }
+
+        /// <summary>
+        ///  元素被显示出来
+        /// </summary>
+        public virtual void ElementDidAppear()
+        {
+
+        }
+
+        /// <summary>
+        ///  元素被隐藏
+        /// </summary>
+        public virtual void ElementDidDisAppear()
         {
 
         }

@@ -256,6 +256,8 @@
     <Compile Include="Base\TableView\EnhancedScrollerCellView.cs" />
     <Compile Include="Base\TableView\IEnhancedScrollerDelegate.cs" />
     <Compile Include="Base\TableView\SmallList.cs" />
+    <Compile Include="Base\Toggle\ToggleCenter.cs" />
+    <Compile Include="Base\Toggle\ToggleItem.cs" />
     <Compile Include="Base\UIElement.cs" />
     <Compile Include="HotFixEnter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -8,7 +8,7 @@ namespace HotFix
 
         private bool isSelect;
 
-        public ToggleCenter center;
+        private ToggleCenter center;
 
         public void Init(int index)
         {

@@ -81,7 +81,7 @@ namespace HotFix
         /// <summary>
         ///  注册的消息 字典   destory会自动销毁
         /// </summary>
-        public Dictionary<int, object> messageTypeDic = new Dictionary<int, object>();
+        private Dictionary<int, object> messageTypeDic = new Dictionary<int, object>();
         public Dictionary<int, object> MessageTypeDic
         {
             set

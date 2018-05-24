@@ -6,9 +6,9 @@ namespace HotFix
     {
         public int index;
 
-        private bool isSelect;
+        private bool isSelect = false;
 
-        private ToggleCenter center;
+        public ToggleCenter center;
 
         public void Init(int index)
         {

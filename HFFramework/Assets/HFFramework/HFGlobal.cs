@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 namespace HFFramework
@@ -57,6 +58,8 @@ namespace HFFramework
         {
             if (self == null)
             {
+                Clean();
+
                 self = this;
                 gameObject.name = "HFGlobal";
                 DontDestroyOnLoad(gameObject);
@@ -123,6 +126,12 @@ namespace HFFramework
             {
                 Destroy(gameObject);
             }
+        }
+
+        public void Clean()
+        {
+            Resources.UnloadUnusedAssets();
+            GC.Collect();
         }
 
         public void OnApplicationQuit()

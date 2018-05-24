@@ -23,6 +23,15 @@ public class Demo : BaseMonoBehaviour
         GameObject.Instantiate(g);
 
         HAResourceManager.Instance.UnloadAssetBundle(ab, false);
+
+
+        AssetBundlePackage abx = HAResourceManager.Instance.LoadAssetBundleFromFile("Textrure");
+
+        Sprite sss = abx.LoadAssetWithCache<Sprite>("aaa");
+        Debug.Log("BBBBBBBBBBBBBBBBBBBB  " + sss.name);
+
+        Sprite[] ss = abx.assetBundle.LoadAssetWithSubAssets<Sprite>("aaa");
+        Debug.Log("XXXXXXXXXXXXXXXXX" + ss.Length);
     }
 
     public void HotFixJump()

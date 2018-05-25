@@ -1,12 +1,14 @@
 ﻿using System;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
 
 namespace HFFramework
 {
     public class HFButton : Button
     {
+
         /// <summary>
         ///  区别button的标记
         /// </summary>

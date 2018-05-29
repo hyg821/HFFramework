@@ -300,12 +300,10 @@ namespace HotFix
         ///  添加子元素 方法
         /// </summary>
         /// <param name="ele"></param>
-        public void AddSubElement(BaseElement ele)
+        public void AddSubElement<T>(GameObject obj = null) where T:BaseElement,new()
         {
-            if (!SubElementDic.ContainsKey(ele.elementID))
-            {
-                SubElementDic.Add(ele.elementID, ele);
-            }
+            T t1 = BaseElement.CreateElementWithGameObject<T>(obj);
+            SubElementDic.Add(t1.elementID, t1);
         }
 
         public void SetParent(GameObject g)
@@ -325,7 +323,6 @@ namespace HotFix
         /// <param name="e"></param>
         public void SetChild(BaseElement child)
         {
-            AddSubElement(child);
             child.transform.SetParent(transform, false);
         }
 
@@ -581,12 +578,9 @@ namespace HotFix
 
             if (messageTypeDic != null)
             {
-                if (messageTypeDic.Count != 0)
+                foreach (var item in messageTypeDic)
                 {
-                    foreach (var item in messageTypeDic)
-                    {
-                        NotificationCenter.self.RemoveObserver(this, item.Key);
-                    }
+                    NotificationCenter.self.RemoveObserver(this, item.Key);
                 }
                 messageTypeDic.Clear();
                 messageTypeDic = null;

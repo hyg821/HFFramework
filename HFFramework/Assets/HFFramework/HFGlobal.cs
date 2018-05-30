@@ -12,7 +12,7 @@ namespace HFFramework
     public class HFGlobal : MonoBehaviour
     {
 
-        public static HFGlobal self;
+        public static HFGlobal Instance;
 
         /// <summary>
         ///  AeestBundle管理器
@@ -56,11 +56,11 @@ namespace HFFramework
 
         void Awake()
         {
-            if (self == null)
+            if (Instance == null)
             {
                 Clean();
 
-                self = this;
+                Instance = this;
                 gameObject.name = "HFGlobal";
                 DontDestroyOnLoad(gameObject);
 

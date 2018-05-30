@@ -113,6 +113,9 @@ namespace HFFramework
                 //添加游戏循环者
                 gameObject.AddComponent<GameLooper>();
 
+                //添加时间控制者
+                gameObject.AddComponent<GameTimer>();
+
                 //添加游戏设置者
                 gameObject.AddComponent<GameSetter>();
 

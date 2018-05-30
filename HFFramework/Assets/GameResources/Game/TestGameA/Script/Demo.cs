@@ -13,6 +13,8 @@ public class Demo : BaseMonoBehaviour
 
     public bool isOpenUpdate = false;
 
+    CoroutineQueue queue;
+
     public void AssetBundleTest()
     {
         GameObject prefab = HAResourceManager.Instance.GetGameObject("Prefab", "Cube");
@@ -157,6 +159,37 @@ public class Demo : BaseMonoBehaviour
         {
             print("跳转完成");
         });
+    }
+
+    public void 创建携程队列()
+    {
+        queue = GameTimer.CreateCoroutineQueue();
+        queue.Append(new SingleCoroutine(CoroutineType.WaitForSeconds, 1, delegate ()
+        {
+            HFLog.C("第一个方法打印");
+        })).Append(new SingleCoroutine(CoroutineType.WaitForSeconds, 2, delegate ()
+        {
+            HFLog.C("第二个方法打印");
+        })).Append(new SingleCoroutine(CoroutineType.WaitForSeconds, 3, delegate ()
+        {
+            HFLog.C("第三个方法打印");
+        })).Append(new SingleCoroutine(CoroutineType.WaitForSeconds, 4, delegate ()
+        {
+            HFLog.C("第四个方法打印");
+        })).Append(new SingleCoroutine(CoroutineType.WaitNull, 1, delegate ()
+        {
+            HFLog.C("第五个方法打印");
+        })).OnComplete(delegate ()
+        {
+            HFLog.C("我执行完了");
+        });
+
+        queue.Execute();
+    }
+
+    public void 停止携程队列()
+    {
+        queue.Stop();
     }
 
 }

@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace HFFramework
 {
     public class GameLooper : MonoBehaviour
     {
-        public static GameLooper Instance;
 
+        public static GameLooper Instance;
         /// <summary>
         ///  需要update的 列表
         /// </summary>
@@ -28,20 +29,16 @@ namespace HFFramework
         /// </summary>
         private Queue<Action> eventQueue = new Queue<Action>();
 
-        public int eventQueueCount = 0;
-
         void Awake()
         {
             Instance = this;
         }
-
+    
         void Update()
         {
             //执行事件队列
             while (eventQueue.Count > 0)
             {
-                //吐出所有的 delegate
-                eventQueueCount = eventQueue.Count;
                 Action e = eventQueue.Dequeue();
                 e();
             }

@@ -84,12 +84,22 @@ namespace HFFramework
 
         public IEnumerator m_ExecuteTimerQueue(CoroutineQueue coroutineQueue)
         {
+            int i = 0;
             foreach (var item in coroutineQueue.queue)
             {
+                i++;
                 item.action();
-                yield return item.daly;
+                if (i != coroutineQueue.queue.Count)
+                {
+                    yield return item.daly;
+                }
+                else
+                {
+                    coroutineQueue.Complete();
+                    yield break;
+                }
             }
-            coroutineQueue.Complete();
+
         }
 
         public static CoroutineQueue CreateCoroutineQueue()
@@ -152,6 +162,8 @@ namespace HFFramework
             this.daly = GameTimer.GetIEnumerator(coroutineType,time);
         }
     }
+
+
 
 
 }

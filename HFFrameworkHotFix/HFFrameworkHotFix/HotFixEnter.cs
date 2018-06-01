@@ -13,11 +13,6 @@ public class HotFixEnter
         //Debug.Log("热更新执行Update");
     }
 
-    public static void aaa()
-    {
-        //Debug.Log("CCCCC");
-    }
-
     public static void FixedUpdate()
     {
         //Debug.Log("热更新执行FixedUpdate");

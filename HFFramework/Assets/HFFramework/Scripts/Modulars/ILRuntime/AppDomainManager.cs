@@ -76,7 +76,6 @@ namespace HFFramework
         public void Awake()
         {
             Instance = this;
-            IsActiveMonoMethod = false;
         }
 
         /// <summary>

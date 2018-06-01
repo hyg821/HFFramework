@@ -5,7 +5,6 @@ using System;
 
 namespace HFFramework
 {
-
     public enum CoroutineType
     {
         WaitForEndOfFrame,

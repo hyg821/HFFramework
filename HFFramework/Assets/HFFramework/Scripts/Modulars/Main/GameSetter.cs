@@ -22,6 +22,11 @@ namespace HFFramework
         /// </summary>
         public int targetFrame = 60;
 
+        /// <summary>
+        ///  FixedUpdate 调用 一秒 帧数 
+        /// </summary>
+        public int fixedUpdateFrame = 10;
+
         public void Awake()
         {
             Instance = this;
@@ -38,7 +43,7 @@ namespace HFFramework
 
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
-            Time.fixedDeltaTime = 1.0f / Application.targetFrameRate;
+            Time.fixedDeltaTime = 1.0f / fixedUpdateFrame;
         }
 
         public void DestroyManager()

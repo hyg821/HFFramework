@@ -29,7 +29,7 @@ namespace HFFramework
         /// <summary>
         ///  页面隐藏 并且销毁
         /// </summary>
-        Destory
+        Destroy
     }
 
     public class UICanvas : BaseMonoBehaviour
@@ -174,9 +174,9 @@ namespace HFFramework
                         controllerList[count - 2].IsActive = true;
                     }
 
-                    if (popType == PopType.Destory)
+                    if (popType == PopType.Destroy)
                     {
-                        controllerList[count - 1].Destory();
+                        controllerList[count - 1].Destroy();
                     }
                 });
             }

@@ -247,7 +247,7 @@ namespace HFFramework
         {
             if (appdomain != null)
             {
-                appdomain.Invoke(MainClassName, "Destory", null, null);
+                appdomain.Invoke(MainClassName, "Destroy", null, null);
                 appdomain = null;
             }
             Instance = null;

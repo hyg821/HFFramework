@@ -18,7 +18,7 @@ namespace HFFramework
         public Transform myTransform;
 
         /// <summary>
-        ///  注册的消息 字典   destory会自动销毁
+        ///  注册的消息 字典   Destroy会自动销毁
         /// </summary>
         public Dictionary<int, object> messageTypeDic;
         public Dictionary<int, object> MessageTypeDic
@@ -112,6 +112,26 @@ namespace HFFramework
         public GameObject FindChild(string path)
         {
             return myTransform.Find(path).gameObject;
+        }
+
+        /// <summary>
+        ///  添加组件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public  T MyAddComponent<T>() where T : MonoBehaviour
+        {
+            return GameFactory.AddComponent<T>(gameObject);
+        }
+
+        /// <summary>
+        ///  移除组件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public  T MyGetComponent<T>() where T : MonoBehaviour
+        {
+            return GameFactory.AddComponent<T>(gameObject);
         }
 
         /// <summary>
@@ -258,15 +278,15 @@ namespace HFFramework
 
         public void OnDestroy()
         {
-            Destory();
+            Destroy();
         }
 
         /// <summary>
         ///  销毁对应的重载方法 具体是否销毁对象自行决定 
-        ///  OnDestroy（Unity反射方法） 会自动调用一次 Destory
+        ///  OnDestroy（Unity反射方法） 会自动调用一次 Destroy
         ///  也可以手动调用
         /// </summary>
-        public virtual void Destory()
+        public virtual void Destroy()
         {
             IsNeedUpdate = false;
             IsNeedLateUpdate = false;

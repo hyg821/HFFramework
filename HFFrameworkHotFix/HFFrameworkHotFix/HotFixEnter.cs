@@ -23,6 +23,11 @@ public class HotFixEnter
         //Debug.Log("热更新执行LateUpdate");
     }
 
+    public static void Destroy()
+    {
+        Debug.Log("热更新被销毁");
+    }
+
 }
 
 

@@ -225,7 +225,7 @@ namespace HFFramework
             return player;
         }
 
-        public void DestoryPlayer(AudioPlayer player)
+        public void DestroyPlayer(AudioPlayer player)
         {
             SoundType type = player.SoundType;
             if (type == SoundType.Effect)
@@ -240,29 +240,29 @@ namespace HFFramework
             {
                 audioPlayerPool.Remove(player);
             }
-            player.Destory();
+            player.Destroy();
         }
 
         public void DestoryPlayer(string name, SoundType type)
         {
-            DestoryPlayer(GetAudioSource(name, type));
+            DestroyPlayer(GetAudioSource(name, type));
         }
 
-        public void DestoryAllAudioPlayer()
+        public void DestroyAllAudioPlayer()
         {
             foreach (var item in audioDic)
             {
-                item.Value.Destory();
+                item.Value.Destroy();
             }
 
             foreach (var item in audioEffectDic)
             {
-                item.Value.Destory();
+                item.Value.Destroy();
             }
 
             foreach (var item in audioPlayerPool)
             {
-                item.Destory();
+                item.Destroy();
             }
 
             audioDic.Clear();
@@ -273,7 +273,7 @@ namespace HFFramework
 
         public void DestroyManager()
         {
-            DestoryAllAudioPlayer();
+            DestroyAllAudioPlayer();
             Instance = null;
         }
     }

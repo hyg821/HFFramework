@@ -183,9 +183,9 @@ namespace HFFramework
             audioSource.Stop();
         }
 
-        public override void Destory()
+        public override void Destroy()
         {
-            base.Destory();
+            base.Destroy();
             audioSource.Stop();
             CurrentAudioClip = null;
             Destroy(gameObject);

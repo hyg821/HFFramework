@@ -50,6 +50,11 @@ namespace HFFramework
         public InputManager inputManager;
 
         /// <summary>
+        ///  对象池管理器
+        /// </summary>
+        public ObjectPoolManager poolManager;
+
+        /// <summary>
         ///  热更新管理器
         /// </summary>
         public AppDomainManager appDomainManager;
@@ -58,57 +63,45 @@ namespace HFFramework
         {
             if (Instance == null)
             {
-                Clean();
-
                 Instance = this;
                 gameObject.name = "HFGlobal";
                 DontDestroyOnLoad(gameObject);
 
+                Clean();
+
+                //添加游戏工厂
+                gameObject.AddComponent<GameFactory>();
+
                 //添加游戏运行环境
                 gameObject.AddComponent<GameEnvironment>();
 
-                gameObject.AddComponent<UtilsManager>();
-
-                //1资源加载   
-                GameObject resourcesManagerObj = new GameObject("ResourcesManager");
-                resourcesManager = resourcesManagerObj.AddComponent<HAResourceManager>();
+                //资源加载
+                resourcesManager = GameFactory.Create<HAResourceManager>("ResourcesManager", true);
                 resourcesManager.InitWithRootPath(PathManager.self.PersistentDataPath + "AssetBundles", PathManager.self.StreamingAssetsPath + "AssetBundles", "AssetBundles");
-                DontDestroyOnLoad(resourcesManagerObj);
 
                 //2通知中心
-                GameObject notificationCenterObj = new GameObject("NotificationCenter");
-                notificationCenter = notificationCenterObj.AddComponent<NotificationCenter>();
-                DontDestroyOnLoad(notificationCenterObj);
+                notificationCenter = GameFactory.Create<NotificationCenter>("NotificationCenter", true);
 
                 //3网络
-                GameObject socketManagerObj = new GameObject("SocketManager");
-                socketManager = socketManagerObj.AddComponent<HFSocketManager>();
-                DontDestroyOnLoad(socketManagerObj);
+                socketManager = GameFactory.Create<HFSocketManager>("SocketManager", true);
 
                 //4声音
-                GameObject audioManagerObj = new GameObject("AudioManager");
-                audioManager = audioManagerObj.AddComponent<AudioManager>();
-                DontDestroyOnLoad(audioManagerObj);
+                audioManager = GameFactory.Create<AudioManager>("AudioManager", true);
 
                 //5UI 
-                GameObject uiManagerObj = new GameObject("UIManager");
-                uiManager = uiManagerObj.AddComponent<UIManager>();
-                DontDestroyOnLoad(uiManagerObj);
+                uiManager = GameFactory.Create<UIManager>("UIManager", true);
 
-                //6下载
-                GameObject webImageManagerObj = new GameObject("WebImageManager");
-                webImageManager = webImageManagerObj.AddComponent<WebImageManager>();
-                DontDestroyOnLoad(webImageManagerObj);
+                //6图片下载
+                webImageManager = GameFactory.Create<WebImageManager>("WebImageManager", true);
 
                 //7游戏设置控制器
-                GameObject inputManagerObj = new GameObject("InputManager");
-                inputManager = inputManagerObj.AddComponent<InputManager>();
-                DontDestroyOnLoad(inputManagerObj);
+                inputManager = GameFactory.Create<InputManager>("InputManager", true);
 
-                //8热更新入口
-                GameObject appDomainManagerObj = new GameObject("AppDomainManager");
-                appDomainManager = appDomainManagerObj.AddComponent<AppDomainManager>();
-                DontDestroyOnLoad(appDomainManagerObj);
+                //8对象池
+                poolManager = GameFactory.Create<ObjectPoolManager>("ObjectPoolManager", true);
+                
+                //9热更新入口
+                appDomainManager = GameFactory.Create<AppDomainManager>("AppDomainManager", true);
 
                 //添加游戏循环者
                 gameObject.AddComponent<GameLooper>();
@@ -121,6 +114,9 @@ namespace HFFramework
 
                 //添加状态检查者
                 gameObject.AddComponent<GameStateChecker>();
+
+                //工具箱
+                gameObject.AddComponent<UtilsManager>();
 
                 //添加状态检查者
                 gameObject.AddComponent<GameFlowController>();
@@ -147,6 +143,7 @@ namespace HFFramework
             UIManager.Instance.DestroyManager();
             WebImageManager.Instance.DestroyManager();
             InputManager.Instance.DestroyManager();
+            ObjectPoolManager.Instance.DestroyManager();
             AppDomainManager.Instance.DestroyManager();
             GameLooper.Instance.DestroyManager();
             GameStateChecker.Instance.DestroyManager();

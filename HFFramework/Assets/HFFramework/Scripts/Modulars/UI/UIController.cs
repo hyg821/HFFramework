@@ -12,7 +12,7 @@ namespace HFFramework
     /// <typeparam name="M"></typeparam>
     public class UIController : UIBase 
     {
-        public string controllerTag; 
+        public UIConfig config;
 
         public override void MyAwake()
         {

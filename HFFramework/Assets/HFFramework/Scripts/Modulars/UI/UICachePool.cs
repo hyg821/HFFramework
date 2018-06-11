@@ -9,7 +9,7 @@ namespace HFFramework
         /// <summary>
         ///  休眠页面的缓存池
         /// </summary>
-        public Dictionary<long, UIController> cacheDic = new Dictionary<long, UIController>();
+        public Dictionary<string, List<UIController>> cacheDic = new Dictionary<string, List<UIController> >();
 
         public override void MyAwake()
         {
@@ -24,29 +24,31 @@ namespace HFFramework
         /// </summary>
         /// <param name="instanceID"></param>
         /// <returns></returns>
-        public UIController FindControllerWithID(long instanceID)
+        public UIController GetController(string type)
         {
-            UIController c = null;
-            if (cacheDic.TryGetValue(instanceID, out c))
+            List<UIController> list = null;
+            if (cacheDic.TryGetValue(type, out list))
             {
-                return c;
+                if (list.Count > 0)
+                {
+                    UIController controller = list[0];
+                    list.RemoveAt(0);
+                    return controller;
+                }
             }
             return null;
         }
 
-        public void Add(UIController c)
+        public void Add(UIController controller)
         {
-            cacheDic.Add(c.myInstanceID, c);
-            c.SetParent(gameObject);
-        }
-
-        public void Remove(UIController c)
-        {
-            UIController cx;
-            if (cacheDic.TryGetValue(c.myInstanceID, out cx))
+            List<UIController> list = null;
+            if (!cacheDic.TryGetValue(controller.config.Type, out list))
             {
-                cacheDic.Remove(c.myInstanceID);
+                list = new List<UIController>();
+                cacheDic.Add(controller.config.Type, list);
             }
+            list.Add(controller);
+            controller.SetParent(this);
         }
     }
 }

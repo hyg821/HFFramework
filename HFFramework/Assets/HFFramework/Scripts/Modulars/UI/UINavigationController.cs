@@ -7,8 +7,9 @@ namespace HFFramework
     public class UINavigationController : UIBase
     {
         public const string UINavigation = "UINavigation";
+
         /// <summary>
-        /// 缓存池
+        ///  所有的 UINavigation 共享一个  缓存池
         /// </summary>
         public UICachePool cachePool;
 
@@ -21,19 +22,11 @@ namespace HFFramework
         {
             base.MyAwake();
             name = UINavigation;
-            cachePool = FindChild<UICachePool>("CachePool");
+            cachePool = UIManager.Instance.cachePool;
         }
 
         public void PushController(UIController controller, PushType pushType)
         {
-            //先从缓存池里取出 对应的controller
-            UIController cx = FindControllerWithID(controller.myInstanceID);
-            //先处理 两个数据集合的数据
-            if (cx != null)
-            {
-                //从缓存池里移除
-                CachePoolRemove(cx);
-            }
             //添加到当前视图栈
             ControllerListAdd(controller);
             //再显示 
@@ -75,9 +68,9 @@ namespace HFFramework
         /// </summary>
         /// <param name="controllerTag"></param>
         /// <returns></returns>
-        public UIController FindControllerWithID(long instanceID)
+        public UIController GetController(string type)
         {
-            UIController c = cachePool.FindControllerWithID(instanceID);
+            UIController c = cachePool.GetController(type);
             return c;
         }
 
@@ -145,11 +138,6 @@ namespace HFFramework
         public void CachePoolAdd(UIController cx)
         {
             cachePool.Add(cx);
-        }
-
-        public void CachePoolRemove(UIController cx)
-        {
-            cachePool.Remove(cx);
         }
     }
 }

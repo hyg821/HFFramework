@@ -100,15 +100,13 @@ public class Demo : BaseMonoBehaviour
 
     public void push添加ViewController()
     {
-        AssetBundlePackage abx = HAResourceManager.Instance.LoadAssetBundleFromFile("prefab");
-        GameObject prefab = abx.LoadAssetWithCache<GameObject>("VC");
-        TestController test = Instantiate(prefab).GetComponent<TestController>();
-        navi.PushController(test,PushType.Model);
+        TestController  test = UIManager.Instance.GetController<TestController>("Login");
+        navi.PushController(test, PushType.Model);
     }
 
     public void pop移除ViewController()
     {
-        navi.PopController(PopType.Cache);
+        navi.PopController(PopType.Destroy);
     }
 
     public void 创建文件夹()

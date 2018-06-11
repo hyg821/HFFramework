@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3986460085
+CRC: 2725953604
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5a64f09f4dc43d62bacdf63076a2e416
+    Hash: 23919175e8d043b8d4dce1906f9abe7d
   TypeTreeHash:
     serializedVersion: 2
-    Hash: f8eb79e5934444ae0107f2eb53de31d4
+    Hash: ebf1f688c921a9f23499c98c3e8d04fb
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -15,6 +15,8 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 20
   Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: 5b5c32a0b9fb25b4ca6947be5fcb9b40, type: 3}
 - Class: 114
@@ -22,11 +24,11 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: f4f0d8592f9ee18468f28808bae117de, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 3f3ce5a786efaf849b7f242b99e0c88f, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 7b20fd4907a7b1b4bb4fd25e17a4accb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f4f0d8592f9ee18468f28808bae117de, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 124
@@ -36,8 +38,9 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/GameResources/HFCommonResources/UISystem_[A]/UISystem.prefab
-- Assets/GameResources/HFCommonResources/UISystem_[A]/UICamera.prefab
-- Assets/GameResources/HFCommonResources/UISystem_[A]/UINavigation.prefab
-- Assets/GameResources/HFCommonResources/UISystem_[A]/UICanvas.prefab
+- Assets/GameResources/HFResources/UISystem_[A]/UISystem.prefab
+- Assets/GameResources/HFResources/UISystem_[A]/UICamera.prefab
+- Assets/GameResources/HFResources/UISystem_[A]/UINavigation.prefab
+- Assets/GameResources/HFResources/UISystem_[A]/UICanvas.prefab
+- Assets/GameResources/HFResources/UISystem_[A]/UIConfig.json
 Dependencies: []

@@ -9,7 +9,6 @@ public class TestController : UIController {
     public override void MyAwake()
     {
         base.MyAwake();
-        controllerTag = "HYG";
     }
 
     public override void DoHideAnimation(Action callback)

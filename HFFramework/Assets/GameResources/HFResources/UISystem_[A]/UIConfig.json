@@ -1,0 +1,31 @@
+﻿{
+    "List": [
+        {
+            "Type": "Login",
+            "LayerIndex": 1,
+            "AssetbundleName": "prefab",
+            "AssetName": "VC",
+            "ShowAnimation": 1,
+            "HideAnimation": 1,
+            "ClassName": "Z"
+        },
+        {
+            "Type": "Hall",
+            "LayerIndex": 1,
+            "AssetbundleName": "X",
+            "AssetName": "Y",
+            "ShowAnimation": 1,
+            "HideAnimation": 1,
+            "ClassName": "Z"
+        },
+        {
+            "Type": "Game",
+            "LayerIndex": 1,
+            "AssetbundleName": "X",
+            "AssetName": "Y",
+            "ShowAnimation": 1,
+            "HideAnimation": 1,
+            "ClassName": "Z"
+        }
+    ]
+}

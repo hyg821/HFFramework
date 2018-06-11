@@ -11,4 +11,17 @@ public class TestController : UIController {
         base.MyAwake();
         controllerTag = "HYG";
     }
+
+    public override void DoHideAnimation(Action callback)
+    {
+        base.DoHideAnimation(callback);
+        callback();
+    }
+
+    public override void DoShowAnimation(Action callback)
+    {
+        base.DoShowAnimation(callback);
+        callback();
+    }
+
 }

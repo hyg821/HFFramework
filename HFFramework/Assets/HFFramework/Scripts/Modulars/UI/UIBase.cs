@@ -15,7 +15,7 @@ namespace HFFramework
         /// <summary>
         ///  UI 隐藏 类型
         /// </summary>
-        private UIHideType hideType = UIHideType.Scale;
+        public UIHideType hideType = UIHideType.Scale;
 
         private CanvasGroup canvasGroup;
         /// <summary>

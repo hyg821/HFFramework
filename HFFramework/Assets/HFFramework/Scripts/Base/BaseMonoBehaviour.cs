@@ -146,6 +146,11 @@ namespace HFFramework
             myTransform.SetParent(parent.transform, worldPositionStays);
         }
 
+        public void SetParent(MonoBehaviour parent, bool worldPositionStays = false)
+        {
+            myTransform.SetParent(parent.transform, worldPositionStays);
+        }
+
         bool isNeedUpdate = false;
         /// <summary>
         ///  是否需要开启Update

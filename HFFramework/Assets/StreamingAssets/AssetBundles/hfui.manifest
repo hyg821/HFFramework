@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1753634638
+CRC: 3986460085
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 355d925128d537c612fa23704152f1f2
+    Hash: 5a64f09f4dc43d62bacdf63076a2e416
   TypeTreeHash:
     serializedVersion: 2
-    Hash: a228ffc04e802bee04594e8fee545ffd
+    Hash: f8eb79e5934444ae0107f2eb53de31d4
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,6 +25,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: f4f0d8592f9ee18468f28808bae117de, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 3f3ce5a786efaf849b7f242b99e0c88f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7b20fd4907a7b1b4bb4fd25e17a4accb, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 124
@@ -36,5 +38,6 @@ ClassTypes:
 Assets:
 - Assets/GameResources/HFCommonResources/UISystem_[A]/UISystem.prefab
 - Assets/GameResources/HFCommonResources/UISystem_[A]/UICamera.prefab
+- Assets/GameResources/HFCommonResources/UISystem_[A]/UINavigation.prefab
 - Assets/GameResources/HFCommonResources/UISystem_[A]/UICanvas.prefab
 Dependencies: []

@@ -8,6 +8,7 @@ using System;
 public class Demo : BaseMonoBehaviour
 {
     public UICanvas myCanvas;
+    public UINavigationController navi;
 
     public List<UIController> testList = new List<UIController>();
 
@@ -90,16 +91,24 @@ public class Demo : BaseMonoBehaviour
     public void 代码添加Canvas()
     {
         myCanvas = UIManager.Instance.AddCanvas(0);
+
+        AssetBundlePackage abx = HAResourceManager.Instance.LoadAssetBundleFromFile("HFUI");
+        GameObject prefab = abx.LoadAssetWithCache<GameObject>("UINavigation");
+        navi = Instantiate(prefab).GetComponent<UINavigationController>();
+        navi.SetParent(myCanvas);
     }
 
     public void push添加ViewController()
     {
-
+        AssetBundlePackage abx = HAResourceManager.Instance.LoadAssetBundleFromFile("prefab");
+        GameObject prefab = abx.LoadAssetWithCache<GameObject>("VC");
+        TestController test = Instantiate(prefab).GetComponent<TestController>();
+        navi.PushController(test,PushType.Model);
     }
 
     public void pop移除ViewController()
     {
-
+        navi.PopController(PopType.Cache);
     }
 
     public void 创建文件夹()

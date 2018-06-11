@@ -39,7 +39,7 @@ namespace HFFramework
         /// <summary>
         ///  渲染UI的摄像机 后期可以使用第二摄像机 分离UI和 物体渲染
         /// </summary>
-        public Camera mainCamera;
+        public UICamera mainCamera;
 
         /// <summary>
         ///  对应的Canvas
@@ -68,8 +68,6 @@ namespace HFFramework
             canvas = gameObject.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceCamera;
 
-            SetMainCamera(Camera.main);
-
             cachePool = FindChild<UICachePool>("CachePool");
 
             canvasScaler = gameObject.GetComponent<CanvasScaler>();
@@ -77,10 +75,10 @@ namespace HFFramework
             canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         }
 
-        public void SetMainCamera(Camera c)
+        public void SetUICamera(UICamera camera)
         {
-            mainCamera = c;
-            canvas.worldCamera = mainCamera;
+            mainCamera = camera;
+            canvas.worldCamera = mainCamera.camera;
         }
 
         public void SetSortingLayer(int sortingLayer)
@@ -155,7 +153,7 @@ namespace HFFramework
                     {
                         if (pushType == PushType.Navigation)
                         {
-                            controllerList[count - 2].IsActive = false;
+                            controllerList[count - 2].IsShow = false;
                         }
                     }
                 });
@@ -171,7 +169,7 @@ namespace HFFramework
                 {
                     if (count - 2 >= 0)
                     {
-                        controllerList[count - 2].IsActive = true;
+                        controllerList[count - 2].IsShow = true;
                     }
 
                     if (popType == PopType.Destroy)

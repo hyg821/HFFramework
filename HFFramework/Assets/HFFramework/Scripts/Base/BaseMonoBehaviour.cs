@@ -10,11 +10,13 @@ namespace HFFramework
         /// <summary>
         ///  每一个gameObject 独有的 id
         /// </summary>
+        [HideInInspector]
         public int myInstanceID;
 
         /// <summary>
         ///  缓存的transform
         /// </summary>
+        [HideInInspector]
         public Transform myTransform;
 
         /// <summary>

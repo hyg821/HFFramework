@@ -11,9 +11,13 @@ namespace HFFramework
         /// </summary>
         public const string RootName = "UISystem";
 
+        public const string CameraName = "UICamera";
+
         public static UIManager Instance;
 
         public UIRoot UIRoot;
+
+        public UICamera UICamera;
 
         public Dictionary<int, UICanvas> canvasDic = new Dictionary<int, UICanvas>();
 
@@ -28,11 +32,19 @@ namespace HFFramework
         public void LoadScene()
         {
             ClearScene();
+
             assetBundlePackage = HAResourceManager.Instance.LoadAssetBundleFromFile("hfui");
+
             GameObject  prefab= assetBundlePackage.LoadAssetWithCache<GameObject>("UISystem");
-            GameObject uiRootObj = Instantiate(prefab);
-            uiRootObj.name = RootName;
-            UIRoot = uiRootObj.GetComponent<UIRoot>();
+            GameObject temp = Instantiate(prefab);
+            temp.name = RootName;
+            UIRoot = temp.GetComponent<UIRoot>();
+
+            prefab = assetBundlePackage.LoadAssetWithCache<GameObject>("UICamera");
+            temp = Instantiate(prefab);
+            temp.name = CameraName;
+            UICamera = temp.GetComponent<UICamera>();
+            UICamera.SetParent(UIRoot.gameObject);
         }
 
         public UICanvas AddCanvas(int canvasLayerIndex)
@@ -43,22 +55,14 @@ namespace HFFramework
                 GameObject canvasPrefab = assetBundlePackage.LoadAssetWithCache<GameObject>("UICanvas");
                 GameObject canvasObject = Instantiate(canvasPrefab);
                 uiCanvas = canvasObject.AddComponent<UICanvas>();
+                uiCanvas.SetUICamera(UICamera);
                 uiCanvas.AutoSizeFitter();
                 uiCanvas.SetSortingLayer(canvasLayerIndex);
+
                 uiCanvas.SetParent(UIRoot.gameObject);
                 canvasDic.Add(canvasLayerIndex, uiCanvas);
             }
             return uiCanvas;
-        }
-
-        public static C GameObjectBindUIController<C, V, M>(GameObject g) where C:UIController  where V : UIView where M : UIModel
-        {
-            C c= g.AddComponent<C>();
-            V v = g.AddComponent<V>();
-            M m = g.AddComponent<M>();
-            c.view = v;
-            c.model = m;
-            return c;
         }
 
         public void ClearScene()

@@ -1,17 +1,19 @@
 ManifestFileVersion: 0
-CRC: 1034155396
+CRC: 1753634638
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3c026c7c3c29b2b43888da4a10ef3ab3
+    Hash: 355d925128d537c612fa23704152f1f2
   TypeTreeHash:
     serializedVersion: 2
-    Hash: f5a320fee609b57231921c0ce6406eb8
+    Hash: a228ffc04e802bee04594e8fee545ffd
 HashAppended: 0
 ClassTypes:
 - Class: 1
   Script: {instanceID: 0}
 - Class: 4
+  Script: {instanceID: 0}
+- Class: 20
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: 5b5c32a0b9fb25b4ca6947be5fcb9b40, type: 3}
@@ -20,8 +22,12 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 8620aa2f452080943af4675dc76d67c2, type: 3}
+  Script: {fileID: 11500000, guid: f4f0d8592f9ee18468f28808bae117de, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3f3ce5a786efaf849b7f242b99e0c88f, type: 3}
 - Class: 115
+  Script: {instanceID: 0}
+- Class: 124
   Script: {instanceID: 0}
 - Class: 223
   Script: {instanceID: 0}
@@ -29,5 +35,6 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/GameResources/HFCommonResources/UISystem_[A]/UISystem.prefab
+- Assets/GameResources/HFCommonResources/UISystem_[A]/UICamera.prefab
 - Assets/GameResources/HFCommonResources/UISystem_[A]/UICanvas.prefab
 Dependencies: []

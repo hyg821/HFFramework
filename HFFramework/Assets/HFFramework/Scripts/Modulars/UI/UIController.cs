@@ -10,57 +10,42 @@ namespace HFFramework
     /// </summary>
     /// <typeparam name="V"></typeparam>
     /// <typeparam name="M"></typeparam>
-    public class UIController : BaseMonoBehaviour 
+    public class UIController : UIBase 
     {
-
         public string controllerTag; 
-
-        public UIView view;
-        public UIModel model;
 
         public override void MyAwake()
         {
             base.MyAwake();
         }
 
-        public virtual void ViewWillAppear()
+        public virtual void DoShowAnimation(Action callback)
         {
 
         }
 
-        public virtual void ViewWillDisAppear()
-        {
-
-        }
-
-        /// <summary>
-        ///  元素被显示出来
-        /// </summary>
-        public virtual void ViewDidAppear()
-        {
-
-        }
-
-        /// <summary>
-        ///  元素被隐藏
-        /// </summary>
-        public virtual void ViewDidDisAppear()
+        public virtual void DoHideAnimation(Action callback)
         {
 
         }
 
         public virtual void Open(Action callback)
         {
-            ViewWillAppear();
-            view.Show(callback);
-            ViewDidAppear();
+            IsShow = true;
+            DoShowAnimation(callback);
         }
 
         public virtual void Close(Action callback)
         {
-            ViewWillDisAppear();
-            view.Hide(callback);
-            ViewDidDisAppear();
+            DoHideAnimation(callback);
+            IsShow = false;
         }
+
+        public override void Destroy()
+        {
+            base.Destroy();
+            Destroy(gameObject);
+        }
+
     }
 }

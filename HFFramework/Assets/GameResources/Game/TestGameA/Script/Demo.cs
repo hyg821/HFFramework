@@ -94,20 +94,12 @@ public class Demo : BaseMonoBehaviour
 
     public void push添加ViewController()
     {
-        GameObject prefab = HAResourceManager.Instance.GetGameObject("Prefab", "VC");
-        GameObject gx = GameObject.Instantiate(prefab);
-        UIController testController = UIManager.GameObjectBindUIController<TestController, TestView, TestModel>(gx);
-        myCanvas.PushController(testController,PushType.Navigation);
-        testList.Add(testController);
+
     }
 
     public void pop移除ViewController()
     {
-        if (testList.Count - 1>=0)
-        {
-            myCanvas.PopController(testList[testList.Count - 1], PopType.Cache);
-            testList.RemoveAt(testList.Count - 1);
-        }
+
     }
 
     public void 创建文件夹()

@@ -22,6 +22,7 @@ namespace HFFramework
         {
             GameObject temp = new GameObject();
             T t1 = temp.AddComponent<T>();
+            temp.name = name;
             if (isDontDestroy)
             {
                 GameObject.DontDestroyOnLoad(temp);

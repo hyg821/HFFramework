@@ -73,7 +73,7 @@ namespace HotFix
             }
             get
             {
-                return IsShow;
+                return isShow;
             }
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class UICachePool : BaseMonoBehaviour
+    public class UICachePool : UIBase
     {
         /// <summary>
         ///  休眠页面的缓存池
@@ -14,7 +14,9 @@ namespace HFFramework
         public override void MyAwake()
         {
             base.MyAwake();
-            IsActive = false;
+            myTransform.position = Vector3.one;
+            myTransform.rotation = Quaternion.identity;
+            IsShow = false;
         }
 
         /// <summary>

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1126328367
+CRC: 1906634721
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6a181c02cb182cb312dd16f114f4019d
+    Hash: 2d08e59040767e54682fe450168ee4ff
   TypeTreeHash:
     serializedVersion: 2
     Hash: f18dc2ea8bf8a7cbfaf37f45005cdd86
@@ -16,6 +16,7 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/Item.csv
 - Assets/GameResources/Game/TestGameA/ConfigA_[A]/ScriptObjectConfigTestA.asset
 - Assets/GameResources/Game/TestGameA/ConfigA_[A]/ErrorCode.json
 Dependencies: []

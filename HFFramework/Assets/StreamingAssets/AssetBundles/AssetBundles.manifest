@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 4036448842
+CRC: 1646414348
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -21,8 +21,7 @@ AssetBundleManifest:
       Dependencies: {}
     Info_5:
       Name: scene
-      Dependencies:
-        Dependency_0: hfui
+      Dependencies: {}
     Info_6:
       Name: textrure
       Dependencies: {}

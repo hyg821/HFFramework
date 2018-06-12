@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1522049582
+CRC: 4055324036
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5030e57bca05df652620402f936cc792
+    Hash: eb6245b75b394c0763539b09bfb523be
   TypeTreeHash:
     serializedVersion: 2
     Hash: 31d6cfe0d16ae931b73c59d7e0c089c0
@@ -11,5 +11,4 @@ HashAppended: 0
 ClassTypes: []
 Assets:
 - Assets/GameResources/Game/TestGameA/Scene_[A]/hyg.unity
-Dependencies:
-- F:/GitHubGit/HFFramework/HFFramework/Assets/StreamingAssets/AssetBundles/hfui
+Dependencies: []

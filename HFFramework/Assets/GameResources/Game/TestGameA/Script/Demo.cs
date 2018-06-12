@@ -4,6 +4,7 @@ using UnityEngine;
 using HFFramework;
 using System.Reflection;
 using System;
+using HFConfig;
 
 public class Demo : BaseMonoBehaviour
 {
@@ -189,6 +190,20 @@ public class Demo : BaseMonoBehaviour
     public void 停止携程队列()
     {
         queue.Stop();
+    }
+
+    public void 解析配置文件()
+    {
+        HFTableManager.Instance.Init();
+        return;
+        foreach (var item in HFTableItem.Instance.dic)
+        {
+            print(item.Value.name);
+            print(item.Value.stoneLv);
+            print(item.Value.isUse);
+            print(item.Value.composite2Id);
+            print("");
+        }
     }
 
 }

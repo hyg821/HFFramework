@@ -107,7 +107,12 @@ namespace HFConfig
             for (int i = 0; i < _column; i++)
             {
                 string property = propertyList[i];
-                string type = typeList[i].ToLower(); ;
+                string type = typeList[i].ToLower();
+                string note = cNameList[i] ;
+                
+                builder.AppendLine("        /// <summary>");
+                builder.AppendLine("        /// "+ note);
+                builder.AppendLine("        /// <summary>");
                 builder.AppendLine("        public "+ type+" "+ property+";");
             }
             builder.AppendLine("    }");

@@ -195,13 +195,9 @@ public class Demo : BaseMonoBehaviour
     public void 解析配置文件()
     {
         HFTableManager.Instance.Init();
-        return;
         foreach (var item in HFTableItem.Instance.dic)
         {
-            print(item.Value.name);
-            print(item.Value.stoneLv);
-            print(item.Value.isUse);
-            print(item.Value.composite2Id);
+            print(item.Value.name+"   "+ item.Value.stoneLv + "   " + item.Value.isUse + "   " + item.Value.composite2Id);
             print("");
         }
     }

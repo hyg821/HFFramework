@@ -1,7 +1,7 @@
 道具id,名称,描述,道具icon,icon路径,类别,模块,魂石类型,魂石等级,是否可使用,是否可合成1,是否可合成2,合成1id,合成2id,是否可分解,分解所需道具,分解id,是否可堆叠,最大堆叠数量,是否可购买,获取渠道,是否可出售,出售货币类型,出售价格,生命值,攻击力,防御力,额外生命上限数值,额外生命上限百分比,额外攻击值,额外攻击百分比,额外防御值,额外防御百分比,额外暴击百分比,额外暴伤百分比,额外增伤百分比,额外减伤百分比,额外攻击怒气获取百分比,额外被击怒气获取百分比,额外提升攻速百分比
 id,name,description,itemIcon,iconPath,type,module,stoneType,stoneLv,isUse,isComposite1,isComposite2,composite1Id,composite2Id,isDecomposition,decompositionItem,decompositionId,isStacking,maxStackingnum,isBuy,buyPath,isSale,salemoneyType,salePrice,hp,atk,def,extrahpNum,extrahpPercent,extraatkNum,extraatkPercent,extradefNum,extradefPercent,extracritPercent,extracritdamPercent,extraadddamPercent,extrasubdamPercent,extraatkangerPercent,extradefangerPercent,extraatkspeedPercent
-int,string,string,string,string,int,int,int,int,bool,bool,bool,string,string,bool,string,int,bool,int,bool,string,bool,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int
-10001,经验,经验,prop_999,common_sprite_prop,0,0,0,0,TRUE,TRUE,TRUE,0,0,TRUE,0,0,TRUE,0,TRUE,0,TRUE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+int,string,string,string,string,array[int],int,int,int,bool,bool,bool,string,string,bool,string,int,bool,int,bool,string,bool,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int
+10001,经验,经验,prop_999,common_sprite_prop,[1;2;3;4;5],0,0,0,TRUE,TRUE,TRUE,0,0,TRUE,0,0,TRUE,0,TRUE,0,TRUE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 10002,钻石,钻石,prop_999,common_sprite_prop,0,0,0,0,TRUE,TRUE,TRUE,0,0,TRUE,0,0,TRUE,0,TRUE,0,TRUE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 10003,金币,金币,prop_999,common_sprite_prop,0,0,0,0,TRUE,TRUE,TRUE,0,0,TRUE,0,0,TRUE,0,TRUE,0,TRUE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 10004,升级点,升级点,prop_999,common_sprite_prop,0,0,0,0,TRUE,TRUE,TRUE,0,0,TRUE,0,0,TRUE,0,TRUE,0,TRUE,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

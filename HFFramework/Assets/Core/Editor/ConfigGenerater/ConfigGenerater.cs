@@ -11,6 +11,7 @@ namespace HFConfig
     public class ConfigGenerater
     {
         public static string[] split = new string[]{","};
+        public static string[] arraySplit = new string[] { "[","]",";" };
 
         public static string InputPath = "GameResources/Game/TestGameA/ConfigA_[A]";
         public static string OutputPath = "GameResources/Game/TestGameA/ConfigScript";
@@ -61,7 +62,7 @@ namespace HFConfig
 
      
             string _class = temp1.ToUpper()+temp2;
-            string _table = "HFTable" + _class;
+            string _table = "HFConfig" + _class;
             string _namespace = "HFConfig";
             string _content = "";
             int _column = 0;
@@ -113,7 +114,17 @@ namespace HFConfig
                 builder.AppendLine("        /// <summary>");
                 builder.AppendLine("        /// "+ note);
                 builder.AppendLine("        /// <summary>");
-                builder.AppendLine("        public "+ type+" "+ property+";");
+
+                if (type.Contains("array"))
+                {
+                    string [] typsc = type.Split(arraySplit, StringSplitOptions.RemoveEmptyEntries);
+                    builder.AppendLine("        public List<" + typsc[1] + @">"+ property+" = new List<" + typsc[1] + @">();");
+                }
+                else
+                {
+                    builder.AppendLine("        public " + type + " " + property + ";");
+                }
+
             }
             builder.AppendLine("    }");
 
@@ -123,6 +134,7 @@ namespace HFConfig
             builder.AppendLine("    { ");
             builder.AppendLine();
             builder.AppendLine("        public static string[] split = new string[] { " + "\"" + "," + "\"" + " };");
+            builder.AppendLine("        public static string[] splitArray = new string[] { " + "\"" + ";" + "\"" +  ", "  + "\"" + "[" + "\""+ ", " + "\"" + "]" + "\"" + " };");
             builder.AppendLine();
             builder.AppendLine("        " + @"private static " + _table + " instance;");
             builder.AppendLine("        " + @"public static " + _table + " Instance");
@@ -171,33 +183,66 @@ namespace HFConfig
             builder.AppendLine(@"                if (strs.Length > 0)");
             builder.AppendLine(@"                {");
             builder.AppendLine(@"                    "+_class+ " config "+ "= new "+ _class+"();");
-            builder.AppendLine(@"                    for (int i = 0; i < strs.Length; i++) ");
-            builder.AppendLine(@"                    {");
 
             for (int i = 0; i < _column; i++)
             {
                 string m_type = typeList[i];
                 string m_property = propertyList[i];
-                switch (m_type)
+
+                if (m_type.Contains("array"))
                 {
-                    case "string":
-                        builder.AppendLine(@"                        config."+ m_property +" = "+ "strs["+i+"];");
-                        break;
-                    case "int":
-                        builder.AppendLine(@"                        int.TryParse(strs["+i+"]"+ ", out config."+ m_property+");");
-                        break;
-                    case "float":
-                        builder.AppendLine(@"                        float.TryParse(strs[" + i + "]" + ", out config." + m_property + ");");
-                        break;
-                    case "bool":
-                        builder.AppendLine(@"                        bool.TryParse(strs[" + i + "]" + ", out config." + m_property + ");");
-                        break;
-                    default:
-                        break;
+                    string[] air = m_type.Split(arraySplit, StringSplitOptions.RemoveEmptyEntries);
+                    string n_type = air[1];
+                    builder.AppendLine(@"                    string[] air = strs[" + i + "].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);");
+                    builder.AppendLine(@"                    for (int x = 0; x < air.Length; x++)");
+                    builder.AppendLine(@"                    {");
+                    switch (n_type)
+                    {
+                        case "string":
+                            builder.AppendLine(@"                       config." + m_property+ ".Add(air[x]);");
+                            break;
+                        case "int":
+                            builder.AppendLine(@"                       int ite = 0;");
+                            builder.AppendLine(@"                       int.TryParse(air[x]" + ", out ite);");
+                            builder.AppendLine(@"                       config." + m_property + ".Add(ite);");
+                            break;
+                        case "float":
+                            builder.AppendLine(@"                       float ite = 0;");
+                            builder.AppendLine(@"                       float.TryParse(air[x]" + ", out ite);");
+                            builder.AppendLine(@"                       config." + m_property + ".Add(ite);");
+                            break;
+                        case "bool":
+                            builder.AppendLine(@"                       bool ite = false;");
+                            builder.AppendLine(@"                       bool.TryParse(air[x]" + ", out ite);");
+                            builder.AppendLine(@"                       config." + m_property + ".Add(ite);");
+                            break;
+                        default:
+                            break;
+                    }
+                    builder.AppendLine(@"                     }");
+                }
+                else
+                {
+                    switch (m_type)
+                    {
+                        case "string":
+                            builder.AppendLine(@"                    config." + m_property + " = " + "strs[" + i + "];");
+                            break;
+                        case "int":
+                            builder.AppendLine(@"                    int.TryParse(strs[" + i + "]" + ", out config." + m_property + ");");
+                            break;
+                        case "float":
+                            builder.AppendLine(@"                    float.TryParse(strs[" + i + "]" + ", out config." + m_property + ");");
+                            break;
+                        case "bool":
+                            builder.AppendLine(@"                    bool.TryParse(strs[" + i + "]" + ", out config." + m_property + ");");
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
-            builder.AppendLine(@"                    }");
             builder.AppendLine(@"                    dic.Add(config."+ propertyList[0]+ ", config );" );
             builder.AppendLine(@"                    list.Add(config);");
             builder.AppendLine(@"               }");
@@ -217,7 +262,7 @@ namespace HFConfig
         public static void CreateConfigManager(List<FileInfo> files)
         {
             string _namespace = "HFConfig";
-            string _manager = "HFTableManager";
+            string _manager = "HFConfigManager";
             StringBuilder builder = new StringBuilder();
             builder.AppendLine(@"using System.Collections;");
             builder.AppendLine(@"using System.Collections.Generic;");
@@ -252,7 +297,7 @@ namespace HFConfig
                 string temp1 = temp0.Substring(0, 1);
                 string temp2 = temp0.Substring(1, temp0.Length - 1);
                 string _class = temp1.ToUpper() + temp2;
-                string _table = "HFTable" + _class;
+                string _table = "HFConfig" + _class;
 
                 builder.AppendLine("            "+_table+".Instance.StartAnalysis();");
             }

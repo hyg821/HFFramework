@@ -7,23 +7,23 @@ using System;
 using HFFramework;
 namespace HFConfig
 { 
-    public class HFTableManager
+    public class HFConfigManager
     { 
-        private static HFTableManager instance;
-        public static HFTableManager Instance
+        private static HFConfigManager instance;
+        public static HFConfigManager Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFTableManager ();
+                     instance = new HFConfigManager ();
                 } 
                 return instance;
             } 
         } 
         public void Init()
         { 
-            HFTableItem.Instance.StartAnalysis();
+            HFConfigItem.Instance.StartAnalysis();
             HAResourceManager.Instance.UnloadAssetBundle("Config", false); 
         } 
     } 

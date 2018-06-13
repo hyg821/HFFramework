@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4210530797
+CRC: 4245175595
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5c51c1d6f1c8640c950004ddc2fba668
+    Hash: 814be22ef5ecf782ac1cd18173fc924a
   TypeTreeHash:
     serializedVersion: 2
     Hash: f18dc2ea8bf8a7cbfaf37f45005cdd86
@@ -16,7 +16,39 @@ ClassTypes:
 - Class: 115
   Script: {instanceID: 0}
 Assets:
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/BuffEffect.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/DamDef.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/Recruit.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/Score.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/Shop.csv
 - Assets/GameResources/Game/TestGameA/ConfigA_[A]/Item.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/GuildMissionAndTeamLv.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/SpineExchangeConfig.txt
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/Composite.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/SkillShow.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/Skill.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/Equipment.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/UI.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/Goods.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/LocalizationConfig_CN.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/GuildGoods.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/Monster.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/EquipmentStrengthen.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/StoneCombination.csv
 - Assets/GameResources/Game/TestGameA/ConfigA_[A]/ScriptObjectConfigTestA.asset
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/RoleBreak.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/Decomposition.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/GuildShop.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/BuffShow.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/Refuge.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/RoleBasics.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/Cardlvgrowcost.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/SpineEquipment.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/StoneType.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/GuildMission.csv
 - Assets/GameResources/Game/TestGameA/ConfigA_[A]/ErrorCode.json
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/GuildLevelup.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/GuildWelfareTechnology.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/HangingCheckPoint.csv
+- Assets/GameResources/Game/TestGameA/ConfigA_[A]/RoleAwake.csv
 Dependencies: []

@@ -1,0 +1,118 @@
+{
+    "EquipmentInfo": [
+        {
+            "Name": "Hair",
+            "slotName": "zhanshi_toufa1",
+            "slotPlaceholderName": "zhanshi_toufa1",
+            "attachmentType": 0
+        },
+        {
+            "Name": "Cloak",
+            "slotName": "zhanshi_pifeng_01",
+            "slotPlaceholderName": "zhanshi_pifeng_01",
+            "attachmentType": 1
+        },
+        {
+            "Name": "BodyTop",
+            "slotName": "zhanshi_shangshen",
+            "slotPlaceholderName": "zhanshi_shangshen",
+            "attachmentType": 1
+        },
+        {
+            "Name": "BodyDown",
+            "slotName": "zhanshi_shangshen02",
+            "slotPlaceholderName": "zhanshi_shangshen02",
+            "attachmentType": 0
+        },
+        {
+            "Name": "LeftArm0",
+            "slotName": "zhanshi_gebo1",
+            "slotPlaceholderName": "zhanshi_gebo1",
+            "attachmentType": 0
+        },
+        {
+            "Name": "LeftArm1",
+            "slotName": "zhanshi_shoutao1",
+            "slotPlaceholderName": "zhanshi_shoutao1",
+            "attachmentType": 0
+        },
+        {
+            "Name": "LeftHand",
+            "slotName": "zhanshi_shoutao2",
+            "slotPlaceholderName": "zhanshi_shoutao2",
+            "attachmentType": 0
+        },
+        {
+            "Name": "RightArm0",
+            "slotName": "zhanshi_gebo2",
+            "slotPlaceholderName": "zhanshi_gebo2",
+            "attachmentType": 0
+        },
+        {
+            "Name": "RightArm1",
+            "slotName": "zhanshi_shoutao4",
+            "slotPlaceholderName": "zhanshi_shoutao4",
+            "attachmentType": 0
+        },
+        {
+            "Name": "RightHand",
+            "slotName": "zhanshi_shoutao3",
+            "slotPlaceholderName": "zhanshi_shoutao3",
+            "attachmentType": 0
+        },
+        {
+            "Name": "LeftLeg0",
+            "slotName": "zhanshi_zuodatui",
+            "slotPlaceholderName": "zhanshi_zuodatui",
+            "attachmentType": 0
+        },
+        {
+            "Name": "LeftLeg1",
+            "slotName": "zhanshi_zuoxiaotui",
+            "slotPlaceholderName": "zhanshi_zuoxiaotui",
+            "attachmentType": 0
+        },
+        {
+            "Name": "LeftFoot",
+            "slotName": "zhanshi_zuojiao",
+            "slotPlaceholderName": "zhanshi_zuojiao",
+            "attachmentType": 0
+        },
+        {
+            "Name": "RightLeg0",
+            "slotName": "zhanshi_youdatui",
+            "slotPlaceholderName": "zhanshi_youdatui",
+            "attachmentType": 0
+        },
+        {
+            "Name": "RightLeg1",
+            "slotName": "zhanshi_youxiaotui",
+            "slotPlaceholderName": "zhanshi_youxiaotui",
+            "attachmentType": 0
+        },
+        {
+            "Name": "RightFoot",
+            "slotName": "zhanshi_youjiao",
+            "slotPlaceholderName": "zhanshi_youjiao",
+            "attachmentType": 0
+        },
+        {
+            "Name": "Weapon",
+            "slotName": "zhanshi_wuqi1",
+            "slotPlaceholderName": "zhanshi_wuqi1",
+            "attachmentType": 0
+        },
+        {
+            "Name": "Shield0",
+            "slotName": "zhanshi_wuqi2",
+            "slotPlaceholderName": "zhanshi_wuqi2",
+            "attachmentType": 0
+        },
+        {
+            "Name": "Shield1",
+            "slotName": "zhanshi_wuqi5",
+            "slotPlaceholderName": "zhanshi_wuqi5",
+            "attachmentType": 0
+        }
+    ]
+}

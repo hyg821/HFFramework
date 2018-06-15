@@ -18,7 +18,7 @@ namespace HFConfig
 
         public static string ConfigAssetbundleName = "Config";
 
-        [MenuItem("配置文件/生成解析 .cs文件")]
+        [MenuItem("游戏辅助工具/配置文件/生成解析 .cs文件")]
         static void GenerateConfigByAnalysis()
         {
             string path = Application.dataPath + "/" + InputPath;

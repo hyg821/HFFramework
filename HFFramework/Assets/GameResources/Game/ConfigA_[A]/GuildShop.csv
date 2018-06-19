@@ -1,0 +1,5 @@
+商店id,显示个数,商店自动刷新时间,刷新消耗贡献
+shopId,showNum,shoprefreshTime,costContribution
+int,int,int,string
+1,8,20,10;20;40;80
+2,5,20,10;20;40;80

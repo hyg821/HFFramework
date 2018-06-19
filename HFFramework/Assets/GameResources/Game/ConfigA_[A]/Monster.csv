@@ -1,0 +1,5 @@
+怪物id,怪物icon,怪物icon路径,怪物包名,怪物预设名称,怪物名称,怪物类型,攻击速度,攻击距离,当前等级,怒气上限,攻击怒气增加,被攻击怒气增加,普通攻击,主动技能,被动技能1,被动技能2,被动技能3,生命值,攻击力,防御力,暴击率,暴击伤害,格挡率
+monsterId,monsterIcon,monstericonPath,monsterAvatarBundlerName,monsterAvatarPrefabName,monsterName,monsterType,attackSpeed,attackDistance,Lv,maxAnger,attackAnger,beAttactedAnger,commonAttack,activeSkill,passiveSkill1,passiveSkill2,passiveSkill3,hp,atk,def,critPercent,critdamPercent,blockPercent
+int,string,string,string,string,string,int,float,int,int,float,float,float,int,int,int,int,int,int,int,int,int,int,int
+1010101,ICON_head_01,role_camp,MonsterBundler,monster_Spine_nvjiangshi,小怪1,1,1,150,1,100,20,10,1,41,42,32,44,50000,10,10,0,0,0
+1010102,ICON_head_01,role_camp,MonsterBundler,monster_Spine_nvjiangshi,小怪1,2,1,150,1,100,20,10,1,41,42,32,44,100000,20,20,0,0,0

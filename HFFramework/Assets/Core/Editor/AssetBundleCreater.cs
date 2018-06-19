@@ -351,7 +351,7 @@ namespace HFFramework
         [MenuItem("游戏辅助工具/AssetBundles/设置DLL到具体资源目录")]
         public static void ReNameDLL()
         {
-            string str = "/GameResources/Game/TestGameA/DLL"+AssetFolderIde+"/";
+            string str = "/GameResources/Game/DLL"+AssetFolderIde+"/";
             string target = "HFFrameworkHotFix.dll";
             string sourcePath = Application.streamingAssetsPath + "/DLL/" + target;
             string reNamePath = Application.dataPath + str + target + ".bytes";

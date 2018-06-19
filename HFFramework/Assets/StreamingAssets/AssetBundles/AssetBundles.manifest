@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3013293104
+CRC: 3107687396
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -27,4 +27,7 @@ AssetBundleManifest:
       Dependencies: {}
     Info_7:
       Name: hfui
+      Dependencies: {}
+    Info_8:
+      Name: common_font
       Dependencies: {}

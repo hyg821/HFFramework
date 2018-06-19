@@ -1,0 +1,6 @@
+招募卡池id,icon,icon路径,是否可单次招募,是否可五连招募,是否可十连招募,单次招募消耗道具,五连招募消耗道具,十连招募消耗道具,招募卡牌概率,招募道具概率,卡池描述,卡牌,碎片,道具,概率图片,概率图片路径
+recruitId,icon,iconPath,isoneRecruit,isfiveRecruit,istenRecruit,onerecruitCost,fiverecruitCost,tenrecruitCost,recruitcardPer,recruititemPer,cardpoolDescription,card,fragment,item,perPicture,perpicturePath
+int,string,string,bool,bool,bool,string,string,string,string,string,string,string,string,string,string,string
+1,equipment_999,common_sprite_equipment,TRUE,FALSE,TRUE,11001*1,0,11001*10,1#2;2#2;3#2;4#2;5#2,10201*2#15;10202*2#15;10203*1#15;10204*1#15;10205*1#15;10101*1#15,招募,1;2;3;4;5,10201;10202;10203;10204;10205;10101,10501,BD_zhaomu_02,recruit_picture
+2,equipment_999,common_sprite_equipment,TRUE,FALSE,TRUE,11002*1,0,11002*10,1#2;2#2;3#2;4#2;5#2,10201*2#15;10202*2#15;10203*1#15;10204*1#15;10205*1#15;10101*1#15,招募,1;2;3;4;5,10201;10202;10203;10204;10205;10101,10501,BD_zhaomu_02,recruit_picture
+3,equipment_999,common_sprite_equipment,TRUE,FALSE,TRUE,10006*100,0,10006*1000,1#2;2#2;3#2;4#2;5#2,10201*2#15;10202*2#15;10203*1#15;10204*1#15;10205*1#15;10101*1#15,招募,1;2;3;4;5,10201;10202;10203;10204;10205;10101,10501,BD_zhaomu_02,recruit_picture

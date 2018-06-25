@@ -27,20 +27,22 @@ namespace HFFramework
             ReNameDLL();
 
             BuildTarget target;
-#if UNITY_STANDALONE_WIN
+            #if UNITY_STANDALONE_WIN
             target = BuildTarget.StandaloneWindows;
-#elif UNITY_STANDALONE_OSX
+            #elif UNITY_STANDALONE_OSX
             target = BuildTarget.StandaloneOSXIntel;
-#elif UNITY_IPHONE
+            #elif UNITY_IPHONE
             target = BuildTarget.iOS;
-#elif UNITY_ANDROID
+            #elif UNITY_ANDROID
             target = BuildTarget.Android;
-#endif
+            #endif
+
             string AssetBundlesPath = Application.dataPath + "/StreamingAssets/AssetBundles";
             if (!Directory.Exists(AssetBundlesPath))
             {
                 Directory.CreateDirectory(AssetBundlesPath);
             }
+
             AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", BuildAssetBundleOptions.ChunkBasedCompression, target);
             BuildZip();
             if (abm)

@@ -154,86 +154,68 @@ namespace HFFramework
             timer.Start();
         }
 
-        private void ConnectSuccess(IAsyncResult ar)
-        {
-            if (state!=ConnectState.Success)
-            {
-                state = ConnectState.Success;
-                connectCallback();
-            }
-        }
-
-        public void ConnectFail()
-        {
-            if (state!= ConnectState.Fail)
-            {
-                state = ConnectState.Fail;
-                errorCallback();
-            }
-        }
-
         public void ReceiveMessage()
         {
             while (true)
             {
-                if (socket.Connected)
+                //如果 可以读取的数据为 0  那么直接休眠0.01秒 然后继续去读
+                if (socket.Available == 0)
                 {
-                    //如果 可以读取的数据为 0  那么直接休眠0.01秒 然后继续去读
-                    if (socket.Available == 0)
-                    {
-                        Thread.Sleep(10);
-                        continue;
-                    }
-
-                    int bodyLength = -1;
-                    int messageType = -1;
-                    byte[] msgBytes;
-
-                    //如果没有读取消息头 并且 可以读取的数据大于 头的长度
-                    if (isReadHeader == false && socket.Available >= MSG_HEAD_LEN)
-                    {
-                        socket.Receive(dataBuffer, MSG_HEAD_LEN, 0);
-                        using (MemoryStream stream = new MemoryStream(dataBuffer))
-                        {
-                            using (BinaryReader reader = new BinaryReader(stream))
-                            {
-                                byte[] temp = reader.ReadBytes(MSG_ALL_IDE_LEN);
-                                //先读取整个数据的长度
-                                int messageLength = BitConverter.ToInt32(temp, 0);
-                                //再-数据头的长度得到 数据体的长度
-                                bodyLength = messageLength - MSG_HEAD_LEN;
-
-                                //然后在读取消息号
-                                temp = reader.ReadBytes(MSG_TYPE_LEN);
-                                messageType = BitConverter.ToInt32(temp, 0);
-
-                                isReadHeader = true;
-                            }
-                        }
-                    }
-
-                    //如果读取过了消息头 并且可读取的数据大于整个数据体的长度
-                    if (isReadHeader == true && socket.Available >= bodyLength)
-                    {
-                        socket.Receive(dataBuffer, bodyLength, 0);
-                        using (MemoryStream stream = new MemoryStream(dataBuffer))
-                        {
-                            using (BinaryReader reader = new BinaryReader(stream))
-                            {
-                                msgBytes = reader.ReadBytes(bodyLength);
-                                if (bodyLength != -1 && messageType != -1)
-                                {
-                                    CreateMessage(messageType, msgBytes);
-                                }
-                            }
-                        }
-                    }
+                    Thread.Sleep(10);
+                    continue;
                 }
-                else
+
+                if (socket.Connected==false)
                 {
                     break;
                 }
+
+                int bodyLength = -1;
+                int messageType = -1;
+                byte[] msgBytes;
+
+                //如果没有读取消息头 并且 可以读取的数据大于 头的长度
+                if (isReadHeader == false && socket.Available >= MSG_HEAD_LEN)
+                {
+                    socket.Receive(dataBuffer, MSG_HEAD_LEN, 0);
+                    using (MemoryStream stream = new MemoryStream(dataBuffer))
+                    {
+                        using (BinaryReader reader = new BinaryReader(stream))
+                        {
+                            byte[] temp = reader.ReadBytes(MSG_ALL_IDE_LEN);
+                            //先读取整个数据的长度
+                            int messageLength = BitConverter.ToInt32(temp, 0);
+                            //再-数据头的长度得到 数据体的长度
+                            bodyLength = messageLength - MSG_HEAD_LEN;
+
+                            //然后在读取消息号
+                            temp = reader.ReadBytes(MSG_TYPE_LEN);
+                            messageType = BitConverter.ToInt32(temp, 0);
+
+                            isReadHeader = true;
+                        }
+                    }
+                }
+
+                //如果读取过了消息头 并且可读取的数据大于整个数据体的长度
+                if (isReadHeader == true && socket.Available >= bodyLength)
+                {
+                    socket.Receive(dataBuffer, bodyLength, 0);
+                    using (MemoryStream stream = new MemoryStream(dataBuffer))
+                    {
+                        using (BinaryReader reader = new BinaryReader(stream))
+                        {
+                            msgBytes = reader.ReadBytes(bodyLength);
+                            if (bodyLength != -1 && messageType != -1)
+                            {
+                                CreateMessage(messageType, msgBytes);
+                            }
+                        }
+                    }
+                }
             }
+
+            //如果跳出循环说明报错
             ConnectFail();
         }
 
@@ -272,6 +254,24 @@ namespace HFFramework
             else
             {
                 ConnectFail();
+            }
+        }
+
+        private void ConnectSuccess(IAsyncResult ar)
+        {
+            if (state != ConnectState.Success)
+            {
+                state = ConnectState.Success;
+                connectCallback();
+            }
+        }
+
+        public void ConnectFail()
+        {
+            if (state != ConnectState.Fail)
+            {
+                state = ConnectState.Fail;
+                errorCallback();
             }
         }
 

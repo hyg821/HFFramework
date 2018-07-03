@@ -12,17 +12,17 @@ namespace HFFramework
         /// <summary>
         ///  需要update的 列表
         /// </summary>
-        private List<BaseMonoBehaviour> updateList = new List<BaseMonoBehaviour>();
+        private List<BaseMonoBehaviour> updateList = new List<BaseMonoBehaviour>(64);
 
         /// <summary>
         ///  需要fixedUpdate的 列表
         /// </summary>
-        private List<BaseMonoBehaviour> fixedUpdateList = new List<BaseMonoBehaviour>();
+        private List<BaseMonoBehaviour> fixedUpdateList = new List<BaseMonoBehaviour>(64);
 
         /// <summary>
         ///  需要lateUpdate的 列表
         /// </summary>
-        private List<BaseMonoBehaviour> lateUpdateList = new List<BaseMonoBehaviour>();
+        private List<BaseMonoBehaviour> lateUpdateList = new List<BaseMonoBehaviour>(64);
 
         /// <summary>
         ///  event队列
@@ -82,60 +82,60 @@ namespace HFFramework
             }
         }
 
-        public static void AddUpdate(BaseMonoBehaviour b)
+        public static void AddUpdate(BaseMonoBehaviour mono)
         {
             if (Instance != null)
             {
-                if (Instance.updateList.Contains(b)==false)
+                if (Instance.updateList.Contains(mono) ==false)
                 {
-                    Instance.updateList.Add(b);
+                    Instance.updateList.Add(mono);
                 }
             }
         }
 
-        public static void SubUpdate(BaseMonoBehaviour b)
+        public static void SubUpdate(BaseMonoBehaviour mono)
         {
             if (Instance != null)
             {
-                Instance.updateList.Remove(b);
+                Instance.updateList.Remove(mono);
             }
         }
 
-        public static void AddFixedUpdate(BaseMonoBehaviour b)
+        public static void AddFixedUpdate(BaseMonoBehaviour mono)
         {
             if (Instance != null)
             {
-                if (Instance.fixedUpdateList.Contains(b) == false)
+                if (Instance.fixedUpdateList.Contains(mono) == false)
                 {
-                    Instance.fixedUpdateList.Add(b);
+                    Instance.fixedUpdateList.Add(mono);
                 }
             }
         }
 
-        public static void SubFixedUpdate(BaseMonoBehaviour b)
+        public static void SubFixedUpdate(BaseMonoBehaviour mono)
         {
             if (Instance != null)
             {
-                Instance.fixedUpdateList.Remove(b);
+                Instance.fixedUpdateList.Remove(mono);
             }
         }
 
-        public static void AddLateUpdate(BaseMonoBehaviour b)
+        public static void AddLateUpdate(BaseMonoBehaviour mono)
         {
             if (Instance != null)
             {
-                if (Instance.lateUpdateList.Contains(b) == false)
+                if (Instance.lateUpdateList.Contains(mono) == false)
                 {
-                    Instance.lateUpdateList.Add(b);
+                    Instance.lateUpdateList.Add(mono);
                 }
             }
         }
 
-        public static void SubLateUpdate(BaseMonoBehaviour b)
+        public static void SubLateUpdate(BaseMonoBehaviour mono)
         {
             if (Instance != null)
             {
-                Instance.lateUpdateList.Remove(b);
+                Instance.lateUpdateList.Remove(mono);
             }
         }
     }

@@ -19,6 +19,10 @@ namespace HFFramework
         [HideInInspector]
         public Transform myTransform;
 
+        public string gameObjectName;
+
+        public string gameObjectTag;
+
         /// <summary>
         ///  注册的消息 字典   Destroy会自动销毁
         /// </summary>
@@ -75,6 +79,8 @@ namespace HFFramework
         {
             myTransform = gameObject.transform;
             myInstanceID = gameObject.GetInstanceID();
+            gameObjectName = gameObject.name;
+            gameObjectTag = gameObject.tag;
         }
 
         /// <summary>

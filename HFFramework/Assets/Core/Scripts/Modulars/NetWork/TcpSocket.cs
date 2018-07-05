@@ -6,6 +6,7 @@ using System;
 using System.Threading;
 using System.Timers;
 using System.IO;
+using UnityEngine;
 
 namespace HFFramework
 {
@@ -78,13 +79,13 @@ namespace HFFramework
 
         public Action connectCallback;
 
-        public Action<int, MemoryStream> receiveCallback;
+        public Action<int, byte[]> receiveCallback;
 
         public Action closeCallback;
 
         public Action errorCallback;
 
-        public void Init(string ip, int port, Action connect, Action<int, MemoryStream> reveive, Action close, Action error)
+        public void Init(string ip, int port, Action connect, Action<int, byte[]> reveive, Action close, Action error)
         {
             this.ip = ip;
             this.port = port;
@@ -221,10 +222,7 @@ namespace HFFramework
 
         private void CreateMessage(int messageType, byte[] data)
         {
-            MemoryStream stream = new MemoryStream();
-            stream.Write(data, 0, data.Length);
-            stream.Position = 0;
-            receiveCallback(messageType, stream);
+            receiveCallback(messageType, data);
         }
 
         public void Send(int msgType, byte[] msg)

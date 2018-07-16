@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class EquipmentStrengthen
     { 
         /// <summary>
@@ -28,6 +29,7 @@ namespace HFConfig
         public int strengthenEffect;
     }
 
+    [System.Serializable]
     public class HFConfigEquipmentStrengthen
     { 
 

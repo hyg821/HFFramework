@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class SkillShow
     { 
         /// <summary>
@@ -128,6 +129,7 @@ namespace HFConfig
         public string BehitSoundDelayTime;
     }
 
+    [System.Serializable]
     public class HFConfigSkillShow
     { 
 

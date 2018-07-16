@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class UI
     { 
         /// <summary>
@@ -48,6 +49,7 @@ namespace HFConfig
         public string className;
     }
 
+    [System.Serializable]
     public class HFConfigUI
     { 
 

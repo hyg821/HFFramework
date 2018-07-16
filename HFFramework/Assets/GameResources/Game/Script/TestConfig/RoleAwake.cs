@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class RoleAwake
     { 
         /// <summary>
@@ -44,6 +45,7 @@ namespace HFConfig
         public string costGold;
     }
 
+    [System.Serializable]
     public class HFConfigRoleAwake
     { 
 

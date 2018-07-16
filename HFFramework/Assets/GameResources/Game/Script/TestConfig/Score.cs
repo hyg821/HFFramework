@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class Score
     { 
         /// <summary>
@@ -24,6 +25,7 @@ namespace HFConfig
         public float score;
     }
 
+    [System.Serializable]
     public class HFConfigScore
     { 
 

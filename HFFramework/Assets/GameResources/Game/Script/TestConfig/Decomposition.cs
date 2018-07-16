@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class Decomposition
     { 
         /// <summary>
@@ -32,6 +33,7 @@ namespace HFConfig
         public string extraDrop;
     }
 
+    [System.Serializable]
     public class HFConfigDecomposition
     { 
 

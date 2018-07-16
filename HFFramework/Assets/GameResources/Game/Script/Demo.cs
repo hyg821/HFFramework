@@ -7,6 +7,8 @@ using System;
 using HFConfig;
 using Centersdk.Protobuf;
 using Google.Protobuf;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class Demo : BaseMonoBehaviour
 {
@@ -226,7 +228,23 @@ public class Demo : BaseMonoBehaviour
         IntegerValue ims = new IntegerValue();
         ims.MergeFrom(bytes);
         print(ims.ToString());
+
+        //测试序列化();
     }
+
+    public void 测试序列化()
+    {
+        FileStream steam = new FileStream(Application.dataPath + "/xxx", FileMode.Create);
+        BinaryFormatter formatter = new BinaryFormatter();
+        formatter.Serialize(steam, HFConfigItem.Instance);
+        steam.Dispose();
+
+        steam = new FileStream(Application.dataPath + "/xxx", FileMode.Open);
+        formatter = new BinaryFormatter();
+        HFConfigItem x = formatter.Deserialize(steam) as HFConfigItem;
+        steam.Dispose();
+    }
+
 
 
 

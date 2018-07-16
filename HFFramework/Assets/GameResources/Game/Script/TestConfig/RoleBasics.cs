@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class RoleBasics
     { 
         /// <summary>
@@ -168,6 +169,7 @@ namespace HFConfig
         public int passivethroughs3;
     }
 
+    [System.Serializable]
     public class HFConfigRoleBasics
     { 
 

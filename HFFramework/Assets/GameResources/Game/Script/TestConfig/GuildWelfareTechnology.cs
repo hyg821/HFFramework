@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class GuildWelfareTechnology
     { 
         /// <summary>
@@ -32,6 +33,7 @@ namespace HFConfig
         public int costContribution;
     }
 
+    [System.Serializable]
     public class HFConfigGuildWelfareTechnology
     { 
 

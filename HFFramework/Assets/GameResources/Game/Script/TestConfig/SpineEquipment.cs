@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class SpineEquipment
     { 
         /// <summary>
@@ -36,6 +37,7 @@ namespace HFConfig
         public string spineEquipmentTypeName;
     }
 
+    [System.Serializable]
     public class HFConfigSpineEquipment
     { 
 

@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class GuildLevelup
     { 
         /// <summary>
@@ -60,6 +61,7 @@ namespace HFConfig
         public int costguildGold;
     }
 
+    [System.Serializable]
     public class HFConfigGuildLevelup
     { 
 

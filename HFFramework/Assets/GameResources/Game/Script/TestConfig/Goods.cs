@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class Goods
     { 
         /// <summary>
@@ -44,6 +45,7 @@ namespace HFConfig
         public int RMBPrice;
     }
 
+    [System.Serializable]
     public class HFConfigGoods
     { 
 

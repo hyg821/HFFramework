@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class GuildMissionAndTeamLv
     { 
         /// <summary>
@@ -20,6 +21,7 @@ namespace HFConfig
         public string missionModule;
     }
 
+    [System.Serializable]
     public class HFConfigGuildMissionAndTeamLv
     { 
 

@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class Shop
     { 
         /// <summary>
@@ -36,6 +37,7 @@ namespace HFConfig
         public string refreshCost;
     }
 
+    [System.Serializable]
     public class HFConfigShop
     { 
 

@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class Composite
     { 
         /// <summary>
@@ -48,6 +49,7 @@ namespace HFConfig
         public int item3Num;
     }
 
+    [System.Serializable]
     public class HFConfigComposite
     { 
 

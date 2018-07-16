@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class Recruit
     { 
         /// <summary>
@@ -80,6 +81,7 @@ namespace HFConfig
         public string perpicturePath;
     }
 
+    [System.Serializable]
     public class HFConfigRecruit
     { 
 

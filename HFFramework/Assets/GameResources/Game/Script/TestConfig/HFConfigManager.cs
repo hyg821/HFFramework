@@ -7,6 +7,7 @@ using System;
 using HFFramework;
 namespace HFConfig
 { 
+    [System.Serializable]
     public class HFConfigManager
     { 
         private static HFConfigManager instance;

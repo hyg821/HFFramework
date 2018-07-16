@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class BuffShow
     { 
         /// <summary>
@@ -64,6 +65,7 @@ namespace HFConfig
         public string BuffEffectIsBreak;
     }
 
+    [System.Serializable]
     public class HFConfigBuffShow
     { 
 

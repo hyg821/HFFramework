@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class Cardlvgrowcost
     { 
         /// <summary>
@@ -24,6 +25,7 @@ namespace HFConfig
         public string costGold;
     }
 
+    [System.Serializable]
     public class HFConfigCardlvgrowcost
     { 
 

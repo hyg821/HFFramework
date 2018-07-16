@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class DamDef
     { 
         /// <summary>
@@ -24,6 +25,7 @@ namespace HFConfig
         public float defNum2;
     }
 
+    [System.Serializable]
     public class HFConfigDamDef
     { 
 

@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class Skill
     { 
         /// <summary>
@@ -76,6 +77,7 @@ namespace HFConfig
         public int skillPower;
     }
 
+    [System.Serializable]
     public class HFConfigSkill
     { 
 

@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class Monster
     { 
         /// <summary>
@@ -108,6 +109,7 @@ namespace HFConfig
         public int blockPercent;
     }
 
+    [System.Serializable]
     public class HFConfigMonster
     { 
 

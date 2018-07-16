@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class RoleBreak
     { 
         /// <summary>
@@ -60,6 +61,7 @@ namespace HFConfig
         public string reborncostItem;
     }
 
+    [System.Serializable]
     public class HFConfigRoleBreak
     { 
 

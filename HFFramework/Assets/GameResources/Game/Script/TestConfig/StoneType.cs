@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class StoneType
     { 
         /// <summary>
@@ -28,6 +29,7 @@ namespace HFConfig
         public string typeiconPath;
     }
 
+    [System.Serializable]
     public class HFConfigStoneType
     { 
 

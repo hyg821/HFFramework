@@ -109,6 +109,7 @@ namespace HFConfig
             builder.AppendLine();
             builder.AppendLine(@"namespace " + _namespace);
             builder.AppendLine("{ ");
+            builder.AppendLine(@"    [System.Serializable]");
             builder.AppendLine(@"    public class " + _class);
             builder.AppendLine("    { ");
 
@@ -137,6 +138,7 @@ namespace HFConfig
 
             builder.AppendLine();
 
+            builder.AppendLine(@"    [System.Serializable]");
             builder.AppendLine(@"    public class " + _table);
             builder.AppendLine("    { ");
             builder.AppendLine();
@@ -280,6 +282,7 @@ namespace HFConfig
             builder.AppendLine(@"using HFFramework;");
             builder.AppendLine(@"namespace " + _namespace);
             builder.AppendLine("{ ");
+            builder.AppendLine(@"    [System.Serializable]");
             builder.AppendLine(@"    public class "+ _manager);
             builder.AppendLine("    { ");
             builder.AppendLine("        " + @"private static " + _manager + " instance;");

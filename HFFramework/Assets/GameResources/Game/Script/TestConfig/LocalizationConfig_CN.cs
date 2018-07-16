@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class LocalizationConfig_CN
     { 
         /// <summary>
@@ -20,6 +21,7 @@ namespace HFConfig
         public string content;
     }
 
+    [System.Serializable]
     public class HFConfigLocalizationConfig_CN
     { 
 

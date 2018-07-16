@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class GuildMission
     { 
         /// <summary>
@@ -108,6 +109,7 @@ namespace HFConfig
         public string speedupReward;
     }
 
+    [System.Serializable]
     public class HFConfigGuildMission
     { 
 

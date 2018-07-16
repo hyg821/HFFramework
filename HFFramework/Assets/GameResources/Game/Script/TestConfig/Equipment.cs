@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class Equipment
     { 
         /// <summary>
@@ -160,6 +161,7 @@ namespace HFConfig
         public string noneExtra;
     }
 
+    [System.Serializable]
     public class HFConfigEquipment
     { 
 

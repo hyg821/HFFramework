@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class HangingCheckPoint
     { 
         /// <summary>
@@ -104,6 +105,7 @@ namespace HFConfig
         public string bossId;
     }
 
+    [System.Serializable]
     public class HFConfigHangingCheckPoint
     { 
 

@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class Item
     { 
         /// <summary>
@@ -172,6 +173,7 @@ namespace HFConfig
         public int extraatkspeedPercent;
     }
 
+    [System.Serializable]
     public class HFConfigItem
     { 
 

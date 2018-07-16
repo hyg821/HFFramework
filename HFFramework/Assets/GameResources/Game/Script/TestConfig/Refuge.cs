@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class Refuge
     { 
         /// <summary>
@@ -56,6 +57,7 @@ namespace HFConfig
         public int levelUpCostCount;
     }
 
+    [System.Serializable]
     public class HFConfigRefuge
     { 
 

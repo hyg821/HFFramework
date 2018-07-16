@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class BuffEffect
     { 
         /// <summary>
@@ -92,6 +93,7 @@ namespace HFConfig
         public string downEffect;
     }
 
+    [System.Serializable]
     public class HFConfigBuffEffect
     { 
 

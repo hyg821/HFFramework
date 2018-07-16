@@ -8,6 +8,7 @@ using HFFramework;
 
 namespace HFConfig
 { 
+    [System.Serializable]
     public class StoneCombination
     { 
         /// <summary>
@@ -48,6 +49,7 @@ namespace HFConfig
         public string combinationDescription;
     }
 
+    [System.Serializable]
     public class HFConfigStoneCombination
     { 
 

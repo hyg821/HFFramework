@@ -5,6 +5,8 @@ using HFFramework;
 using System.Reflection;
 using System;
 using HFConfig;
+using Centersdk.Protobuf;
+using Google.Protobuf;
 
 public class Demo : BaseMonoBehaviour
 {
@@ -14,6 +16,8 @@ public class Demo : BaseMonoBehaviour
     public List<UIController> testList = new List<UIController>();
 
     public bool isOpenUpdate = false;
+
+    public byte[] bytes;
 
     CoroutineQueue queue;
 
@@ -202,13 +206,28 @@ public class Demo : BaseMonoBehaviour
             print("");
         }
 
-        Item it = HFConfigItem.Instance.Get(10001);
+        HFConfig.Item it = HFConfigItem.Instance.Get(10001);
         for (int i = 0; i < it.type.Count; i++)
         {
             print("AAAAAAAAAA    =" + it.type[i]);
         }
-   
-
     }
+
+
+    public void 序列化ProtoBuf()
+    {
+        IntegerValue intx = new IntegerValue();
+        intx.Val = 100;
+        bytes = intx.ToByteArray();
+    }
+
+    public void 反序列化ProtoBuf()
+    {
+        IntegerValue ims = new IntegerValue();
+        ims.MergeFrom(bytes);
+        print(ims.ToString());
+    }
+
+
 
 }

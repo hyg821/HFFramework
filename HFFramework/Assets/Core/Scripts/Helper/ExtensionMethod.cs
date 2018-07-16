@@ -18,9 +18,11 @@ namespace HFFramework
     {
         public float day;
         public float hour;
+        public float extraHour;
         public float min;
+        public float extraMin;
         public float sec;
-        public float msec;
+        public float extraSec;
     }
 
     public static class ExtensionMethod
@@ -131,15 +133,18 @@ namespace HFFramework
 
         public static HATimeFormat MillisecondConvertToTimeFormat(this long t)
         {
+            //1000 毫秒->秒
+            //60     秒->分钟
+            //60     分钟->小时
+            //24     小时->天
             HATimeFormat format = new HATimeFormat();
             format.day = t / (1000 * 60 * 60 * 24);
-            //计算小时,用毫秒总数除以(1000*60*24),后去掉小数点
-            format.hour = t / (1000 * 60 * 24);
-            //计算分钟,用毫秒总数减去小时乘以(1000*60*24)后,除以(1000*60),再去掉小数点
-            format.min = (t - format.hour * (1000 * 60 * 24)) / (1000 * 60);
-            //同上
-            format.sec = (t - format.hour * (1000 * 60 * 24) - format.min * (1000 * 60)) / 1000;
-            format.msec = t - format.hour * (1000 * 60 * 24) - format.min * (1000 * 60) - format.sec * 1000;
+            format.hour = t / (1000 * 60 * 60);
+            format.extraHour = format.hour - format.day * 24;
+            format.min = t / (1000 * 60);
+            format.extraMin = format.min - format.hour * 60;
+            format.sec = t / (1000);
+            format.extraSec = format.sec - format.min * 60;
             return format;
         }
 

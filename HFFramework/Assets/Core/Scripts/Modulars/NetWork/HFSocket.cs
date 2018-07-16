@@ -2,10 +2,10 @@
 using System.IO;
 using System.Net.Sockets;
 using UnityEngine;
-using ProtoBuf;
 using System.Collections.Generic;
 using System.Collections;
 using System.Net;
+using Google.Protobuf;
 
 namespace HFFramework
 {
@@ -205,25 +205,13 @@ namespace HFFramework
         }
 
         /// <summary>
-        /// 发送SOCKET消息
-        /// </summary>
-        public void SendMessage(int messageType, MemoryStream obj)
-        {
-            socket.SendMessage(messageType, obj);
-            //DebugTools.Log("发送消息：  " + "消息号： " + messageType);
-            //DebugTools.Log("发送消息：  " + "消息号： " + messageType + "  消息体：  " + JsonMapper.ToJson(obj));
-        }
-
-        /// <summary>
         /// 发消息
         /// </summary>
         /// <param name="messageType">消息号</param>
         /// <param name="msg">消息体</param>
-        public void SendMessage(int messageType, object msg)
+        public void SendMessage(int messageType, IMessage msg)
         {
-            MemoryStream ms = new MemoryStream();
-            Serializer.Serialize(ms, msg);
-            SendMessage(messageType, ms);
+            socket.SendMessage(messageType, msg.ToByteArray());
         }
 
 
@@ -301,17 +289,6 @@ namespace HFFramework
                     checkNetCoroutine = null;
                 }
             };
-        }
-
-        /// <summary>
-        /// 消息反序列化
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="stream"></param>
-        /// <returns></returns>
-        public static object GetMessageObjectByType(Type type, MemoryStream stream)
-        {
-            return Serializer.Deserialize(type, stream);
         }
     }
 }

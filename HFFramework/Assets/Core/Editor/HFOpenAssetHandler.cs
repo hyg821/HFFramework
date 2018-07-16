@@ -4,7 +4,7 @@ using UnityEditor.Callbacks;
 using System.IO;
 using System;
 
-public class OpenAssetHandler
+public class HFOpenAssetHandler
 {
     /// <summary>
     ///  ide路径

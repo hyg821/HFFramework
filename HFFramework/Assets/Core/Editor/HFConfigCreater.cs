@@ -8,7 +8,7 @@ using System;
 
 namespace HFConfig
 {
-    public class ConfigGenerater
+    public class HFConfigCreater
     {
         public static string[] split = new string[]{","};
         public static string[] arraySplit = new string[] { "[","]",";" };

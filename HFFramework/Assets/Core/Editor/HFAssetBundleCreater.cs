@@ -9,7 +9,7 @@ using LitJson;
 
 namespace HFFramework
 {
-    public class AssetBundleCreater
+    public class HFAssetBundleCreater
     {
 
         public const string AssetFolderIde = "_[A]";
@@ -432,7 +432,7 @@ namespace HFFramework
 
                             if (config != null && config.assetbundleNameType == "Default")
                             {
-                                string md5Str = AssetBundleCreater.GetMD5(newItem);
+                                string md5Str = HFAssetBundleCreater.GetMD5(newItem);
                                 // 通过文件路径 设置assetbundle 
                                 assetImporter.assetBundleName = md5Str;
                                 string md5;

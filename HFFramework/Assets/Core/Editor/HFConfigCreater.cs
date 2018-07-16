@@ -13,8 +13,8 @@ namespace HFConfig
         public static string[] split = new string[]{","};
         public static string[] arraySplit = new string[] { "[","]",";" };
 
-        public static string InputPath = "GameResources/Game/TestGameA/ConfigA_[A]";
-        public static string OutputPath = "GameResources/Game/TestGameA/ConfigScript";
+        public static string InputPath = "GameResources/Game/ConfigA_[A]";
+        public static string OutputPath = "GameResources/Game/Script/TestConfig";
 
         public static string ConfigAssetbundleName = "Config";
 
@@ -53,6 +53,13 @@ namespace HFConfig
             AssetDatabase.Refresh();
 
         }
+
+        [MenuItem("游戏辅助工具/配置文件/生成解析 .proto文件")]
+        public static void CreateProtoByConfig()
+        {
+
+        }
+
 
         public static void CreateConfig(FileInfo file)
         {

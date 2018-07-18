@@ -170,16 +170,6 @@ namespace HFFramework
             return mm + ":" + ss;
         }
 
-        public static JsonData JsonDataContains(this JsonData jsonData, object a)
-        {
-            JsonData j = null;
-            if (((IDictionary)jsonData).Contains(a))
-            {
-                j = jsonData[a + ""];
-            }
-            return j;
-        }
-
         public static string FormattedName(this string str, int nameLength)
         {
             if (str.Length > nameLength)

@@ -122,26 +122,6 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  添加组件
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public  T MyAddComponent<T>() where T : MonoBehaviour
-        {
-            return GameFactory.AddComponent<T>(gameObject);
-        }
-
-        /// <summary>
-        ///  移除组件
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public  T MyGetComponent<T>() where T : MonoBehaviour
-        {
-            return GameFactory.AddComponent<T>(gameObject);
-        }
-
-        /// <summary>
         ///  设置父物体
         /// </summary>
         /// <param name="parent"></param>

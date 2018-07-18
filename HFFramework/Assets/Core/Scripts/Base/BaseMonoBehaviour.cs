@@ -48,9 +48,9 @@ namespace HFFramework
         {
             set
             {
-                isActive = value;
                 if (gameObject.activeSelf != value)
                 {
+                    isActive = value;
                     gameObject.SetActive(isActive);
                 }
 
@@ -62,7 +62,6 @@ namespace HFFramework
                 {
                     ElementDidDisAppear();
                 }
-
             }
             get
             {

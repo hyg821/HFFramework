@@ -22,6 +22,11 @@ namespace HotFix
         ///  element 对应的 游戏物体
         /// </summary>
         public GameObject gameObject;
+        public void SetGameObject(GameObject value)
+        {
+            gameObject = value;
+            transform = gameObject.transform;
+        }
 
         /// <summary>
         ///  gameObject 的 transform
@@ -103,9 +108,9 @@ namespace HotFix
         {
             set
             {
-                isActive = value;
                 if (gameObject != null && gameObject.activeSelf != value)
                 {
+                    isActive = value;
                     gameObject.SetActive(isActive);
                 }
                 if (value == true)
@@ -142,11 +147,7 @@ namespace HotFix
         {
             T t1 = new T();
             t1.elementID = GetGlobalID();
-            if (g!=null)
-            {
-                t1.gameObject = g;
-                t1.transform = g.transform;
-            }
+            t1.SetGameObject(g);
             t1.Awake();
             return t1;
         }
@@ -157,8 +158,7 @@ namespace HotFix
             T t1 = new T();
             t1.elementID = GetGlobalID();
             t1.parent = parent;
-            t1.gameObject = g;
-            t1.transform = g.transform;
+            t1.SetGameObject(g);
             t1.Awake();
             return t1;
         }
@@ -203,13 +203,13 @@ namespace HotFix
 
         }
 
-        public GameObject Instantiate(GameObject p)
+        public GameObject Instantiate(GameObject prefab)
         {
-            if (p != null)
+            if (prefab != null)
             {
-                gameObject = GameObject.Instantiate(p);
-                gameObject.name = p.name;
-                transform = gameObject.transform;
+                GameObject temp = GameObject.Instantiate(prefab);
+                temp.name = prefab.name;
+                SetGameObject(temp);
             }
             return gameObject;
         }
@@ -612,6 +612,7 @@ namespace HotFix
         public void DestoryGameObject()
         {
             GameObject.Destroy(gameObject);
+            gameObject = null;
         }
     }
 }

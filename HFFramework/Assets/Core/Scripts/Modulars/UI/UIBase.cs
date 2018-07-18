@@ -6,7 +6,17 @@ namespace HFFramework
 {
     public enum UIHideType
     {
+        /// <summary>
+        ///  通过激活非激活的方式来控制隐藏 有GC 适合一些子物体 小物体
+        /// </summary>
+        Active,
+        /// <summary>
+        /// 通过缩放的方式控制 无GC scollRect 会跳动 适合没有scrollRect的页面
+        /// </summary>
         Scale,
+        /// <summary>
+        ///  通过canvasGroup的方式 无GC 太多了界面会卡顿 适合大页面
+        /// </summary>
         CanvasGroup
     }
 
@@ -15,7 +25,7 @@ namespace HFFramework
         /// <summary>
         ///  UI 隐藏 类型
         /// </summary>
-        public UIHideType hideType = UIHideType.Scale;
+        public UIHideType hideType = UIHideType.Active;
 
         private CanvasGroup canvasGroup;
         /// <summary>
@@ -46,27 +56,41 @@ namespace HFFramework
                 {
                     if (isShow == true)
                     {
-                        if (hideType == UIHideType.Scale)
+                        switch (hideType)
                         {
-                            transform.localScale = Vector3.one;
-                        }
-                        else
-                        {
-                            CanvasGroup.alpha = 1;
-                        }
-                        ElementDidAppear();
+                            case UIHideType.Active:
+                                IsActive = isShow;
+                                break;
+                            case UIHideType.Scale:
+                                transform.localScale = Vector3.one;
+                                ElementDidAppear();
+                                break;
+                            case UIHideType.CanvasGroup:
+                                CanvasGroup.alpha = 1;
+                                ElementDidAppear();
+                                break;
+                            default:
+                                break;
+                        }    
                     }
                     else
                     {
-                        if (hideType == UIHideType.Scale)
+                        switch (hideType)
                         {
-                            transform.localScale = Vector3.zero;
+                            case UIHideType.Active:
+                                IsActive = false;
+                                break;
+                            case UIHideType.Scale:
+                                transform.localScale = Vector3.zero;
+                                ElementDidDisAppear();
+                                break;
+                            case UIHideType.CanvasGroup:
+                                CanvasGroup.alpha = 0;
+                                ElementDidDisAppear();
+                                break;
+                            default:
+                                break;
                         }
-                        else
-                        {
-                            CanvasGroup.alpha = 0;
-                        }
-                        ElementDidDisAppear();
                     }
                 }
             }

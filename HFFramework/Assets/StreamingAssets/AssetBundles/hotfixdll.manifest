@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1877119987
+CRC: 1077402862
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6453b23acc168ac1fc9905a48a6a4c3a
+    Hash: d50014e45b740e775ad9e4ce6d62db96
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -12,5 +12,5 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 Assets:
-- Assets/GameResources/Game/TestGameA/DLL_[A]/HFFrameworkHotFix.dll.bytes
+- Assets/GameResources/Game/DLL_[A]/HFFrameworkHotFix.dll.bytes
 Dependencies: []

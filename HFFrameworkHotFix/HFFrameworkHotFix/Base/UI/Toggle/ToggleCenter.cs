@@ -15,7 +15,7 @@ namespace HotFix
         /// <summary>
         ///  item 集合
         /// </summary>
-        private List<ToggleItem> list = new List<ToggleItem>();
+        private List<ToggleCell> list = new List<ToggleCell>();
 
         /// <summary>
         ///  每次选择之后的回调
@@ -35,7 +35,7 @@ namespace HotFix
         ///  添加item
         /// </summary>
         /// <param name="it"></param>
-        public void AddToggleItem(ToggleItem it)
+        public void AddToggleItem(ToggleCell it)
         {
             it.center = this;
             list.Add(it);
@@ -50,7 +50,7 @@ namespace HotFix
             currentIndex = index;
             for (int i = 0; i < list.Count; i++)
             {
-                ToggleItem item = list[i];
+                ToggleCell item = list[i];
                 if (currentIndex == item.index)
                 {
                     item.StartSelect(true);

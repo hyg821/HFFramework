@@ -26,9 +26,34 @@ namespace HFFramework
             Instance = this;
         }
 
+        /// <summary>
+        ///  获取一个携程队列
+        /// </summary>
+        /// <returns></returns>
+        public static CoroutineQueue CreateCoroutineQueue()
+        {
+            CoroutineQueue qe = new CoroutineQueue();
+            return qe;
+        }
+
+        /// <summary>
+        ///  开启单个协程
+        /// </summary>
+        /// <param name="coroutineType"></param>
+        /// <param name="time"></param>
+        /// <param name="callback"></param>
         public static void StartSingleCoroutine(CoroutineType coroutineType, float time, Action callback)
         {
             Instance.StartCoroutine(Instance.StartCoroutineFunction(coroutineType, time, callback));
+        }
+
+        /// <summary>
+        ///  执行携程队列
+        /// </summary>
+        /// <param name="coroutineQueue"></param>
+        public void ExecuteCoroutineQueue(CoroutineQueue coroutineQueue)
+        {
+            StartCoroutine(m_ExecuteTimerQueue(coroutineQueue));
         }
 
         private IEnumerator StartCoroutineFunction(CoroutineType coroutineType, float time, Action callback)
@@ -37,6 +62,12 @@ namespace HFFramework
             callback();
         }
 
+        /// <summary>
+        ///  获得等待类型
+        /// </summary>
+        /// <param name="coroutineType"></param>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public static IEnumerator GetIEnumerator(CoroutineType coroutineType, float time)
         {
             switch (coroutineType)
@@ -67,11 +98,10 @@ namespace HFFramework
             }
         }
 
-        public void ExecuteCoroutineQueue(CoroutineQueue coroutineQueue)
-        {
-            StartCoroutine(m_ExecuteTimerQueue(coroutineQueue));
-        }
-
+        /// <summary>
+        ///  停止携程队列
+        /// </summary>
+        /// <param name="coroutineQueue"></param>
         public void StopCoroutineQueue(CoroutineQueue coroutineQueue)
         {
             foreach (var item in coroutineQueue.queue)
@@ -81,7 +111,7 @@ namespace HFFramework
             coroutineQueue.Destroy();
         }
 
-        public IEnumerator m_ExecuteTimerQueue(CoroutineQueue coroutineQueue)
+        private IEnumerator m_ExecuteTimerQueue(CoroutineQueue coroutineQueue)
         {
             int i = 0;
             foreach (var item in coroutineQueue.queue)
@@ -98,29 +128,34 @@ namespace HFFramework
                     yield break;
                 }
             }
-
         }
-
-        public static CoroutineQueue CreateCoroutineQueue()
-        {
-            CoroutineQueue qe = new CoroutineQueue();
-            return qe;
-        }
-
     }
 
+    /// <summary>
+    ///  携程队列
+    /// </summary>
     public class CoroutineQueue
     {
         public Queue<SingleCoroutine> queue = new Queue<SingleCoroutine>();
 
         private Action complete;
-
+        
+        /// <summary>
+        /// 完成回调
+        /// </summary>
+        /// <param name="complete"></param>
+        /// <returns></returns>
         public CoroutineQueue OnComplete(Action complete)
         {
             this.complete = complete;
             return this;
         }
 
+        /// <summary>
+        ///  队列末未添加
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public CoroutineQueue Append(SingleCoroutine t)
         {
             queue.Enqueue(t);
@@ -140,17 +175,26 @@ namespace HFFramework
             }
         }
 
+        /// <summary>
+        ///  停止
+        /// </summary>
         public void Stop()
         {
             GameTimer.Instance.StopCoroutineQueue(this); 
         }
 
+        /// <summary>
+        ///  销毁
+        /// </summary>
         public void Destroy()
         {
             queue.Clear();
         }
     }
 
+    /// <summary>
+    ///  单一协程
+    /// </summary>
     public class SingleCoroutine
     {
         public Action action;
@@ -161,9 +205,5 @@ namespace HFFramework
             this.daly = GameTimer.GetIEnumerator(coroutineType,time);
         }
     }
-
-
-
-
 }
 

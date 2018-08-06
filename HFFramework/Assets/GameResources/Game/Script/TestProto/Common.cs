@@ -1729,7 +1729,7 @@ namespace Centersdk.Protobuf {
 
   }
 
-  public sealed partial class IntegerValue : pb::IMessage<IntegerValue> {
+  public  partial class IntegerValue : pb::IMessage<IntegerValue> {
     private static readonly pb::MessageParser<IntegerValue> _parser = new pb::MessageParser<IntegerValue>(() => new IntegerValue());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

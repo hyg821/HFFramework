@@ -220,7 +220,7 @@ public class Demo : BaseMonoBehaviour
     {
         IntegerValue intx = new IntegerValue();
         intx.Val = 100;
-        bytes = intx.ToByteArray();
+        bytes = intx.ToByteArray();    
     }
 
     public void 反序列化ProtoBuf()
@@ -230,6 +230,46 @@ public class Demo : BaseMonoBehaviour
         print(ims.ToString());
 
         //测试序列化();
+        ims = Deserialize(IntegerValue.Parser, bytes);
+        print(ims.ToString());
+    }
+
+    public T Deserialize<T>(MessageParser<T> parser,byte[] bys) where T : IMessage<T>
+    {
+        return parser.ParseFrom(bys);
+    }
+
+    /// <summary>
+    ///  正反泛型序列化
+    /// </summary>
+    public void 正反序列化ProtoBuf()
+    {
+        MessageConverter.AddMessageParser(1, IntegerValue.Parser);
+        MessageConverter.AddMessageParser(2, ShopItemList.Parser);
+        MessageConverter.AddMessageParser(3, ArenaChallenge.Parser);
+
+        //正反 序列化大概GC 1.5kb
+        IntegerValue i1 = new IntegerValue();
+        i1.Val = 256;
+        MessageConverter.Deserialize(1,MessageConverter.Serialize(i1));
+
+        ShopItemList i2 = new ShopItemList();
+        i2.ShopId = 528;
+        i2.RefreshMillis = 1000;
+        MessageConverter.Deserialize(2, MessageConverter.Serialize(i2));
+
+        BattleBuff i3 = new BattleBuff();
+        i3.BuffId = 8888;
+        MessageConverter.Deserialize(3, MessageConverter.Serialize(i3));
+
+        //print(i1.ToString());
+        //print(i2.ToString());
+        //print(i3.ToString());
+    }
+
+    private void Update()
+    {
+        正反序列化ProtoBuf();
     }
 
     public void 测试序列化()

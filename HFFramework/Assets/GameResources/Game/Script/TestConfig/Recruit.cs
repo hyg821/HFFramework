@@ -152,6 +152,9 @@ namespace HFConfig
                     list.Add(config);
                }
            }
+           notes = null;
+           names = null;
+           types = null;
         }
     }
 }

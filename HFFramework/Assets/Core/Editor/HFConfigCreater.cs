@@ -256,6 +256,9 @@ namespace HFConfig
             builder.AppendLine(@"                    list.Add(config);");
             builder.AppendLine(@"               }");
             builder.AppendLine(@"           }");
+            builder.AppendLine(@"           notes = null;");
+            builder.AppendLine(@"           names = null;");
+            builder.AppendLine(@"           types = null;");
             builder.AppendLine(@"        }");
             builder.AppendLine(@"    }");
             builder.AppendLine(@"}");

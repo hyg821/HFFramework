@@ -4,19 +4,13 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class InputManager : MonoBehaviour
+    public class InputManager : MonoBehaviour, IManager
     {
         public static InputManager Instance;
 
         void Awake()
         {
             Instance = this;
-        }
-
-        // Use this for initialization
-        void Start()
-        {
-
         }
 
         public void DestroyManager()

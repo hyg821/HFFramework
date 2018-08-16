@@ -13,7 +13,7 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class System_Collections_Generic_Dictionary_2_Int32_Object_Binding_Enumerator_Int32_Object_Binding
+    unsafe class System_Collections_Generic_Dictionary_2_Int32_Object_Binding_Enumerator_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {

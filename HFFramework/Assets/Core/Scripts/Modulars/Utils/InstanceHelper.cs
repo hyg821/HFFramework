@@ -34,7 +34,7 @@ namespace HFFramework
         {
             get
             {
-                return NotificationCenter.self;
+                return NotificationCenter.Instance;
             }
         }
 

@@ -7,7 +7,7 @@ using System;
 
 namespace HFFramework
 {
-    public class WebImageManager : MonoBehaviour
+    public class WebImageManager : MonoBehaviour, IManager
     {
         public static WebImageManager Instance;
 

@@ -14,7 +14,7 @@ namespace HFFramework
         WaitNull
     }
 
-    public class GameTimer : MonoBehaviour
+    public class GameTimer : MonoBehaviour,IManager
     {
         public static WaitForEndOfFrame WaitForEndOfFrame = new WaitForEndOfFrame();
         public static WaitForFixedUpdate WaitForFixedUpdate = new WaitForFixedUpdate();
@@ -128,6 +128,11 @@ namespace HFFramework
                     yield break;
                 }
             }
+        }
+
+        public void DestroyManager()
+        {
+            Instance = null;
         }
     }
 

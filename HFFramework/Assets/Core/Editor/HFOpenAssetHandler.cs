@@ -60,7 +60,6 @@ public class HFOpenAssetHandler
             return true;
         }
 
-        Debug.LogWarning("Letting Unity handle opening of script.");
         return false;
     }
 

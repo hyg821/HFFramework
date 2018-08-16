@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace HFFramework
 {
-    public class UtilsManager : MonoBehaviour
+    public class UtilsManager : MonoBehaviour,IManager
     {
         public const string customPath = "GameData";
 
@@ -164,6 +164,11 @@ namespace HFFramework
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("<color=#{0}>{1}</color>", color, str);
             return sb.ToString();
+        }
+
+        public void DestroyManager()
+        {
+            Instance = null;
         }
     }
 }

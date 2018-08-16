@@ -21,7 +21,7 @@ namespace  HFFramework
         Editor
     }
 
-    public class GameEnvironment : MonoBehaviour
+    public class GameEnvironment : MonoBehaviour,IManager
     {
         public static GameEnvironment Instance;
 
@@ -125,5 +125,9 @@ namespace  HFFramework
             return log;
         }
 
+        public void DestroyManager()
+        {
+            Instance = null;
+        }
     }
 }

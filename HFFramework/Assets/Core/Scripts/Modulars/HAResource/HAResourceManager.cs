@@ -8,7 +8,7 @@ using Mono.Cecil.Pdb;
 
 namespace HFFramework
 {
-    public class HAResourceManager : MonoBehaviour
+    public class HAResourceManager : MonoBehaviour,IManager
     {
         // 注意 
         // 必须每一个场景一个包 并且场景不可以和别的资源放在同一个包里

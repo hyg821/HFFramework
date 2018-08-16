@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class HFSocketManager : MonoBehaviour
+    public class HFSocketManager : MonoBehaviour, IManager
     {
         public static HFSocketManager Instance;
 

@@ -20,7 +20,7 @@ namespace HFFramework
         Free
     }
 
-    public class AudioManager : MonoBehaviour
+    public class AudioManager : MonoBehaviour, IManager
     {
         /// <summary>
         ///  标记背景音乐

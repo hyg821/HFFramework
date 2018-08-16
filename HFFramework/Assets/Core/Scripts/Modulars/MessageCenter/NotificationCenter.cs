@@ -61,16 +61,16 @@ namespace HFFramework
         }
     }
 
-    public class NotificationCenter : MonoBehaviour
+    public class NotificationCenter : MonoBehaviour, IManager
     {
-        public static NotificationCenter self;
+        public static NotificationCenter Instance;
 
         private Dictionary<long, List<ObserverDelegate>> messagePool = new Dictionary<long, List<ObserverDelegate>>();
 
         public void Awake()
         {
-            self = this;
-            self.messagePool = new Dictionary<long, List<ObserverDelegate>>();
+            Instance = this;
+            Instance.messagePool = new Dictionary<long, List<ObserverDelegate>>();
         }
 
         /// <summary>
@@ -102,7 +102,15 @@ namespace HFFramework
         ///  发消息
         /// </summary>
         /// <param name="msg"></param>
-        public void PostNotification(NotificationMessage msg)
+        public static void PostNotification(NotificationMessage msg)
+        {
+            if (Instance!=null)
+            {
+                Instance.SendNotification(msg);
+            }       
+        }
+
+        public void SendNotification(NotificationMessage msg)
         {
             List<ObserverDelegate> list;
             if (messagePool.TryGetValue(msg.msgID, out list))
@@ -160,7 +168,7 @@ namespace HFFramework
         public void DestroyManager()
         {
             messagePool.Clear();
-            self = null;
+            Instance = null;
         }
     }
 }

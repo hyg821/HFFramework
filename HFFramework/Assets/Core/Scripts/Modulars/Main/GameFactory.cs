@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class GameFactory : MonoBehaviour
+    public class GameFactory : MonoBehaviour, IManager
     {
         public static GameFactory Instance;
 
@@ -40,6 +40,10 @@ namespace HFFramework
             return obj.GetComponent<T>();
         }
 
+        public void DestroyManager()
+        {
+            Instance = null;
+        }
     }
 
 }

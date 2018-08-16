@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class GameStateChecker : MonoBehaviour
+    public class GameStateChecker : MonoBehaviour,IManager
     {
         //客户端内部通信 基础消息号
         public const long GAME_MESSAGE_BASE = -123456;
@@ -40,7 +40,7 @@ namespace HFFramework
             set
             {
                 isPaused = value;
-                NotificationCenter.self.PostNotification(new NotificationMessage(MESSAGE_APPPAUSE, this, isPaused));
+                NotificationCenter.PostNotification(new NotificationMessage(MESSAGE_APPPAUSE, this, isPaused));
             }
             get
             {
@@ -60,7 +60,7 @@ namespace HFFramework
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 networkCanUse = false;
-                NotificationCenter.self.PostNotification(new NotificationMessage(MESSAGE_NETWORK_UNUSE, this, null));
+                NotificationCenter.PostNotification(new NotificationMessage(MESSAGE_NETWORK_UNUSE, this, null));
             }
             else
             {

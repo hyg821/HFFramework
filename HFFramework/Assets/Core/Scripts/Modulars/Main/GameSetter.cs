@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class GameSetter : MonoBehaviour
+    public class GameSetter : MonoBehaviour,IManager
     {
         public static GameSetter Instance;
         /// <summary>

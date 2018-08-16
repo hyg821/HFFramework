@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace HFFramework
 {
-    public class GameLooper : MonoBehaviour
+    public class GameLooper : MonoBehaviour, IManager
     {
 
         public static GameLooper Instance;
@@ -45,7 +45,7 @@ namespace HFFramework
 
             for (int i = 0; i < updateList.Count; i++)
             {
-                updateList[i].MyUpdate(Time.deltaTime);
+                updateList[i].OnUpdate(Time.deltaTime);
             }
         }
 
@@ -53,7 +53,7 @@ namespace HFFramework
         {
             for (int i = 0; i < fixedUpdateList.Count; i++)
             {
-                fixedUpdateList[i].MyFixedUpdate(Time.deltaTime);
+                fixedUpdateList[i].OnFixedUpdate(Time.deltaTime);
             }
         }
 
@@ -61,7 +61,7 @@ namespace HFFramework
         {
             for (int i = 0; i < lateUpdateList.Count; i++)
             {
-                lateUpdateList[i].MyLateUpdate(Time.deltaTime);
+                lateUpdateList[i].OnLateUpdate(Time.deltaTime);
             }
         }
 

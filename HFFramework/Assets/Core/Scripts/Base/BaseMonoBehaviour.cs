@@ -87,7 +87,7 @@ namespace HFFramework
         /// </summary>
         public void SendNotificationMessage(int messageType, object obj)
         {
-            NotificationCenter.self.PostNotification(new NotificationMessage(messageType, null, obj));
+            NotificationCenter.PostNotification(new NotificationMessage(messageType, null, obj));
         }
 
         /// <summary>
@@ -223,21 +223,21 @@ namespace HFFramework
             if (!MessageTypeDic.TryGetValue(messageType, out temp))
             {
                 MessageTypeDic.Add(messageType, null);
-                NotificationCenter.self.AddObserver(receiver, messageType, callback);
+                NotificationCenter.Instance.AddObserver(receiver, messageType, callback);
             }
         }
 
-        public virtual void MyUpdate(float deltaTime)
+        public virtual void OnUpdate(float deltaTime)
         {
 
         }
 
-        public virtual void MyFixedUpdate(float deltaTime)
+        public virtual void OnFixedUpdate(float deltaTime)
         {
 
         }
 
-        public virtual void MyLateUpdate(float deltaTime)
+        public virtual void OnLateUpdate(float deltaTime)
         {
 
         }
@@ -284,11 +284,11 @@ namespace HFFramework
             IsNeedLateUpdate = false;
             IsNeedFixedUpdate = false;
 
-            if (messageTypeDic != null)
+            if (messageTypeDic != null&& NotificationCenter.Instance!=null)
             {
                 foreach (var item in messageTypeDic)
                 {
-                    NotificationCenter.self.RemoveObserver(this, item.Key);
+                    NotificationCenter.Instance.RemoveObserver(this, item.Key);
                 }
                 messageTypeDic.Clear();
                 messageTypeDic = null;

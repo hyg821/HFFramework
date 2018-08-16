@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class ObjectPoolManager : MonoBehaviour
+    /// <summary>
+    /// 对象池 只适合 继承IPoolInterface 接口的对象才能使用 （缺点）
+    /// </summary>
+    public class ObjectPoolManager : MonoBehaviour, IManager
     {
         public static ObjectPoolManager Instance;
 

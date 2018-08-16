@@ -1485,9 +1485,9 @@ namespace HotFix
             IsNeedFixedUpdate = true;
         }
 
-        public override void MyUpdate(float deltaTime)
+        public override void OnUpdate(float deltaTime)
         {
-            base.MyUpdate(deltaTime);
+            base.OnUpdate(deltaTime);
             if (_reloadData)
             {
                 // if the reload flag is true, then reload the data
@@ -1529,9 +1529,9 @@ namespace HotFix
             }
         }
 
-        public override void MyLateUpdate(float deltaTime)
+        public override void OnLateUpdate(float deltaTime)
         {
-            base.MyLateUpdate(deltaTime);
+            base.OnLateUpdate(deltaTime);
             if (_refreshActive)
             {
                 // if the refresh toggle is on, then

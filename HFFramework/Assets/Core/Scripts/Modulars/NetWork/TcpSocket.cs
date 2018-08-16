@@ -244,6 +244,8 @@ namespace HFFramework
                         //写入包体内容 
                         writer.Write(msg);
 
+                        writer.Flush();
+
                         //发送
                         socket.Send(stream.ToArray());
                     }

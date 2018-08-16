@@ -390,7 +390,7 @@ namespace HotFix
 
         public void Update(float deltaTime)
         {
-            MyUpdate(deltaTime);
+            OnUpdate(deltaTime);
         }
 
         bool isNeedFixedUpdate = false;
@@ -419,7 +419,7 @@ namespace HotFix
 
         public void FixedUpdate(float deltaTime)
         {
-            MyFixedUpdate(deltaTime);
+            OnFixedUpdate(deltaTime);
         }
 
         bool isNeedLateUpdate = false;
@@ -448,13 +448,13 @@ namespace HotFix
 
         public void LateUpdate(float deltaTime)
         {
-            MyLateUpdate(deltaTime);
+            OnLateUpdate(deltaTime);
         }
 
         /// <summary>
         ///  如果需要 开启update 方法 只需要设置 IsNeedLateUpdate=true 并且重载M_Update 方法
         /// </summary>
-        public virtual void MyUpdate(float deltaTime)
+        public virtual void OnUpdate(float deltaTime)
         {
 
         }
@@ -462,7 +462,7 @@ namespace HotFix
         /// <summary>
         ///  同理 update 
         /// </summary>
-        public virtual void MyFixedUpdate(float deltaTime)
+        public virtual void OnFixedUpdate(float deltaTime)
         {
 
         }
@@ -470,7 +470,7 @@ namespace HotFix
         /// <summary>
         /// 同理 update
         /// </summary>
-        public virtual void MyLateUpdate(float deltaTime)
+        public virtual void OnLateUpdate(float deltaTime)
         {
 
         }

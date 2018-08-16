@@ -64,21 +64,21 @@ public class Demo : BaseMonoBehaviour
         IsNeedLateUpdate = !IsNeedLateUpdate;
     }
 
-    public override void MyUpdate(float f)
+    public override void OnUpdate(float f)
     {
-        base.MyUpdate(f);
+        base.OnUpdate(f);
         Debug.Log("MyUpdate");
     }
 
-    public override void MyFixedUpdate(float f)
+    public override void OnFixedUpdate(float f)
     {
-        base.MyFixedUpdate(f);
+        base.OnFixedUpdate(f);
         Debug.Log("MyFixedUpdate");
     }
 
-    public override void MyLateUpdate(float f)
+    public override void OnLateUpdate(float f)
     {
-        base.MyLateUpdate(f);
+        base.OnLateUpdate(f);
         Debug.Log("MyLateUpdate");
     }
 
@@ -269,7 +269,7 @@ public class Demo : BaseMonoBehaviour
 
     private void Update()
     {
-        正反序列化ProtoBuf();
+        //正反序列化ProtoBuf();
     }
 
     public void 测试序列化()

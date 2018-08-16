@@ -5,11 +5,11 @@ using System.Collections;
 namespace HFFramework
 {
     /// <summary>
-    ///  HLFramework 框架唯一入口 只能初始化一次
+    ///  HFFramework 框架唯一入口 只能初始化一次
     /// </summary>
     [DefaultExecutionOrder(0)]
     [DisallowMultipleComponent]
-    public class HFGlobal : MonoBehaviour
+    public class HFGlobal : MonoBehaviour, IManager
     {
 
         public static HFGlobal Instance;
@@ -67,7 +67,7 @@ namespace HFFramework
                 gameObject.name = "HFGlobal";
                 DontDestroyOnLoad(gameObject);
 
-                Clean();
+                Clear();
 
                 //添加游戏工厂
                 gameObject.AddComponent<GameFactory>();
@@ -127,17 +127,18 @@ namespace HFFramework
             }
         }
 
-        public void Clean()
+        public void Clear()
         {
             Resources.UnloadUnusedAssets();
             GC.Collect();
         }
 
-        public void OnApplicationQuit()
+        public void DestroyManager()
         {
-            GameEnvironment.Instance = null;
+            GameFactory.Instance.DestroyManager();
+            GameEnvironment.Instance.DestroyManager();
             HAResourceManager.Instance.DestroyManager();
-            NotificationCenter.self.DestroyManager();
+            NotificationCenter.Instance.DestroyManager();
             HFSocketManager.Instance.DestroyManager();
             AudioManager.Instance.DestroyManager();
             UIManager.Instance.DestroyManager();
@@ -146,7 +147,17 @@ namespace HFFramework
             ObjectPoolManager.Instance.DestroyManager();
             AppDomainManager.Instance.DestroyManager();
             GameLooper.Instance.DestroyManager();
+            GameTimer.Instance.DestroyManager();
+            GameSetter.Instance.DestroyManager();
             GameStateChecker.Instance.DestroyManager();
+            UtilsManager.Instance.DestroyManager();
+            GameFlowController.Instance.DestroyManager();
+            Clear();
+        }
+
+        public void OnApplicationQuit()
+        {
+            DestroyManager();
             Debug.Log("应用退出");
         }
     }

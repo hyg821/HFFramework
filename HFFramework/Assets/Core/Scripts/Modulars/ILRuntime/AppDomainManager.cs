@@ -14,7 +14,7 @@ using ILRuntime.CLR.TypeSystem;
 
 namespace HFFramework
 {
-    public class AppDomainManager : MonoBehaviour
+    public class AppDomainManager : MonoBehaviour, IManager
     {
 
         public string updateMethodName = "Update";

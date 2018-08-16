@@ -5,7 +5,7 @@ using LitJson;
 
 namespace HFFramework
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager : MonoBehaviour, IManager
     {
         /// <summary>
         ///  UI根物体名字

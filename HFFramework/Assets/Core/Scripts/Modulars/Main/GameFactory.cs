@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,14 +31,22 @@ namespace HFFramework
             return t1;
         }
 
-        public static T AddComponent<T>(GameObject obj) where T : MonoBehaviour
+        public static T ReflectCreate<T>()
         {
-            return  obj.AddComponent<T>();
+            return Activator.CreateInstance<T>();
         }
 
-        public static T GetComponent<T>(GameObject obj) where T : MonoBehaviour
+        /// <summary>
+        ///  普通类 只需要命名空间.类名即可 
+        ///  Unity的对象 需要 UnityEngine.GameObject,UnityEngine 类似这样
+        /// </summary>
+        /// <param name="nameSpace"></param>
+        /// <param name="className"></param>
+        /// <returns></returns>
+        public static object ReflectCreate(string name)
         {
-            return obj.GetComponent<T>();
+            Type t = Type.GetType(name);
+            return Activator.CreateInstance(t);
         }
 
         public void DestroyManager()

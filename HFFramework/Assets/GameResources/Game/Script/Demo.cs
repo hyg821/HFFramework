@@ -285,6 +285,15 @@ public class Demo : BaseMonoBehaviour
         steam.Dispose();
     }
 
+    public void 反射创建()
+    {
+        GameObject obj = GameFactory.ReflectCreate<GameObject>();
+        obj.name = "reflect";
+
+        GameObject obj1 = GameFactory.ReflectCreate("UnityEngine.GameObject,UnityEngine") as GameObject;
+        obj1.name = "reflect1";
+    }
+
 
 
 

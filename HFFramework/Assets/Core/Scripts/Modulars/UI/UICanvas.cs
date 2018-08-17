@@ -51,9 +51,9 @@ namespace HFFramework
         /// </summary>
         public CanvasScaler canvasScaler;
 
-        public override void MyAwake()
+        public override void OnAwake()
         {
-            base.MyAwake();
+            base.OnAwake();
 
             canvas = gameObject.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceCamera;

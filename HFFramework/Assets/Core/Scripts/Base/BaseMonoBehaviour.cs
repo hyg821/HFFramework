@@ -71,10 +71,10 @@ namespace HFFramework
 
         public void Awake()
         {
-            MyAwake();
+            OnAwake();
         }
 
-        public virtual void MyAwake()
+        public virtual void OnAwake()
         {
             myTransform = gameObject.transform;
             myInstanceID = gameObject.GetInstanceID();

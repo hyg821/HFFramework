@@ -11,9 +11,9 @@ namespace HFFramework
         /// </summary>
         public Dictionary<string, List<UIController>> cacheDic = new Dictionary<string, List<UIController> >();
 
-        public override void MyAwake()
+        public override void OnAwake()
         {
-            base.MyAwake();
+            base.OnAwake();
             myTransform.position = Vector3.one;
             myTransform.rotation = Quaternion.identity;
             IsShow = false;

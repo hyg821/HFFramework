@@ -6,9 +6,9 @@ using System;
 
 public class TestController : UIController {
 
-    public override void MyAwake()
+    public override void OnAwake()
     {
-        base.MyAwake();
+        base.OnAwake();
     }
 
     public override void DoHideAnimation(Action callback)

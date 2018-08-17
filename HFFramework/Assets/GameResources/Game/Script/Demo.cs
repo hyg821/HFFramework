@@ -25,7 +25,7 @@ public class Demo : BaseMonoBehaviour
 
     public void AssetBundleTest()
     {
-        GameObject prefab = HAResourceManager.Instance.GetGameObject("Prefab", "Cube");
+        GameObject prefab = HAResourceManager.Instance.GetPrefab("Prefab", "Cube");
         GameObject.Instantiate(prefab);
 
         AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile("Prefab");

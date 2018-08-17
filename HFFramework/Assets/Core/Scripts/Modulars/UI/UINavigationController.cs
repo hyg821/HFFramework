@@ -18,9 +18,9 @@ namespace HFFramework
         /// </summary>
         public List<UIController> controllerList = new List<UIController>();
 
-        public override void MyAwake()
+        public override void OnAwake()
         {
-            base.MyAwake();
+            base.OnAwake();
             name = UINavigation;
             cachePool = UIManager.Instance.cachePool;
         }

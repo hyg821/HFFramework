@@ -8,9 +8,9 @@ namespace HFFramework
     {
         public new Camera camera;
 
-        public override void MyAwake()
+        public override void OnAwake()
         {
-            base.MyAwake();
+            base.OnAwake();
             camera = gameObject.GetComponent<Camera>();
         }
 

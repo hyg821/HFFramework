@@ -144,10 +144,10 @@ namespace HFFramework
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public GameObject GetGameObject(string packageName, string abName)
+        public GameObject GetPrefab(string packageName, string assetName)
         {
             AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-            GameObject g = ab.LoadAssetWithCache<GameObject>(abName);
+            GameObject g = ab.LoadAssetWithCache<GameObject>(assetName);
             return g;
         }
 

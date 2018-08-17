@@ -14,9 +14,9 @@ namespace HFFramework
     {
         public UIConfig config;
 
-        public override void MyAwake()
+        public override void OnAwake()
         {
-            base.MyAwake();
+            base.OnAwake();
         }
 
         public virtual void DoShowAnimation(Action callback)

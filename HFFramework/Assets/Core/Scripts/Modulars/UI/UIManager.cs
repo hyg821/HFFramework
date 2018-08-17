@@ -88,9 +88,8 @@ namespace HFFramework
             if (controller==null)
             {
                 UIConfig config = configDic[type];
-                GameObject prefab = HAResourceManager.Instance.GetGameObject(config.AssetbundleName, config.AssetName);
-                GameObject obj = GameObject.Instantiate(prefab);
-                controller = obj.GetComponent<T>();
+                GameObject obj;
+                controller  =GameFactory.Create<T>(config.AssetbundleName, config.AssetName,out obj);     
                 controller.config = config;
                 if (controller==null)
                 {

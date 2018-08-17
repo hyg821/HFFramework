@@ -6,9 +6,9 @@ namespace HFFramework
 {
     public class UIRoot : BaseMonoBehaviour
     {
-        public override void MyAwake()
+        public override void OnAwake()
         {
-            base.MyAwake();
+            base.OnAwake();
             myTransform.position = Vector3.zero;
             transform.rotation = Quaternion.identity;
         }

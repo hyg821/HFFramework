@@ -247,9 +247,9 @@ namespace HFFramework
 
         public int audioIndex = 0;
 
-        public override void MyAwake()
+        public override void OnAwake()
         {
-            base.MyAwake();
+            base.OnAwake();
             audioSource = gameObject.GetComponent<AudioSource>();
             if (audioSource == null)
             {

@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class LocalizationConfig_CN
@@ -22,20 +22,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigLocalizationConfig_CN
+    public class ConfigLocalizationConfig_CN
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigLocalizationConfig_CN instance;
-        public static HFConfigLocalizationConfig_CN Instance
+        private static ConfigLocalizationConfig_CN instance;
+        public static ConfigLocalizationConfig_CN Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigLocalizationConfig_CN ();
+                     instance = new ConfigLocalizationConfig_CN ();
                 } 
                 return instance;
             } 

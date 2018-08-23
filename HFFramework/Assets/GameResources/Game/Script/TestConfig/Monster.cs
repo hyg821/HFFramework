@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class Monster
@@ -110,20 +110,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigMonster
+    public class ConfigMonster
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigMonster instance;
-        public static HFConfigMonster Instance
+        private static ConfigMonster instance;
+        public static ConfigMonster Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigMonster ();
+                     instance = new ConfigMonster ();
                 } 
                 return instance;
             } 

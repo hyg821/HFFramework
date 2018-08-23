@@ -25,6 +25,8 @@ namespace  HFFramework
     {
         public static GameEnvironment Instance;
 
+        public static string HotFixDLLName = "HFFrameworkHotFix";
+
         /// <summary>
         ///  运行环境
         /// </summary>

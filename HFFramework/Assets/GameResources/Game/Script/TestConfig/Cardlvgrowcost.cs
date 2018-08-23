@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class Cardlvgrowcost
@@ -26,20 +26,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigCardlvgrowcost
+    public class ConfigCardlvgrowcost
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigCardlvgrowcost instance;
-        public static HFConfigCardlvgrowcost Instance
+        private static ConfigCardlvgrowcost instance;
+        public static ConfigCardlvgrowcost Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigCardlvgrowcost ();
+                     instance = new ConfigCardlvgrowcost ();
                 } 
                 return instance;
             } 

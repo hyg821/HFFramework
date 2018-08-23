@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class HangingCheckPoint
@@ -106,20 +106,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigHangingCheckPoint
+    public class ConfigHangingCheckPoint
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigHangingCheckPoint instance;
-        public static HFConfigHangingCheckPoint Instance
+        private static ConfigHangingCheckPoint instance;
+        public static ConfigHangingCheckPoint Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigHangingCheckPoint ();
+                     instance = new ConfigHangingCheckPoint ();
                 } 
                 return instance;
             } 

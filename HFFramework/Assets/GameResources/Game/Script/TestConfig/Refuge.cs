@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class Refuge
@@ -58,20 +58,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigRefuge
+    public class ConfigRefuge
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigRefuge instance;
-        public static HFConfigRefuge Instance
+        private static ConfigRefuge instance;
+        public static ConfigRefuge Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigRefuge ();
+                     instance = new ConfigRefuge ();
                 } 
                 return instance;
             } 

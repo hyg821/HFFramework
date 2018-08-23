@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class Item
@@ -174,20 +174,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigItem
+    public class ConfigItem
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigItem instance;
-        public static HFConfigItem Instance
+        private static ConfigItem instance;
+        public static ConfigItem Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigItem ();
+                     instance = new ConfigItem ();
                 } 
                 return instance;
             } 

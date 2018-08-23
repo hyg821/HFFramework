@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class RoleBasics
@@ -170,20 +170,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigRoleBasics
+    public class ConfigRoleBasics
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigRoleBasics instance;
-        public static HFConfigRoleBasics Instance
+        private static ConfigRoleBasics instance;
+        public static ConfigRoleBasics Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigRoleBasics ();
+                     instance = new ConfigRoleBasics ();
                 } 
                 return instance;
             } 

@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class Composite
@@ -50,20 +50,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigComposite
+    public class ConfigComposite
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigComposite instance;
-        public static HFConfigComposite Instance
+        private static ConfigComposite instance;
+        public static ConfigComposite Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigComposite ();
+                     instance = new ConfigComposite ();
                 } 
                 return instance;
             } 

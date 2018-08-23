@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class Score
@@ -26,20 +26,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigScore
+    public class ConfigScore
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigScore instance;
-        public static HFConfigScore Instance
+        private static ConfigScore instance;
+        public static ConfigScore Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigScore ();
+                     instance = new ConfigScore ();
                 } 
                 return instance;
             } 

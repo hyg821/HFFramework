@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class BuffEffect
@@ -94,20 +94,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigBuffEffect
+    public class ConfigBuffEffect
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigBuffEffect instance;
-        public static HFConfigBuffEffect Instance
+        private static ConfigBuffEffect instance;
+        public static ConfigBuffEffect Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigBuffEffect ();
+                     instance = new ConfigBuffEffect ();
                 } 
                 return instance;
             } 

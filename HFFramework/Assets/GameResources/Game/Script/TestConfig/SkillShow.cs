@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class SkillShow
@@ -130,20 +130,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigSkillShow
+    public class ConfigSkillShow
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigSkillShow instance;
-        public static HFConfigSkillShow Instance
+        private static ConfigSkillShow instance;
+        public static ConfigSkillShow Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigSkillShow ();
+                     instance = new ConfigSkillShow ();
                 } 
                 return instance;
             } 

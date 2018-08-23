@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class DamDef
@@ -26,20 +26,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigDamDef
+    public class ConfigDamDef
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigDamDef instance;
-        public static HFConfigDamDef Instance
+        private static ConfigDamDef instance;
+        public static ConfigDamDef Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigDamDef ();
+                     instance = new ConfigDamDef ();
                 } 
                 return instance;
             } 

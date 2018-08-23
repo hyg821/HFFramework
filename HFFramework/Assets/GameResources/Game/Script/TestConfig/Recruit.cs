@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class Recruit
@@ -82,20 +82,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigRecruit
+    public class ConfigRecruit
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigRecruit instance;
-        public static HFConfigRecruit Instance
+        private static ConfigRecruit instance;
+        public static ConfigRecruit Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigRecruit ();
+                     instance = new ConfigRecruit ();
                 } 
                 return instance;
             } 

@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class UI
@@ -50,20 +50,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigUI
+    public class ConfigUI
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigUI instance;
-        public static HFConfigUI Instance
+        private static ConfigUI instance;
+        public static ConfigUI Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigUI ();
+                     instance = new ConfigUI ();
                 } 
                 return instance;
             } 

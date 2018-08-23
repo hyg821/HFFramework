@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class GuildMissionAndTeamLv
@@ -22,20 +22,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigGuildMissionAndTeamLv
+    public class ConfigGuildMissionAndTeamLv
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigGuildMissionAndTeamLv instance;
-        public static HFConfigGuildMissionAndTeamLv Instance
+        private static ConfigGuildMissionAndTeamLv instance;
+        public static ConfigGuildMissionAndTeamLv Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigGuildMissionAndTeamLv ();
+                     instance = new ConfigGuildMissionAndTeamLv ();
                 } 
                 return instance;
             } 

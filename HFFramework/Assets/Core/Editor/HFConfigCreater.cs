@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using System;
 
-namespace HFConfig
+namespace Config
 {
     public class HFConfigCreater
     {
@@ -51,13 +51,6 @@ namespace HFConfig
             CreateConfigManager(fileList);
 
             AssetDatabase.Refresh();
-
-        }
-
-        [MenuItem("游戏辅助工具/配置文件/生成解析 .proto文件")]
-        public static void CreateProtoByConfig()
-        {
-
         }
 
 
@@ -67,10 +60,9 @@ namespace HFConfig
             string temp1 = temp0.Substring(0,1);
             string temp2 = temp0.Substring(1, temp0.Length-1);
 
-     
             string _class = temp1.ToUpper()+temp2;
-            string _table = "HFConfig" + _class;
-            string _namespace = "HFConfig";
+            string _table = "Config" + _class;
+            string _namespace = "Config";
             string _content = "";
             int _column = 0;
 
@@ -95,8 +87,6 @@ namespace HFConfig
             propertyList = propertys.Split(split, StringSplitOptions.None);
 
             typeList = types.Split(split, StringSplitOptions.None);
-
-
 
             StringBuilder builder = new StringBuilder();
             builder.AppendLine(@"using System.Collections;");
@@ -138,10 +128,9 @@ namespace HFConfig
 
             builder.AppendLine();
 
-            builder.AppendLine(@"    [System.Serializable]");
-            builder.AppendLine(@"    public class " + _table);
+            builder.AppendLine("    [System.Serializable]");
+            builder.AppendLine("    public class " + _table);
             builder.AppendLine("    { ");
-            builder.AppendLine();
             builder.AppendLine("        public static string[] split = new string[] { " + "\"" + "," + "\"" + " };");
             builder.AppendLine("        public static string[] splitArray = new string[] { " + "\"" + ";" + "\"" +  ", "  + "\"" + "[" + "\""+ ", " + "\"" + "]" + "\"" + " };");
             builder.AppendLine();
@@ -273,7 +262,7 @@ namespace HFConfig
 
         public static void CreateConfigManager(List<FileInfo> files)
         {
-            string _namespace = "HFConfig";
+            string _namespace = "Config";
             string _manager = "HFConfigManager";
             StringBuilder builder = new StringBuilder();
             builder.AppendLine(@"using System.Collections;");
@@ -310,7 +299,7 @@ namespace HFConfig
                 string temp1 = temp0.Substring(0, 1);
                 string temp2 = temp0.Substring(1, temp0.Length - 1);
                 string _class = temp1.ToUpper() + temp2;
-                string _table = "HFConfig" + _class;
+                string _table = "Config" + _class;
 
                 builder.AppendLine("            "+_table+".Instance.StartAnalysis();");
             }
@@ -327,9 +316,7 @@ namespace HFConfig
             {
                 f.Write(b, 0, b.Length);
             }
-
         }
-
     }
 }
 

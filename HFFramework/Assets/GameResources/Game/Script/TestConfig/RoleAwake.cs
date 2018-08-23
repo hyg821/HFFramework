@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class RoleAwake
@@ -46,20 +46,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigRoleAwake
+    public class ConfigRoleAwake
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigRoleAwake instance;
-        public static HFConfigRoleAwake Instance
+        private static ConfigRoleAwake instance;
+        public static ConfigRoleAwake Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigRoleAwake ();
+                     instance = new ConfigRoleAwake ();
                 } 
                 return instance;
             } 

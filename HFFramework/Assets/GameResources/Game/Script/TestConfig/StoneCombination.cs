@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class StoneCombination
@@ -50,20 +50,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigStoneCombination
+    public class ConfigStoneCombination
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigStoneCombination instance;
-        public static HFConfigStoneCombination Instance
+        private static ConfigStoneCombination instance;
+        public static ConfigStoneCombination Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigStoneCombination ();
+                     instance = new ConfigStoneCombination ();
                 } 
                 return instance;
             } 

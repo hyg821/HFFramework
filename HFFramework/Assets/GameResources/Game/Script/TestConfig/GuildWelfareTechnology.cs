@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class GuildWelfareTechnology
@@ -34,20 +34,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigGuildWelfareTechnology
+    public class ConfigGuildWelfareTechnology
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigGuildWelfareTechnology instance;
-        public static HFConfigGuildWelfareTechnology Instance
+        private static ConfigGuildWelfareTechnology instance;
+        public static ConfigGuildWelfareTechnology Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigGuildWelfareTechnology ();
+                     instance = new ConfigGuildWelfareTechnology ();
                 } 
                 return instance;
             } 

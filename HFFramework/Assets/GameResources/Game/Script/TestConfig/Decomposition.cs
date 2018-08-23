@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class Decomposition
@@ -34,20 +34,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigDecomposition
+    public class ConfigDecomposition
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigDecomposition instance;
-        public static HFConfigDecomposition Instance
+        private static ConfigDecomposition instance;
+        public static ConfigDecomposition Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigDecomposition ();
+                     instance = new ConfigDecomposition ();
                 } 
                 return instance;
             } 

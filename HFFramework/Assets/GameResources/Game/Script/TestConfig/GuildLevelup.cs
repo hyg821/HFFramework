@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using HFFramework;
 
-namespace HFConfig
+namespace Config
 { 
     [System.Serializable]
     public class GuildLevelup
@@ -62,20 +62,19 @@ namespace HFConfig
     }
 
     [System.Serializable]
-    public class HFConfigGuildLevelup
+    public class ConfigGuildLevelup
     { 
-
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static HFConfigGuildLevelup instance;
-        public static HFConfigGuildLevelup Instance
+        private static ConfigGuildLevelup instance;
+        public static ConfigGuildLevelup Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigGuildLevelup ();
+                     instance = new ConfigGuildLevelup ();
                 } 
                 return instance;
             } 

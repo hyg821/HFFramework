@@ -4,7 +4,7 @@ using UnityEngine;
 using HFFramework;
 using System.Reflection;
 using System;
-using HFConfig;
+using Config;
 using Centersdk.Protobuf;
 using Google.Protobuf;
 using System.IO;
@@ -202,13 +202,14 @@ public class Demo : BaseMonoBehaviour
     {
 
         HFConfigManager.Instance.Init();
-        foreach (var item in HFConfigItem.Instance.dic)
+
+        foreach (var item in ConfigItem.Instance.dic)
         {
             print(item.Value.name+"   "+ item.Value.stoneLv + "   " + item.Value.isUse + "   " + item.Value.composite2Id);
             print("");
         }
 
-        HFConfig.Item it = HFConfigItem.Instance.Get(10001);
+        Config.Item it = ConfigItem.Instance.Get(10001);
         for (int i = 0; i < it.type.Count; i++)
         {
             print("AAAAAAAAAA    =" + it.type[i]);
@@ -276,12 +277,12 @@ public class Demo : BaseMonoBehaviour
     {
         FileStream steam = new FileStream(Application.dataPath + "/xxx", FileMode.Create);
         BinaryFormatter formatter = new BinaryFormatter();
-        formatter.Serialize(steam, HFConfigItem.Instance);
+        formatter.Serialize(steam, ConfigItem.Instance);
         steam.Dispose();
 
         steam = new FileStream(Application.dataPath + "/xxx", FileMode.Open);
         formatter = new BinaryFormatter();
-        HFConfigItem x = formatter.Deserialize(steam) as HFConfigItem;
+        ConfigItem x = formatter.Deserialize(steam) as ConfigItem;
         steam.Dispose();
     }
 

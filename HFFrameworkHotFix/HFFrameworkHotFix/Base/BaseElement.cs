@@ -506,7 +506,7 @@ namespace HotFix
         /// </summary>
         public void SendNotificationMessage(int messageType, object obj)
         {
-            NotificationCenter.self.PostNotification(new NotificationMessage(messageType, null, obj));
+            NotificationCenter.PostNotification(new NotificationMessage(messageType, null, obj));
         }
 
 
@@ -528,7 +528,7 @@ namespace HotFix
             if (!MessageTypeDic.ContainsKey(messageType))
             {
                 MessageTypeDic.Add(messageType, null);
-                NotificationCenter.self.AddObserver(receiver, messageType, callback);
+                NotificationCenter.Instance.AddObserver(receiver, messageType, callback);
             }
         }
 
@@ -580,7 +580,7 @@ namespace HotFix
             {
                 foreach (var item in messageTypeDic)
                 {
-                    NotificationCenter.self.RemoveObserver(this, item.Key);
+                    NotificationCenter.Instance.RemoveObserver(this, item.Key);
                 }
                 messageTypeDic.Clear();
                 messageTypeDic = null;

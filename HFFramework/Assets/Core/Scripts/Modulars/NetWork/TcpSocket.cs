@@ -15,7 +15,7 @@ namespace HFFramework
     ///  说明  和后端的通讯 发送逻辑 和 解析逻辑
     ///   一个完整的数据  =  数据头  （8字节 4+4)   +  数据体 （proto包字节）
     ///  数据头 =  数据体字段长度4字节 + 数据体类型字段长度4字节
-    ///  数据体 =  proto包字节 + 数据体冗余字段长度8字节 
+    ///  数据体 =  proto包字节
     /// </summary>
     public class TcpSocket
     {
@@ -247,7 +247,7 @@ namespace HFFramework
                         writer.Flush();
 
                         //发送
-                        socket.Send(stream.ToArray());
+                        socket.Send(stream.GetBuffer());
                     }
                 }
             }

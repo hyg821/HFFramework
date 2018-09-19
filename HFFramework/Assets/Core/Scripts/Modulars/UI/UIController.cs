@@ -41,6 +41,11 @@ namespace HFFramework
             IsShow = false;
         }
 
+        public virtual void Refresh(string tag,object value)
+        {
+
+        }
+
         public override void Destroy()
         {
             base.Destroy();

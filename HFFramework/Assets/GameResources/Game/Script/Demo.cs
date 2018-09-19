@@ -9,6 +9,8 @@ using Centersdk.Protobuf;
 using Google.Protobuf;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
+using System.Threading;
 
 public class Demo : BaseMonoBehaviour
 {
@@ -294,6 +296,26 @@ public class Demo : BaseMonoBehaviour
         GameObject obj1 = GameFactory.ReflectCreate("UnityEngine.GameObject,UnityEngine") as GameObject;
         obj1.name = "reflect1";
     }
+
+    public  async void Task测试()
+    {
+        print("测试读取开头");
+        string str = await 测试读取();
+        print("测试中间" + str);
+        print("测试读取结束");
+    }
+
+    public async Task<string> 测试读取()
+    {
+        return await Task.Run<string>(async delegate ()
+        {
+            await Task.Delay(1000);
+            print("延迟1秒");
+            print("当前线程id" + Thread.CurrentThread.ManagedThreadId);
+            return "hyg";
+        });        
+    }
+
 
 
 

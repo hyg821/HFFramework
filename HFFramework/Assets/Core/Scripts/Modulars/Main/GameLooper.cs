@@ -12,17 +12,17 @@ namespace HFFramework
         /// <summary>
         ///  需要update的 列表
         /// </summary>
-        private List<BaseMonoBehaviour> updateList = new List<BaseMonoBehaviour>(64);
+        private List<BaseMonoBehaviour> updateList = new List<BaseMonoBehaviour>();
 
         /// <summary>
         ///  需要fixedUpdate的 列表
         /// </summary>
-        private List<BaseMonoBehaviour> fixedUpdateList = new List<BaseMonoBehaviour>(64);
+        private List<BaseMonoBehaviour> fixedUpdateList = new List<BaseMonoBehaviour>();
 
         /// <summary>
         ///  需要lateUpdate的 列表
         /// </summary>
-        private List<BaseMonoBehaviour> lateUpdateList = new List<BaseMonoBehaviour>(64);
+        private List<BaseMonoBehaviour> lateUpdateList = new List<BaseMonoBehaviour>();
 
         /// <summary>
         ///  event队列

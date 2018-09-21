@@ -130,7 +130,7 @@ public class Demo : BaseMonoBehaviour
 
     public void 写入一个文件()
     {
-        UtilsManager.CreateFile("HYG.txt", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        UtilsManager.WriteFile("HYG.txt", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
 
     public void 同步读取一个文件()

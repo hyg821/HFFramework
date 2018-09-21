@@ -50,20 +50,26 @@ namespace  HFFramework
         /// <summary>
         ///  是否开启Log
         /// </summary>
-        public bool log;
+        public bool isOpenLog;
+
+        /// <summary>
+        ///  是否开启本地log 
+        /// </summary>
+        public bool isOpenLoaclLog;
 
         public void Awake()
         {
             Instance = this;
-            AddPathManager();
+            AddHelpManager();
             SetRuntimeEnvironment(GameEnvironmentEnum.Develop);
             SetAppVersion();
             SetResourceVersion("0.0.0");
             SwitchPlatform();
             OpenLog(true);
+            OpenLocalLog(true);
         }
 
-        public void AddPathManager()
+        public void AddHelpManager()
         {
             gameObject.AddComponent<PathManager>();
         }
@@ -121,10 +127,24 @@ namespace  HFFramework
         /// </summary>
         /// <param name="b"></param>
         /// <returns></returns>
-        public bool OpenLog(bool b)
+        public void OpenLog(bool b)
         {
-            log = b;
-            return log;
+            isOpenLog = b;
+        }
+
+        public void OpenLocalLog(bool b)
+        {
+            isOpenLoaclLog = b;
+            GameLocalLogger log = gameObject.GetComponent<GameLocalLogger>();
+            if (isOpenLoaclLog == true && log == null)
+            {
+                log = gameObject.AddComponent<GameLocalLogger>();
+            }
+            else if (log != null && isOpenLoaclLog == false)
+            {
+                GameObject.Destroy(log);
+                log = null;
+            }
         }
 
         public void DestroyManager()

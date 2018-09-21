@@ -3,12 +3,16 @@ using System.Text;
 using System.IO;
 using System;
 using System.Collections;
+using System.Threading;
 
 namespace HFFramework
 {
     public class UtilsManager : MonoBehaviour,IManager
     {
         public const string customPath = "GameData";
+
+        //读写锁
+        private static ReaderWriterLockSlim LogWriteLock = new ReaderWriterLockSlim();
 
         public static UtilsManager Instance;
 
@@ -59,13 +63,27 @@ namespace HFFramework
         /// </summary>
         /// <param name="folderName"> 文件夹名字 </param>
         /// <param name="isRelative"> 是否是相对于RootPath 的相对路径 </param>
-        public static void CreateFolder(string folderName, bool isRelative= true)
+        public static bool CreateFolder(string folderName, bool isRelative= true)
         {
             string path = GetPath(folderName, isRelative);
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
+                return true;
             }
+            return false;
+        }
+
+        /// <summary>
+        ///  获取一个文件夹下 文件个数
+        /// </summary>
+        /// <param name="folderName"></param>
+        /// <param name="isRelative"></param>
+        /// <returns></returns>
+        public static int GetFileCountInFolder(string folderName, bool isRelative = true)
+        {
+            DirectoryInfo logFolder = new DirectoryInfo(UtilsManager.GetPath(folderName, true));
+            return logFolder.GetFiles().Length;
         }
 
         /// <summary>
@@ -88,14 +106,17 @@ namespace HFFramework
         /// <param name="folderName">文件路径</param>
         /// <param name="content">内容</param>
         /// <param name="isRelative"></param>
-        public static void CreateFile(string folderName, string content ,bool isRelative = true)
+        public static void WriteFile(string folderName, string content , FileMode mode = FileMode.Create, bool isRelative = true)
         {
             string path = GetPath(folderName, isRelative);
             byte[] b = Encoding.UTF8.GetBytes(content);
-            using (FileStream f = new FileStream(path, FileMode.Create))
+            LogWriteLock.EnterWriteLock();
+            using (FileStream f = new FileStream(path, mode))
             {
                 f.Write(b, 0, b.Length);
+                f.Flush();
             }
+            LogWriteLock.ExitWriteLock();
         }
 
         /// <summary>
@@ -145,7 +166,7 @@ namespace HFFramework
             }
         }
 
-        private static string GetPath(string folderName, bool isRelative)
+        public static string GetPath(string folderName, bool isRelative)
         {
             string path = "";
             if (isRelative)

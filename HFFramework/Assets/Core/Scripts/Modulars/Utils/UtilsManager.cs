@@ -50,7 +50,7 @@ namespace HFFramework
         /// </summary>
         public void CreateCustomFilePathFolder()
         {
-            RootPath = PathManager.self.PersistentDataPath + customPath;
+            RootPath = PathManager.Instance.PersistentDataPath + customPath;
             HFLog.C("自定义读写根目录 " + RootPath);
             if (!Directory.Exists(RootPath))
             {

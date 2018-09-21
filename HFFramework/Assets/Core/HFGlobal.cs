@@ -77,7 +77,7 @@ namespace HFFramework
 
                 //资源加载
                 resourcesManager = GameFactory.Create<HAResourceManager>("ResourcesManager", true);
-                resourcesManager.InitWithRootPath(PathManager.self.PersistentDataPath + "AssetBundles", PathManager.self.StreamingAssetsPath + "AssetBundles", "AssetBundles");
+                resourcesManager.InitWithRootPath(PathManager.Instance.PersistentDataPath + "AssetBundles", PathManager.Instance.StreamingAssetsPath + "AssetBundles", "AssetBundles");
 
                 //2通知中心
                 notificationCenter = GameFactory.Create<NotificationCenter>("NotificationCenter", true);

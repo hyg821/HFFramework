@@ -8,7 +8,7 @@ namespace HFFramework
     /// </summary>
     public class PathManager:MonoBehaviour
     {
-        public static PathManager self;
+        public static PathManager Instance;
 
         public string PersistentDataPath;
 
@@ -16,7 +16,7 @@ namespace HFFramework
 
         public void Awake()
         {
-            self = this;
+            Instance = this;
             PersistentDataPath = SetPersistentDataPath();
             StreamingAssetsPath = SetStreamingAssetsPath();
         }

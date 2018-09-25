@@ -67,10 +67,9 @@ namespace HFFramework
 
         private Dictionary<long, List<ObserverDelegate>> messagePool = new Dictionary<long, List<ObserverDelegate>>();
 
-        public void Awake()
+        private void Awake()
         {
             Instance = this;
-            Instance.messagePool = new Dictionary<long, List<ObserverDelegate>>();
         }
 
         /// <summary>

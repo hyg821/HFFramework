@@ -167,7 +167,7 @@ namespace BestHTTP.WebSocket
         public WebSocket(Uri uri)
             :this(uri, string.Empty, string.Empty)
         {
-#if (!UNITY_WEBGL || UNITY_EDITOR)
+#if (!UNITY_WEBGL || UNITY_EDITOR) && !BESTHTTP_DISABLE_GZIP
             this.Extensions = new IExtension[] { new PerMessageCompression(/*compression level: */           Decompression.Zlib.CompressionLevel.Default,
                                                                            /*clientNoContextTakeover: */     false,
                                                                            /*serverNoContextTakeover: */     false,

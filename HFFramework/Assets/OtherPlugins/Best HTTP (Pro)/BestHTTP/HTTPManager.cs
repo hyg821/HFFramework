@@ -173,6 +173,15 @@ namespace BestHTTP
         public static bool UseAlternateSSLDefaultValue { get; set; }
 #endif
 
+#if !NETFX_CORE && !UNITY_WP8
+        public static Func<HTTPRequest, System.Security.Cryptography.X509Certificates.X509Certificate, System.Security.Cryptography.X509Certificates.X509Chain, bool> DefaultCertificationValidator { get; set; }
+#endif
+
+        /// <summary>
+        /// Setting this option to true, the processing connection will set the TCP NoDelay option to send out data as soon as it can.
+        /// </summary>
+        public static bool TryToMinimizeTCPLatency = false;
+
         /// <summary>
         /// On most systems the maximum length of a path is around 255 character. If a cache entity's path is longer than this value it doesn't get cached. There no platform independent API to query the exact value on the current system, but it's
         /// exposed here and can be overridden. It's default value is 255.
@@ -184,7 +193,7 @@ namespace BestHTTP
         #region Manager variables
 
         /// <summary>
-        /// All connection has a reference in this Dictionary untill it's removed completly.
+        /// All connection has a reference in this Dictionary until it's removed completely.
         /// </summary>
         private static Dictionary<string, List<ConnectionBase>> Connections = new Dictionary<string, List<ConnectionBase>>();
 
@@ -194,7 +203,7 @@ namespace BestHTTP
         private static List<ConnectionBase> ActiveConnections = new List<ConnectionBase>();
 
         /// <summary>
-        /// Free connections. They can be removed completly after a specified time.
+        /// Free connections. They can be removed completely after a specified time.
         /// </summary>
         private static List<ConnectionBase> FreeConnections = new List<ConnectionBase>();
 
@@ -369,7 +378,7 @@ namespace BestHTTP
         /// </summary>
         private static ConnectionBase CreateConnection(HTTPRequest request, string serverUrl)
         {
-            if (request.CurrentUri.IsFile)
+            if (request.CurrentUri.IsFile && Application.platform != RuntimePlatform.WebGLPlayer)
                 return new FileConnection(serverUrl);
 
 #if UNITY_WEBGL && !UNITY_EDITOR

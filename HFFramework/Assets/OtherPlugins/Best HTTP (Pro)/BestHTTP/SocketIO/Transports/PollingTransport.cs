@@ -112,8 +112,8 @@ namespace BestHTTP.SocketIO.Transports
 
         public void Send(System.Collections.Generic.List<Packet> packets)
         {
-            if (State != TransportStates.Open)
-                throw new Exception("Transport is not in Open state!");
+            if (State != TransportStates.Opening && State != TransportStates.Open)
+                return;
 
             if (IsRequestInProgress)
                 throw new Exception("Sending packets are still in progress!");
@@ -325,6 +325,11 @@ namespace BestHTTP.SocketIO.Transports
                         State = TransportStates.Open;
                     goto default;
 
+                case TransportEventTypes.Message:
+                  if (packet.SocketIOEvent == SocketIOEventTypes.Connect) //2:40
+                    this.State = TransportStates.Open;
+                  goto default;
+
                 default:
                     (Manager as IManager).OnPacket(packet);
                     break;
@@ -340,18 +345,47 @@ namespace BestHTTP.SocketIO.Transports
             {
                 if (resp != null && resp.Data != null && resp.Data.Length >= 1)
                 {
+
+// 1.x
+//00000000  00 09 07 ff 30 7b 22 73 69 64 22 3a 22 6f 69 48       0{"sid":"oiH
+//00000010  34 31 33 73 61 49 4e 52 53 67 37 41 4b 41 41 41   413saINRSg7AKAAA
+//00000020  41 22 2c 22 75 70 67 72 61 64 65 73 22 3a 5b 22   A","upgrades":["
+//00000030  77 65 62 73 6f 63 6b 65 74 22 5d 2c 22 70 69 6e   websocket"],"pin
+//00000040  67 49 6e 74 65 72 76 61 6c 22 3a 32 35 30 30 30   gInterval":25000
+//00000050  2c 22 70 69 6e 67 54 69 6d 65 6f 75 74 22 3a 36   ,"pingTimeout":6
+//00000060  30 30 30 30 7d                                    0000}           
+
+// 2.x
+//00000000  39 37 3a 30 7b 22 73 69 64 22 3a 22 73 36 62 5a   97:0{"sid":"s6bZ
+//00000010  6c 43 37 66 51 59 6b 4f 46 4f 62 35 41 41 41 41   lC7fQYkOFOb5AAAA
+//00000020  22 2c 22 75 70 67 72 61 64 65 73 22 3a 5b 22 77   ","upgrades":["w
+//00000030  65 62 73 6f 63 6b 65 74 22 5d 2c 22 70 69 6e 67   ebsocket"],"ping
+//00000040  49 6e 74 65 72 76 61 6c 22 3a 32 35 30 30 30 2c   Interval":25000,
+//00000050  22 70 69 6e 67 54 69 6d 65 6f 75 74 22 3a 36 30   "pingTimeout":60
+//00000060  30 30 30 7d 32 3a 34 30                           000}2:40        
+
                     int idx = 0;
 
                     while (idx < resp.Data.Length)
                     {
-                        PayloadTypes type = (PayloadTypes)resp.Data[idx++];
+                        PayloadTypes type = PayloadTypes.Text;
                         int length = 0;
 
-                        byte num = resp.Data[idx++];
-                        while (num != 0xFF)
-                        {
+                        if (resp.Data[idx] < '0') {
+                          type = (PayloadTypes)resp.Data[idx++];
+
+                          byte num = resp.Data[idx++];
+                          while (num != 0xFF) {
                             length = (length * 10) + num;
                             num = resp.Data[idx++];
+                          }
+                        }
+                        else {
+                          byte next = resp.Data[idx++];
+                          while (next != ':') {
+                            length = (length * 10) + (next - '0');
+                            next = resp.Data[idx++];
+                          } 
                         }
 
                         Packet packet = null;

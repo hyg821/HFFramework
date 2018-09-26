@@ -12,6 +12,41 @@ These defines are the following:
 Upgrading to 1.9.x:
 In v1.9.0 all DLL dependencies are removed, and some of the files from the source too. So a clean install is advised: Before you install v1.9.x you have to remove the /Assets/Best HTTP (Pro)/ folder and TcpClientImplementation.dll from the /Assets/Plugins/, /Assets/Plugins/Metro and /Assets/Plugins/WP8 folders.
 
+1.10.2 (2017.07.29)
+General
+-[Bugfix] Fixed an exception when redirected
+
+1.10.1 (2017.07.26)
+General
+-[New Feature] Added BESTHTTP_DISABLE_GZIP to be able to disable gzip Accept-Encoding requests
+-[Improvement] Improved compatibility when run in an Editor window
+-[Improvement] DNS query is done async with timeout (Thanks goes to chriser on the forums for the code)
+-[Bugfix] The HTTPConnection object will not close the TCP stream when the "Connection: Close" header present and the http response handler's IsClosedManually set to true.
+-[Bugfix] Fixed a compilation issue in RawJsonForm.cs when both BESTHTTP_DISABLE_SOCKETIO and BESTHTTP_DISABLE_SIGNALR are defined
+-[Bugfix] When a request's DisableChace is set to true, it will not produce a warning if caching headers added manually
+-[Bugfix] When there's no connection the CookieJar will not override saved cookies with an empty one
+Websocket
+-[Bugfix] Fixed an issue where receive threads are not shut down resulting in an exception
+Socket.IO
+-[Improvement] Compatibility with Socket.IO 2.0.0
+Server-Sent Events
+-[Improvement] Added WithCredentials property to the EventSource class under WebGL
+-[Improvement] EventSource constructor will thrown a NotSupportedException under WebGL when the underlying browser isn't supports the EventSource protocol
+-[Bugfix] Subscibing to a named event (On(...)) isn't worked under WebGL
+
+1.10.0 (2017.05.05)
+General
+-Removed support for Windows Phone 8
+-[New Feature] HTTPManager and HTTPRequest has a new property 'TryToMinimizeTCPLatency' to turn on/off TCP NoDelay
+-[New Feature] A new Form type 'RawJson' to send the fields added with AddField jon encoded
+-[Improvement] Added DefaultCertificationValidator to the HTTPManger
+-[Improvement] Improved compatibility with Unity 2017.1
+-[Improvement] Now the plugin capable to download files larger than 2 GB (Thanks goes to Daniel @ present4D)
+-[Bugfix] Accessing streaming assets now possible under WebGL builds
+-[Bugfix] Fixed a sneaky bug where the HTTPUpdateDelegator unloaded in builds
+Socket.IO
+-[Improvement] Sockets now have an Id property generated the same as in the JS Socket.IO lib.
+
 1.9.17 (2017.01.29)
 General
 -[New Feature] GZip content encoding is now supported when UseStreaming is on. The plugin now will automatically decompress downloaded chunks.

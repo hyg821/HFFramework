@@ -1096,7 +1096,8 @@ namespace BestHTTP.SignalR
                     }
                     else if (DateTime.UtcNow - ReconnectDelayStartedAt >= ReconnectDelay)
                     {
-                        UnityEngine.Debug.Log(this.ReconnectStarted.ToString() + " " + this.ReconnectStartedAt.ToString() + " " + NegotiationResult.DisconnectTimeout.ToString());
+                        if (HTTPManager.Logger.Level <= Logger.Loglevels.Warning)
+                          HTTPManager.Logger.Warning("SignalR Connection", this.ReconnectStarted.ToString() + " " + this.ReconnectStartedAt.ToString() + " " + NegotiationResult.DisconnectTimeout.ToString());
                         Reconnect();
                     }
                     break;

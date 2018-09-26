@@ -4,9 +4,25 @@ using UnityEngine;
 using BestHTTP;
 using System;
 using System.IO;
+using System.Threading;
+using System.Net;
+using System.ComponentModel;
 
 namespace HFFramework
 {
+    public class WebUrlLocalPath
+    {
+        /// <summary>
+        ///  服务器地址
+        /// </summary>
+        public string webUrl;
+
+        /// <summary>
+        ///  本地路径
+        /// </summary>
+        public string localPath;
+    }
+
     public class BestHttpHelper
     {
         private static BestHttpHelper instance = null;
@@ -23,7 +39,7 @@ namespace HFFramework
             }
         }
 
-        private byte maxDownLoadCount = 4;
+        private byte maxDownLoadCount = 2;
         public byte MaxDownLoadCount
         {
             set
@@ -36,152 +52,251 @@ namespace HFFramework
             }
         }
 
-        public void DownLoadFileAndWriteToLocal(string taskName, string webUrl, string localPath, Action<string> success, Action<string> fail)
-        {
-            BestHttpDownLoadTask b = new BestHttpDownLoadTask(taskName, webUrl, localPath, success, fail);
-            b.StartDownLoad();
-        }
+        public int currentDownLoadCount = 0;
 
-        public int maxTaskCount = 0;
-        public int currentTaskIndex = 0;
-        public Action<float> progress;
-
-        public void DownLoadFilesAndWriteToLocal(string[] webUrl, string[] localPath, Action<float> progress)
+        public static BestHttpDownLoadTask GetDownLoadTask()
         {
-            currentTaskIndex = 0;
-            maxTaskCount = webUrl.Length;
-            this.progress = progress;
-            DownLoadFile(webUrl, localPath);
-        }
-
-        public void DownLoadFile(string[] webUrl, string[] localPath)
-        {
-            DownLoadFileAndWriteToLocal("Task" + currentTaskIndex, webUrl[currentTaskIndex], localPath[currentTaskIndex], delegate (string taskName)
+            if (Instance.currentDownLoadCount <= Instance.MaxDownLoadCount)
             {
-                HFLog.L("单个下载完成");
-                if (currentTaskIndex < maxTaskCount - 1)
-                {
-                    if (progress != null)
-                    {
-                        progress((currentTaskIndex + 1.0f) / maxTaskCount);
-                    }
-                    currentTaskIndex++;
-                    DownLoadFile(webUrl, localPath);
-                }
-                else
-                {
-                    progress(1);
-                    HFLog.L("所有下载队列下载完成");
-                }
-            }, delegate (string taskName)
+                return new BestHttpDownLoadTask();
+            }
+            else
             {
-                HFLog.L("下载出现错误");
-            });
+                return null;
+            }
         }
-
     }
 
     public class BestHttpDownLoadTask
     {
-        public string taskName;
-        public string webUrl;
-        public string localPath;
-        public Action<string> success;
+        private static ReaderWriterLockSlim writeLock = new ReaderWriterLockSlim();
+        /// <summary>
+        ///  全部任务路径
+        /// </summary>
+        public WebUrlLocalPath[] allTaskPath;
+
+        /// <summary>
+        ///  当前任务路径
+        /// </summary>
+        public WebUrlLocalPath currentPath;
+
+        /// <summary>
+        ///  当前任务名称
+        /// </summary>
+        public string currentTaskName;
+
+        /// <summary>
+        ///  当前需要下载的数量
+        /// </summary>
+        public int taskCount = 0;
+
+        /// <summary>
+        ///  当前任务索引
+        /// </summary>
+        public int currentTaskIndex = 0;
+
+        /// <summary>
+        ///  进度
+        /// </summary>
+        public Action<float> progress;
+
+        /// <summary>
+        ///  成功回调
+        /// </summary>
+        public Action<string> simpleTaskFinish;
+
+        /// <summary>
+        ///  失败回调
+        /// </summary>
         public Action<string> fail;
 
-        public BestHttpDownLoadTask(string taskName, string webUrl, string localPath, Action<string> success, Action<string> fail)
+        public HTTPRequest request;
+
+        public void DownLoadFilesAndWriteToLocal(WebUrlLocalPath[] allTaskPath, Action<float> progress, Action<string> fail)
         {
-            HFLog.L(taskName + "被创建了");
-            this.taskName = taskName;
-            this.webUrl = webUrl;
-            this.localPath = localPath;
-            this.success = success;
+            BestHttpHelper.Instance.currentDownLoadCount++;
+            currentTaskIndex = 0;
+            this.allTaskPath = allTaskPath;
+            this.progress = progress;
             this.fail = fail;
+            taskCount = allTaskPath.Length;
+            DownLoadFile(allTaskPath[0]);
         }
 
-        public void StartDownLoad()
+        private void DownLoadFile(WebUrlLocalPath path)
         {
-            if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor)
+            StartDownLoadTask("Task" + currentTaskIndex, path, delegate (string taskName)
             {
-                localPath = localPath.Replace("file://", "");
-            }
-
-            if (File.Exists(localPath))
-            {
-                HFLog.L(taskName + "-----------------------文件存在 删除！" + localPath);
-                File.Delete(localPath);
-            }
-
-            HTTPRequest request = new HTTPRequest(new Uri(webUrl), delegate (HTTPRequest req, HTTPResponse resp)
-            {
-                if (req != null && resp != null)
+                HFLog.L("单个下载完成");
+                if (currentTaskIndex < taskCount - 1)
                 {
-                    List<byte[]> fragments = resp.GetStreamedFragments();
-                    using (FileStream fs = new FileStream(localPath, FileMode.Append))
+                    if (progress != null)
                     {
-                        if (fs != null && fragments != null)
-                        {
-                            foreach (byte[] data in fragments)
-                            {
-                                fs.Write(data, 0, data.Length);
-                            }
-                        }
+                        progress((currentTaskIndex + 1.0f) / taskCount);
                     }
-                    if (resp.IsStreamingFinished)
-                    {
-                        if (success != null)
-                        {
-                            success(taskName);
-                        }
-                    }
-
-                    switch (req.State)
-                    {
-                        case HTTPRequestStates.Initial:
-                            break;
-                        case HTTPRequestStates.Queued:
-                            break;
-                        case HTTPRequestStates.Processing:
-
-                            HFLog.L(taskName + "开始返回数据");
-                            break;
-                        case HTTPRequestStates.Finished:
-                            break;
-                        case HTTPRequestStates.Error:
-                            HFLog.L("下载出现错误 开始重新下载");
-                            StartDownLoad();
-                            if (fail != null)
-                            {
-                                fail(taskName);
-                            }
-                            break;
-                        case HTTPRequestStates.Aborted:
-                            HFLog.L("下载出现错误 开始重新下载");
-                            break;
-                        case HTTPRequestStates.ConnectionTimedOut:
-                            HFLog.L("下载出现错误 开始重新下载");
-                            break;
-                        case HTTPRequestStates.TimedOut:
-                            HFLog.L("下载出现错误 开始重新下载");
-                            if (fail != null)
-                            {
-                                fail(taskName);
-                            }
-                            break;
-                        default:
-                            break;
-                    }
+                    currentTaskIndex++;
+                    DownLoadFile(allTaskPath[currentTaskIndex]);
                 }
                 else
                 {
-                    StartDownLoad();
+                    progress(1);
+                    BestHttpHelper.Instance.currentDownLoadCount--;
+                    HFLog.L("所有下载队列下载完成");
                 }
             });
+        }
 
+        private void StartDownLoadTask(string taskName, WebUrlLocalPath paths, Action<string> simpleTaskFinish)
+        {
+            HFLog.L(taskName + "被创建了");
+            this.currentTaskName = taskName;
+            this.currentPath = paths;
+            this.simpleTaskFinish = simpleTaskFinish;
+            Start();
+        }
+
+        public void Start()
+        {
+            if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor)
+            {
+                currentPath.localPath = currentPath.localPath.Replace("file://", "");
+            }
+
+            if (File.Exists(currentPath.localPath))
+            {
+                HFLog.L(currentTaskName + "文件存在 删除！" + currentPath.localPath);
+                File.Delete(currentPath.localPath);
+            }
+
+
+            request = new HTTPRequest(new Uri(currentPath.webUrl), OnRequest);
+            request.OnProgress = OnUploadProgress;
+            request.Timeout = new TimeSpan(0, 0, 20);
+            request.ConnectTimeout = new TimeSpan(0, 0, 20);
             request.UseStreaming = true;
-            request.StreamFragmentSize = 1 * 1024 * 1024;
+            request.StreamFragmentSize = 1 * 256 * 256;
             request.DisableCache = true;
             request.Send();
+
+
+            /*
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadProgressChanged += WebClientDownloadProgressChanged;
+                client.DownloadFileCompleted += WebClientDownloadCompleted;
+                client.DownloadFileAsync(new Uri(currentPath.webUrl), currentPath.localPath);
+            }
+            */
+        }
+
+        /*
+        void WebClientDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            GameLooper.BackToMainThread(delegate ()
+            {
+                float progressPercent = e.ProgressPercentage / 100.0f;
+                float allProgress = (currentTaskIndex + 0.0f) / taskCount + progressPercent / taskCount;
+                if (allProgress != 1)
+                {
+                    progress(allProgress);
+                }
+            });
+        }
+
+        void WebClientDownloadCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            GameLooper.BackToMainThread(delegate ()
+            {
+                simpleTaskFinish(currentTaskName);
+            });
+        }
+        */
+
+        public void OnRequest(HTTPRequest req, HTTPResponse resp)
+        {
+            if (req != null && resp != null)
+            {
+                List<byte[]> fragments = resp.GetStreamedFragments();
+                writeLock.EnterWriteLock();
+                using (FileStream fs = new FileStream(currentPath.localPath, FileMode.Append))
+                {
+                    if (fs != null && fragments != null)
+                    {
+                        foreach (byte[] data in fragments)
+                        {
+                            fs.Write(data, 0, data.Length);
+                        }
+                    }
+                }
+                writeLock.ExitWriteLock();
+                if (resp.IsStreamingFinished)
+                {
+                    if (simpleTaskFinish != null)
+                    {
+                        simpleTaskFinish(currentTaskName);
+                    }
+                }
+            }
+
+            switch (req.State)
+            {
+                case HTTPRequestStates.Initial:
+                    break;
+                case HTTPRequestStates.Queued:
+                    break;
+                case HTTPRequestStates.Processing:
+                    break;
+                case HTTPRequestStates.Finished:
+                    break;
+                case HTTPRequestStates.Error:
+                    BestHttpHelper.Instance.currentDownLoadCount--;
+                    fail(req.State.ToString());
+                    break;
+                case HTTPRequestStates.Aborted:
+                    BestHttpHelper.Instance.currentDownLoadCount--;
+                    fail(req.State.ToString());
+                    break;
+                case HTTPRequestStates.ConnectionTimedOut:
+                    BestHttpHelper.Instance.currentDownLoadCount--;
+                    fail(req.State.ToString());
+                    break;
+                case HTTPRequestStates.TimedOut:
+                    BestHttpHelper.Instance.currentDownLoadCount--;
+                    fail(req.State.ToString());
+                    break;
+                default:
+                    break;
+            }
+
+            /*
+            if (req.State != HTTPRequestStates.Processing)
+            {
+                HFLog.L("下载状态  " + req.State);
+            }
+            */
+        }
+
+        void OnUploadProgress(HTTPRequest originalRequest, long uploaded, long uploadLeng)
+        {
+            float progressPercent = (uploaded / (float)uploadLeng);
+            float allProgress = (currentTaskIndex + 0.0f) / taskCount + progressPercent / taskCount;
+            if (allProgress != 1)
+            {
+                progress(allProgress);
+            }
+        }
+
+        /// <summary>
+        ///  如果报错 上层代码调用clear 再创建新的
+        /// </summary>
+        public void Clear()
+        {
+            if (request != null)
+            {
+                request.Abort();
+                request.Clear();
+                request = null;
+            }
         }
     }
 }

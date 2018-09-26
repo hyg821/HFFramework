@@ -226,6 +226,9 @@ namespace BestHTTP.Cookies
 
             lock (Locker)
             {
+                if (!Loaded)
+                    return;
+
                 try
                 {
                     // Delete any expired cookie

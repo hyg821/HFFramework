@@ -100,6 +100,8 @@ namespace HFFramework
             }
         }
 
+        private static ReaderWriterLockSlim writeLock = new ReaderWriterLockSlim();
+
         /// <summary>
         ///  写入一个文件 
         /// </summary>
@@ -110,13 +112,13 @@ namespace HFFramework
         {
             string path = GetPath(folderName, isRelative);
             byte[] b = Encoding.UTF8.GetBytes(content);
-            LogWriteLock.EnterWriteLock();
+            writeLock.EnterWriteLock();
             using (FileStream f = new FileStream(path, mode))
             {
                 f.Write(b, 0, b.Length);
                 f.Flush();
             }
-            LogWriteLock.ExitWriteLock();
+            writeLock.ExitWriteLock();
         }
 
         /// <summary>

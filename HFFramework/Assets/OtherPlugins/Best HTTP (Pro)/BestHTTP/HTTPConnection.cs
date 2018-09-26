@@ -199,6 +199,9 @@ namespace BestHTTP
                     bool sentRequest = false;
                     try
                     {
+#if !NETFX_CORE
+                         Client.NoDelay = CurrentRequest.TryToMinimizeTCPLatency;
+#endif
                          CurrentRequest.SendOutTo(Stream);
 
                          sentRequest = true;
@@ -341,21 +344,25 @@ namespace BestHTTP
 #endif
                                     break;
                             }
+                          
+                            // Closing the stream is done manually
+                            if (CurrentRequest.Response == null || !CurrentRequest.Response.IsClosedManually) {
+                                // If we have a response and the server telling us that it closed the connection after the message sent to us, then
+                                //  we will close the connection too.
+                                bool closeByServer = CurrentRequest.Response == null || CurrentRequest.Response.HasHeaderWithValue("connection", "close");
+                                bool closeByClient = !CurrentRequest.IsKeepAlive;
 
-                            // If we have a response and the server telling us that it closed the connection after the message sent to us, then
-                            //  we will close the connection too.
-                            bool closeByServer = CurrentRequest.Response == null || CurrentRequest.Response.HasHeaderWithValue("connection", "close");
-                            bool closeByClient = !CurrentRequest.Response.IsClosedManually && !CurrentRequest.IsKeepAlive;
-                            if (closeByServer || closeByClient)
-                                Close();
-                            else if (CurrentRequest.Response != null)
-                            {
-                                var keepAliveheaderValues = CurrentRequest.Response.GetHeaderValues("keep-alive");
-                                if (keepAliveheaderValues != null && keepAliveheaderValues.Count > 0)
+                                if (closeByServer || closeByClient)
+                                    Close();
+                                else if (CurrentRequest.Response != null)
                                 {
-                                    if (KeepAlive == null)
-                                        KeepAlive = new KeepAliveHeader();
-                                    KeepAlive.Parse(keepAliveheaderValues);
+                                    var keepAliveheaderValues = CurrentRequest.Response.GetHeaderValues("keep-alive");
+                                    if (keepAliveheaderValues != null && keepAliveheaderValues.Count > 0)
+                                    {
+                                        if (KeepAlive == null)
+                                            KeepAlive = new KeepAliveHeader();
+                                        KeepAlive.Parse(keepAliveheaderValues);
+                                    }
                                 }
                             }
                         }
@@ -659,8 +666,11 @@ namespace BestHTTP
                 return false;
             }
 
-            // We didn't check HTTPManager.IsCachingDisabled's value on purpose. (sending out a request with conditional get then change IsCachingDisabled to true may produce undefined behavior)
-            if (CurrentRequest.Response.StatusCode == 304)
+            if (CurrentRequest.Response.StatusCode == 304
+#if !BESTHTTP_DISABLE_CACHING && (!UNITY_WEBGL || UNITY_EDITOR)
+                && !CurrentRequest.DisableCache
+#endif
+                )
             {
 #if !BESTHTTP_DISABLE_CACHING && (!UNITY_WEBGL || UNITY_EDITOR)
                 if (CurrentRequest.IsRedirected)

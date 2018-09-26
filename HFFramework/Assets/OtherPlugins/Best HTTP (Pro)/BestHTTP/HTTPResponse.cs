@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using UnityEngine;
+
 #if !NETFX_CORE || UNITY_EDITOR
     using System.Net.Sockets;
 #endif
+
+using UnityEngine;
 
 namespace BestHTTP
 {
@@ -130,12 +132,12 @@ namespace BestHTTP
         /// <summary>
         /// Cached converted data.
         /// </summary>
-        protected UnityEngine.Texture2D texture;
+        protected Texture2D texture;
 
         /// <summary>
         /// The data loaded to a Texture2D.
         /// </summary>
-        public UnityEngine.Texture2D DataAsTexture2D
+        public Texture2D DataAsTexture2D
         {
             get
             {
@@ -145,7 +147,7 @@ namespace BestHTTP
                 if (texture != null)
                     return texture;
 
-                texture = new UnityEngine.Texture2D(0, 0, UnityEngine.TextureFormat.ARGB32, false);
+                texture = new Texture2D(0, 0, TextureFormat.ARGB32, false);
                 texture.LoadImage(Data);
 
                 return texture;
@@ -309,11 +311,11 @@ namespace BestHTTP
                 List<string> contentLengthHeaders = GetHeaderValues("content-length");
                 var contentRangeHeaders = GetHeaderValues("content-range");
                 if (contentLengthHeaders != null && contentRangeHeaders == null)
-                    ReadRaw(Stream, int.Parse(contentLengthHeaders[0]));
+                    ReadRaw(Stream, long.Parse(contentLengthHeaders[0]));
                 else if (contentRangeHeaders != null)
                 {
                     if (contentLengthHeaders != null)
-                        ReadRaw(Stream, int.Parse(contentLengthHeaders[0]));
+                        ReadRaw(Stream, long.Parse(contentLengthHeaders[0]));
                     else
                     {
                         HTTPRange range = GetRange();
@@ -655,7 +657,7 @@ namespace BestHTTP
         #region Read Raw Body
 
         // No transfer-encoding just raw bytes.
-        internal void ReadRaw(Stream stream, int contentLength)
+        internal void ReadRaw(Stream stream, long contentLength)
         {
             BeginReceiveStreamFragments();
 
@@ -676,8 +678,12 @@ namespace BestHTTP
 #endif
                 GetFirstHeaderValue("content-encoding");
             bool gzipped = !string.IsNullOrEmpty(encoding) && encoding == "gzip";
+            if(!baseRequest.UseStreaming && contentLength > 2147483646)
+            {
+                throw new OverflowException("You have to use STREAMING to download files bigger than 2GB!");
+            }
 
-            using (var output = new MemoryStream(baseRequest.UseStreaming ? 0 : contentLength))
+            using (var output = new MemoryStream(baseRequest.UseStreaming ? 0 : (int)contentLength))
             {
                 byte[] buffer = new byte[Math.Max(baseRequest.StreamFragmentSize, MinBufferSize)];
                 int readBytes = 0;
@@ -688,7 +694,8 @@ namespace BestHTTP
 
                     do
                     {
-                        int bytes = stream.Read(buffer, readBytes, Math.Min(contentLength, buffer.Length - readBytes));
+                        int readbuffer = (int)Math.Min(2147483646, (uint)contentLength);
+                        int bytes = stream.Read(buffer, readBytes, Math.Min(readbuffer, buffer.Length - readBytes));
 
                         if (bytes <= 0)
                             throw ExceptionHelper.ServerClosedTCPStream();

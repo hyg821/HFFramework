@@ -29,6 +29,8 @@ namespace HFFramework
         /// </summary>
         private Queue<Action> eventQueue = new Queue<Action>();
 
+        private static object lockObj = new object();
+
         void Awake()
         {
             Instance = this;
@@ -76,9 +78,12 @@ namespace HFFramework
 
         public static void BackToMainThread(Action e)
         {
-            if (e != null&& Instance != null)
+            lock (lockObj)
             {
-                Instance.eventQueue.Enqueue(e);
+                if (e != null && Instance != null)
+                {
+                    Instance.eventQueue.Enqueue(e);
+                }
             }
         }
 

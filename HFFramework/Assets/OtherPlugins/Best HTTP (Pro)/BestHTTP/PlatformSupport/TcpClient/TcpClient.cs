@@ -406,8 +406,27 @@ namespace BestHTTP.PlatformSupport.TcpClient.General
 
         public void Connect(string hostname, int port)
         {
-            IPAddress[] addresses = Dns.GetHostAddresses(hostname);
-            Connect(addresses, port);
+            if (ConnectTimeout > TimeSpan.Zero)
+            {
+                // https://forum.unity3d.com/threads/best-http-released.200006/page-37#post-3150972
+                System.Threading.ManualResetEvent mre = new System.Threading.ManualResetEvent(false);
+                IAsyncResult result = Dns.BeginGetHostAddresses(hostname, (res) => mre.Set(), null);
+                bool success = mre.WaitOne(ConnectTimeout);
+                if (success)
+                {
+                    IPAddress[] addresses = Dns.EndGetHostAddresses(result);
+                    Connect(addresses, port);
+                }
+                else
+                {
+                    throw new TimeoutException("DNS resolve timed out!");
+                }
+            }
+            else
+            {
+                IPAddress[] addresses = Dns.GetHostAddresses(hostname);
+                Connect(addresses, port);
+            }
         }
 
         public void Connect(IPAddress[] ipAddresses, int port)

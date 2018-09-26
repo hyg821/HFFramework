@@ -26,6 +26,11 @@ namespace BestHTTP.SocketIO
         public string Namespace { get; private set; }
 
         /// <summary>
+        /// Unique Id of the socket.
+        /// </summary>
+        public string Id { get; private set; }
+
+        /// <summary>
         /// True if the socket is connected and open to the server. False otherwise.
         /// </summary>
         public bool IsOpen { get; private set; }
@@ -366,6 +371,10 @@ namespace BestHTTP.SocketIO
             // Some preprocessing of the the packet
             switch(packet.SocketIOEvent)
             {
+                case SocketIOEventTypes.Connect:
+                    this.Id = this.Namespace != "/" ? this.Namespace + "#" + this.Manager.Handshake.Sid : this.Manager.Handshake.Sid;
+                    break;
+
                 case SocketIOEventTypes.Disconnect:
                     if (IsOpen)
                     {
@@ -455,7 +464,7 @@ namespace BestHTTP.SocketIO
             if (this.Namespace != "/")
                 (Manager as IManager).SendPacket(new Packet(TransportEventTypes.Message, SocketIOEventTypes.Connect, this.Namespace, string.Empty));
 
-            // and we are no open
+            // and we are now open
             IsOpen = true;
         }
 

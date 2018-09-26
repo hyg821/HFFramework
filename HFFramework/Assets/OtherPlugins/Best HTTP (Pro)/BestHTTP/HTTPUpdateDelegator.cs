@@ -1,7 +1,4 @@
-﻿#if UNITY_EDITOR
-    using UnityEditor;
-#endif
-using UnityEngine;
+﻿using UnityEngine;
 
 #if NETFX_CORE || BUILD_FOR_WP8
     using System.Threading.Tasks;
@@ -74,13 +71,8 @@ namespace BestHTTP
                     if (Instance == null)
                     {
                         go = new GameObject("HTTP Update Delegator");
-                        go.hideFlags = HideFlags.HideAndDontSave;
-
-#if UNITY_EDITOR
-                        if (UnityEditor.EditorApplication.isPlaying)
-                            GameObject.DontDestroyOnLoad(go);
-#endif
-
+                        go.hideFlags = HideFlags.DontSave;
+                        
                         Instance = go.AddComponent<HTTPUpdateDelegator>();
                     }
                     IsCreated = true;
@@ -92,10 +84,11 @@ namespace BestHTTP
                         UnityEditor.EditorApplication.update += Instance.Update;
                     }
 
-                    UnityEditor.EditorApplication.playModeStateChanged -= Instance.OnPlayModeStateChanged;
-                    UnityEditor.EditorApplication.playModeStateChanged += Instance.OnPlayModeStateChanged;
+                    UnityEditor.EditorApplication.playmodeStateChanged -= Instance.OnPlayModeStateChanged;
+                    UnityEditor.EditorApplication.playmodeStateChanged += Instance.OnPlayModeStateChanged;
 #endif
                 }
+                HTTPManager.Logger.Information("HTTPUpdateDelegator", "Instance Created!");
             }
             catch
             {
@@ -128,6 +121,15 @@ namespace BestHTTP
             }
 
             IsSetupCalled = true;
+
+            // Unity doesn't tolerate well if the DontDestroyOnLoad called when purely in editor mode. So, we will set the flag
+            //  only when we are playing, or not in the editor.
+#if UNITY_EDITOR
+            if (UnityEditor.EditorApplication.isPlaying)
+#endif
+                GameObject.DontDestroyOnLoad(this.gameObject);
+
+            HTTPManager.Logger.Information("HTTPUpdateDelegator", "Setup done!");
         }
 
 #if NETFX_CORE
@@ -170,7 +172,7 @@ namespace BestHTTP
         }
 
 #if UNITY_EDITOR
-        void OnPlayModeStateChanged(PlayModeStateChange p)
+        void OnPlayModeStateChanged()
         {
             if (UnityEditor.EditorApplication.isPlaying)
                 UnityEditor.EditorApplication.update -= Update;
@@ -181,6 +183,8 @@ namespace BestHTTP
 
         void OnDisable()
         {
+            HTTPManager.Logger.Information("HTTPUpdateDelegator", "OnDisable Called!");
+
 #if UNITY_EDITOR
             if (UnityEditor.EditorApplication.isPlaying)
 #endif
@@ -189,6 +193,8 @@ namespace BestHTTP
 
         void OnApplicationQuit()
         {
+            HTTPManager.Logger.Information("HTTPUpdateDelegator", "OnApplicationQuit Called!");
+
             if (OnBeforeApplicationQuit != null)
             {
                 try
@@ -216,7 +222,7 @@ namespace BestHTTP
 
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.update -= Update;
-            UnityEditor.EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            UnityEditor.EditorApplication.playmodeStateChanged -= OnPlayModeStateChanged;
 #endif
         }
     }

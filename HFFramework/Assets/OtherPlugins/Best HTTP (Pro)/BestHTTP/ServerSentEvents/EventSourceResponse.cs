@@ -167,7 +167,7 @@ namespace BestHTTP.ServerSentEvents
             ReadHeaders(stream);
         }
 
-        private new void ReadRaw(Stream stream, int contentLength)
+        private new void ReadRaw(Stream stream, long contentLength)
         {
             byte[] buffer = new byte[1024];
             int bytes;

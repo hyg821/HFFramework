@@ -64,7 +64,13 @@ namespace BestHTTP.PlatformSupport.TcpClient.WinRT
             catch(AggregateException ex)
             {
                 if (ex.InnerException != null)
-                    throw ex.InnerException;
+                    //throw ex.InnerException;
+                {
+                    if ( ex.Message.Contains("No such host is known") || ex.Message.Contains("unreachable host") )
+                        throw new Exception("Socket Exception");
+                    else
+                        throw ex.InnerException;
+                }
                 else
                     throw ex;
             }

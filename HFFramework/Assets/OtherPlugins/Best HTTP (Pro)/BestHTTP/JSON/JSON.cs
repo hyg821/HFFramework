@@ -1,5 +1,3 @@
-#if !(BESTHTTP_DISABLE_SOCKETIO && BESTHTTP_DISABLE_SIGNALR)
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -487,5 +485,3 @@ namespace BestHTTP.JSON
 		}
 	}
 }
-
-#endif

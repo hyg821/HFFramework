@@ -7,14 +7,14 @@ namespace HFFramework
 {
     public class ObjectPool : MonoBehaviour
     {
-        public Stack<IPoolInterface> pool = new Stack<IPoolInterface>();
-        public Func<IPoolInterface> Create;
+        public Stack<IPool> pool = new Stack<IPool>();
+        public Func<IPool> Create;
 
         /// <summary>
         ///  必须要调用的方法 否则有可能 吐出对象为 null
         /// </summary>
         /// <param name="CreateFunc"></param>
-        public void Init(Func<IPoolInterface> CreateFunc)
+        public void Init(Func<IPool> CreateFunc)
         {
             this.Create = CreateFunc;
         }
@@ -23,7 +23,7 @@ namespace HFFramework
         ///  吃一个对象
         /// </summary>
         /// <param name="i"></param>
-        public void Eat(IPoolInterface i)
+        public void Eat(IPool i)
         {
             pool.Push(i);
             i.BeEat();
@@ -33,9 +33,9 @@ namespace HFFramework
         ///  吐一个对象
         /// </summary>
         /// <returns></returns>
-        public IPoolInterface Vomiting()
+        public IPool Vomiting()
         {
-            IPoolInterface temp = null;
+            IPool temp = null;
             if (pool.Count > 0)
             {
                 temp = pool.Pop();

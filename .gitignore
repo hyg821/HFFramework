@@ -16,11 +16,11 @@
 # Unity3D generated meta files
 *.meta
 
-/HotFix/obj
-/HotFix/Properties
-/HotFix/bin
-/HFFramework/.vs
-/HFFramework/Assets/StreamingAssets/AssetBundles
-/HFFramework/Assets/StreamingAssets/DLL
-/HFFramework/Assets/StreamingAssets/HotFixResources
-/.vs
+/HotFix/obj/
+/HotFix/Properties/
+/HotFix/bin/
+/HFFramework/.vs/
+/HFFramework/Assets/StreamingAssets/AssetBundles/
+/HFFramework/Assets/StreamingAssets/DLL/
+/HFFramework/Assets/StreamingAssets/HotFixResources/
+/.vs/

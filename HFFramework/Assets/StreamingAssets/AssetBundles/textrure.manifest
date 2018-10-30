@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2600991868
+CRC: 1069449154
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fe76235c7706fb2874925ae5de85522d
+    Hash: e16b5a020b3a44bf9762739824446c76
   TypeTreeHash:
     serializedVersion: 2
     Hash: 460b4f5d62b6facbccf7c01637df8f00
@@ -14,6 +14,6 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/GameResources/Game/Texture_[A]/avc.png
 - Assets/GameResources/Game/Texture_[A]/aaa.png
+- Assets/GameResources/Game/Texture_[A]/avc.png
 Dependencies: []

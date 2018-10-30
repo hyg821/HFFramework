@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 2370753564
+CRC: 449534421
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -9,25 +9,8 @@ AssetBundleManifest:
       Name: hotfixdll
       Dependencies: {}
     Info_2:
-      Name: material
-      Dependencies:
-        Dependency_0: textrure
-    Info_3:
-      Name: prefab
-      Dependencies:
-        Dependency_0: material
-    Info_4:
-      Name: scene1
-      Dependencies: {}
-    Info_5:
-      Name: scene
-      Dependencies: {}
-    Info_6:
-      Name: textrure
-      Dependencies: {}
-    Info_7:
-      Name: hfui
-      Dependencies: {}
-    Info_8:
       Name: common_font
+      Dependencies: {}
+    Info_3:
+      Name: hfui
       Dependencies: {}

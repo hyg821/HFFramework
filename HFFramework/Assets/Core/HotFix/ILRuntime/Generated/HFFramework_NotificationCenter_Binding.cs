@@ -19,6 +19,7 @@ namespace ILRuntime.Runtime.Generated
         {
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
+            FieldInfo field;
             Type[] args;
             Type type = typeof(HFFramework.NotificationCenter);
             args = new Type[]{typeof(HFFramework.NotificationMessage)};
@@ -30,6 +31,10 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Object), typeof(System.Int32)};
             method = type.GetMethod("RemoveObserver", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, RemoveObserver_2);
+
+            field = type.GetField("Instance", flag);
+            app.RegisterCLRFieldGetter(field, get_Instance_0);
+            app.RegisterCLRFieldSetter(field, set_Instance_0);
 
 
         }
@@ -99,6 +104,15 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
+
+        static object get_Instance_0(ref object o)
+        {
+            return HFFramework.NotificationCenter.Instance;
+        }
+        static void set_Instance_0(ref object o, object v)
+        {
+            HFFramework.NotificationCenter.Instance = (HFFramework.NotificationCenter)v;
+        }
 
 
     }

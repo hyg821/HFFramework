@@ -10,7 +10,7 @@ namespace HFFramework
         /// <summary>
         ///  UI根物体名字
         /// </summary>
-        public const string RootName = "UISystem";
+        public const string RootName = "UIRoot";
 
         public const string CameraName = "UICamera";
 
@@ -51,7 +51,7 @@ namespace HFFramework
         {
             ClearScene();
             assetBundlePackage = HAResourceManager.Instance.LoadAssetBundleFromFile("hfui");
-            GameObject  prefab= assetBundlePackage.LoadAssetWithCache<GameObject>("UISystem");
+            GameObject  prefab= assetBundlePackage.LoadAssetWithCache<GameObject>("UIRoot");
             GameObject temp = Instantiate(prefab);
             temp.name = RootName;
             UIRoot = temp.GetComponent<UIRoot>();
@@ -62,7 +62,8 @@ namespace HFFramework
             UICamera = temp.GetComponent<UICamera>();
             UICamera.SetParent(UIRoot.gameObject);
 
-            cachePool = UIRoot.transform.Find("CachePool").GetComponent<UICachePool>();
+            cachePool = new GameObject("CachePool").AddComponent<UICachePool>();
+            cachePool.SetParent(UIRoot);
         }
 
         public UICanvas AddCanvas(int canvasLayerIndex)

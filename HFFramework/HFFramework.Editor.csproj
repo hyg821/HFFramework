@@ -1,0 +1,708 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7BC6E37D-C599-FEDD-F6B7-99F6CA2C6F43}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <CompilerResponseFile></CompilerResponseFile>
+    <UnityProjectGenerator>VSTU</UnityProjectGenerator>
+    <UnityProjectType>Editor:5</UnityProjectType>
+    <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
+    <UnityVersion>2017.3.1p3</UnityVersion>
+    <RootNamespace></RootNamespace>
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoConfig>true</NoConfig>
+    <NoStdLib>true</NoStdLib>
+    <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Debug\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_3_1;UNITY_2017_3;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;ENABLE_LOCALIZATION;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;DISABLE_ILRUNTIME_DEBUG;ODIN_INSPECTOR;</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Release\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_3_1;UNITY_2017_3;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;ENABLE_LOCALIZATION;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;DISABLE_ILRUNTIME_DEBUG;ODIN_INSPECTOR;</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>D:\Unity2017\Editor\Data\MonoBleedingEdge\lib\mono\4.6-api\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>D:\Unity2017\Editor\Data\MonoBleedingEdge\lib\mono\4.6-api\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.XML">
+      <HintPath>D:\Unity2017\Editor\Data\MonoBleedingEdge\lib\mono\4.6-api\System.XML.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>D:\Unity2017\Editor\Data\MonoBleedingEdge\lib\mono\4.6-api\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>D:\Unity2017\Editor\Data\MonoBleedingEdge\lib\mono\4.6-api\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <HintPath>D:\Unity2017\Editor\Data\MonoBleedingEdge\lib\mono\4.6-api\System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <HintPath>D:\Unity2017\Editor\Data\MonoBleedingEdge\lib\mono\4.6-api\System.Xml.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UNETModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.UNETModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WebModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.WebModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ARModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StyleSheetsModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.StyleSheetsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticlesLegacyModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.ParticlesLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteShapeModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Networking">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TestRunner">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Timeline">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Timeline">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TreeEditor">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIAutomation">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UIAutomation">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/UIAutomation/Editor/UnityEditor.UIAutomation.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.GoogleAudioSpatializer">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Editor/UnityEditor.GoogleAudioSpatializer.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GoogleAudioSpatializer">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.HoloLens">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/UnityHoloLens/Editor/UnityEditor.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.SpatialTracking">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpatialTracking">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>D:/Unity2017/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>D:/Unity2017/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>D:/Unity2017/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets/OtherPlugins/Demigiant/DOTween/DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43">
+      <HintPath>Assets/OtherPlugins/Demigiant/DOTween/DOTween43.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween46">
+      <HintPath>Assets/OtherPlugins/Demigiant/DOTween/DOTween46.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween50">
+      <HintPath>Assets/OtherPlugins/Demigiant/DOTween/DOTween50.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenEditor">
+      <HintPath>Assets/OtherPlugins/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets/OtherPlugins/MemoryProfiler/Editor/JsonDotNet20/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>Assets/Plugins/Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>Assets/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Advertisements">
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/Editor/UnityEditor.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Analytics">
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/Editor/UnityEditor.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Purchasing">
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.purchasing@0.0.19/Editor/UnityEditor.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StandardEvents">
+      <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="HFFramework.csproj">
+      <Project>{C71AED8D-BA8D-69F1-5A54-FF6C72176C07}</Project>
+      <Name>HFFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="HFFramework.Editor.Plugins.csproj">
+      <Project>{EAA65034-5B69-E7F7-B08A-61B0EA085FC2}</Project>
+      <Name>HFFramework.Editor.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Core\Editor\FindReferences.cs" />
+    <Compile Include="Assets\Core\Editor\HFAssetBundleCreater.cs" />
+    <Compile Include="Assets\Core\Editor\HFConfigCreater.cs" />
+    <Compile Include="Assets\Core\Editor\HFEditorHelper.cs" />
+    <Compile Include="Assets\Core\Editor\HFOpenAssetHandler.cs" />
+    <Compile Include="Assets\Core\Editor\HFTextureImporter.cs" />
+    <Compile Include="Assets\Core\Editor\JsonModel\JsonModel.cs" />
+    <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\Editor\ILRuntimeCLRBinding.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\AnimationBaker.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\AnimationFixer\AnimationFixer.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\AnimationWindowExtra\AnimationWindowExtra.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\AnimationWindowExtra\AnimationWindowImpl_2017_1.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\AnimationWindowExtra\AnimationWindowImpl_50.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\AnimationWindowExtra\AnimationWindowImpl_51_52_53.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\AnimationWindowExtra\AnimationWindowImpl_54.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\AnimationWindowExtra\AnimationWindowImpl_55.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\AnimationWindowExtra\AnimationWindowImpl_56.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\AnimationWindowExtra\IAnimationWindowImpl.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\BbwPlugin.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\BindInfo.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\BlendShape.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\BlendShapeEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\BlendShapeFrame.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\BlendShapeFrameEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Bone2DEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\BoneUtils.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\BoneWeight.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\ColorRing.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\ContextMenu.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\CurveUtility.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Edge.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\EditorEventHandler.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\EditorExtra.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\EditorGUIExtra.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\EditorUpdater.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Exporter\Exporter.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Gizmos.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\HandlesExtra.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Hole.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Ik2DEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\IkCCD2DEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\IkGroupEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\IkLimb2DEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\IkUtils.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\IndexedEdge.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\InspectorEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\KeyframeUtility.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\MaskCreator.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\MeshToolEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Node.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\OnionSkin\MaterialCache.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\OnionSkin\ObjectPool.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\OnionSkin\OnionLayer.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\OnionSkin\OnionLayer_56.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\OnionSkin\OnionLayerManager.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\OnionSkin\OnionSkinWindow.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\PoseManagerEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\PoseUtils.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\RectHandles.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\ScriptableObjectUtility.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\SelectionRectTool.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\SerializedCache.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\SliceEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\SpriteMeshAnimationEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\SpriteMeshCache.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\SpriteMeshData.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\SpriteMeshEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\SpriteMeshEditorWindow.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\SpriteMeshInstanceEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\SpriteMeshInstancePostProcessor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\SpriteMeshPostprocessor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\SpriteMeshUtils.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\TextureEditorWindow.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\TimeLine\BlendShapeFrameDopeElement.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\TimeLine\IDopeElement.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\TimeLine\TickHandler.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\TimeLine\TickStyle.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\TimeLine\TimeArea.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\TimeLine\TimeLine.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\TimeLine\ZoomableArea.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\ToolsExtra.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Algorithm\Dwyer.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Algorithm\Incremental.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Algorithm\ITriangulator.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Algorithm\SweepLine.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\BadTriQueue.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Behavior.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Carver.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Data\BadSubseg.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Data\BadTriangle.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Data\Osub.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Data\Otri.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Data\Segment.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Data\Triangle.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Data\Vertex.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Enums.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Geometry\BoundingBox.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Geometry\Edge.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Geometry\EdgeEnumerator.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Geometry\InputGeometry.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Geometry\ISegment.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Geometry\ITriangle.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Geometry\Point.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Geometry\RegionPointer.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\IO\DataReader.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\IO\DebugWriter.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\IO\FileReader.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\IO\FileWriter.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\IO\IGeometryFormat.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\IO\IMeshFormat.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\IO\InputTriangle.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\IO\TriangleFormat.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Log\ILog.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Log\ILogItem.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Log\SimpleLog.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Log\SimpleLogItem.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Mesh.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\NewLocation.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Primitives.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Quality.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Sampler.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Smoothing\ISmoother.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Smoothing\SimpleSmoother.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Tools\AdjacencyMatrix.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Tools\BoundedVoronoi.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Tools\CuthillMcKee.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Tools\IVoronoi.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Tools\QuadTree.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Tools\QualityMeasure.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Tools\RegionIterator.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Tools\Statistic.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Tools\Voronoi.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\Tools\VoronoiRegion.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\Triangle\TriangleLocator.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\VertexAnimation\BakedMesh.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\VertexAnimation\SpriteMeshInstanceTracker.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\VertexAnimation\TransformTracker.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\VertexAnimation\VertexSelection.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\VertexManipulator\IVertexManipulable.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\VertexManipulator\IVertexManipulator.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\VertexManipulator\RectManipulator\IRectManipulable.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\VertexManipulator\RectManipulator\IRectManipulatorData.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\VertexManipulator\RectManipulator\RectManipulator.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\VertexManipulator\RectManipulator\RectManipulatorData.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\VertexManipulator\RectManipulator\RectManipulatorParams.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\VertexManipulator\VertexManipulator.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\WeightEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Scripts\Editor\WindowEditorTool.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\EasytouchHierachyCallBack.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\EasyTouchInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\EasyTouchMenu.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\EasyTouchTriggerInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\EasyTouchWelcomeScreen.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\HTGuiTools.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickDragInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickEnterExitInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickLongTapInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickPinchInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickSwipeInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickTapInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickTouchInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\Plugins\Editor\QuickTwistInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCAreaInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCAxisInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCButtonInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCDPadInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCGuiTools.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCJoystickInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCMenu.cs" />
+    <Compile Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouchControls\Plugins\Editor\ETCTouchPadInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\LoopScrollRect\Scripts\Editor\LoopScrollRectInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\LoopScrollRect\Scripts\Editor\SGDefaultControls.cs" />
+    <Compile Include="Assets\OtherPlugins\LoopScrollRect\Scripts\Editor\SGMenuOptions.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\ArrayTools.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\BytesAndOffset.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\CrawledDataUnpacker.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\Crawler.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\HighLevelAPI.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\Inspector.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\LowLevelAPI.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\ManagedHeapExtensions.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\MemoryProfilerWindow.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\PackedManagedObject.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\PackedMemorySnapshotUtility.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\PrimitiveValueReader.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\ShortestPathToRootFinder.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\StringTools.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\Treemap\Group.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\Treemap\Item.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\Treemap\ITreemapRenderable.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\Treemap\Tests\TreemapTests.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\Treemap\Utility.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\TreeMapView.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\TypeTools.cs" />
+    <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\ZoomArea.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Core\Editor\CleanupMissingScripts.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Core\Editor\ConstantShakePresetEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Core\Editor\MinMaxSliderDrawer.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Core\Editor\ProCamera2DEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Core\Editor\ProCamera2DEditorHelper.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Core\Editor\ProCamera2DEditorResources.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Core\Editor\ProCamera2DHierarchyIcon.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Core\Editor\ProCamera2DPrefs.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Core\Editor\ScriptableObjectUtility.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Core\Editor\ShakePresetEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DCameraWindowEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DCinematicsEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DContentFitterEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DForwardFocusEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DGeometryBoundariesEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DLimitDistanceEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DLimitSpeedEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DNumericBoundariesEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DPanAndZoomEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DParallaxEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DPixelPerfectEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DPointerInfluenceEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DRailsEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DRepeaterEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DRoomsEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DShakeEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DSpeedBasedZoomEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DTransitionsFXEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Extensions\Editor\ProCamera2DZoomToFitTargetsEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Helpers\Pixel Perfect\Editor\ProCamera2DPixelPerfectSpriteEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Triggers\Editor\ProCamera2DTriggerBoundariesEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Triggers\Editor\ProCamera2DTriggerInfluenceEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Triggers\Editor\ProCamera2DTriggerRailsEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\ProCamera2D\Code\Triggers\Editor\ProCamera2DTriggerZoomEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\AssetDatabaseAvailabilityDetector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\AtlasAssetInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\BoneFollowerInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\Menus.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\SkeletonAnimationInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\SkeletonAnimatorInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\SkeletonBaker.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\SkeletonBakingWindow.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\SkeletonDataAssetInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\SkeletonDebugWindow.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\SkeletonRendererInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\SpineAttributeDrawers.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\SpineEditorUtilities.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Editor\SpineInspectorUtility.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Modules\BoundingBoxFollower\Editor\BoundingBoxFollowerInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Modules\CustomMaterials\Editor\SkeletonRendererCustomMaterialsInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Ragdoll\Editor\SkeletonRagdoll2DInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Ragdoll\Editor\SkeletonRagdollInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\Editor\SpineSpriteShaderGUI.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SkeletonGraphic\Editor\BoneFollowerGraphicInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SkeletonGraphic\Editor\SkeletonGraphicInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SkeletonRenderSeparator\Editor\SkeletonPartsRendererInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SkeletonRenderSeparator\Editor\SkeletonRenderSeparatorInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SlotBlendModes\Editor\SlotBlendModesEditor.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\SkeletonUtility\Editor\SkeletonUtilityBoneInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\Spine\spine-unity\SkeletonUtility\Editor\SkeletonUtilityInspector.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\AssetBundleBrowserMain.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\AssetBundleBuildTab.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\AssetBundleDataSource\ABDataSource.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\AssetBundleDataSource\ABDataSourceProvider.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\AssetBundleDataSource\AssetDatabaseABDataSource.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\AssetBundleManageTab.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\AssetBundleModel\ABModel.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\AssetBundleModel\ABModelAssetInfo.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\AssetBundleModel\ABModelBundleInfo.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\AssetBundleTree.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\AssetListTree.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\BundleDetailList.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\InspectTab\AssetBundleInspectTab.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\InspectTab\AssetBundleRecord.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\InspectTab\InspectSingleBundle.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\InspectTab\InspectTreeView.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\MessageList.cs" />
+    <Compile Include="Assets\OtherPlugins\UnityEngine.AssetBundles\Editor\AssetBundleBrowser\MessageSystem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Core\Scripts\Functions\note.txt" />
+    <None Include="Assets\Core\Shader\UIGrayETCDefault.shader" />
+    <None Include="Assets\Core\Shader\UIMask.shader" />
+    <None Include="Assets\Core\Shader\UIShine.shader" />
+    <None Include="Assets\GameResources\Game\ConfigA_[A]\SpineExchangeConfig.txt" />
+    <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Shaders\Unlit-Alpha-Cull-off.shader" />
+    <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Shaders\VertexLitOneDirectional.shader" />
+    <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Shaders\VisibleInsideMask.shader" />
+    <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Shaders\VisibleOutsideMask.shader" />
+    <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Licenses.txt" />
+    <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Readme.txt" />
+    <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Version.txt" />
+    <None Include="Assets\OtherPlugins\Best HTTP (Pro)\BestHTTP\SecureProtocol\License.txt" />
+    <None Include="Assets\OtherPlugins\Best HTTP (Pro)\ReleaseNotes.txt" />
+    <None Include="Assets\OtherPlugins\Best HTTP (Pro)\link.xml" />
+    <None Include="Assets\OtherPlugins\Best HTTP (Pro)\link_android_subset.xml" />
+    <None Include="Assets\OtherPlugins\Demigiant\DOTween\DOTween.XML" />
+    <None Include="Assets\OtherPlugins\Demigiant\DOTween\DOTween43.xml" />
+    <None Include="Assets\OtherPlugins\Demigiant\DOTween\DOTween46.xml" />
+    <None Include="Assets\OtherPlugins\Demigiant\DOTween\DOTween50.xml" />
+    <None Include="Assets\OtherPlugins\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
+    <None Include="Assets\OtherPlugins\Demigiant\DOTween\readme.txt" />
+    <None Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\How to migrate from EasyTouch 4.X.txt" />
+    <None Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\RealseNotes.txt" />
+    <None Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\_Documentation\How to migrate from EasyTouch 4.X.txt" />
+    <None Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouchControls\Documentation\Version 2.0.txt" />
+    <None Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouchControls\Issues in button behavior (MAC).txt" />
+    <None Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouchControls\ReleaseNotes.txt" />
+    <None Include="Assets\OtherPlugins\EasyTouchBundle\Readme.txt" />
+    <None Include="Assets\OtherPlugins\EnhancedScroller v2\Tutorials\readme.txt" />
+    <None Include="Assets\OtherPlugins\EnhancedScroller v2\readme.txt" />
+    <None Include="Assets\OtherPlugins\EnhancedScroller v2\upgrading from 1.x to 2.x.txt" />
+    <None Include="Assets\OtherPlugins\LeanTouch\Examples\Fonts\OFL.txt" />
+    <None Include="Assets\OtherPlugins\LeanTouch\Examples\Shaders\Skybox.shader" />
+    <None Include="Assets\OtherPlugins\LeanTouch\Examples\Shaders\Smooth.shader" />
+    <None Include="Assets\OtherPlugins\MemoryProfiler\Editor\JsonDotNet20\Newtonsoft.Json.xml" />
+    <None Include="Assets\OtherPlugins\MemoryProfiler\Editor\JsonDotNet20\license.txt" />
+    <None Include="Assets\OtherPlugins\MemoryProfiler\Editor\JsonDotNet20\readme.txt" />
+    <None Include="Assets\OtherPlugins\ProCamera2D\Code\Helpers\Letterbox\Resources\Letterbox.shader" />
+    <None Include="Assets\OtherPlugins\ProCamera2D\Code\Helpers\TransitionFX\Resources\PC2D_Blinds.shader" />
+    <None Include="Assets\OtherPlugins\ProCamera2D\Code\Helpers\TransitionFX\Resources\PC2D_Circle.shader" />
+    <None Include="Assets\OtherPlugins\ProCamera2D\Code\Helpers\TransitionFX\Resources\PC2D_Fade.shader" />
+    <None Include="Assets\OtherPlugins\ProCamera2D\Code\Helpers\TransitionFX\Resources\PC2D_Shutters.shader" />
+    <None Include="Assets\OtherPlugins\ProCamera2D\Code\Helpers\TransitionFX\Resources\PC2D_Texture.shader" />
+    <None Include="Assets\OtherPlugins\ProCamera2D\Code\Helpers\TransitionFX\Resources\PC2D_Wipe.shader" />
+    <None Include="Assets\OtherPlugins\ProCamera2D\README.txt" />
+    <None Include="Assets\OtherPlugins\ProCamera2D\TransitionFX Textures\README.txt" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Editor\Resources\SpineAssetDatabaseMarker.txt" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\CustomMaterials\SkeletonRendererCustomMaterials.txt" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Ghost\Shaders\Spine-Special-Skeleton-Ghost.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Spine-Skeleton-Fill.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Spine-Skeleton-Tint.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\ShaderMaths.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\ShaderShared.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\SpriteLighting.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\SpritePixelLighting.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\SpriteShadows.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\SpriteSpecular.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\SpriteUnlit.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CGIncludes\SpriteVertexLighting.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CameraDepthNormalsTexture.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CameraDepthTexture.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\CameraNormalsTexture.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\ShaderShared.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpriteDepthNormalsTexture.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpriteLighting.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpritePixelLighting.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpriteShadows.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpriteUnlit.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpriteVertexLighting.cginc" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpritesPixelLit.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpritesUnlit.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\Shaders\Sprite\SpritesVertexLit.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SkeletonGraphic\Shaders\Spine-SkeletonGraphic-TintBlack.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SkeletonGraphic\Shaders\Spine-SkeletonGraphic.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SkeletonRenderSeparator\SkeletonRenderSeparator.txt" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SlotBlendModes\Spine-Skeleton-PMA-Multiply.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Modules\SlotBlendModes\Spine-Skeleton-PMA-Screen.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Shaders\Spine-Skeleton-TintBlack.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Shaders\Spine-Skeleton.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Shaders\Spine-SkeletonLit.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Shaders\Utility\Hidden-Spine-Bones.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\Shaders\Utility\HiddenPass.shader" />
+    <None Include="Assets\OtherPlugins\Spine\spine-unity\version.txt" />
+    <None Include="Assets\Plugins\BitmapFontImporter\Examples\Font1\font1.fnt" />
+    <None Include="Assets\Plugins\BitmapFontImporter\Examples\Font2\font2.fnt" />
+    <None Include="Assets\Plugins\BitmapFontImporter\Examples\font3\font3.fnt" />
+    <None Include="Assets\Plugins\BitmapFontImporter\Shaders\BFILogic.cginc" />
+    <None Include="Assets\Plugins\BitmapFontImporter\Shaders\Font2.shader" />
+    <None Include="Assets\Plugins\BitmapFontImporter\Shaders\Font3.shader" />
+    <None Include="Assets\Plugins\BitmapFontImporter\Shaders\Font4.shader" />
+    <None Include="Assets\Plugins\BitmapFontImporter\Shaders\Font5.shader" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="GenerateTargetFrameworkMonikerAttribute" />
+</Project>

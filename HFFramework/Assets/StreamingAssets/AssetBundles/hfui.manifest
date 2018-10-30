@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2611324930
+CRC: 3659439247
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 06b2a081f563259088292d73cf8bfb01
+    Hash: 3beec4348260ccd63228683fd284cfdf
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 5eee866180c2e7649a2987a738b92387
+    Hash: 07664dd736a0abd9e2d2c7e5be825044
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -18,17 +18,19 @@ ClassTypes:
 - Class: 49
   Script: {instanceID: 0}
 - Class: 114
-  Script: {fileID: 11500000, guid: 5b5c32a0b9fb25b4ca6947be5fcb9b40, type: 3}
+  Script: {fileID: 11500000, guid: eeb08ff021b56f446aa4b83f1725a48e, type: 3}
 - Class: 114
   Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
   Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 3f3ce5a786efaf849b7f242b99e0c88f, type: 3}
+  Script: {fileID: 11500000, guid: 2e469b96430fb964f9553c2bbe3f83d8, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 7b20fd4907a7b1b4bb4fd25e17a4accb, type: 3}
+  Script: {fileID: 11500000, guid: af90a7771e0e00a40a8e18f66d1fa709, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: f4f0d8592f9ee18468f28808bae117de, type: 3}
+  Script: {fileID: 11500000, guid: cdae85ec63cfcb045b1b8362c194ab03, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5b5c32a0b9fb25b4ca6947be5fcb9b40, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 124
@@ -38,9 +40,9 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/GameResources/HFResources/UISystem_[A]/UISystem.prefab
-- Assets/GameResources/HFResources/UISystem_[A]/UICamera.prefab
-- Assets/GameResources/HFResources/UISystem_[A]/UINavigation.prefab
+- Assets/GameResources/HFResources/UISystem_[A]/UIRoot.prefab
 - Assets/GameResources/HFResources/UISystem_[A]/UICanvas.prefab
+- Assets/GameResources/HFResources/UISystem_[A]/UINavigation.prefab
 - Assets/GameResources/HFResources/UISystem_[A]/UIConfig.json
+- Assets/GameResources/HFResources/UISystem_[A]/UICamera.prefab
 Dependencies: []

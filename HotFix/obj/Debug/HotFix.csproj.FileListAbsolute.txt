@@ -1,0 +1,12 @@
+C:\Users\Administrator\Desktop\Demo\HotFix\obj\Debug\HotFix.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\Demo\Template\Assets\StreamingAssets\DLL\HotFix.dll
+C:\Users\Administrator\Desktop\Demo\Template\Assets\StreamingAssets\DLL\HotFix.pdb
+C:\Users\Administrator\Desktop\Demo\HotFix\obj\Debug\HotFix.dll
+C:\Users\Administrator\Desktop\Demo\HotFix\obj\Debug\HotFix.pdb
+E:\GitHubGit\HFFramework\HotFix\obj\Debug\HotFix.csprojAssemblyReference.cache
+E:\GitHubGit\HFFramework\HotFix\obj\Debug\HotFix.csproj.CoreCompileInputs.cache
+E:\GitHubGit\HFFramework\HotFix\obj\Debug\HotFix.dll
+E:\GitHubGit\HFFramework\HotFix\obj\Debug\HotFix.pdb
+E:\GitHubGit\HFFramework\Template\Assets\StreamingAssets\DLL\HotFix.dll
+E:\GitHubGit\HFFramework\Template\Assets\StreamingAssets\DLL\HotFix.pdb
+E:\GitHubGit\HFFramework\HotFix\obj\Debug\HotFix.csproj.CopyComplete

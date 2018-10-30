@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2603433971
+CRC: 2895714688
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f3e635053089833377b45784095aa89e
+    Hash: 1ca649df412f8175eb27c7c31c00a917
   TypeTreeHash:
     serializedVersion: 2
     Hash: 0bb4c37c915d5352389eeb93c1a3b27a
@@ -19,6 +19,6 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/GameResources/Game/Font_[A]/FontB.TTF
-- Assets/GameResources/Game/Font_[A]/FontA.TTF
 - Assets/GameResources/Game/Font_[A]/FontC.ttf
+- Assets/GameResources/Game/Font_[A]/FontA.TTF
 Dependencies: []

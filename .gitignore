@@ -12,3 +12,5 @@
 *.userprefs
 *.pidb
 *.booproj
+
+.vs

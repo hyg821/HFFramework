@@ -2,9 +2,9 @@
 /HFFramework/[Tt]emp/
 /HFFramework/[Oo]bj/
 /HFFramework/[Bb]uild/
-/HFFramework/StreamingAssets/AssetBundles/
-/HFFramework/StreamingAssets/DLL/
-/HFFramework/StreamingAssets/HotFixResources/
+/HFFramework/Assets/StreamingAssets/AssetBundles/
+/HFFramework/Assets/StreamingAssets/DLL/
+/HFFramework/Assets/StreamingAssets/HotFixResources/
 /HotFix/bin/
 /HotFix/obj/
 /HotFix/Properties/

@@ -45,7 +45,7 @@ public class ILRuntimeCLRBinding
         Debug.Log("开始自动分析");
         //用新的分析热更dll调用引用来生成绑定代码
         ILRuntime.Runtime.Enviorment.AppDomain domain = new ILRuntime.Runtime.Enviorment.AppDomain();
-        using (System.IO.FileStream fs = new System.IO.FileStream("Assets/StreamingAssets/DLL/"+GameEnvironment.HotFixDLLName+ ".dll", System.IO.FileMode.Open, System.IO.FileAccess.Read))
+        using (System.IO.FileStream fs = new System.IO.FileStream("Assets/StreamingAssets/DLL/"+ GameConst.HotFixDLLName+ ".dll", System.IO.FileMode.Open, System.IO.FileAccess.Read))
         {
             domain.LoadAssembly(fs);
         }

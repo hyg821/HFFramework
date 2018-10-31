@@ -11,9 +11,6 @@ namespace HFFramework
     {
         public const string customPath = "GameData";
 
-        //读写锁
-        private static ReaderWriterLockSlim LogWriteLock = new ReaderWriterLockSlim();
-
         public static UtilsManager Instance;
 
         public static string RootPath;

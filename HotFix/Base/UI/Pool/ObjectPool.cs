@@ -8,7 +8,7 @@ namespace HotFix
     {
         public string name;
 
-        public Queue<IPoolInterface> pool = new Queue<IPoolInterface>();
+        public Queue<IPool> pool = new Queue<IPool>();
 
         private ObjectPool()
         {
@@ -24,7 +24,7 @@ namespace HotFix
         ///  吃一个对象
         /// </summary>
         /// <param name="i"></param>
-        public void Eat(IPoolInterface i)
+        public void Eat(IPool i)
         {
             pool.Enqueue(i);
             i.BeEat();
@@ -34,11 +34,11 @@ namespace HotFix
         ///  吐一个对象
         /// </summary>
         /// <returns></returns>
-        public IPoolInterface Vomiting()
+        public IPool Vomiting()
         {
             if (pool.Count>0)
             {
-                IPoolInterface i = pool.Dequeue();
+                IPool i = pool.Dequeue();
                 i.BeVomiting();
                 return  i;
             }

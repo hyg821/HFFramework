@@ -6,10 +6,6 @@ namespace HFFramework
 {
     public class GameConst : MonoBehaviour
     {
-        // Use this for initialization
-        void Start()
-        {
-
-        }
+        public const string HotFixDLLName = "HotFix";
     }
 }

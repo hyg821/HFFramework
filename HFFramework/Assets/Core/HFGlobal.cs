@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using BestHTTP;
 
 namespace HFFramework
 {
@@ -135,6 +136,7 @@ namespace HFFramework
 
         public void DestroyManager()
         {
+            HTTPManager.OnQuit();
             GameFactory.Instance.DestroyManager();
             GameEnvironment.Instance.DestroyManager();
             HAResourceManager.Instance.DestroyManager();

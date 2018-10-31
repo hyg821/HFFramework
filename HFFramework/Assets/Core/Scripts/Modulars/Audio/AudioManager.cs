@@ -62,7 +62,7 @@ namespace HFFramework
         /// </summary>
         public List<AudioPlayer> audioPlayerPool = new List<AudioPlayer>();
 
-        private float musicVolume;
+        private float musicVolume=1;
         /// <summary>
         ///  主音乐音量
         /// </summary>
@@ -79,11 +79,12 @@ namespace HFFramework
             }
             get
             {
+                musicVolume = PlayerPrefs.GetFloat(MusicVolumeDefine, 1);
                 return musicVolume;
             }
         }
 
-        private float effectVolume;
+        private float effectVolume=1;
         /// <summary>
         /// 效果声音音量
         /// </summary>
@@ -106,11 +107,12 @@ namespace HFFramework
             }
             get
             {
+                effectVolume = PlayerPrefs.GetFloat(EffectVolumeDefine, 1);
                 return effectVolume;
             }
         }
 
-        private float freeVolume;
+        private float freeVolume=1;
         /// <summary>
         ///  自有声音音量
         /// </summary>
@@ -128,6 +130,7 @@ namespace HFFramework
             }
             get
             {
+                freeVolume = PlayerPrefs.GetFloat(FreeVolumeDefine, 1);
                 return freeVolume;
             }
         }
@@ -135,23 +138,6 @@ namespace HFFramework
         void Awake()
         {
             Instance = this;
-            if (!PlayerPrefs.HasKey(EffectVolumeDefine))
-            {
-                EffectVolume = 1;
-            }
-            else
-            {
-                EffectVolume = PlayerPrefs.GetFloat(EffectVolumeDefine);
-            }
-
-            if (!PlayerPrefs.HasKey(MusicVolumeDefine))
-            {
-                MusicVolume = 1;
-            }
-            else
-            {
-                MusicVolume = PlayerPrefs.GetFloat(MusicVolumeDefine);
-            }
         }
 
 
@@ -167,14 +153,17 @@ namespace HFFramework
 
             if (type == SoundType.Music)
             {
+                player.Volume = MusicVolume;
                 audioDic.Add(name, player);
             }
             else if (type == SoundType.Effect)
             {
+                player.Volume = EffectVolume;
                 audioEffectDic.Add(name, player);
             }
             else if (type == SoundType.Free)
             {
+                player.Volume = FreeVolume;
                 audioPlayerPool.Add(player);
             }
             return player;

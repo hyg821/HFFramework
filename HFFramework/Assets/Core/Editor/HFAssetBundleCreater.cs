@@ -354,7 +354,7 @@ namespace HFFramework
         public static void ReNameDLL()
         {
             string str = "/GameResources/Game/DLL"+AssetFolderIde+"/";
-            string target = GameEnvironment.HotFixDLLName+ ".dll";
+            string target = GameConst.HotFixDLLName+ ".dll";
             string sourcePath = Application.streamingAssetsPath + "/DLL/" + target;
             string reNamePath = Application.dataPath + str + target + ".bytes";
             File.Copy(sourcePath, reNamePath, true);

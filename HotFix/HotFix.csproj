@@ -253,7 +253,7 @@
     <Compile Include="Base\BaseElement.cs" />
     <Compile Include="Base\HotFixHelper.cs" />
     <Compile Include="Base\Singleton.cs" />
-    <Compile Include="Base\UI\Pool\IPoolInterface.cs" />
+    <Compile Include="Base\UI\Pool\IPool.cs" />
     <Compile Include="Base\UI\Pool\ObjectPool.cs" />
     <Compile Include="Base\UI\Pool\ObjectPoolManager.cs" />
     <Compile Include="Base\UI\TableView\BigList.cs" />

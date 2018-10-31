@@ -10,7 +10,7 @@ public class HotFixEnter
 
     public static void Update()
     {
-        //Debug.Log("热更新执行Update");
+        // Debug.Log("热更新执行Update");
     }
 
     public static void FixedUpdate()

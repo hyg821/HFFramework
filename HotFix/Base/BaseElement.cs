@@ -235,6 +235,18 @@ namespace HotFix
             return transform.Find(path).GetComponent<T>();
         }
 
+        public T AutoFind<T>(string path)
+        {
+            if (String.IsNullOrEmpty(path))
+            {
+                return gameObject.GetComponent<T>();
+            }
+            else
+            {
+                return transform.Find(path).GetComponent<T>();
+            }
+        }
+
         public T AddCompoment<T>() where T : BaseElement ,new()
         {
             T t1 = BaseElement.CreateElementWithGameObject<T>(gameObject);

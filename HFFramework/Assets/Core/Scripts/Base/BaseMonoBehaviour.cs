@@ -82,6 +82,11 @@ namespace HFFramework
             gameObjectTag = gameObject.tag;
         }
 
+        public virtual void FindElement()
+        {
+
+        }
+
         /// <summary>
         ///  发送消息
         /// </summary>
@@ -109,6 +114,18 @@ namespace HFFramework
         public T FindChild<T>(string path)
         {
             return myTransform.Find(path).GetComponent<T>();
+        }
+
+        public T AutoFind<T>(string path)
+        {
+            if (String.IsNullOrEmpty(path))
+            {
+                return gameObject.GetComponent<T>();
+            }
+            else
+            {
+                return myTransform.Find(path).GetComponent<T>();
+            }
         }
 
         /// <summary>

@@ -40,6 +40,10 @@ namespace HFFramework
                 {
                     string P = item.propertyName;
                     string T = item.TName;
+                    if (string.IsNullOrEmpty(P)||string.IsNullOrEmpty(T))
+                    {
+                        continue;
+                    }
                     str.AppendLine("        public " + T + " " + P+";");
                 }
                 str.AppendLine("        #region");
@@ -49,6 +53,10 @@ namespace HFFramework
                 {
                     string P = item.propertyName;
                     string T = item.TName;
+                    if (string.IsNullOrEmpty(P)|| string.IsNullOrEmpty(T))
+                    {
+                        continue;
+                    }
                     if (T == "GameObject")
                     {
                         str.AppendLine("            "+P + " = " + "FindChild" + "(\"" + GetRelativePath(this,item) + "\");");

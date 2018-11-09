@@ -9,7 +9,7 @@ public class HFOpenAssetHandler
     /// <summary>
     ///  ide路径
     /// </summary>
-    public const string emacsPath = "E://Microsoft VS Code/Code";
+    public const string emacsPath = "D://VSCode/Code";
 
     /// <summary>
     ///  使用自定义ide 打开的扩展名

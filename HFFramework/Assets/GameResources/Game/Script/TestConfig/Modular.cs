@@ -9,79 +9,73 @@ using HFFramework;
 namespace Config
 { 
     [System.Serializable]
-    public class Goods
+    public class Modular
     { 
         /// <summary>
-        /// 商品id
+        /// 道具id
         /// <summary>
-        public int goodsId;
+        public int id;
         /// <summary>
-        /// 所属商城
+        /// 名称
         /// <summary>
-        public int shopType;
+        public string name;
         /// <summary>
-        /// 商品
+        /// 描述
         /// <summary>
-        public string goods;
+        public string description;
         /// <summary>
-        /// 商品类型
+        /// 道具icon
         /// <summary>
-        public int goodsType;
+        public string itemIcon;
         /// <summary>
-        /// 每日最大购买数量
+        /// icon路径
         /// <summary>
-        public int dailymaxNum;
+        public string iconPath;
         /// <summary>
-        /// 支付道具1
+        /// 类别
         /// <summary>
-        public string payItem1;
-        /// <summary>
-        /// 支付道具2
-        /// <summary>
-        public string payItem2;
-        /// <summary>
-        /// 人民币价格
-        /// <summary>
-        public int RMBPrice;
+        public List<int>type = new List<int>();
     }
 
     [System.Serializable]
-    public class ConfigGoods
+    public class ConfigModular
     { 
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static ConfigGoods instance;
-        public static ConfigGoods Instance
+        private static ConfigModular instance;
+        public static ConfigModular Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new ConfigGoods ();
+                     instance = new ConfigModular ();
                 } 
                 return instance;
             } 
         } 
 
-        public Dictionary<int , Goods> dic = new Dictionary<int , Goods>();
+        public Dictionary<int , Modular> dic = new Dictionary<int , Modular>();
 
-        public List<Goods> list = new List<Goods>();
+        public List<Modular> list = new List<Modular>();
 
-        public Goods Get(int id)
+        public  static Modular Get(int id)
         {
-            Goods temp;
-            dic.TryGetValue(id, out temp);
+            Modular temp;
+            Instance.dic.TryGetValue(id, out temp);
             return temp;
         }
 
         public void StartAnalysis()
         {
             AssetBundlePackage package = HAResourceManager.Instance.LoadAssetBundleFromFile("Config");
-            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("Goods");
+            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("Modular");
             StringReader reader = new StringReader(textAsset.text);
             string notes = reader.ReadLine();
             string names = reader.ReadLine();
+            reader.ReadLine();
+            reader.ReadLine();
             string types = reader.ReadLine();
             while (true)
             {
@@ -93,16 +87,20 @@ namespace Config
                 string[] strs = row.Split(split, StringSplitOptions.None);
                 if (strs.Length > 0)
                 {
-                    Goods config = new Goods();
-                    int.TryParse(strs[0], out config.goodsId);
-                    int.TryParse(strs[1], out config.shopType);
-                    config.goods = strs[2];
-                    int.TryParse(strs[3], out config.goodsType);
-                    int.TryParse(strs[4], out config.dailymaxNum);
-                    config.payItem1 = strs[5];
-                    config.payItem2 = strs[6];
-                    int.TryParse(strs[7], out config.RMBPrice);
-                    dic.Add(config.goodsId, config );
+                    Modular config = new Modular();
+                    int.TryParse(strs[0], out config.id);
+                    config.name = strs[1];
+                    config.description = strs[2];
+                    config.itemIcon = strs[3];
+                    config.iconPath = strs[4];
+                    string[] air = strs[5].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);
+                    for (int x = 0; x < air.Length; x++)
+                    {
+                       int ite = 0;
+                       int.TryParse(air[x], out ite);
+                       config.type.Add(ite);
+                     }
+                    dic.Add(config.id, config );
                     list.Add(config);
                }
            }

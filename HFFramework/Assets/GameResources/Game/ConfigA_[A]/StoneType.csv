@@ -1,6 +1,0 @@
-id,魂石类型,类型icon,类型icon路径
-id,stoneType,typeIcon,typeiconPath
-int,int,string,string
-1,1,prop_999,common_sprite_prop
-2,2,prop_999,common_sprite_prop
-3,3,prop_999,common_sprite_prop

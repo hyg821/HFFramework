@@ -287,6 +287,12 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>D:/Unity2017/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>D:/Unity2017/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Plugins\Sirenix\Demos\Odin Inspector\Scripts\Attribute Examples\AssetListExamples.cs" />
@@ -374,7 +380,6 @@
     <None Include="Assets\Core\Shader\UIGrayETCDefault.shader" />
     <None Include="Assets\Core\Shader\UIMask.shader" />
     <None Include="Assets\Core\Shader\UIShine.shader" />
-    <None Include="Assets\GameResources\Game\ConfigA_[A]\SpineExchangeConfig.txt" />
     <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Shaders\Unlit-Alpha-Cull-off.shader" />
     <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Shaders\VertexLitOneDirectional.shader" />
     <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Shaders\VisibleInsideMask.shader" />

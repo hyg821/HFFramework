@@ -73,19 +73,32 @@ namespace Config
 
             StringReader reader = new StringReader(_content);
 
+            //第一行 中文名字
             string cNames = reader.ReadLine();
+
+            //第二行 代码属性名字
             string propertys = reader.ReadLine();
+
+            //第三行 值类型还是引用类型
+            string valueRef = reader.ReadLine();
+
+            //第四行 单个 还是 数组 
+            string singleArray = reader.ReadLine();
+
+            //第五航 属性的类型  int float custom..
             string types = reader.ReadLine();
 
             string[] cNameList;
+            string[] valueRefList;
+            string[] singleArrayList;
             string[] propertyList;
             string[] typeList;
 
             cNameList = cNames.Split(split, StringSplitOptions.None);
             _column = cNameList.Length;
-
+            valueRefList = valueRef.Split(split, StringSplitOptions.None);
+            singleArrayList = singleArray.Split(split, StringSplitOptions.None);
             propertyList = propertys.Split(split, StringSplitOptions.None);
-
             typeList = types.Split(split, StringSplitOptions.None);
 
             StringBuilder builder = new StringBuilder();
@@ -108,21 +121,35 @@ namespace Config
                 string property = propertyList[i];
                 string type = typeList[i].ToLower();
                 string note = cNameList[i] ;
-                
+                string sa = singleArrayList[i];
+                string vf = valueRefList[i];
+
                 builder.AppendLine("        /// <summary>");
                 builder.AppendLine("        /// "+ note);
                 builder.AppendLine("        /// <summary>");
 
-                if (type.Contains("array"))
+                if (sa == "array")
                 {
-                    string [] typsc = type.Split(arraySplit, StringSplitOptions.RemoveEmptyEntries);
-                    builder.AppendLine("        public List<" + typsc[1] + @">"+ property+" = new List<" + typsc[1] + @">();");
+                    builder.AppendLine("        public List<" + type + @">"+ property+" = new List<" + type + @">();");
                 }
-                else
+                else if (sa == "single")
                 {
                     builder.AppendLine("        public " + type + " " + property + ";");
+                    if (vf.Contains("ref"))
+                    {
+                        string[] valueRefTempList = vf.Split('_');
+                        if (valueRefTempList.Length>1)
+                        {
+                            builder.AppendLine("        public " + valueRefTempList[1] + " " + FirstCharToUpper(property));
+                            builder.AppendLine("        { ");
+                            builder.AppendLine("            get ");
+                            builder.AppendLine("            { ");
+                            builder.AppendLine("                return " + "Config" +valueRefTempList[1]+ ".Get("+ property + ");");
+                            builder.AppendLine("            } ");
+                            builder.AppendLine("        } ");
+                        }
+                    }
                 }
-
             }
             builder.AppendLine("    }");
 
@@ -154,10 +181,10 @@ namespace Config
             builder.AppendLine("        public List<" + _class + @"> list = new List<"+ _class + @">();");
             builder.AppendLine();
 
-            builder.AppendLine("        public "+_class+" Get("+ typeList[0]+" id)");
+            builder.AppendLine("        public  static "+_class+" Get("+ typeList[0]+" id)");
             builder.AppendLine("        {");
             builder.AppendLine("            "+ _class+" temp;");
-            builder.AppendLine("            dic.TryGetValue(id, out temp);");
+            builder.AppendLine("            Instance."+"dic.TryGetValue(id, out temp);");
             builder.AppendLine("            return temp;");
             builder.AppendLine("        }");
 
@@ -169,6 +196,8 @@ namespace Config
             builder.AppendLine(@"            StringReader reader = new StringReader(textAsset.text);");
             builder.AppendLine(@"            string notes = reader.ReadLine();");
             builder.AppendLine(@"            string names = reader.ReadLine();");
+            builder.AppendLine(@"            reader.ReadLine();");
+            builder.AppendLine(@"            reader.ReadLine();");
             builder.AppendLine(@"            string types = reader.ReadLine();");
             builder.AppendLine(@"            while (true)");
             builder.AppendLine(@"            {");
@@ -186,15 +215,14 @@ namespace Config
             {
                 string m_type = typeList[i];
                 string m_property = propertyList[i];
+                string m_sa = singleArrayList[i];
 
-                if (m_type.Contains("array"))
+                if (m_sa == "array")
                 {
-                    string[] air = m_type.Split(arraySplit, StringSplitOptions.RemoveEmptyEntries);
-                    string n_type = air[1];
                     builder.AppendLine(@"                    string[] air = strs[" + i + "].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);");
                     builder.AppendLine(@"                    for (int x = 0; x < air.Length; x++)");
                     builder.AppendLine(@"                    {");
-                    switch (n_type)
+                    switch (m_type)
                     {
                         case "string":
                             builder.AppendLine(@"                       config." + m_property+ ".Add(air[x]);");
@@ -219,7 +247,7 @@ namespace Config
                     }
                     builder.AppendLine(@"                     }");
                 }
-                else
+                else if(m_sa == "single")
                 {
                     switch (m_type)
                     {
@@ -317,6 +345,12 @@ namespace Config
                 f.Write(b, 0, b.Length);
             }
         }
+
+        public  static string FirstCharToUpper(string str)
+        {
+            return str.Substring(0, 1).ToUpper() + str.Substring(1);
+        }
+
     }
 }
 

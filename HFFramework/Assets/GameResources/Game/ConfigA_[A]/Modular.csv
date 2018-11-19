@@ -1,0 +1,10 @@
+道具id,名称,描述,道具icon,icon路径,类别
+id,name,description,itemIcon,iconPath,type
+val,val,val,val,val,val
+single,single,single,single,single,array
+int,string,string,string,string,int
+10001,经验,经验,prop_999,common_sprite_prop,1;2;3;4;5
+10002,钻石,钻石,prop_999,common_sprite_prop,0
+10003,金币,金币,prop_999,common_sprite_prop,0
+10004,升级点,升级点,prop_999,common_sprite_prop,0
+10005,汽油,汽油,prop_999,common_sprite_prop,0

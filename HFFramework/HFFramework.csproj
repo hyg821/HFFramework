@@ -287,6 +287,12 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/ProgramData/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>D:/Unity2017/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>D:/Unity2017/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="HFFramework.Plugins.csproj">
@@ -652,39 +658,9 @@
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\UtilsManager.cs" />
     <Compile Include="Assets\Core\Scripts\ScriptableObject\ScriptableObjectTestA.cs" />
     <Compile Include="Assets\Core\Template\ReflectionBehaviourMethod.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\BuffEffect.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\BuffShow.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\Cardlvgrowcost.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\Composite.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\DamDef.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\Decomposition.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\Equipment.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\EquipmentStrengthen.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\Goods.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\GuildGoods.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\GuildLevelup.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\GuildMission.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\GuildMissionAndTeamLv.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\GuildShop.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\GuildWelfareTechnology.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\HangingCheckPoint.cs" />
     <Compile Include="Assets\GameResources\Game\Script\TestConfig\HFConfigManager.cs" />
     <Compile Include="Assets\GameResources\Game\Script\TestConfig\Item.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\LocalizationConfig_CN.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\Monster.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\Recruit.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\Refuge.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\RoleAwake.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\RoleBasics.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\RoleBreak.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\Score.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\Shop.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\Skill.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\SkillShow.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\SpineEquipment.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\StoneCombination.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\StoneType.cs" />
-    <Compile Include="Assets\GameResources\Game\Script\TestConfig\UI.cs" />
+    <Compile Include="Assets\GameResources\Game\Script\TestConfig\Modular.cs" />
     <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Scripts\CharacterMotion.cs" />
     <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Scripts\Follow.cs" />
     <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Scripts\SkinnedMeshCombiner.cs" />
@@ -1895,7 +1871,6 @@
     <None Include="Assets\Core\Shader\UIGrayETCDefault.shader" />
     <None Include="Assets\Core\Shader\UIMask.shader" />
     <None Include="Assets\Core\Shader\UIShine.shader" />
-    <None Include="Assets\GameResources\Game\ConfigA_[A]\SpineExchangeConfig.txt" />
     <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Shaders\Unlit-Alpha-Cull-off.shader" />
     <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Shaders\VertexLitOneDirectional.shader" />
     <None Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Shaders\VisibleInsideMask.shader" />

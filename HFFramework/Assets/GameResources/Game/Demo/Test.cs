@@ -7,7 +7,7 @@ public class Test : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 1; i++)
         {
             UIManager.Instance.AddCanvas(i);
         }

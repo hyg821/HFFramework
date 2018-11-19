@@ -3,4 +3,4 @@ Type,LayerIndex,AssetbundleName,AssetName,ShowAnimation,HideAnimation,ClassName
 val,val,val,val,val,val,val
 single,single,single,single,single,single,single
 string,int,string,string,string,string,string
-Login,1,ui_prefab,LoginView,1,1,LoginController
+Login,0,ui_prefab,LoginView,1,1,LoginController

@@ -10,6 +10,7 @@ public class Test : MonoBehaviour {
 	void Start () {
         HFConfigManager.Instance.Init();
         print(ConfigItem.Get(10001).Module.id);
+        print(ConfigItem.Get(10001).Module.type.Count);
 	}
 	
 	// Update is called once per frame

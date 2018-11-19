@@ -93,8 +93,8 @@ namespace HFFramework
         public void InitWithRootPath(string resourceRootPath, string resourceSpareRootPath, string mainfestName)
         {
 
-            HFLog.C("正式资源地址" + resourceRootPath);
-            HFLog.C("备用资源地址" + resourceSpareRootPath);
+            print("正式资源地址" + resourceRootPath);
+            print("备用资源地址" + resourceSpareRootPath);
             Caching.ClearCache();
 
             if (!string.IsNullOrEmpty(resourceRootPath) && !string.IsNullOrEmpty(resourceSpareRootPath))
@@ -273,7 +273,7 @@ namespace HFFramework
             if (!allAssetBundleDic.ContainsKey(assetBundleName))
             {
                 AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(assetBundleName, false));
-                HFLog.L("同步加载AssetBundle   " + assetBundleName);
+                //HFLog.L("同步加载AssetBundle   " + assetBundleName);
                 AssetBundlePackage tmpAssetBundle = new AssetBundlePackage(bundle, assetBundleName);
                 AddAssetBundleToDic(tmpAssetBundle);
                 return tmpAssetBundle;
@@ -318,7 +318,7 @@ namespace HFFramework
             if (!allAssetBundleDic.ContainsKey(assetBundleName))
             {
                 AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(AutoGetResourcePath(assetBundleName, false));
-                HFLog.L("异步加载AssetBundle   " + assetBundleName);
+                //HFLog.L("异步加载AssetBundle   " + assetBundleName);
                 yield return request;
                 if (!allAssetBundleDic.ContainsKey(assetBundleName))
                 {
@@ -329,7 +329,7 @@ namespace HFFramework
             }
             else
             {
-                HFLog.L("异步 通过缓存加载");
+                //HFLog.L("异步 通过缓存加载");
             }
         }
 
@@ -426,10 +426,6 @@ namespace HFFramework
             {
                 allAssetBundleDic.Add(bundle.name, bundle);
             }
-            else
-            {
-                HFLog.L("资源加载重复");
-            }
         }
 
         public AssetBundlePackage GetAssetBundleWithName(string name)
@@ -470,7 +466,7 @@ namespace HFFramework
             AssetBundlePackage bundle = GetAssetBundleWithName(name);
             if (bundle != null)
             {
-                HFLog.L("卸载Assetbundle  " + bundle.name);
+                //HFLog.L("卸载Assetbundle  " + bundle.name);
                 bundle.Unload(b);
                 allAssetBundleDic.Remove(name);
             }
@@ -498,7 +494,7 @@ namespace HFFramework
         {
             if (bundle != null && !string.IsNullOrEmpty(bundle.name))
             {
-                HFLog.L("卸载Assetbundle  " + bundle.name);
+                //HFLog.L("卸载Assetbundle  " + bundle.name);
                 allAssetBundleDic.Remove(bundle.name);
                 bundle.Unload(b);
             }

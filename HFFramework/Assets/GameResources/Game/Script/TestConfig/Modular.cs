@@ -107,6 +107,7 @@ namespace Config
            notes = null;
            names = null;
            types = null;
+           reader.Close();
         }
     }
 }

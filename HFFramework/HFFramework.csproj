@@ -658,6 +658,7 @@
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\UtilsManager.cs" />
     <Compile Include="Assets\Core\Scripts\ScriptableObject\ScriptableObjectTestA.cs" />
     <Compile Include="Assets\Core\Template\ReflectionBehaviourMethod.cs" />
+    <Compile Include="Assets\GameResources\Game\Demo\Test.cs" />
     <Compile Include="Assets\GameResources\Game\Script\TestConfig\HFConfigManager.cs" />
     <Compile Include="Assets\GameResources\Game\Script\TestConfig\Item.cs" />
     <Compile Include="Assets\GameResources\Game\Script\TestConfig\Modular.cs" />

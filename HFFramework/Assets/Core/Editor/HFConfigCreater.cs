@@ -276,6 +276,7 @@ namespace Config
             builder.AppendLine(@"           notes = null;");
             builder.AppendLine(@"           names = null;");
             builder.AppendLine(@"           types = null;");
+            builder.AppendLine(@"           reader.Close();");
             builder.AppendLine(@"        }");
             builder.AppendLine(@"    }");
             builder.AppendLine(@"}");

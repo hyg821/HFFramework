@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Config;
 
 namespace HFFramework
 {
@@ -12,7 +13,19 @@ namespace HFFramework
     /// <typeparam name="M"></typeparam>
     public class UIController : UIBase 
     {
-        public UIConfig config;
+        private UI config;
+        public UI Config
+        {
+            set
+            {
+                config = value;
+                SetParent(UIManager.Instance.GetCanvas(config.LayerIndex), false);
+            }
+            get
+            {
+                return config;
+            }
+        }
 
         public override void OnAwake()
         {

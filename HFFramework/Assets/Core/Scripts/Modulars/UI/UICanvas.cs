@@ -59,7 +59,7 @@ namespace HFFramework
             canvas.renderMode = RenderMode.ScreenSpaceCamera;
 
             canvasScaler = gameObject.GetComponent<CanvasScaler>();
-            canvasScaler.referenceResolution = new Vector2(GameSetter.Instance.ServerSceneWidth, GameSetter.Instance.ServerSceneHeight);
+            canvasScaler.referenceResolution = new Vector2(GameEnvironment.Instance.ServerSceneWidth, GameEnvironment.Instance.ServerSceneHeight);
             canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         }
 
@@ -79,7 +79,7 @@ namespace HFFramework
         {
             if (canvasScaler != null)
             {
-                if (((Screen.width + 0.0f) / (Screen.height + 0.0f)) > (GameSetter.Instance.ServerSceneWidth / GameSetter.Instance.ServerSceneHeight))
+                if (((Screen.width + 0.0f) / (Screen.height + 0.0f)) > (GameEnvironment.Instance.ServerSceneWidth / GameEnvironment.Instance.ServerSceneHeight))
                 {
                     canvasScaler.matchWidthOrHeight = 1f;
                 }

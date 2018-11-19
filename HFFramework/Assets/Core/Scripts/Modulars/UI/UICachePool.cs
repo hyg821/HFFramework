@@ -42,10 +42,10 @@ namespace HFFramework
         public void Add(UIController controller)
         {
             List<UIController> list = null;
-            if (!cacheDic.TryGetValue(controller.config.Type, out list))
+            if (!cacheDic.TryGetValue(controller.Config.Type, out list))
             {
                 list = new List<UIController>();
-                cacheDic.Add(controller.config.Type, list);
+                cacheDic.Add(controller.Config.Type, list);
             }
             list.Add(controller);
             controller.SetParent(this);

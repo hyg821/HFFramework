@@ -65,6 +65,7 @@ namespace HFFramework
         {
             GameObject prefab = HAResourceManager.Instance.GetPrefab(assetPackageName, assetName);
             temp = GameObject.Instantiate(prefab);
+            temp.name = assetName;
             return temp.GetComponent<T>();
         }
 

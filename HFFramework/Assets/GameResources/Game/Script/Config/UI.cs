@@ -9,71 +9,64 @@ using HFFramework;
 namespace Config
 { 
     [System.Serializable]
-    public class Item
+    public class UI
     { 
         /// <summary>
-        /// 道具id
+        /// 类型
         /// <summary>
-        public int id;
+        public string Type;
         /// <summary>
-        /// 名称
+        /// 层级
         /// <summary>
-        public string name;
+        public int LayerIndex;
         /// <summary>
-        /// 描述
+        /// 包名
         /// <summary>
-        public string description;
+        public string AssetbundleName;
         /// <summary>
-        /// 道具icon
+        /// 资源名字
         /// <summary>
-        public string itemIcon;
+        public string AssetName;
         /// <summary>
-        /// icon路径
+        /// 显示动画
         /// <summary>
-        public string iconPath;
+        public string ShowAnimation;
         /// <summary>
-        /// 类别
+        /// 消失动画
         /// <summary>
-        public List<int>type = new List<int>();
+        public string HideAnimation;
         /// <summary>
-        /// 模块
+        /// 类名
         /// <summary>
-        public int module;
-        public Modular Module
-        { 
-            get 
-            { 
-                return ConfigModular.Get(module);
-            } 
-        } 
+        public string ClassName;
     }
 
     [System.Serializable]
-    public class ConfigItem
+    public class ConfigUI
     { 
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static ConfigItem instance;
-        public static ConfigItem Instance
+        private static ConfigUI instance;
+        public static ConfigUI Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new ConfigItem ();
+                     instance = new ConfigUI ();
                 } 
                 return instance;
             } 
         } 
 
-        public Dictionary<int , Item> dic = new Dictionary<int , Item>();
+        public Dictionary<string , UI> dic = new Dictionary<string , UI>();
 
-        public List<Item> list = new List<Item>();
+        public List<UI> list = new List<UI>();
 
-        public  static Item Get(int id)
+        public  static UI Get(string id)
         {
-            Item temp;
+            UI temp;
             Instance.dic.TryGetValue(id, out temp);
             return temp;
         }
@@ -81,7 +74,7 @@ namespace Config
         public void StartAnalysis()
         {
             AssetBundlePackage package = HAResourceManager.Instance.LoadAssetBundleFromFile("Config");
-            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("Item");
+            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("UI");
             StringReader reader = new StringReader(textAsset.text);
             string notes = reader.ReadLine();
             string names = reader.ReadLine();
@@ -98,21 +91,15 @@ namespace Config
                 string[] strs = row.Split(split, StringSplitOptions.None);
                 if (strs.Length > 0)
                 {
-                    Item config = new Item();
-                    int.TryParse(strs[0], out config.id);
-                    config.name = strs[1];
-                    config.description = strs[2];
-                    config.itemIcon = strs[3];
-                    config.iconPath = strs[4];
-                    string[] air = strs[5].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);
-                    for (int x = 0; x < air.Length; x++)
-                    {
-                       int ite = 0;
-                       int.TryParse(air[x], out ite);
-                       config.type.Add(ite);
-                     }
-                    int.TryParse(strs[6], out config.module);
-                    dic.Add(config.id, config );
+                    UI config = new UI();
+                    config.Type = strs[0];
+                    int.TryParse(strs[1], out config.LayerIndex);
+                    config.AssetbundleName = strs[2];
+                    config.AssetName = strs[3];
+                    config.ShowAnimation = strs[4];
+                    config.HideAnimation = strs[5];
+                    config.ClassName = strs[6];
+                    dic.Add(config.Type, config );
                     list.Add(config);
                }
            }

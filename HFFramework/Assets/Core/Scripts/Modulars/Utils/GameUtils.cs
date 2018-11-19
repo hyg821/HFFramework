@@ -7,11 +7,11 @@ using System.Threading;
 
 namespace HFFramework
 {
-    public class UtilsManager : MonoBehaviour,IManager
+    public class GameUtils : MonoBehaviour,IManager
     {
         public const string customPath = "GameData";
 
-        public static UtilsManager Instance;
+        public static GameUtils Instance;
 
         public static string RootPath;
 
@@ -79,7 +79,7 @@ namespace HFFramework
         /// <returns></returns>
         public static int GetFileCountInFolder(string folderName, bool isRelative = true)
         {
-            DirectoryInfo logFolder = new DirectoryInfo(UtilsManager.GetPath(folderName, true));
+            DirectoryInfo logFolder = new DirectoryInfo(GameUtils.GetPath(folderName, true));
             return logFolder.GetFiles().Length;
         }
 
@@ -151,7 +151,7 @@ namespace HFFramework
         public static void AsyncReadFile(string folderName, Action<string> callback, bool isRelative = true)
         {
             string path = GetPath(folderName, isRelative);
-            UtilsManager.Instance.StartCoroutine(UtilsManager.Instance.AsyncRead(path, callback));
+            GameUtils.Instance.StartCoroutine(GameUtils.Instance.AsyncRead(path, callback));
         }
 
       

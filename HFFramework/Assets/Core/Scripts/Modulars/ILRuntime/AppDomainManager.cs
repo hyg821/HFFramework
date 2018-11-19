@@ -94,7 +94,7 @@ namespace HFFramework
             {
                 appdomain = new ILRuntime.Runtime.Enviorment.AppDomain();
                 //如果是debug  那么就从streamAsset读取
-                if (GameEnvironment.Instance.runtimeEnvironment == GameEnvironmentEnum.Develop)
+                if (GameEnvironment.Instance.RuntimeEnvironment == GameEnvironmentType.Develop)
                 {
                     HAResourceManager.Instance.EditorLoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
                 }

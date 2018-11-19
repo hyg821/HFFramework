@@ -15,7 +15,7 @@ namespace HFFramework
     {
         public const string logFolderName = "Log";
 
-        public StringBuilder logStr;
+        private StringBuilder logStr;
 
         public string timeTag;
 
@@ -23,14 +23,14 @@ namespace HFFramework
 
         private void Start()
         {
-            bool isNewCreate = UtilsManager.CreateFolder(logFolderName);
+            bool isNewCreate = GameUtils.CreateFolder(logFolderName);
             if (isNewCreate==false)
             {
-                int fileCount = UtilsManager.GetFileCountInFolder(logFolderName);
+                int fileCount = GameUtils.GetFileCountInFolder(logFolderName);
                 if (fileCount > cacheCount)
                 {
-                    UtilsManager.DeleteFolder(logFolderName);
-                    UtilsManager.CreateFolder(logFolderName);
+                    GameUtils.DeleteFolder(logFolderName);
+                    GameUtils.CreateFolder(logFolderName);
                 }
             }
 
@@ -40,7 +40,7 @@ namespace HFFramework
             timeTag = timeTag.Replace(@" ", "_");
             timeTag = timeTag.Replace(@":", "_");
             timeTag = timeTag + "Log.txt";
-            UtilsManager.WriteFile(timeTag, logStr.ToString());
+            GameUtils.WriteFile(timeTag, logStr.ToString());
             Application.logMessageReceived += LogMessageReceived;
         }
 
@@ -52,7 +52,7 @@ namespace HFFramework
             logStr.AppendLine(type.ToString());
             Task.Run(delegate ()
             {
-                UtilsManager.WriteFile(timeTag, logStr.ToString(), FileMode.Append);
+                GameUtils.WriteFile(timeTag, logStr.ToString(), FileMode.Append);
             });
         }
 

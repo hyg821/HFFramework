@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using BestHTTP;
+using Config;
 
 namespace HFFramework
 {
@@ -73,12 +74,15 @@ namespace HFFramework
                 //添加游戏工厂
                 gameObject.AddComponent<GameFactory>();
 
-                //添加游戏运行环境
-                gameObject.AddComponent<GameEnvironment>();
+                //负责提供路径
+                gameObject.AddComponent<PathManager>();
 
                 //资源加载
                 resourcesManager = GameFactory.Create<HAResourceManager>("ResourcesManager", true);
                 resourcesManager.InitWithRootPath(PathManager.Instance.PersistentDataPath + "AssetBundles", PathManager.Instance.StreamingAssetsPath + "AssetBundles", "AssetBundles");
+
+                //添加游戏运行环境 + 配置文件
+                gameObject.AddComponent<GameEnvironment>();
 
                 //2通知中心
                 notificationCenter = GameFactory.Create<NotificationCenter>("NotificationCenter", true);
@@ -110,14 +114,11 @@ namespace HFFramework
                 //添加时间控制者
                 gameObject.AddComponent<GameTimer>();
 
-                //添加游戏设置者
-                gameObject.AddComponent<GameSetter>();
-
                 //添加状态检查者
                 gameObject.AddComponent<GameStateChecker>();
 
                 //工具箱
-                gameObject.AddComponent<UtilsManager>();
+                gameObject.AddComponent<GameUtils>();
 
                 //添加状态检查者
                 gameObject.AddComponent<GameFlowController>();
@@ -150,9 +151,8 @@ namespace HFFramework
             AppDomainManager.Instance.DestroyManager();
             GameLooper.Instance.DestroyManager();
             GameTimer.Instance.DestroyManager();
-            GameSetter.Instance.DestroyManager();
             GameStateChecker.Instance.DestroyManager();
-            UtilsManager.Instance.DestroyManager();
+            GameUtils.Instance.DestroyManager();
             GameFlowController.Instance.DestroyManager();
             Clear();
         }

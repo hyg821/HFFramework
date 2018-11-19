@@ -1,0 +1,6 @@
+类型,层级,包名,资源名字,显示动画,消失动画,类名
+Type,LayerIndex,AssetbundleName,AssetName,ShowAnimation,HideAnimation,ClassName
+val,val,val,val,val,val,val
+single,single,single,single,single,single,single
+string,int,string,string,string,string,string
+Login,1,ui_prefab,LoginView,1,1,LoginController

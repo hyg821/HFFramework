@@ -18,8 +18,8 @@ namespace HFFramework
         {
             if (m_Camera != null)
             {
-                m_Camera.orthographicSize = GameSetter.Instance.ServerSceneWidth / 2 / 100;
-                m_Camera.aspect = GameSetter.Instance.ServerSceneWidth / GameSetter.Instance.ServerSceneHeight;
+                m_Camera.orthographicSize = GameEnvironment.Instance.ServerSceneWidth / 2 / 100;
+                m_Camera.aspect = GameEnvironment.Instance.ServerSceneWidth / GameEnvironment.Instance.ServerSceneHeight;
             }
         }
     }

@@ -17,7 +17,7 @@ namespace HFFramework
         /// <param name="str"></param>
         public static void L(string str)
         {
-            if (GameEnvironment.Instance.isOpenLog == true)
+            if (GameEnvironment.Instance.IsOpenLog == true)
             {
                 Debug.Log(str);
             }
@@ -28,9 +28,9 @@ namespace HFFramework
         /// </summary>
         public static void C(string str)
         {
-            if (GameEnvironment.Instance.isOpenLog == true)
+            if (GameEnvironment.Instance.IsOpenLog == true)
             {
-                Debug.Log(Time.frameCount+" : "+ UtilsManager.SetColor(str, constColor));
+                Debug.Log(Time.frameCount+" : "+ GameUtils.SetColor(str, constColor));
             }
         }
 
@@ -49,7 +49,7 @@ namespace HFFramework
         /// <param name="str"></param>
         public static void E(string str)
         {
-            if (GameEnvironment.Instance.isOpenLog == true)
+            if (GameEnvironment.Instance.IsOpenLog == true)
             {
                 Debug.LogError(str);
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using LitJson;
+using Config;
 
 namespace HFFramework
 {
@@ -24,33 +25,21 @@ namespace HFFramework
 
         public UICachePool cachePool;
 
-        public Dictionary<string, UIConfig> configDic = new Dictionary<string, UIConfig>(); 
-
-        public AssetBundlePackage assetBundlePackage;
-
         void Awake()
         {
             Instance = this;
-            LoadConfig();
             LoadScene();
         }
 
-        public void LoadConfig()
+        public UICanvas GetCanvas(int index)
         {
-            assetBundlePackage = HAResourceManager.Instance.LoadAssetBundleFromFile("hfui");
-            TextAsset text = assetBundlePackage.LoadAssetWithCache<TextAsset>("UIConfig.json");
-            UIConfigRoot root = JsonMapper.ToObject<UIConfigRoot>(text.text);
-            for (int i = 0; i < root.List.Count; i++)
-            {
-                UIConfig config = root.List[i];
-                configDic.Add(config.Type, config);
-            }
+            return canvasDic[index];
         }
 
         public void LoadScene()
         {
             ClearScene();
-            assetBundlePackage = HAResourceManager.Instance.LoadAssetBundleFromFile("hfui");
+            AssetBundlePackage assetBundlePackage = HAResourceManager.Instance.LoadAssetBundleFromFile("hfui");
             GameObject  prefab= assetBundlePackage.LoadAssetWithCache<GameObject>("UIRoot");
             GameObject temp = Instantiate(prefab);
             temp.name = RootName;
@@ -71,7 +60,7 @@ namespace HFFramework
             UICanvas uiCanvas;
             if (!canvasDic.TryGetValue(canvasLayerIndex, out uiCanvas))
             {
-                GameObject canvasPrefab = assetBundlePackage.LoadAssetWithCache<GameObject>("UICanvas");
+                GameObject canvasPrefab = HAResourceManager.Instance.GetPrefab("hfui","UICanvas");
                 GameObject canvasObject = Instantiate(canvasPrefab);
                 uiCanvas = canvasObject.AddComponent<UICanvas>();
                 uiCanvas.SetUICamera(UICamera);
@@ -88,14 +77,14 @@ namespace HFFramework
             UIController controller = cachePool.GetController(type);
             if (controller==null)
             {
-                UIConfig config = configDic[type];
+                UI config = ConfigUI.Get(type);
                 GameObject obj;
-                controller  =GameFactory.Create<T>(config.AssetbundleName, config.AssetName,out obj);     
-                controller.config = config;
+                controller  =GameFactory.Create<T>(config.AssetbundleName, config.AssetName,out obj);
                 if (controller==null)
                 {
                     controller = obj.AddComponent<T>();
                 }
+                controller.Config = config;
             }
             return controller as T;
         }
@@ -103,7 +92,6 @@ namespace HFFramework
         public void ClearScene()
         {
             canvasDic.Clear();
-            assetBundlePackage = null;
             UIRoot = null;
         }
 

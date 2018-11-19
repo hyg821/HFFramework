@@ -16,8 +16,8 @@ namespace HFFramework
 
         public void Start()
         {
-            camera.orthographicSize = GameSetter.Instance.ServerSceneWidth / 2 / 100;
-            camera.aspect = GameSetter.Instance.ServerSceneWidth / GameSetter.Instance.ServerSceneHeight;
+            camera.orthographicSize = GameEnvironment.Instance.ServerSceneWidth / 2 / 100;
+            //camera.aspect = GameEnvironment.Instance.setting.ServerSceneWidth / GameEnvironment.Instance.setting.ServerSceneHeight;
         }
     }
 }

@@ -13,8 +13,8 @@ namespace Config
         public static string[] split = new string[]{","};
         public static string[] arraySplit = new string[] { "[","]",";" };
 
-        public static string InputPath = "GameResources/Game/ConfigA_[A]";
-        public static string OutputPath = "GameResources/Game/Script/TestConfig";
+        public static string InputPath = "GameResources/Game/Config_[A]";
+        public static string OutputPath = "GameResources/Game/Script/Config";
 
         public static string ConfigAssetbundleName = "Config";
 

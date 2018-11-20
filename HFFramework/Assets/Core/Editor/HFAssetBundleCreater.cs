@@ -11,7 +11,6 @@ namespace HFFramework
 {
     public class HFAssetBundleCreater
     {
-
         public const string AssetFolderIde = "_[A]";
 
         public static Dictionary<string, string> assetbundleNameDic = new Dictionary<string, string>();
@@ -121,27 +120,19 @@ namespace HFFramework
         /// <returns></returns>
         private static string GetMD5HashFromFile(string fileName)
         {
-            try
-            {
-                FileStream file = new FileStream(fileName, FileMode.Open);
-                System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
-                byte[] retVal = md5.ComputeHash(file);
-                file.Dispose();
-                file.Close();
+            FileStream file = new FileStream(fileName, FileMode.Open);
+            System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            byte[] retVal = md5.ComputeHash(file);
+            file.Dispose();
+            file.Close();
 
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < retVal.Length; i++)
-                {
-                    sb.Append(retVal[i].ToString("x2"));
-                }
-                return sb.ToString();
-            }
-            catch (Exception ex)
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < retVal.Length; i++)
             {
-                throw new Exception("GetMD5HashFromFile() fail,error:" + ex.Message);
+                sb.Append(retVal[i].ToString("x2"));
             }
+            return sb.ToString();
         }
-
 
         /// <summary>
         ///  压缩 资源
@@ -151,7 +142,6 @@ namespace HFFramework
         {
             GoCompress(Application.streamingAssetsPath + "/AssetBundles", Application.streamingAssetsPath + "/HotFixResources" + "/AssetBundles");
         }
-
 
         public static void GoCompress(string SourceFile, string TartgetFile)
         {
@@ -258,7 +248,6 @@ namespace HFFramework
             return true;
         }
 
-
         [MenuItem("游戏辅助工具/AssetBundles/构建 单个Assetbundle")]
         static void BuildMiniGameAssetBundles()
         {
@@ -274,16 +263,9 @@ namespace HFFramework
 
             BuildSomeAssetBundles(Application.dataPath + "/StreamingAssets/SimpleAssetBundles", list.ToArray());
 
-            AssetDatabase.Refresh();
+            File.Delete(Application.dataPath + "/StreamingAssets/AssetBundlesMiniGame/" + "AssetBundlesMiniGame");
+            File.Delete(Application.dataPath + "/StreamingAssets/AssetBundlesMiniGame/" + "AssetBundlesMiniGame.manifest");
 
-            try
-            {
-                File.Delete(Application.dataPath + "/StreamingAssets/AssetBundlesMiniGame/" + "AssetBundlesMiniGame");
-                File.Delete(Application.dataPath + "/StreamingAssets/AssetBundlesMiniGame/" + "AssetBundlesMiniGame.manifest");
-            }
-            catch (Exception)
-            {
-            }
             AssetDatabase.Refresh();
         }
 
@@ -294,10 +276,10 @@ namespace HFFramework
             return j["Shield"];
         }
 
-
         static void BuildSomeAssetBundles(string outPath, AssetBundleBuild[] builds)
         {
             Caching.ClearCache();
+
             BuildTarget target;
 #if UNITY_STANDALONE_WIN
             target = BuildTarget.StandaloneWindows;
@@ -336,7 +318,6 @@ namespace HFFramework
             }
             return assetBundleNames;
         }
-
 
         [MenuItem("游戏辅助工具/AssetBundles/设置AssetbundleName")]
         public static void SetAssetbundlesNames()
@@ -386,15 +367,12 @@ namespace HFFramework
             {
                 Directory.CreateDirectory(path); //新建文件夹   
             }
-
             AssetDatabase.Refresh();
 
             DirectoryInfo folder = new DirectoryInfo(path);
-
             if (folder.Name.Contains(AssetFolderIde))
             {
                 FileInfo[] f = folder.GetFiles();
-                //先找出AssetbundleConfig
                 HFAssetbundleConfig config = null;
                 foreach (FileInfo NextFile in f)
                 {
@@ -405,13 +383,10 @@ namespace HFFramework
                             string str = sr.ReadToEnd();
                             HFAssetbundleConfigRoot root = JsonMapper.ToObject<HFAssetbundleConfigRoot>(str);
                             config = root.HFAssetbundleConfig;
-                            sr.Dispose();
-                            sr.Close();
                         }
                         break;
                     }
                 }
-
 
                 foreach (FileInfo NextFile in f)
                 {

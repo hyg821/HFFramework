@@ -4,11 +4,6 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class JsonModel
-    {
-
-    }
-
     public class AssetsBundleMD5
     {
         /// <summary>

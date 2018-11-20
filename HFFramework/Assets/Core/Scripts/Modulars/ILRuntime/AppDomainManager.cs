@@ -16,7 +16,6 @@ namespace HFFramework
 {
     public class AppDomainManager : MonoBehaviour, IManager
     {
-
         public string updateMethodName = "Update";
         public string fixedUpdateMethodName = "FixedUpdate";
         public string lateUpdateMethodName = "LateUpdate";
@@ -109,7 +108,7 @@ namespace HFFramework
         /// <summary>
         /// 初始化ilruntime
         /// </summary>
-        public unsafe void HotFixInit(bool isOK)
+        public void HotFixInit(bool isOK)
         {
             if (isOK)
             {
@@ -127,12 +126,12 @@ namespace HFFramework
             lateUpdateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(lateUpdateMethodName, 0);
         }
 
-        public unsafe void HotFixAwake()
+        public void HotFixAwake()
         {
             appdomain.Invoke(MainClassName, "AwakeDLL", null, null);
         }
 
-        public  void Update()
+        public void Update()
         {
             if (appdomain!=null&& updateMethod!=null)
             {

@@ -22,6 +22,7 @@ public class LoginController : UIController {
         loginBtn.onClick.AddListener(delegate ()
         {
             HFLog.C("点击登录的名称是" + input.text);
+            AppDomainManager.Instance.JumpToHotFix("hotfixdll", "HotFix", "HotFixEnter");
         });
     }
 }

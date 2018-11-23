@@ -256,11 +256,6 @@
     <Compile Include="Base\UI\Pool\IPool.cs" />
     <Compile Include="Base\UI\Pool\ObjectPool.cs" />
     <Compile Include="Base\UI\Pool\ObjectPoolManager.cs" />
-    <Compile Include="Base\UI\TableView\BigList.cs" />
-    <Compile Include="Base\UI\TableView\EnhancedScroller.cs" />
-    <Compile Include="Base\UI\TableView\EnhancedScrollerCellView.cs" />
-    <Compile Include="Base\UI\TableView\IEnhancedScrollerDelegate.cs" />
-    <Compile Include="Base\UI\TableView\SmallList.cs" />
     <Compile Include="Base\UI\Toggle\ToggleCell.cs" />
     <Compile Include="Base\UI\Toggle\ToggleCenter.cs" />
     <Compile Include="Base\UI\UIElement.cs" />

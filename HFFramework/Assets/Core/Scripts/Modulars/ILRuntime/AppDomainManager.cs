@@ -31,11 +31,6 @@ namespace HFFramework
         private ILRuntime.Runtime.Enviorment.AppDomain appdomain;
 
         /// <summary>
-        ///  游戏类型
-        /// </summary>
-        public int GameType;
-
-        /// <summary>
         ///  dll名字
         /// </summary>
         public string DllName;
@@ -84,9 +79,8 @@ namespace HFFramework
         /// <param name="dllName">dll名字</param>
         /// <param name="mainClass">dll被调用的方法</param>
         ///   HFFramework.AppDomainManager.self.Jump(0, "HotFixDll", "HFFrameworkHotFix", "HotFixEnter");
-        public void Jump(int gameType, string assetbundleName, string dllName, string mainClass)
+        public void JumpToHotFix(string assetbundleName, string dllName, string mainClass)
         {
-            GameType = gameType;
             DllName = dllName;
             MainClassName = mainClass;
             if (appdomain == null)

@@ -59,13 +59,13 @@ namespace HFFramework
                 //否则使用 StreamingAssets 文件夹下的
                 else
                 {
-                    if (GameEnvironment.Instance.runtimePlatform == GamePlatform.Android || GameEnvironment.Instance.runtimePlatform == GamePlatform.iOS)
+                    if (GameEnvironment.Instance.runtimePlatform == GamePlatform.iOS)
                     {
-                        newPath = ResourceSpareRootPath + path;
+                        newPath = "file://" + ResourceSpareRootPath + path;
                     }
                     else
                     {
-                        newPath = "file://" + ResourceSpareRootPath + path;
+                        newPath = ResourceSpareRootPath + path;
                     }
                 }
             }

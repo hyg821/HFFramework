@@ -117,9 +117,9 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  拿到AssetBundleManifest 以便于收集 所有的assetbundle 依赖
+        ///  拿到AssetBundleManifest 以便于收集 所有的assetbundle 依赖  如果存在动态下载 一定要刷新调用这个方法  刷新所有依赖
         /// </summary>
-        private void GetAssetBundleManifest()
+        public void GetAssetBundleManifest()
         {
             AssetBundle manifestAB = AssetBundle.LoadFromFile(AutoGetResourcePath(MainfestName, false));  // 加载总ManifestAssetBundle
             if (manifestAB != null)

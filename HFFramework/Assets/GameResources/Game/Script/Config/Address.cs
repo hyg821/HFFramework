@@ -1,0 +1,97 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Text;
+using System.IO;
+using System;
+using HFFramework;
+
+namespace Config
+{ 
+    [System.Serializable]
+    public class Address
+    { 
+        /// <summary>
+        /// 索引
+        /// <summary>
+        public string id;
+        /// <summary>
+        /// 国家
+        /// <summary>
+        public string country;
+        /// <summary>
+        /// 省市
+        /// <summary>
+        public string city;
+        /// <summary>
+        /// 街道
+        /// <summary>
+        public string street;
+    }
+
+    [System.Serializable]
+    public class ConfigAddress
+    { 
+        public static string[] split = new string[] { "," };
+        public static string[] splitArray = new string[] { ";", "[", "]" };
+
+        private static ConfigAddress instance;
+        public static ConfigAddress Instance
+        { 
+            get 
+            { 
+                if (instance==null) 
+                { 
+                     instance = new ConfigAddress ();
+                } 
+                return instance;
+            } 
+        } 
+
+        public Dictionary<string , Address> dic = new Dictionary<string , Address>();
+
+        public List<Address> list = new List<Address>();
+
+        public  static Address Get(string id)
+        {
+            Address temp;
+            Instance.dic.TryGetValue(id, out temp);
+            return temp;
+        }
+
+        public void StartAnalysis()
+        {
+            AssetBundlePackage package = HAResourceManager.Instance.LoadAssetBundleFromFile("Config");
+            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("Address");
+            StringReader reader = new StringReader(textAsset.text);
+            string notes = reader.ReadLine();
+            string names = reader.ReadLine();
+            reader.ReadLine();
+            reader.ReadLine();
+            string types = reader.ReadLine();
+            while (true)
+            {
+                string row = reader.ReadLine();
+                if (string.IsNullOrEmpty(row))
+                {
+                    break;
+                }
+                string[] strs = row.Split(split, StringSplitOptions.None);
+                if (strs.Length > 0)
+                {
+                    Address config = new Address();
+                    config.id = strs[0];
+                    config.country = strs[1];
+                    config.city = strs[2];
+                    config.street = strs[3];
+                    dic.Add(config.id, config );
+                    list.Add(config);
+               }
+           }
+           notes = null;
+           names = null;
+           types = null;
+           reader.Close();
+        }
+    }
+}

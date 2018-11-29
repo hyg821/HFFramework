@@ -24,7 +24,9 @@ namespace Config
         } 
         public void Init()
         { 
+            ConfigAddress.Instance.StartAnalysis();
             ConfigGameSetting.Instance.StartAnalysis();
+            ConfigMan.Instance.StartAnalysis();
             ConfigUI.Instance.StartAnalysis();
             HAResourceManager.Instance.UnloadAssetBundle("Config", false); 
         } 

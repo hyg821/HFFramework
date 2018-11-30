@@ -80,6 +80,7 @@ namespace Config
                 if (strs.Length > 0)
                 {
                     Address config = new Address();
+                    string[] air = null;
                     config.id = strs[0];
                     config.country = strs[1];
                     config.city = strs[2];

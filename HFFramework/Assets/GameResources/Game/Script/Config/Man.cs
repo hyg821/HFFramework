@@ -26,13 +26,10 @@ namespace Config
         /// <summary>
         /// 家庭地址
         /// <summary>
-        public string address;
-        public Address Address
-        { 
-            get 
-            { 
-                return ConfigAddress.Get(address);
-            } 
+        public List<string>address = new List<string>();
+        public Address GetAddress(string key)
+        {
+            return ConfigAddress.Get(key);
         } 
         /// <summary>
         /// 爱好
@@ -91,11 +88,16 @@ namespace Config
                 if (strs.Length > 0)
                 {
                     Man config = new Man();
+                    string[] air = null;
                     int.TryParse(strs[0], out config.id);
                     config.name = strs[1];
                     bool.TryParse(strs[2], out config.sex);
-                    config.address = strs[3];
-                    string[] air = strs[4].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);
+                    air = strs[3].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);
+                    for (int x = 0; x < air.Length; x++)
+                    {
+                       config.address.Add(air[x]);
+                     }
+                    air = strs[4].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);
                     for (int x = 0; x < air.Length; x++)
                     {
                        config.love.Add(air[x]);

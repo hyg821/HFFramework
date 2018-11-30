@@ -1,6 +1,6 @@
 索引,人名,性别,家庭地址,爱好
 id,name,sex,address,love
 val,val,val,ref_Address,val
-single,single,single,single,array
+single,single,single,array,array
 int,string,bool,string,string
-0,东方,TRUE,0,吃饭;睡觉;玩游戏
+0,东方,TRUE,0,1,吃饭;睡觉;玩游戏

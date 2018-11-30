@@ -72,6 +72,7 @@ namespace Config
                 if (strs.Length > 0)
                 {
                     Attribute config = new Attribute();
+                    string[] air = null;
                     int.TryParse(strs[0], out config.id);
                     config.name = strs[1];
                     dic.Add(config.id, config );

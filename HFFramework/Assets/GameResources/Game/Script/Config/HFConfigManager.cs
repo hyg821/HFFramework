@@ -32,7 +32,8 @@ namespace Config
             ConfigGameSetting.Instance.StartAnalysis();
             ConfigMan.Instance.StartAnalysis();
             ConfigUI.Instance.StartAnalysis();
-            HAResourceManager.Instance.UnloadAssetBundle("Config", true);
+            HAResourceManager.Instance.UnloadAssetBundle("Config", true); 
+            GC.Collect();
         } 
 
         public void Dispose()
@@ -44,6 +45,7 @@ namespace Config
             ConfigMan.Instance.Dispose();
             ConfigUI.Instance.Dispose();
             instance = null;
+            GC.Collect();
         }
     } 
 } 

@@ -108,6 +108,7 @@ namespace Config
                 if (strs.Length > 0)
                 {
                     GameSetting config = new GameSetting();
+                    string[] air = null;
                     config.id = strs[0];
                     config.Mode = strs[1];
                     config.AppVersion = strs[2];

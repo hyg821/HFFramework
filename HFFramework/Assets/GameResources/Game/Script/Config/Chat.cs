@@ -129,6 +129,7 @@ namespace Config
                 if (strs.Length > 0)
                 {
                     Chat config = new Chat();
+                    string[] air = null;
                     int.TryParse(strs[0], out config.id);
                     config.question = strs[1];
                     config.chooseA = strs[2];

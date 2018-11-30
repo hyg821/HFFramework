@@ -131,6 +131,17 @@ namespace Config
                 if (sa == "array")
                 {
                     builder.AppendLine("        public List<" + type + @">"+ property+" = new List<" + type + @">();");
+                    if (vf.Contains("ref"))
+                    {
+                        string[] valueRefTempList = vf.Split('_');
+                        if (valueRefTempList.Length > 1)
+                        {
+                            builder.AppendLine("        public " + valueRefTempList[1] + " " + "Get"+FirstCharToUpper(property)+"("+ type +" key"+ ")");
+                            builder.AppendLine("        { ");
+                            builder.AppendLine("              return " + "Config" + valueRefTempList[1] + ".Get(key);");
+                            builder.AppendLine("        } ");
+                        }
+                    }
                 }
                 else if (sa == "single")
                 {

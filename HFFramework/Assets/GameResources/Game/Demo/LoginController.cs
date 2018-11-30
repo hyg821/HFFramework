@@ -26,7 +26,7 @@ public class LoginController : UIController {
             AppDomainManager.Instance.JumpToHotFix("hotfixdll", "HotFix", "HotFixEnter");
         });
 
-        print(ConfigMan.Get(0).Address.city);
+        print(ConfigMan.Get(0).GetAddress("1"));
         print(ConfigMan.Get(0).love.Count);
         print(ConfigMan.Get(0).sex);
 

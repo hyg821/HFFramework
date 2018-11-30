@@ -92,6 +92,7 @@ namespace Config
                 if (strs.Length > 0)
                 {
                     UI config = new UI();
+                    string[] air = null;
                     config.Type = strs[0];
                     int.TryParse(strs[1], out config.LayerIndex);
                     config.AssetbundleName = strs[2];

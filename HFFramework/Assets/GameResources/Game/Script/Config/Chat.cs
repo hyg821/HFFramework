@@ -9,80 +9,101 @@ using HFFramework;
 namespace Config
 { 
     [System.Serializable]
-    public class GameSetting
+    public class Chat
     { 
         /// <summary>
-        /// 模式
+        /// id
         /// <summary>
-        public string id;
+        public int id;
         /// <summary>
-        /// 开发类型
+        /// 问题
         /// <summary>
-        public string Mode;
+        public string question;
         /// <summary>
-        /// app版本
+        /// 选项A
         /// <summary>
-        public string AppVersion;
+        public string chooseA;
         /// <summary>
-        ///  资源版本
+        /// 选项A类型
         /// <summary>
-        public string ResourceVersion;
+        public int chooseAtype;
+        public Attribute ChooseAtype
+        { 
+            get 
+            { 
+                return ConfigAttribute.Get(chooseAtype);
+            } 
+        } 
         /// <summary>
-        /// 是否热更新检测
+        /// 选项A数值
         /// <summary>
-        public bool AssetbundleName;
+        public int chooseAnum;
         /// <summary>
-        /// 是否开启log
+        /// 选项B
         /// <summary>
-        public bool IsOpenLog;
+        public string chooseB;
         /// <summary>
-        /// log是否写入本地
+        /// 选项B类型
         /// <summary>
-        public bool IsOpenLoaclLog;
+        public int chooseBtype;
+        public Attribute ChooseBtype
+        { 
+            get 
+            { 
+                return ConfigAttribute.Get(chooseBtype);
+            } 
+        } 
         /// <summary>
-        /// 模拟设备宽度
+        /// 选项B数值
         /// <summary>
-        public float ServerSceneWidth;
+        public int chooseBnum;
         /// <summary>
-        /// 模拟设备高度
+        /// 选项C
         /// <summary>
-        public float ServerSceneHeight;
+        public string chooseC;
         /// <summary>
-        /// update帧数
+        /// 选项C类型
         /// <summary>
-        public int TargetFrame;
+        public int chooseCtype;
+        public Attribute ChooseCtype
+        { 
+            get 
+            { 
+                return ConfigAttribute.Get(chooseCtype);
+            } 
+        } 
         /// <summary>
-        /// fixed帧数
+        /// 选项C数值
         /// <summary>
-        public int FixedUpdateFrame;
+        public int chooseCnum;
     }
 
     [System.Serializable]
-    public class ConfigGameSetting
+    public class ConfigChat
     { 
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static ConfigGameSetting instance;
-        public static ConfigGameSetting Instance
+        private static ConfigChat instance;
+        public static ConfigChat Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new ConfigGameSetting ();
+                     instance = new ConfigChat ();
                 } 
                 return instance;
             } 
         } 
 
-        public Dictionary<string , GameSetting> dic = new Dictionary<string , GameSetting>();
+        public Dictionary<int , Chat> dic = new Dictionary<int , Chat>();
 
-        public List<GameSetting> list = new List<GameSetting>();
+        public List<Chat> list = new List<Chat>();
 
-        public  static GameSetting Get(string id)
+        public  static Chat Get(int id)
         {
-            GameSetting temp;
+            Chat temp;
             Instance.dic.TryGetValue(id, out temp);
             return temp;
         }
@@ -90,7 +111,7 @@ namespace Config
         public void StartAnalysis()
         {
             AssetBundlePackage package = HAResourceManager.Instance.LoadAssetBundleFromFile("Config");
-            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("GameSetting");
+            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("Chat");
             StringReader reader = new StringReader(textAsset.text);
             string notes = reader.ReadLine();
             string names = reader.ReadLine();
@@ -107,18 +128,18 @@ namespace Config
                 string[] strs = row.Split(split, StringSplitOptions.None);
                 if (strs.Length > 0)
                 {
-                    GameSetting config = new GameSetting();
-                    config.id = strs[0];
-                    config.Mode = strs[1];
-                    config.AppVersion = strs[2];
-                    config.ResourceVersion = strs[3];
-                    bool.TryParse(strs[4], out config.AssetbundleName);
-                    bool.TryParse(strs[5], out config.IsOpenLog);
-                    bool.TryParse(strs[6], out config.IsOpenLoaclLog);
-                    float.TryParse(strs[7], out config.ServerSceneWidth);
-                    float.TryParse(strs[8], out config.ServerSceneHeight);
-                    int.TryParse(strs[9], out config.TargetFrame);
-                    int.TryParse(strs[10], out config.FixedUpdateFrame);
+                    Chat config = new Chat();
+                    int.TryParse(strs[0], out config.id);
+                    config.question = strs[1];
+                    config.chooseA = strs[2];
+                    int.TryParse(strs[3], out config.chooseAtype);
+                    int.TryParse(strs[4], out config.chooseAnum);
+                    config.chooseB = strs[5];
+                    int.TryParse(strs[6], out config.chooseBtype);
+                    int.TryParse(strs[7], out config.chooseBnum);
+                    config.chooseC = strs[8];
+                    int.TryParse(strs[9], out config.chooseCtype);
+                    int.TryParse(strs[10], out config.chooseCnum);
                     dic.Add(config.id, config );
                     list.Add(config);
                }

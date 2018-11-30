@@ -278,6 +278,15 @@ namespace Config
             builder.AppendLine(@"           types = null;");
             builder.AppendLine(@"           reader.Close();");
             builder.AppendLine(@"        }");
+            builder.AppendLine();
+            builder.AppendLine(@"        public void Dispose()");
+            builder.AppendLine(@"        {");
+            builder.AppendLine(@"            dic.Clear();");
+            builder.AppendLine(@"            list.Clear();");
+            builder.AppendLine(@"            list = null;");
+            builder.AppendLine(@"            dic = null;");
+            builder.AppendLine(@"            instance = null;");
+            builder.AppendLine(@"        }");
             builder.AppendLine(@"    }");
             builder.AppendLine(@"}");
 
@@ -301,6 +310,7 @@ namespace Config
             builder.AppendLine(@"using System.IO;");
             builder.AppendLine(@"using System;");
             builder.AppendLine(@"using HFFramework;");
+            builder.AppendLine();
             builder.AppendLine(@"namespace " + _namespace);
             builder.AppendLine("{ ");
             builder.AppendLine(@"    [System.Serializable]");
@@ -318,6 +328,7 @@ namespace Config
             builder.AppendLine("                return instance;");
             builder.AppendLine("            } ");
             builder.AppendLine("        } ");
+            builder.AppendLine();
             builder.AppendLine("        public void Init()");
             builder.AppendLine("        { ");
 
@@ -333,11 +344,28 @@ namespace Config
                 builder.AppendLine("            "+_table+".Instance.StartAnalysis();");
             }
 
-            builder.AppendLine("            " + "HAResourceManager.Instance.UnloadAssetBundle("+"\""+ ConfigAssetbundleName + "\""+", false); ");
- 
+            builder.AppendLine("            " + "HAResourceManager.Instance.UnloadAssetBundle("+"\""+ ConfigAssetbundleName + "\""+", true); ");
+            builder.AppendLine("            GC.Collect();");
+
             builder.AppendLine("        } ");
-            builder.AppendLine("    } ");
-            builder.AppendLine("} ");
+            builder.AppendLine();
+            builder.AppendLine(@"        public void Dispose()");
+            builder.AppendLine(@"        {");
+            for (int i = 0; i < files.Count; i++)
+            {
+                FileInfo file = files[i];
+                string temp0 = file.Name.Replace(".csv", "");
+                string temp1 = temp0.Substring(0, 1);
+                string temp2 = temp0.Substring(1, temp0.Length - 1);
+                string _class = temp1.ToUpper() + temp2;
+                string _table = "Config" + _class;
+                builder.AppendLine("            " + _table + ".Instance.Dispose();");
+            }
+            builder.AppendLine(@"            instance = null;");
+            builder.AppendLine(@"            GC.Collect();");
+            builder.AppendLine(@"        }");
+            builder.AppendLine(@"    } ");
+            builder.AppendLine(@"} ");
 
             string path = Application.dataPath + "/" + OutputPath + "/" + _manager + ".cs";
             byte[] b = Encoding.UTF8.GetBytes(builder.ToString());

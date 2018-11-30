@@ -9,52 +9,44 @@ using HFFramework;
 namespace Config
 { 
     [System.Serializable]
-    public class Address
+    public class Attribute
     { 
         /// <summary>
-        /// 索引
+        /// id
         /// <summary>
-        public string id;
+        public int id;
         /// <summary>
-        /// 国家
+        /// 名称
         /// <summary>
-        public string country;
-        /// <summary>
-        /// 省市
-        /// <summary>
-        public string city;
-        /// <summary>
-        /// 街道
-        /// <summary>
-        public string street;
+        public string name;
     }
 
     [System.Serializable]
-    public class ConfigAddress
+    public class ConfigAttribute
     { 
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static ConfigAddress instance;
-        public static ConfigAddress Instance
+        private static ConfigAttribute instance;
+        public static ConfigAttribute Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new ConfigAddress ();
+                     instance = new ConfigAttribute ();
                 } 
                 return instance;
             } 
         } 
 
-        public Dictionary<string , Address> dic = new Dictionary<string , Address>();
+        public Dictionary<int , Attribute> dic = new Dictionary<int , Attribute>();
 
-        public List<Address> list = new List<Address>();
+        public List<Attribute> list = new List<Attribute>();
 
-        public  static Address Get(string id)
+        public  static Attribute Get(int id)
         {
-            Address temp;
+            Attribute temp;
             Instance.dic.TryGetValue(id, out temp);
             return temp;
         }
@@ -62,7 +54,7 @@ namespace Config
         public void StartAnalysis()
         {
             AssetBundlePackage package = HAResourceManager.Instance.LoadAssetBundleFromFile("Config");
-            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("Address");
+            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("Attribute");
             StringReader reader = new StringReader(textAsset.text);
             string notes = reader.ReadLine();
             string names = reader.ReadLine();
@@ -79,11 +71,9 @@ namespace Config
                 string[] strs = row.Split(split, StringSplitOptions.None);
                 if (strs.Length > 0)
                 {
-                    Address config = new Address();
-                    config.id = strs[0];
-                    config.country = strs[1];
-                    config.city = strs[2];
-                    config.street = strs[3];
+                    Attribute config = new Attribute();
+                    int.TryParse(strs[0], out config.id);
+                    config.name = strs[1];
                     dic.Add(config.id, config );
                     list.Add(config);
                }

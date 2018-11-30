@@ -105,14 +105,13 @@ namespace HFFramework
         /// <param name="folderName">文件路径</param>
         /// <param name="content">内容</param>
         /// <param name="isRelative"></param>
-        public static void WriteFile(string folderName, string content , FileMode mode = FileMode.Create, bool isRelative = true)
+        public static void WriteFile(string folderName, byte[] content , FileMode mode = FileMode.Create, bool isRelative = true)
         {
-            string path = GetPath(folderName, isRelative);
-            byte[] b = Encoding.UTF8.GetBytes(content);
+            string path = GetPath(folderName, isRelative);         
             writeLock.EnterWriteLock();
             using (FileStream f = new FileStream(path, mode))
             {
-                f.Write(b, 0, b.Length);
+                f.Write(content, 0, content.Length);
                 f.Flush();
             }
             writeLock.ExitWriteLock();

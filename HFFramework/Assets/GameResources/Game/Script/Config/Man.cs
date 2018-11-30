@@ -109,5 +109,14 @@ namespace Config
            types = null;
            reader.Close();
         }
+
+        public void Dispose()
+        {
+            dic.Clear();
+            list.Clear();
+            list = null;
+            dic = null;
+            instance = null;
+        }
     }
 }

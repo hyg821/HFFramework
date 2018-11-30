@@ -40,7 +40,7 @@ namespace HFFramework
             timeTag = timeTag.Replace(@" ", "_");
             timeTag = timeTag.Replace(@":", "_");
             timeTag = timeTag + "Log.txt";
-            GameUtils.WriteFile(timeTag, logStr.ToString());
+            GameUtils.WriteFile(timeTag,Encoding.UTF8.GetBytes(logStr.ToString()));
             Application.logMessageReceived += LogMessageReceived;
         }
 
@@ -52,7 +52,7 @@ namespace HFFramework
             logStr.AppendLine(type.ToString());
             Task.Run(delegate ()
             {
-                GameUtils.WriteFile(timeTag, logStr.ToString(), FileMode.Append);
+                GameUtils.WriteFile(timeTag, Encoding.UTF8.GetBytes(logStr.ToString()), FileMode.Append);
             });
         }
 

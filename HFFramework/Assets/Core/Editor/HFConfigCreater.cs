@@ -210,7 +210,7 @@ namespace Config
             builder.AppendLine(@"                if (strs.Length > 0)");
             builder.AppendLine(@"                {");
             builder.AppendLine(@"                    "+_class+ " config "+ "= new "+ _class+"();");
-
+            builder.AppendLine(@"                    string[] air = null;");
             for (int i = 0; i < _column; i++)
             {
                 string m_type = typeList[i];
@@ -219,7 +219,7 @@ namespace Config
 
                 if (m_sa == "array")
                 {
-                    builder.AppendLine(@"                    string[] air = strs[" + i + "].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);");
+                    builder.AppendLine(@"                    air = strs[" + i + "].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);");
                     builder.AppendLine(@"                    for (int x = 0; x < air.Length; x++)");
                     builder.AppendLine(@"                    {");
                     switch (m_type)

@@ -31,8 +31,5 @@ public class LoginController : UIController {
         print(ConfigMan.Get(0).sex);
 
         print(ConfigChat.Get(1).ChooseCtype.name);
-
-        GameUtils.WriteFile()
-
     }
 }

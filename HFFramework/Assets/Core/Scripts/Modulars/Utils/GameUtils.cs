@@ -9,11 +9,7 @@ namespace HFFramework
 {
     public class GameUtils : MonoBehaviour,IManager
     {
-        public const string customPath = "GameData";
-
         public static GameUtils Instance;
-
-        public static string RootPath;
 
         public void Awake()
         {
@@ -47,11 +43,10 @@ namespace HFFramework
         /// </summary>
         public void CreateCustomFilePathFolder()
         {
-            RootPath = PathManager.Instance.PersistentDataPath + customPath;
-            HFLog.C("自定义读写根目录 " + RootPath);
-            if (!Directory.Exists(RootPath))
+            HFLog.C("自定义读写根目录 " + PathManager.Instance.PersistentDataCustomPath);
+            if (!Directory.Exists(PathManager.Instance.PersistentDataCustomPath))
             {
-                Directory.CreateDirectory(RootPath);
+                Directory.CreateDirectory(PathManager.Instance.PersistentDataCustomPath);
             }
         }
 
@@ -169,7 +164,7 @@ namespace HFFramework
             string path = "";
             if (isRelative)
             {
-                path = RootPath + "/" + folderName;
+                path = PathManager.Instance.PersistentDataCustomPath + "/" + folderName;
             }
             else
             {

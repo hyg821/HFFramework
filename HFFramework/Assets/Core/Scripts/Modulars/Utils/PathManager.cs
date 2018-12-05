@@ -10,23 +10,47 @@ namespace HFFramework
     {
         public static PathManager Instance;
 
+        /// <summary>
+        ///  持久化路径
+        /// </summary>
         public string PersistentDataPath;
 
+        /// <summary>
+        ///  StreamingAssets 路径
+        /// </summary>
         public string StreamingAssetsPath;
+
+        /// <summary>
+        ///   StreamingAssets AssetBundles 路径
+        /// </summary>
+        public string StreamingAssetsAssetBundlesPath;
+
+        /// <summary>
+        /// 持久化  AssetBundles 路径
+        /// </summary>
+        public string PersistentDataAssetBundlesPath;
+
+        /// <summary>
+        /// 持久化  自定义读写路径
+        /// </summary>
+        public string PersistentDataCustomPath;
 
         public void Awake()
         {
             Instance = this;
             PersistentDataPath = SetPersistentDataPath();
             StreamingAssetsPath = SetStreamingAssetsPath();
-        }
+            StreamingAssetsAssetBundlesPath = StreamingAssetsPath + "AssetBundles";
+            PersistentDataAssetBundlesPath = PersistentDataPath + "AssetBundles";
+            PersistentDataCustomPath = PersistentDataPath + "GameData";
+    }
 
-        public string SetPersistentDataPath()
+        private string SetPersistentDataPath()
         {
             return Application.persistentDataPath + "/";
         }
 
-        public string SetStreamingAssetsPath()
+        private string SetStreamingAssetsPath()
         {
             return Application.streamingAssetsPath + "/";
         }

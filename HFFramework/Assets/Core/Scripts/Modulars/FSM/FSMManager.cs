@@ -11,21 +11,10 @@ namespace HFFramework
         /// </summary>
         private Dictionary<string, FSMBaseState> allStateDic = new Dictionary<string, FSMBaseState>();
 
-        private FSMBaseState currentState;
         /// <summary>
         ///  获取当前正在执行的状态
         /// </summary>
-        public FSMBaseState CurrentState
-        {
-            set
-            {
-                currentState = value;
-            }
-            get
-            {
-                return currentState;
-            }
-        }
+        public FSMBaseState CurrentState { set; get; }
 
         /// <summary>
         ///  构造方法
@@ -75,10 +64,9 @@ namespace HFFramework
         {
             if (CurrentState != null)
             {
-                currentState.OnStateInvoke(StateEnum.StateStay);
+                CurrentState.OnStateInvoke(StateEnum.StateStay);
             }
         }
-
 
         /// <summary>
         /// 索引器

@@ -409,7 +409,10 @@ namespace HFFramework
                             {
                                 string md5Str = HFAssetBundleCreater.GetMD5(newItem);
                                 // 通过文件路径 设置assetbundle 
-                                assetImporter.assetBundleName = md5Str;
+                                if (assetImporter.assetBundleName!= md5Str)
+                                {
+                                    assetImporter.assetBundleName = md5Str;
+                                }
                                 string md5;
                                 if (assetbundleNameDic.TryGetValue(newItem, out md5) == false)
                                 {
@@ -419,7 +422,10 @@ namespace HFFramework
 
                             if (config != null && config.assetbundleNameType == "Custom")
                             {
-                                assetImporter.assetBundleName = config.assetbundleName;
+                                if (assetImporter.assetBundleName!= config.assetbundleName)
+                                {
+                                    assetImporter.assetBundleName = config.assetbundleName;
+                                }
                                 string md5;
                                 if (assetbundleNameDic.TryGetValue(newItem, out md5) == false)
                                 {

@@ -28,9 +28,11 @@ namespace Config
         { 
             ConfigAddress.Instance.StartAnalysis();
             ConfigAttribute.Instance.StartAnalysis();
+            ConfigBackground.Instance.StartAnalysis();
             ConfigChat.Instance.StartAnalysis();
             ConfigGameSetting.Instance.StartAnalysis();
             ConfigMan.Instance.StartAnalysis();
+            ConfigRole.Instance.StartAnalysis();
             ConfigUI.Instance.StartAnalysis();
             HAResourceManager.Instance.UnloadAssetBundle("Config", true); 
             GC.Collect();
@@ -40,9 +42,11 @@ namespace Config
         {
             ConfigAddress.Instance.Dispose();
             ConfigAttribute.Instance.Dispose();
+            ConfigBackground.Instance.Dispose();
             ConfigChat.Instance.Dispose();
             ConfigGameSetting.Instance.Dispose();
             ConfigMan.Instance.Dispose();
+            ConfigRole.Instance.Dispose();
             ConfigUI.Instance.Dispose();
             instance = null;
             GC.Collect();

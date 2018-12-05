@@ -660,10 +660,12 @@
     <Compile Include="Assets\GameResources\Game\Demo\Test.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\Address.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\Attribute.cs" />
+    <Compile Include="Assets\GameResources\Game\Script\Config\Background.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\Chat.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\GameSetting.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\HFConfigManager.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\Man.cs" />
+    <Compile Include="Assets\GameResources\Game\Script\Config\Role.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\UI.cs" />
     <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Scripts\CharacterMotion.cs" />
     <Compile Include="Assets\OtherPlugins\Anima2D\Anima2D\Examples\Scripts\Follow.cs" />

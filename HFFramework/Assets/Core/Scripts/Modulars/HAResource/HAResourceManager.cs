@@ -393,6 +393,7 @@ namespace HFFramework
             {
                 appdomain.LoadAssembly(fs, null, new PdbReaderProvider());
             }
+            UnloadAssetBundle(ab, true);
             if (cbAction != null)
             {
                 cbAction(true);

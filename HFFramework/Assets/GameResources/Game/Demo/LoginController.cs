@@ -31,5 +31,7 @@ public class LoginController : UIController {
         print(ConfigMan.Get(0).sex);
 
         print(ConfigChat.Get(1).ChooseCtype.name);
+
+        print(ConfigRole.Get(1).GetTime1(1).name);
     }
 }

@@ -1,0 +1,13 @@
+id,资源名称,场景类型
+id,name,type
+val,val,val
+single,single,single
+int,string,int
+1,carnie,1
+2,pool,3
+3,classroomafternoon,1
+4,cafeafternoon,2
+5,restaurantmorning,1
+6,alleymorning,2
+7,alleyevening,1
+8,pubnight,2

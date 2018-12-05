@@ -9,60 +9,48 @@ using HFFramework;
 namespace Config
 { 
     [System.Serializable]
-    public class Man
+    public class Background
     { 
         /// <summary>
-        /// 索引
+        /// id
         /// <summary>
         public int id;
         /// <summary>
-        /// 人名
+        /// 资源名称
         /// <summary>
         public string name;
         /// <summary>
-        /// 性别
+        /// 场景类型
         /// <summary>
-        public bool sex;
-        /// <summary>
-        /// 家庭地址
-        /// <summary>
-        public List<string>address = new List<string>();
-        public Address GetAddress(string key)
-        { 
-              return ConfigAddress.Get(key);
-        } 
-        /// <summary>
-        /// 爱好
-        /// <summary>
-        public List<string>love = new List<string>();
+        public int type;
     }
 
     [System.Serializable]
-    public class ConfigMan
+    public class ConfigBackground
     { 
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
-        private static ConfigMan instance;
-        public static ConfigMan Instance
+        private static ConfigBackground instance;
+        public static ConfigBackground Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new ConfigMan ();
+                     instance = new ConfigBackground ();
                 } 
                 return instance;
             } 
         } 
 
-        public Dictionary<int , Man> dic = new Dictionary<int , Man>();
+        public Dictionary<int , Background> dic = new Dictionary<int , Background>();
 
-        public List<Man> list = new List<Man>();
+        public List<Background> list = new List<Background>();
 
-        public  static Man Get(int id)
+        public  static Background Get(int id)
         {
-            Man temp;
+            Background temp;
             Instance.dic.TryGetValue(id, out temp);
             return temp;
         }
@@ -70,7 +58,7 @@ namespace Config
         public void StartAnalysis()
         {
             AssetBundlePackage package = HAResourceManager.Instance.LoadAssetBundleFromFile("Config");
-            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("Man");
+            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("Background");
             StringReader reader = new StringReader(textAsset.text);
             string notes = reader.ReadLine();
             string names = reader.ReadLine();
@@ -87,21 +75,11 @@ namespace Config
                 string[] strs = row.Split(split, StringSplitOptions.None);
                 if (strs.Length > 0)
                 {
-                    Man config = new Man();
+                    Background config = new Background();
                     string[] air = null;
                     int.TryParse(strs[0], out config.id);
                     config.name = strs[1];
-                    bool.TryParse(strs[2], out config.sex);
-                    air = strs[3].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);
-                    for (int x = 0; x < air.Length; x++)
-                    {
-                       config.address.Add(air[x]);
-                     }
-                    air = strs[4].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);
-                    for (int x = 0; x < air.Length; x++)
-                    {
-                       config.love.Add(air[x]);
-                     }
+                    int.TryParse(strs[2], out config.type);
                     dic.Add(config.id, config );
                     list.Add(config);
                }

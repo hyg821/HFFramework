@@ -85,12 +85,12 @@ namespace HFFramework
 
         public Action errorCallback;
 
-        public void Init(string ip, int port, Action connect, Action<int, byte[]> reveive, Action close, Action error)
+        public void Init(string ip, int port, Action connect, Action<int, byte[]> receive, Action close, Action error)
         {
             this.ip = ip;
             this.port = port;
             this.connectCallback = connect;
-            this.receiveCallback = reveive;
+            this.receiveCallback = receive;
             this.closeCallback = close;
             this.errorCallback = error;
             AddressFamily ipv = CheckAddressFamily();
@@ -281,6 +281,7 @@ namespace HFFramework
             {
                 state = ConnectState.Close;
                 socket.Close();
+                closeCallback();
                 isReadHeader = false;
                 receiveThread = null;
             }

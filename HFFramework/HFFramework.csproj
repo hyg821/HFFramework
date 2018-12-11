@@ -598,6 +598,8 @@
     <Compile Include="Assets\Core\Scripts\Functions\CameraDragMove.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\ClickEventForward.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\DragEventForward.cs" />
+    <Compile Include="Assets\Core\Scripts\Functions\LearnByteOperation.cs" />
+    <Compile Include="Assets\Core\Scripts\Functions\LearnMatrix.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\LearnTask.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\PinchZoom.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\T2Type.cs" />

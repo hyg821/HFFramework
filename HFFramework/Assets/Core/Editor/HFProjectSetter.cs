@@ -14,7 +14,12 @@ namespace HFFramework
         [MenuItem("游戏辅助工具/构建项目初始化设置(只需要运行第一次)")]
         static void ProjectInit()
         {
-            PlayerSettings.applicationIdentifier = "com.hyg.HFFramework";
+            PlayerSettings.companyName = "hyg";
+            PlayerSettings.productName = "HFFramework";
+            string identifier = "com" + "." + PlayerSettings.companyName + "." + PlayerSettings.productName;
+            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Standalone, identifier);
+            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, identifier) ;
+            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, identifier);
             PlayerSettings.bundleVersion = "1.0.0";
 
             //模式 3d  

@@ -36,17 +36,17 @@ namespace HFFramework
         /// <summary>
         ///  最大数据缓冲长度
         /// </summary>
-        public const int MAX_BUFFER_LEN = 512;
+        private const int MAX_BUFFER_LEN = 512;
 
         /// <summary>
         ///  连接间隔 5秒
         /// </summary>
-        public float CONNECT_TIMEOUT = 5000;
+        private float CONNECT_TIMEOUT = 5000;
 
         /// <summary>
         ///  检测 间隔 100 毫秒
         /// </summary>
-        public float CONNECT_CHECK_INTERVAL= 100;
+        private float CONNECT_CHECK_INTERVAL= 100;
 
         /// <summary>
         ///  数据包长度 的 标识位 字段长度   
@@ -63,10 +63,19 @@ namespace HFFramework
         /// </summary>
         private const int MSG_HEAD_LEN = MSG_ALL_IDE_LEN + MSG_TYPE_LEN;
 
+        /// <summary>
+        ///  socket
+        /// </summary>
         private Socket socket;
 
+        /// <summary>
+        ///  ip 
+        /// </summary>
         public string ip;
 
+        /// <summary>
+        ///  端口
+        /// </summary>
         public int port;
 
         private ConnectState state;
@@ -84,8 +93,11 @@ namespace HFFramework
         /// <summary>
         ///  数据缓冲
         /// </summary>
-        public byte[] dataBuffer = new byte[MAX_BUFFER_LEN];
+        private byte[] dataBuffer = new byte[MAX_BUFFER_LEN];
 
+        /// <summary>
+        ///  是否读取消息头
+        /// </summary>
         private bool isReadHeader = false;
 
         /// <summary>
@@ -93,13 +105,40 @@ namespace HFFramework
         /// </summary>
         private Thread receiveThread;
 
-        public Action connectCallback;
+        /// <summary>
+        ///  连接成功回调
+        /// </summary>
+        private Action connectCallback;
 
-        public Action<int, byte[]> receiveCallback;
+        /// <summary>
+        ///  接收数据回调
+        /// </summary>
+        private Action<int, byte[]> receiveCallback;
 
-        public Action closeCallback;
+        /// <summary>
+        ///  关闭回调
+        /// </summary>
+        private Action closeCallback;
 
-        public Action errorCallback;
+        /// <summary>
+        ///  错误回调
+        /// </summary>
+        private Action errorCallback;
+
+        /// <summary>
+        ///  是否成功连接
+        /// </summary>
+        public bool Connected
+        {
+            get
+            {
+                if (socket != null)
+                {
+                    return socket.Connected;
+                }
+                return false;
+            }
+        }
 
         public void Init(string ip, int port, Action connect, Action<int, byte[]> receive, Action close, Action error)
         {

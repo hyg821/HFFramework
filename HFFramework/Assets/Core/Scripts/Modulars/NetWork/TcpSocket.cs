@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using System;
 using System.Threading;
 using System.Timers;
 using System.IO;
-using UnityEngine;
 
 namespace HFFramework
 {
@@ -22,9 +19,18 @@ namespace HFFramework
         public enum ConnectState
         {
             UnKnow,
+            /// <summary>
+            ///  成功
+            /// </summary>
             Success,
-            Close,
-            Fail
+            /// <summary>
+            ///  错误
+            /// </summary>
+            Fail,
+            /// <summary>
+            ///  关闭
+            /// </summary>
+            Close
         }
 
         /// <summary>
@@ -43,14 +49,14 @@ namespace HFFramework
         public float CONNECT_CHECK_INTERVAL= 100;
 
         /// <summary>
-        ///  消息号 的 标识位 字段长度
-        /// </summary>
-        private const int MSG_TYPE_LEN = 4;
-
-        /// <summary>
         ///  数据包长度 的 标识位 字段长度   
         /// </summary>
         private const int MSG_ALL_IDE_LEN = 4;
+
+        /// <summary>
+        ///  消息号 的 标识位 字段长度
+        /// </summary>
+        private const int MSG_TYPE_LEN = 4;
 
         /// <summary>
         ///  数据头长度
@@ -63,7 +69,17 @@ namespace HFFramework
 
         public int port;
 
-        public ConnectState state = ConnectState.UnKnow;
+        private ConnectState state;
+        /// <summary>
+        ///  连接状态
+        /// </summary>
+        public ConnectState State
+        {
+            get
+            {
+                return state;
+            }
+        }
 
         /// <summary>
         ///  数据缓冲
@@ -94,6 +110,7 @@ namespace HFFramework
             this.closeCallback = close;
             this.errorCallback = error;
             AddressFamily ipv = CheckAddressFamily();
+            SetState(ConnectState.UnKnow);
             socket = new Socket(ipv, SocketType.Stream, ProtocolType.Tcp);
         }
 
@@ -118,10 +135,7 @@ namespace HFFramework
 
         public void StartConnect()
         {
-            IAsyncResult ir = socket.BeginConnect(ip, port, ConnectSuccess, null);
-            receiveThread = new Thread(new ThreadStart(ReceiveMessage));
-            receiveThread.IsBackground = true;
-            receiveThread.Start();
+            socket.BeginConnect(ip, port, ConnectSuccess, null);
             CheckConnect();
         }
 
@@ -147,7 +161,7 @@ namespace HFFramework
                     {
                         timer.Stop();
                         timer = null;
-                        ConnectFail();
+                        SetState(ConnectState.Fail);
                     }
                 }
                 allTime += CONNECT_TIMEOUT;
@@ -159,16 +173,16 @@ namespace HFFramework
         {
             while (true)
             {
+                if (socket != null && socket.Connected == false)
+                {
+                    break;
+                }
+
                 //如果 可以读取的数据为 0  那么直接休眠0.01秒 然后继续去读
                 if (socket.Available == 0)
                 {
                     Thread.Sleep(10);
                     continue;
-                }
-
-                if (socket.Connected==false)
-                {
-                    break;
                 }
 
                 int bodyLength = -1;
@@ -217,7 +231,7 @@ namespace HFFramework
             }
 
             //如果跳出循环说明报错
-            ConnectFail();
+            SetState(ConnectState.Fail);
         }
 
         private void CreateMessage(int messageType, byte[] data)
@@ -246,45 +260,62 @@ namespace HFFramework
 
                         writer.Flush();
 
-                        //发送
-                        socket.Send(stream.GetBuffer());
+                        try
+                        {
+                            socket.Send(stream.GetBuffer());
+                        }
+                        catch (Exception)
+                        {
+                            SetState(ConnectState.Fail);
+                        }
                     }
                 }
             }
             else
             {
-                ConnectFail();
+                SetState(ConnectState.Fail);
+            }
+        }
+
+        private void SetState(ConnectState s)
+        {
+            if (state!=s)
+            {
+                state = s;
+                switch (state)
+                {   
+                    case ConnectState.UnKnow:
+                        break;
+                    case ConnectState.Success:
+                        connectCallback();
+                        break;
+                    case ConnectState.Close:
+                        closeCallback();
+                        break;
+                    case ConnectState.Fail:
+                        errorCallback();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
         private void ConnectSuccess(IAsyncResult ar)
         {
-            if (state != ConnectState.Success)
-            {
-                state = ConnectState.Success;
-                connectCallback();
-            }
-        }
-
-        public void ConnectFail()
-        {
-            if (state != ConnectState.Fail)
-            {
-                state = ConnectState.Fail;
-                errorCallback();
-            }
+            SetState(ConnectState.Success);
+            receiveThread = new Thread(new ThreadStart(ReceiveMessage));
+            receiveThread.IsBackground = true;
+            receiveThread.Start();
         }
 
         public void Close()
         {
-            if (state != ConnectState.Close)
-            {
-                state = ConnectState.Close;
-                socket.Close();
-                closeCallback();
-                isReadHeader = false;
-                receiveThread = null;
-            }
+            socket.Close();
+            SetState(ConnectState.Close);
+            isReadHeader = false;
+            receiveThread = null;
+            socket = null;
         }
     }
 }

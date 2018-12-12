@@ -140,6 +140,13 @@ namespace HFFramework
             }
         }
 
+        /*
+        public TcpSocket(string ip, int port, Action connect, Action<int, byte[]> receive, Action close, Action error)
+        {
+            Init(ip, port, connect, receive, close, error);
+        }
+        */
+
         public void Init(string ip, int port, Action connect, Action<int, byte[]> receive, Action close, Action error)
         {
             this.ip = ip;
@@ -174,7 +181,7 @@ namespace HFFramework
 
         public void StartConnect()
         {
-            socket.BeginConnect(ip, port, ConnectSuccess, null);
+            socket.BeginConnect(ip, port, ConnectCallback, null);
             CheckConnect();
         }
 
@@ -340,12 +347,20 @@ namespace HFFramework
             }
         }
 
-        private void ConnectSuccess(IAsyncResult ar)
+        private void ConnectCallback(IAsyncResult ar)
         {
-            SetState(ConnectState.Success);
-            receiveThread = new Thread(new ThreadStart(ReceiveMessage));
-            receiveThread.IsBackground = true;
-            receiveThread.Start();
+            socket.EndConnect(ar);
+            if (socket.Connected)
+            {
+                SetState(ConnectState.Success);
+                receiveThread = new Thread(new ThreadStart(ReceiveMessage));
+                receiveThread.IsBackground = true;
+                receiveThread.Start();
+            }
+            else
+            {
+                SetState(ConnectState.Fail);
+            }
         }
 
         public void Close()

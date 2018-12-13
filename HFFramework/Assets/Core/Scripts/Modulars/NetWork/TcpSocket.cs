@@ -19,12 +19,17 @@ namespace HFFramework
     {
         public class SteamPackage
         {
+            /// <summary>
+            ///  是否读取消息头
+            /// </summary>
+            public bool isReadHeader = false;
             public int bodyLength = int.MaxValue;
             public int msgType = int.MaxValue;
             public byte[] msgBytes;
 
             public void Clear()
             {
+                isReadHeader = false;
                 bodyLength = int.MaxValue;
                 msgType = int.MaxValue;
                 msgBytes = null;
@@ -133,11 +138,6 @@ namespace HFFramework
         private byte[] dataBuffer = new byte[MAX_BUFFER_LEN];
 
         private SteamPackage currentPackage = new SteamPackage();
-
-        /// <summary>
-        ///  是否读取消息头
-        /// </summary>
-        private bool isReadHeader = false;
 
         /// <summary>
         ///  接收数据线程
@@ -307,7 +307,7 @@ namespace HFFramework
                 }
 
                 //如果没有读取消息头 并且 可以读取的数据大于 头的长度
-                if (isReadHeader == false && socket.Available >= MSG_HEAD_LEN)
+                if (currentPackage.isReadHeader == false && socket.Available >= MSG_HEAD_LEN)
                 {
                     socket.Receive(dataBuffer, MSG_HEAD_LEN, 0);
                     using (MemoryStream stream = new MemoryStream(dataBuffer))
@@ -324,13 +324,13 @@ namespace HFFramework
                             temp = reader.ReadBytes(MSG_TYPE_LEN);
                             currentPackage.msgType = BitConverter.ToInt32(temp, 0);
 
-                            isReadHeader = true;
+                            currentPackage.isReadHeader = true;
                         }
                     }
                 }
 
                 //如果读取过了消息头 并且可读取的数据大于整个数据体的长度
-                if (isReadHeader == true && socket.Available >= currentPackage.bodyLength)
+                if (currentPackage.isReadHeader == true && socket.Available >= currentPackage.bodyLength)
                 {
                     socket.Receive(dataBuffer, currentPackage.bodyLength, 0);
                     using (MemoryStream stream = new MemoryStream(dataBuffer))
@@ -442,7 +442,8 @@ namespace HFFramework
         {
             socket.Close();
             SetState(ConnectState.Close);
-            isReadHeader = false;
+            currentPackage.Clear();
+            currentPackage = null;
             receiveThread = null;
             socket = null;
         }

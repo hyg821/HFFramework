@@ -4,6 +4,9 @@ using UnityEngine;
 using HFFramework;
 using UnityEngine.UI;
 using Config;
+using BestHTTP;
+using System.Net.Sockets;
+using System.IO;
 
 public class LoginController : UIController {
     public InputField input;
@@ -25,6 +28,7 @@ public class LoginController : UIController {
             HFLog.C("点击登录的名称是" + input.text);
             AppDomainManager.Instance.JumpToHotFix("hotfixdll", "HotFix", "HotFixEnter");
 
+            
             TcpSocket socket = new TcpSocket();
             socket.Init("10.2.0.207", 8002, delegate ()
             {
@@ -54,7 +58,21 @@ public class LoginController : UIController {
             });
 
             socket.StartConnect();
-            //socket.Close();
+            
+
+            /*
+            ClientSocket socket = new ClientSocket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket.beginConnectedCallback = delegate(bool b) {
+                GameLooper.BackToMainThread(delegate ()
+                {
+                    HFLog.C("链接成功");
+                });
+            };
+            socket.connectErrorCallback = delegate() { };
+            socket.messageDispatchReceiveDelegate = delegate(int a, MemoryStream b) { };
+            socket.Connecting("10.2.0.207", 8002);
+
+            */
         });
 
         print(ConfigMan.Get(0).GetAddress("1"));

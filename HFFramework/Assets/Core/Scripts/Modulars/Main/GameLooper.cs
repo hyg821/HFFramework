@@ -7,8 +7,8 @@ namespace HFFramework
 {
     public class GameLooper : MonoBehaviour, IManager
     {
-
         public static GameLooper Instance;
+
         /// <summary>
         ///  需要update的 列表
         /// </summary>

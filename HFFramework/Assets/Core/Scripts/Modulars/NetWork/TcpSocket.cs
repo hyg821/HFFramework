@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Timers;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace HFFramework
 {
@@ -32,6 +33,28 @@ namespace HFFramework
             /// </summary>
             Close
         }
+
+        private static byte[] checkBytes = new byte[1];
+
+        /// <summary>
+        ///  锁
+        /// </summary>
+        private static object lockObj = new object();
+
+        /// <summary>
+        ///  线程休眠时间
+        /// </summary>
+        private const int THREAD_SLEEP_TIME = 20;
+
+        /// <summary>
+        ///  检测网络连接时间
+        /// </summary>
+        private const int CHECK_CONNECT_TIME = 200;
+
+        /// <summary>
+        ///  检测网络连接 累加时间
+        /// </summary>
+        private int checkConnectAllTime = 0;
 
         /// <summary>
         ///  最大数据缓冲长度
@@ -128,24 +151,17 @@ namespace HFFramework
         /// <summary>
         ///  是否成功连接
         /// </summary>
-        public bool Connected
+        private bool Connected
         {
             get
             {
                 if (socket != null)
                 {
-                    return socket.Connected;
+                    return !(socket.Poll(1, SelectMode.SelectRead) && socket.Available == 0);
                 }
                 return false;
             }
         }
-
-        /*
-        public TcpSocket(string ip, int port, Action connect, Action<int, byte[]> receive, Action close, Action error)
-        {
-            Init(ip, port, connect, receive, close, error);
-        }
-        */
 
         public void Init(string ip, int port, Action connect, Action<int, byte[]> receive, Action close, Action error)
         {
@@ -158,6 +174,15 @@ namespace HFFramework
             AddressFamily ipv = CheckAddressFamily();
             SetState(ConnectState.UnKnow);
             socket = new Socket(ipv, SocketType.Stream, ProtocolType.Tcp);
+
+            //设置 keepAlive
+            uint dummy = 0;
+            int uintSize = Marshal.SizeOf(dummy);
+            byte[] inOptionValues = new byte[uintSize * 3];
+            BitConverter.GetBytes((uint)1).CopyTo(inOptionValues, 0);//是否启用Keep-Alive
+            BitConverter.GetBytes((uint)4000).CopyTo(inOptionValues, uintSize);//多长时间开始第一次探测
+            BitConverter.GetBytes((uint)100).CopyTo(inOptionValues, uintSize * 2);//探测时间间隔
+            socket.IOControl(IOControlCode.KeepAliveValues, inOptionValues, null);
         }
 
         /// <summary>
@@ -210,24 +235,36 @@ namespace HFFramework
                         SetState(ConnectState.Fail);
                     }
                 }
-                allTime += CONNECT_TIMEOUT;
+                allTime += CONNECT_CHECK_INTERVAL;
             };
             timer.Start();
         }
 
+        public bool  CheckSocketConnect()
+        {
+            return Connected;
+        }
+
         public void ReceiveMessage()
         {
-            while (true)
+            while (state == ConnectState.Success)
             {
-                if (socket != null && socket.Connected == false)
+                //检测 网络 连接
+                checkConnectAllTime += THREAD_SLEEP_TIME;
+                if (checkConnectAllTime>=CHECK_CONNECT_TIME)
                 {
-                    break;
+                    checkConnectAllTime = 0;
+                    bool isConnect = CheckSocketConnect();
+                    if (isConnect==false)
+                    {
+                        break;
+                    }
                 }
 
                 //如果 可以读取的数据为 0  那么直接休眠0.01秒 然后继续去读
                 if (socket.Available == 0)
                 {
-                    Thread.Sleep(10);
+                    Thread.Sleep(THREAD_SLEEP_TIME);
                     continue;
                 }
 
@@ -325,24 +362,27 @@ namespace HFFramework
 
         private void SetState(ConnectState s)
         {
-            if (state!=s)
+            lock (lockObj)
             {
-                state = s;
-                switch (state)
-                {   
-                    case ConnectState.UnKnow:
-                        break;
-                    case ConnectState.Success:
-                        connectCallback();
-                        break;
-                    case ConnectState.Close:
-                        closeCallback();
-                        break;
-                    case ConnectState.Fail:
-                        errorCallback();
-                        break;
-                    default:
-                        break;
+                if (state != s)
+                {
+                    state = s;
+                    switch (state)
+                    {
+                        case ConnectState.UnKnow:
+                            break;
+                        case ConnectState.Success:
+                            connectCallback();
+                            break;
+                        case ConnectState.Close:
+                            closeCallback();
+                            break;
+                        case ConnectState.Fail:
+                            errorCallback();
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }

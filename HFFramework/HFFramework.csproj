@@ -638,10 +638,10 @@
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameStateChecker.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameTimer.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\MessageCenter\NotificationCenter.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\NetWork\ClientSocket.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\NetWork\HFSocket.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\NetWork\HFSocketManager.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\NetWork\TcpSocket.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\Network\ClientSocket.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\Network\HFSocket.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\Network\HFSocketManager.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\Network\TcpSocket.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Pool\IPool.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Pool\ObjectPool.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Pool\ObjectPoolManager.cs" />

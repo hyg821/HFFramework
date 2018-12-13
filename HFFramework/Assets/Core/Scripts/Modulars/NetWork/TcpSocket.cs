@@ -242,7 +242,29 @@ namespace HFFramework
 
         public bool  CheckSocketConnect()
         {
-            return Connected;
+            bool end0 = true;
+            bool end1 = Connected;
+
+            bool blockingState = socket.Blocking;
+            try
+            {
+                socket.Blocking = false;
+                socket.Send(checkBytes, 0, 0);
+                end0 = true;
+            }
+            catch (SocketException e)
+            {
+                if (!e.NativeErrorCode.Equals(10035))
+                {
+                    end0 = false;
+                }
+            }
+            finally
+            {
+                socket.Blocking = blockingState;
+            }
+
+            return end1 == false ? end1 : end0;
         }
 
         public void ReceiveMessage()

@@ -12,11 +12,25 @@ namespace HFFramework
     ///  测试使用
     ///  说明  和后端的通讯 发送逻辑 和 解析逻辑
     ///   一个完整的数据  =  数据头  （8字节 4+4)   +  数据体 （proto包字节）
-    ///  数据头 =  数据体字段长度4字节 + 数据体类型字段长度4字节
+    ///  数据头 =  包体总长度4字节 + 数据体类型字段长度4字节
     ///  数据体 =  proto包字节
     /// </summary>
     public class TcpSocket
     {
+        public class SteamPackage
+        {
+            public int bodyLength = int.MaxValue;
+            public int msgType = int.MaxValue;
+            public byte[] msgBytes;
+
+            public void Clear()
+            {
+                bodyLength = int.MaxValue;
+                msgType = int.MaxValue;
+                msgBytes = null;
+            }
+        }
+
         public enum ConnectState
         {
             UnKnow,
@@ -117,6 +131,8 @@ namespace HFFramework
         ///  数据缓冲
         /// </summary>
         private byte[] dataBuffer = new byte[MAX_BUFFER_LEN];
+
+        private SteamPackage currentPackage = new SteamPackage();
 
         /// <summary>
         ///  是否读取消息头
@@ -290,10 +306,6 @@ namespace HFFramework
                     continue;
                 }
 
-                int bodyLength = -1;
-                int messageType = -1;
-                byte[] msgBytes;
-
                 //如果没有读取消息头 并且 可以读取的数据大于 头的长度
                 if (isReadHeader == false && socket.Available >= MSG_HEAD_LEN)
                 {
@@ -306,11 +318,11 @@ namespace HFFramework
                             //先读取整个数据的长度
                             int messageLength = BitConverter.ToInt32(temp, 0);
                             //再-数据头的长度得到 数据体的长度
-                            bodyLength = messageLength - MSG_HEAD_LEN;
+                            currentPackage.bodyLength = messageLength - MSG_HEAD_LEN;
 
                             //然后在读取消息号
                             temp = reader.ReadBytes(MSG_TYPE_LEN);
-                            messageType = BitConverter.ToInt32(temp, 0);
+                            currentPackage.msgType = BitConverter.ToInt32(temp, 0);
 
                             isReadHeader = true;
                         }
@@ -318,17 +330,17 @@ namespace HFFramework
                 }
 
                 //如果读取过了消息头 并且可读取的数据大于整个数据体的长度
-                if (isReadHeader == true && socket.Available >= bodyLength)
+                if (isReadHeader == true && socket.Available >= currentPackage.bodyLength)
                 {
-                    socket.Receive(dataBuffer, bodyLength, 0);
+                    socket.Receive(dataBuffer, currentPackage.bodyLength, 0);
                     using (MemoryStream stream = new MemoryStream(dataBuffer))
                     {
                         using (BinaryReader reader = new BinaryReader(stream))
                         {
-                            msgBytes = reader.ReadBytes(bodyLength);
-                            if (bodyLength != -1 && messageType != -1)
+                            currentPackage.msgBytes = reader.ReadBytes(currentPackage.bodyLength);
+                            if (currentPackage.bodyLength != int.MaxValue && currentPackage.msgType != int.MaxValue)
                             {
-                                CreateMessage(messageType, msgBytes);
+                                CreateMessage(currentPackage);
                             }
                         }
                     }
@@ -339,9 +351,10 @@ namespace HFFramework
             SetState(ConnectState.Fail);
         }
 
-        private void CreateMessage(int messageType, byte[] data)
+        private void CreateMessage(SteamPackage package)
         {
-            receiveCallback(messageType, data);
+            receiveCallback(package.msgType, package.msgBytes);
+            package.Clear();
         }
 
         public void Send(int msgType, byte[] msg)

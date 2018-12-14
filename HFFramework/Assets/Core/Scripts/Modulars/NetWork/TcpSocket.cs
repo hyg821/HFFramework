@@ -17,7 +17,7 @@ namespace HFFramework
     /// </summary>
     public class TcpSocket
     {
-        public class SteamPackage
+        public class StreamPackage
         {
             /// <summary>
             ///  是否读取消息头
@@ -137,7 +137,7 @@ namespace HFFramework
         /// </summary>
         private byte[] dataBuffer = new byte[MAX_BUFFER_LEN];
 
-        private SteamPackage currentPackage = new SteamPackage();
+        private StreamPackage currentPackage = new StreamPackage();
 
         /// <summary>
         ///  接收数据线程
@@ -351,7 +351,7 @@ namespace HFFramework
             SetState(ConnectState.Fail);
         }
 
-        private void CreateMessage(SteamPackage package)
+        private void CreateMessage(StreamPackage package)
         {
             receiveCallback(package.msgType, package.msgBytes);
             package.Clear();

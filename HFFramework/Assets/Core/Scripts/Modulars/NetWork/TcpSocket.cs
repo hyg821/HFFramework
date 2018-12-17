@@ -350,15 +350,13 @@ namespace HFFramework
 
                     //binaryReader 读取 MSG_ALL_IDE_LEN长度的字节
                     byte[] temp = binaryReader.ReadBytes(MSG_ALL_IDE_LEN);
-                    Array.Reverse(temp);
                     //通过获得的字节 转换成 数据包的总长度
-                    int messageLength = BitConverter.ToInt32(temp, 0);
+                    int messageLength = ExtensionMethod.BitConverterToInt32(temp, 0);
 
                     //binaryReader 读取 MSG_TYPE_LEN 长度的字节
                     temp = binaryReader.ReadBytes(MSG_TYPE_LEN);
-                    Array.Reverse(temp);
                     //通过获得的字节 转换成 消息类型
-                    currentPackage.msgType = BitConverter.ToInt32(temp, 0);
+                    currentPackage.msgType = ExtensionMethod.BitConverterToInt32(temp, 0);
 
                     //重置memoryStream 索引为0
                     binaryReader.BaseStream.Position = 0;
@@ -410,13 +408,11 @@ namespace HFFramework
             if (socket.Connected)
             {
                 //写入 消息总长度 = 消息体长度+ 定义的消息头长度
-                byte[] temp = BitConverter.GetBytes(msg.Length + MSG_HEAD_LEN);
-                Array.Reverse(temp);
+                byte[] temp = ExtensionMethod.BitConverterGetBytes(msg.Length + MSG_HEAD_LEN);
                 binaryWriter.Write(temp);
 
                 //写入消息号 定义的长度 一个int 4字节
-                temp = BitConverter.GetBytes(msgType);
-                Array.Reverse(temp);
+                temp = ExtensionMethod.BitConverterGetBytes(msgType);
                 binaryWriter.Write(temp);
 
                 //写入消息体

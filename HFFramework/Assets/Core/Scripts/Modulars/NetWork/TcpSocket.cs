@@ -1,9 +1,9 @@
-﻿using System.Net;
-using System.Net.Sockets;
-using System;
-using System.Threading;
-using System.Timers;
+﻿using System;
 using System.IO;
+using System.Timers;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
 using System.Runtime.InteropServices;
 
 namespace HFFramework
@@ -14,6 +14,8 @@ namespace HFFramework
     ///   一个完整的数据  =  数据头  （8字节 4+4)   +  数据体 （proto包字节）
     ///  数据头 =  包体总长度4字节 + 数据体类型字段长度4字节
     ///  数据体 =  proto包字节
+    ///   
+    ///  因为c# 是小端编码 服务器一般使用大端编码 所以 用到了 BitConver 和  ( BinaryReader  BinaryWriter )的地方需要 Array.Reverse(temp) 来转换到大端
     /// </summary>
     public enum ConnectState
     {
@@ -348,11 +350,13 @@ namespace HFFramework
 
                     //binaryReader 读取 MSG_ALL_IDE_LEN长度的字节
                     byte[] temp = binaryReader.ReadBytes(MSG_ALL_IDE_LEN);
+                    Array.Reverse(temp);
                     //通过获得的字节 转换成 数据包的总长度
                     int messageLength = BitConverter.ToInt32(temp, 0);
 
                     //binaryReader 读取 MSG_TYPE_LEN 长度的字节
                     temp = binaryReader.ReadBytes(MSG_TYPE_LEN);
+                    Array.Reverse(temp);
                     //通过获得的字节 转换成 消息类型
                     currentPackage.msgType = BitConverter.ToInt32(temp, 0);
 
@@ -407,10 +411,12 @@ namespace HFFramework
             {
                 //写入 消息总长度 = 消息体长度+ 定义的消息头长度
                 byte[] temp = BitConverter.GetBytes(msg.Length + MSG_HEAD_LEN);
+                Array.Reverse(temp);
                 binaryWriter.Write(temp);
 
                 //写入消息号 定义的长度 一个int 4字节
                 temp = BitConverter.GetBytes(msgType);
+                Array.Reverse(temp);
                 binaryWriter.Write(temp);
 
                 //写入消息体

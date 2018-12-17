@@ -14,5 +14,8 @@ public class T2Type : MonoBehaviour {
     {
         Type type = typeof(T);
         print(type);
+
+        bool b = gameObject.GetType() == typeof(T);
+        print(b);
     }
 }

@@ -7,6 +7,7 @@ using Config;
 using BestHTTP;
 using System.Net.Sockets;
 using System.IO;
+using System;
 
 public class LoginController : UIController {
     public InputField input;
@@ -26,8 +27,7 @@ public class LoginController : UIController {
         loginBtn.onClick.AddListener(delegate ()
         {
             HFLog.C("点击登录的名称是" + input.text);
-            AppDomainManager.Instance.JumpToHotFix("hotfixdll", "HotFix", "HotFixEnter");
-
+            HFFramework.AppDomainManager.Instance.JumpToHotFix("hotfixdll", "HotFix", "HotFixEnter");
 
             HFSocket socket = HFSocketManager.Instance.GetSocket("hyg");
             socket.Init("10.2.0.207", 8002, delegate ()

@@ -23,15 +23,15 @@ namespace HFFramework
             ///  是否读取消息头
             /// </summary>
             public bool isReadHeader = false;
-            public int bodyLength = int.MaxValue;
-            public int msgType = int.MaxValue;
+            public int bodyLength = int.MinValue;
+            public int msgType = int.MinValue;
             public byte[] msgBytes;
 
             public void Clear()
             {
                 isReadHeader = false;
-                bodyLength = int.MaxValue;
-                msgType = int.MaxValue;
+                bodyLength = int.MinValue;
+                msgType = int.MinValue;
                 msgBytes = null;
             }
         }
@@ -78,7 +78,7 @@ namespace HFFramework
         /// <summary>
         ///  最大数据缓冲长度
         /// </summary>
-        private const int MAX_BUFFER_LEN = 512;
+        private const int MAX_BUFFER_LEN = 1024;
 
         /// <summary>
         ///  连接间隔 5秒
@@ -133,9 +133,21 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  数据缓冲
+        ///  socket 接收到第一层byte[]数据缓冲
         /// </summary>
         private byte[] dataBuffer = new byte[MAX_BUFFER_LEN];
+
+        /// <summary>
+        ///  通过第一层缓冲生成的 第二层readStream缓冲
+        /// </summary>
+        private MemoryStream readStream;
+        private BinaryReader binaryReader;
+
+        /// <summary>
+        ///  发送消息的数据缓冲
+        /// </summary>
+        private MemoryStream writeStream;
+        private BinaryWriter binaryWriter;
 
         private StreamPackage currentPackage = new StreamPackage();
 
@@ -199,6 +211,12 @@ namespace HFFramework
             BitConverter.GetBytes((uint)4000).CopyTo(inOptionValues, uintSize);//多长时间开始第一次探测
             BitConverter.GetBytes((uint)100).CopyTo(inOptionValues, uintSize * 2);//探测时间间隔
             socket.IOControl(IOControlCode.KeepAliveValues, inOptionValues, null);
+
+            readStream = new MemoryStream();
+            binaryReader = new BinaryReader(readStream);
+
+            writeStream = new MemoryStream();
+            binaryWriter = new BinaryWriter(writeStream);
         }
 
         /// <summary>
@@ -299,7 +317,7 @@ namespace HFFramework
                     }
                 }
 
-                //如果 可以读取的数据为 0  那么直接休眠0.01秒 然后继续去读
+                //如果 可以读取的数据为 0  那么直接休眠THREAD_SLEEP_TIME 毫秒 然后继续去读
                 if (socket.Available == 0)
                 {
                     Thread.Sleep(THREAD_SLEEP_TIME);
@@ -309,40 +327,56 @@ namespace HFFramework
                 //如果没有读取消息头 并且 可以读取的数据大于 头的长度
                 if (currentPackage.isReadHeader == false && socket.Available >= MSG_HEAD_LEN)
                 {
+                    //socket 接收到缓冲区 并且接收的长度是数据头长度
                     socket.Receive(dataBuffer, MSG_HEAD_LEN, 0);
-                    using (MemoryStream stream = new MemoryStream(dataBuffer))
-                    {
-                        using (BinaryReader reader = new BinaryReader(stream))
-                        {
-                            byte[] temp = reader.ReadBytes(MSG_ALL_IDE_LEN);
-                            //先读取整个数据的长度
-                            int messageLength = BitConverter.ToInt32(temp, 0);
-                            //再-数据头的长度得到 数据体的长度
-                            currentPackage.bodyLength = messageLength - MSG_HEAD_LEN;
 
-                            //然后在读取消息号
-                            temp = reader.ReadBytes(MSG_TYPE_LEN);
-                            currentPackage.msgType = BitConverter.ToInt32(temp, 0);
+                    //把数据头字节 写入 memoryStream 
+                    readStream.Write(dataBuffer, 0, MSG_HEAD_LEN);
 
-                            currentPackage.isReadHeader = true;
-                        }
-                    }
+                    //重置memoryStream 索引为0
+                    readStream.Position = 0;
+
+                    //binaryReader 读取 MSG_ALL_IDE_LEN长度的字节
+                    byte[] temp = binaryReader.ReadBytes(MSG_ALL_IDE_LEN);
+                    //通过获得的字节 转换成 数据包的总长度
+                    int messageLength = BitConverter.ToInt32(temp, 0);
+
+                    //binaryReader 读取 MSG_TYPE_LEN 长度的字节
+                    temp = binaryReader.ReadBytes(MSG_TYPE_LEN);
+                    //通过获得的字节 转换成 消息类型
+                    currentPackage.msgType = BitConverter.ToInt32(temp, 0);
+
+                    //重置memoryStream 索引为0
+                    binaryReader.BaseStream.Position = 0;
+
+                    //再减去数据头的长度得到 数据体的长度
+                    currentPackage.bodyLength = messageLength - MSG_HEAD_LEN;
+
+                    //设置已经读取 消息头标记
+                    currentPackage.isReadHeader = true;
                 }
 
                 //如果读取过了消息头 并且可读取的数据大于整个数据体的长度
                 if (currentPackage.isReadHeader == true && socket.Available >= currentPackage.bodyLength)
                 {
+                    //从socket 内部缓冲区 读取 已经获取过消息体长度的 数据到自己的缓冲区 
                     socket.Receive(dataBuffer, currentPackage.bodyLength, 0);
-                    using (MemoryStream stream = new MemoryStream(dataBuffer))
+
+                    //把自己的缓冲写入 memoryStream
+                    readStream.Write(dataBuffer, 0, currentPackage.bodyLength);
+                    //重置memoryStream 索引为0
+                    readStream.Position = 0;
+
+                    //从 memoryStream 读取 数据体长度的 数据
+                    currentPackage.msgBytes = binaryReader.ReadBytes(currentPackage.bodyLength);
+                    //重置memoryStream 索引为0
+                    binaryReader.BaseStream.Position = 0;
+
+                    //如果读取了数据体  消息类型
+                    if (currentPackage.bodyLength != int.MinValue && currentPackage.msgType != int.MinValue)
                     {
-                        using (BinaryReader reader = new BinaryReader(stream))
-                        {
-                            currentPackage.msgBytes = reader.ReadBytes(currentPackage.bodyLength);
-                            if (currentPackage.bodyLength != int.MaxValue && currentPackage.msgType != int.MaxValue)
-                            {
-                                CreateMessage(currentPackage);
-                            }
-                        }
+                        //分发消息
+                        CreateMessage(currentPackage);
                     }
                 }
             }
@@ -361,32 +395,31 @@ namespace HFFramework
         {
             if (socket.Connected)
             {
-                using (MemoryStream stream = new MemoryStream(dataBuffer))
+                //写入 消息总长度 = 消息体长度+ 定义的消息头长度
+                byte[] temp = BitConverter.GetBytes(msg.Length + MSG_HEAD_LEN);
+                binaryWriter.Write(temp);
+
+                //写入消息号 定义的长度 一个int 4字节
+                temp = BitConverter.GetBytes(msgType);
+                binaryWriter.Write(temp);
+
+                //写入消息体
+                binaryWriter.Write(msg);
+
+                binaryWriter.Flush();
+
+                try
                 {
-                    using (BinaryWriter writer = new BinaryWriter(stream))
-                    {
-                        //写入 消息总长度 4字节
-                        byte[] temp = BitConverter.GetBytes(msg.Length + MSG_HEAD_LEN);
-                        writer.Write(temp);
-
-                        //写入消息号 4字节
-                        temp = BitConverter.GetBytes(msgType);
-                        writer.Write(temp);
-
-                        //写入包体内容 
-                        writer.Write(msg);
-
-                        writer.Flush();
-
-                        try
-                        {
-                            socket.Send(stream.GetBuffer());
-                        }
-                        catch (Exception)
-                        {
-                            SetState(ConnectState.Fail);
-                        }
-                    }
+                    socket.Send(writeStream.GetBuffer());
+                }
+                catch (Exception)
+                {
+                    SetState(ConnectState.Fail);
+                }
+                finally
+                {
+                    writeStream.Position = 0;
+                    writeStream.SetLength(0);
                 }
             }
             else
@@ -443,6 +476,10 @@ namespace HFFramework
             socket.Close();
             SetState(ConnectState.Close);
             currentPackage.Clear();
+            readStream.Dispose();
+            binaryReader.Dispose();
+            writeStream.Dispose();
+            binaryWriter.Dispose();
             currentPackage = null;
             receiveThread = null;
             socket = null;

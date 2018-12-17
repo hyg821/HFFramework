@@ -80,7 +80,7 @@ namespace HFFramework
         /// <summary>
         ///  最大数据缓冲长度
         /// </summary>
-        private const int MAX_BUFFER_LEN = 1024;
+        private const int MAX_BUFFER_LEN = 1024*64;
 
         /// <summary>
         ///  连接间隔 5秒

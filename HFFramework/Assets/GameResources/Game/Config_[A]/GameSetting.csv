@@ -3,4 +3,4 @@ id,Mode,AppVersion,ResourceVersion,AssetbundleName,IsOpenLog,IsOpenLoaclLog,Serv
 val,val,val,val,val,val,val,val,val,val,val
 single,single,single,single,single,single,single,single,single,single,single
 string,string,string,string,bool,bool,bool,float,float,int,int
-0,Debug,1.0.0,1.0.0,FALSE,TRUE,FALSE,1920,1080,60,10
+0,develop,1.0.0,1.0.0,FALSE,TRUE,FALSE,1920,1080,60,10

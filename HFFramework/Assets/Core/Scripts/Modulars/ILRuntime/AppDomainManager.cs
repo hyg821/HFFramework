@@ -185,6 +185,7 @@ namespace HFFramework
             appdomain.DelegateManager.RegisterMethodDelegate<AssetBundlePackage>();
             appdomain.DelegateManager.RegisterMethodDelegate<TrackEntry>();
             appdomain.DelegateManager.RegisterFunctionDelegate<GameObject>();
+            appdomain.DelegateManager.RegisterMethodDelegate<System.Int32, System.Byte[]>();
 
             //===========================委托转换器（DelegateConvertor）================================================
             // 如果你需要将一个不是Action或者Func类型的委托实例传到ILRuntime外部使用的话，

@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using HotFix;
+using HFFramework;
 
 public class HotFixEnter
 {
     public static void AwakeDLL()
     {
         Debug.Log("AwakeDLL");
-        //HFFramework.HFSocket
     }
 
     public static void Update()

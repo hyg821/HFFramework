@@ -8,6 +8,8 @@ using BestHTTP;
 using System.Net.Sockets;
 using System.IO;
 using System;
+using Lobbyservice.Protobuf;
+using Google.Protobuf;
 
 public class LoginController : UIController {
     public InputField input;
@@ -28,14 +30,32 @@ public class LoginController : UIController {
         {
             HFLog.C("点击登录的名称是" + input.text);
             HFFramework.AppDomainManager.Instance.JumpToHotFix("hotfixdll", "HotFix", "HotFixEnter");
-
+         
             HFSocket socket = HFSocketManager.Instance.GetSocket("hyg");
             socket.Init("10.2.0.207", 8002, delegate ()
              {
                  HFLog.C("连接成功");
-             }, delegate (int a, byte[] bb)
+
+                 
+                 LoginRequest request = new LoginRequest();
+                 request.OpenId = "zcc";
+                 request.ProductId = "1";
+                 request.Pf = "AND";
+                 request.Channel = "";
+                 request.ChannelUid = "";
+                 request.Version = "1.0.0";
+                 socket.SendMessage(1,request);
+                 
+             }, delegate (int msgID, byte[] bb)
              {
-                 HFLog.C("开始接受");
+                 HFLog.C("开始接受"+msgID);
+                 
+                 if (msgID==1)
+                 {
+                     LoginResponse res = LoginResponse.Parser.ParseFrom(bb);
+                     HFLog.C(res.ToString());
+                 }
+                 
              }, delegate ()
              {
                  HFLog.C("连接关闭");
@@ -46,20 +66,6 @@ public class LoginController : UIController {
              });
 
             socket.StartConnect();
-
-            /*
-            ClientSocket socket = new ClientSocket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket.beginConnectedCallback = delegate(bool b) {
-                GameLooper.BackToMainThread(delegate ()
-                {
-                    HFLog.C("链接成功");
-                });
-            };
-            socket.connectErrorCallback = delegate() { };
-            socket.messageDispatchReceiveDelegate = delegate(int a, MemoryStream b) { };
-            socket.Connecting("10.2.0.207", 8002);
-
-            */
         });
 
         print(ConfigMan.Get(0).GetAddress("1"));

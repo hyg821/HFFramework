@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package lobbyservice.protobuf;
+
+option java_package = "com.hoolai.commonapp.protobuf";
+option java_outer_classname = "LobbyServiceProto";
+
+//用户登录响应信息
+//用户登录请求信息
+message LoginRequest{
+	string openId = 1;		// 用户唯一标识。(一般是用户登录后，游戏客户端获取的uid)
+	string product_id = 2;  // 该产品的产品id (客户端代码:FastSdk.getChannelInterface().getChannelInfo().getProductId())
+	string pf = 3;			// 平台信息
+	string channel = 4;	 	// 用户登录后，游戏客户端获取的channel
+	string channel_uid = 5; // 用户登录后，游戏客户端获取的channelUid
+	string access_token = 6;// 用户登录后，游戏客户端获取的登陆令牌
+	string channelId = 7;	// 渠道ID
+	string version = 8;		// 用户登录版本号
+	string phone_type = 9;	// 手机型号
+	string idfa = 10; 		// 广告标示符
+	string idfv = 11; 		// Vindor标示符
+	string imei = 12; 		// 手机的唯一识别号码
+}
+
+//用户登录响应信息
+message LoginResponse{
+	int32 code = 1;		 // 登录码
+	int64 gold = 2;		 // 金币
+	int64 diamond = 3;   // 钻石
+	int64 userId = 4;		// 角色ID
+	string name = 5;		// 角色名称
+	int32 level = 6;		// 角色等级
+	string sex = 7;			// 性别
+	string headImgUrl = 8;	// 头像地址
+	int64 exp = 9; // 当前经验值
+	bool isNewUser = 10; // 是否新用户
+	string ip = 11; // IP
+}
+
+/** 微信登录信息**/
+message WechatLoginObject {
+	string appId = 1;
+	string wxAppId = 2;
+	string token = 3; // 微信的token
+	string openId = 4; // 微信的openId
+	string pf = 5;
+	string pfKey = 6;
+	string version = 7; // 用户登录版本号
+	string phone_type = 8; // 手机型号
+	string idfa = 9; // 广告标示符
+	string idfv = 10; // Vindor标示符
+}

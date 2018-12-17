@@ -659,6 +659,7 @@
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\PathManager.cs" />
     <Compile Include="Assets\Core\Scripts\ScriptableObject\GameSetting.cs" />
     <Compile Include="Assets\Core\Template\ReflectionBehaviourMethod.cs" />
+    <Compile Include="Assets\GameResources\Game\Demo\LobbyService.cs" />
     <Compile Include="Assets\GameResources\Game\Demo\LoginController.cs" />
     <Compile Include="Assets\GameResources\Game\Demo\Test.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\Address.cs" />

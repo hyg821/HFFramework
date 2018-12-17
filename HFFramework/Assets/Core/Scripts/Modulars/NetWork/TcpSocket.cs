@@ -16,6 +16,7 @@ namespace HFFramework
     ///  数据体 =  proto包字节
     ///   
     ///  因为c# 是小端编码 服务器一般使用大端编码 所以 用到了 BitConver 和  ( BinaryReader  BinaryWriter )的地方需要 Array.Reverse(temp) 来转换到大端
+    ///  有两处 服务器冗余代码 正式使用的时候需要删掉  如果加上仅适用于公司后台编码逻辑
     /// </summary>
     public enum ConnectState
     {
@@ -340,7 +341,8 @@ namespace HFFramework
                 if (currentPackage.isReadHeader == false && socket.Available >= MSG_HEAD_LEN)
                 {
                     //socket 接收到缓冲区 并且接收的长度是数据头长度
-                    socket.Receive(dataBuffer, MSG_HEAD_LEN, 0);
+                    //服务器冗余 正式时候需要删掉 + 4
+                    socket.Receive(dataBuffer, MSG_HEAD_LEN+4, 0);
 
                     //把数据头字节 写入 memoryStream 
                     readStream.Write(dataBuffer, 0, MSG_HEAD_LEN);
@@ -413,6 +415,9 @@ namespace HFFramework
 
                 //写入消息号 定义的长度 一个int 4字节
                 temp = ExtensionMethod.BitConverterGetBytes(msgType);
+                binaryWriter.Write(temp);
+
+                //服务器冗余 正式时候需要删掉
                 binaryWriter.Write(temp);
 
                 //写入消息体
@@ -511,22 +516,22 @@ namespace HFFramework
 
             if (readStream!=null)
             {
-                readStream.Dispose();
+                readStream.Close();
             }
 
             if (binaryReader!=null)
             {
-                binaryReader.Dispose();
+                binaryReader.Close();
             }
 
             if (writeStream!=null)
             {
-                writeStream.Dispose();
+                writeStream.Close();
             }
 
             if (binaryWriter!=null)
             {
-                binaryWriter.Dispose();
+                binaryWriter.Close();
             }
 
             currentPackage = null;

@@ -15,6 +15,23 @@ namespace HFFramework
     ///  数据头 =  包体总长度4字节 + 数据体类型字段长度4字节
     ///  数据体 =  proto包字节
     /// </summary>
+    public enum ConnectState
+    {
+        UnKnow,
+        /// <summary>
+        ///  成功
+        /// </summary>
+        Success,
+        /// <summary>
+        ///  错误
+        /// </summary>
+        Fail,
+        /// <summary>
+        ///  关闭
+        /// </summary>
+        Close
+    }
+
     public class TcpSocket
     {
         public class StreamPackage
@@ -34,23 +51,6 @@ namespace HFFramework
                 msgType = int.MinValue;
                 msgBytes = null;
             }
-        }
-
-        public enum ConnectState
-        {
-            UnKnow,
-            /// <summary>
-            ///  成功
-            /// </summary>
-            Success,
-            /// <summary>
-            ///  错误
-            /// </summary>
-            Fail,
-            /// <summary>
-            ///  关闭
-            /// </summary>
-            Close
         }
 
         private static byte[] checkBytes = new byte[1];
@@ -151,6 +151,8 @@ namespace HFFramework
 
         private StreamPackage currentPackage = new StreamPackage();
 
+        private System.Timers.Timer  checkConnectedTimer;
+
         /// <summary>
         ///  接收数据线程
         /// </summary>
@@ -179,7 +181,7 @@ namespace HFFramework
         /// <summary>
         ///  是否成功连接
         /// </summary>
-        private bool Connected
+        public bool Connected
         {
             get
             {
@@ -246,17 +248,17 @@ namespace HFFramework
 
         public void CheckConnect()
         {
+            CloseTimer();
             float allTime = 0;
-            System.Timers.Timer timer = new System.Timers.Timer(CONNECT_CHECK_INTERVAL);
-            timer.Elapsed += delegate (object sender, ElapsedEventArgs e)
+            checkConnectedTimer = new System.Timers.Timer(CONNECT_CHECK_INTERVAL);
+            checkConnectedTimer.Elapsed += delegate (object sender, ElapsedEventArgs e)
             {
                 if (allTime< CONNECT_TIMEOUT)
                 {
                     //如果在规定时间内 连接上了 那么直接 停止定时器
                     if (socket.Connected)
                     {
-                        timer.Stop();
-                        timer = null;
+                        CloseTimer();
                     }
                 }
                 // 如果在规定时间内没有连接上 直接停止定时器 并且报错
@@ -264,14 +266,22 @@ namespace HFFramework
                 {
                     if (socket.Connected==false)
                     {
-                        timer.Stop();
-                        timer = null;
+                        CloseTimer();
                         SetState(ConnectState.Fail);
                     }
                 }
                 allTime += CONNECT_CHECK_INTERVAL;
             };
-            timer.Start();
+            checkConnectedTimer.Start();
+        }
+
+        private void CloseTimer()
+        {
+            if (checkConnectedTimer != null)
+            {
+                checkConnectedTimer.Close();
+                checkConnectedTimer = null;
+            }
         }
 
         public bool  CheckSocketConnect()
@@ -440,13 +450,22 @@ namespace HFFramework
                         case ConnectState.UnKnow:
                             break;
                         case ConnectState.Success:
-                            connectCallback();
+                            if (connectCallback!=null)
+                            {
+                                connectCallback();
+                            }
                             break;
                         case ConnectState.Close:
-                            closeCallback();
+                            if (closeCallback!=null)
+                            {
+                                closeCallback();
+                            }
                             break;
                         case ConnectState.Fail:
-                            errorCallback();
+                            if (errorCallback!=null)
+                            {
+                                errorCallback();
+                            }
                             break;
                         default:
                             break;
@@ -473,13 +492,38 @@ namespace HFFramework
 
         public void Close()
         {
-            socket.Close();
+            if (socket!=null)
+            {
+                socket.Close();
+            }
+
             SetState(ConnectState.Close);
-            currentPackage.Clear();
-            readStream.Dispose();
-            binaryReader.Dispose();
-            writeStream.Dispose();
-            binaryWriter.Dispose();
+
+            if (currentPackage!=null)
+            {
+                currentPackage.Clear();
+            }
+
+            if (readStream!=null)
+            {
+                readStream.Dispose();
+            }
+
+            if (binaryReader!=null)
+            {
+                binaryReader.Dispose();
+            }
+
+            if (writeStream!=null)
+            {
+                writeStream.Dispose();
+            }
+
+            if (binaryWriter!=null)
+            {
+                binaryWriter.Dispose();
+            }
+
             currentPackage = null;
             receiveThread = null;
             socket = null;

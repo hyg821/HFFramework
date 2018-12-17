@@ -9,27 +9,8 @@ using Google.Protobuf;
 
 namespace HFFramework
 {
-    public enum HASocketState
-    {
-        /// <summary>
-        ///  未知
-        /// </summary>
-        UnKnow = -1,
-
-        /// <summary>
-        ///  正确
-        /// </summary>
-        OK = 0,
-
-        /// <summary>
-        ///  错误
-        /// </summary>
-        Error = -999
-    }
-
     public class HFSocket : MonoBehaviour
     {
-
         /// <summary>
         ///  socket的名字
         /// </summary>
@@ -46,31 +27,29 @@ namespace HFFramework
         public int serverPort;
 
         /// <summary>
-        ///  当前网络是ipv4 还是 ipv6
+        ///  连接状态
         /// </summary>
-        public AddressFamily ipvType;
-
-        /// <summary>
-        ///  连接的状态
-        /// </summary>
-        public HASocketState state = HASocketState.UnKnow;
+        public ConnectState ConnectState
+        {
+            get
+            {
+                if (socket!=null)
+                {
+                    return socket.State;
+                }
+                else
+                {
+                    return ConnectState.UnKnow;
+                }
+            }
+        }
 
         /// <summary>
         /// 真正的socket 
         /// </summary>
-        private ClientSocket socket;
+        private TcpSocket socket;
 
-        /// <summary>
-        ///  监测网络状态的间隔时间
-        /// </summary>
-        public WaitForSeconds wait = new WaitForSeconds(6);
-
-        /// <summary>
-        /// 检测网络状态的协程 
-        /// </summary>
-        private Coroutine checkNetCoroutine;
-
-        private bool isDispatch;
+        private bool isDispatch = false;
         /// <summary>
         ///  是否开启 update 来dispatch消息
         /// </summary>
@@ -109,28 +88,30 @@ namespace HFFramework
             }
         }
 
-
         /// <summary>
         /// 线程同步
         /// </summary>
-        private Queue<KeyValuePair<int, MemoryStream>> eventQueue = new Queue<KeyValuePair<int, MemoryStream>>();
+        private Queue<KeyValuePair<int, byte[]>> eventQueue = new Queue<KeyValuePair<int, byte[]>>();
 
         /// <summary>
         /// 消息派发委托
         /// </summary>
-        private Action<int, MemoryStream> messageDispatchProtoActionDelegate;
+        private Action<int, byte[]> DispatchCallback;
 
         /// <summary>
         ///  成功连接委托
         /// </summary>
-        private Action<bool> beginConnectedCallback;
-        private Action<bool> relayBeginConnectedCallback;
+        private Action ConnectedCallback;
 
         /// <summary>
         ///  失败委托
         /// </summary>
-        private Action connectErrorCallback;
+        private Action ErrorCallback;
 
+        /// <summary>
+        ///  断开委托
+        /// </summary>
+        private Action CloseCallback;
 
         public void Awake()
         {
@@ -142,153 +123,90 @@ namespace HFFramework
             this.socketName = tag;
         }
 
-        public void Init(string ip, int port, Action<bool> relayBeginConnectedCallback, Action<int, MemoryStream> dispatchAction, Action connectErrorCallback)
+        public void Init(string ip, int port, Action connect, Action<int, byte[]> receive, Action close, Action error)
         {
             serverIP = ip;
             serverPort = port;
-
-            // 判断 ipv4 || ipv6
-            AddressFamily ipv;
-            IPAddress[] address = Dns.GetHostAddresses(serverIP);
-            if (address[0].AddressFamily == AddressFamily.InterNetworkV6)
-            {
-                ipv = AddressFamily.InterNetworkV6;
-                ipvType = AddressFamily.InterNetworkV6;
-            }
-            else
-            {
-                ipv = AddressFamily.InterNetwork;
-                ipvType = AddressFamily.InterNetwork;
-            }
-
-            this.beginConnectedCallback = BeginConnected;
-            this.relayBeginConnectedCallback = relayBeginConnectedCallback;
-            this.connectErrorCallback = connectErrorCallback;
-            this.messageDispatchProtoActionDelegate = dispatchAction;
-            Init(ipv);
+            IsDispatch = true;
+            ConnectedCallback = connect;
+            DispatchCallback = receive;
+            CloseCallback = close;
+            ErrorCallback = error;
+            Init();
         }
 
-        public void Init(AddressFamily ipv)
+        private void Init()
         {
-            if (socket == null)
+            if (socket != null)
             {
-                socket = new ClientSocket(ipv, SocketType.Stream, ProtocolType.Tcp);
-                socket.beginConnectedCallback = beginConnectedCallback;
-                socket.connectErrorCallback = connectErrorCallback;
-                socket.messageDispatchReceiveDelegate = DispatchProto;
-                IsDispatch = true;
-
-                if (checkNetCoroutine == null)
-                {
-                    checkNetCoroutine = StartCoroutine(CheckNet());
-                }
+                socket.Close();
+                socket = null;
             }
-            //发送链接请求
-            socket.Connecting(serverIP, serverPort);
+            socket = new TcpSocket();
+            socket.Init(serverIP, serverPort, m_connect, m_receive, m_close, m_error);
         }
 
-        public void BeginConnected(bool b)
+        public void ReConnect()
         {
-            if (b == true)
-            {
-                state = HASocketState.OK;
-            }
-            else
-            {
-                state = HASocketState.Error;
-            }
-
-            if (relayBeginConnectedCallback != null)
-            {
-                relayBeginConnectedCallback(b);
-            }
+            Init();
+            StartConnect();
         }
 
-        /// <summary>
-        /// 发消息
-        /// </summary>
-        /// <param name="messageType">消息号</param>
-        /// <param name="msg">消息体</param>
+        public void StartConnect()
+        {
+            socket.StartConnect();
+        }
+
+        private void m_connect()
+        {
+            GameLooper.BackToMainThread(delegate ()
+            {
+                ConnectedCallback();
+            });
+        }
+
+        private void m_receive(int msgType, byte[] msg)
+        {
+            eventQueue.Enqueue(new KeyValuePair<int, byte[]>(msgType, msg));
+        }
+
+        private void m_close()
+        {
+            GameLooper.BackToMainThread(delegate ()
+            {
+                CloseCallback();
+            });
+        }
+
+        private void m_error()
+        {
+            GameLooper.BackToMainThread(delegate ()
+            {
+                ErrorCallback();
+            });
+        }
+
         public void SendMessage(int messageType, IMessage msg)
         {
-            socket.SendMessage(messageType, msg.ToByteArray());
+            socket.Send(messageType, msg.ToByteArray());
         }
 
-
-        /// <summary>
-        /// 接收消息
-        /// </summary>
-        /// <param name="protoId"></param>
-        /// <param name="buff"></param>
-        public void DispatchProto(int messageType, MemoryStream msg)
-        {
-            //string json = JsonMapper.ToJson(msg);
-            //DebugTools.TestLog("-----读取消息-----  消息号：  " + messageType + " DispatchProto len: " + msg.Length);
-            eventQueue.Enqueue(new KeyValuePair<int, MemoryStream>(messageType, msg));
-        }
-
-        /// <summary>
-        /// 交给Command，这里不想关心发给谁。
-        /// </summary>
         public void Update()
         {
             while (eventQueue.Count > 0)
             {
-                KeyValuePair<int, MemoryStream> e = eventQueue.Dequeue();
-                messageDispatchProtoActionDelegate(e.Key, e.Value);
+                KeyValuePair<int, byte[]> e = eventQueue.Dequeue();
+                DispatchCallback(e.Key, e.Value);
             }
         }
 
-        public IEnumerator CheckNet()
-        {
-            while (true)
-            {
-                yield return wait;
-                CheckError();
-            }
-        }
-
-        public void CheckError()
-        {
-            if (socket == null)
-            {
-                state = HASocketState.Error;
-            }
-            else if (socket.Connected == false)
-            {
-                state = HASocketState.Error;
-            }
-            else
-            {
-                state = HASocketState.OK;
-            }
-            if (state != HASocketState.OK)
-            {
-                if (connectErrorCallback != null)
-                {
-                    CloseSocket(false);
-                    connectErrorCallback();
-                }
-            }
-        }
-
-        /// <summary>
-        /// 关闭socket
-        /// </summary>
-        public void CloseSocket(bool isCloseCkeckNet)
+        public void Close()
         {
             if (socket != null)
             {
-                socket.CloseSocket();
+                socket.Close();
                 socket = null;
-                IsDispatch = false;
-
-                if (isCloseCkeckNet == true)
-                {
-                    StopCoroutine(checkNetCoroutine);
-                    checkNetCoroutine = null;
-                }
-            };
+            }
         }
     }
 }

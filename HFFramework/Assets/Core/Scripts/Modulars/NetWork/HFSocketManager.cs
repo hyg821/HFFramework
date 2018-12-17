@@ -42,8 +42,9 @@ namespace HFFramework
         {
             foreach (var item in socketCache)
             {
-                item.Value.CloseSocket(true);
+                item.Value.Close();
             }
+            socketCache.Clear();
         }
 
         public void DestroyManager()

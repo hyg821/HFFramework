@@ -28,37 +28,24 @@ public class LoginController : UIController {
             HFLog.C("点击登录的名称是" + input.text);
             AppDomainManager.Instance.JumpToHotFix("hotfixdll", "HotFix", "HotFixEnter");
 
-            
-            TcpSocket socket = new TcpSocket();
+
+            HFSocket socket = HFSocketManager.Instance.GetSocket("hyg");
             socket.Init("10.2.0.207", 8002, delegate ()
-            {
-                GameLooper.BackToMainThread(delegate ()
-                {
-                    HFLog.C("连接成功");
-                });
-            }, delegate (int mes, byte[] con)
-            {
-                GameLooper.BackToMainThread(delegate ()
-                {
-                    HFLog.C("接收消息");
-                });
-            }, delegate ()
-            {
-                GameLooper.BackToMainThread(delegate ()
-                {
-                    HFLog.C("连接关闭");
-                });
-            }, delegate ()
-            {
-                GameLooper.BackToMainThread(delegate ()
-                {
-                    HFLog.C("连接失败");
-                    socket.Close();
-                });
-            });
+             {
+                 HFLog.C("连接成功");
+             }, delegate (int a, byte[] bb)
+             {
+                 HFLog.C("开始接受");
+             }, delegate ()
+             {
+                 HFLog.C("连接关闭");
+             }, delegate ()
+             {
+                 HFLog.C("连接失败 重新连接");
+                 socket.ReConnect();
+             });
 
             socket.StartConnect();
-            
 
             /*
             ClientSocket socket = new ClientSocket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);

@@ -490,14 +490,17 @@ namespace HFFramework
             }
         }
 
-        public void Close()
+        public void Close(bool isCallback = true)
         {
             if (socket!=null)
             {
                 socket.Close();
             }
 
-            SetState(ConnectState.Close);
+            if (isCallback)
+            {
+                SetState(ConnectState.Close);
+            }
 
             if (currentPackage!=null)
             {

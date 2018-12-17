@@ -26,11 +26,11 @@ namespace HFFramework
         public HFSocket GetSocket(string socketTag)
         {
             HFSocket socket;
-            if (!socketCache.TryGetValue(tag, out socket))
+            if (!socketCache.TryGetValue(socketTag, out socket))
             {
                 socket = gameObject.AddComponent<HFSocket>();
-                socket.SetName(tag);
-                socketCache.Add(tag, socket);
+                socket.SetName(socketTag);
+                socketCache.Add(socketTag, socket);
             }
             return socket;
         }

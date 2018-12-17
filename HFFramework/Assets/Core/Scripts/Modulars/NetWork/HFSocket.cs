@@ -139,7 +139,7 @@ namespace HFFramework
         {
             if (socket != null)
             {
-                socket.Close();
+                socket.Close(false);
                 socket = null;
             }
             socket = new TcpSocket();
@@ -153,7 +153,7 @@ namespace HFFramework
         }
 
         public void StartConnect()
-        {
+        {      
             socket.StartConnect();
         }
 
@@ -204,7 +204,7 @@ namespace HFFramework
         {
             if (socket != null)
             {
-                socket.Close();
+                socket.Close(true);
                 socket = null;
             }
         }

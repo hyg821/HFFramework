@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package centersdk.protobuf;
+
+option java_package = "com.hoolai.centersdk.protobuf";
+option java_outer_classname = "EquipmentProto";
+import "common.proto";
+
+// 装备列表
+message EquipmentList{
+	repeated Equipment equipments = 1;	
+	int32 bagSize = 2;
+	int32 code = 3;
+}
+
+message Equipment{
+	int64 uniqueId = 1; // 装备唯一ID
+	repeated string basicAttributes = 2; // 基础属性 属性格式：属性类型1:属性值1;属性类型2:属性值2;
+	repeated string succinctAttributes = 3; // 洗练属性 属性格式：属性类型1:属性值1;属性类型2:属性值2;
+	repeated int64 diamonds = 4; // 镶嵌宝石 宝石唯一ID列表
+	int32 templateId = 5;// 装备模板ID
+	bool isBind = 6; // 是否绑定状态
+	int32 strengtheningLevel = 7; // 强化等级
+	int32 strengtheningExp = 8; // 强化等级
+	int32 advancedLevel = 9; // 进阶等级
+}
+
+// 装备强化
+message EquipmentStrengthening {
+	repeated centersdk.protobuf.TwoIntegerValue costs = 1;// 强化石消耗列表
+	int64 uniqueId = 2; // 强化装备ID
+}
+
+// 装备洗练请求
+message EquipmentSuccinctReq {
+	repeated int32 lockLocs = 1; // 属性锁定位置
+	int64 uniqueId = 2; // 装备唯一ID
+	int32 costId = 3; // 消耗洗练石ID
+}
+
+// 装备洗练应答
+message EquipmentSuccinctResp {
+	repeated centersdk.protobuf.TwoIntegerAndLongValue atts = 1; // 洗练属性
+	int64 uniqueId = 2; // 装备唯一ID
+	int32 code = 3; // 错误码
+}
+
+// 装备继承
+message EquipmentInherit {
+	Equipment equipment = 1; // 继承后的装备
+	int32  code = 2; // 错误码
+}
+
+message UpdateEquipment {
+	Equipment equipment = 1; // 装备信息
+	int32  code = 2; // 错误码
+}

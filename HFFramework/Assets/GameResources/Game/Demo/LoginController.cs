@@ -10,6 +10,8 @@ using System.IO;
 using System;
 using Lobbyservice.Protobuf;
 using Google.Protobuf;
+using Centersdk.Protobuf;
+using Loginservice.Protobuf;
 
 public class LoginController : UIController {
     public InputField input;
@@ -35,27 +37,43 @@ public class LoginController : UIController {
             socket.Init("10.2.0.207", 8002, delegate ()
              {
                  HFLog.C("连接成功");
-
-                 
-                 LoginRequest request = new LoginRequest();
+                 Lobbyservice.Protobuf.LoginRequest request = new Lobbyservice.Protobuf.LoginRequest();
                  request.OpenId = "zcc";
                  request.ProductId = "1";
                  request.Pf = "AND";
                  request.Channel = "";
                  request.ChannelUid = "";
-                 request.Version = "1.0.0";
+                 request.Version = "1.1.2";
                  socket.SendMessage(1,request);
                  
              }, delegate (int msgID, byte[] bb)
              {
-                 HFLog.C("开始接受"+msgID);
+                 HFLog.C("开始接受"+msgID + "  消息长度"+bb.Length);
                  
                  if (msgID==1)
                  {
-                     LoginResponse res = LoginResponse.Parser.ParseFrom(bb);
+                     HFLog.C("开始接受XXXXXXXXXXXXXX");
+
+                     Lobbyservice.Protobuf.LoginResponse res = CreateMessage<Lobbyservice.Protobuf.LoginResponse>(bb);
                      HFLog.C(res.ToString());
                  }
-                 
+
+                 if (msgID==6)
+                 {
+                     QuickLoginInfo res = CreateMessage<QuickLoginInfo>(bb);
+                     HFLog.C(res.ToString());
+
+                     IntegerAndString value = new IntegerAndString();
+                     value.IntVal = 1;
+                     value.StringVal = "650768";
+                     socket.SendMessage(504, value);
+                 }
+
+                 if (msgID == 504)
+                 {
+                     Paohuzi.Protobuf.MessageVideo msgObj = CreateMessage<Paohuzi.Protobuf.MessageVideo>(bb);
+                     HFLog.C(msgObj.ToString());
+                 }               
              }, delegate ()
              {
                  HFLog.C("连接关闭");
@@ -76,4 +94,13 @@ public class LoginController : UIController {
 
         print(ConfigRole.Get(1).GetTime1(1).name);
     }
+
+
+    public T CreateMessage<T>(byte [] bytes) where T: IMessage,new()
+    {
+        T t1 = new T();
+        t1.MergeFrom(bytes);
+        return t1;
+    }
+
 }

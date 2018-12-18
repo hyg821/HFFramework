@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package centersdk.protobuf;
+
+option java_package = "com.hoolai.centersdk.protobuf";
+option java_outer_classname = "RoleProto";
+
+
+//角色信息列表
+message RoleArray{
+	repeated RoleInfo roles = 1;
+}
+//角色信息
+message RoleInfo {
+	int64 roleId = 1;		// 全局唯一角色ID
+	string name = 2;		// 角色名称
+	int64 userId = 3;		// 根ID.就是用户ID
+	int32 serverId = 4;		// 服务器ID
+	string serverName = 5;	// 服务器名称
+	int32 type = 6;			// 角色类型
+	int32 level = 7;		// 角色等级
+	int32 sex = 8;			// 性别
+	int32 headImgId = 9;	// 头像ID
+}
+
+//精简的角色信息列表
+message SimpleRoleArray {
+	repeated SimpleRoleInfo roles = 1;	//角色列表
+}
+
+//精简的角色信息。只填充角色ID,角色名,职业等一些精简信息
+message SimpleRoleInfo {
+	int64 roleId = 1;		// 全局唯一角色ID
+	string name = 2;		// 角色名称
+	int64 userId = 3;		// 根ID.就是用户ID
+	int32 serverId = 4;		// 服务器ID
+	int32 type = 5;			// 角色类型
+	int32 level = 6;		// 角色等级
+	int32 sex = 7;			// 性别
+	int32 headImgId = 8;	// 头像ID
+}

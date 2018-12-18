@@ -14,6 +14,10 @@ namespace ILRuntime.Runtime.Generated
         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             UnityEngine_Debug_Binding.Register(app);
+            HFFramework_HFSocketManager_Binding.Register(app);
+            HFFramework_HFSocket_Binding.Register(app);
+            HFFramework_HFLog_Binding.Register(app);
+            System_String_Binding.Register(app);
             UnityEngine_GameObject_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int64_ILTypeInstance_Binding.Register(app);
@@ -33,7 +37,6 @@ namespace ILRuntime.Runtime.Generated
             System_IDisposable_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_Object_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Int32_Object_Binding.Register(app);
-            System_String_Binding.Register(app);
             System_Type_Binding.Register(app);
             System_Activator_Binding.Register(app);
             System_Collections_Generic_Queue_1_ILTypeInstance_Binding.Register(app);
@@ -41,24 +44,8 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_String_ILTypeInstance_Binding.Register(app);
-            UnityEngine_Mathf_Binding.Register(app);
-            UnityEngine_UI_ScrollRect_Binding.Register(app);
-            UnityEngine_Vector2_Binding.Register(app);
-            UnityEngine_RectTransform_Binding.Register(app);
-            UnityEngine_Rect_Binding.Register(app);
-            UnityEngine_RectOffset_Binding.Register(app);
-            UnityEngine_UI_HorizontalOrVerticalLayoutGroup_Binding.Register(app);
             UnityEngine_Vector3_Binding.Register(app);
-            UnityEngine_UI_LayoutElement_Binding.Register(app);
-            UnityEngine_UI_LayoutGroup_Binding.Register(app);
-            UnityEngine_Events_UnityEvent_1_Vector2_Binding.Register(app);
-            UnityEngine_Time_Binding.Register(app);
-            System_NotSupportedException_Binding.Register(app);
             UnityEngine_CanvasGroup_Binding.Register(app);
-            System_Array_Binding.Register(app);
-            System_Object_Binding.Register(app);
-            System_Single_Binding.Register(app);
-            System_Int32_Binding.Register(app);
 
             ILRuntime.CLR.TypeSystem.CLRType __clrType = null;
         }

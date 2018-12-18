@@ -79,9 +79,9 @@ namespace HFFramework
         private int checkConnectAllTime = 0;
 
         /// <summary>
-        ///  最大数据缓冲长度
+        ///  最大数据缓冲长度  如果这个缓冲区小于 服务器发送的一个包的长度 比如 2048 那么会出现无法接收的情况
         /// </summary>
-        private const int MAX_BUFFER_LEN = 1024*4;
+        private const int MAX_BUFFER_LEN = 1024*10;
 
         /// <summary>
         ///  连接间隔 5秒

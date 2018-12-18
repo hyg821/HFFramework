@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package newddz.UserProto;
+
+option java_package = "com.hoolai.ccgames.runfastgame.protocol";
+option java_outer_classname = "UserProto";
+
+message UserId {
+	 int64 id = 1;          // 玩家ID
+}
+
+message UserStatus {
+	 int64 id = 1;          // 玩家ID
+	 int32 status = 2;      // 玩家状态
+}
+
+message UserMission {
+	 int64 id = 1;          // 玩家ID
+	 int32 type = 2;        // 种类
+	 int32 count = 3;       // 数量
+	 int32 room_level = 4;  // 房间等级
+	 bool is_gold = 5;      // 是否元宝场
+}
+
+message UserInfo {
+	 int64 id = 1;            // 玩家ID
+	 string name = 2;         // 玩家昵称
+	 string head_img_url = 3; // 头像URL地址
+	 string sex = 4;           // 玩家性别 0代表女 1代表男 2代表未知
+	 int64 gold = 5;          // 用户拥有金币
+}
+

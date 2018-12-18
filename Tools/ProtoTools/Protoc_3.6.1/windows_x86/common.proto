@@ -1,0 +1,305 @@
+syntax = "proto3";
+package centersdk.protobuf;
+
+option java_package = "com.hoolai.centersdk.protobuf";
+option java_outer_classname = "CommonProto";
+import "phzroom.proto";
+
+//通用数组参数类
+message ParamsArray {
+    repeated Params params = 1;
+    Params param = 2;
+    int32 code = 3;
+    int32 type = 4;
+}
+//通用参数类。此类目的。避免重复定义VO
+message Params{
+    int64 userId = 1;
+    int64 roleId = 2;
+    int32 id = 3;
+    int32 code = 4;
+    int32 count = 5;
+    int64 amount = 6;
+    int32 value = 7;
+    int32 index = 8;
+    int32 status = 9;
+    bool statusB = 10;
+    int32 type = 11;
+    int32 itemId = 12;
+    int32 gold = 13;
+    int64 time = 14;
+    string text = 15;
+    string content = 16;
+    repeated int64 userIds = 17;	//用户ID数组
+    repeated int32 intVals = 18;	//整形数组参数
+    repeated int64 longVals = 19;	//长整型数组参数
+    repeated string strVals = 20;	//字符数组参数
+    repeated float floatVals = 21;	//float类型参数
+	int32 communityId = 22;         //亲友圈ID
+	bool isAA = 23;                 //是否是AA
+	bool isDYJ = 24;                //是否是大赢家
+	string qyqcreateId = 25;        //亲友圈牌桌编号
+}
+
+message ParamsMaJiang{
+    int64 userId = 1;
+    int64 roleId = 2;
+    int32 id = 3;
+    int32 code = 4;
+    int32 count = 5;
+    int64 amount = 6;
+    int32 value = 7;
+    int32 index = 8;
+    int32 status = 9;
+    bool statusB = 10;
+    int32 type = 11;
+    int32 itemId = 12;
+    int32 gold = 13;
+    int64 time = 14;
+    string text = 15;
+    string content = 16;
+    repeated int64 userIds = 17;	//用户ID数组
+    repeated int32 intVals = 18;	//整形数组参数
+    repeated int64 longVals = 19;	//长整型数组参数
+    repeated float floatVals = 20;	//float类型参数
+    bool isAA = 21;                 //是否是AA
+    bool isDYJ = 22;                //是否是大赢家
+}
+
+message Empty {
+
+}
+
+// 服务器之间跳转时使用
+message QuickLoginInfo {
+    int64 user_Id = 1;         // 玩家ID
+    int64 role_id = 2;         // 角色ID
+    int64 key = 3;             // 登录key
+    string server_id = 4;      // 服务器ID
+    string ip = 5;             // 服务器域名
+    int32 port = 6;            // 服务器端口
+    string type = 7;           // 服务器类别
+    string param = 8;          // 特有参数，一般由子服务器和前端协商定义。建议使用json格式。方便拓展
+    int32 code = 9;           // 消息码，前后端协商定义
+    string group_id = 10;      // 玩法的分类ID
+    string version = 11;	   // 用户登录版本号
+    string roomId = 12;	       // 房间ID
+    PaoDeKuai paodekuai = 13;		// 跑得快玩法设置
+    int32 communityId = 14;         // 亲友圈ID
+    paohuzi.protobuf.CreateRoom paohuzi = 15; //跑胡子
+    ParamsMaJiang params = 16; //麻将
+	bool communityAA = 17;    // 亲友圈是不是AA
+}
+
+// int数组
+message IntegerValues {
+    int32 id = 1; // id
+    repeated int32 vals = 2; // 整数数组参数
+    int32 val1 = 3; // 扩展参数1
+}
+
+message IntegerValue {
+    int32 val = 1;              // 整型参数
+}
+
+message LongValue { // 长整型参数
+                    int64 val = 1;
+}
+
+message LongValues {
+    repeated int64 vals = 1;
+    int32 id = 2;
+    int32 val1 = 3; // int类型扩展参数1
+}
+
+message TwoIntegerValue{
+    int32 intVal1 = 1;
+    int32 intVal2 = 2;
+}
+
+message TwoIntegerValues {
+    repeated TwoIntegerValue vals = 1;
+    int32 intVal1 = 2;
+}
+
+message TwoIntegerAndLongValue { // 两个整型和一个长整型
+                                 int64 longVal = 1;
+                                 int32 intVal1 = 2;
+                                 int32 intVal2 = 3;
+}
+
+message StringValue {
+    string val = 1;              // 字符串参数
+}
+
+message FloatValue {
+    float val = 1;              // float参数
+}
+
+message StringValues {
+    repeated string vals = 1;              // 字符数组参数
+}
+
+message Status {
+    int32 code = 1;
+    string message = 2;
+}
+
+message IntegerAndLong {
+    int32 int_val = 1;
+    int64 long_val =2;
+}
+
+message IntegerAndString {
+    int32 int_val = 1;
+    string string_val =2;
+}
+
+//录像使用 非游戏内
+message GamePosCards {
+    string room_id = 1;        // 房间ID
+    int32 pos_index = 2;      // 座位索引
+    repeated int32 cards = 3; // 牌
+    int32 firstPushPos = 4;   // 先出牌的位置
+    string param = 5;         // 预留参数
+}
+//录像使用 非游戏内
+message GameAction {
+    int64 room_id = 1; // 房间ID
+    int32 pos_index = 2; // 座位索引
+    int32 action_type = 3; // 动作类型
+    int32 multiple = 4; // 倍数
+    repeated int32 cards = 5;  // 要出的牌
+    repeated int32 cards0 = 6; // 手牌
+    repeated int32 cards1 = 7; // 手牌
+    repeated int32 cards2 = 8; // 手牌
+    int32 rank = 9; // 牌力
+    int32 cardsLeft = 10; // 手里剩下牌的张数
+}
+
+//视频列表
+message VideotapeList{
+    int32 gameId = 1;
+    int32 jvNum = 2;
+    string roomId = 3;
+}
+
+// 单局录像
+message Videotape{
+    repeated GamePosCards posCards = 1;// 每局的玩家发牌手牌
+    repeated GameAction roomAction = 2;// 每次玩家的操作出牌
+    repeated int32 startWin = 3;       // 每人的输赢
+    repeated int32 endWin = 4;         // 每人的输赢
+    repeated GamePlayerInfo infos = 5;
+    int32 curInningId = 6;
+    int32 inningId = 7;
+    PaoDeKuai paodekuai = 8;           // 创建房间规则
+}
+
+// 录像集合
+message Videotapes{
+    repeated Videotape videotape = 1; // 本局录像集合
+}
+
+// 单局战绩
+message CombatRecord{
+    int64 endTime = 1; // 结算时间
+    string roomId = 2;  // 房间ID
+    int32 gameId = 3;  // 游戏ID 区分哪个游戏
+    int32 jvNum = 4;   // 局数
+    int32 playerNum = 5; // 几人场
+    int32 winGold = 6; // 我的输赢
+    DetailsCombatRecord record = 7;
+    int32 curJvNum = 8; // 进行的局数
+    int32 cost = 9;        // 消耗
+}
+
+// 所有战绩
+message CombatRecords{
+    repeated CombatRecord records = 1;
+    int32 costDiamonds = 2;   // 消耗钻石
+    int32 tables = 3;   // 桌数
+	int32 maxPage = 4;  // 最大页数
+	int32 curPage = 5;  // 当前页数
+}
+
+// 详细战绩
+message DetailsCombatRecord{
+    int64 roomOwnerId = 1;    // 房主ID
+    string ownerName = 2;   // 房主名字
+    string ownerHeadURL = 3;// 房主头像地址
+    string roomId = 4;      // 房间ID
+    int64 startTime = 5;    // 开始时间
+    int64 endTime = 6;      // 结束时间
+    int32 gameId = 7;       // 游戏ID
+    int32 jvNum = 8;        // 总局数
+    int32 createType = 9;	// 是否亲友圈创建  0 是 1 不是
+    repeated GamePlayerInfo infos = 10; // 玩家输赢信息
+}
+
+// 房间内玩家信息
+message GamePlayerInfo{
+    int64 userId = 1;    // 玩家ID
+    string userName = 2; // 玩家名字
+    string headUrl = 3;  // 头像地址
+    int32 winGold = 4;   // 玩家输赢
+    int32 pos_index = 5;
+    repeated ScoreChange scores = 6; // 积分变化
+}
+
+// 每局积分变化
+message ScoreChange{
+	int64 times = 1; // 对局时间
+	int32 changeValue = 2;  // 积分变化
+}
+
+//聊天
+message DeskChat{
+    int32 code = 1;             // 状态码
+    string description = 2;     // 描述信息
+    int32 type = 3;             // 类型  1 文字 2 语音 3 图片
+    int64 userId = 4;
+    string userName = 5;
+    string userHeadUrl = 6;
+    int64 time = 7;             // 当前发言时间
+    bool isDisplay = 8;         // 是否显示时间
+    string voiceId = 9;         // 语音聊天的语音ID
+    int32 voiceTimes = 10;      // 语音聊天秒数
+    string imageId = 11;        // 图片
+}
+
+// 创建房间请求
+message PaoDeKuai{
+    int32 jvNum = 1;      // 局数
+    int32 pushCard = 2;   // 出牌
+    int32 rule = 3;       // 规则
+    repeated int32 finalOp = 4;    // 最后 从左至右 0123
+    repeated int32 gamePlay = 5;   // 玩法 从左至右 0123
+    int32 displayCard = 6;// 余牌
+    int32 tuoguan = 7;    // 托管
+    int32 piao = 8;       // 飘   0不开启飘功能  123 开启对应的
+    repeated int32 gaoji = 9;      // 高级 从左至右 01234
+    int32 playerNum = 10; // 几人玩法  目前只有3人
+    int32 typeId = 11;    // 16张  还是  15张 还是其他
+    int32 local = 12;     // 是否添加测试机器人  0 不添加  1 添加
+    int32 createType = 13;// 0 非亲友圈 其他 亲友圈ID 7位
+    int32 gameId = 14;     // 游戏id 跑得快 1；长沙麻将 2；歪胡子 3；
+	int32 payType = 15;    // 房费类型 0 (如果亲友圈ID是0则是房卡否则是大赢家)  1 AA
+	string qyqRoomId = 16; // 亲友圈牌桌ID
+}
+
+// 大厅和服务器间跳转
+message QuickLogin {
+    string ip = 1;  // 服务器域名
+    int32 port = 2; // 服务器端口
+    int32 gameId = 3; // 游戏类型
+}
+
+message CommunityStatus { // 亲友圈房间状态
+	string roomId = 1; // 房间ID
+	int64 communityId = 2; // 亲友圈ID
+	int64 userId = 3; // 玩家ID
+	string createId = 4; // 亲友圈牌桌玩法编号
+	int32 curRound = 5; // 当前局数
+	int32 maxRound = 6; // 最大局数
+}

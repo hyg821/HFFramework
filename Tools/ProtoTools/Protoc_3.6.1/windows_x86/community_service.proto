@@ -1,0 +1,135 @@
+syntax = "proto3";
+
+package communityservice.protobuf;
+
+option java_package = "com.hoolai.centersdk.protobuf";
+option java_outer_classname = "CommunityServiceProto";
+import "common.proto";
+import "phzroom.proto";
+
+//亲友圈列表
+message CommunityList{
+	repeated CommunityInfo communityinfo = 1;
+}
+
+
+//亲友圈
+message CommunityInfo{
+	int32 uniqueId = 1;		// 亲友圈id
+	string name = 2;			// 亲友圈名字
+	int64  userId = 3;  		//创建人id
+	string  userName = 4;  		//创建人name
+	string  headImgUrl = 5;  		//创建人头像
+	int32 state = 6;	 		// 亲友圈状态
+	repeated int32 gameIdList = 7;			//游戏列表
+	int32 IsTop = 8;				//是否置顶
+	int32 OnlineDesk = 9;	 		// 在线桌子
+	repeated User user = 10 ; //用户列表
+	bool isShowRed = 11; //是否显示红点
+	bool isJoinSet = 12;//是否设置加入设置
+	bool isOutSet = 13;//是否设置退出设置
+	bool isDissolveSet = 14;//是否设置解散设置
+	bool isShowMember = 15;//是否显示成员列表
+	bool isShowRecord = 16;//是否显示战绩
+	string  notic = 17;  		//公告
+	bool isAA = 18;//是否AA
+}
+
+message ApplyList{
+	repeated ApplyInfo applyList = 1;
+}
+
+message ApplyInfo{
+	int64 userId = 1; //用户id
+	int64 time = 2; //申请时间
+	bool isAgree = 3; //是否同意
+	int32 type = 4; //消息类型
+	int32 uniqueId = 5; //亲友圈ID
+	string uniqueName = 6; //亲友圈mingzi
+	string userName = 7; //用户mingzi
+	string headImgUrl = 8; //用户头像
+	int32 NewsType = 9; //亲友圈消息类型
+	bool isShowRed = 10; //是否显示红点
+	bool set = 11; //亲友圈设置是否直接退出加入
+}
+
+message TableList{
+	CommunityInfo communityInfo = 1;		// 亲友圈id
+	repeated TableInfo tableinfo = 2 ; //牌桌列表
+	bool isShowRed = 3; //是否显示红点
+}
+
+message UserList{
+	repeated User user = 1; //玩家列表
+}
+
+message TableInfo{
+	int32 uniqueId = 1;		// 亲友圈id
+	string roomId = 2;		// 房间id
+	int32 gameId = 3;		// 游戏id
+	int32  state = 4;  		//牌桌状态 0 准备中 1 牌局中
+	int32  type = 5;  		//牌桌类型 0 可创建 1 普通牌桌
+	string  password = 6;  	//密码
+	repeated User user = 7; //玩家列表
+	centersdk.protobuf.PaoDeKuai paodekuai = 8; //跑得快规则
+	int32  gameCount = 9;  	//局数
+	int32  onlinePeople = 10;  	//在线人数
+	int32  zongCount = 11;  	//总数量
+	int32  people = 12;  	//总数量
+	paohuzi.protobuf.CreateRoom paohuzi = 13; //跑胡子
+	centersdk.protobuf.ParamsMaJiang majiang = 14; //麻将
+	int64  createTime = 15;  	//创建时间
+
+}
+
+message User{
+	int64  userId = 1;						//用户id
+	string userName = 2;					//用户名称
+	string userHeadUrl = 3;					//用户头像地址
+	int32 state = 4;						// 用户状态 0 空闲 1 等待中 2 对局中
+	int32 count = 5;						// 对局
+	int32 BigplayerCount = 6;				// 大玩家次数
+	repeated int64 ProhibitTableList = 7;	//禁止同桌列表
+	string Remarks1 = 8;					//备注1
+	string Remarks2 = 9;					//备注3
+	int64 JoinTime = 10;					//加入亲友圈时间
+	int32 duty = 11;						// 职务 4合伙人 3普通 2管理员 1创始人
+	string OnlineState = 12;				//在线状态
+	bool isCanPlay = 13;					//是否可以打牌
+	int32 communityId = 14;					// 亲友圈id
+	int32 IsOnline = 15;					// 是否在线 0不在线 1 在线
+	int64 BeloneToPartner = 16;				// 是谁拉进来的
+	string BeloneToPartnerName = 17;		// 是谁拉进来的名字
+	bool isPartner = 18;					//是否是合伙人
+	int32 UserType = 19;					// 0空闲，1 等待中，2对局中
+	int32 BigplayerScore = 20;				// 大玩家分数
+	int32 zongScore = 21;				// 大玩家次数
+	int32 openTables = 22;				// 开桌数
+	int32 expendMoney = 23;            //消耗金币或者钻石
+}
+
+//聊天列表
+message ChatList{
+	repeated CommunityChat chat = 1;
+	string notice = 2;     // 公告
+}
+
+//聊天
+message CommunityChat{
+	int32 uniqueId = 1;			 // 亲友圈id
+	string description = 2;     // 内容
+	int32 type = 3;             // 类型  1 文字 2 语音 3 图片
+	int64 userId = 4;
+	string userName = 5;
+	string userHeadUrl = 6;
+	int64 time = 7;             // 当前发言时间
+	string voiceId = 8;         // 语音聊天的语音ID
+	int32 voiceTimes = 9;      // 语音聊天秒数
+	string imageId = 10;        // 图片
+}
+
+
+
+
+
+

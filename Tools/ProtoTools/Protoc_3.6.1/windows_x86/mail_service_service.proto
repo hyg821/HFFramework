@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package mailservice.protobuf;
+
+option java_package = "com.hoolai.commonapp.protobuf";
+option java_outer_classname = "MailServiceProto";
+
+//邮件列表
+message MailList {
+	repeated MainInfo maininfo = 1;
+}
+
+//邮件
+message MainInfo {
+	string title = 1;			// 标题
+	string context = 2;  		//内容
+	int64  time = 3;		// 时间
+	int32 state = 4;	 		// 状态
+}
+
+
+

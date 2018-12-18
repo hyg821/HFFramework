@@ -36,15 +36,9 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(UnityEngine.Transform), typeof(System.Boolean)};
             method = type.GetMethod("SetParent", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, SetParent_4);
-            args = new Type[]{typeof(UnityEngine.Transform)};
-            method = type.GetMethod("SetParent", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, SetParent_5);
             args = new Type[]{typeof(UnityEngine.Vector3)};
             method = type.GetMethod("set_localScale", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, set_localScale_6);
-            args = new Type[]{};
-            method = type.GetMethod("get_childCount", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_childCount_7);
+            app.RegisterCLRMethodRedirection(method, set_localScale_5);
 
 
         }
@@ -144,26 +138,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret;
         }
 
-        static StackObject* SetParent_5(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Transform @parent = (UnityEngine.Transform)typeof(UnityEngine.Transform).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            UnityEngine.Transform instance_of_this_method = (UnityEngine.Transform)typeof(UnityEngine.Transform).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            instance_of_this_method.SetParent(@parent);
-
-            return __ret;
-        }
-
-        static StackObject* set_localScale_6(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* set_localScale_5(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -180,23 +155,6 @@ namespace ILRuntime.Runtime.Generated
             instance_of_this_method.localScale = value;
 
             return __ret;
-        }
-
-        static StackObject* get_childCount_7(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            UnityEngine.Transform instance_of_this_method = (UnityEngine.Transform)typeof(UnityEngine.Transform).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            var result_of_this_method = instance_of_this_method.childCount;
-
-            __ret->ObjectType = ObjectTypes.Integer;
-            __ret->Value = result_of_this_method;
-            return __ret + 1;
         }
 
 

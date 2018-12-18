@@ -1,0 +1,288 @@
+syntax = "proto3";
+
+package paohuzi.protobuf;
+
+option java_package = "com.hoolai.centersdk.protobuf";
+option java_outer_classname = "PHZRoomProto";
+
+message LoginRequest{ // 登陆请求
+	string key = 1; // 登陆KEY
+	int64 userId = 2; // 角色ID
+}
+
+message LoginResp { // 登陆应答
+	int32 code = 1; // 登陆状态 -1连接已经存在 -2连接错误 -3获取用户信息失败 -4验证用户信息失败 -5房间已满 
+}
+
+message CreateRoom { // 创建房间请求
+	Rules rules = 1; // 玩法规则
+	int32 playerCount = 2; // 二人玩法还是三人玩法
+	int32 gamePlayType = 3; // 游戏玩法类型
+	int32 maxRound = 4; // 局数
+	int32 maxScore = 5; // 单局最大积分
+	int32 chongTun = 6; // 充囤
+	int32 fangZuobi = 7; // IP防作弊 0.否 1.是
+	Location loaction = 8; // 位置信息
+	int32 gameId = 9; // 游戏ID 跑胡子游戏ID为4
+	int32 communityId = 10; // 亲友圈ID
+	int32 aaType = 11; // AA制创建类型 0.非AA 1.AA均摊 2.AA大赢家
+	string createId = 12; // 亲友圈牌桌玩法编号
+}
+
+message Play { // 玩法类型
+	int32 type = 1;// 玩法类型
+	int32 flag = 2; // 是否选中 0.未选中 1.选中
+	string val = 3; // 属性数字
+}
+
+// 加入房间 包含登陆请求信息、房间ID
+message JoinRoom {
+	string roomId = 1;
+	Location loaction = 2; // 位置信息
+}
+
+// 解散房间玩家操作
+message DisbandOp {
+	int32 opt = 1; // 1true 2false 0无操作
+	int64 userId = 2;
+}
+
+// 房间信息
+message RoomInfo {
+	repeated RoomMember members = 1;// 牌桌成员信息
+	string roomId = 2; // 房间编号
+	int64 userId = 3; // 用户ID
+	int32 nowRound = 4; // 当前局数
+	int32 maxRound = 5; // 最大局数
+	bool isStart = 6; // 游戏是否已经开启
+	int32 code = 7; // 加入房间错误码返回 -5房间已满
+	bool gameState = 8; // 本局是否开始 
+	int32 playerCount = 9; // 几人局
+	int32 playType = 10; // 玩法类型
+}
+
+// 牌桌成员信息
+message RoomMember {
+	string headImgUrl = 1; // 头像地址
+	string name = 2; // 用户名
+	int64 userId = 3; // 用户ID
+	int32 huxi = 4; // 胡息
+	int32 score = 5; // 积分
+	int32 position = 6; // 位置
+	bool isReady = 7;  // 是否已准备
+	bool isBanker = 8; // 是否房主
+	int32 maxHuxi = 9; // 最高胡息
+	int32 hutimes = 10; // 胡牌次数
+	bool isLeave = 11; // 是否离开状态
+	Location loaction = 12; // 位置信息
+	string sex = 13; // 性别 1男 2女
+}
+
+message GameFinished { // 游戏结束
+	repeated RoomMember members = 1;// 成员局内总收支
+	string roomId = 2; // 房号
+	int64 startTime = 3;	// 开始时间
+	int64 endTime = 4; // 结束时间
+	int32 round = 5; // 进行的局数
+	int32 maxRound = 6; // 最大局数
+	bool isForce = 7; // 是否强制退出
+}
+
+message Licensing { // 发牌
+	repeated int32 handCards = 1; // 手牌
+	int32 surplusCardAmount = 2; // 剩余牌堆牌数量
+}
+
+message ShowOperation { // 牌局显示操作
+	repeated BaseChi chiList = 1; // 吃列表
+	int32 cardId = 2;// 打出或者摸到的牌
+	bool hasPeng = 4; // 是否有碰
+	bool canHu = 6; // 是否可胡
+}
+
+message ChiRequest {
+	repeated LastChi chiList = 1;
+}
+
+message BaseChi { // 一级吃
+	repeated NextChi nextChiList = 1;
+	repeated int32 cardIds = 2; // 吃牌列表
+}
+
+message NextChi { // 二级吃
+	repeated LastChi lastChiList = 1;
+	repeated int32 cardIds = 2; // 吃牌列表
+}
+
+message LastChi {// 三级吃
+	repeated int32 cardIds = 1; 
+}
+
+message ChiResult {
+	repeated LastChi chiList = 1; // 吃牌
+	int64 userId = 2;// 玩家ID
+	int32 huxi = 3; // 吃二七十或者贰柒拾后的胡息
+}
+
+message Hu {
+	repeated HandCards cards = 1; // 玩家手牌
+	int64 winnerId = 2; // 赢牌玩家ID
+	int32 cardId = 3; // 牌ID
+	bool isFinished = 4; // 游戏是否结束
+}
+
+message HandCards { // 胡牌或者黄庄玩家的手牌
+	repeated int32 cardIds = 1; // 玩家手牌
+	int64 userId = 2; // 玩家ID
+}
+
+message BoardSettlement { // 每局结束后的牌局结算
+	repeated Hupaixing paixingInfos = 1; // 牌型信息
+	repeated MingTang mingtangInfos = 2; // 名堂信息
+	repeated Settlement settInfos = 3; // 玩家局内收支
+	repeated int32 diCardIds = 4; // 底牌
+	int32 huCardId = 5; // 胡牌ID
+	int32 huxi = 6; // 胡息
+	int32 tun = 7; // 囤数
+	int32 fan = 8; // 番
+	bool isZimo = 9; // 是否自摸
+}
+
+message Settlement { // 局内结算
+	int64 userId = 1; // 玩家ID
+	int32 change = 2; // 积分变化
+	int32 score = 3; // 当前积分
+	repeated int32 weiIds = 4; // 偎牌ID列表
+}
+
+message MingTang { // 名堂信息
+	string name = 1; // 牌型名称
+	int32 fan = 2; // 番数
+	int32 tun = 3; // 囤数
+	int32 mul = 4; // 倍数
+}
+
+message Hupaixing{
+	repeated int32 cardIds = 1;
+	int32 type = 2; // 1吃、2碰、3偎、4臭偎、5提、6跑、7将、8坎
+	int32 cardId = 3;
+	int32 huxi = 4; // 胡息
+}
+
+message Return { // 玩家返回牌桌
+	repeated ReturnMemberInfo memberInfo = 1; // 成员信息
+	RoomInfo roomInfo = 2;
+	int32 surplusCardAmount = 3; // 底牌数量
+	int64 createdId = 4;// 房主ID
+	int64 nowOperationPlayerId = 5; // 当前正在操作的玩家ID
+	int32 cardId = 6; // 当前正在操作的牌ID
+	int32 nowOperation = 7; // 玩家当前正在进行操作 1摸牌 2打牌
+	int32 chongtun = 8; // 充囤
+}
+
+message ReturnMemberInfo {
+	repeated LeftHandPaixingInfo leftHandPaixing = 1; // 玩家提、跑、偎、臭偎、碰、吃操作
+	repeated int32 putCardIds = 2; // 打出的牌
+	repeated int32 handCardIds = 3; // 玩家自己的手牌
+	ShowOperation showOperation = 4; // 玩家的显示操作
+	TingList tingList = 5; // 玩家可胡牌列表
+}
+
+message LeftHandPaixingInfo { // 玩家提、跑、偎、臭偎、碰、吃信息
+	repeated int32 cardIds = 1;
+	int32 type = 2; // 1吃、2碰、3偎、4臭偎、5提、6跑
+	int32 cardId = 3;
+}
+
+message Ti {
+	repeated int32 tiIds = 1; // 提牌列表
+	int64 userId = 2; // 提牌玩家ID
+	int32 huxi = 3; // 提牌玩家当前胡息
+	int32 tiType = 4; // 提类型：1.四字提（扣除4张手牌） 2.坎提（扣除三张手牌） 3.偎提（不扣手牌，将偎的牌转为提）
+	bool isChongpao = 5; // 是否重跑（八块）
+}
+
+message Pao {
+	int64 userId = 1; // 跑牌玩家ID
+	int32 paoType = 2; // 跑牌类型 1.坎跑 2.碰跑 3.偎跑
+	int32 cardId = 3; // 牌ID
+	int32 huxi = 4; // 胡息
+	bool isChongpao = 5; // 是否重跑（八块）
+}
+
+message TingList { // 听牌列表
+	repeated TingInfo tingList = 1;
+}
+
+message TingInfo {
+	int32 cardId = 1; // 牌ID
+	int32 type = 2; // 0.自摸和非自摸均可胡 1.自摸胡 2.非自摸胡
+}
+
+message Rules{ // 玩法规则
+	repeated Play rules = 1; // 玩法规则
+	int32 chongtun = 2; // 充囤
+	int32 maxScore = 3; // 单局最大分数
+}
+
+message UserLeave {
+	int64 userId = 1; // 玩家ID
+	int32 startState = 2; // 房间开始状态
+	bool isRemove = 3; // 是否房间内移除
+}
+
+message MessageVideo { // 录像
+	repeated MessageRecordOperation records = 1; // 操作列表
+	MessageRecordStart start = 2; // 牌局开始数据
+	MessageRecordEnd end = 3; // 结算
+	Rules rules = 4; // 玩法规则
+	string roomId = 5; // 房间号
+	int32 maxRound = 6; // 最大局
+	int32 curRound = 7; // 当前局
+}
+
+message MessageRecordStart { // 牌局开始信息
+	repeated RoomMember members = 1; // 玩家信息
+	repeated Licensing licensing = 2; // 发牌数据
+}
+
+message MessageRecordEnd { // 牌局结束信息
+	BoardSettlement settlement = 1; // 结算信息
+	repeated HandCards handCardIds = 2; //  手牌 
+	int64 userId = 3; // 胡牌玩家ID
+}
+
+message MessageRecordOperation { // 玩家操作
+	repeated MessageRecordShowOperation showOperations = 1; // 玩家显示操作
+	repeated LastChi chiCardIds = 2; // 玩家吃、比牌列表
+	repeated int32 tiList = 3; // 提牌列表
+	int64 userId = 4; // 操作玩家ID 当玩家显示操作时userId、chiCardIds、tiList、cardAmount、huxi均不生效
+	int32 messageId = 5; // 消息标号
+	int32 cardId = 6; // 发挡底牌、获得挡底牌、摸牌、打牌、碰牌、胡牌、偎牌、臭偎、跑牌ID
+	int32 cardAmount = 7; // 剩余牌数量
+	int32 huxi = 8; // 当前胡息
+	int32 paoOrTiType = 9; // 提/跑类型
+}
+
+message MessageRecordShowOperation { // 玩家的胡、碰、吃、过操作
+	repeated int32 operations = 1; // 长度为4的数组。数组第0/1/2/3位分别表示胡、碰、吃、过操作，例如[1,1,1,1]表示显示胡、碰、吃、过操作按钮
+	int64 userId = 2; // 玩家ID
+}
+
+message Location { // 玩家位置信息
+	string longitude = 2; // 经度
+	string latitude = 3; // 纬度
+	string location = 4; // 位置
+	string ip = 5; // IP
+}
+
+message UpdateLocation {
+	Location location = 1; // 位置信息
+	int64 userId = 2; // 玩家ID
+}
+
+message DisbandShows { // 玩家下线后返回游戏显示当前房间的解散状态
+	repeated DisbandOp opts = 1; // 玩家的解散房间状态
+	int64 applyUserId = 2; // 申请解散房间的用户ID
+	int32 surplusTime = 3; // 倒计时剩余时间
+}

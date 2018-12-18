@@ -1,0 +1,172 @@
+syntax = "proto3";
+
+package waihuzi.protobuf;
+
+option java_package = "com.hoolai.waihuzi.protobuf";
+option java_outer_classname = "RoomProto";
+
+// 将登陆信息和创建房间或者加入房间信息组合，请求一个消息便可直接加入牌桌。登陆逻辑不单独消息处理。
+
+message LoginRequest{ // 登陆请求
+	string key = 1; // 登陆KEY
+	int64 userId = 2; // 角色ID
+	string longitude = 3; // 经度
+	string latitude = 4; // 纬度
+	
+}
+
+message LoginResp { // 登陆应答
+	int32 code = 1; // 登陆状态 -1连接已经存在 -2连接错误 -3获取用户信息失败 -4验证用户信息失败 -5房间已满 
+}
+
+// 创建房间信息 包含登陆请求信息、进行的最大局数、卡不卡歪、豪的玩法等
+message CreateRoom{
+	LoginRequest loginReq = 1;
+	int32 maxRound = 2;// 最大局数
+	int32 playerCount = 3; // 二人还是三人玩法 2为二人玩法 3为三人玩法
+}
+
+// 加入房间 包含登陆请求信息、房间ID
+message JoinRoom {
+	LoginRequest loginReq = 1;
+	string roomId = 2;
+}
+
+// 解散房间玩家操作
+message DisbandOp {
+	int32 opt = 1; // 1true 2false
+	int64 userId = 2;
+}
+
+// 房间信息
+message RoomInfo {
+	LoginResp loginResp = 1;
+	repeated RoomMember members = 2;// 牌桌成员信息
+	string roomId = 3; // 房间编号
+	int64 userId = 4; // 用户ID
+	int32 nowRound = 5; // 当前局数
+	int32 maxRound = 6; // 最大局数
+	bool isStart = 7; // 牌局是否已经开启
+	// 当前牌桌数据
+}
+
+// 牌桌成员信息
+message RoomMember {
+	string headImgUrl = 1; // 头像地址
+	string name = 2; // 用户名
+	int64 userId = 3; // 用户ID
+	int32 huxi = 4; // 胡息
+	int32 score = 5; // 积分
+	int32 position = 6; // 位置
+	bool isReady = 7;  // 是否已准备
+	bool isBanker = 8; // 是否庄家
+	int32 maxHuxi = 9; // 最高胡息
+	int32 hutimes = 10; // 胡牌次数
+	string longitude = 11; // 经度
+	string latitude = 12; // 纬度
+	bool isLeave = 13; // 是否离开状态
+}
+
+message GameFinished { // 游戏结束
+	repeated RoomMember members = 1;// 成员局内总收支
+	string roomId = 2; // 房号
+	int64 startTime = 3;	// 开始时间
+	int64 endTime = 4; // 结束时间
+	int32 round = 5; // 进行的局数
+	int32 maxRound = 6; // 最大局数
+}
+
+message Licensing { // 发牌
+	repeated int32 handCards = 1; // 手牌
+}
+
+message ShowOperation { // 牌局显示操作
+	repeated Chi chiList = 1; // 吃列表
+	int32 cardId = 2;// 打出或者摸到的牌
+	repeated int32 liuCardIds = 3; // 要溜的牌列表
+	bool hasPeng = 4; // 是否有碰
+	bool hasWai = 5; // 是否有歪
+	bool canHu = 6; // 是否可胡
+	bool isWaiLiu = 7; // 是否歪溜
+}
+
+message Chi { // 吃
+	repeated int32 cardId = 1; // 吃牌
+}
+
+message ChiResult {
+	repeated int32 cardId = 1; // 吃牌
+	int64 userId = 2;// 玩家ID
+	int32 huxi = 3; // 吃二七十或者贰柒拾后的胡息
+}
+
+message Hu {
+	repeated HandCards cards = 1; // 玩家手牌
+	int64 winnerId = 2; // 赢牌玩家ID
+	int32 cardId = 3; // 牌ID
+	bool isFinished = 4; // 游戏是否结束
+}
+
+message HandCards { // 胡牌或者黄庄玩家的手牌
+	repeated int32 cardIds = 1; // 玩家手牌
+	int64 userId = 2; // 玩家ID
+}
+
+message BoardSettlement { // 每局结束后的牌局结算
+	repeated Hupaixing paixingInfos = 1; // 牌型信息
+	repeated HuPaixingInfo hupxInfos = 2; // 胡牌型信息
+	repeated PlayerSettlementInfo settInfos = 3; // 玩家局内结算
+	repeated int32 diCardIds = 4; // 底牌
+	string roomId = 5; // 房间号
+	int64 endTime = 6; // 牌局结束时间
+	int32 totalHuxi = 7; // 总胡息
+	int32 nowRound = 8; // 当前局数
+	int32 totalRound = 9; // 总局数
+	int32 huCardId = 10; // 胡牌ID
+}
+
+message PlayerSettlementInfo { // 玩家每局结算信息
+	int64 userId = 1; // 玩家ID
+	int32 winScore = 2; // 获胜积分
+	int32 nowScore = 3; // 当前积分
+}
+
+message HuPaixingInfo { // 胡牌牌型信息
+	string name = 1; // 牌型名称
+	int32 huxi = 2; // 胡息
+}
+
+message Hupaixing{
+	repeated int32 cardIds = 1;
+	int32 type = 2; // 1吃、2碰、3歪、4溜、5坎、6最后两张牌
+	int32 cardId = 3;
+	int32 huxi = 4; // 胡息
+}
+
+message Return { // 玩家返回牌桌
+	repeated ReturnMemberInfo memberInfo = 1; // 成员信息
+	string roomId = 2; // 房间号
+	int32 nowRound = 3; // 当前局
+	int32 maxRound = 4; // 最大局
+	int32 gameState = 5; // 游戏当前状态 1.未开启 2.正在进行中
+	int32 surplusCardAmount = 6; // 底牌数量
+	int64 createdId = 7;// 房主ID
+	int64 nowOperationPlayerId = 8; // 当前正在操作的玩家ID
+	int32 cardId = 9; // 当前正在操作的牌ID
+	int32 nowOperation = 10; // 玩家当前正在进行操作 1摸牌 2打牌
+}
+
+message ReturnMemberInfo {
+	repeated LeftHandPaixingInfo leftHandPaixing = 1; // 玩家左下角的吃、碰、歪、溜牌型
+	RoomMember members = 2; // 房间成员信息
+	repeated int32 putCardIds = 3; // 打出的牌
+	repeated int32 handCardIds = 4; // 玩家自己的手牌
+	ShowOperation showOperation = 5; // 玩家的显示操作
+	repeated int32 huCardIds = 6; // 玩家可胡牌列表
+}
+
+message LeftHandPaixingInfo { // 玩家的吃、碰、歪、溜信息
+	repeated int32 cardIds = 1;
+	int32 type = 2; // 1吃、2碰、3歪、4清溜、7歪溜
+	int32 cardId = 3;
+}

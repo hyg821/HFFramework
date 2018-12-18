@@ -1,0 +1,249 @@
+syntax = "proto3";
+
+import "common.proto";
+
+package newddz.RoomProto;
+option java_package = "com.hoolai.centersdk.protobuf";
+option java_outer_classname = "RunFastRoomProto";
+
+
+// 房间ID
+message RoomId {
+     int64 room_id = 1; // 房间ID
+}
+
+// 房间类型ID，由配置表配置
+message TypeId {
+     int32 group_id = 1;       // 玩法内部ID
+     int32 sub_id = 2;         // 等级
+} 
+
+message PlayerPoint{
+	 double pos_x = 1; 
+     double pos_y = 2;
+}
+
+// 位置
+message RoomPos {
+     int64 room_id = 1; // 房间ID
+     int32 pos_index = 2; // 座位索引
+}
+
+message RoomPosCountDown {
+     int64 room_id = 1; // 房间ID
+     int32 pos_index = 2; // 座位索引
+     int64 millis = 3; // 倒计时时长
+     int32 type = 4; // 倒计时原因
+}
+
+// 位置和牌
+message RoomPosCards {
+     int64 room_id = 1;        // 房间ID
+     int32 pos_index = 2;      // 座位索引
+     repeated int32 cards = 3; // 牌
+	 int32 firstPushPos = 4;   // 先出牌的位置
+}
+
+// 某个玩家的详细信息，用户进入房间时使用
+message PlayerInfo {
+     int64 room_id = 1; // 房间ID
+     int32 pos_index = 2; // 座位索引
+     int64 user_id = 3; // 玩家ID
+     string user_name = 4; // 玩家昵称
+     string head_img_url = 5; // 玩家头像URL
+     int64 gold = 6; // 玩家金币数
+     string sex = 7; // 玩家性别，0代表女 1代表男 2代表未知
+    repeated int32 cards = 8; // 手牌
+     int32 state = 9; // 玩家状态，参看Constants.PLAYER_STATE_*
+     bool is_managed = 10; // 是否处于托管状态，只在恢复游戏时有用
+     int32 role = 11; // 玩家角色，参看Constants.PLAYER_ROLE_*
+	 int32 callMultiple = 12; // 叫地主的倍数 0 是不叫(重连用)
+	repeated int32 lastCards = 13; // 上一轮出牌(重连用)
+	 int64 timers = 14; // 本次出牌剩余时间(重连用)
+}
+
+// 房间中比较全面的信息，用户刚进入房间时使用
+message RoomInfo {
+     int64 room_id = 1;             // 房间ID
+     int64 type_id = 2;             // 房间类型ID
+     int32 pos_index = 3;           // 玩家座位索引
+     int32 room_stage = 4;          // 当前房间所处阶段，在Constants中定义
+     int64 multiple = 5;            // 当前房间倍数，只在恢复游戏时有用
+    repeated PlayerInfo players = 6;// 加入前已经存在的玩家信息
+     int64 base_gold = 7;           // 房间底分
+    repeated int32 hole_cards = 8;  // 房间底牌
+	 int64 joinRoomMinGold = 9;     // 加入房间最低筹码
+	 int32 curInning = 10;          // 当前局数
+	 int32 curTotalInning = 11;     // 总局数
+	 centersdk.protobuf.PaoDeKuai createInfo = 12;    // 房间创建信息
+	 repeated int32 lastCards = 13; // 重连之前之后一个人出的牌
+	 int32 lastPos = 14;			// 最后出牌人的位置
+	 int32 firstPushPos = 15;       // 先出牌的位置
+	 int64 time = 16;               // 解散剩余倒计时(毫秒)
+}
+
+// 这个消息主要针对房间内使用技能道具，和普通道具使用（例如开宝箱）不一样。
+// 斗地主暂时没有使用
+message SkillItem {
+     int64 room_id = 1; // 房间ID
+     int64 user_id = 2; // 玩家ID
+     int64 item_id = 3; // 使用的技能道具ID
+     double pos_x = 4; // 道具投放的x坐标
+     double pos_y = 5; // 道具投放的y坐标
+}
+
+// 最终结果，以及每个人金币变化
+message RoomResult {
+     int64 room_id = 1; // 房间ID
+     int32 type = 2; // 0=普通 1=春天 2=反春天
+    repeated int64 gold = 3; // 所有人金币变化
+	repeated SimpleResultInfo infos = 4;
+	 int32 finish_jv = 5;     // 完成局数  
+}
+
+// 房间的动作，包括准备，叫地主、明牌、出牌，过牌等
+message RoomAction {
+     int64 room_id = 1; // 房间ID
+     int32 pos_index = 2; // 座位索引
+     int32 action_type = 3; // 动作类型
+     int32 multiple = 4; // 倍数
+    repeated int32 cards = 5; // 牌
+     int32 rank = 6; // 牌力
+     int32 cardsLeft = 7; // 手里剩下牌的张数
+}
+
+message RoomMultiple {
+     int64 room_id = 1; // 房间ID
+     int64 base_gold = 2; // 房间底分
+     int64 multiple = 3; // 当前倍数
+}
+
+message RoomMission {
+     int64 room_id = 1; // 房间ID
+     int32 room_level = 2; // 房间等级, 1=初级，2=中级，3=高级，4=精英，5=大师
+     int64 mission_id = 3; // 任务ID
+     bool is_finish = 4; // 任务是否已完成
+}
+
+message RoomLuckyWheel {
+     int64 room_id = 1; // 房间ID
+     int32 room_level = 2; // 房间等级, 1=初级，2=中级，3=高级，4=精英，5=大师
+     int32 innings = 3; // 游戏局数
+     int32 innings_to_bonus = 4; // 再玩多少局数可抽奖，-1表示今天已经抽完所有奖，0表示当前有未抽的奖
+    repeated int32 bonus_ids = 5; // 奖品ID，-1表示元宝
+    repeated int32 bonus_counts = 6; // 奖品数量
+    repeated int32 bonus_multiples = 7; // 奖品倍数，内圈
+}
+
+message RoomLuckyWheelBonus {
+     int64 room_id = 1; // 房间ID
+     int32 room_level = 2; // 房间等级, 1=初级，2=中级，3=高级，4=精英，5=大师
+     int32 id_index = 3; // 奖品索引
+     int32 multiple_index = 4; // 倍数索引
+}
+
+message RoomRobot {
+     int64 room_id = 1; // 房间ID
+     int32 type_id = 2; // 房间类型ID，蕴含玩法和等级
+     int64 user_id = 3; // 玩家ID
+     string name = 4; // 玩家昵称
+     string head_img_url = 5; // 头像URL地址
+     string sex = 6; // 玩家性别 0代表女 1代表男 2代表未知
+     int64 gold = 7; // 用户拥有金币
+}
+
+// 单局结算
+message SimpleResultInfo{
+	 int64 user_id = 1;       // 用户ID
+	 string userName = 2;     // 用户名字
+	 string head_img_url = 3; // 头像地址
+	 int32 piaoFen = 4;       // 飘分输赢
+	 int32 zhadan = 5;        // 炸弹输赢
+	 int32 totalWin = 6;      // 牌局输赢
+	 repeated int32 cards = 7;// 玩家剩余牌数
+	 bool redTen = 8;        // 是否有红十
+}
+
+// 单人总结算
+message ResultPanelInfo{
+	 int64 user_id = 1;       // 用户ID
+	 string userName = 2;     // 用户名字
+	 string head_img_url = 3; // 头像地址
+	 int32 gold = 4;          // 最后一局输赢
+	 int32 piaoFen = 5;       // 飘分输赢
+	 int32 zhadan = 6;       // 炸弹输赢
+	 int32 totalWin = 7;     // 牌局输赢
+	 int32 maxWin = 8;       // 单局最高赢
+	 string winLoseJv = 9;   // 胜负局数  赢:输
+}
+
+// 
+message AllResultInfo{
+	int32 room_id = 1;       // 房间号
+	int32 finish_jv = 2;    // 完成局数
+	string startTime = 3;    // 开始时间
+	string endTime = 4;      // 结束时间
+	repeated ResultPanelInfo infos = 5;
+	int32 videoCode = 6;     // 录像码
+	int32 isOpen = 7;        // 是否打开结算面板 0 打开 1 不打开
+}
+
+// 解散房间消息
+message DesRoom{
+	int64 room_id = 1; 
+	int64 userId = 2;//发起人
+	string userName = 3;// 名字
+	repeated PlayerInfo players = 4;
+}
+
+// 战绩表
+message BattleRecords{
+	repeated PlayerInfo playerInfo = 1;
+	repeated BattleRecord records = 2; // 战绩
+}
+
+
+// 个人战绩
+message BattleRecord{
+	repeated bool isRedTen = 4; // 是否扎鸟
+	repeated int32 winList = 5; // 每一局的输赢集合
+}
+// 查看详细战绩
+message ShowBattleRecord {
+	repeated DetailedBattleRecord baRecord = 1;
+}
+
+// 详细战绩
+message DetailedBattleRecord{
+	repeated RecordCardData cards = 1; // 出牌顺序以及牌
+	int32 remainCard = 2;              // 剩余牌数 
+	int32 zhaDan = 3;                  // 炸弹输赢
+	int32 piaoFen = 4;                 // 飘分
+	int32 piaofenWin = 5;			   // 飘分输赢
+	int64 firstPushCards = 6;          // 第一个出牌的人
+	PlayerInfo playerInfo = 7;
+	int32 winGold = 8;
+	bool isRedTen = 9;
+}
+
+// 出牌顺序记录
+message RecordCardData{
+	int32 handTimes = 1;//第几手
+	repeated int32 cards = 2; // 出的牌
+}
+
+message PlayerGPSInfo{
+	bool isOpenGPS = 1;
+	PlayerPoint point = 2;
+	string localName = 3;
+	string playerIp = 4;
+	int32 player_pos = 5;
+	int64 roomId = 6;
+}
+
+message PlayerGPSInfos{
+	repeated PlayerGPSInfo info = 1;
+	int64 room_id = 2;                // 房间ID
+	int32 room_stage = 3;             // 当前房间所处阶段，在Constants中定义
+}
+

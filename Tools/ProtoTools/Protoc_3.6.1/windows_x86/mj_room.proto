@@ -1,0 +1,210 @@
+syntax = "proto3";
+
+package lobbyservice.protobuf;
+
+option java_package = "com.hoolai.centersdk.protobuf";
+option java_outer_classname = "MjProto";
+
+//牌桌请求类,此类为牌桌内前端向后端请求的类,其定义了很多属性,属性的具体释意由逻辑负责,避免重复定义消息体.
+message DeskRequest {
+	int32 deskId = 1; // 牌桌ID
+	int32 amount = 2;
+	int32 value = 3;
+	int32 type = 4;
+}
+
+//牌桌消息集合类,是很多消息组件的集合，例如：牌桌信息、牌桌变量、玩家详细信息
+message MessageDeskFull {
+	int32 deskId = 1;								// 牌桌ID
+	int32 code = 2;									// 返回码。具体释义由每个逻辑详细解释
+	int32 position = 3;								// 当前玩家的座位号
+	MessageDeskInfo deskInfo = 4;					// 牌桌信息
+	repeated MessagePlayerDetail players = 5;		// 玩家列表信息
+}
+//牌桌信息
+message MessageDeskInfo {
+	int32 deskId = 1;						// 牌桌ID
+	int32 groupId = 2;						// 牌桌组ID
+	int32 gameStage = 3;					// 游戏进程
+	string deskName = 4;					// 牌桌名称
+	int32 deskType = 5;						// 牌桌类型
+	string passWord = 6;					// 牌桌密码
+	int32 lastCardCount = 7;				// 剩余牌个数
+	int64 roomOwner = 8;					// 房主ID
+	int64 zhuangId = 9;						// 庄ID
+	int32 niaoCount = 10;					// 鸟牌个数
+	int32 niaoAddType = 11;					// 鸟牌算法
+	int32 boardCount = 12;					// 局数
+	repeated int32 cardTypeIds = 13;		// 允许的玩法ID.
+	int32 piaoFen = 14;						// 飘分
+	int32 lastNiao = 15;					// 海底抓鸟
+	int32 zuoBiStatus = 16;					// 防作弊
+	int32 realCount = 17;					// 每局局数
+	int32 totalCount = 18;					// 总局数
+	int32 friendCircleId = 19;				// 亲友圈ID
+	int64 lastOutCardUserId = 20;			// 最后打牌玩家
+	//红中选项
+	repeated int32 keXuanIndex = 21;		// 可选
+	int32 laiZiCount = 22;					// 赖子个数
+	int32 qiangGangZhuaNiao = 24;			// 抢杠抓鸟
+	int32 qingMoJiaMa = 25;					// 清摸加码
+	//追加选项
+	bool isAA = 26;							// 是否AA
+	bool isDYJ = 27;						// 是否大赢家
+}
+//玩家详细信息
+message MessagePlayerDetail {
+	int32 deskId = 1;						// 牌桌ID
+	int64 userId = 2;						// 用户ID
+	int32 position = 3;						// 座位号
+	int32 playerState = 4;					// 玩家状态
+	repeated int32 handCards = 5;			// 玩家手牌
+	string nickName = 6;					// 用户名\昵称
+	string headImgUrl = 7;					// 玩家头像地址
+	string sex = 8;							// 性别
+	int64 gameGold = 9;						// 玩家筹码
+	repeated int32 gangList = 10;			// 杠列表
+	repeated int32 anGangList = 11;			// 暗杠列表
+	repeated int32 pengList = 12;			// 碰列表
+	repeated MessageDeskCards chiList = 13;	// 吃列表
+	repeated int32 outCardList = 14;		// 打牌列表
+	int32 totalFan = 15;					// 总番数
+}
+
+//玩家信息
+message MessagePlayerInfo {
+	int32 deskId = 1;						// 牌桌ID
+	int64 userId = 2;						// 用户ID
+	int32 position = 3;						// 座位号
+	int32 playerState = 4;					// 玩家状态
+	int32 code = 5;							// 状态码。供某些逻辑使用
+	string nickName = 6;					// 用户名\昵称
+}
+
+//玩家信息列表类
+message MessagePlayerInfos {
+	int32 deskId = 1;						// 牌桌ID
+	int64 userId = 2;
+	int64 amount = 3;
+	repeated MessagePlayerInfo infos = 4;	// 玩家信息列表
+}
+
+//牌桌消息通用类。为了适应各种场景。避免重复定义消息体
+message MessageDeskCommon {
+	int32 deskId = 1;						// 牌桌ID
+	int32 card = 2;							// 牌
+	int32 code = 3;							// 返回码。具体释义由每个逻辑详细解释
+	int64 userId = 4;						// 玩家ID
+	int64 otherUserId = 5;					// 其他玩家ID
+	repeated int64 userIds = 6;				// 玩家ID列表
+	int32 position = 7;						// 座位号
+	int64 amount = 8;
+	int32 count = 9;						//
+	int32 lastCardCount = 10;				// 剩余牌个数
+	string strVal = 11;						// 字符串属性
+	repeated int32 cards = 12;				// 牌列表
+	repeated int32 ids = 13;				// ID列表
+}
+//牌桌的牌信息类
+message MessageDeskCards {
+	int32 deskId = 1;						// 牌桌ID
+	repeated int32 cards = 2;				// 牌列表
+}
+
+//起手胡信息类
+message MessageStartHu {
+	int32 deskId = 1;						// 牌桌ID
+	int64 userId = 2;						// 胡牌用户ID
+	int32 code = 3;							// 返回码
+	repeated int32 ids = 4;					// 胡的牌型ID列表
+	repeated MessageDeskCards cards = 5;	// 牌型ID对应的亮牌列表
+}
+//听牌列表
+message MessageTing {
+	int32 outCard = 1;						//需要打出的牌
+	repeated int32 tingCards = 2;			//听牌列表
+	repeated int32 tingCounts = 3;			//听牌剩余个数列表
+}
+
+//抓牌、打牌提示
+message MessageCardTips {
+	int32 deskId = 1;						// 牌桌ID
+	int64 userId = 2;						// 用户ID
+	repeated int32 cards = 3;				// 当前打、抓的牌列表
+	repeated int32 huList = 4;				// 胡牌是否
+	repeated int32 gangList = 5;			// 杠牌是否
+	repeated int32 buList = 6;				// 补牌是否
+	repeated int32 pengList = 7;			// 碰牌列表
+	repeated MessageDeskCards chiList = 8;	// 吃牌列表
+	repeated MessageTing tingList = 9;		// 听牌列表
+}
+
+//牌桌信息和当前动作信息。主要用于玩家加入牌桌，但当前牌桌处于玩家下注或等待玩家动作阶段。
+message MessageDeskPlay {
+	int32 deskId = 1;						// 牌桌ID
+	int64 userId = 2;						// 玩家ID
+	int32 gameStage = 3;					// 游戏进行阶段
+	int64 time = 4;							// 当前游戏阶段剩余毫秒数
+}
+
+//牌桌的结算信息类
+message MessageDeskCompare {
+	int32 deskId = 1;						// 牌桌ID
+	repeated int32 handCards = 2;			// 牌桌剩余手牌
+	repeated int32 niaoCards = 3;			// 鸟牌列表
+	repeated MessagePlayerCompare infos = 4;// 玩家结算信息
+}
+//牌桌内玩家的结算信息类
+message MessagePlayerCompare {
+	int64 userId = 1;						// 玩家ID
+	repeated int32 huCards = 2;				// 最后胡的那张牌
+	int32 huFan = 3;						// 翻数，可能为负数。为输牌了
+	int32 huType = 4;						// 胡类型 0无 1自摸 2胡 3点炮
+	repeated int32 handCards = 5;			// 玩家手牌
+	repeated int32 gangList = 6;			// 杠列表
+	repeated int32 anGangList = 7;			// 暗杠列表
+	repeated int32 pengList = 8;			// 碰列表
+	repeated MessageDeskCards chiList = 9;	// 吃列表
+	repeated int32 niaoList = 10;			// 中的鸟牌列表
+	repeated int32 huIdList = 11;			// 胡牌的牌型ID列表
+	repeated int32 startHuIdList = 12;		// 起手胡的牌型ID列表
+}
+
+//牌桌的最终结算信息类
+message MessageDeskFinalCompare {
+	int32 deskId = 1;						// 牌桌ID
+	int32 type = 2;							// 结算类型，1、正常结算 2、流局结算 3、牌桌解散
+	int64 roomOwner = 3;					// 房主ID
+	int64 totalCount = 4;					// 总局数
+	int32 realCount = 5;					// 实际局数
+	int64 startTime = 6;					// 开始时间
+	int64 endTime = 7;						// 结束时间
+	repeated MessagePlayerFinalCompare infos = 8;// 玩家最终结算信息
+}
+//玩家的最终结算信息类
+message MessagePlayerFinalCompare {
+	int64 userId = 1;						// 玩家ID
+	string nickName = 2;					// 用户名\昵称
+	string headImgUrl = 3;					// 玩家头像地址
+	int32 zhuangCount = 4;					// 坐庄次数
+	int32 huCount = 5;						// 起手胡、平胡、大胡次数。
+	int32 daHuCount = 6;					// 大胡次数
+	int32 paoCount = 7;						// 点炮次数
+	int32 totalFan = 8;						// 总番数
+	int32 jieGangCount = 9;					// 接杠次数
+	int32 dianGangCount = 10;				// 点杠次数
+}
+
+message MessageVideo {// 录像列表
+	int64 userId = 1;
+	repeated Record records = 2;
+}
+message Record {//每一步录像VO
+	int32 id = 1;//动作ID。消息号为动作ID。根据不同的ID填充不同的数据
+	MessageDeskFull deskFull = 2;		//初始化动作
+	MessageDeskCommon common = 3;		//通用动作
+	MessageStartHu startHu = 4;			//起手胡动作
+	MessageCardTips tips = 5;			//抓、打牌提示动作
+	MessageDeskCompare compare = 6;		//结算动作
+
+}

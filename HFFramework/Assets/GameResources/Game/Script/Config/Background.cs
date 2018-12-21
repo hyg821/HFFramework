@@ -60,11 +60,11 @@ namespace Config
             AssetBundlePackage package = HAResourceManager.Instance.LoadAssetBundleFromFile("Config");
             TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("Background");
             StringReader reader = new StringReader(textAsset.text);
-            string notes = reader.ReadLine();
-            string names = reader.ReadLine();
             reader.ReadLine();
             reader.ReadLine();
-            string types = reader.ReadLine();
+            reader.ReadLine();
+            reader.ReadLine();
+            reader.ReadLine();
             while (true)
             {
                 string row = reader.ReadLine();
@@ -84,9 +84,6 @@ namespace Config
                     list.Add(config);
                }
            }
-           notes = null;
-           names = null;
-           types = null;
            reader.Close();
         }
 

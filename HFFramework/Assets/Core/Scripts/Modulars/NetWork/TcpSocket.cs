@@ -487,7 +487,7 @@ namespace HFFramework
             if (socket.Connected)
             {
                 SetState(ConnectState.Success);
-                receiveThread = new Thread(new ThreadStart(ReceiveMessage));
+                receiveThread = new Thread(ReceiveMessage);
                 receiveThread.IsBackground = true;
                 receiveThread.Start();
             }

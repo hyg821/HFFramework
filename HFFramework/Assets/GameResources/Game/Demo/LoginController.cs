@@ -44,6 +44,7 @@ public class LoginController : UIController {
                  request.Channel = "";
                  request.ChannelUid = "";
                  request.Version = "1.1.2";
+
                  socket.SendMessage(1,request);
                  
              }, delegate (int msgID, byte[] bb)

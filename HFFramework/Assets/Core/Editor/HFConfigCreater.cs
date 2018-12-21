@@ -205,11 +205,11 @@ namespace Config
             builder.AppendLine(@"            AssetBundlePackage package = HAResourceManager.Instance.LoadAssetBundleFromFile("+"\"" + ConfigAssetbundleName +"\""+ ");");
             builder.AppendLine(@"            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>(" + "\"" + _class + "\"" + ");");
             builder.AppendLine(@"            StringReader reader = new StringReader(textAsset.text);");
-            builder.AppendLine(@"            string notes = reader.ReadLine();");
-            builder.AppendLine(@"            string names = reader.ReadLine();");
             builder.AppendLine(@"            reader.ReadLine();");
             builder.AppendLine(@"            reader.ReadLine();");
-            builder.AppendLine(@"            string types = reader.ReadLine();");
+            builder.AppendLine(@"            reader.ReadLine();");
+            builder.AppendLine(@"            reader.ReadLine();");
+            builder.AppendLine(@"            reader.ReadLine();");
             builder.AppendLine(@"            while (true)");
             builder.AppendLine(@"            {");
             builder.AppendLine(@"                string row = reader.ReadLine();");
@@ -284,9 +284,6 @@ namespace Config
             builder.AppendLine(@"                    list.Add(config);");
             builder.AppendLine(@"               }");
             builder.AppendLine(@"           }");
-            builder.AppendLine(@"           notes = null;");
-            builder.AppendLine(@"           names = null;");
-            builder.AppendLine(@"           types = null;");
             builder.AppendLine(@"           reader.Close();");
             builder.AppendLine(@"        }");
             builder.AppendLine();

@@ -54,5 +54,5 @@ namespace HFFramework
             CloseAllSocket();
             Instance = null;
         }
-    }
+    } 
 }

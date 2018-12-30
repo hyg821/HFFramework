@@ -36,7 +36,7 @@ namespace HFFramework
 
         public void AnalysisConfig()
         {
-            AssetBundlePackage pp = HAResourceManager.Instance.LoadAssetBundleFromFile("Common_Config");
+            AssetBundlePackage pp = HFResourceManager.Instance.LoadAssetBundleFromFile("Common_Config");
             TextAsset tt = pp.LoadAssetWithCache<TextAsset>("SpineExchangeConfig");
             SpineEquipment ex = JsonMapper.ToObject<SpineEquipment>(tt.text);
             for (int i = 0; i < ex.Equipment.Count; i++)
@@ -82,7 +82,7 @@ namespace HFFramework
                 string regionName = info.equipmentImageName;
                 string defaultSkinName = info.defaultSkinName;
                 string spineEquipmentType = info.spineEquipmentTypeName;
-                AssetBundlePackage assetbundle = HAResourceManager.Instance.LoadAssetBundleFromFile(info.equipmentAssetbundleName);
+                AssetBundlePackage assetbundle = HFResourceManager.Instance.LoadAssetBundleFromFile(info.equipmentAssetbundleName);
                 AtlasAsset atlasAsset = assetbundle.LoadAssetWithCache<AtlasAsset>(info.equipmentAtlasAssetName);
                 float scale = skeletonAnimation.skeletonDataAsset.scale;
                 Atlas atlas = atlasAsset.GetAtlas();
@@ -145,7 +145,7 @@ namespace HFFramework
                 string regionName = info.equipmentImageName;
                 string defaultSkinName = info.defaultSkinName;
                 string spineEquipmentType = info.spineEquipmentTypeName;
-                AssetBundlePackage assetbundle = HAResourceManager.Instance.LoadAssetBundleFromFile(info.equipmentAssetbundleName);
+                AssetBundlePackage assetbundle = HFResourceManager.Instance.LoadAssetBundleFromFile(info.equipmentAssetbundleName);
                 AtlasAsset atlasAsset = assetbundle.LoadAssetWithCache<AtlasAsset>(info.equipmentAtlasAssetName);
                 float scale = skeletonAnimation.skeletonDataAsset.scale;
                 Atlas atlas = atlasAsset.GetAtlas();
@@ -190,7 +190,7 @@ namespace HFFramework
         /// <param name="item"></param>
         public void ExchangeEquipment(SkeletonAnimation skeletonAnimation, EquipmentItem item)
         {
-            AssetBundlePackage pg = HAResourceManager.Instance.LoadAssetBundleFromFile(item.equipmentAssetbundleName);
+            AssetBundlePackage pg = HFResourceManager.Instance.LoadAssetBundleFromFile(item.equipmentAssetbundleName);
             Texture2D equipmentTexture = pg.LoadAssetWithCache<Texture2D>(item.equipmentImageName);
             // 找到具体的一个 插槽
             Slot slot = skeletonAnimation.skeleton.FindSlot(item.slotName);

@@ -34,7 +34,7 @@ namespace Config
             ConfigMan.Instance.StartAnalysis();
             ConfigRole.Instance.StartAnalysis();
             ConfigUI.Instance.StartAnalysis();
-            HAResourceManager.Instance.UnloadAssetBundle("Config", true); 
+            HFResourceManager.Instance.UnloadAssetBundle("Config", true); 
             GC.Collect();
         } 
 

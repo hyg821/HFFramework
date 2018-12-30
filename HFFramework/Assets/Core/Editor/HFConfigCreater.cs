@@ -202,7 +202,7 @@ namespace Config
             builder.AppendLine();
             builder.AppendLine("        public void StartAnalysis()");
             builder.AppendLine("        {");
-            builder.AppendLine(@"            AssetBundlePackage package = HAResourceManager.Instance.LoadAssetBundleFromFile("+"\"" + ConfigAssetbundleName +"\""+ ");");
+            builder.AppendLine(@"            AssetBundlePackage package = HFResourceManager.Instance.LoadAssetBundleFromFile("+"\"" + ConfigAssetbundleName +"\""+ ");");
             builder.AppendLine(@"            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>(" + "\"" + _class + "\"" + ");");
             builder.AppendLine(@"            StringReader reader = new StringReader(textAsset.text);");
             builder.AppendLine(@"            reader.ReadLine();");
@@ -352,7 +352,7 @@ namespace Config
                 builder.AppendLine("            "+_table+".Instance.StartAnalysis();");
             }
 
-            builder.AppendLine("            " + "HAResourceManager.Instance.UnloadAssetBundle("+"\""+ ConfigAssetbundleName + "\""+", true); ");
+            builder.AppendLine("            " + "HFResourceManager.Instance.UnloadAssetBundle("+"\""+ ConfigAssetbundleName + "\""+", true); ");
             builder.AppendLine("            GC.Collect();");
 
             builder.AppendLine("        } ");

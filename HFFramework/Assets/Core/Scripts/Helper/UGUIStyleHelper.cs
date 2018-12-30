@@ -70,7 +70,7 @@ namespace HFFramework
                 textColorList.Add(item.color);
             }
 
-            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(assetBundleName);
+            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(assetBundleName);
             grayMaterial = ab.LoadAssetWithCache<Material>(assetName);
         }
 

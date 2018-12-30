@@ -8,7 +8,7 @@ using Mono.Cecil.Pdb;
 
 namespace HFFramework
 {
-    public class HAResourceManager : MonoBehaviour,IManager
+    public class HFResourceManager : MonoBehaviour,IManager
     {
         // 注意 
         // 必须每一个场景一个包 并且场景不可以和别的资源放在同一个包里
@@ -16,7 +16,7 @@ namespace HFFramework
         // 场景不可以依赖别的包里的资源 因为场景没有做依赖递归加载 
         // 如果有依赖请把依赖做成预设体 通过加载预设体的方式 实现
 
-        public static HAResourceManager Instance;
+        public static HFResourceManager Instance;
 
         /// <summary>
         ///  assetbundle位置的根目录   默认的是所有的assetbundle 都放在一个文件夹下   
@@ -146,7 +146,7 @@ namespace HFFramework
         /// <returns></returns>
         public GameObject GetPrefab(string packageName, string assetName)
         {
-            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             GameObject g = ab.LoadAssetWithCache<GameObject>(assetName);
             return g;
         }
@@ -158,7 +158,7 @@ namespace HFFramework
         /// <returns></returns>
         public Sprite GetSprite(string packageName, string abName)
         {
-            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             Sprite sp = ab.LoadAssetWithCache<Sprite>(abName);
             return sp;
         }
@@ -170,7 +170,7 @@ namespace HFFramework
         /// <returns></returns>
         public AudioClip GetAudio(string packageName, string abName)
         {
-            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             AudioClip audio = ab.LoadAssetWithCache<AudioClip>(abName);
             return audio;
         }
@@ -223,7 +223,7 @@ namespace HFFramework
         /// <param name="callBack"></param>
         public void LoadAssetWithAutoKill<T>(string packageName, string assetName, Action<T> callback) where T : UnityEngine.Object
         {
-            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             T ta = ab.assetBundle.LoadAsset<T>(assetName);
             callback(ta);
             UnloadAssetBundle(ab, false);
@@ -238,7 +238,7 @@ namespace HFFramework
         /// <param name="callBack"></param>
         public void LoadPrefabWithAutoKill(string packageName, string assetName, Action<GameObject> callback)
         {
-            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             GameObject prefab = ab.assetBundle.LoadAsset<GameObject>(assetName);
             callback(prefab);
             UnloadAssetBundle(ab, false);
@@ -375,7 +375,7 @@ namespace HFFramework
 
         public void LoadHotFixAssembly(string assetbundleName, string dllName, ILRuntime.Runtime.Enviorment.AppDomain appdomain, Action<bool> cbAction)
         {
-            AssetBundlePackage ab = HAResourceManager.Instance.LoadAssetBundleFromFile(assetbundleName);
+            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(assetbundleName);
             TextAsset text = ab.LoadAssetWithCache<TextAsset>(dllName + ".dll");
             byte[] dll = text.bytes;
             using (MemoryStream fs = new MemoryStream(dll))

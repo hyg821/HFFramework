@@ -202,21 +202,10 @@ namespace HFFramework
             if (finishCallback != null && autoJump && !string.IsNullOrEmpty(sceneName))
             {
                 yield return StartCoroutine(LoadSceneAsync(sceneName));
-                bundle.Unload(false);
-                www.Dispose();
-                Resources.UnloadUnusedAssets();
-                finishCallback();
             }
-            else
-            {
-                bundle.Unload(false);
-                www.Dispose();
-                Resources.UnloadUnusedAssets();
-                if (finishCallback != null)
-                {
-                    finishCallback();
-                }
-            }
+            bundle.Unload(false);
+            www.Dispose();
+            finishCallback();
         }
 
         private IEnumerator LoadSceneAsync(string sceneName)

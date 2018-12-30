@@ -128,7 +128,7 @@ namespace HotFix
             }
         }
 
-        public List<IEnumerator> coroutineList = new List<IEnumerator>();
+        private List<Coroutine> coroutineList = new List<Coroutine>();
 
         public BaseElement()
         {
@@ -356,18 +356,6 @@ namespace HotFix
             return GameLooper.Instance.StartCoroutine(c);
         }
 
-        /// <summary>
-        ///  关闭协程
-        /// </summary>
-        /// <param name="coroutine"></param>
-        public void StopCoroutine(IEnumerator c)
-        {
-            if (c != null)
-            {
-                GameLooper.Instance.StopCoroutine(c);
-            }
-        }
-
         public void StopCoroutine(Coroutine c)
         {
             if (c != null)
@@ -521,13 +509,11 @@ namespace HotFix
             NotificationCenter.PostNotification(new NotificationMessage(messageType, null, obj));
         }
 
-
         public void PlayMusic(string assetBundlePackageName, string musicName)
         {
             AudioPlayer player = AudioManager.Instance.GetFreeAudioPlayer();
             player.SetAudioClipAndPlay(assetBundlePackageName, musicName);
         }
-
 
         /// <summary>
         ///  接收 通知中心 信息   对应发送消息 和 发送通知
@@ -564,7 +550,6 @@ namespace HotFix
                 compomentList = null;
             }
 
-
             if (coroutineList != null)
             {
                 for (int i = 0; i < coroutineList.Count; i++)
@@ -600,7 +585,6 @@ namespace HotFix
 
             parent = null;
             gameObject = null;
-
 
             if (IsNeedUpdate == true)
             {

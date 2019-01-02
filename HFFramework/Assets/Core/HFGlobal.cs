@@ -18,7 +18,7 @@ namespace HFFramework
         /// <summary>
         ///  AeestBundle管理器
         /// </summary>
-        public HAResourceManager resourcesManager;
+        public HFResourceManager resourcesManager;
 
         /// <summary>
         ///  通知中心
@@ -77,7 +77,7 @@ namespace HFFramework
                 gameObject.AddComponent<PathManager>();
 
                 //资源加载
-                resourcesManager = GameFactory.Create<HAResourceManager>("ResourcesManager", true);
+                resourcesManager = GameFactory.Create<HFResourceManager>("ResourcesManager", true);
                 resourcesManager.InitWithRootPath(PathManager.Instance.PersistentDataAssetBundlesPath, PathManager.Instance.StreamingAssetsAssetBundlesPath , "AssetBundles");
 
                 //添加游戏运行环境 + 配置文件
@@ -138,7 +138,7 @@ namespace HFFramework
         {
             GameFactory.Instance.DestroyManager();
             GameEnvironment.Instance.DestroyManager();
-            HAResourceManager.Instance.DestroyManager();
+            HFResourceManager.Instance.DestroyManager();
             NotificationCenter.Instance.DestroyManager();
             HFSocketManager.Instance.DestroyManager();
             AudioManager.Instance.DestroyManager();

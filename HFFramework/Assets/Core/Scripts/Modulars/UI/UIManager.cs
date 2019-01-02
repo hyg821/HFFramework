@@ -39,7 +39,7 @@ namespace HFFramework
         public void LoadScene()
         {
             ClearScene();
-            AssetBundlePackage assetBundlePackage = HAResourceManager.Instance.LoadAssetBundleFromFile("hfui");
+            AssetBundlePackage assetBundlePackage = HFResourceManager.Instance.LoadAssetBundleFromFile("hfui");
             GameObject  prefab= assetBundlePackage.LoadAssetWithCache<GameObject>("UIRoot");
             GameObject temp = Instantiate(prefab);
             temp.name = RootName;
@@ -60,7 +60,7 @@ namespace HFFramework
             UICanvas uiCanvas;
             if (!canvasDic.TryGetValue(canvasLayerIndex, out uiCanvas))
             {
-                GameObject canvasPrefab = HAResourceManager.Instance.GetPrefab("hfui","UICanvas");
+                GameObject canvasPrefab = HFResourceManager.Instance.GetPrefab("hfui","UICanvas");
                 GameObject canvasObject = Instantiate(canvasPrefab);
                 uiCanvas = canvasObject.AddComponent<UICanvas>();
                 uiCanvas.SetUICamera(UICamera);

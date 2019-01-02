@@ -63,7 +63,7 @@ namespace HFFramework
         /// <returns></returns>
         public static T Create<T>(string assetPackageName, string assetName,out GameObject temp)
         {
-            GameObject prefab = HAResourceManager.Instance.GetPrefab(assetPackageName, assetName);
+            GameObject prefab = HFResourceManager.Instance.GetPrefab(assetPackageName, assetName);
             temp = GameObject.Instantiate(prefab);
             temp.name = assetName;
             return temp.GetComponent<T>();

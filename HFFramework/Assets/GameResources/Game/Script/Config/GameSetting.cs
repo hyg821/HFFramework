@@ -89,7 +89,7 @@ namespace Config
 
         public void StartAnalysis()
         {
-            AssetBundlePackage package = HAResourceManager.Instance.LoadAssetBundleFromFile("Config");
+            AssetBundlePackage package = HFResourceManager.Instance.LoadAssetBundleFromFile("Config");
             TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("GameSetting");
             StringReader reader = new StringReader(textAsset.text);
             reader.ReadLine();

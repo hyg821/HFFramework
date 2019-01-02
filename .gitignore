@@ -18,3 +18,9 @@
 *.pidb
 *.booproj
 *.vs
+HFFramework/Assets/StreamingAssets.meta
+HFFramework/Assets/StreamingAssets/DLL.meta
+HFFramework/HFFramework.csproj
+HFFramework/HFFramework.Editor.csproj
+HFFramework/HFFramework.Editor.Plugins.csproj
+HFFramework/HFFramework.Plugins.csproj

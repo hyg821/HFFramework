@@ -89,12 +89,12 @@ namespace HFFramework
                 //如果是debug  那么就从streamAsset读取
                 if (GameEnvironment.Instance.RuntimeEnvironment == GameEnvironmentType.Develop)
                 {
-                    HAResourceManager.Instance.EditorLoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
+                    HFResourceManager.Instance.EditorLoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
                 }
                 //否则 从assetbundle 里读取
                 else
                 {
-                    HAResourceManager.Instance.LoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
+                    HFResourceManager.Instance.LoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
                 }
             }
         }

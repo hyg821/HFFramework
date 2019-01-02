@@ -19,11 +19,11 @@ namespace HFFramework
         /// <summary>
         ///  AeestBundle管理器
         /// </summary>
-        public static HAResourceManager ResourcesManager
+        public static HFResourceManager ResourcesManager
         {
             get
             {
-                return HAResourceManager.Instance;
+                return HFResourceManager.Instance;
             }
         }
 

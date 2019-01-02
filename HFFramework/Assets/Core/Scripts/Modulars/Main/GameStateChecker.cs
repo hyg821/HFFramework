@@ -6,15 +6,12 @@ namespace HFFramework
 {
     public class GameStateChecker : MonoBehaviour,IManager
     {
-        //客户端内部通信 基础消息号
-        public const long GAME_MESSAGE_BASE = -123456;
+        public static GameStateChecker Instance;
 
         /// <summary>
         ///  程序暂停
         /// </summary>
-        public const long MESSAGE_APPPAUSE = GAME_MESSAGE_BASE + 1;
-
-        public static GameStateChecker Instance;
+        public const int APPPAUSE = 1;
 
         private bool isPaused = false;
         /// <summary>
@@ -25,7 +22,7 @@ namespace HFFramework
             set
             {
                 isPaused = value;
-                NotificationCenter.PostNotification(new NotificationMessage(MESSAGE_APPPAUSE, this, isPaused));
+                NotificationCenter.PostNotification(new NotificationMessage(GameConst.MSG_STATE, APPPAUSE, this, isPaused));
             }
             get
             {

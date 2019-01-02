@@ -14,14 +14,10 @@ namespace ILRuntime.Runtime.Generated
         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             UnityEngine_Debug_Binding.Register(app);
-            HFFramework_HFSocketManager_Binding.Register(app);
-            HFFramework_HFSocket_Binding.Register(app);
-            HFFramework_HFLog_Binding.Register(app);
-            System_String_Binding.Register(app);
             UnityEngine_GameObject_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int64_ILTypeInstance_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Int32_Object_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_UInt64_Object_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
             UnityEngine_Transform_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);
@@ -35,8 +31,9 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_Int64_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Int64_ILTypeInstance_Binding.Register(app);
             System_IDisposable_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Int32_Object_Binding_Enumerator_Binding.Register(app);
-            System_Collections_Generic_KeyValuePair_2_Int32_Object_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_UInt64_Object_Binding_Enumerator_Binding.Register(app);
+            System_Collections_Generic_KeyValuePair_2_UInt64_Object_Binding.Register(app);
+            System_String_Binding.Register(app);
             System_Type_Binding.Register(app);
             System_Activator_Binding.Register(app);
             System_Collections_Generic_Queue_1_ILTypeInstance_Binding.Register(app);

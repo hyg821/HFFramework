@@ -30,9 +30,11 @@ public class LoginController : UIController {
         FindElement();
         loginBtn.onClick.AddListener(delegate ()
         {
+
+            
             HFLog.C("点击登录的名称是" + input.text);
             HFFramework.AppDomainManager.Instance.JumpToHotFix("hotfixdll", "HotFix", "HotFixEnter");
-         
+        
             HFSocket socket = HFSocketManager.Instance.GetSocket("hyg");
             socket.Init("10.2.0.207", 8002, delegate ()
              {
@@ -85,6 +87,9 @@ public class LoginController : UIController {
              });
 
             socket.StartConnect();
+
+
+            NotificationCenter.Instance.RemoveObserver(this, GameConst.MSG_UI, 123);
         });
 
         print(ConfigMan.Get(0).GetAddress("1"));
@@ -94,6 +99,17 @@ public class LoginController : UIController {
         print(ConfigChat.Get(1).ChooseCtype.name);
 
         print(ConfigRole.Get(1).GetTime1(1).name);
+
+
+        ReceiveNotificationMessage(this, GameConst.MSG_UI, 123, delegate (NotificationMessage msg)
+        {
+            print("发送的消息是 " + msg.obj);
+        });
+    }
+
+    private void Update()
+    {
+        SendNotificationMessage(GameConst.MSG_UI, 123, "str");
     }
 
 

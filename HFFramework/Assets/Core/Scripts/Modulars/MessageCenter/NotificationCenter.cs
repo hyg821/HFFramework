@@ -7,9 +7,14 @@ namespace HFFramework
     public struct NotificationMessage
     {
         /// <summary>
+        ///  模块id
+        /// </summary>
+        public ushort moduleID;
+
+        /// <summary>
         ///  消息id
         /// </summary>
-        public long msgID;
+        public int msgID;
 
         /// <summary>
         ///  发送者
@@ -21,11 +26,22 @@ namespace HFFramework
         /// </summary>
         public object obj;
 
-        public NotificationMessage(long msgID, object sender, object obj)
+        private ulong key;
+        public ulong Key
         {
+            get
+            {
+                return key;
+            }
+        }
+
+        public NotificationMessage(ushort moduleID, int msgID, object sender, object obj)
+        {
+            this.moduleID = moduleID;
             this.msgID = msgID;
             this.sender = sender;
             this.obj = obj;
+            this.key = NotificationCenter.ConvertToKey(moduleID, msgID);
         }
     }
 
@@ -37,20 +53,36 @@ namespace HFFramework
         public object receiver;
 
         /// <summary>
-        ///  消息号
+        ///  模块id
         /// </summary>
-        public long msgID;
+        public ushort moduleID;
+
+        /// <summary>
+        ///  消息id
+        /// </summary>
+        public int msgID;
 
         /// <summary>
         ///  消息回调
         /// </summary>
         public Action<NotificationMessage> callback;
 
-        public ObserverDelegate(object receiver, long msgID, Action<NotificationMessage> callback)
+        private ulong key;
+        public ulong Key
+        {
+            get
+            {
+                return key;
+            }
+        }
+
+        public ObserverDelegate(object receiver, ushort moduleID, int msgID, Action<NotificationMessage> callback)
         {
             this.receiver = receiver;
+            this.moduleID = moduleID;
             this.msgID = msgID;
             this.callback = callback;
+            this.key = NotificationCenter.ConvertToKey(moduleID, msgID);
         }
 
         public void Destroy()
@@ -65,7 +97,16 @@ namespace HFFramework
     {
         public static NotificationCenter Instance;
 
-        private Dictionary<long, List<ObserverDelegate>> messagePool = new Dictionary<long, List<ObserverDelegate>>();
+        private Dictionary<ulong, List<ObserverDelegate>> messagePool = new Dictionary<ulong, List<ObserverDelegate>>();
+
+        public static ulong ConvertToKey(ushort moduleID, int msgID)
+        {
+            ulong key = 0x0;
+            key = key | (uint)msgID;
+            uint temp= (uint)(moduleID << 35);
+            key = key | temp;
+            return key;
+        }
 
         private void Awake()
         {
@@ -78,11 +119,11 @@ namespace HFFramework
         /// <param name="receiver"></param>
         /// <param name="msgID"></param>
         /// <param name="callback"></param>
-        public void AddObserver(object receiver, int msgID, Action<NotificationMessage> callback)
+        public void AddObserver(object receiver, ushort moduleID, int msgID, Action<NotificationMessage> callback)
         {
-            ObserverDelegate o = new ObserverDelegate(receiver, msgID, callback);
+            ObserverDelegate o = new ObserverDelegate(receiver, moduleID, msgID, callback);
             List<ObserverDelegate> list;
-            if (messagePool.TryGetValue(msgID, out list))
+            if (messagePool.TryGetValue(o.Key, out list))
             {
                 if (list != null)
                 {
@@ -93,7 +134,7 @@ namespace HFFramework
             {
                 list = new List<ObserverDelegate>();
                 list.Add(o);
-                messagePool.Add(msgID, list);
+                messagePool.Add(o.Key, list);
             }
         }
 
@@ -112,7 +153,7 @@ namespace HFFramework
         public void SendNotification(NotificationMessage msg)
         {
             List<ObserverDelegate> list;
-            if (messagePool.TryGetValue(msg.msgID, out list))
+            if (messagePool.TryGetValue(msg.Key, out list))
             {
                 for (int i = 0; i < list.Count; i++)
                 {
@@ -129,15 +170,20 @@ namespace HFFramework
             }
         }
 
+        public void RemoveObserver(object receiver, ushort moduleID, int msgID)
+        {
+            RemoveObserver(receiver, ConvertToKey(moduleID, msgID));
+        }
+
         /// <summary>
         ///  移除观察者
         /// </summary>
         /// <param name="receiver"></param>
         /// <param name="msgID"></param>
-        public void RemoveObserver(object receiver, int msgID)
+        public void RemoveObserver(object receiver, ulong key)
         {
             List<ObserverDelegate> list;
-            if (messagePool.TryGetValue(msgID, out list))
+            if (messagePool.TryGetValue(key, out list))
             {
                 if (list != null)
                 {

@@ -86,8 +86,8 @@ namespace HotFix
         /// <summary>
         ///  注册的消息 字典   destory会自动销毁
         /// </summary>
-        private Dictionary<int, object> messageTypeDic = new Dictionary<int, object>();
-        public Dictionary<int, object> MessageTypeDic
+        public Dictionary<ulong, object> messageTypeDic;
+        public Dictionary<ulong, object> MessageTypeDic
         {
             set
             {
@@ -97,7 +97,7 @@ namespace HotFix
             {
                 if (messageTypeDic == null)
                 {
-                    messageTypeDic = new Dictionary<int, object>();
+                    messageTypeDic = new Dictionary<ulong, object>();
                 }
                 return messageTypeDic;
             }
@@ -514,11 +514,11 @@ namespace HotFix
         }
 
         /// <summary>
-        ///  发送通知
+        ///  发送消息
         /// </summary>
-        public void SendNotificationMessage(int messageType, object obj)
+        public void SendNotificationMessage(ushort moduleID, int msgID, object obj)
         {
-            NotificationCenter.PostNotification(new NotificationMessage(messageType, null, obj));
+            NotificationCenter.PostNotification(new NotificationMessage(moduleID, msgID, this, obj));
         }
 
 
@@ -535,12 +535,14 @@ namespace HotFix
         /// <param name="receiver">this</param>
         /// <param name="messageType"> 消息类型 int  </param>
         /// <param name="callback"> 信息回调 </param>
-        public void ReceiveNotificationMessage(object receiver, int messageType, Action<NotificationMessage> callback)
+        public void ReceiveNotificationMessage(object receiver, ushort moduleID, int msgID, Action<NotificationMessage> callback)
         {
-            if (!MessageTypeDic.ContainsKey(messageType))
+            object temp;
+            ulong key = NotificationCenter.ConvertToKey(moduleID, msgID);
+            if (!MessageTypeDic.TryGetValue(key, out temp))
             {
-                MessageTypeDic.Add(messageType, null);
-                NotificationCenter.Instance.AddObserver(receiver, messageType, callback);
+                MessageTypeDic.Add(key, null);
+                NotificationCenter.Instance.AddObserver(receiver, moduleID, msgID, callback);
             }
         }
 

@@ -26,8 +26,8 @@ namespace HFFramework
         /// <summary>
         ///  注册的消息 字典   Destroy会自动销毁
         /// </summary>
-        public Dictionary<int, object> messageTypeDic;
-        public Dictionary<int, object> MessageTypeDic
+        public Dictionary<ulong, object> messageTypeDic;
+        public Dictionary<ulong, object> MessageTypeDic
         {
             set
             {
@@ -37,7 +37,7 @@ namespace HFFramework
             {
                 if (messageTypeDic == null)
                 {
-                    messageTypeDic = new Dictionary<int, object>();
+                    messageTypeDic = new Dictionary<ulong, object>();
                 }
                 return messageTypeDic;
             }
@@ -90,9 +90,9 @@ namespace HFFramework
         /// <summary>
         ///  发送消息
         /// </summary>
-        public void SendNotificationMessage(int messageType, object obj)
+        public void SendNotificationMessage(ushort moduleID, int msgID, object obj)
         {
-            NotificationCenter.PostNotification(new NotificationMessage(messageType, null, obj));
+            NotificationCenter.PostNotification(new NotificationMessage(moduleID, msgID, this, obj));
         }
 
         /// <summary>
@@ -234,13 +234,14 @@ namespace HFFramework
             }
         }
 
-        public void ReceiveNotificationMessage(object receiver, int messageType, Action<NotificationMessage> callback)
+        public void ReceiveNotificationMessage(object receiver, ushort moduleID, int msgID, Action<NotificationMessage> callback)
         {
             object temp;
-            if (!MessageTypeDic.TryGetValue(messageType, out temp))
+            ulong key = NotificationCenter.ConvertToKey(moduleID, msgID);
+            if (!MessageTypeDic.TryGetValue(key, out temp))
             {
-                MessageTypeDic.Add(messageType, null);
-                NotificationCenter.Instance.AddObserver(receiver, messageType, callback);
+                MessageTypeDic.Add(key, null);
+                NotificationCenter.Instance.AddObserver(receiver, moduleID, msgID, callback);
             }
         }
 

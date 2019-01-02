@@ -97,8 +97,6 @@ namespace HFFramework
     {
         public static NotificationCenter Instance;
 
-        private Dictionary<ulong, List<ObserverDelegate>> messagePool = new Dictionary<ulong, List<ObserverDelegate>>();
-
         public static ulong ConvertToKey(ushort moduleID, int msgID)
         {
             ulong key = 0x0;
@@ -107,6 +105,8 @@ namespace HFFramework
             key = key | temp;
             return key;
         }
+
+        private Dictionary<ulong, List<ObserverDelegate>> messagePool = new Dictionary<ulong, List<ObserverDelegate>>();
 
         private void Awake()
         {

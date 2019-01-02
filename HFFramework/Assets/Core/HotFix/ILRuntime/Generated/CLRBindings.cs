@@ -27,7 +27,7 @@ namespace ILRuntime.Runtime.Generated
             HFFramework_NotificationCenter_Binding.Register(app);
             HFFramework_AudioManager_Binding.Register(app);
             HFFramework_AudioPlayer_Binding.Register(app);
-            System_Collections_Generic_List_1_IEnumerator_Binding.Register(app);
+            System_Collections_Generic_List_1_Coroutine_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int64_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Int64_ILTypeInstance_Binding.Register(app);
             System_IDisposable_Binding.Register(app);

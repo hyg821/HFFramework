@@ -330,7 +330,7 @@
     <Compile Include="Assets\Core\HotFix\ILRuntime\Generated\System_Collections_Generic_KeyValuePair_2_Int64_ILTypeInstanc_t.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Generated\System_Collections_Generic_KeyValuePair_2_String_ILTypeInstan_t.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Generated\System_Collections_Generic_KeyValuePair_2_UInt64_Object_Bindi_t.cs" />
-    <Compile Include="Assets\Core\HotFix\ILRuntime\Generated\System_Collections_Generic_List_1_IEnumerator_Binding.cs" />
+    <Compile Include="Assets\Core\HotFix\ILRuntime\Generated\System_Collections_Generic_List_1_Coroutine_Binding.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Generated\System_Collections_Generic_List_1_ILTypeInstance_Binding.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Generated\System_Collections_Generic_Queue_1_ILTypeInstance_Binding.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Generated\System_Collections_Generic_Queue_1_ILTypeInstance_Binding_Enu_t.cs" />
@@ -611,7 +611,7 @@
     <Compile Include="Assets\Core\Scripts\Modulars\DownLoad\WebImageManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\FSM\FSMBaseState.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\FSM\FSMManager.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\HAResource\HAResourceManager.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\HFResource\HFResourceManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\ILRuntime\AppDomainManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Input\InputManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameConst.cs" />

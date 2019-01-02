@@ -9,13 +9,13 @@ public class LearnTask : MonoBehaviour
 {
     //https://www.cnblogs.com/qiandi/p/4704255.html
 
-    void Start ()
+    void Start()
     {
         //Task ~~ Coroutine
         //Await ~~ yield return
         //Async ~~ IEnumerator
 
-        Task.Run(delegate()
+        Task.Run(delegate ()
         {
             Thread.Sleep(1000);
             print("当前线程id " + Thread.CurrentThread.ManagedThreadId);
@@ -42,7 +42,11 @@ public class LearnTask : MonoBehaviour
         task4.Start();
 
 
-        Test3();
+        Task.Run(async delegate ()
+        {
+            int count = await Test5();
+            print("TaskCompletionSource 结果是 :" + count);
+        });
 
         //print("最后结尾");
     }
@@ -58,14 +62,14 @@ public class LearnTask : MonoBehaviour
         print("Test1当前线程id " + Thread.CurrentThread.ManagedThreadId);
     }
 
-    public async  void Test3()
+    public async void Test3()
     {
         string str = await Test4();
         print(str);
         print("Test3当前线程id " + Thread.CurrentThread.ManagedThreadId);
     }
 
-    public async Task<string>Test4()
+    public async Task<string> Test4()
     {
         print("Test4开始");
         await Task.Delay(TimeSpan.FromSeconds(3));
@@ -73,4 +77,13 @@ public class LearnTask : MonoBehaviour
         return "sss";
     }
 
+
+    public async Task<int> Test5()
+    {
+        await Task.Delay(1000);
+        TaskCompletionSource<int> ts = new TaskCompletionSource<int>();
+        ts.SetResult(100);
+        await ts.Task;
+        return ts.Task.Result;
+    }
 }

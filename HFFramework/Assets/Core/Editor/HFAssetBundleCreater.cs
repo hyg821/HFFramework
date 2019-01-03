@@ -79,14 +79,15 @@ namespace HFFramework
         public static void WriteMD5Diff(String date)
         {
             string path = Application.streamingAssetsPath + "/HotFixResources" + "/MD5Diff.json";
-            FileStream fs = new FileStream(path, FileMode.Create);
-            //获得字节数组
-            byte[] data = Encoding.Default.GetBytes(date);
-            //开始写入
-            fs.Write(data, 0, data.Length);
-            //清空缓冲区、关闭流
-            fs.Flush();
-            fs.Close();
+            using (FileStream fs = new FileStream(path, FileMode.Create))
+            {
+                //获得字节数组
+                byte[] data = Encoding.Default.GetBytes(date);
+                //开始写入
+                fs.Write(data, 0, data.Length);
+                //清空缓冲区、关闭流
+                fs.Flush();
+            }
         }
 
         /// <summary>
@@ -101,14 +102,15 @@ namespace HFFramework
                 js[item.Key] = item.Value;
             }
             string path = Application.dataPath + "/GameResources" + "/AssetbundleNames.json";
-            FileStream fs = new FileStream(path, FileMode.Create);
-            //获得字节数组
-            byte[] data = Encoding.Default.GetBytes(js.ToJson());
-            //开始写入
-            fs.Write(data, 0, data.Length);
-            //清空缓冲区、关闭流
-            fs.Flush();
-            fs.Close();
+            using (FileStream fs = new FileStream(path, FileMode.Create))
+            {
+                //获得字节数组
+                byte[] data = Encoding.Default.GetBytes(js.ToJson());
+                //开始写入
+                fs.Write(data, 0, data.Length);
+                //清空缓冲区、关闭流
+                fs.Flush();
+            }
         }
 
 
@@ -119,18 +121,17 @@ namespace HFFramework
         /// <returns></returns>
         private static string GetMD5HashFromFile(string fileName)
         {
-            FileStream file = new FileStream(fileName, FileMode.Open);
-            System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
-            byte[] retVal = md5.ComputeHash(file);
-            file.Dispose();
-            file.Close();
-
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < retVal.Length; i++)
+            using (FileStream file = new FileStream(fileName, FileMode.Open))
             {
-                sb.Append(retVal[i].ToString("x2"));
-            }
-            return sb.ToString();
+                System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+                byte[] retVal = md5.ComputeHash(file);
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < retVal.Length; i++)
+                {
+                    sb.Append(retVal[i].ToString("x2"));
+                }
+                return sb.ToString();
+            }            
         }
 
         /// <summary>

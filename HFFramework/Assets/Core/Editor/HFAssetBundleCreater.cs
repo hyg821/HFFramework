@@ -11,7 +11,7 @@ namespace HFFramework
 {
     public class HFAssetBundleCreater
     {
-        public const string AssetFolderIde = "_[A]";
+        public const string AssetFolderIde = "[A]";
 
         public static Dictionary<string, string> assetbundleNameDic = new Dictionary<string, string>();
 
@@ -21,8 +21,6 @@ namespace HFFramework
         [MenuItem("游戏辅助工具/AssetBundles/构建 所有 AssetBundles")]
         static void BuildAllAssetBundles()
         {
-            Caching.ClearCache();
-
             ReNameDLL();
 
             BuildTarget target;
@@ -278,8 +276,6 @@ namespace HFFramework
 
         static void BuildSomeAssetBundles(string outPath, AssetBundleBuild[] builds)
         {
-            Caching.ClearCache();
-
             BuildTarget target;
 #if UNITY_STANDALONE_WIN
             target = BuildTarget.StandaloneWindows;

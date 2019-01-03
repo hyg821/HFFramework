@@ -30,8 +30,8 @@ namespace UnityEditor
 
         public void Demo(Texture2D texture)
         {
-            string TextureExtension = "_[TA]";
-            //可以通过 资源路径 是否包含 自定义的 字符串 比如 “_[A]” 之类的来判断一些东西
+            string TextureExtension = "[TA]";
+            //可以通过 资源路径 是否包含 自定义的 字符串 比如 “[A]” 之类的来判断一些东西
             if (assetPath.Contains(TextureExtension))
             {
 

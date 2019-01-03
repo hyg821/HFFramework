@@ -81,7 +81,6 @@ namespace Config
             reader.ReadLine();
             reader.ReadLine();
             reader.ReadLine();
-
             while (true)
             {
                 string row = reader.ReadLine();

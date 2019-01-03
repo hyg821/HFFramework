@@ -6,14 +6,14 @@ using System.IO;
 using System.Text;
 using System;
 
-namespace Config
+namespace HFFramework
 {
     public class HFConfigCreater
     {
         public static string[] split = new string[]{","};
         public static string[] arraySplit = new string[] { "[","]",";" };
 
-        public static string InputPath = "GameResources/Game/Config_[A]";
+        public static string InputPath = "GameResources/Game/Config"+HFAssetBundleCreater.AssetFolderIde;
         public static string OutputPath = "GameResources/Game/Script/Config";
 
         public static string ConfigAssetbundleName = "Config";
@@ -49,6 +49,8 @@ namespace Config
             }
 
             CreateConfigManager(fileList);
+
+            Debug.Log("生成配置文件完成");
 
             AssetDatabase.Refresh();
         }

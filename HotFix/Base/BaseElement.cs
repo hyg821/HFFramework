@@ -374,11 +374,11 @@ namespace HotFix
                     isNeedUpdate = value;
                     if (value == true)
                     {
-                        //GameUpdate.AddUpdate(this);
+                        GameUpdate.AddUpdate(this);
                     }
                     else
                     {
-                        //GameUpdate.SubUpdate(this);
+                        GameUpdate.SubUpdate(this);
                     }
                 }
             }
@@ -403,11 +403,11 @@ namespace HotFix
                     isNeedFixedUpdate = value;
                     if (value == true)
                     {
-                        //GameUpdate.AddFixedUpdate(this);
+                        GameUpdate.AddFixedUpdate(this);
                     }
                     else
                     {
-                        //GameUpdate.SubFixedUpdate(this);
+                        GameUpdate.SubFixedUpdate(this);
                     }
                 }
             }
@@ -432,11 +432,11 @@ namespace HotFix
                     isNeedLateUpdate = value;
                     if (value == true)
                     {
-                        //GameUpdate.AddLateUpdate(this);
+                        GameUpdate.AddLateUpdate(this);
                     }
                     else
                     {
-                        //GameUpdate.SubLateUpdate(this);
+                        GameUpdate.SubLateUpdate(this);
                     }
                 }
             }

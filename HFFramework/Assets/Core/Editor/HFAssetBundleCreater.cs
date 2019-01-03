@@ -67,6 +67,7 @@ namespace HFFramework
         [MenuItem("游戏辅助工具/AssetBundles/构建 所有 AssetBundles  并且自动命名 ")]
         static void SetAssetBundleNameAndBuildAllAssetBundles()
         {
+            Caching.ClearCache();
             SetAssetbundlesNames();
             BuildAllAssetBundles();
         }

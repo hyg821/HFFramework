@@ -92,10 +92,20 @@ namespace HFFramework
         /// <param name="path"></param>
         public void InitWithRootPath(string resourceRootPath, string resourceSpareRootPath, string mainfestName)
         {
-
             print("正式资源地址" + resourceRootPath);
             print("备用资源地址" + resourceSpareRootPath);
+
             Caching.ClearCache();
+
+            if (!Directory.Exists(resourceRootPath))
+            {
+                Directory.CreateDirectory(resourceRootPath);
+            }
+
+            if (!Directory.Exists(resourceSpareRootPath))
+            {
+                Directory.CreateDirectory(resourceSpareRootPath);
+            }
 
             if (!string.IsNullOrEmpty(resourceRootPath) && !string.IsNullOrEmpty(resourceSpareRootPath))
             {

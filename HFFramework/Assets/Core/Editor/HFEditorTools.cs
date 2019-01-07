@@ -13,6 +13,7 @@ namespace HFFramework
     public class HFEditorTools
     {
         public const string AssetFolderIde = "[A]";
+        public const string SpriteFolderIde = "[S]";
 
         /// <summary>
         /// 资源打包
@@ -177,18 +178,18 @@ namespace HFFramework
             if (directory.Name.Contains(AssetFolderIde))
             {
                 FileInfo[] file = directory.GetFiles();
-                HFAssetbundleConfig config = null;
+                AssetBundleConfig config = null;
 
                 //找一下配置文件
                 foreach (FileInfo nextFile in file)
                 {
-                    if (nextFile.Name == "AssetbundleConfig.json")
+                    if (nextFile.Name == "AssetConfig.json")
                     {
                         using (StreamReader sr = nextFile.OpenText())
                         {
                             string str = sr.ReadToEnd();
-                            HFAssetbundleConfigRoot root = JsonMapper.ToObject<HFAssetbundleConfigRoot>(str);
-                            config = root.HFAssetbundleConfig;
+                            HFAssetConfigRoot root = JsonMapper.ToObject<HFAssetConfigRoot>(str);
+                            config = root.AssetBundleConfig;
                         }
                         break;
                     }
@@ -197,7 +198,7 @@ namespace HFFramework
                 //遍历设置
                 foreach (FileInfo nextFile in file)
                 {
-                    if (nextFile.Name != "AssetbundleConfig.json"&& nextFile.Extension!=".cs")
+                    if (nextFile.Name != "AssetConfig.json" && nextFile.Extension!=".cs")
                     {
                         string ex = Path.GetExtension(nextFile.FullName);
                         if (ex != ".meta")
@@ -354,10 +355,10 @@ namespace HFFramework
             return sTemp.ToLower();
         }
 
-        [MenuItem("Assets/Create/HFFramework/创建一个Assetbundle 打包配置文件", false, 80)]
+        [MenuItem("Assets/Create/HFFramework/创建一个Asset 打包配置文件", false, 80)]
         public static void CreateAssetbundleConfig()
         {
-            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, ScriptableObject.CreateInstance<CreateScriptAssetAction>(), GetSelectedPathOrFallback() + "/AssetbundleConfig.json", null, "Assets/Core/Template/AssetbundleConfig.json");
+            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, ScriptableObject.CreateInstance<CreateScriptAssetAction>(), GetSelectedPathOrFallback() + "/AssetConfig.json", null, "Assets/Core/Template/AssetConfig.json");
         }
 
         public static string GetSelectedPathOrFallback()

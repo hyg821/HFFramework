@@ -38,30 +38,25 @@ namespace HotFix
 
         public void Update()
         {
-            int i = 0;
-            while (i< updateList.Count)
+            for (int i = 0; i < updateList.Count; i++)
             {
                 updateList[i].OnUpdate(Time.deltaTime);
-                i++;
             }
         }
 
         public void FixedUpdate()
         {
-            int i = 0;
-            while (i <= fixedUpdateList.Count)
+            for (int i = 0; i < fixedUpdateList.Count; i++)
             {
-                fixedUpdateList[i].OnFixedUpdate(0);
-                i++;
+                fixedUpdateList[i].OnFixedUpdate(Time.fixedDeltaTime);
             }
         }
 
         public void LateUpdate()
         {
-            int i = 0;
-            while (i < lateUpdateList.Count)
+            for (int i = 0; i < lateUpdateList.Count; i++)
             {
-                lateUpdateList[i].OnLateUpdate(0);
+                lateUpdateList[i].OnLateUpdate(Time.deltaTime);
             }
         }
 

@@ -24,7 +24,7 @@ namespace HFFramework
         public List<AssetsBundleMD5> AssetsBundleMD5List { get; set; }
     }
 
-    public class HFAssetbundleConfig
+    public class AssetBundleConfig
     {
         /// <summary>
         /// Default 代表使用 默认MD5创建的assetbundleName 
@@ -37,11 +37,11 @@ namespace HFFramework
         public string assetbundleName { get; set; }
     }
 
-    public class HFAssetbundleConfigRoot
+    public class HFAssetConfigRoot
     {
         /// <summary>
         /// 
         /// </summary>
-        public HFAssetbundleConfig HFAssetbundleConfig { get; set; }
+        public AssetBundleConfig AssetBundleConfig { get; set; }
     }
 }

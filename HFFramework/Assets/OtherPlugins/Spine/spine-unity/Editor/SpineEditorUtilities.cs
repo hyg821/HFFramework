@@ -1281,7 +1281,7 @@ namespace Spine.Unity.Editor {
 			} else {
 				var obj = Json.Deserialize(new StringReader(asset.text));
 				if (obj == null) {
-					Debug.LogErrorFormat("'{0}' is not valid JSON.", asset.name);
+					//Debug.LogErrorFormat("'{0}' is not valid JSON.", asset.name);
 					return false;
 				}
 

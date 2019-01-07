@@ -641,7 +641,6 @@
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\GameUtils.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\InstanceHelper.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\PathManager.cs" />
-    <Compile Include="Assets\Core\Scripts\ScriptableObject\GameSetting.cs" />
     <Compile Include="Assets\Core\Template\ReflectionBehaviourMethod.cs" />
     <Compile Include="Assets\GameResources\Game\Demo\Common.cs" />
     <Compile Include="Assets\GameResources\Game\Demo\CommunityService.cs" />

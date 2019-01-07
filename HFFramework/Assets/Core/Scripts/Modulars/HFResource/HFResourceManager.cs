@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mono.Cecil.Pdb;
+using UnityEngine.U2D;
 
 namespace HFFramework
 {
@@ -171,6 +172,20 @@ namespace HFFramework
             AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             Sprite sp = ab.LoadAssetWithCache<Sprite>(abName);
             return sp;
+        }
+
+        /// <summary>
+        ///  使用这个方法  如果在编辑器首先需要在 EditorSetting 里把 SpritePacker 设置成Always Enabled 在运行之前build一下图集 才能显示
+        /// </summary>
+        /// <param name="packageName">assetbundle名字</param>
+        /// <param name="atlasName">图集名字</param>
+        /// <param name="spriteName">图片名字</param>
+        /// <returns></returns>
+        public Sprite GetSpriteByAtlas(string packageName, string atlasName, string spriteName)
+        {
+            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+            SpriteAtlas atlas = ab.LoadAssetWithCache<SpriteAtlas>(atlasName);
+            return atlas.GetSprite(spriteName);
         }
 
         /// <summary>

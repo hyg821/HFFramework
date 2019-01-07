@@ -14,15 +14,19 @@ using Centersdk.Protobuf;
 using Loginservice.Protobuf;
 
 public class LoginController : UIController {
+
+    public Image bg;
     public InputField input;
     public Button loginBtn;
     #region
     public override void FindElement()
     {
+        bg = AutoFind<Image>("");
         input = AutoFind<InputField>("InputField");
         loginBtn = AutoFind<Button>("Button");
     }
     #endregion
+
 
     // Use this for initialization
     void Start()
@@ -31,7 +35,9 @@ public class LoginController : UIController {
         loginBtn.onClick.AddListener(delegate ()
         {
 
-            
+            bg.sprite = HFResourceManager.Instance.GetSpriteByAtlas("textrure", "TestAtlas", "A");
+
+
             HFLog.C("点击登录的名称是" + input.text);
             HFFramework.AppDomainManager.Instance.JumpToHotFix("hotfixdll", "HotFix", "HotFixEnter");
         

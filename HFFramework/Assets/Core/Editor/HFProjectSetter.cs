@@ -31,6 +31,7 @@ namespace HFFramework
             //老精灵图集模式 并且在打包的时候才 build图集
             EditorSettings.spritePackerMode = SpritePackerMode.BuildTimeOnly;
 
+            //可见meta 文件
             EditorSettings.externalVersionControl = "Visible Meta Files";
 
             //左右横向显示

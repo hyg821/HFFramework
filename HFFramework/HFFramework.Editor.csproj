@@ -373,9 +373,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Core\Editor\FindReferences.cs" />
-    <Compile Include="Assets\Core\Editor\HFAssetBundleCreater.cs" />
     <Compile Include="Assets\Core\Editor\HFConfigCreater.cs" />
-    <Compile Include="Assets\Core\Editor\HFEditorHelper.cs" />
+    <Compile Include="Assets\Core\Editor\HFEditorTools.cs" />
     <Compile Include="Assets\Core\Editor\HFOpenAssetHandler.cs" />
     <Compile Include="Assets\Core\Editor\HFProjectSetter.cs" />
     <Compile Include="Assets\Core\Editor\HFTextureImporter.cs" />

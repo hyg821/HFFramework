@@ -56,7 +56,7 @@ namespace HFFramework
             }
         }
 
-        private static byte[] checkBytes = new byte[1];
+        private static byte[] checkBytes = new byte[0];
 
         /// <summary>
         ///  锁
@@ -208,6 +208,8 @@ namespace HFFramework
             SetState(ConnectState.UnKnow);
             socket = new Socket(ipv, SocketType.Stream, ProtocolType.Tcp);
 
+            //这段代码 il2cpp 直接崩溃 所以不能用在移动端
+            #if UNITY_STANDALONE_WIN || StandaloneOSXIntel
             //设置 keepAlive
             uint dummy = 0;
             int uintSize = Marshal.SizeOf(dummy);
@@ -216,6 +218,7 @@ namespace HFFramework
             BitConverter.GetBytes((uint)4000).CopyTo(inOptionValues, uintSize);//多长时间开始第一次探测
             BitConverter.GetBytes((uint)100).CopyTo(inOptionValues, uintSize * 2);//探测时间间隔
             socket.IOControl(IOControlCode.KeepAliveValues, inOptionValues, null);
+            #endif
 
             readStream = new MemoryStream();
             binaryReader = new BinaryReader(readStream);
@@ -245,8 +248,15 @@ namespace HFFramework
 
         public void StartConnect()
         {
-            socket.BeginConnect(ip, port, ConnectCallback, null);
-            CheckConnect();
+            try
+            {
+                socket.BeginConnect(ip, port, ConnectCallback, null);
+                CheckConnect();
+            }
+            catch (Exception)
+            {
+                SetState(ConnectState.Fail);
+            }
         }
 
         public void CheckConnect()

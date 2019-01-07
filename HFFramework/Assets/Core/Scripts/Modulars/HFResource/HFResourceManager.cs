@@ -103,11 +103,6 @@ namespace HFFramework
                 Directory.CreateDirectory(resourceRootPath);
             }
 
-            if (!Directory.Exists(resourceSpareRootPath))
-            {
-                Directory.CreateDirectory(resourceSpareRootPath);
-            }
-
             if (!string.IsNullOrEmpty(resourceRootPath) && !string.IsNullOrEmpty(resourceSpareRootPath))
             {
                 if (!string.Equals(resourceRootPath.Substring(resourceRootPath.Length - 1), @"/"))

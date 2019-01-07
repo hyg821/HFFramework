@@ -14,8 +14,6 @@ namespace HFFramework
     {
         public const string AssetFolderIde = "[A]";
 
-        public static Dictionary<string, string> assetbundleNameDic = new Dictionary<string, string>();
-
         /// <summary>
         /// 资源打包
         /// </summary>
@@ -74,7 +72,7 @@ namespace HFFramework
         }
 
         [MenuItem("游戏辅助工具/AssetBundles/构建 单个Assetbundle")]
-        static void BuildMiniGameAssetBundles()
+        static void BuildSomeAssetBundles()
         {
             List<AssetBundleBuild> list = new List<AssetBundleBuild>();
             //需要build 什么就写在这
@@ -125,10 +123,7 @@ namespace HFFramework
             //ClearAssetBundlesName();
             string resourcesPath = Application.dataPath + "/GameResources";
             ReNameDLL();
-            assetbundleNameDic.Clear();
             m_SetAssetbundlesNames(resourcesPath);
-            WriteAssetbundleNames(assetbundleNameDic);
-            assetbundleNameDic.Clear();
         }
 
         [MenuItem("游戏辅助工具/AssetBundles/设置DLL到具体资源目录")]
@@ -183,6 +178,8 @@ namespace HFFramework
             {
                 FileInfo[] file = directory.GetFiles();
                 HFAssetbundleConfig config = null;
+
+                //找一下配置文件
                 foreach (FileInfo nextFile in file)
                 {
                     if (nextFile.Name == "AssetbundleConfig.json")
@@ -197,6 +194,7 @@ namespace HFFramework
                     }
                 }
 
+                //遍历设置
                 foreach (FileInfo nextFile in file)
                 {
                     if (nextFile.Name != "AssetbundleConfig.json"&& nextFile.Extension!=".cs")
@@ -208,37 +206,21 @@ namespace HFFramework
                             newItem = newItem.Substring(newItem.IndexOf("Assets"));
                             //再拿到他的AssetImporter
                             AssetImporter assetImporter = AssetImporter.GetAtPath(newItem);
-
-                            newItem = newItem.Substring(newItem.IndexOf("GameResources"));
-                            newItem = newItem.Replace(@"/", "_");
-                            int last_ = newItem.LastIndexOf("_");
-                            newItem = newItem.Substring(0, last_);
-
-                            if (config != null && config.assetbundleNameType == "Default")
+ 
+                            if (config != null)
                             {
-                                string md5Str = GetMD5(newItem);
-                                // 通过文件路径 设置assetbundle 
-                                if (assetImporter.assetBundleName!= md5Str)
+                                string bundleName = string.Empty;
+                                if (config.assetbundleNameType == "Default")
                                 {
-                                    assetImporter.assetBundleName = md5Str;
+                                    bundleName = GetMD5(newItem);
                                 }
-                                string md5;
-                                if (assetbundleNameDic.TryGetValue(newItem, out md5) == false)
+                                else if (config.assetbundleNameType == "Custom")
                                 {
-                                    assetbundleNameDic.Add(newItem, md5Str);
+                                    bundleName = config.assetbundleName;
                                 }
-                            }
-
-                            if (config != null && config.assetbundleNameType == "Custom")
-                            {
-                                if (assetImporter.assetBundleName!= config.assetbundleName)
+                                if (assetImporter.assetBundleName != bundleName)
                                 {
-                                    assetImporter.assetBundleName = config.assetbundleName;
-                                }
-                                string md5;
-                                if (assetbundleNameDic.TryGetValue(newItem, out md5) == false)
-                                {
-                                    assetbundleNameDic.Add(newItem, config.assetbundleName);
+                                    assetImporter.assetBundleName = bundleName;
                                 }
                             }
                         }
@@ -246,12 +228,15 @@ namespace HFFramework
                 }
             }
 
-            DirectoryInfo[] d = directory.GetDirectories();
-            if (d.Length != 0)
+            //获取子文件夹
+            DirectoryInfo[] subDirectory = directory.GetDirectories();
+            if (subDirectory.Length != 0)
             {
-                foreach (DirectoryInfo NextFolder in d)
+                //便利递归子文件夹
+                foreach (DirectoryInfo nextDirectory in subDirectory)
                 {
-                    string newItem = NextFolder.FullName.Replace("\\", "/");
+                    string newItem = nextDirectory.FullName.Replace("\\", "/");
+                    //设置名字
                     m_SetAssetbundlesNames(newItem);
                 }
             }
@@ -275,29 +260,6 @@ namespace HFFramework
             {
                 //获得字节数组
                 byte[] data = Encoding.Default.GetBytes(date);
-                //开始写入
-                fs.Write(data, 0, data.Length);
-                //清空缓冲区、关闭流
-                fs.Flush();
-            }
-        }
-
-        /// <summary>
-        ///  MD5写入本地
-        /// </summary>
-        /// <param name="date"></param>
-        public static void WriteAssetbundleNames(Dictionary<string, string> lx)
-        {
-            JsonData js = new JsonData();
-            foreach (var item in lx)
-            {
-                js[item.Key] = item.Value;
-            }
-            string path = Application.dataPath + "/GameResources" + "/AssetbundleNames.json";
-            using (FileStream fs = new FileStream(path, FileMode.Create))
-            {
-                //获得字节数组
-                byte[] data = Encoding.Default.GetBytes(js.ToJson());
                 //开始写入
                 fs.Write(data, 0, data.Length);
                 //清空缓冲区、关闭流

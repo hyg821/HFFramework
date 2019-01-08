@@ -69,16 +69,6 @@ namespace HFFramework
         private const int THREAD_SLEEP_TIME = 20;
 
         /// <summary>
-        ///  检测网络连接时间
-        /// </summary>
-        private const int CHECK_CONNECT_TIME = 200;
-
-        /// <summary>
-        ///  检测网络连接 累加时间
-        /// </summary>
-        private int checkConnectAllTime = 0;
-
-        /// <summary>
         ///  最大数据缓冲长度  如果这个缓冲区小于 服务器发送的一个包的长度 比如 2048 那么会出现无法接收的情况
         /// </summary>
         private const int MAX_BUFFER_LEN = 1024*10;
@@ -89,9 +79,9 @@ namespace HFFramework
         private float CONNECT_TIMEOUT = 5000;
 
         /// <summary>
-        ///  检测 间隔 100 毫秒
+        ///  定时器检测间隔
         /// </summary>
-        private float CONNECT_CHECK_INTERVAL= 100;
+        private float CONNECT_CHECK_INTERVAL= 500;
 
         /// <summary>
         ///  数据包长度 的 标识位 字段长度   
@@ -154,7 +144,15 @@ namespace HFFramework
 
         private StreamPackage currentPackage = new StreamPackage();
 
-        private System.Timers.Timer  checkConnectedTimer;
+        /// <summary>
+        ///  检查第一次是否连接上 定时器
+        /// </summary>
+        private System.Timers.Timer checkConnectedTimer;
+
+        /// <summary>
+        ///  轮询检测 连接状态 定时器
+        /// </summary>
+        private System.Timers.Timer checkConnectingTimer;
 
         /// <summary>
         ///  接收数据线程
@@ -251,7 +249,7 @@ namespace HFFramework
             try
             {
                 socket.BeginConnect(ip, port, ConnectCallback, null);
-                CheckConnect();
+                CheckConnected();
             }
             catch (Exception)
             {
@@ -259,36 +257,30 @@ namespace HFFramework
             }
         }
 
-        public void CheckConnect()
+        private void CheckConnected()
         {
-            CloseTimer();
+            CloseCheckConnectedTimer();
             float allTime = 0;
             checkConnectedTimer = new System.Timers.Timer(CONNECT_CHECK_INTERVAL);
             checkConnectedTimer.Elapsed += delegate (object sender, ElapsedEventArgs e)
             {
-                if (allTime< CONNECT_TIMEOUT)
+                if (allTime< CONNECT_TIMEOUT&& socket.Connected)
                 {
                     //如果在规定时间内 连接上了 那么直接 停止定时器
-                    if (socket.Connected)
-                    {
-                        CloseTimer();
-                    }
+                    CloseCheckConnectedTimer();
                 }
                 // 如果在规定时间内没有连接上 直接停止定时器 并且报错
-                else
+                else if(socket.Connected == false)
                 {
-                    if (socket.Connected==false)
-                    {
-                        CloseTimer();
-                        SetState(ConnectState.Fail);
-                    }
+                    CloseCheckConnectedTimer();
+                    SetState(ConnectState.Fail);
                 }
                 allTime += CONNECT_CHECK_INTERVAL;
             };
             checkConnectedTimer.Start();
         }
 
-        private void CloseTimer()
+        private void CloseCheckConnectedTimer()
         {
             if (checkConnectedTimer != null)
             {
@@ -297,7 +289,33 @@ namespace HFFramework
             }
         }
 
-        public bool  CheckSocketConnect()
+        public void CheckConnecting()
+        {
+            CloseCheckConnectingTimer();
+            checkConnectingTimer = new System.Timers.Timer(CONNECT_CHECK_INTERVAL);
+            checkConnectingTimer.Elapsed += delegate (object sender, ElapsedEventArgs e)
+            {
+                //检测 网络 连接
+                bool isConnect = CheckSocketConnect();
+                if (isConnect == false)
+                {
+                    CloseCheckConnectingTimer();
+                    SetState(ConnectState.Fail);
+                }
+            };
+            checkConnectingTimer.Start();
+        }
+
+        private void CloseCheckConnectingTimer()
+        {
+            if (checkConnectingTimer != null)
+            {
+                checkConnectingTimer.Close();
+                checkConnectingTimer = null;
+            }
+        }
+
+        public bool CheckSocketConnect()
         {
             bool end0 = true;
             bool end1 = Connected;
@@ -328,18 +346,6 @@ namespace HFFramework
         {
             while (state == ConnectState.Success)
             {
-                //检测 网络 连接
-                checkConnectAllTime += THREAD_SLEEP_TIME;
-                if (checkConnectAllTime>=CHECK_CONNECT_TIME)
-                {
-                    checkConnectAllTime = 0;
-                    bool isConnect = CheckSocketConnect();
-                    if (isConnect==false)
-                    {
-                        break;
-                    }
-                }
-
                 //如果 可以读取的数据为 0  那么直接休眠THREAD_SLEEP_TIME 毫秒 然后继续去读
                 if (socket.Available == 0)
                 {
@@ -497,6 +503,7 @@ namespace HFFramework
             if (socket.Connected)
             {
                 SetState(ConnectState.Success);
+                CheckConnecting();
                 receiveThread = new Thread(ReceiveMessage);
                 receiveThread.IsBackground = true;
                 receiveThread.Start();
@@ -547,6 +554,9 @@ namespace HFFramework
             currentPackage = null;
             receiveThread = null;
             socket = null;
+
+            CloseCheckConnectingTimer();
+            CloseCheckConnectedTimer();
         }
     }
 }

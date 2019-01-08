@@ -45,6 +45,7 @@ public class LoginController : UIController {
             socket.Init("10.2.0.207", 8002, delegate ()
              {
                  HFLog.C("连接成功");
+                
                  Lobbyservice.Protobuf.LoginRequest request = new Lobbyservice.Protobuf.LoginRequest();
                  request.OpenId = "zcc";
                  request.ProductId = "1";
@@ -54,15 +55,15 @@ public class LoginController : UIController {
                  request.Version = "1.1.2";
 
                  socket.SendMessage(1,request);
+                
+                
                  
              }, delegate (int msgID, byte[] bb)
              {
                  HFLog.C("开始接受"+msgID + "  消息长度"+bb.Length);
-                 
+                   
                  if (msgID==1)
                  {
-                     HFLog.C("开始接受XXXXXXXXXXXXXX");
-
                      Lobbyservice.Protobuf.LoginResponse res = CreateMessage<Lobbyservice.Protobuf.LoginResponse>(bb);
                      HFLog.C(res.ToString());
                  }
@@ -72,17 +73,20 @@ public class LoginController : UIController {
                      QuickLoginInfo res = CreateMessage<QuickLoginInfo>(bb);
                      HFLog.C(res.ToString());
 
+                     
                      IntegerAndString value = new IntegerAndString();
                      value.IntVal = 1;
                      value.StringVal = "650768";
                      socket.SendMessage(504, value);
+                     
                  }
 
                  if (msgID == 504)
                  {
                      Paohuzi.Protobuf.MessageVideo msgObj = CreateMessage<Paohuzi.Protobuf.MessageVideo>(bb);
                      HFLog.C(msgObj.ToString());
-                 }               
+                 }            
+                 
              }, delegate ()
              {
                  HFLog.C("连接关闭");

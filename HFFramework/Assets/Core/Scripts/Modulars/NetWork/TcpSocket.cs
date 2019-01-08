@@ -207,7 +207,7 @@ namespace HFFramework
             socket = new Socket(ipv, SocketType.Stream, ProtocolType.Tcp);
 
             //这段代码 il2cpp 直接崩溃 所以不能用在移动端
-            #if UNITY_STANDALONE_WIN || StandaloneOSXIntel
+            #if UNITY_STANDALONE_WIN || StandaloneOSXIntel || UNITY_EDITOR
             //设置 keepAlive
             uint dummy = 0;
             int uintSize = Marshal.SizeOf(dummy);

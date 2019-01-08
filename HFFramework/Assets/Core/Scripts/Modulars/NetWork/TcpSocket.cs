@@ -284,6 +284,7 @@ namespace HFFramework
         {
             if (checkConnectedTimer != null)
             {
+                checkConnectedTimer.Stop();
                 checkConnectedTimer.Close();
                 checkConnectedTimer = null;
             }
@@ -310,6 +311,7 @@ namespace HFFramework
         {
             if (checkConnectingTimer != null)
             {
+                checkConnectingTimer.Stop();
                 checkConnectingTimer.Close();
                 checkConnectingTimer = null;
             }

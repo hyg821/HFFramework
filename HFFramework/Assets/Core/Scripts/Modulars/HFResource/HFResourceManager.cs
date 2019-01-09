@@ -419,11 +419,11 @@ namespace HFFramework
             WWW www = new WWW("file:///" + Application.streamingAssetsPath + "/DLL/" + dllName + ".dll");
             yield return www;
             byte[] dll = www.bytes;
-            www.Dispose();
             using (MemoryStream fs = new MemoryStream(dll))
             {
                 appdomain.LoadAssembly(fs, null, new PdbReaderProvider());
             }
+            www.Dispose();
             if (cbAction != null)
             {
                 cbAction(true);

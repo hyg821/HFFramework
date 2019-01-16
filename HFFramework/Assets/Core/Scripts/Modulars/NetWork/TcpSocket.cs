@@ -529,11 +529,6 @@ namespace HFFramework
                 socket.Close();
             }
 
-            if (isCallback)
-            {
-                SetState(ConnectState.Close);
-            }
-
             if (currentPackage!=null)
             {
                 currentPackage.Clear();
@@ -565,6 +560,11 @@ namespace HFFramework
 
             CloseCheckConnectingTimer();
             CloseCheckConnectedTimer();
+
+            if (isCallback)
+            {
+                SetState(ConnectState.Close);
+            }
         }
     }
 }

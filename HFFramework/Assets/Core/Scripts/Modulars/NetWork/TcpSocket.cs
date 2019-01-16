@@ -451,7 +451,7 @@ namespace HFFramework
 
                 try
                 {
-                    socket.Send(writeStream.GetBuffer());
+                    socket.Send(writeStream.ToArray());
                 }
                 catch (Exception)
                 {

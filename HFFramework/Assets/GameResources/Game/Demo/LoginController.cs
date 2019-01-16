@@ -48,13 +48,14 @@ public class LoginController : UIController {
 
             HFFramework.AppDomainManager.Instance.JumpToHotFix("hotfixdll", "HotFix", "HotFixEnter");
 
+            errorCount = 0;
             HFSocket socket = HFSocketManager.Instance.GetSocket("hyg");
             socket.Init("10.2.0.207", 8002, delegate ()
             {
                 errorCount = 0;
                 HFLog.C("连接成功");
                 Lobbyservice.Protobuf.LoginRequest request = new Lobbyservice.Protobuf.LoginRequest();
-                request.OpenId = "zcc";
+                request.OpenId = "aaa";
                 request.ProductId = "1";
                 request.Pf = "AND";
                 request.Channel = "";
@@ -88,10 +89,11 @@ public class LoginController : UIController {
                 HFLog.C("连接关闭");
             }, delegate ()
             {
+                HFLog.C("连接失败 重新连接");
                 if (errorCount < 5)
                 {
                     errorCount++;
-                    HFLog.C("连接失败 重新连接 失败次数" + errorCount);
+                    HFLog.C("失败次数" + errorCount);
                     socket.ReConnect();
                 }
             });

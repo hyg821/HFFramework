@@ -391,9 +391,15 @@ namespace HFFramework
                 //如果读取过了消息头 并且可读取的数据大于整个数据体的长度
                 if (currentPackage.isReadHeader == true && socket.Available >= currentPackage.bodyLength)
                 {
-                    //从socket 内部缓冲区 读取 已经获取过消息体长度的 数据到自己的缓冲区 
-                    socket.Receive(dataBuffer, currentPackage.bodyLength, 0);
-
+                    //从socket 内部缓冲区 读取 已经获取过消息体长度的 数据到自己的缓冲区  
+                    //需要判断消息体是否为0 因为服务器传过来的proto如果没有属性反序列化之后长度是0 
+                    //但是socket.Receive 如果接收0的话 就会无限阻塞等待新消息过来 
+                    //这样就会导致空消息是等到非空消息发送过来之后才能接收到 时效出现了问题
+                    if (currentPackage.bodyLength!=0)
+                    {
+                        socket.Receive(dataBuffer, currentPackage.bodyLength, 0);
+                    }
+       
                     //把自己的缓冲写入 memoryStream
                     readStream.Write(dataBuffer, 0, currentPackage.bodyLength);
                     //重置memoryStream 索引为0

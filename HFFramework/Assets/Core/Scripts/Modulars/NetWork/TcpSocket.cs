@@ -56,12 +56,12 @@ namespace HFFramework
             }
         }
 
-        private static byte[] checkBytes = new byte[0];
-
         /// <summary>
         ///  锁
         /// </summary>
         private static object lockObj = new object();
+
+        private byte[] checkBytes = new byte[1];
 
         /// <summary>
         ///  线程休眠时间
@@ -418,9 +418,6 @@ namespace HFFramework
                     }
                 }
             }
-
-            //如果跳出循环说明报错
-            SetState(ConnectState.Fail);
         }
 
         private void CreateMessage(StreamPackage package)

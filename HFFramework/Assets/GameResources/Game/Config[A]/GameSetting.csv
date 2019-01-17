@@ -1,6 +1,0 @@
-模式,开发类型,app版本, 资源版本,是否热更新检测,是否开启log,log是否写入本地,模拟设备宽度,模拟设备高度,update帧数,fixed帧数
-id,Mode,AppVersion,ResourceVersion,AssetbundleName,IsOpenLog,IsOpenLoaclLog,ServerSceneWidth,ServerSceneHeight,TargetFrame,FixedUpdateFrame
-val,val,val,val,val,val,val,val,val,val,val
-single,single,single,single,single,single,single,single,single,single,single
-string,string,string,string,bool,bool,bool,float,float,int,int
-0,develop,1.0.0,1.0.0,FALSE,TRUE,FALSE,1920,1080,60,10

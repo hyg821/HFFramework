@@ -184,7 +184,12 @@ namespace HFFramework
 
         public void SendMessage(int messageType, IMessage msg)
         {
-            socket.Send(messageType, msg.ToByteArray());
+            SendMessage(messageType, msg.ToByteArray());
+        }
+
+        public void SendMessage(int messageType, byte[] msg)
+        {
+            socket.Send(messageType, msg);
         }
 
         public void Update()

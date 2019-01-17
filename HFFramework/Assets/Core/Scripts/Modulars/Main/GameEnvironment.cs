@@ -74,54 +74,31 @@ namespace  HFFramework
         /// <summary>
         ///  默认帧数
         /// </summary>
-        public int TargetFrame = 60;
+        public int TargetFrame;
 
         /// <summary>
         ///  FixedUpdate 调用 一秒 帧数 
         /// </summary>
-        public int FixedUpdateFrame = 10;
+        public int FixedUpdateFrame;
 
         public void Awake()
         {
             Instance = this;
-            LoadConfig();
             SwitchPlatform();
             Init();
         }
 
-        public void LoadConfig()
-        {
-            //加载配置文件
-            HFConfigManager.Instance.Init();
-        }
-
         private void Init()
         {
-            Config.GameSetting setting = ConfigGameSetting.Get("0");
-            string mode = setting.Mode.ToLower();
-            switch (mode)
-            {
-                case "debug":
-                    SetRuntimeEnvironment(GameEnvironmentType.Debug);
-                    break;
-                case "develop":
-                    SetRuntimeEnvironment(GameEnvironmentType.Develop);
-                    break;
-                case "release":
-                    SetRuntimeEnvironment(GameEnvironmentType.Release);
-                    break;
-                default:
-                    break;
-            }
-
-            SetAppVersion(setting.AppVersion);
-            SetResourceVersion(setting.ResourceVersion);
-            OpenLog(setting.IsOpenLog);
-            OpenLocalLog(setting.IsOpenLoaclLog);
-            TargetFrame = setting.TargetFrame;
-            FixedUpdateFrame = setting.FixedUpdateFrame;
-            ServerSceneWidth = setting.ServerSceneWidth;
-            ServerSceneHeight = setting.ServerSceneHeight;
+            SetRuntimeEnvironment(GameEnvironmentType.Develop);
+            SetAppVersion("1.0.0");
+            SetResourceVersion("1.0.0");
+            OpenLog(true);
+            OpenLocalLog(false);
+            TargetFrame = 60;
+            FixedUpdateFrame = 10;
+            ServerSceneWidth = 1920;
+            ServerSceneHeight = 1080;
             Application.runInBackground = true;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             Application.targetFrameRate = TargetFrame;

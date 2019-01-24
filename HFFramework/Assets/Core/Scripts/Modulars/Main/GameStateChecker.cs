@@ -38,14 +38,6 @@ namespace HFFramework
             Instance = this;
         }
 
-        void OnApplicationFocus(bool hasFocus)
-        {
-#if UNITY_EDITOR
-#else
-        IsPaused = !hasFocus;
-#endif
-        }
-
         void OnApplicationPause(bool pauseStatus)
         {
 #if UNITY_EDITOR

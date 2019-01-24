@@ -42,7 +42,7 @@ public class LoginController : UIController {
 
         ReceiveNotificationMessage(this, GameConst.MSG_STATE, GameStateChecker.APPPAUSE, delegate (NotificationMessage msg)
         {
-            print("状态改变 " + msg.obj);
+            print("是否暂停 " + msg.obj);
         });
 
         loginBtn.onClick.AddListener(delegate ()
@@ -116,7 +116,7 @@ public class LoginController : UIController {
 
     private void Update()
     {
-        //SendNotificationMessage(GameConst.MSG_UI, 123, "str");
+        SendNotificationMessage(GameConst.MSG_UI, 123, "str");
     }
 
     public T CreateMessage<T>(byte [] bytes) where T: IMessage,new()

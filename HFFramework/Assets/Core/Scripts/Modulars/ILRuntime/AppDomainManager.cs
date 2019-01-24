@@ -8,9 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using Spine;
 using Assets.Game.Scripts.HotFix;
-using HFFramework;
 using ILRuntime.CLR.Method;
-using ILRuntime.CLR.TypeSystem;
 
 namespace HFFramework
 {
@@ -29,6 +27,11 @@ namespace HFFramework
         ///  全局app作用域
         /// </summary>
         private ILRuntime.Runtime.Enviorment.AppDomain appdomain;
+
+        /// <summary>
+        ///  缓存Stream 2018之后新版 需要一直开启这个
+        /// </summary>
+        private MemoryStream codeStream;
 
         /// <summary>
         ///  dll名字
@@ -86,31 +89,21 @@ namespace HFFramework
             if (appdomain == null)
             {
                 appdomain = new ILRuntime.Runtime.Enviorment.AppDomain();
-                //如果是debug  那么就从streamAsset读取
-                if (GameEnvironment.Instance.RuntimeEnvironment == GameEnvironmentType.Develop)
-                {
-                    HFResourceManager.Instance.EditorLoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
-                }
-                //否则 从assetbundle 里读取
-                else
-                {
-                    HFResourceManager.Instance.LoadHotFixAssembly(assetbundleName, dllName, appdomain, HotFixInit);
-                }
+                HFResourceManager.Instance.LoadHotFixAssembly(assetbundleName, dllName,HotFixInit);
             }
         }
 
         /// <summary>
         /// 初始化ilruntime
         /// </summary>
-        public void HotFixInit(bool isOK)
+        public void HotFixInit(byte[] bytes)
         {
-            if (isOK)
-            {
-                InitializeILRuntime();
-                CacheMethod();
-                IsActiveMonoMethod = true;
-                HotFixAwake();
-            }
+            codeStream = new MemoryStream(bytes);
+            appdomain.LoadAssembly(codeStream);
+            InitializeILRuntime();
+            CacheMethod();
+            IsActiveMonoMethod = true;
+            HotFixAwake();
         }
 
         public void CacheMethod()
@@ -159,7 +152,6 @@ namespace HFFramework
             LitJson.JsonMapper.RegisterILRuntimeCLRRedirection(appdomain);
 
             appdomain.RegisterCrossBindingAdaptor(new MonoBehaviourAdapter());
-            //使用Couroutine时，C#编译器会自动生成一个实现了IEnumerator，IEnumerator<object>，IDisposable接口的类，因为这是跨域继承，所以需要写CrossBindAdapter（详细请看04_Inheritance教程），Demo已经直接写好，直接注册即可
             appdomain.RegisterCrossBindingAdaptor(new CoroutineAdapter());
 
             //添加值绑定
@@ -239,6 +231,11 @@ namespace HFFramework
 
         public void DestroyManager()
         {
+            if (codeStream!=null)
+            {
+                codeStream.Close();
+            }
+
             if (appdomain != null)
             {
                 appdomain.Invoke(MainClassName, "Destroy", null, null);

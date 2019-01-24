@@ -48,10 +48,9 @@ public class ILRuntimeCLRBinding
         using (System.IO.FileStream fs = new System.IO.FileStream("Assets/StreamingAssets/DLL/"+ GameConst.HotFixDLLName+ ".dll", System.IO.FileMode.Open, System.IO.FileAccess.Read))
         {
             domain.LoadAssembly(fs);
+            InitILRuntime(domain);
+            ILRuntime.Runtime.CLRBinding.BindingCodeGenerator.GenerateBindingCode(domain, "Assets/Core/HotFix/ILRuntime/Generated");
         }
-        //Crossbind Adapter is needed to generate the correct binding code
-        InitILRuntime(domain);
-        ILRuntime.Runtime.CLRBinding.BindingCodeGenerator.GenerateBindingCode(domain, "Assets/Core/HotFix/ILRuntime/Generated");
         AssetDatabase.Refresh();
         Debug.Log("开始自动结束");
     }

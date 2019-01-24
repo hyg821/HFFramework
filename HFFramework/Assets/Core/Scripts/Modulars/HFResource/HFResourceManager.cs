@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Mono.Cecil.Pdb;
+using Mono.Cecil;
 using UnityEngine.U2D;
 
 namespace HFFramework
@@ -393,41 +393,33 @@ namespace HFFramework
             }
         }
 
-        public void LoadHotFixAssembly(string assetbundleName, string dllName, ILRuntime.Runtime.Enviorment.AppDomain appdomain, Action<bool> cbAction)
+        public void LoadHotFixAssembly(string assetbundleName, string dllName, Action<byte[]> callback)
         {
-            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(assetbundleName);
-            TextAsset text = ab.LoadAssetWithCache<TextAsset>(dllName + ".dll");
-            byte[] dll = text.bytes;
-            using (MemoryStream fs = new MemoryStream(dll))
+            if (GameEnvironment.Instance.RuntimeEnvironment == GameEnvironmentType.Develop)
             {
-                appdomain.LoadAssembly(fs, null, new PdbReaderProvider());
+                StartCoroutine(m_EditorLoadHotFixAssembly(assetbundleName, dllName, callback));
             }
-            UnloadAssetBundle(ab, true);
-            if (cbAction != null)
+            else
             {
-                cbAction(true);
+                AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(assetbundleName);
+                TextAsset text = ab.LoadAssetWithCache<TextAsset>(dllName + ".dll");
+                if (callback != null)
+                {
+                    callback(text.bytes);
+                }
+                UnloadAssetBundle(ab, true);
             }
         }
 
-        public void EditorLoadHotFixAssembly(string assetbundleName, string dllName, ILRuntime.Runtime.Enviorment.AppDomain appdomain, Action<bool> cbAction)
-        {
-            StartCoroutine(m_EditorLoadHotFixAssembly(assetbundleName, dllName, appdomain, cbAction));
-        }
-
-        private IEnumerator m_EditorLoadHotFixAssembly(string assetbundleName, string dllName, ILRuntime.Runtime.Enviorment.AppDomain appdomain, Action<bool> cbAction)
+        private IEnumerator m_EditorLoadHotFixAssembly(string assetbundleName, string dllName, Action<byte[]> callback)
         {
             WWW www = new WWW("file:///" + Application.streamingAssetsPath + "/DLL/" + dllName + ".dll");
             yield return www;
-            byte[] dll = www.bytes;
-            using (MemoryStream fs = new MemoryStream(dll))
+            if (callback != null)
             {
-                appdomain.LoadAssembly(fs, null, new PdbReaderProvider());
+                callback(www.bytes);
             }
             www.Dispose();
-            if (cbAction != null)
-            {
-                cbAction(true);
-            }
         }
 
         public void AddAssetBundleToDic(AssetBundlePackage bundle)

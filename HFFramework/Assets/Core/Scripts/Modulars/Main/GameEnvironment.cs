@@ -90,7 +90,7 @@ namespace  HFFramework
 
         private void Init()
         {
-            SetRuntimeEnvironment(GameEnvironmentType.Develop);
+            SetRuntimeEnvironment(GameEnvironmentType.Release);
             SetAppVersion("1.0.0");
             SetResourceVersion("1.0.0");
             OpenLog(true);

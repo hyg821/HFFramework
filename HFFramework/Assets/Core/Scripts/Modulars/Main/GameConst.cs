@@ -21,6 +21,6 @@ namespace HFFramework
         /// <summary>
         ///  状态消息
         /// </summary>
-        public const ushort MSG_STATE = 2;
+        public const ushort MSG_STATE = 3;
     }
 }

@@ -21,8 +21,11 @@ namespace HFFramework
         {
             set
             {
-                isPaused = value;
-                NotificationCenter.PostNotification(new NotificationMessage(GameConst.MSG_STATE, APPPAUSE, this, isPaused));
+                if (isPaused!=value)
+                {
+                    isPaused = value;
+                    NotificationCenter.PostNotification(new NotificationMessage(GameConst.MSG_STATE, APPPAUSE, this, isPaused));
+                }
             }
             get
             {
@@ -55,7 +58,6 @@ namespace HFFramework
         {
             Instance = null;
         }
-
     }
 }
 

@@ -163,7 +163,10 @@ namespace HFFramework
 
         private void m_receive(int msgType, byte[] msg)
         {
-            eventQueue.Enqueue(new KeyValuePair<int, byte[]>(msgType, msg));
+            lock (eventQueue)
+            {
+                eventQueue.Enqueue(new KeyValuePair<int, byte[]>(msgType, msg));
+            }
         }
 
         private void m_close()
@@ -194,10 +197,13 @@ namespace HFFramework
 
         public void Update()
         {
-            while (eventQueue.Count > 0)
+            lock (eventQueue)
             {
-                KeyValuePair<int, byte[]> e = eventQueue.Dequeue();
-                DispatchCallback(e.Key, e.Value);
+                while (eventQueue.Count > 0)
+                {
+                    KeyValuePair<int, byte[]> e = eventQueue.Dequeue();
+                    DispatchCallback(e.Key, e.Value);
+                }
             }
         }
 

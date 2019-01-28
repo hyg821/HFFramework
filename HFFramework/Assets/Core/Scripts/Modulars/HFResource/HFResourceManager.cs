@@ -196,6 +196,20 @@ namespace HFFramework
         }
 
         /// <summary>
+        /// 获取shader
+        /// </summary>
+        /// <param name="packageName"></param>
+        /// <param name="abName"></param>
+        /// <returns></returns>
+        public Shader GetShader(string packageName, string abName)
+        {
+            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+            Shader shader = ab.LoadAssetWithCache<Shader>(abName);
+            Shader.WarmupAllShaders();
+            return shader;
+        }
+
+        /// <summary>
         ///  异步加载场景
         /// </summary>
         /// <param name="assetBundleName"></param>

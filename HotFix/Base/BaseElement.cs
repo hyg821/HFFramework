@@ -372,25 +372,13 @@ namespace HotFix
                 if (value != isNeedUpdate)
                 {
                     isNeedUpdate = value;
-                    if (value == true)
-                    {
-                        GameUpdate.AddUpdate(this);
-                    }
-                    else
-                    {
-                        GameUpdate.SubUpdate(this);
-                    }
+                    GameUpdate.PrepareForUpdate(this);
                 }
             }
             get
             {
                 return isNeedUpdate;
             }
-        }
-
-        public void Update(float deltaTime)
-        {
-            OnUpdate(deltaTime);
         }
 
         bool isNeedFixedUpdate = false;
@@ -401,25 +389,13 @@ namespace HotFix
                 if (value != isNeedFixedUpdate)
                 {
                     isNeedFixedUpdate = value;
-                    if (value == true)
-                    {
-                        GameUpdate.AddFixedUpdate(this);
-                    }
-                    else
-                    {
-                        GameUpdate.SubFixedUpdate(this);
-                    }
+                    GameUpdate.PrepareForFixedUpdate(this);
                 }
             }
             get
             {
                 return isNeedFixedUpdate;
             }
-        }
-
-        public void FixedUpdate(float deltaTime)
-        {
-            OnFixedUpdate(deltaTime);
         }
 
         bool isNeedLateUpdate = false;
@@ -430,25 +406,13 @@ namespace HotFix
                 if (value != isNeedLateUpdate)
                 {
                     isNeedLateUpdate = value;
-                    if (value == true)
-                    {
-                        GameUpdate.AddLateUpdate(this);
-                    }
-                    else
-                    {
-                        GameUpdate.SubLateUpdate(this);
-                    }
+                    GameUpdate.PrepareForFixedUpdate(this);
                 }
             }
             get
             {
                 return isNeedLateUpdate;
             }
-        }
-
-        public void LateUpdate(float deltaTime)
-        {
-            OnLateUpdate(deltaTime);
         }
 
         /// <summary>

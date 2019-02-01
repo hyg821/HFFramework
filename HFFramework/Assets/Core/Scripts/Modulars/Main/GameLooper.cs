@@ -10,17 +10,29 @@ namespace HFFramework
         public static GameLooper Instance;
 
         /// <summary>
-        ///  需要update的 列表
+        /// 即将在下一帧被update的列表
+        /// </summary>
+        private List<BaseMonoBehaviour> prepareUpdateList = new List<BaseMonoBehaviour>();
+        /// <summary>
+        ///  本帧执行的update的列表
         /// </summary>
         private List<BaseMonoBehaviour> updateList = new List<BaseMonoBehaviour>();
 
         /// <summary>
-        ///  需要fixedUpdate的 列表
+        ///  即将在下一帧被fixedUpdate的列表
+        /// </summary>
+        private List<BaseMonoBehaviour> prepareFixedUpdateList = new List<BaseMonoBehaviour>();
+        /// <summary>
+        ///  本帧执行fixedUpdate的列表
         /// </summary>
         private List<BaseMonoBehaviour> fixedUpdateList = new List<BaseMonoBehaviour>();
 
         /// <summary>
-        ///  需要lateUpdate的 列表
+        /// 即将在下一帧被LateUpdate的列表
+        /// </summary>
+        private List<BaseMonoBehaviour> prepareLateUpdateList = new List<BaseMonoBehaviour>();
+        /// <summary>
+        ///  本帧执行lateUpdate的列表
         /// </summary>
         private List<BaseMonoBehaviour> lateUpdateList = new List<BaseMonoBehaviour>();
 
@@ -45,6 +57,20 @@ namespace HFFramework
                 e();
             }
 
+            for (int i = 0; i < prepareUpdateList.Count; i++)
+            {
+                BaseMonoBehaviour temp = prepareUpdateList[i];
+                if (temp.IsNeedUpdate)
+                {
+                    updateList.Add(temp);
+                }
+                else
+                {
+                    updateList.Remove(temp);
+                }
+            }
+            prepareUpdateList.Clear();
+
             for (int i = 0; i < updateList.Count; i++)
             {
                 updateList[i].OnUpdate(Time.deltaTime);
@@ -53,6 +79,20 @@ namespace HFFramework
 
         void FixedUpdate()
         {
+            for (int i = 0; i < prepareFixedUpdateList.Count; i++)
+            {
+                BaseMonoBehaviour temp = prepareFixedUpdateList[i];
+                if (temp.IsNeedFixedUpdate)
+                {
+                    fixedUpdateList.Add(temp);
+                }
+                else
+                {
+                    fixedUpdateList.Remove(temp);
+                }
+            }
+            prepareFixedUpdateList.Clear();
+
             for (int i = 0; i < fixedUpdateList.Count; i++)
             {
                 fixedUpdateList[i].OnFixedUpdate(Time.deltaTime);
@@ -61,6 +101,20 @@ namespace HFFramework
 
         void LateUpdate()
         {
+            for (int i = 0; i < prepareLateUpdateList.Count; i++)
+            {
+                BaseMonoBehaviour temp = prepareLateUpdateList[i];
+                if (temp.IsNeedLateUpdate)
+                {
+                    lateUpdateList.Add(temp);
+                }
+                else
+                {
+                    lateUpdateList.Remove(temp);
+                }
+            }
+            prepareLateUpdateList.Clear();
+
             for (int i = 0; i < lateUpdateList.Count; i++)
             {
                 lateUpdateList[i].OnLateUpdate(Time.deltaTime);
@@ -69,8 +123,11 @@ namespace HFFramework
 
         public void DestroyManager()
         {
+            prepareUpdateList.Clear();
             updateList.Clear();
+            prepareFixedUpdateList.Clear();
             fixedUpdateList.Clear();
+            prepareLateUpdateList.Clear();
             lateUpdateList.Clear();
             eventQueue.Clear();
             Instance = null;
@@ -87,60 +144,36 @@ namespace HFFramework
             }
         }
 
-        public static void AddUpdate(BaseMonoBehaviour mono)
+        public static void PrepareForUpdate(BaseMonoBehaviour mono)
         {
             if (Instance != null)
             {
-                if (Instance.updateList.Contains(mono) ==false)
+                if (Instance.prepareUpdateList.Contains(mono) ==false)
                 {
-                    Instance.updateList.Add(mono);
+                    Instance.prepareUpdateList.Add(mono);
                 }
             }
         }
 
-        public static void SubUpdate(BaseMonoBehaviour mono)
+        public static void PrepareForFixedUpdate(BaseMonoBehaviour mono)
         {
             if (Instance != null)
             {
-                Instance.updateList.Remove(mono);
-            }
-        }
-
-        public static void AddFixedUpdate(BaseMonoBehaviour mono)
-        {
-            if (Instance != null)
-            {
-                if (Instance.fixedUpdateList.Contains(mono) == false)
+                if (Instance.prepareFixedUpdateList.Contains(mono) == false)
                 {
-                    Instance.fixedUpdateList.Add(mono);
+                    Instance.prepareFixedUpdateList.Add(mono);
                 }
             }
         }
 
-        public static void SubFixedUpdate(BaseMonoBehaviour mono)
+        public static void PrepareForLateUpdate(BaseMonoBehaviour mono)
         {
             if (Instance != null)
             {
-                Instance.fixedUpdateList.Remove(mono);
-            }
-        }
-
-        public static void AddLateUpdate(BaseMonoBehaviour mono)
-        {
-            if (Instance != null)
-            {
-                if (Instance.lateUpdateList.Contains(mono) == false)
+                if (Instance.prepareLateUpdateList.Contains(mono) == false)
                 {
-                    Instance.lateUpdateList.Add(mono);
+                    Instance.prepareLateUpdateList.Add(mono);
                 }
-            }
-        }
-
-        public static void SubLateUpdate(BaseMonoBehaviour mono)
-        {
-            if (Instance != null)
-            {
-                Instance.lateUpdateList.Remove(mono);
             }
         }
     }

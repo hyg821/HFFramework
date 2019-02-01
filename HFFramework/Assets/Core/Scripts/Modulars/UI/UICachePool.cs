@@ -9,7 +9,7 @@ namespace HFFramework
         /// <summary>
         ///  休眠页面的缓存池
         /// </summary>
-        public Dictionary<string, List<UIController>> cacheDic = new Dictionary<string, List<UIController> >();
+        public Dictionary<string, List<UIController>> cacheDic = new Dictionary<string, List<UIController>>();
 
         public override void OnAwake()
         {

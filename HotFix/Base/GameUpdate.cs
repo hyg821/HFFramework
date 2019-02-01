@@ -20,24 +20,50 @@ namespace HotFix
                 return instance;
             }
         }
-        /// <summary>
-        ///  需要update的 列表
-        /// </summary>
-        private List<BaseElement> updateList = new List<BaseElement>(64);
 
         /// <summary>
-        ///  需要fixedUpdate的 列表
+        /// 即将在下一帧被update的列表
         /// </summary>
-        private List<BaseElement> fixedUpdateList = new List<BaseElement>(64);
+        private List<BaseElement> prepareUpdateList = new List<BaseElement>();
+        /// <summary>
+        ///  本帧执行的update的列表
+        /// </summary>
+        private List<BaseElement> updateList = new List<BaseElement>();
 
         /// <summary>
-        ///  需要lateUpdate的 列表
+        ///  即将在下一帧被fixedUpdate的列表
         /// </summary>
-        private List<BaseElement> lateUpdateList = new List<BaseElement>(64);
+        private List<BaseElement> prepareFixedUpdateList = new List<BaseElement>();
+        /// <summary>
+        ///  本帧执行fixedUpdate的列表
+        /// </summary>
+        private List<BaseElement> fixedUpdateList = new List<BaseElement>();
 
+        /// <summary>
+        /// 即将在下一帧被LateUpdate的列表
+        /// </summary>
+        private List<BaseElement> prepareLateUpdateList = new List<BaseElement>();
+        /// <summary>
+        ///  本帧执行lateUpdate的列表
+        /// </summary>
+        private List<BaseElement> lateUpdateList = new List<BaseElement>();
 
         public void Update()
         {
+            for (int i = 0; i < prepareUpdateList.Count; i++)
+            {
+                BaseElement temp = prepareUpdateList[i];
+                if (temp.IsNeedUpdate)
+                {
+                    updateList.Add(temp);
+                }
+                else
+                {
+                    updateList.Remove(temp);
+                }
+            }
+            prepareUpdateList.Clear();
+
             for (int i = 0; i < updateList.Count; i++)
             {
                 updateList[i].OnUpdate(Time.deltaTime);
@@ -46,82 +72,90 @@ namespace HotFix
 
         public void FixedUpdate()
         {
+            for (int i = 0; i < prepareFixedUpdateList.Count; i++)
+            {
+                BaseElement temp = prepareFixedUpdateList[i];
+                if (temp.IsNeedFixedUpdate)
+                {
+                    fixedUpdateList.Add(temp);
+                }
+                else
+                {
+                    fixedUpdateList.Remove(temp);
+                }
+            }
+            prepareFixedUpdateList.Clear();
+
             for (int i = 0; i < fixedUpdateList.Count; i++)
             {
-                fixedUpdateList[i].OnFixedUpdate(Time.fixedDeltaTime);
+                fixedUpdateList[i].OnFixedUpdate(Time.deltaTime);
             }
         }
 
         public void LateUpdate()
         {
+            for (int i = 0; i < prepareLateUpdateList.Count; i++)
+            {
+                BaseElement temp = prepareLateUpdateList[i];
+                if (temp.IsNeedLateUpdate)
+                {
+                    lateUpdateList.Add(temp);
+                }
+                else
+                {
+                    lateUpdateList.Remove(temp);
+                }
+            }
+            prepareLateUpdateList.Clear();
+
             for (int i = 0; i < lateUpdateList.Count; i++)
             {
                 lateUpdateList[i].OnLateUpdate(Time.deltaTime);
             }
         }
 
-        public static void AddUpdate(BaseElement mono)
-        {
-            if (Instance != null)
-            {
-                if (Instance.updateList.Contains(mono) == false)
-                {
-                    Instance.updateList.Add(mono);
-                }
-            }
-        }
-
-        public static void SubUpdate(BaseElement mono)
-        {
-            if (Instance != null)
-            {
-                Instance.updateList.Remove(mono);
-            }
-        }
-
-        public static void AddFixedUpdate(BaseElement mono)
-        {
-            if (Instance != null)
-            {
-                if (Instance.fixedUpdateList.Contains(mono) == false)
-                {
-                    Instance.fixedUpdateList.Add(mono);
-                }
-            }
-        }
-
-        public static void SubFixedUpdate(BaseElement mono)
-        {
-            if (Instance != null)
-            {
-                Instance.fixedUpdateList.Remove(mono);
-            }
-        }
-
-        public static void AddLateUpdate(BaseElement mono)
-        {
-            if (Instance != null)
-            {
-                if (Instance.lateUpdateList.Contains(mono) == false)
-                {
-                    Instance.lateUpdateList.Add(mono);
-                }
-            }
-        }
-
-        public static void SubLateUpdate(BaseElement mono)
-        {
-            if (Instance != null)
-            {
-                Instance.lateUpdateList.Remove(mono);
-            }
-        }
-
         public void Destroy()
         {
+            prepareUpdateList.Clear();
             updateList.Clear();
+            prepareFixedUpdateList.Clear();
             fixedUpdateList.Clear();
+            prepareLateUpdateList.Clear();
             lateUpdateList.Clear();
+            instance = null;
+        }
+
+        public static void PrepareForUpdate(BaseElement mono)
+        {
+            if (Instance != null)
+            {
+                if (Instance.prepareUpdateList.Contains(mono) == false)
+                {
+                    Instance.prepareUpdateList.Add(mono);
+                }
+            }
+        }
+
+        public static void PrepareForFixedUpdate(BaseElement mono)
+        {
+            if (Instance != null)
+            {
+                if (Instance.prepareFixedUpdateList.Contains(mono) == false)
+                {
+                    Instance.prepareFixedUpdateList.Add(mono);
+                }
+            }
+        }
+
+        public static void PrepareForLateUpdate(BaseElement mono)
+        {
+            if (Instance != null)
+            {
+                if (Instance.prepareLateUpdateList.Contains(mono) == false)
+                {
+                    Instance.prepareLateUpdateList.Add(mono);
+                }
+            }
         }
     }
 }

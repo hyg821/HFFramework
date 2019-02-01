@@ -164,14 +164,7 @@ namespace HFFramework
                 if (isNeedUpdate != value)
                 {
                     isNeedUpdate = value;
-                    if (value == true)
-                    {
-                        GameLooper.AddUpdate(this);
-                    }
-                    else
-                    {
-                        GameLooper.SubUpdate(this);
-                    }
+                    GameLooper.PrepareForUpdate(this);
                 }
             }
             get
@@ -191,14 +184,7 @@ namespace HFFramework
                 if (value != isNeedFixedUpdate)
                 {
                     isNeedFixedUpdate = value;
-                    if (value == true)
-                    {
-                        GameLooper.AddFixedUpdate(this);
-                    }
-                    else
-                    {
-                        GameLooper.SubFixedUpdate(this);
-                    }
+                    GameLooper.PrepareForFixedUpdate(this);
                 }
             }
             get
@@ -218,14 +204,7 @@ namespace HFFramework
                 if (value != isNeedLateUpdate)
                 {
                     isNeedLateUpdate = value;
-                    if (value == true)
-                    {
-                        GameLooper.AddLateUpdate(this);
-                    }
-                    else
-                    {
-                        GameLooper.SubLateUpdate(this);
-                    }
+                    GameLooper.PrepareForLateUpdate(this);
                 }
             }
             get

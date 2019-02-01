@@ -23,7 +23,7 @@ namespace HFFramework
 
         public Dictionary<int, UICanvas> canvasDic = new Dictionary<int, UICanvas>();
 
-        public UICachePool cachePool;
+        public Dictionary<string, UIController> controllerDic = new Dictionary<string, UIController>();
 
         void Awake()
         {
@@ -50,9 +50,6 @@ namespace HFFramework
             temp.name = CameraName;
             UICamera = temp.GetComponent<UICamera>();
             UICamera.SetParent(UIRoot.gameObject);
-
-            cachePool = new GameObject("CachePool").AddComponent<UICachePool>();
-            cachePool.SetParent(UIRoot);
         }
 
         public UICanvas AddCanvas(int canvasLayerIndex)
@@ -74,23 +71,29 @@ namespace HFFramework
 
         public T GetController<T>(string type) where T :UIController
         {
-            UIController controller = cachePool.GetController(type);
-            if (controller==null)
+            UIController controller;
+            if (controllerDic.TryGetValue(type,out controller)==false)
             {
                 UI config = ConfigUI.Get(type);
                 GameObject obj;
-                controller  =GameFactory.Create<T>(config.AssetbundleName, config.AssetName,out obj);
-                if (controller==null)
+                controller = GameFactory.Create<T>(config.AssetbundleName, config.AssetName, out obj);
+                if (controller == null)
                 {
                     controller = obj.AddComponent<T>();
                 }
                 controller.Config = config;
+                controllerDic.Add(type, controller);
             }
             return controller as T;
         }
 
         public void ClearScene()
         {
+            foreach (var item in controllerDic)
+            {
+                item.Value.Destroy();
+            }
+            controllerDic.Clear();
             canvasDic.Clear();
             UIRoot = null;
         }

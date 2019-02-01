@@ -42,13 +42,13 @@ namespace HFFramework
 
         }
 
-        public virtual void Open(Action callback)
+        public virtual void Open(Action callback = null)
         {
             IsShow = true;
             DoShowAnimation(callback);
         }
 
-        public virtual void Close(Action callback)
+        public virtual void Close(Action callback = null)
         {
             DoHideAnimation(callback);
             IsShow = false;

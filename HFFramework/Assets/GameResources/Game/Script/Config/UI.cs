@@ -13,31 +13,31 @@ namespace Config
     { 
         /// <summary>
         /// 类型
-        /// <summary>
+        /// </summary>
         public string Type;
         /// <summary>
         /// 层级
-        /// <summary>
+        /// </summary>
         public int LayerIndex;
         /// <summary>
         /// 包名
-        /// <summary>
+        /// </summary>
         public string AssetbundleName;
         /// <summary>
         /// 资源名字
-        /// <summary>
+        /// </summary>
         public string AssetName;
         /// <summary>
         /// 显示动画
-        /// <summary>
+        /// </summary>
         public string ShowAnimation;
         /// <summary>
         /// 消失动画
-        /// <summary>
+        /// </summary>
         public string HideAnimation;
         /// <summary>
         /// 类名
-        /// <summary>
+        /// </summary>
         public string ClassName;
     }
 

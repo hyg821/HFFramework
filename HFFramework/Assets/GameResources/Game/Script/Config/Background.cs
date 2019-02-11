@@ -13,15 +13,15 @@ namespace Config
     { 
         /// <summary>
         /// id
-        /// <summary>
+        /// </summary>
         public int id;
         /// <summary>
         /// 资源名称
-        /// <summary>
+        /// </summary>
         public string name;
         /// <summary>
         /// 场景类型
-        /// <summary>
+        /// </summary>
         public int type;
     }
 

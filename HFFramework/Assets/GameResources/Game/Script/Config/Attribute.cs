@@ -13,11 +13,11 @@ namespace Config
     { 
         /// <summary>
         /// id
-        /// <summary>
+        /// </summary>
         public int id;
         /// <summary>
         /// 名称
-        /// <summary>
+        /// </summary>
         public string name;
     }
 

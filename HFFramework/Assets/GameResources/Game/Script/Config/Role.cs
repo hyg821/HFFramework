@@ -13,15 +13,15 @@ namespace Config
     { 
         /// <summary>
         /// 人物id
-        /// <summary>
+        /// </summary>
         public int id;
         /// <summary>
         /// 名字
-        /// <summary>
+        /// </summary>
         public string name;
         /// <summary>
         /// 时间场景1
-        /// <summary>
+        /// </summary>
         public List<int>time1 = new List<int>();
         public Background GetTime1(int key)
         { 
@@ -29,7 +29,7 @@ namespace Config
         } 
         /// <summary>
         /// 时间场景2
-        /// <summary>
+        /// </summary>
         public List<int>time2 = new List<int>();
         public Background GetTime2(int key)
         { 
@@ -37,7 +37,7 @@ namespace Config
         } 
         /// <summary>
         /// 时间场景3
-        /// <summary>
+        /// </summary>
         public List<int>time3 = new List<int>();
         public Background GetTime3(int key)
         { 
@@ -45,7 +45,7 @@ namespace Config
         } 
         /// <summary>
         /// 时间场景4
-        /// <summary>
+        /// </summary>
         public List<int>time4 = new List<int>();
         public Background GetTime4(int key)
         { 
@@ -53,19 +53,19 @@ namespace Config
         } 
         /// <summary>
         /// 场景服装1
-        /// <summary>
+        /// </summary>
         public List<string>clothes1 = new List<string>();
         /// <summary>
         /// 场景服装2
-        /// <summary>
+        /// </summary>
         public List<string>clothes2 = new List<string>();
         /// <summary>
         /// 场景服装3
-        /// <summary>
+        /// </summary>
         public List<string>clothes3 = new List<string>();
         /// <summary>
         /// 场景服装4
-        /// <summary>
+        /// </summary>
         public List<string>clothes4 = new List<string>();
     }
 

@@ -13,19 +13,19 @@ namespace Config
     { 
         /// <summary>
         /// 索引
-        /// <summary>
+        /// </summary>
         public int id;
         /// <summary>
         /// 人名
-        /// <summary>
+        /// </summary>
         public string name;
         /// <summary>
         /// 性别
-        /// <summary>
+        /// </summary>
         public bool sex;
         /// <summary>
         /// 家庭地址
-        /// <summary>
+        /// </summary>
         public List<string>address = new List<string>();
         public Address GetAddress(string key)
         { 
@@ -33,7 +33,7 @@ namespace Config
         } 
         /// <summary>
         /// 爱好
-        /// <summary>
+        /// </summary>
         public List<string>love = new List<string>();
     }
 

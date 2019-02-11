@@ -13,19 +13,19 @@ namespace Config
     { 
         /// <summary>
         /// 索引
-        /// <summary>
+        /// </summary>
         public string id;
         /// <summary>
         /// 国家
-        /// <summary>
+        /// </summary>
         public string country;
         /// <summary>
         /// 省市
-        /// <summary>
+        /// </summary>
         public string city;
         /// <summary>
         /// 街道
-        /// <summary>
+        /// </summary>
         public string street;
     }
 

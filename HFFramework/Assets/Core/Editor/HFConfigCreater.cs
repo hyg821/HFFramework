@@ -128,7 +128,7 @@ namespace HFFramework
 
                 builder.AppendLine("        /// <summary>");
                 builder.AppendLine("        /// "+ note);
-                builder.AppendLine("        /// <summary>");
+                builder.AppendLine("        /// </summary>");
 
                 if (sa == "array")
                 {

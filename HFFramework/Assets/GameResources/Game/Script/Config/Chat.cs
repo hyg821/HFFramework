@@ -13,19 +13,19 @@ namespace Config
     { 
         /// <summary>
         /// id
-        /// <summary>
+        /// </summary>
         public int id;
         /// <summary>
         /// 问题
-        /// <summary>
+        /// </summary>
         public string question;
         /// <summary>
         /// 选项A
-        /// <summary>
+        /// </summary>
         public string chooseA;
         /// <summary>
         /// 选项A类型
-        /// <summary>
+        /// </summary>
         public int chooseAtype;
         public Attribute ChooseAtype
         { 
@@ -36,15 +36,15 @@ namespace Config
         } 
         /// <summary>
         /// 选项A数值
-        /// <summary>
+        /// </summary>
         public int chooseAnum;
         /// <summary>
         /// 选项B
-        /// <summary>
+        /// </summary>
         public string chooseB;
         /// <summary>
         /// 选项B类型
-        /// <summary>
+        /// </summary>
         public int chooseBtype;
         public Attribute ChooseBtype
         { 
@@ -55,15 +55,15 @@ namespace Config
         } 
         /// <summary>
         /// 选项B数值
-        /// <summary>
+        /// </summary>
         public int chooseBnum;
         /// <summary>
         /// 选项C
-        /// <summary>
+        /// </summary>
         public string chooseC;
         /// <summary>
         /// 选项C类型
-        /// <summary>
+        /// </summary>
         public int chooseCtype;
         public Attribute ChooseCtype
         { 
@@ -74,7 +74,7 @@ namespace Config
         } 
         /// <summary>
         /// 选项C数值
-        /// <summary>
+        /// </summary>
         public int chooseCnum;
     }
 

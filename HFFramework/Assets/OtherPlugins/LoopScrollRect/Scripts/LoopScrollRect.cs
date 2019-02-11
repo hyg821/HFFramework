@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System;
+using System.Collections;
 
 namespace UnityEngine.UI
 {
@@ -32,8 +33,7 @@ namespace UnityEngine.UI
             }
         }
 
-        [Tooltip("Threshold for preloading")]
-        public float threshold = 100;
+        protected float threshold = 0;
         [Tooltip("Reverse direction for dragging")]
         public bool reverseDirection = false;
         [Tooltip("Rubber scale for outside")]
@@ -68,7 +68,7 @@ namespace UnityEngine.UI
                     m_GridLayout = content.GetComponent<GridLayoutGroup>();
                     if (m_GridLayout != null)
                     {
-                        m_ContentSpacing = GetDimension(m_GridLayout.spacing);
+                        m_ContentSpacing = Mathf.Abs(GetDimension(m_GridLayout.spacing));
                     }
                 }
                 return m_ContentSpacing;
@@ -275,11 +275,6 @@ namespace UnityEngine.UI
         }
 
         //==========LoopScrollRect==========
-        private void ReturnObjectAndSendMessage(Transform go)
-        {
-            go.SendMessage("ScrollCellReturn", SendMessageOptions.DontRequireReceiver);
-            SG.ResourceManager.Instance.ReturnObjectToPool(go.gameObject);
-        }
 
         public void ClearCells()
         {
@@ -291,9 +286,99 @@ namespace UnityEngine.UI
                 objectsToFill = null;
                 for (int i = content.childCount - 1; i >= 0; i--)
                 {
-                    ReturnObjectAndSendMessage(content.GetChild(i));
+                    prefabSource.ReturnObject(content.GetChild(i));
                 }
             }
+        }
+
+        public void SrollToCell(int index, float speed)
+        {
+            if(totalCount >= 0 && (index < 0 || index >= totalCount))
+            {
+                Debug.LogWarningFormat("invalid index {0}", index);
+                return;
+            }
+            if(speed <= 0)
+            {
+                Debug.LogWarningFormat("invalid speed {0}", speed);
+                return;
+            }
+            StopAllCoroutines();
+            StartCoroutine(ScrollToCellCoroutine(index, speed));
+        }
+
+        IEnumerator ScrollToCellCoroutine(int index, float speed)
+        {
+            bool needMoving = true;
+            while(needMoving)
+            {
+                yield return null;
+                if(!m_Dragging)
+                {
+                    float move = 0;
+                    if(index < itemTypeStart)
+                    {
+                        move = -Time.deltaTime * speed;
+                    }
+                    else if(index >= itemTypeEnd)
+                    {
+                        move = Time.deltaTime * speed;
+                    }
+                    else
+                    {
+                        m_ViewBounds = new Bounds(viewRect.rect.center, viewRect.rect.size);
+                        var m_ItemBounds = GetBounds4Item(index);
+                        var offset = 0.0f;
+                        if (directionSign == -1)
+                            offset = reverseDirection ? (m_ViewBounds.min.y - m_ItemBounds.min.y) : (m_ViewBounds.max.y - m_ItemBounds.max.y);
+                        else if (directionSign == 1)
+                            offset = reverseDirection ? (m_ItemBounds.max.x - m_ViewBounds.max.x) : (m_ItemBounds.min.x - m_ViewBounds.min.x);
+                        // check if we cannot move on
+                        if (totalCount >= 0)
+                        {
+                            if (offset > 0 && itemTypeEnd == totalCount && !reverseDirection)
+                            {
+                                m_ItemBounds = GetBounds4Item(totalCount - 1);
+                                // reach bottom
+                                if ((directionSign == -1 && m_ItemBounds.min.y > m_ViewBounds.min.y) ||
+                                    (directionSign == 1 && m_ItemBounds.max.x < m_ViewBounds.max.x))
+                                {
+                                    needMoving = false;
+                                    break;
+                                }
+                            }
+                            else if (offset < 0 && itemTypeStart == 0 && reverseDirection)
+                            {
+                                m_ItemBounds = GetBounds4Item(0);
+                                if ((directionSign == -1 && m_ItemBounds.max.y < m_ViewBounds.max.y) ||
+                                    (directionSign == 1 && m_ItemBounds.min.x > m_ViewBounds.min.x))
+                                {
+                                    needMoving = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        float maxMove = Time.deltaTime * speed;
+                        if(Mathf.Abs(offset) < maxMove)
+                        {
+                            needMoving = false;
+                            move = offset;
+                         }
+                         else
+                            move = Mathf.Sign(offset) * maxMove;
+                    }
+                    if (move != 0)
+                    {
+                        Vector2 offset = GetVector(move);
+                        content.anchoredPosition += offset;
+                        m_PrevPosition += offset;
+                        m_ContentStartPosition += offset;
+                    }
+                }
+            }
+            StopMovement();
+            UpdatePrevData();
         }
 
         public void RefreshCells()
@@ -311,7 +396,7 @@ namespace UnityEngine.UI
                     }
                     else
                     {
-                        ReturnObjectAndSendMessage(content.GetChild(i));
+                        prefabSource.ReturnObject(content.GetChild(i));
                         i--;
                     }
                 }
@@ -320,17 +405,19 @@ namespace UnityEngine.UI
 
         public void RefillCellsFromEnd(int offset = 0)
         {
-            //TODO: unsupported for Infinity or Grid yet
-            if (!Application.isPlaying || totalCount < 0 || contentConstraintCount > 1 || prefabSource == null)
+            if (!Application.isPlaying || prefabSource == null)
                 return;
             
             StopMovement();
             itemTypeEnd = reverseDirection ? offset : totalCount - offset;
             itemTypeStart = itemTypeEnd;
 
+            if (totalCount >= 0 && itemTypeStart % contentConstraintCount != 0)
+                Debug.LogWarning("Grid will become strange since we can't fill items in the last line");
+
             for (int i = m_Content.childCount - 1; i >= 0; i--)
             {
-                ReturnObjectAndSendMessage(m_Content.GetChild(i));
+                prefabSource.ReturnObject(m_Content.GetChild(i));
             }
 
             float sizeToFill = 0, sizeFilled = 0;
@@ -366,10 +453,13 @@ namespace UnityEngine.UI
             itemTypeStart = reverseDirection ? totalCount - offset : offset;
             itemTypeEnd = itemTypeStart;
 
+            if (totalCount >= 0 && itemTypeStart % contentConstraintCount != 0)
+                Debug.LogWarning("Grid will become strange since we can't fill items in the first line");
+
             // Don't `Canvas.ForceUpdateCanvases();` here, or it will new/delete cells to change itemTypeStart/End
             for (int i = m_Content.childCount - 1; i >= 0; i--)
             {
-                ReturnObjectAndSendMessage(m_Content.GetChild(i));
+                prefabSource.ReturnObject(m_Content.GetChild(i));
             }
 
             float sizeToFill = 0, sizeFilled = 0;
@@ -408,6 +498,7 @@ namespace UnityEngine.UI
                 newItem.SetAsFirstSibling();
                 size = Mathf.Max(GetSize(newItem), size);
             }
+            threshold = Mathf.Max(threshold, size * 1.5f);
 
             if (!reverseDirection)
             {
@@ -416,9 +507,7 @@ namespace UnityEngine.UI
                 m_PrevPosition += offset;
                 m_ContentStartPosition += offset;
             }
-            // protection
-            if(size > 0 && threshold < size)
-                threshold = size * 1.1f;
+            
             return size;
         }
 
@@ -436,7 +525,7 @@ namespace UnityEngine.UI
             {
                 RectTransform oldItem = content.GetChild(0) as RectTransform;
                 size = Mathf.Max(GetSize(oldItem), size);
-                ReturnObjectAndSendMessage(oldItem);
+                prefabSource.ReturnObject(oldItem);
 
                 itemTypeStart++;
 
@@ -476,6 +565,7 @@ namespace UnityEngine.UI
                     break;
                 }
             }
+            threshold = Mathf.Max(threshold, size * 1.5f);
 
             if (reverseDirection)
             {
@@ -484,9 +574,7 @@ namespace UnityEngine.UI
                 m_PrevPosition -= offset;
                 m_ContentStartPosition -= offset;
             }
-            // protection
-            if (size > 0 && threshold < size)
-                threshold = size * 1.1f;
+            
             return size;
         }
 
@@ -503,7 +591,7 @@ namespace UnityEngine.UI
             {
                 RectTransform oldItem = content.GetChild(content.childCount - 1) as RectTransform;
                 size = Mathf.Max(GetSize(oldItem), size);
-                ReturnObjectAndSendMessage(oldItem);
+                prefabSource.ReturnObject(oldItem);
 
                 itemTypeEnd--;
                 if (itemTypeEnd % contentConstraintCount == 0 || content.childCount == 0)
@@ -541,7 +629,7 @@ namespace UnityEngine.UI
 
             if (executing == CanvasUpdate.PostLayout)
             {
-                UpdateBounds(false);
+                UpdateBounds();
                 UpdateScrollbars(Vector2.zero);
                 UpdatePrevData();
 
@@ -725,7 +813,7 @@ namespace UnityEngine.UI
             if (position != m_Content.anchoredPosition)
             {
                 m_Content.anchoredPosition = position;
-                UpdateBounds();
+                UpdateBounds(true);
             }
         }
 
@@ -939,7 +1027,7 @@ namespace UnityEngine.UI
                 localPosition[axis] = newLocalPosition;
                 m_Content.localPosition = localPosition;
                 m_Velocity[axis] = 0;
-                UpdateBounds();
+                UpdateBounds(true);
             }
         }
 
@@ -1088,7 +1176,7 @@ namespace UnityEngine.UI
             }
         }
 
-        private void UpdateBounds(bool updateItems = true)
+        private void UpdateBounds(bool updateItems = false)
         {
             m_ViewBounds = new Bounds(viewRect.rect.center, viewRect.rect.size);
             m_ContentBounds = GetBounds();
@@ -1141,6 +1229,34 @@ namespace UnityEngine.UI
 
             var toLocal = viewRect.worldToLocalMatrix;
             m_Content.GetWorldCorners(m_Corners);
+            for (int j = 0; j < 4; j++)
+            {
+                Vector3 v = toLocal.MultiplyPoint3x4(m_Corners[j]);
+                vMin = Vector3.Min(v, vMin);
+                vMax = Vector3.Max(v, vMax);
+            }
+
+            var bounds = new Bounds(vMin, Vector3.zero);
+            bounds.Encapsulate(vMax);
+            return bounds;
+        }
+
+        private Bounds GetBounds4Item(int index)
+        {
+            if (m_Content == null)
+                return new Bounds();
+
+            var vMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+            var vMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+
+            var toLocal = viewRect.worldToLocalMatrix;
+            int offset = index - itemTypeStart;
+            if (offset < 0 || offset >= m_Content.childCount)
+                return new Bounds();
+            var rt = m_Content.GetChild(offset) as RectTransform;
+            if (rt == null)
+                return new Bounds();
+            rt.GetWorldCorners(m_Corners);
             for (int j = 0; j < 4; j++)
             {
                 Vector3 v = toLocal.MultiplyPoint3x4(m_Corners[j]);

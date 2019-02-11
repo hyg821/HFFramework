@@ -18,14 +18,17 @@ public class LoginController : UIController {
     public Image bg;
     public InputField input;
     public Button loginBtn;
+    public Image webImage;
     #region
     public override void FindElement()
     {
         bg = AutoFind<Image>("");
         input = AutoFind<InputField>("InputField");
         loginBtn = AutoFind<Button>("Button");
+        webImage = AutoFind<Image>("Image");
     }
     #endregion
+
 
 
     public int errorCount = 0;
@@ -107,6 +110,8 @@ public class LoginController : UIController {
             NotificationCenter.Instance.RemoveObserver(this, GameConst.MSG_UI, 123);
         });
 
+        webImage.SetWebImage("http://photographs.leonardauction.com/max/189525.jpg");
+
         print(ConfigMan.Get(0).GetAddress("1"));
         print(ConfigMan.Get(0).love.Count);
         print(ConfigMan.Get(0).sex);
@@ -116,7 +121,7 @@ public class LoginController : UIController {
 
     private void Update()
     {
-        SendNotificationMessage(GameConst.MSG_UI, 123, "str");
+        //SendNotificationMessage(GameConst.MSG_UI, 123, "str");
     }
 
     public T CreateMessage<T>(byte [] bytes) where T: IMessage,new()

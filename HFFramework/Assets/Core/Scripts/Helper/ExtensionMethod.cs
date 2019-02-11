@@ -1,9 +1,15 @@
 ﻿using System;
+using UnityEngine.UI;
 
 namespace HFFramework
 {
     public static class ExtensionMethod
-    { 
+    {
+        public static void SetWebImage(this Image image, string url)
+        {
+            WebImageManager.DownLoadImage(image, url);
+        }
+
         /// <summary>
         ///  自动区分大小端
         /// </summary>

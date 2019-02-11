@@ -14,7 +14,7 @@ namespace HFFramework
         /// <summary>
         ///  图片缓存字典
         /// </summary>
-        private Dictionary<int, Sprite> cacheDic = new Dictionary<int, Sprite>();
+        private Dictionary<string, Sprite> cacheDic = new Dictionary<string, Sprite>();
 
         public void Awake()
         {
@@ -26,55 +26,41 @@ namespace HFFramework
         /// </summary>
         /// <param name="url">URL</param>
         /// <param name="c">Image组件</param>
-        public static void DownLoadImage(string url, Image c)
+        public static void DownLoadImage(Image image,string url)
         {
-            WebImageManager.Instance.m_LoadImage(url, c);
+            WebImageManager.Instance.m_LoadImage(url, image);
         }
 
         private void m_LoadImage(string url, Image c)
         {
-            StartCoroutine(SetImage(url, c));
-        }
-
-        private IEnumerator SetImage(string url, Image c)
-        {
             if (url.Length != 0 && c != null)
             {
-                int hash = url.GetHashCode();
-                if (cacheDic.ContainsKey(hash))
+                Sprite m_sprite;
+                if (cacheDic.TryGetValue(url, out m_sprite))
                 {
-                    c.sprite = cacheDic[hash];
+                    c.sprite = m_sprite;
                 }
                 else
                 {
-                    HTTPRequest http = new HTTPRequest(new Uri(url));
-                    http.Send();
-                    yield return StartCoroutine(http);
-                    if (http.Response.IsSuccess)
+                    HTTPRequest request = new HTTPRequest(new Uri(url), delegate (HTTPRequest originalRequest, HTTPResponse response)
                     {
-                        Texture2D tex2d = http.Response.DataAsTexture2D;
-                        if (tex2d != null)
+                        //var m_texture = new Texture2D(0, 0);
+                        //m_texture.LoadImage(response.Data);
+                        Texture2D m_texture = response.DataAsTexture2D;
+                        if (m_texture != null)
                         {
-                            Sprite m_sprite = Sprite.Create(tex2d, new Rect(0, 0, tex2d.width, tex2d.height), new Vector2(0, 0));
+                            m_sprite = Sprite.Create(m_texture, new Rect(0, 0, m_texture.width, m_texture.height), new Vector2(0, 0));
                             c.sprite = m_sprite;
-                            if (cacheDic.ContainsKey(hash))
+                            if (!cacheDic.ContainsKey(url))
                             {
-                                cacheDic[hash] = m_sprite;
-                            }
-                            else
-                            {
-                                cacheDic.Add(hash, m_sprite);
+                                cacheDic.Add(url, m_sprite);
                             }
                         }
                         else
                         {
                             SetDefaultImage(url, c);
                         }
-                    }
-                    else
-                    {
-                        SetDefaultImage(url, c);
-                    }
+                    }).Send();
                 }
             }
             else
@@ -94,10 +80,6 @@ namespace HFFramework
 
         public static void ClearCache()
         {
-            foreach (var item in Instance.cacheDic)
-            {
-                Resources.UnloadAsset(item.Value);
-            }
             Instance.cacheDic.Clear();
             Resources.UnloadUnusedAssets();
         }

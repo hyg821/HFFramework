@@ -44,15 +44,24 @@ namespace HFFramework
             Application.logMessageReceived += LogMessageReceived;
         }
 
-        public  void LogMessageReceived(string condition, string stackTrace, LogType type)
+        public void LogMessageReceived(string condition, string stackTrace, LogType type)
         {
-            logStr.Clear();
-            logStr.AppendLine(condition);
-            logStr.AppendLine(stackTrace);
-            logStr.AppendLine(type.ToString());
+            lock (logStr)
+            {
+                logStr.Clear();       
+                logStr.AppendLine("--------------------------------时间 : "+DateTime.Now.ToString("yyyy - MM - dd hh: mm:ss fff")+"   日志类型 : "+ type.ToString()+ "--------------------------------------");
+                logStr.AppendLine();
+                logStr.AppendLine(condition);
+                logStr.AppendLine();
+                logStr.AppendLine(stackTrace);
+                logStr.AppendLine();
+            }
             Task.Run(delegate ()
             {
-                GameUtils.WriteFile(timeTag, Encoding.UTF8.GetBytes(logStr.ToString()), FileMode.Append);
+                lock (logStr)
+                {
+                    GameUtils.WriteFile(timeTag, Encoding.UTF8.GetBytes(logStr.ToString()), FileMode.Append);
+                }
             });
         }
 

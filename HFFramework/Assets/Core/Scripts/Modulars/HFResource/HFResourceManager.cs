@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Mono.Cecil;
 using UnityEngine.U2D;
 
 namespace HFFramework
@@ -60,7 +59,7 @@ namespace HFFramework
                 //否则使用 StreamingAssets 文件夹下的
                 else
                 {
-                    if (GameEnvironment.Instance.runtimePlatform == GamePlatform.Android)
+                    if (GameEnvironment.Instance.Platform == GamePlatform.Android)
                     {
                         newPath = ResourceSpareRootPath + path;
                     }

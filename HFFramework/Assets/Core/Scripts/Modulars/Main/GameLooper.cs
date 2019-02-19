@@ -50,11 +50,14 @@ namespace HFFramework
     
         void Update()
         {
-            //执行事件队列
-            while (eventQueue.Count > 0)
+            lock (lockObj)
             {
-                Action e = eventQueue.Dequeue();
-                e();
+                //执行事件队列
+                while (eventQueue.Count > 0)
+                {
+                    Action e = eventQueue.Dequeue();
+                    e();
+                }
             }
 
             for (int i = 0; i < prepareUpdateList.Count; i++)

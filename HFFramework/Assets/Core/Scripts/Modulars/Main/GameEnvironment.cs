@@ -29,7 +29,7 @@ namespace  HFFramework
         /// <summary>
         ///  运行环境的平台
         /// </summary>
-        public GamePlatform runtimePlatform;
+        public GamePlatform Platform;
 
         /// <summary>
         ///  运行环境
@@ -94,7 +94,7 @@ namespace  HFFramework
             SetAppVersion("1.0.0");
             SetResourceVersion("1.0.0");
             OpenLog(true);
-            OpenLocalLog(false);
+            OpenLocalLog(true);
             TargetFrame = 60;
             FixedUpdateFrame = 10;
             ServerSceneWidth = 1920;
@@ -118,25 +118,25 @@ namespace  HFFramework
             switch (Application.platform)
             {
                 case RuntimePlatform.WebGLPlayer:
-                    runtimePlatform = GamePlatform.Web;
+                    Platform = GamePlatform.Web;
                     break;
                 case RuntimePlatform.OSXEditor:
-                    runtimePlatform = GamePlatform.Editor;
+                    Platform = GamePlatform.Editor;
                     break;
                 case RuntimePlatform.WindowsEditor:
-                    runtimePlatform = GamePlatform.Editor;
+                    Platform = GamePlatform.Editor;
                     break;
                 case RuntimePlatform.WindowsPlayer:
-                    runtimePlatform = GamePlatform.Windows;
+                    Platform = GamePlatform.Windows;
                     break;
                 case RuntimePlatform.OSXPlayer:
-                    runtimePlatform = GamePlatform.Mac;
+                    Platform = GamePlatform.Mac;
                     break;
                 case RuntimePlatform.IPhonePlayer:
-                    runtimePlatform = GamePlatform.iOS;
+                    Platform = GamePlatform.iOS;
                     break;
                 case RuntimePlatform.Android:
-                    runtimePlatform = GamePlatform.Android;
+                    Platform = GamePlatform.Android;
                     break;
                 default:
                     break;

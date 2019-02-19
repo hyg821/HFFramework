@@ -121,7 +121,7 @@ public class LoginController : UIController {
 
     private void Update()
     {
-        //SendNotificationMessage(GameConst.MSG_UI, 123, "str");
+        SendNotificationMessage(GameConst.MSG_UI, 123, "str");
     }
 
     public T CreateMessage<T>(byte [] bytes) where T: IMessage,new()

@@ -30,7 +30,14 @@ namespace HFFramework
         {
             if (GameEnvironment.Instance.IsOpenLog == true)
             {
-                Debug.Log(Time.frameCount+" : "+ GameUtils.SetColor(str, constColor));
+                if (GameEnvironment.Instance.Platform == GamePlatform.Editor)
+                {
+                    Debug.Log(Time.frameCount + " : " + GameUtils.SetColor(str, constColor));
+                }
+                else
+                {
+                    Debug.Log(Time.frameCount + " : " + str);
+                }
             }
         }
 

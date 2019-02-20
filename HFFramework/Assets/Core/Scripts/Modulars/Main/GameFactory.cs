@@ -69,6 +69,15 @@ namespace HFFramework
             return temp.GetComponent<T>();
         }
 
+        /// <summary>
+        ///  销毁自己 new 出来的 object
+        /// </summary>
+        /// <param name="asset"></param>
+        public static void DestroyAsset(UnityEngine.Object asset)
+        {
+            UnityEngine.Object.Destroy(asset);
+        }
+
         public void DestroyManager()
         {
             Instance = null;

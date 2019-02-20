@@ -110,13 +110,14 @@ public class LoginController : UIController {
             NotificationCenter.Instance.RemoveObserver(this, GameConst.MSG_UI, 123);
         });
 
-        webImage.SetWebImage("http://photographs.leonardauction.com/max/189525.jpg");
+        webImage.SetWebImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550678703691&di=ffbd41f0ddfcde0dd19ce793dad58320&imgtype=0&src=http%3A%2F%2Fpic17.nipic.com%2F20111021%2F8633866_210108284151_2.jpg");
 
         print(ConfigMan.Get(0).GetAddress("1"));
         print(ConfigMan.Get(0).love.Count);
         print(ConfigMan.Get(0).sex);
         print(ConfigChat.Get(1).ChooseCtype.name);
         print(ConfigRole.Get(1).GetTime1(1).name);
+
     }
 
     private void Update()

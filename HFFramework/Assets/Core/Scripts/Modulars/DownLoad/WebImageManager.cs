@@ -44,9 +44,9 @@ namespace HFFramework
                 {
                     HTTPRequest request = new HTTPRequest(new Uri(url), delegate (HTTPRequest originalRequest, HTTPResponse response)
                     {
-                        //var m_texture = new Texture2D(0, 0);
-                        //m_texture.LoadImage(response.Data);
-                        Texture2D m_texture = response.DataAsTexture2D;
+                        Texture2D m_texture = new Texture2D(0, 0, TextureFormat.ETC2_RGBA1, false);
+                        m_texture.LoadImage(response.Data);
+                        m_texture.name = url.GetHashCode().ToString();
                         if (m_texture != null)
                         {
                             m_sprite = Sprite.Create(m_texture, new Rect(0, 0, m_texture.width, m_texture.height), new Vector2(0, 0));
@@ -80,6 +80,11 @@ namespace HFFramework
 
         public static void ClearCache()
         {
+            foreach (var item in Instance.cacheDic)
+            {
+                GameFactory.DestroyAsset(item.Value.texture);
+                GameFactory.DestroyAsset(item.Value);
+            }
             Instance.cacheDic.Clear();
             Resources.UnloadUnusedAssets();
         }

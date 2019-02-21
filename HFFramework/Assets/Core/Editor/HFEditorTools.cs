@@ -430,7 +430,7 @@ namespace HFFramework
     [CreateAssetMenu(menuName = "HFFramework/创建一个ScriptableObject 可以自定义 (暂时没用) ")]
     public class GameSetting : ScriptableObject
     {
-
+        
     }
 }
 

@@ -99,15 +99,22 @@ namespace BitmapFontMaker
 
                 string tmpMiniPnfFileName = Path.GetFileNameWithoutExtension(tmpMiniPngPath);
                 char[] tmpAsciiArray = tmpMiniPnfFileName.ToCharArray();
-                if(tmpAsciiArray.Length!=1)
-                {
-                    MessageBox.Show("小图片命名不规范，命名为单字符,比如 A B C 1 2 3 # * 之类");
 
+                int tmpAscii;
+                if (tmpAsciiArray.Contains('^') && tmpAsciiArray.Length != 1)
+                {
+                    tmpAscii = (int)tmpAsciiArray[1];
+                }
+                else if (tmpAsciiArray.Length == 1)
+                {
+                    tmpAscii = (int)tmpAsciiArray[0];
+                }
+                else
+                {
+                    MessageBox.Show("报错图片名字"+ tmpMiniPnfFileName + "小图片命名不规范，命名为单字符,比如 A B C 1 2 3 # * 之类");
                     tmpStreamWrite.Close();
                     return;
-                }
-                int tmpAscii = (int)tmpAsciiArray[0];
-                
+                }             
 
                 Image tmpImageMini = Image.FromFile(tmpMiniPngPath);
 

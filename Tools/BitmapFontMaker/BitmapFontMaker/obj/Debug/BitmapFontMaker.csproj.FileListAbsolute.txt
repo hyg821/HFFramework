@@ -26,3 +26,13 @@ C:\Users\Administrator\Desktop\BitmapFontMaker-master\BitmapFontMaker\obj\Debug\
 C:\Users\Administrator\Desktop\BitmapFontMaker-master\BitmapFontMaker\obj\Debug\BitmapFontMaker.csproj.CoreCompileInputs.cache
 C:\Users\Administrator\Desktop\BitmapFontMaker-master\BitmapFontMaker\obj\Debug\BitmapFontMaker.exe
 C:\Users\Administrator\Desktop\BitmapFontMaker-master\BitmapFontMaker\obj\Debug\BitmapFontMaker.pdb
+E:\GitHubGit\HFFramework\Tools\BitmapFontMaker\BitmapFontMaker\bin\Debug\BitmapFontMaker.exe.config
+E:\GitHubGit\HFFramework\Tools\BitmapFontMaker\BitmapFontMaker\bin\Debug\BitmapFontMaker.exe
+E:\GitHubGit\HFFramework\Tools\BitmapFontMaker\BitmapFontMaker\bin\Debug\BitmapFontMaker.pdb
+E:\GitHubGit\HFFramework\Tools\BitmapFontMaker\BitmapFontMaker\obj\Debug\BitmapFontMaker.csprojAssemblyReference.cache
+E:\GitHubGit\HFFramework\Tools\BitmapFontMaker\BitmapFontMaker\obj\Debug\BitmapFontMaker.Form1.resources
+E:\GitHubGit\HFFramework\Tools\BitmapFontMaker\BitmapFontMaker\obj\Debug\BitmapFontMaker.Properties.Resources.resources
+E:\GitHubGit\HFFramework\Tools\BitmapFontMaker\BitmapFontMaker\obj\Debug\BitmapFontMaker.csproj.GenerateResource.cache
+E:\GitHubGit\HFFramework\Tools\BitmapFontMaker\BitmapFontMaker\obj\Debug\BitmapFontMaker.csproj.CoreCompileInputs.cache
+E:\GitHubGit\HFFramework\Tools\BitmapFontMaker\BitmapFontMaker\obj\Debug\BitmapFontMaker.exe
+E:\GitHubGit\HFFramework\Tools\BitmapFontMaker\BitmapFontMaker\obj\Debug\BitmapFontMaker.pdb

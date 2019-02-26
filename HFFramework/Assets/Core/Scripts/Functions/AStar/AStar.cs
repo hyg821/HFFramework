@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace HFFramework
@@ -39,26 +41,41 @@ namespace HFFramework
 
             Test();
 
-            startNode = GetNode(0, 5);
+            startNode = GetNode(0, 0);
             startNode.BecomeStart();
-            endNode = GetNode(9, 5);
+            endNode = GetNode(9, 0);
             endNode.BecomeEnd();
 
+            Stopwatch watch = new Stopwatch();
+            watch.Start();  //开始监视代码运行时间
+
             Search(startNode);
+
+            watch.Stop();  //停止监视
+            TimeSpan timespan = watch.Elapsed;  //获取当前实例测量得出的总时间
+            print("输出时间" + timespan.TotalMilliseconds);
 
             StartCoroutine(Animation());
         }
 
         public void Test()
         {
-
-
-            for (int i = 0; i < 9; i++)
+            /*
             {
-                Node node = GetNode(5, i);
+                Node node = GetNode(5, 5);
                 node.SetIsCanRun(false);
             }
-            /*
+            */
+
+            
+            {
+                for (int i = 0; i < 9; i++)
+                {
+                    Node node = GetNode(5, i);
+                    node.SetIsCanRun(false);
+                }
+            }
+            
             {
                 Node node = GetNode(0, 6);
                 node.SetIsCanRun(false);
@@ -77,7 +94,6 @@ namespace HFFramework
                 node = GetNode(1, 3);
                 node.SetIsCanRun(false);
             }
-            */
         }
 
         public IEnumerator Animation()
@@ -105,7 +121,7 @@ namespace HFFramework
 
         public void Search(Node node)
         {
-            print("检查" + node.index);
+            //print("检查" + node.index);
 
             //如果是自己直接退出
             if (node == endNode)
@@ -136,11 +152,16 @@ namespace HFFramework
                     }
                     else
                     {
+                        //先算一下 现在的 allG
                         Node oldParent = item.parent;
                         float oldG = item.GetAllG();
+
+                        //再算一下基于node 的allG
                         item.parent = node;
                         float newG = item.GetAllG();
-                        if (oldG < newG)
+
+                        //目的是item追求最小allG 父物体 
+                        if (oldG <= newG)
                         {
                             item.parent = oldParent;
                         }
@@ -151,17 +172,16 @@ namespace HFFramework
                     }
                 }
 
-                if (minNode == null)
-                {
-                    minNode = item;
-                    continue;
-                }
-                else
+                if (minNode != null)
                 {
                     if (minNode.F > item.F)
                     {
                         minNode = item;
                     }
+                }
+                else
+                {
+                    minNode = item;
                 }
             }
 
@@ -227,7 +247,6 @@ namespace HFFramework
                 return false;
             }
         }
-
     }
 
     public struct Index
@@ -289,7 +308,7 @@ namespace HFFramework
                     Vector2 v2 = new Vector2(parent.index.x, parent.index.y);
                     return Vector2.Distance(v1, v2);
                     */
-
+                    
                     int z = Mathf.Abs(index.x - parent.index.x) + Mathf.Abs(index.y - parent.index.y);
                     if (z == 1)
                     {
@@ -297,12 +316,12 @@ namespace HFFramework
                     }
                     else if (z == 2)
                     {
-                        return 14.1f;
+                        return 14f;
                     }
                     else
                     {
                         return 0;
-                    }
+                    }          
                 }
                 else
                 {
@@ -333,9 +352,9 @@ namespace HFFramework
                 Node endNode = AStar.Instance.endNode;
                 Vector2 v2 = new Vector2(endNode.index.x, endNode.index.y);
                 return Vector2.Distance(v1, v2);
-               */
+                */
 
-
+                
                 Node endNode = AStar.Instance.endNode;
                 int z = Mathf.Abs(index.x - endNode.index.x) + Mathf.Abs(index.y - endNode.index.y);
                 return z * 10;

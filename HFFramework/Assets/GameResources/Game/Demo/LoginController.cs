@@ -13,7 +13,8 @@ using Google.Protobuf;
 using Centersdk.Protobuf;
 using Loginservice.Protobuf;
 
-public class LoginController : UIController {
+public class LoginController : UIController
+{
 
     public Image bg;
     public InputField input;
@@ -125,7 +126,7 @@ public class LoginController : UIController {
         SendNotificationMessage(GameConst.MSG_UI, 123, "str");
     }
 
-    public T CreateMessage<T>(byte [] bytes) where T: IMessage,new()
+    public T CreateMessage<T>(byte[] bytes) where T : IMessage, new()
     {
         T t1 = new T();
         t1.MergeFrom(bytes);

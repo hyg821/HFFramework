@@ -10,6 +10,7 @@ namespace HFFramework
     {
         public static AStar Instance;
 
+        //最大只能是100 100
         int MaxX = 10;
         int MaxY = 10;
 
@@ -27,9 +28,9 @@ namespace HFFramework
         {
             Instance = this;
 
-            for (int i = 0; i < MaxX; i++)
+            for (short i = 0; i < MaxX; i++)
             {
-                for (int j = 0; j < MaxY; j++)
+                for (short j = 0; j < MaxY; j++)
                 {
                     GameObject gb = GameObject.Instantiate(prefab);
                     Node node = gb.AddComponent<Node>();
@@ -69,7 +70,7 @@ namespace HFFramework
 
             
             {
-                for (int i = 0; i < 9; i++)
+                for (short i = 0; i < 9; i++)
                 {
                     Node node = GetNode(5, i);
                     node.SetIsCanRun(false);
@@ -107,7 +108,7 @@ namespace HFFramework
             }
         }
 
-        public Node GetNode(int x, int y)
+        public Node GetNode(short x, short y)
         {
             Index idx = new Index
             {
@@ -195,12 +196,12 @@ namespace HFFramework
 
         public void FindAroundNodesToOpenList(Node node)
         {
-            int x = node.index.x;
-            int y = node.index.y;
+            short x = node.index.x;
+            short y = node.index.y;
 
-            for (int i = x - 1; i <= x + 1; i++)
+            for (short i = (short)(x - 1); i <= x + 1; i++)
             {
-                for (int j = y - 1; j <= y + 1; j++)
+                for (short j = (short)(y - 1); j <= y + 1; j++)
                 {
                     if (i != x || y != j)
                     {
@@ -249,10 +250,27 @@ namespace HFFramework
         }
     }
 
-    public struct Index
+    public struct Index:IEquatable<Index>
     {
-        public int x;
-        public int y;
+        public short x;
+        public short y;
+
+        public override int GetHashCode()
+        {
+            return x * 1000 + y;
+        }
+
+        public bool Equals(Index other)
+        {
+            if (this.x==other.x&&this.y==other.y)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public override string ToString()
         {
@@ -270,7 +288,7 @@ namespace HFFramework
 
         public SpriteRenderer render;
 
-        public void Init(int x, int y)
+        public void Init(short x, short y)
         {
             index = new Index
             {

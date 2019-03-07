@@ -184,7 +184,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			else
 			{
 				throw new ArgumentException(
-					"Invalid parameter passed to HC128 init - " + Platform.GetTypeName(parameters),
+					"Invalid parameter passed to HC128 init - " + Org.BouncyCastle.Utilities.Platform.GetTypeName(parameters),
 					"parameters");
 			}
 

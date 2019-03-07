@@ -172,7 +172,7 @@ namespace Org.BouncyCastle.X509
 			Stream inStream)
 		{
 			X509Certificate cert;
-            IList certs = Platform.CreateArrayList();
+            IList certs = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 
 			while ((cert = ReadCertificate(inStream)) != null)
 			{

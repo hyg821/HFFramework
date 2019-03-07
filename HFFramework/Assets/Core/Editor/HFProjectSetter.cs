@@ -39,7 +39,7 @@ namespace HFFramework
             PlayerSettings.allowedAutorotateToLandscapeRight = true;
 
             //安卓 ARMv7 包体减小 
-            PlayerSettings.Android.targetDevice = AndroidTargetDevice.ARMv7;
+            PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7;
 
             //.net 4.6 代码运行
             PlayerSettings.scriptingRuntimeVersion = ScriptingRuntimeVersion.Latest;

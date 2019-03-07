@@ -14,7 +14,6 @@ namespace BestHTTP.PlatformSupport.TcpClient.WinRT
         public TimeSpan ConnectTimeout { get; set; }
 
         public bool UseHTTPSProtocol { get; set; }
-
 #endregion
 
 #region Private Properties
@@ -39,6 +38,7 @@ namespace BestHTTP.PlatformSupport.TcpClient.WinRT
 
             Socket = new StreamSocket();
             Socket.Control.KeepAlive = true;
+            Socket.Control.NoDelay = true;
 
             var host = new HostName(hostName);
 
@@ -51,18 +51,24 @@ namespace BestHTTP.PlatformSupport.TcpClient.WinRT
                         Tls12;
 #endif
 
+            System.Threading.CancellationTokenSource tokenSource = new System.Threading.CancellationTokenSource();
+
             // https://msdn.microsoft.com/en-us/library/windows/apps/xaml/jj710176.aspx#content
             try
             {
-                var result = Socket.ConnectAsync(host, UseHTTPSProtocol ? "https" : port.ToString(), spl);
-
                 if (ConnectTimeout > TimeSpan.Zero)
-                    Connected = result.AsTask().Wait(ConnectTimeout);
-                else
-                    Connected = result.AsTask().Wait(TimeSpan.FromMilliseconds(-1));
+                    tokenSource.CancelAfter(ConnectTimeout);
+
+                var task = Socket.ConnectAsync(host, UseHTTPSProtocol ? "https" : port.ToString(), spl).AsTask(tokenSource.Token);
+                task.ConfigureAwait(false);
+                task.Wait();
+                Connected = task.IsCompleted;
             }
             catch(AggregateException ex)
             {
+                //https://msdn.microsoft.com/en-us/library/dd537614(v=vs.110).aspx?f=255&MSPPError=-2147217396
+
+                Connected = false;
                 if (ex.InnerException != null)
                     //throw ex.InnerException;
                 {
@@ -73,6 +79,10 @@ namespace BestHTTP.PlatformSupport.TcpClient.WinRT
                 }
                 else
                     throw ex;
+            }
+            finally {
+                // https://docs.microsoft.com/en-us/dotnet/api/system.threading.cancellationtokensource
+                tokenSource.Dispose();
             }
 
             if (!Connected)

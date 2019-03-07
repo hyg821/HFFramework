@@ -1,4 +1,4 @@
-﻿#if !BESTHTTP_DISABLE_COOKIES && (!UNITY_WEBGL || UNITY_EDITOR)
+﻿#if !BESTHTTP_DISABLE_COOKIES //&& (!UNITY_WEBGL || UNITY_EDITOR)
 
 using System;
 using System.Collections.Generic;
@@ -229,8 +229,9 @@ namespace BestHTTP.Cookies
 
                 cookie.Date = cookie.LastAccess = DateTime.UtcNow;
             }
-            catch
+            catch (Exception ex)
             {
+                HTTPManager.Logger.Warning("Cookie", "Parse - Couldn't parse header: " + header + " exception: " + ex.ToString() + " " + ex.StackTrace);
             }
             return cookie;
         }

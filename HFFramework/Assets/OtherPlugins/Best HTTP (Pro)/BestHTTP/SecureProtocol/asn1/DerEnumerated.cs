@@ -24,7 +24,7 @@ namespace Org.BouncyCastle.Asn1
                 return (DerEnumerated)obj;
             }
 
-            throw new ArgumentException("illegal object in GetInstance: " + Platform.GetTypeName(obj));
+            throw new ArgumentException("illegal object in GetInstance: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj));
         }
 
         /**

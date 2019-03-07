@@ -65,7 +65,7 @@ namespace Org.BouncyCastle.Asn1.X509
             if (obj is DerGeneralizedTime)
                 return new Time((DerGeneralizedTime)obj);
 
-            throw new ArgumentException("unknown object in factory: " + Platform.GetTypeName(obj), "obj");
+            throw new ArgumentException("unknown object in factory: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj), "obj");
         }
 
         public string GetTime()

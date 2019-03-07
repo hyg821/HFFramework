@@ -313,7 +313,7 @@ namespace Org.BouncyCastle.X509
 				Asn1Sequence seq = Asn1Sequence.GetInstance(
 					X509ExtensionUtilities.FromExtensionValue(str));
 
-                IList list = Platform.CreateArrayList();
+                IList list = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 
 				foreach (DerObjectIdentifier oid in seq)
 				{
@@ -365,10 +365,10 @@ namespace Org.BouncyCastle.X509
 
 			GeneralNames gns = GeneralNames.GetInstance(asn1Object);
 
-            IList result = Platform.CreateArrayList();
+            IList result = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 			foreach (GeneralName gn in gns.GetNames())
 			{
-                IList entry = Platform.CreateArrayList();
+                IList entry = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 				entry.Add(gn.TagNo);
 				entry.Add(gn.Name.ToString());
 				result.Add(entry);
@@ -454,7 +454,7 @@ namespace Org.BouncyCastle.X509
 		public override string ToString()
 		{
 			StringBuilder buf = new StringBuilder();
-			string nl = Platform.NewLine;
+			string nl = Org.BouncyCastle.Utilities.Platform.NewLine;
 
 			buf.Append("  [0]         Version: ").Append(this.Version).Append(nl);
 			buf.Append("         SerialNumber: ").Append(this.SerialNumber).Append(nl);
@@ -578,7 +578,7 @@ namespace Org.BouncyCastle.X509
 
 			streamCalculator.Stream.Write(b, 0, b.Length);
 
-            Platform.Dispose(streamCalculator.Stream);
+            Org.BouncyCastle.Utilities.Platform.Dispose(streamCalculator.Stream);
 
             if (!((IVerifier)streamCalculator.GetResult()).IsVerified(this.GetSignature()))
 			{
@@ -595,7 +595,7 @@ namespace Org.BouncyCastle.X509
 			Asn1Encodable p2 = id2.Parameters;
 
 			if ((p1 == null) == (p2 == null))
-				return Platform.Equals(p1, p2);
+				return Org.BouncyCastle.Utilities.Platform.Equals(p1, p2);
 
 			// Exactly one of p1, p2 is null at this point
 			return p1 == null

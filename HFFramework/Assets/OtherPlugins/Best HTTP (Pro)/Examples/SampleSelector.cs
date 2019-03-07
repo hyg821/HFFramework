@@ -72,10 +72,6 @@ public class SampleSelector : MonoBehaviour
     {
         HTTPManager.Logger.Level = BestHTTP.Logger.Loglevels.All;
 
-#if !BESTHTTP_DISABLE_ALTERNATE_SSL && (!UNITY_WEBGL || UNITY_EDITOR)
-        BestHTTP.HTTPManager.UseAlternateSSLDefaultValue = true;
-#endif
-
 #if UNITY_SAMSUNGTV
         SamsungTV.touchPadMode = SamsungTV.TouchPadMode.Mouse;
 
@@ -88,12 +84,6 @@ public class SampleSelector : MonoBehaviour
         Cursor.SetCursor(tex, Vector2.zero, CursorMode.Auto);
 #endif
 
-#if UNITY_WEBPLAYER
-    #if !BESTHTTP_DISABLE_PROXY
-        // Set up a global proxy in webplayer builds to breach the Socket Policy Service restriction
-        BestHTTP.HTTPManager.Proxy = new BestHTTP.HTTPProxy(new Uri("http://u3assets.cloudapp.net:8888"), null, true);
-    #endif      
-#endif
         Samples.Add(new SampleDescriptor(null, "HTTP Samples", string.Empty, string.Empty) { IsLabel = true } );
 
         Samples.Add(new SampleDescriptor(typeof(TextureDownloadSample), "Texture Download", "With HTTPManager.MaxConnectionPerServer you can control how many requests can be processed per server parallel.\n\nFeatures demoed in this example:\n-Parallel requests to the same server\n-Controlling the parallelization\n-Automatic Caching\n-Create a Texture2D from the downloaded data", CodeBlocks.TextureDownloadSample));
@@ -110,16 +100,23 @@ public class SampleSelector : MonoBehaviour
 #if !BESTHTTP_DISABLE_SOCKETIO
         Samples.Add(new SampleDescriptor(null, "Socket.IO Samples", string.Empty, string.Empty) { IsLabel = true });
         Samples.Add(new SampleDescriptor(typeof(SocketIOChatSample), "Chat", "This example uses the Socket.IO implementation to connect to the official Chat demo server(http://chat.socket.io/).\n\nFeatures demoed in this example:\n-Instantiating and setting up a SocketManager to connect to a Socket.IO server\n-Changing SocketOptions property\n-Subscribing to Socket.IO events\n-Sending custom events to the server", CodeBlocks.SocketIOChatSample));
+#if !UNITY_WEBGL || UNITY_EDITOR
         Samples.Add(new SampleDescriptor(typeof(SocketIOWePlaySample), "WePlay", "This example uses the Socket.IO implementation to connect to the official WePlay demo server(http://weplay.io/).\n\nFeatures demoed in this example:\n-Instantiating and setting up a SocketManager to connect to a Socket.IO server\n-Subscribing to Socket.IO events\n-Receiving binary data\n-How to load a texture from the received binary data\n-How to disable payload decoding for fine tune for some speed\n-Sending custom events to the server", CodeBlocks.SocketIOWePlaySample));
 #endif
+#endif
 
-#if !BESTHTTP_DISABLE_SIGNALR
+#if !BESTHTTP_DISABLE_SIGNALR_CORE
+        Samples.Add(new SampleDescriptor(null, "SignalR Core Samples", string.Empty, string.Empty) { IsLabel = true });
+        Samples.Add(new SampleDescriptor(typeof(TestHubExample), "Hub Sample", "This sample demonstrates most of the functionalities of the SignalR protocol:\n-How to set up HubConnection to connect to the server\n-Subscribing to server-callable function\n-Calling client-callable function on the server\n-Calling and handling streaming\n", string.Empty));
+#endif
+
+#if (!BESTHTTP_DISABLE_SIGNALR && !UNITY_WEBGL) || UNITY_EDITOR
         Samples.Add(new SampleDescriptor(null, "SignalR Samples", string.Empty, string.Empty) { IsLabel = true });
         Samples.Add(new SampleDescriptor(typeof(SimpleStreamingSample), "Simple Streaming", "A very simple example of a background thread that broadcasts the server time to all connected clients every two seconds.\n\nFeatures demoed in this example:\n-Subscribing and handling non-hub messages", CodeBlocks.SignalR_SimpleStreamingSample));
         Samples.Add(new SampleDescriptor(typeof(ConnectionAPISample), "Connection API", "Demonstrates all features of the lower-level connection API including starting and stopping, sending and receiving messages, and managing groups.\n\nFeatures demoed in this example:\n-Instantiating and setting up a SignalR Connection to connect to a SignalR server\n-Changing the default Json encoder\n-Subscribing to state changes\n-Receiving and handling of non-hub messages\n-Sending non-hub messages\n-Managing groups", CodeBlocks.SignalR_ConnectionAPISample));
         Samples.Add(new SampleDescriptor(typeof(ConnectionStatusSample), "Connection Status", "Demonstrates how to handle the events that are raised when connections connect, reconnect and disconnect from the Hub API.\n\nFeatures demoed in this example:\n-Connecting to a Hub\n-Setting up a callback for Hub events\n-Handling server-sent method call requests\n-Calling a Hub-method on the server-side\n-Opening and closing the SignalR Connection", CodeBlocks.SignalR_ConnectionStatusSample));
         Samples.Add(new SampleDescriptor(typeof(DemoHubSample), "Demo Hub", "A contrived example that exploits every feature of the Hub API.\n\nFeatures demoed in this example:\n-Creating and using wrapper Hub classes to encapsulate hub functions and events\n-Handling long running server-side functions by handling progress messages\n-Groups\n-Handling server-side functions with return value\n-Handling server-side functions throwing Exceptions\n-Calling server-side functions with complex type parameters\n-Calling server-side functions with array parameters\n-Calling overloaded server-side functions\n-Changing Hub states\n-Receiving and handling hub state changes\n-Calling server-side functions implemented in VB .NET", CodeBlocks.SignalR_DemoHubSample));
-#if !UNITY_WEBGL
+#if !UNITY_WEBGL || UNITY_EDITOR
         Samples.Add(new SampleDescriptor(typeof(AuthenticationSample), "Authentication", "Demonstrates how to use the authorization features of the Hub API to restrict certain Hubs and methods to specific users.\n\nFeatures demoed in this example:\n-Creating and using wrapper Hub classes to encapsulate hub functions and events\n-Create and use a Header-based authenticator to access protected APIs\n-SignalR over HTTPS", CodeBlocks.SignalR_AuthenticationSample));
 #endif
 #endif
@@ -230,9 +227,8 @@ public class SampleSelector : MonoBehaviour
 
                     GUILayout.FlexibleSpace();
                     if (GUILayout.Button("Clear Cookies"))
-                        //BestHTTP.Cookies.CookieJar.Clear();
-                        BestHTTP.HTTPManager.OnQuit();
-
+                        BestHTTP.Cookies.CookieJar.Clear();
+ 
                     GUILayout.EndVertical();
                 }
 #endif

@@ -101,7 +101,7 @@ namespace Org.BouncyCastle.Asn1
 				dOut.WriteObject(obj);
 			}
 
-            Platform.Dispose(dOut);
+            Org.BouncyCastle.Utilities.Platform.Dispose(dOut);
 
             byte[] bytes = bOut.ToArray();
 

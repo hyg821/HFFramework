@@ -31,7 +31,7 @@ namespace Org.BouncyCastle.Asn1.X509
                 return new CrlDistPoint((Asn1Sequence) obj);
             }
 
-            throw new ArgumentException("unknown object in factory: " + Platform.GetTypeName(obj), "obj");
+            throw new ArgumentException("unknown object in factory: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj), "obj");
 		}
 
 		private CrlDistPoint(
@@ -77,7 +77,7 @@ namespace Org.BouncyCastle.Asn1.X509
 		public override string ToString()
 		{
 			StringBuilder buf = new StringBuilder();
-			string sep = Platform.NewLine;
+			string sep = Org.BouncyCastle.Utilities.Platform.NewLine;
 
 			buf.Append("CRLDistPoint:");
 			buf.Append(sep);

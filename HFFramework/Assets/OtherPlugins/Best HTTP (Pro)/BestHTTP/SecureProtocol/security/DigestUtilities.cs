@@ -38,8 +38,8 @@ namespace Org.BouncyCastle.Security
         {
         }
 
-        private static readonly IDictionary algorithms = Platform.CreateHashtable();
-        private static readonly IDictionary oids = Platform.CreateHashtable();
+        private static readonly IDictionary algorithms = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
+        private static readonly IDictionary oids = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
 
         static DigestUtilities()
         {
@@ -117,7 +117,7 @@ namespace Org.BouncyCastle.Security
             if (mechanism == null)
                 throw new System.ArgumentNullException("mechanism");
 
-            mechanism = Platform.ToUpperInvariant(mechanism);
+            mechanism = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(mechanism);
             string aliased = (string) algorithms[mechanism];
 
             if (aliased != null)
@@ -140,7 +140,7 @@ namespace Org.BouncyCastle.Security
         public static IDigest GetDigest(
             string algorithm)
         {
-            string upper = Platform.ToUpperInvariant(algorithm);
+            string upper = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(algorithm);
             string mechanism = (string) algorithms[upper];
 
             if (mechanism == null)

@@ -65,9 +65,13 @@ public class WebSocketSample : MonoBehaviour
                     // Create the WebSocket instance
                     webSocket = new WebSocket(new Uri(address));
 
-#if !BESTHTTP_DISABLE_PROXY && !UNITY_WEBGL
+#if !UNITY_WEBGL
+                    webSocket.StartPingThread = true;
+
+#if !BESTHTTP_DISABLE_PROXY
                     if (HTTPManager.Proxy != null)
                         webSocket.InternalRequest.Proxy = new HTTPProxy(HTTPManager.Proxy.Address, HTTPManager.Proxy.Credentials, false);
+#endif
 #endif
 
                     // Subscribe to the WS events
@@ -109,9 +113,9 @@ public class WebSocketSample : MonoBehaviour
             });
     }
 
-    #endregion
+#endregion
 
-    #region WebSocket Event Handlers
+#region WebSocket Event Handlers
 
     /// <summary>
     /// Called when the web socket is open, and we are ready to send and receive data

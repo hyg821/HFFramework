@@ -20,7 +20,7 @@ namespace Org.BouncyCastle.Crypto.Modes.Gcm
             if (lookupPowX2 != null && Arrays.AreEqual(y, (uint[])lookupPowX2[0]))
                 return;
 
-            lookupPowX2 = Platform.CreateArrayList(8);
+            lookupPowX2 = Org.BouncyCastle.Utilities.Platform.CreateArrayList(8);
             lookupPowX2.Add(y);
         }
 

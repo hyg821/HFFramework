@@ -1080,16 +1080,16 @@ namespace Org.BouncyCastle.Asn1.Sec
         }
 
 
-        private static readonly IDictionary objIds = Platform.CreateHashtable();
-        private static readonly IDictionary curves = Platform.CreateHashtable();
-        private static readonly IDictionary names = Platform.CreateHashtable();
+        private static readonly IDictionary objIds = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
+        private static readonly IDictionary curves = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
+        private static readonly IDictionary names = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
 
         private static void DefineCurve(
             string					name,
             DerObjectIdentifier		oid,
             X9ECParametersHolder	holder)
         {
-            objIds.Add(Platform.ToUpperInvariant(name), oid);
+            objIds.Add(Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(name), oid);
             names.Add(oid, name);
             curves.Add(oid, holder);
         }
@@ -1161,7 +1161,7 @@ namespace Org.BouncyCastle.Asn1.Sec
         public static DerObjectIdentifier GetOid(
             string name)
         {
-            return (DerObjectIdentifier)objIds[Platform.ToUpperInvariant(name)];
+            return (DerObjectIdentifier)objIds[Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(name)];
         }
 
         /**

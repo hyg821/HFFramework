@@ -1,70 +1,29 @@
 ﻿#if (UNITY_WSA || BUILD_FOR_WP8) && !UNITY_EDITOR && !ENABLE_IL2CPP
 
 using System;
+using System.IO;
 
 using Windows.Storage.Streams;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace BestHTTP.PlatformSupport.TcpClient.WinRT
 {
     public sealed class DataReaderWriterStream : System.IO.Stream
     {
         private TcpClient Client { get; set; }
-        private DataReader Reader { get; set; }
-        private DataWriter Writer { get; set; }
 
         public DataReaderWriterStream(TcpClient socket)
         {
             this.Client = socket;
-            this.Reader = new DataReader(Client.Socket.InputStream);
-            this.Writer = new DataWriter(Client.Socket.OutputStream);
         }
 
-#region Stream interface
-
-        public override bool CanRead
-        {
-            get { return true; }
-        }
-
-        public override bool CanSeek
-        {
-            get { return false; }
-        }
-
-        public override bool CanWrite
-        {
-            get { return true; }
-        }
-
-        public override void Flush()
-        {
-            Writer.StoreAsync().AsTask().Wait();
-        }
-
-        public override long Length
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public override long Position
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool DataAvailable
-        {
-            get
-            {
-                return Reader.UnconsumedBufferLength > 0;
-            }
-        }
+        public override bool CanRead { get { return true; } }
+        public override bool CanSeek { get { return false; } }
+        public override bool CanWrite { get { return true; } }
+        public override void Flush() { }
+        public override long Length { get { throw new NotImplementedException(); } }
+        public override long Position { get { throw new NotImplementedException(); } set { throw new NotImplementedException(); } }
+        public bool DataAvailable { get { return true; } }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
@@ -72,8 +31,10 @@ namespace BestHTTP.PlatformSupport.TcpClient.WinRT
 
             try
             {
-                var task = Client.Socket.InputStream.ReadAsync(tmpBuffer, (uint)count, InputStreamOptions.None);
-                task.AsTask().Wait();
+                var task = Client.Socket.InputStream.ReadAsync(tmpBuffer, tmpBuffer.Capacity, InputStreamOptions.Partial)
+                            .AsTask();
+                task.ConfigureAwait(false);
+                task.Wait();
             }
             catch(AggregateException ex)
             {
@@ -83,65 +44,22 @@ namespace BestHTTP.PlatformSupport.TcpClient.WinRT
                     throw ex;
             }
 
-            /*byte[] tmpBuff = tmpBuffer.ToArray();
-            int length = Math.Min(tmpBuff.Length, count);
-
-            Array.Copy(tmpBuff, 0, buffer, offset, length);
-
-            return length;*/
-            
-            DataReader buf = DataReader.FromBuffer(tmpBuffer);
-            int length = (int)buf.UnconsumedBufferLength;
+            DataReader reader = DataReader.FromBuffer(tmpBuffer);
+            int length = (int)reader.UnconsumedBufferLength;
             for (int i = 0; i < length; ++i)
-                buffer[offset + i] = buf.ReadByte();
+                buffer[offset + i] = reader.ReadByte();
             return length;
         }
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            for (int i = 0; i < count; ++i)
-                Writer.WriteByte(buffer[offset + i]);
+            var task  = Client.Socket.OutputStream.WriteAsync(buffer.AsBuffer(offset, count)).AsTask<uint, uint>();
+            task.ConfigureAwait(false);
+            task.Wait();
         }
 
-        public override long Seek(long offset, System.IO.SeekOrigin origin)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void SetLength(long value)
-        {
-            throw new NotImplementedException();
-        }
-
-#endregion
-
-#region Dispose
-
-        private bool disposed = false;
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    if (Reader != null)
-                    {
-                        Reader.Dispose();
-                        Reader = null;
-                    }
-
-                    if (Writer != null)
-                    {
-                        Writer.Dispose();
-                        Writer = null;
-                    }
-                }
-                disposed = true;
-            }
-            base.Dispose(disposing);
-        }
-
-#endregion
+        public override long Seek(long offset, System.IO.SeekOrigin origin) { return 0; }
+        public override void SetLength(long value) { }
     }
 }
 

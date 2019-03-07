@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.X509.Extension
 		private static ICollection GetAlternativeName(
 			Asn1OctetString extVal)
 		{
-			IList temp = Platform.CreateArrayList();
+			IList temp = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 
 			if (extVal != null)
 			{
@@ -48,7 +48,7 @@ namespace Org.BouncyCastle.X509.Extension
 
 					foreach (GeneralName genName in seq)
 					{
-                        IList list = Platform.CreateArrayList();
+                        IList list = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 						list.Add(genName.TagNo);
 
 						switch (genName.TagNo)

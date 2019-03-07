@@ -1,51 +1,37 @@
+------------------------------------ Getting Started ------------------------------------
+
+Open up the Getting Started guide from "Tools > Odin Inspector > Getting Started."
 
 
-                                       Getting Started
-==============================================================================================
+------------------------------------- Helpful Links -------------------------------------
 
-   To get started using Odin in the shortest time possible, we've included two demo scenes 
-   showcasing various features of Odin Inspector. Make sure to at least check out the 
-   "1 - Odin Attributes Overview" scene located in the "Demos/Odin Inspector/Scene" folder.
-
-
-                                           Manual
-==============================================================================================
-
-   For a more in-depth walkthrough of Odin Inspector, check out our online manual:
-   
-   http://sirenix.net/odininspector/manual/introduction/getting-started
+Manual:             https://sirenix.net/odininspector/manual/introduction/getting-started
+API Documentaion:   https://sirenix.net/odininspector/documentation
+FAQ:                https://sirenix.net/odininspector/faq
+Roadmap:            https://sirenix.net/odininspector/roadmap
+Release Notes:      https://sirenix.net/odininspector/releasenotes
+Issue Tracker:      https://bitbucket.org/sirenix/odin-inspector
 
 
-                                        Documentation
-==============================================================================================
+--------------------------------- Community and Support ---------------------------------
 
-    Our online API documentation for Odin Inspector is full of examples and explanations of 
-    various features. So if you want to know more about any features you discover, be sure 
-    to look it up in the documentation.
+If you have any issues, suggestions or want advice, then you're more than welcome 
+to join us on Discord, or reach out to us by any other means.
 
-    http://sirenix.net/odininspector/documentation
-
-
-                                        Issue Tracker
-==============================================================================================
-
-    We really hope you enjoy the product and it doesn't get in your way. But if you stumble 
-	upon any bugs or shortcomings, or have any feature requests, make sure to post them on 
-	our issue tracker. We'll get on it as soon as possible.
-
-    https://bitbucket.org/sirenix/odin-inspector
+Support:            https://sirenix.net/support
+Community Addons:   https://devdog.io/unity-assets/odin-inspector-and-serializer/community-bonus/
+Discord:            https://discord.gg/AgDmStu
 
 
-                                      Special Requests
-==============================================================================================
-    
-    If you have any special request and want something tailored to fit your needs, make sure
-	to reach out to us at Sirenix, we will most likely be happy to help you out!
+---------------------------------------Thanks you!---------------------------------------
 
-    http://www.sirenix.net/odininspector
+We really hope you like using Odin. Be sure to leave a review on the Asset Store,
+that helps us out a lot!
 
+Leave a review:     https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041
 
 
+Odin Inspector is published by Devdog and developed by Sirenix.
 
-
-
+Devdog:             https://devdog.io
+Sirenix:            Https://sirenix.net

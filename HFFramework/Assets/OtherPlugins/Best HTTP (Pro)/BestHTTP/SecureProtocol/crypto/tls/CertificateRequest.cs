@@ -95,7 +95,7 @@ namespace Org.BouncyCastle.Crypto.Tls
             }
             else
             {
-                IList derEncodings = Platform.CreateArrayList(mCertificateAuthorities.Count);
+                IList derEncodings = Org.BouncyCastle.Utilities.Platform.CreateArrayList(mCertificateAuthorities.Count);
 
                 int totalLength = 0;
                 foreach (Asn1Encodable certificateAuthority in mCertificateAuthorities)
@@ -141,7 +141,7 @@ namespace Org.BouncyCastle.Crypto.Tls
                 supportedSignatureAlgorithms = TlsUtilities.ParseSupportedSignatureAlgorithms(false, input);
             }
 
-            IList certificateAuthorities = Platform.CreateArrayList();
+            IList certificateAuthorities = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
             byte[] certAuthData = TlsUtilities.ReadOpaque16(input);
             MemoryStream bis = new MemoryStream(certAuthData, false);
             while (bis.Position < bis.Length)

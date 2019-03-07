@@ -7,7 +7,7 @@ using Org.BouncyCastle.Utilities;
 
 namespace Org.BouncyCastle.Crypto.Modes.Gcm
 {
-    public class Tables8kGcmMultiplier
+    public sealed class Tables8kGcmMultiplier
         : IGcmMultiplier
     {
         private byte[] H;
@@ -80,6 +80,7 @@ namespace Org.BouncyCastle.Crypto.Modes.Gcm
             }
         }
 
+#if true //!ENABLE_IL2CPP || UNITY_WEBGL
         public void MultiplyH(byte[] x)
         {
             uint[] z = new uint[4];
@@ -101,6 +102,98 @@ namespace Org.BouncyCastle.Crypto.Modes.Gcm
 
             Pack.UInt32_To_BE(z, x, 0);
         }
+#else
+        uint[] z = new uint[4];
+        public unsafe void MultiplyH(byte[] x)
+        {
+            //Array.Clear(z, 0, z.Length);
+
+            fixed (byte* px = x)
+            fixed (uint* pz = z)
+            {
+                pz[0] = pz[1] = pz[2] = pz[3] = 0;
+
+                for (int i = 15; i >= 0; --i)
+                {
+                    //GcmUtilities.Xor(z, M[i + i][x[i] & 0x0f]);
+                    //uint[] m = M[i + i][x[i] & 0x0f];
+                    //z[0] ^= m[0];
+                    //z[1] ^= m[1];
+                    //z[2] ^= m[2];
+                    //z[3] ^= m[3];
+
+                    fixed (uint* pm = M[i + i][px[i] & 0x0f])
+                    {
+                        pz[0] ^= pm[0];
+                        pz[1] ^= pm[1];
+                        pz[2] ^= pm[2];
+                        pz[3] ^= pm[3];
+                    }
+
+                    //GcmUtilities.Xor(z, M[i + i + 1][(x[i] & 0xf0) >> 4]);
+                    //m = M[i + i + 1][(x[i] & 0xf0) >> 4];
+                    //z[0] ^= m[0];
+                    //z[1] ^= m[1];
+                    //z[2] ^= m[2];
+                    //z[3] ^= m[3];
+
+                    fixed (uint* pm = M[i + i + 1][(px[i] & 0xf0) >> 4])
+                    {
+                        pz[0] ^= pm[0];
+                        pz[1] ^= pm[1];
+                        pz[2] ^= pm[2];
+                        pz[3] ^= pm[3];
+                    }
+                }
+
+                //int off = 0;
+                //for (int i = 0; i < 4; ++i)
+                //{
+                //    uint n = pz[i];
+                //
+                //    px[off + 0] = (byte)(n >> 24);
+                //    px[off + 1] = (byte)(n >> 16);
+                //    px[off + 2] = (byte)(n >> 8);
+                //    px[off + 3] = (byte)(n);
+                //
+                //    off += 4;
+                //}
+                // i = 0
+                uint n = pz[0];
+                
+                px[0] = (byte)(n >> 24);
+                px[1] = (byte)(n >> 16);
+                px[2] = (byte)(n >> 8);
+                px[3] = (byte)(n);
+
+                // i = 1
+                n = pz[1];
+
+                px[4] = (byte)(n >> 24);
+                px[5] = (byte)(n >> 16);
+                px[6] = (byte)(n >> 8);
+                px[7] = (byte)(n);
+
+                // i = 2
+                n = pz[2];
+
+                px[8] = (byte)(n >> 24);
+                px[9] = (byte)(n >> 16);
+                px[10] = (byte)(n >> 8);
+                px[11] = (byte)(n);
+
+                // i = 3
+                n = pz[3];
+
+                px[12] = (byte)(n >> 24);
+                px[13] = (byte)(n >> 16);
+                px[14] = (byte)(n >> 8);
+                px[15] = (byte)(n);
+            }
+
+            //Pack.UInt32_To_BE(z, x, 0);
+        }
+#endif
     }
 }
 

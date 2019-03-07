@@ -117,7 +117,7 @@ namespace Org.BouncyCastle.X509
 
             streamCalculator.Stream.Write(b, 0, b.Length);
 
-            Platform.Dispose(streamCalculator.Stream);
+            Org.BouncyCastle.Utilities.Platform.Dispose(streamCalculator.Stream);
 
             if (!((IVerifier)streamCalculator.GetResult()).IsVerified(this.GetSignature()))
             {
@@ -261,7 +261,7 @@ namespace Org.BouncyCastle.X509
 		public override string ToString()
 		{
 			StringBuilder buf = new StringBuilder();
-			string nl = Platform.NewLine;
+			string nl = Org.BouncyCastle.Utilities.Platform.NewLine;
 
 			buf.Append("              Version: ").Append(this.Version).Append(nl);
 			buf.Append("             IssuerDN: ").Append(this.IssuerDN).Append(nl);

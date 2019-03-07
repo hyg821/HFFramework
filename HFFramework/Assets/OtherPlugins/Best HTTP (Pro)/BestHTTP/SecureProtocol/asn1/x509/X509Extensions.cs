@@ -165,7 +165,7 @@ namespace Org.BouncyCastle.Asn1.X509
 		 */
 		public static readonly DerObjectIdentifier TargetInformation = new DerObjectIdentifier("2.5.29.55");
 
-        private readonly IDictionary extensions = Platform.CreateHashtable();
+        private readonly IDictionary extensions = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
         private readonly IList ordering;
 
 		public static X509Extensions GetInstance(
@@ -193,7 +193,7 @@ namespace Org.BouncyCastle.Asn1.X509
                 return GetInstance(((Asn1TaggedObject) obj).GetObject());
             }
 
-            throw new ArgumentException("unknown object in factory: " + Platform.GetTypeName(obj), "obj");
+            throw new ArgumentException("unknown object in factory: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj), "obj");
 		}
 
 		/**
@@ -204,7 +204,7 @@ namespace Org.BouncyCastle.Asn1.X509
         private X509Extensions(
             Asn1Sequence seq)
         {
-            this.ordering = Platform.CreateArrayList();
+            this.ordering = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 
 			foreach (Asn1Encodable ae in seq)
 			{
@@ -247,11 +247,11 @@ namespace Org.BouncyCastle.Asn1.X509
         {
             if (ordering == null)
             {
-                this.ordering = Platform.CreateArrayList(extensions.Keys);
+                this.ordering = Org.BouncyCastle.Utilities.Platform.CreateArrayList(extensions.Keys);
             }
             else
             {
-                this.ordering = Platform.CreateArrayList(ordering);
+                this.ordering = Org.BouncyCastle.Utilities.Platform.CreateArrayList(ordering);
             }
 
             foreach (DerObjectIdentifier oid in this.ordering)
@@ -270,7 +270,7 @@ namespace Org.BouncyCastle.Asn1.X509
             IList oids,
             IList values)
         {
-            this.ordering = Platform.CreateArrayList(oids);
+            this.ordering = Org.BouncyCastle.Utilities.Platform.CreateArrayList(oids);
 
             int count = 0;
             foreach (DerObjectIdentifier oid in this.ordering)
@@ -305,11 +305,11 @@ namespace Org.BouncyCastle.Asn1.X509
         {
             if (ordering == null)
             {
-                this.ordering = Platform.CreateArrayList(extensions.Keys);
+                this.ordering = Org.BouncyCastle.Utilities.Platform.CreateArrayList(extensions.Keys);
             }
             else
             {
-                this.ordering = Platform.CreateArrayList(ordering);
+                this.ordering = Org.BouncyCastle.Utilities.Platform.CreateArrayList(ordering);
             }
 
             foreach (DerObjectIdentifier oid in this.ordering)
@@ -329,7 +329,7 @@ namespace Org.BouncyCastle.Asn1.X509
 			ArrayList	oids,
 			ArrayList	values)
 		{
-            this.ordering = Platform.CreateArrayList(oids);
+            this.ordering = Org.BouncyCastle.Utilities.Platform.CreateArrayList(oids);
 
             int count = 0;
 			foreach (DerObjectIdentifier oid in this.ordering)
@@ -429,7 +429,7 @@ namespace Org.BouncyCastle.Asn1.X509
 
 		private DerObjectIdentifier[] GetExtensionOids(bool isCritical)
 		{
-			IList oids = Platform.CreateArrayList();
+			IList oids = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 
 			foreach (DerObjectIdentifier oid in this.ordering)
             {

@@ -48,7 +48,7 @@ namespace Org.BouncyCastle.Asn1
 				return (Asn1TaggedObject) obj;
 			}
 
-			throw new ArgumentException("Unknown object in GetInstance: " + Platform.GetTypeName(obj), "obj");
+			throw new ArgumentException("Unknown object in GetInstance: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj), "obj");
 		}
 
 		/**
@@ -91,7 +91,7 @@ namespace Org.BouncyCastle.Asn1
 			return this.tagNo == other.tagNo
 //				&& this.empty == other.empty
 				&& this.explicitly == other.explicitly   // TODO Should this be part of equality?
-				&& Platform.Equals(GetObject(), other.GetObject());
+				&& Org.BouncyCastle.Utilities.Platform.Equals(GetObject(), other.GetObject());
 		}
 
 		protected override int Asn1GetHashCode()
@@ -178,7 +178,7 @@ namespace Org.BouncyCastle.Asn1
 				return GetObject();
 			}
 
-			throw Platform.CreateNotImplementedException("implicit tagging for tag: " + tag);
+			throw Org.BouncyCastle.Utilities.Platform.CreateNotImplementedException("implicit tagging for tag: " + tag);
 		}
 
 		public override string ToString()

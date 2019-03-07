@@ -62,7 +62,7 @@ namespace Org.BouncyCastle.X509
 
 			while ((line = ReadLine(inStream)) != null)
 			{
-                if (Platform.StartsWith(line, _header1) || Platform.StartsWith(line, _header2))
+                if (Org.BouncyCastle.Utilities.Platform.StartsWith(line, _header1) || Org.BouncyCastle.Utilities.Platform.StartsWith(line, _header2))
 				{
 					break;
 				}
@@ -70,7 +70,7 @@ namespace Org.BouncyCastle.X509
 
 			while ((line = ReadLine(inStream)) != null)
 			{
-                if (Platform.StartsWith(line, _footer1) || Platform.StartsWith(line, _footer2))
+                if (Org.BouncyCastle.Utilities.Platform.StartsWith(line, _footer1) || Org.BouncyCastle.Utilities.Platform.StartsWith(line, _footer2))
 				{
 					break;
 				}

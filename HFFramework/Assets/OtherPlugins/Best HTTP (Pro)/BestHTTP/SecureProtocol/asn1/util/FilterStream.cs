@@ -38,14 +38,14 @@ namespace Org.BouncyCastle.Asn1.Utilities
         {
             if (disposing)
             {
-                Platform.Dispose(s);
+                Org.BouncyCastle.Utilities.Platform.Dispose(s);
             }
             base.Dispose(disposing);
         }
 #else
         public override void Close()
         {
-            Platform.Dispose(s);
+            Org.BouncyCastle.Utilities.Platform.Dispose(s);
             base.Close();
         }
 #endif

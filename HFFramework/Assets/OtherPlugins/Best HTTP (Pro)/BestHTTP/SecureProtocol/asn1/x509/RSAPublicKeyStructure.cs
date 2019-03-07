@@ -34,7 +34,7 @@ namespace Org.BouncyCastle.Asn1.X509
                 return new RsaPublicKeyStructure((Asn1Sequence) obj);
             }
 
-            throw new ArgumentException("Invalid RsaPublicKeyStructure: " + Platform.GetTypeName(obj));
+            throw new ArgumentException("Invalid RsaPublicKeyStructure: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj));
         }
 
 		public RsaPublicKeyStructure(

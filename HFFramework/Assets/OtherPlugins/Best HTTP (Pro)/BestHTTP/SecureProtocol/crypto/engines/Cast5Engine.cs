@@ -337,7 +337,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             ICipherParameters	parameters)
         {
             if (!(parameters is KeyParameter))
-				throw new ArgumentException("Invalid parameter passed to "+ AlgorithmName +" init - " + Platform.GetTypeName(parameters));
+				throw new ArgumentException("Invalid parameter passed to "+ AlgorithmName +" init - " + Org.BouncyCastle.Utilities.Platform.GetTypeName(parameters));
 
 			_encrypting = forEncryption;
 			_workingKey = ((KeyParameter)parameters).GetKey();

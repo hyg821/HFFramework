@@ -149,7 +149,7 @@ namespace Org.BouncyCastle.Crypto.Tls
 
         protected virtual IBlockCipher CreateAesEngine()
         {
-            return new AesEngine();
+            return new AesFastEngine();
         }
 
         protected virtual IBlockCipher CreateCamelliaEngine()

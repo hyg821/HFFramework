@@ -19,14 +19,14 @@ namespace Org.BouncyCastle.Asn1.Nist
         {
         }
 
-        private static readonly IDictionary objIds = Platform.CreateHashtable();
-        private static readonly IDictionary names = Platform.CreateHashtable();
+        private static readonly IDictionary objIds = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
+        private static readonly IDictionary names = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
 
         private static void DefineCurveAlias(
             string				name,
             DerObjectIdentifier	oid)
         {
-            objIds.Add(Platform.ToUpperInvariant(name), oid);
+            objIds.Add(Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(name), oid);
             names.Add(oid, name);
         }
 
@@ -79,7 +79,7 @@ namespace Org.BouncyCastle.Asn1.Nist
         public static DerObjectIdentifier GetOid(
             string name)
         {
-            return (DerObjectIdentifier) objIds[Platform.ToUpperInvariant(name)];
+            return (DerObjectIdentifier) objIds[Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(name)];
         }
 
         /**

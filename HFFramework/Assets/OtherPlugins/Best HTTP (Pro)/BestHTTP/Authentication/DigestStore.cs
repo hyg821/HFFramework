@@ -6,7 +6,7 @@ namespace BestHTTP.Authentication
     /// <summary>
     /// Stores and manages already received digest infos.
     /// </summary>
-    internal static class DigestStore
+    public static class DigestStore
     {
         private static Dictionary<string, Digest> Digests = new Dictionary<string, Digest>();
 
@@ -17,7 +17,7 @@ namespace BestHTTP.Authentication
         /// </summary>
         private static string[] SupportedAlgorithms = new string[] { "digest", "basic" };
 
-        internal static Digest Get(Uri uri)
+        public static Digest Get(Uri uri)
         {
             lock (Locker)
             {

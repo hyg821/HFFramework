@@ -5,7 +5,7 @@ namespace BestHTTP.WebSocket
     /// <summary>
     /// http://tools.ietf.org/html/rfc6455#section-7.4.1
     /// </summary>
-    public enum WebSocketStausCodes : uint
+    public enum WebSocketStausCodes : ushort
     {
         /// <summary>
         /// Indicates a normal closure, meaning that the purpose for which the connection was established has been fulfilled.

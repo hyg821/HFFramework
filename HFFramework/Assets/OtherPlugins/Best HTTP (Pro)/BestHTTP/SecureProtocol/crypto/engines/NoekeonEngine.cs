@@ -74,7 +74,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 		{
 			if (!(parameters is KeyParameter))
 				throw new ArgumentException("Invalid parameters passed to Noekeon init - "
-                    + Platform.GetTypeName(parameters), "parameters");
+                    + Org.BouncyCastle.Utilities.Platform.GetTypeName(parameters), "parameters");
 
 			_forEncryption = forEncryption;
 			_initialised = true;

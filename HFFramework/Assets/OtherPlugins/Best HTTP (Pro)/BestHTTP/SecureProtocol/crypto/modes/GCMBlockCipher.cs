@@ -516,6 +516,7 @@ namespace Org.BouncyCastle.Crypto.Modes
             multiplier.MultiplyH(Y);
         }
 
+#if true //!ENABLE_IL2CPP || UNITY_WEBGL
         private byte[] GetNextCounterBlock()
         {
             if (blocksRemaining == 0)
@@ -534,6 +535,34 @@ namespace Org.BouncyCastle.Crypto.Modes
             cipher.ProcessBlock(counter, 0, tmp, 0);
             return tmp;
         }
+#else
+        byte[] tmpBlock;
+        private unsafe byte[] GetNextCounterBlock()
+        {
+            if (blocksRemaining == 0)
+                throw new InvalidOperationException("Attempt to process too many blocks");
+
+            blocksRemaining--;
+
+            uint c = 1;
+            fixed (byte* pcounter = counter)
+            {
+                c += pcounter[15]; pcounter[15] = (byte)c; c >>= 8;
+                c += pcounter[14]; pcounter[14] = (byte)c; c >>= 8;
+                c += pcounter[13]; pcounter[13] = (byte)c; c >>= 8;
+                c += pcounter[12]; pcounter[12] = (byte)c;
+            }
+
+            if (tmpBlock == null)
+                tmpBlock = new byte[BlockSize];
+            else
+                //Array.Clear(tmpBlock, 0, tmpBlock.Length);
+                tmpBlock[0] = tmpBlock[1] = tmpBlock[2] = tmpBlock[3] = tmpBlock[4] = tmpBlock[5] = tmpBlock[6] = tmpBlock[7] = tmpBlock[8] = tmpBlock[9] = tmpBlock[10] = tmpBlock[11] = tmpBlock[12] = tmpBlock[13] = tmpBlock[14] = tmpBlock[15] = 0;
+            // TODO Sure would be nice if ciphers could operate on int[]
+            cipher.ProcessBlock(counter, 0, tmpBlock, 0);
+            return tmpBlock;
+        }
+#endif
     }
 }
 

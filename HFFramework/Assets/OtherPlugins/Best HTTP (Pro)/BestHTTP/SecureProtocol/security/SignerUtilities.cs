@@ -29,8 +29,8 @@ namespace Org.BouncyCastle.Security
         {
         }
 
-        internal static readonly IDictionary algorithms = Platform.CreateHashtable();
-        internal static readonly IDictionary oids = Platform.CreateHashtable();
+        internal static readonly IDictionary algorithms = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
+        internal static readonly IDictionary oids = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
 
         static SignerUtilities()
         {
@@ -274,7 +274,7 @@ namespace Org.BouncyCastle.Security
             if (mechanism == null)
                 throw new ArgumentNullException("mechanism");
 
-            mechanism = Platform.ToUpperInvariant(mechanism);
+            mechanism = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(mechanism);
             string aliased = (string) algorithms[mechanism];
 
             if (aliased != null)
@@ -300,7 +300,7 @@ namespace Org.BouncyCastle.Security
             if (algorithm == null)
                 throw new ArgumentNullException("algorithm");
 
-            algorithm = Platform.ToUpperInvariant(algorithm);
+            algorithm = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(algorithm);
 
             string mechanism = (string) algorithms[algorithm];
 
@@ -314,7 +314,7 @@ namespace Org.BouncyCastle.Security
                 return GetPssX509Parameters("SHA-1");
             }
 
-            if (Platform.EndsWith(mechanism, "withRSAandMGF1"))
+            if (Org.BouncyCastle.Utilities.Platform.EndsWith(mechanism, "withRSAandMGF1"))
             {
                 string digestName = mechanism.Substring(0, mechanism.Length - "withRSAandMGF1".Length);
                 return GetPssX509Parameters(digestName);
@@ -350,7 +350,7 @@ namespace Org.BouncyCastle.Security
             if (algorithm == null)
                 throw new ArgumentNullException("algorithm");
 
-            algorithm = Platform.ToUpperInvariant(algorithm);
+            algorithm = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(algorithm);
 
             string mechanism = (string) algorithms[algorithm];
 
@@ -536,10 +536,10 @@ namespace Org.BouncyCastle.Security
                 return new Iso9796d2Signer(new RsaBlindedEngine(), new RipeMD160Digest(), true);
             }
 
-            if (Platform.EndsWith(mechanism, "/X9.31"))
+            if (Org.BouncyCastle.Utilities.Platform.EndsWith(mechanism, "/X9.31"))
             {
                 string x931 = mechanism.Substring(0, mechanism.Length - "/X9.31".Length);
-                int withPos = Platform.IndexOf(x931, "WITH");
+                int withPos = Org.BouncyCastle.Utilities.Platform.IndexOf(x931, "WITH");
                 if (withPos > 0)
                 {
                     int endPos = withPos + "WITH".Length;

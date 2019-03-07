@@ -99,8 +99,8 @@ namespace Org.BouncyCastle.Security
         /// <param name="autoSeed">If true, the instance will be auto-seeded.</param>
         public static SecureRandom GetInstance(string algorithm, bool autoSeed)
         {
-            string upper = Platform.ToUpperInvariant(algorithm);
-            if (Platform.EndsWith(upper, "PRNG"))
+            string upper = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(algorithm);
+            if (Org.BouncyCastle.Utilities.Platform.EndsWith(upper, "PRNG"))
             {
                 string digestName = upper.Substring(0, upper.Length - "PRNG".Length);
                 DigestRandomGenerator prng = CreatePrng(digestName, autoSeed);

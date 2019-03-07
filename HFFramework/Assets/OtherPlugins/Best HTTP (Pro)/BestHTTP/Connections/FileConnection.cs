@@ -18,7 +18,7 @@ using BestHTTP.Extensions;
 
 namespace BestHTTP
 {
-    sealed class StreamList : System.IO.Stream
+    public sealed class StreamList : System.IO.Stream
     {
         private System.IO.Stream[] Streams;
         private int CurrentIdx;

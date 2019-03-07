@@ -589,7 +589,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 				return;
 			}
 
-			throw new ArgumentException("invalid parameter passed to Rijndael init - " + Platform.GetTypeName(parameters));
+			throw new ArgumentException("invalid parameter passed to Rijndael init - " + Org.BouncyCastle.Utilities.Platform.GetTypeName(parameters));
 		}
 
         public virtual string AlgorithmName

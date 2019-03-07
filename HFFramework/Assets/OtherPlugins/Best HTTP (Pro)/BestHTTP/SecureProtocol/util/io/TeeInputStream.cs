@@ -25,16 +25,16 @@ namespace Org.BouncyCastle.Utilities.IO
         {
             if (disposing)
             {
-                Platform.Dispose(input);
-                Platform.Dispose(tee);
+                Org.BouncyCastle.Utilities.Platform.Dispose(input);
+                Org.BouncyCastle.Utilities.Platform.Dispose(tee);
             }
             base.Dispose(disposing);
         }
 #else
         public override void Close()
 		{
-            Platform.Dispose(input);
-            Platform.Dispose(tee);
+            Org.BouncyCastle.Utilities.Platform.Dispose(input);
+            Org.BouncyCastle.Utilities.Platform.Dispose(tee);
             base.Close();
 		}
 #endif

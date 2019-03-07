@@ -94,7 +94,7 @@ var Lib_BEST_HTTP_WebGL_ES_Bridge =
 		};
 
 		event.eventImpl.onmessage = function(e) {
-          console.log(id + ' onMessage('+ eventName + ')');
+          console.log(id + ' on Generic Message');
           es._GenericEventHandler(id, undefined, e, onMessage);
 		};
 

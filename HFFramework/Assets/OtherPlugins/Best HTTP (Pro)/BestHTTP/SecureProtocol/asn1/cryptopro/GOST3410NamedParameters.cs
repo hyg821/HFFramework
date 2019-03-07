@@ -18,8 +18,8 @@ namespace Org.BouncyCastle.Asn1.CryptoPro
 		{
 		}
 
-        private static readonly IDictionary objIds = Platform.CreateHashtable();
-        private static readonly IDictionary parameters = Platform.CreateHashtable();
+        private static readonly IDictionary objIds = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
+        private static readonly IDictionary parameters = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
 
         private static readonly Gost3410ParamSetParameters cryptoProA = new Gost3410ParamSetParameters(
             1024,

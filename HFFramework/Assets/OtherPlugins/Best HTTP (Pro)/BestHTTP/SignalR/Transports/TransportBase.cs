@@ -366,7 +366,15 @@ namespace BestHTTP.SignalR.Transports
             else
               result = new MultiMessage();
 
-            result.Parse(msg);
+            try
+            {
+                result.Parse(msg);
+            }
+            catch
+            {
+                HTTPManager.Logger.Error("MessageFactory", "Can't parse msg: " + json);
+                throw;
+            }
 
             return result;
         }

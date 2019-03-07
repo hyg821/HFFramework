@@ -57,8 +57,7 @@ namespace BestHTTP
         public DateTime TimedOutStart { get; protected set; }
 
 #if !BESTHTTP_DISABLE_PROXY
-        protected HTTPProxy Proxy { get; set; }
-        public bool HasProxy { get { return Proxy != null; } }
+        public bool HasProxy { get { return this.CurrentRequest != null && this.CurrentRequest.Proxy != null; } }
 #endif
 
         public Uri LastProcessedUri { get; protected set; }
@@ -105,7 +104,9 @@ namespace BestHTTP
             if (IsThreaded)
             {
 #if NETFX_CORE
+#pragma warning disable 4014
                 Windows.System.Threading.ThreadPool.RunAsync(ThreadFunc);
+#pragma warning restore 4014
 #else
                 ThreadPool.QueueUserWorkItem(new WaitCallback(ThreadFunc));
                 //new Thread(ThreadFunc)

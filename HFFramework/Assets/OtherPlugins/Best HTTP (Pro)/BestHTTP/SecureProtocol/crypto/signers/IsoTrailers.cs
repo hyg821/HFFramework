@@ -24,7 +24,7 @@ namespace Org.BouncyCastle.Crypto.Signers
 
         private static IDictionary CreateTrailerMap()
         {
-            IDictionary trailers = Platform.CreateHashtable();
+            IDictionary trailers = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
 
             trailers.Add("RIPEMD128", TRAILER_RIPEMD128);
             trailers.Add("RIPEMD160", TRAILER_RIPEMD160);

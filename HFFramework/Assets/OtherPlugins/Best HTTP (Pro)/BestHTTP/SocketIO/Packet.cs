@@ -265,10 +265,10 @@ namespace BestHTTP.SocketIO
         internal void Parse(string from)
         {
             int idx = 0;
-            this.TransportEvent = (TransportEventTypes)(int)char.GetNumericValue(from, idx++);
+            this.TransportEvent = (TransportEventTypes)ToInt(from[idx++]);
 
-            if (from.Length > idx && char.GetNumericValue(from, idx) >= 0.0)
-                this.SocketIOEvent = (SocketIOEventTypes)(int)char.GetNumericValue(from, idx++);
+            if (from.Length > idx && ToInt(from[idx]) >= 0)
+                this.SocketIOEvent = (SocketIOEventTypes)ToInt(from[idx++]);
             else
                 this.SocketIOEvent = SocketIOEventTypes.Unknown;
 
@@ -299,10 +299,10 @@ namespace BestHTTP.SocketIO
                 this.Namespace = "/";
 
             // Parse Id
-            if (from.Length > idx && char.GetNumericValue(from[idx]) >= 0)
+            if (from.Length > idx && ToInt(from[idx]) >= 0)
             {
                 int startIdx = idx++;
-                while (from.Length > idx && char.GetNumericValue(from[idx]) >= 0)
+                while (from.Length > idx && ToInt(from[idx]) >= 0)
                     idx++;
 
                 int id = 0;
@@ -315,6 +315,20 @@ namespace BestHTTP.SocketIO
                 this.Payload = from.Substring(idx);
             else
                 this.Payload = string.Empty;
+        }
+
+        /// <summary>
+        /// Custom function instead of char.GetNumericValue, as it throws an error under WebGL using the new 4.x runtime.
+        /// It will return the value of the char if it's a numeric one, otherwise -1.
+        /// </summary>
+        private int ToInt(char ch)
+        {
+            int charValue = Convert.ToInt32(ch);
+            int num = charValue - '0';
+            if (num < 0 || num > 9)
+                return -1;
+
+            return num;
         }
 
         /// <summary>

@@ -188,7 +188,14 @@ namespace HFFramework
             {
                 if (socket != null)
                 {
-                    return !(socket.Poll(1, SelectMode.SelectRead) && socket.Available == 0);
+                    try
+                    {
+                        return !(socket.Poll(1, SelectMode.SelectRead) && socket.Available == 0);
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
                 }
                 return false;
             }

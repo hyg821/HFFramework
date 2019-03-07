@@ -38,7 +38,7 @@ namespace Org.BouncyCastle.Crypto
 			this.forEncryption = forEncryption;
 
 			// TODO
-			throw Platform.CreateNotImplementedException("IES");
+			throw Org.BouncyCastle.Utilities.Platform.CreateNotImplementedException("IES");
 		}
 
 		public override int GetBlockSize()

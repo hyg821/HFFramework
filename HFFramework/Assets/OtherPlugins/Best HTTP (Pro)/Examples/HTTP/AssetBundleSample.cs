@@ -12,11 +12,7 @@ namespace BestHTTP.Examples
         /// <summary>
         /// The url of the resource to download
         /// </summary>
-#if UNITY_WEBGL && !UNITY_EDITOR
-    const string URL = "https://besthttp.azurewebsites.net/Content/AssetBundle_v5.html";
-#else
-        const string URL = "https://besthttp.azurewebsites.net/Content/AssetBundle.html";
-#endif
+        private Uri URI = new Uri("https://besthttpdemosite.azurewebsites.net/AssetBundles/WebGL/demobundle.assetbundle");
 
         #region Private Fields
 
@@ -77,7 +73,7 @@ namespace BestHTTP.Examples
             downloading = true;
 
             // Create and send our request
-            var request = new HTTPRequest(new Uri(URL)).Send();
+            var request = new HTTPRequest(URI).Send();
 
             status = "Download started";
 

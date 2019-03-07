@@ -10,7 +10,7 @@ namespace BestHTTP.Authentication
     /// Internal class that stores all information that received from a server in a WWW-Authenticate and need to construct a valid Authorization header. Based on rfc 2617 (http://tools.ietf.org/html/rfc2617).
     /// Used only internally by the plugin.
     /// </summary>
-    internal sealed class Digest
+    public sealed class Digest
     {
         #region Public Properties
 
@@ -148,7 +148,7 @@ namespace BestHTTP.Authentication
         /// <summary>
         /// Generates a string that can be set to an Authorization header.
         /// </summary>
-        public string GenerateResponseHeader(HTTPRequest request, Credentials credentials)
+        public string GenerateResponseHeader(HTTPRequest request, Credentials credentials, bool isProxy = false)
         {
             try
             {
@@ -192,6 +192,14 @@ namespace BestHTTP.Authentication
                         // We will first check the longer value("auth-int") then the short one ("auth"). If one matches we will reset the qop to the exact value.
                         string qop = this.QualityOfProtections != null ? this.QualityOfProtections.TrimAndLower() : null;
 
+                        // When we authenticate with a proxy and we want to tunnel the request, we have to use the CONNECT method instead of the 
+                        //  request's, as the proxy will not know about the request itself.
+                        string method = isProxy ? "CONNECT" : request.MethodType.ToString().ToUpper();
+
+                        // When we authenticate with a proxy and we want to tunnel the request, the uri must match what we are sending in the CONNECT request's
+                        //  Host header.
+                        string uri = isProxy ? request.CurrentUri.Host + ":" + request.CurrentUri.Port : request.CurrentUri.GetRequestPathAndQueryURL();
+
                         if (qop == null)
                         {
                             string HA2 = string.Concat(request.MethodType.ToString().ToUpper(), ":", request.CurrentUri.GetRequestPathAndQueryURL()).CalculateMD5Hash();
@@ -206,14 +214,14 @@ namespace BestHTTP.Authentication
                             if (entityBody == null)
                                 entityBody = string.Empty.GetASCIIBytes();
 
-                            string HA2 = string.Format("{0}:{1}:{2}", request.MethodType.ToString().ToUpper(), request.CurrentUri.GetRequestPathAndQueryURL(), entityBody.CalculateMD5Hash()).CalculateMD5Hash();
+                            string HA2 = string.Format("{0}:{1}:{2}", method, uri, entityBody.CalculateMD5Hash()).CalculateMD5Hash();
 
                             response = string.Format("{0}:{1}:{2}:{3}:{4}:{5}", HA1, Nonce, ncvalue, cnonce, qop, HA2).CalculateMD5Hash();
                         }
                         else if (qop.Contains("auth"))
                         {
                             qop = "auth";
-                            string HA2 = string.Concat(request.MethodType.ToString().ToUpper(), ":", request.CurrentUri.GetRequestPathAndQueryURL()).CalculateMD5Hash();
+                            string HA2 = string.Concat(method, ":", uri).CalculateMD5Hash();
 
                             response = string.Format("{0}:{1}:{2}:{3}:{4}:{5}", HA1, Nonce, ncvalue, cnonce, qop, HA2).CalculateMD5Hash();
                         }
@@ -221,7 +229,7 @@ namespace BestHTTP.Authentication
                             return string.Empty;
 
                         string result = string.Format("Digest username=\"{0}\", realm=\"{1}\", nonce=\"{2}\", uri=\"{3}\", cnonce=\"{4}\", response=\"{5}\"",
-                                                                credentials.UserName, Realm, Nonce, request.Uri.GetRequestPathAndQueryURL(), cnonce, response);
+                                                                credentials.UserName, Realm, Nonce, uri, cnonce, response);
 
                         if (qop != null)
                             result += String.Concat(", qop=\"", qop, "\", nc=", ncvalue);

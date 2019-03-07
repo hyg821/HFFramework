@@ -106,7 +106,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 
         internal static string VerifyAlgorithmName(string algorithm)
         {
-            string upper = Platform.ToUpperInvariant(algorithm);
+            string upper = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(algorithm);
             if (Array.IndexOf(algorithms, algorithm, 0, algorithms.Length) < 0)
                 throw new ArgumentException("unrecognised algorithm: " + algorithm, "algorithm");
             return upper;

@@ -56,7 +56,7 @@ namespace Org.BouncyCastle.Asn1
                 }
             }
 
-            throw new ArgumentException("Unknown object in GetInstance: " + Platform.GetTypeName(obj), "obj");
+            throw new ArgumentException("Unknown object in GetInstance: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj), "obj");
         }
 
         /**
@@ -122,13 +122,13 @@ namespace Org.BouncyCastle.Asn1
                 return new DerSet(v, false);
             }
 
-            throw new ArgumentException("Unknown object in GetInstance: " + Platform.GetTypeName(obj), "obj");
+            throw new ArgumentException("Unknown object in GetInstance: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj), "obj");
         }
 
         protected internal Asn1Set(
             int capacity)
         {
-            _set = Platform.CreateArrayList(capacity);
+            _set = Org.BouncyCastle.Utilities.Platform.CreateArrayList(capacity);
         }
 
         public virtual IEnumerator GetEnumerator()

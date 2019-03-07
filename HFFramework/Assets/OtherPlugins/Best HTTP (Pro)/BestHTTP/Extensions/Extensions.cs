@@ -116,6 +116,48 @@ namespace BestHTTP.Extensions
             stream.Write(array, 0, array.Length);
         }
 
+        /// <summary>
+        /// Returns true if the Uri's host is a valid IPv4 or IPv6 address.
+        /// </summary>
+        public static bool IsHostIsAnIPAddress(this Uri uri)
+        {
+            if (uri == null)
+                return false;
+
+            return IsIpV4AddressValid(uri.Host) || IsIpV6AddressValid(uri.Host);
+        }
+
+        // Original idea from: https://www.code4copy.com/csharp/c-validate-ip-address-string/
+        // Working regex: https://www.regular-expressions.info/ip.html
+        private static readonly System.Text.RegularExpressions.Regex validIpV4AddressRegex = new System.Text.RegularExpressions.Regex("\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Validates an IPv4 address.
+        /// </summary>
+        public static bool IsIpV4AddressValid(string address)
+        {
+            if (!string.IsNullOrEmpty(address))
+                return validIpV4AddressRegex.IsMatch(address.Trim());
+
+            return false;
+        }
+
+        /// <summary>
+        /// Validates an IPv6 address.
+        /// </summary>
+        public static bool IsIpV6AddressValid(string address)
+        {
+#if !NETFX_CORE
+            if (!string.IsNullOrEmpty(address))
+            {
+                System.Net.IPAddress ip;
+                if (System.Net.IPAddress.TryParse(address, out ip))
+                  return ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6;
+            }
+#endif
+            return false;
+        }
+
         #endregion
 
         #region String Conversions

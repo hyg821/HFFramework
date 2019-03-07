@@ -12,7 +12,7 @@ namespace Org.BouncyCastle.Crypto.Tls
     {
         public static IDictionary EnsureExtensionsInitialised(IDictionary extensions)
         {
-            return extensions == null ? Platform.CreateHashtable() : extensions;
+            return extensions == null ? Org.BouncyCastle.Utilities.Platform.CreateHashtable() : extensions;
         }
 
         public static void AddEncryptThenMacExtension(IDictionary extensions)

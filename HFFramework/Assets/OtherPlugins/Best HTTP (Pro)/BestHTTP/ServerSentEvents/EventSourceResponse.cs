@@ -59,7 +59,7 @@ namespace BestHTTP.ServerSentEvents
             base.IsClosedManually = true;
         }
 
-        internal override bool Receive(int forceReadRawContentLength = -1, bool readPayloadData = true)
+        public override bool Receive(int forceReadRawContentLength = -1, bool readPayloadData = true)
         {
             bool received = base.Receive(forceReadRawContentLength, false);
 

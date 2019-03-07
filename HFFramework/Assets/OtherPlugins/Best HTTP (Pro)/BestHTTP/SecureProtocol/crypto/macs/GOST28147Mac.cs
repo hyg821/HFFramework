@@ -86,7 +86,7 @@ namespace Org.BouncyCastle.Crypto.Macs
 			else
 			{
 				throw new ArgumentException("invalid parameter passed to Gost28147 init - "
-                    + Platform.GetTypeName(parameters));
+                    + Org.BouncyCastle.Utilities.Platform.GetTypeName(parameters));
 			}
 		}
 

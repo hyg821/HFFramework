@@ -37,7 +37,7 @@ namespace Org.BouncyCastle.Utilities.IO.Pem
 		{
 			string line = reader.ReadLine();
 
-            if (line != null && Platform.StartsWith(line, BeginString))
+            if (line != null && Org.BouncyCastle.Utilities.Platform.StartsWith(line, BeginString))
 			{
 				line = line.Substring(BeginString.Length);
 				int index = line.IndexOf('-');
@@ -53,12 +53,12 @@ namespace Org.BouncyCastle.Utilities.IO.Pem
 		private PemObject LoadObject(string type)
 		{
 			string endMarker = EndString + type;
-			IList headers = Platform.CreateArrayList();
+			IList headers = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 			StringBuilder buf = new StringBuilder();
 
 			string line;
 			while ((line = reader.ReadLine()) != null
-                && Platform.IndexOf(line, endMarker) == -1)
+                && Org.BouncyCastle.Utilities.Platform.IndexOf(line, endMarker) == -1)
 			{
 				int colonPos = line.IndexOf(':');
 
@@ -71,7 +71,7 @@ namespace Org.BouncyCastle.Utilities.IO.Pem
 					// Process field
 					string fieldName = line.Substring(0, colonPos).Trim();
 
-                    if (Platform.StartsWith(fieldName, "X-"))
+                    if (Org.BouncyCastle.Utilities.Platform.StartsWith(fieldName, "X-"))
                     {
                         fieldName = fieldName.Substring(2);
                     }

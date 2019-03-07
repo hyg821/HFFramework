@@ -28,7 +28,7 @@ namespace Org.BouncyCastle.Asn1
                 return (DerGeneralizedTime)obj;
             }
 
-            throw new ArgumentException("illegal object in GetInstance: " + Platform.GetTypeName(obj), "obj");
+            throw new ArgumentException("illegal object in GetInstance: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj), "obj");
         }
 
         /**
@@ -164,7 +164,7 @@ namespace Org.BouncyCastle.Asn1
             char sign = '+';
             DateTime time = ToDateTime();
 
-#if SILVERLIGHT || PORTABLE || NETFX_CORE
+#if true //SILVERLIGHT || PORTABLE || NETFX_CORE
             long offset = time.Ticks - time.ToUniversalTime().Ticks;
             if (offset < 0)
             {
@@ -205,7 +205,7 @@ namespace Org.BouncyCastle.Asn1
             string d = time;
             bool makeUniversal = false;
 
-            if (Platform.EndsWith(d, "Z"))
+            if (Org.BouncyCastle.Utilities.Platform.EndsWith(d, "Z"))
             {
                 if (HasFractionalSeconds)
                 {
@@ -224,7 +224,7 @@ namespace Org.BouncyCastle.Asn1
 
                 if (HasFractionalSeconds)
                 {
-                    int fCount = Platform.IndexOf(d, "GMT") - 1 - d.IndexOf('.');
+                    int fCount = Org.BouncyCastle.Utilities.Platform.IndexOf(d, "GMT") - 1 - d.IndexOf('.');
                     formatStr = @"yyyyMMddHHmmss." + FString(fCount) + @"'GMT'zzz";
                 }
                 else
@@ -268,7 +268,7 @@ namespace Org.BouncyCastle.Asn1
              * NOTE: DateTime.Kind and DateTimeStyles.AssumeUniversal not available in .NET 1.1
              */
             DateTimeStyles style = DateTimeStyles.None;
-            if (Platform.EndsWith(format, "Z"))
+            if (Org.BouncyCastle.Utilities.Platform.EndsWith(format, "Z"))
             {
                 try
                 {

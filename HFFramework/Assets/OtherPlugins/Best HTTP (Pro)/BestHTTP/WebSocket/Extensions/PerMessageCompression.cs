@@ -13,6 +13,8 @@ namespace BestHTTP.WebSocket.Extensions
     /// </summary>
     public sealed class PerMessageCompression : IExtension
     {
+        public const int MinDataLengthToCompressDefault = 256;
+
         private static readonly byte[] Trailer = new byte[] { 0x00, 0x00, 0xFF, 0xFF };
 
         #region Public Properties
@@ -70,7 +72,7 @@ namespace BestHTTP.WebSocket.Extensions
         #endregion
 
         public PerMessageCompression()
-            :this(CompressionLevel.Default, false, false, ZlibConstants.WindowBitsMax, ZlibConstants.WindowBitsMax, 10)
+            :this(CompressionLevel.Default, false, false, ZlibConstants.WindowBitsMax, ZlibConstants.WindowBitsMax, MinDataLengthToCompressDefault)
         { }
 
         public PerMessageCompression(CompressionLevel level,

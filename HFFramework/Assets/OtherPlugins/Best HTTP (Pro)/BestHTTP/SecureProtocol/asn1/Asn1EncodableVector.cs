@@ -9,7 +9,7 @@ namespace Org.BouncyCastle.Asn1
     public class Asn1EncodableVector
 		: IEnumerable
     {
-        private IList v = Platform.CreateArrayList();
+        private IList v = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 
 		public static Asn1EncodableVector FromEnumerable(
 			IEnumerable e)

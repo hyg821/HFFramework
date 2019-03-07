@@ -138,7 +138,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
             else
             {
-                throw new ArgumentException("invalid parameter passed to RC2 init - " + Platform.GetTypeName(parameters));
+                throw new ArgumentException("invalid parameter passed to RC2 init - " + Org.BouncyCastle.Utilities.Platform.GetTypeName(parameters));
             }
         }
 

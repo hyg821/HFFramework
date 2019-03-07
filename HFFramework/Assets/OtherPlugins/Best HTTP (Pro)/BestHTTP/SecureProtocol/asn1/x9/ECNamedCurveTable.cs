@@ -145,7 +145,7 @@ namespace Org.BouncyCastle.Asn1.X9
         {
             get
             {
-                IList v = Platform.CreateArrayList();
+                IList v = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
                 CollectionUtilities.AddRange(v, X962NamedCurves.Names);
                 CollectionUtilities.AddRange(v, SecNamedCurves.Names);
                 CollectionUtilities.AddRange(v, NistNamedCurves.Names);

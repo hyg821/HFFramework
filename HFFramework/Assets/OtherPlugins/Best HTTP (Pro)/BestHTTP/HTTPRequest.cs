@@ -10,7 +10,7 @@ namespace BestHTTP
     using BestHTTP.Extensions;
     using BestHTTP.Forms;
 
-    #if !BESTHTTP_DISABLE_COOKIES && (!UNITY_WEBGL || UNITY_EDITOR)
+    #if !BESTHTTP_DISABLE_COOKIES //&& (!UNITY_WEBGL || UNITY_EDITOR)
         using BestHTTP.Cookies;
     #endif
 
@@ -86,7 +86,8 @@ namespace BestHTTP
                                                           HTTPMethods.Put.ToString().ToUpper(),
                                                           HTTPMethods.Delete.ToString().ToUpper(),
                                                           HTTPMethods.Patch.ToString().ToUpper(),
-                                                          HTTPMethods.Merge.ToString().ToUpper()
+                                                          HTTPMethods.Merge.ToString().ToUpper(),
+                                                          HTTPMethods.Options.ToString().ToUpper()
                                                       };
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace BestHTTP
         /// <summary>
         /// The original request's Uri.
         /// </summary>
-        public Uri Uri { get; private set; }
+        public Uri Uri { get; set; }
 
         /// <summary>
         /// The method that how we want to process our request the server.
@@ -207,6 +208,8 @@ namespace BestHTTP
             }
         }
 
+        public int MaxFragmentQueueLength { get; set; }
+
         /// <summary>
         /// The callback function that will be called when a request is fully processed or when any downloaded fragment is available if UseStreaming is true. Can be null for fire-and-forget requests.
         /// </summary>
@@ -281,7 +284,7 @@ namespace BestHTTP
         /// <summary>
         /// A web proxy's properties where the request must pass through.
         /// </summary>
-        public HTTPProxy Proxy { get; set; }
+        public Proxy Proxy { get; set; }
 #endif
 
         /// <summary>
@@ -296,7 +299,7 @@ namespace BestHTTP
         public bool UseAlternateSSL { get; set; }
 #endif
 
-#if !BESTHTTP_DISABLE_COOKIES && (!UNITY_WEBGL || UNITY_EDITOR)
+#if !BESTHTTP_DISABLE_COOKIES //&& (!UNITY_WEBGL || UNITY_EDITOR)
 
         /// <summary>
         /// If true cookies will be added to the headers (if any), and parsed from the response. If false, all cookie operations will be ignored. It's default value is HTTPManager's IsCookiesEnabled.
@@ -379,6 +382,14 @@ namespace BestHTTP
         /// The IClientCredentialsProvider implementation that the plugin will use to send client certificates when the request's UseAlternateSSL property is set to true.
         /// </summary>
         public Org.BouncyCastle.Crypto.Tls.IClientCredentialsProvider CustomClientCredentialsProvider { get; set; }
+
+        /// <summary>
+        /// With this property custom Server Name Indication entries can be sent to the server while negotiating TLS. 
+        /// All added entries must conform to the rules defined in the RFC (https://tools.ietf.org/html/rfc3546#section-3.1), the plugin will not check the entries' validity!
+        /// <remarks>This list will be sent to every server that the plugin must connect to while it tries to finish the request.
+        /// So for example if redirected to an another server, that new server will receive this list too!</remarks>
+        /// </summary>
+        public List<string> CustomTLSServerNameList { get; set; }
 #endif
 
         /// <summary>
@@ -411,6 +422,13 @@ namespace BestHTTP
         /// Setting this option to true, the processing connection will set the TCP NoDelay option to send out data as soon as it can.
         /// </summary>
         public bool TryToMinimizeTCPLatency { get; set; }
+
+#if UNITY_WEBGL
+        /// <summary>
+        /// Its value will be set to the XmlHTTPRequest's withCredentials field. Its default value is HTTPManager.IsCookiesEnabled's value.
+        /// </summary>
+        public bool WithCredentials { get; set; }
+#endif
 
         #region Internal Properties For Progress Report Support
 
@@ -585,11 +603,12 @@ namespace BestHTTP
 #endif
             this.Callback = callback;
             this.StreamFragmentSize = 4 * 1024;
+            this.MaxFragmentQueueLength = 10;
 
             this.DisableRetry = !(methodType == HTTPMethods.Get);
             this.MaxRedirects = int.MaxValue;
             this.RedirectCount = 0;
-#if !BESTHTTP_DISABLE_COOKIES && (!UNITY_WEBGL || UNITY_EDITOR)
+#if !BESTHTTP_DISABLE_COOKIES //&& (!UNITY_WEBGL || UNITY_EDITOR)
             this.IsCookiesEnabled = HTTPManager.IsCookiesEnabled;
 #endif
 
@@ -621,6 +640,10 @@ namespace BestHTTP
             this.CustomCertificationValidator += HTTPManager.DefaultCertificationValidator;
 #endif
             this.TryToMinimizeTCPLatency = HTTPManager.TryToMinimizeTCPLatency;
+
+#if UNITY_WEBGL
+            this.WithCredentials = this.IsCookiesEnabled;
+#endif
         }
 
         #endregion
@@ -673,16 +696,16 @@ namespace BestHTTP
             FieldCollector.AddBinaryData(fieldName, content, fileName, mimeType);
         }
 
+#if !BESTHTTP_DISABLE_UNITY_FORM
         /// <summary>
         /// Set or overwrite the internal form. Remarks: on WP8 it doesn't supported!
         /// </summary>
         public void SetFields(UnityEngine.WWWForm wwwForm)
         {
-#if !BESTHTTP_DISABLE_UNITY_FORM
             FormUsage = HTTPFormUsage.Unity;
             FormImpl = new UnityForm(wwwForm);
-#endif
         }
+#endif
 
         /// <summary>
         /// Manually set a HTTP Form.
@@ -690,6 +713,17 @@ namespace BestHTTP
         public void SetForm(HTTPFormBase form)
         {
             FormImpl = form;
+        }
+
+        /// <summary>
+        /// Returns with the added form-fields or null if no one added.
+        /// </summary>
+        public List<HTTPFieldData> GetFormFields()
+        {
+            if (this.FieldCollector == null || this.FieldCollector.IsEmpty)
+                return null;
+
+            return new List<HTTPFieldData>(this.FieldCollector.Fields);
         }
 
         /// <summary>
@@ -869,7 +903,12 @@ namespace BestHTTP
         {
 #if !UNITY_WEBGL || UNITY_EDITOR
             if (!HasHeader("Host"))
-                SetHeader("Host", CurrentUri.Authority);
+            {
+                if (CurrentUri.Port == 80 || CurrentUri.Port == 443)
+                    SetHeader("Host", CurrentUri.Host);
+                else
+                    SetHeader("Host", CurrentUri.Authority);
+            }
 
             if (IsRedirected && !HasHeader("Referer"))
                 AddHeader("Referer", Uri.ToString());
@@ -922,9 +961,10 @@ namespace BestHTTP
 
             // Always set the Content-Length header if possible
             // http://tools.ietf.org/html/rfc2616#section-4.4 : For compatibility with HTTP/1.0 applications, HTTP/1.1 requests containing a message-body MUST include a valid Content-Length header field unless the server is known to be HTTP/1.1 compliant.
+            // 2018.06.03: Changed the condition so that content-length header will be included for zero length too.
             if (
 #if !UNITY_WEBGL || UNITY_EDITOR
-                contentLength > 0
+                contentLength >= 0
 #else
                 contentLength != -1
 #endif
@@ -985,7 +1025,7 @@ namespace BestHTTP
             }
 
             // Cookies.
-#if !BESTHTTP_DISABLE_COOKIES && (!UNITY_WEBGL || UNITY_EDITOR)
+#if !BESTHTTP_DISABLE_COOKIES //&& (!UNITY_WEBGL || UNITY_EDITOR)
             // User added cookies are sent even when IsCookiesEnabled is set to false
             List<Cookie> cookies = IsCookiesEnabled ? CookieJar.Get(CurrentUri) : null;
 
@@ -1081,6 +1121,9 @@ namespace BestHTTP
                             continue;
                         }
 
+                        if (HTTPManager.Logger.Level <= Logger.Loglevels.Information)
+                            VerboseLogging("Header - '" + header + "': '" + values[i] + "'");
+
                         stream.WriteArray(headerName);
                         stream.WriteArray(values[i].GetASCIIBytes());
                         stream.WriteArray(EOL);
@@ -1100,11 +1143,11 @@ namespace BestHTTP
             }
         }
 
-        #endregion
-
-        #region Internal Helper Functions
-
-        internal byte[] GetEntityBody()
+        /// <summary>
+        /// Returns with the bytes that will be sent to the server as the request's payload.
+        /// </summary>
+        /// <remarks>Call this only after all form-fields are added!</remarks>
+        public byte[] GetEntityBody()
         {
             if (RawData != null)
                 return RawData;
@@ -1119,14 +1162,19 @@ namespace BestHTTP
             return null;
         }
 
+        #endregion
+
+        #region Internal Helper Functions
+
         internal void SendOutTo(Stream stream)
         {
+            // Under WEBGL EnumerateHeaders and GetEntityBody are used instead of this function.
+#if !UNITY_WEBGL || UNITY_EDITOR
             try
             {
-#if !UNITY_WEBGL || UNITY_EDITOR
                 string requestPathAndQuery =
                 #if !BESTHTTP_DISABLE_PROXY
-                    HasProxy && Proxy.SendWholeUri ? CurrentUri.OriginalString :
+                    HasProxy ? this.Proxy.GetRequestPath(CurrentUri) :
                 #endif
                     CurrentUri.GetRequestPathAndQueryURL();
 
@@ -1135,16 +1183,20 @@ namespace BestHTTP
                 if (HTTPManager.Logger.Level <= Logger.Loglevels.Information)
                     HTTPManager.Logger.Information("HTTPRequest", string.Format("Sending request: '{0}'", requestLine));
 
-                stream.WriteArray(requestLine.GetASCIIBytes());
-                stream.WriteArray(EOL);
+                // Create a buffer stream that will not close 'stream' when disposed or closed.
+                // buffersize should be larger than UploadChunkSize as it might be used for uploading user data and
+                //  it should have enough room for UploadChunkSize data and additional chunk information.
+                WriteOnlyBufferedStream bufferStream = new WriteOnlyBufferedStream(stream, (int)(UploadChunkSize * 1.5f));
 
-                SendHeaders(stream);
-                stream.WriteArray(EOL);
+                bufferStream.WriteArray(requestLine.GetASCIIBytes());
+                bufferStream.WriteArray(EOL);
 
-                // Send headers to the wire
-                if (UploadStream != null)
-                    stream.Flush();
-#endif
+                // Write headers to the buffer
+                SendHeaders(bufferStream);
+                bufferStream.WriteArray(EOL);
+
+                // Send remaining data to the wire
+                bufferStream.Flush();
 
                 byte[] data = RawData;
 
@@ -1181,22 +1233,22 @@ namespace BestHTTP
                         // If we don't know the size, send as chunked
                         if (!UseUploadStreamLength)
                         {
-                            stream.WriteArray(count.ToString("X").GetASCIIBytes());
-                            stream.WriteArray(EOL);
+                            bufferStream.WriteArray(count.ToString("X").GetASCIIBytes());
+                            bufferStream.WriteArray(EOL);
                         }
 
                         // write out the buffer to the wire
-                        stream.Write(buffer, 0, count);
+                        bufferStream.Write(buffer, 0, count);
 
                         // chunk trailing EOL
                         if (!UseUploadStreamLength)
-                            stream.WriteArray(EOL);
-
-                        // Make sure that the system sends the buffer
-                        stream.Flush();
+                            bufferStream.WriteArray(EOL);
 
                         // update how many bytes are uploaded
                         Uploaded += count;
+
+                        // Write to the wire
+                        bufferStream.Flush();
 
                         // let the callback fire
                         UploadProgressChanged = true;
@@ -1205,30 +1257,29 @@ namespace BestHTTP
                     // All data from the stream are sent, write the 'end' chunk if necessary
                     if (!UseUploadStreamLength)
                     {
-                        stream.WriteArray("0".GetASCIIBytes());
-                        stream.WriteArray(EOL);
-                        stream.WriteArray(EOL);
+                        bufferStream.WriteArray("0".GetASCIIBytes());
+                        bufferStream.WriteArray(EOL);
+                        bufferStream.WriteArray(EOL);
                     }
 
                     // Make sure all remaining data will be on the wire
-                    stream.Flush();
+                    bufferStream.Flush();
 
                     // Dispose the MemoryStream
                     if (UploadStream == null && uploadStream != null)
                         uploadStream.Dispose();
                 }
                 else
-                    stream.Flush();
+                    bufferStream.Flush();
 
-#if !UNITY_WEBGL || UNITY_EDITOR
                 HTTPManager.Logger.Information("HTTPRequest", "'" + requestLine + "' sent out");
-#endif
             }
             finally
             {
                 if (UploadStream != null && DisposeUploadStream)
                     UploadStream.Dispose();
             }
+#endif
         }
 
         internal void UpgradeCallback()
@@ -1365,7 +1416,12 @@ namespace BestHTTP
             this.Downloaded = this.DownloadLength = 0;
         }
 
-#region System.Collections.IEnumerator implementation
+        private void VerboseLogging(string str)
+        {
+            HTTPManager.Logger.Verbose("HTTPRequest", "'" + this.CurrentUri.ToString() + "' - " + str);
+        }
+
+        #region System.Collections.IEnumerator implementation
 
         public object Current { get { return null; } }
 

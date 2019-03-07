@@ -32,7 +32,7 @@ namespace Org.BouncyCastle.Asn1.CryptoPro
                 return new Gost3410PublicKeyAlgParameters((Asn1Sequence) obj);
             }
 
-            throw new ArgumentException("Invalid GOST3410Parameter: " + Platform.GetTypeName(obj));
+            throw new ArgumentException("Invalid GOST3410Parameter: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj));
         }
 
 		public Gost3410PublicKeyAlgParameters(

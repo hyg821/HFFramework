@@ -11,7 +11,7 @@ namespace Org.BouncyCastle.Asn1.Utilities
 {
     public sealed class Asn1Dump
     {
-        private static readonly string NewLine = Platform.NewLine;
+        private static readonly string NewLine = Org.BouncyCastle.Utilities.Platform.NewLine;
 
         private Asn1Dump()
         {

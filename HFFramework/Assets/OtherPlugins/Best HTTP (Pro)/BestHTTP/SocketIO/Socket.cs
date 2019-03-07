@@ -113,7 +113,7 @@ namespace BestHTTP.SocketIO
                 Packet packet = new Packet(TransportEventTypes.Message, SocketIOEventTypes.Disconnect, this.Namespace, string.Empty);
                 (Manager as IManager).SendPacket(packet);
 
-                // IsOpen must be false, becouse in the OnPacket preprocessing the packet would call this function again
+                // IsOpen must be false, because in the OnPacket preprocessing the packet would call this function again
                 IsOpen = false;
                 (this as ISocket).OnPacket(packet);
             }
@@ -368,7 +368,7 @@ namespace BestHTTP.SocketIO
         /// </summary>
         void ISocket.OnPacket(Packet packet)
         {
-            // Some preprocessing of the the packet
+            // Some preprocessing of the packet
             switch(packet.SocketIOEvent)
             {
                 case SocketIOEventTypes.Connect:

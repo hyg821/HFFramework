@@ -749,16 +749,16 @@ namespace Org.BouncyCastle.Crypto.EC
         };
 
 
-        private static readonly IDictionary nameToCurve = Platform.CreateHashtable();
-        private static readonly IDictionary nameToOid = Platform.CreateHashtable();
-        private static readonly IDictionary oidToCurve = Platform.CreateHashtable();
-        private static readonly IDictionary oidToName = Platform.CreateHashtable();
-        private static readonly IList names = Platform.CreateArrayList();
+        private static readonly IDictionary nameToCurve = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
+        private static readonly IDictionary nameToOid = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
+        private static readonly IDictionary oidToCurve = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
+        private static readonly IDictionary oidToName = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
+        private static readonly IList names = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 
         private static void DefineCurve(string name, X9ECParametersHolder holder)
         {
             names.Add(name);
-            name = Platform.ToUpperInvariant(name);
+            name = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(name);
             nameToCurve.Add(name, holder);
         }
 
@@ -767,7 +767,7 @@ namespace Org.BouncyCastle.Crypto.EC
             names.Add(name);
             oidToName.Add(oid, name);
             oidToCurve.Add(oid, holder);
-            name = Platform.ToUpperInvariant(name);
+            name = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(name);
             nameToOid.Add(name, oid);
             nameToCurve.Add(name, holder);
         }
@@ -778,7 +778,7 @@ namespace Org.BouncyCastle.Crypto.EC
             if (curve == null)
                 throw new InvalidOperationException();
 
-            name = Platform.ToUpperInvariant(name);
+            name = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(name);
             nameToOid.Add(name, oid);
             nameToCurve.Add(name, curve);
         }
@@ -843,7 +843,7 @@ namespace Org.BouncyCastle.Crypto.EC
 
         public static X9ECParameters GetByName(string name)
         {
-            X9ECParametersHolder holder = (X9ECParametersHolder)nameToCurve[Platform.ToUpperInvariant(name)];
+            X9ECParametersHolder holder = (X9ECParametersHolder)nameToCurve[Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(name)];
             return holder == null ? null : holder.Parameters;
         }
 
@@ -867,7 +867,7 @@ namespace Org.BouncyCastle.Crypto.EC
          */
         public static DerObjectIdentifier GetOid(string name)
         {
-            return (DerObjectIdentifier)nameToOid[Platform.ToUpperInvariant(name)];
+            return (DerObjectIdentifier)nameToOid[Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(name)];
         }
 
         /**

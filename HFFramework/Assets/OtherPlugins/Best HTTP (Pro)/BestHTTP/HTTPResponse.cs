@@ -17,7 +17,7 @@ namespace BestHTTP
 
     using BestHTTP.Extensions;
 
-    #if !BESTHTTP_DISABLE_COOKIES && (!UNITY_WEBGL || UNITY_EDITOR)
+    #if !BESTHTTP_DISABLE_COOKIES //&& (!UNITY_WEBGL || UNITY_EDITOR)
         using BestHTTP.Cookies;
     #endif
 
@@ -100,7 +100,7 @@ namespace BestHTTP
         /// </summary>
         public bool IsUpgraded { get; protected set; }
 
-#if !BESTHTTP_DISABLE_COOKIES && (!UNITY_WEBGL || UNITY_EDITOR)
+#if !BESTHTTP_DISABLE_COOKIES //&& (!UNITY_WEBGL || UNITY_EDITOR)
         /// <summary>
         /// The cookies that the server sent to the client.
         /// </summary>
@@ -183,7 +183,7 @@ namespace BestHTTP
 
         #endregion
 
-        internal HTTPResponse(HTTPRequest request, Stream stream, bool isStreamed, bool isFromCache)
+        public HTTPResponse(HTTPRequest request, Stream stream, bool isStreamed, bool isFromCache)
         {
             this.baseRequest = request;
             this.Stream = stream;
@@ -195,7 +195,7 @@ namespace BestHTTP
             this.IsClosedManually = false;
         }
 
-        internal virtual bool Receive(int forceReadRawContentLength = -1, bool readPayloadData = true)
+        public virtual bool Receive(int forceReadRawContentLength = -1, bool readPayloadData = true)
         {
             string statusLine = string.Empty;
 
@@ -607,7 +607,8 @@ namespace BestHTTP
                         if (gzipped)
                         {
                             var decompressed = Decompress(buffer, 0, readBytes);
-                            FeedStreamFragment(decompressed, 0, decompressed.Length);
+                            if (decompressed != null)
+                                FeedStreamFragment(decompressed, 0, decompressed.Length);
                         }
                         else
                             FeedStreamFragment(buffer, 0, readBytes);
@@ -636,7 +637,16 @@ namespace BestHTTP
                 }
 
                 if (baseRequest.UseStreaming)
+                {
+                    if (gzipped)
+                    {
+                        var decompressed = Decompress(null, 0, 0, true);
+                        if (decompressed != null)
+                            FeedStreamFragment(decompressed, 0, decompressed.Length);
+                    }
+
                     FlushRemainingFragmentBuffer();
+                }
 
                 // Read the trailing headers or the CRLF
                 ReadHeaders(stream);
@@ -721,7 +731,8 @@ namespace BestHTTP
                         if (gzipped)
                         {
                             var decompressed = Decompress(buffer, 0, readBytes);
-                            FeedStreamFragment(decompressed, 0, decompressed.Length);
+                            if (decompressed != null)
+                                FeedStreamFragment(decompressed, 0, decompressed.Length);
                         }
                         else
                             FeedStreamFragment(buffer, 0, readBytes);
@@ -731,7 +742,16 @@ namespace BestHTTP
                 };
 
                 if (baseRequest.UseStreaming)
+                {
+                    if (gzipped)
+                    {
+                        var decompressed = Decompress(null, 0, 0, true);
+                        if (decompressed != null)
+                            FeedStreamFragment(decompressed, 0, decompressed.Length);
+                    }
+
                     FlushRemainingFragmentBuffer();
+                }
 
                 if (!baseRequest.UseStreaming)
                     this.Data = DecodeStream(output);
@@ -812,7 +832,8 @@ namespace BestHTTP
                         if (gzipped)
                         {
                             var decompressed = Decompress(buffer, 0, readBytes);
-                            FeedStreamFragment(decompressed, 0, decompressed.Length);
+                            if (decompressed != null)
+                                FeedStreamFragment(decompressed, 0, decompressed.Length);
                         }
                         else
                             FeedStreamFragment(buffer, 0, readBytes);
@@ -823,7 +844,16 @@ namespace BestHTTP
                 } while (bytes > 0);
 
                 if (baseRequest.UseStreaming)
+                {
+                    if (gzipped)
+                    {
+                        var decompressed = Decompress(null, 0, 0, true);
+                        if (decompressed != null)
+                            FeedStreamFragment(decompressed, 0, decompressed.Length);
+                    }
+
                     FlushRemainingFragmentBuffer();
+                }
 
                 if (!baseRequest.UseStreaming)
                     this.Data = DecodeStream(output);
@@ -890,17 +920,19 @@ namespace BestHTTP
         private Decompression.Zlib.GZipStream decompressorGZipStream;
         private byte[] copyBuffer;
 
-        private byte[] Decompress(byte[] data, int offset, int count)
+        const int MinLengthToDecompress = 256;
+
+        private byte[] Decompress(byte[] data, int offset, int count, bool forceDecompress = false)
         {
             if (decompressorInputStream == null)
                 decompressorInputStream = new MemoryStream(count);
 
-            decompressorInputStream.Write(data, offset, count);
+            if (data != null)
+                decompressorInputStream.Write(data, offset, count);
 
-            // http://tools.ietf.org/html/rfc7692#section-7.2.2
-            // Append 4 octets of 0x00 0x00 0xff 0xff to the tail end of the payload of the message.
-            //decompressorInputStream.Write(PerMessageCompression.Trailer, 0, PerMessageCompression.Trailer.Length);
-
+            if (!forceDecompress && decompressorInputStream.Length < MinLengthToDecompress)
+                return null;
+            
             decompressorInputStream.Position = 0;
 
             if (decompressorGZipStream == null)
@@ -926,13 +958,7 @@ namespace BestHTTP
             decompressorGZipStream.SetLength(0);
 
             byte[] result = decompressorOutputStream.ToArray();
-
-            /*if (this.ServerNoContextTakeover)
-            {
-                decompressorDeflateStream.Dispose();
-                decompressorDeflateStream = null;
-            }*/
-
+            
             return result;
         }
 
@@ -957,6 +983,9 @@ namespace BestHTTP
         /// <param name="length">How many data we want to copy.</param>
         protected void FeedStreamFragment(byte[] buffer, int pos, int length)
         {
+            if (buffer == null || length == 0)
+                return;
+
             if (fragmentBuffer == null)
             {
                 fragmentBuffer = new byte[baseRequest.StreamFragmentSize];
@@ -1021,7 +1050,7 @@ namespace BestHTTP
                 }
 
 
-                if (HTTPManager.Logger.Level == Logger.Loglevels.All)
+                if (HTTPManager.Logger.Level == Logger.Loglevels.All && buffer != null && streamedFragments != null)
                     VerboseLogging(string.Format("AddStreamedFragment buffer length: {0:N0} streamedFragments: {1:N0}", buffer.Length, streamedFragments.Count));
 
 #if !BESTHTTP_DISABLE_CACHING && (!UNITY_WEBGL || UNITY_EDITOR)
@@ -1040,12 +1069,10 @@ namespace BestHTTP
 #endif
             void WaitWhileHasFragments()
         {
+            VerboseLogging("WaitWhileHasFragments");
+
 #if !UNITY_WEBGL || UNITY_EDITOR
-            while (baseRequest.UseStreaming &&
-                #if !BESTHTTP_DISABLE_CACHING
-                    //this.IsFromCache &&
-                #endif
-                HasStreamedFragments())
+            while (baseRequest.UseStreaming && HasFragmentsInQueue())
             {
                 #if NETFX_CORE
                     await System.Threading.Tasks.Task.Delay(16);
@@ -1054,6 +1081,18 @@ namespace BestHTTP
                 #endif
             }
 #endif
+        }
+
+        bool HasFragmentsInQueue()
+        {
+            lock (SyncRoot)
+            {
+                bool result = streamedFragments != null && streamedFragments.Count >= baseRequest.MaxFragmentQueueLength;
+                if (result && HTTPManager.Logger.Level == Logger.Loglevels.All)
+                    VerboseLogging(string.Format("HasFragmentsInQueue - {0} / {1}", streamedFragments.Count, baseRequest.MaxFragmentQueueLength));
+
+                return result;
+            }
         }
 
         /// <summary>
@@ -1085,7 +1124,7 @@ namespace BestHTTP
         internal bool HasStreamedFragments()
         {
             lock (SyncRoot)
-                return streamedFragments != null && streamedFragments.Count > 0;
+                return streamedFragments != null && streamedFragments.Count >= baseRequest.MaxFragmentQueueLength;
         }
 
         internal void FinishStreaming()
@@ -1101,6 +1140,7 @@ namespace BestHTTP
 
         void VerboseLogging(string str)
         {
+          if (HTTPManager.Logger.Level == Logger.Loglevels.All)
             HTTPManager.Logger.Verbose("HTTPResponse", "'" + this.baseRequest.CurrentUri.ToString() + "' - " + str);
         }
 

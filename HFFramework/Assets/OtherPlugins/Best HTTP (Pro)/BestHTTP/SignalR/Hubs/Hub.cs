@@ -232,7 +232,7 @@ namespace BestHTTP.SignalR.Hubs
                     HTTPManager.Logger.Exception("Hub - " + this.Name, "IHub.OnMethod - callback", ex);
                 }
             }
-            else
+            else if (OnMethodCall == null)
                 HTTPManager.Logger.Warning("Hub - " + this.Name, string.Format("[Client] {0}.{1} (args: {2})", this.Name, msg.Method, msg.Arguments.Length));
         }
 

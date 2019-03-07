@@ -332,7 +332,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             ICipherParameters  parameters)
         {
             if (!(parameters is KeyParameter))
-				throw new ArgumentException("invalid parameter passed to Blowfish init - " + Platform.GetTypeName(parameters));
+				throw new ArgumentException("invalid parameter passed to Blowfish init - " + Org.BouncyCastle.Utilities.Platform.GetTypeName(parameters));
 
 			this.encrypting = forEncryption;
 			this.workingKey = ((KeyParameter)parameters).GetKey();

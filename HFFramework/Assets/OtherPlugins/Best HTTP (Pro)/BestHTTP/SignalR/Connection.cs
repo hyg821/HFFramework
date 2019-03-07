@@ -468,6 +468,7 @@ namespace BestHTTP.SignalR
         private void OnAuthenticationSucceded(IAuthenticationProvider provider)
         {
             provider.OnAuthenticationSucceded -= OnAuthenticationSucceded;
+            provider.OnAuthenticationFailed -= OnAuthenticationFailed;
 
             StartImpl();
         }
@@ -477,6 +478,7 @@ namespace BestHTTP.SignalR
         /// </summary>
         private void OnAuthenticationFailed(IAuthenticationProvider provider, string reason)
         {
+            provider.OnAuthenticationSucceded -= OnAuthenticationSucceded;
             provider.OnAuthenticationFailed -= OnAuthenticationFailed;
 
             (this as IConnection).Error(reason);
@@ -863,6 +865,13 @@ namespace BestHTTP.SignalR
             if (this.State == ConnectionStates.Closed)
                 return;
 
+            // If we are just quitting, don't try to reconnect.
+            if (HTTPManager.IsQuitting)
+            {
+                Close();
+                return;
+            }
+
             HTTPManager.Logger.Error("SignalR Connection", reason);
 
             ReconnectStarted = false;
@@ -932,11 +941,22 @@ namespace BestHTTP.SignalR
 
                     case RequestTypes.Poll:
                         uriBuilder.Path += "poll";
+
                         if (this.LastReceivedMessage != null)
                         {
                             queryBuilder.Append("messageId=");
                             queryBuilder.Append(this.LastReceivedMessage.MessageId);
                         }
+
+                        if (!string.IsNullOrEmpty(GroupsToken))
+                        {
+                            if (queryBuilder.Length > 0)
+                                queryBuilder.Append("&");
+
+                            queryBuilder.Append("groupsToken=");
+                            queryBuilder.Append(GroupsToken);
+                        }
+
                         goto default;
 
                     case RequestTypes.Send:

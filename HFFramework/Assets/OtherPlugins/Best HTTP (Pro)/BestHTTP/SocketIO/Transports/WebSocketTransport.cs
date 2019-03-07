@@ -123,9 +123,25 @@ namespace BestHTTP.SocketIO.Transports
             if (HTTPManager.Logger.Level <= BestHTTP.Logger.Loglevels.All)
                 HTTPManager.Logger.Verbose("WebSocketTransport", "OnMessage: " + message);
 
+            Packet packet = null;
             try
             {
-                Packet packet = new Packet(message);
+                packet = new Packet(message);
+            }
+            catch (Exception ex)
+            {
+                HTTPManager.Logger.Exception("WebSocketTransport", "OnMessage Packet parsing", ex);
+            }
+
+            if (packet == null)
+            {
+                HTTPManager.Logger.Error("WebSocketTransport", "Message parsing failed. Message: " + message);
+                return;
+            }
+
+            try
+            {
+
                 if (packet.AttachmentCount == 0)
                     OnPacket(packet);
                 else
@@ -133,7 +149,7 @@ namespace BestHTTP.SocketIO.Transports
             }
             catch (Exception ex)
             {
-                HTTPManager.Logger.Exception("WebSocketTransport", "OnMessage", ex);
+                HTTPManager.Logger.Exception("WebSocketTransport", "OnMessage OnPacket", ex);
             }
         }
 
@@ -323,7 +339,7 @@ namespace BestHTTP.SocketIO.Transports
             {
                 case TransportEventTypes.Open:
                     if (this.State != TransportStates.Opening)
-                        HTTPManager.Logger.Warning("PollingTransport", "Received 'Open' packet while state is '" + State.ToString() + "'");
+                        HTTPManager.Logger.Warning("WebSocketTransport", "Received 'Open' packet while state is '" + State.ToString() + "'");
                     else
                         State = TransportStates.Open;
                     goto default;

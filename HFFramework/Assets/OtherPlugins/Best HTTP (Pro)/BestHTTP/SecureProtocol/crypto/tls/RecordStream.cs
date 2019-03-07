@@ -291,7 +291,7 @@ namespace Org.BouncyCastle.Crypto.Tls
         {
             try
             {
-                Platform.Dispose(mInput);
+                Org.BouncyCastle.Utilities.Platform.Dispose(mInput);
             }
             catch (IOException)
             {
@@ -299,7 +299,7 @@ namespace Org.BouncyCastle.Crypto.Tls
 
             try
             {
-                Platform.Dispose(mOutput);
+                Org.BouncyCastle.Utilities.Platform.Dispose(mOutput);
             }
             catch (IOException)
             {

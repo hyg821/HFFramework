@@ -140,7 +140,7 @@ namespace BestHTTP.SignalR.Transports
                     reason = "Connect - Request Aborted!";
                     break;
 
-                // Ceonnecting to the server is timed out.
+                // Connecting to the server is timed out.
                 case HTTPRequestStates.ConnectionTimedOut:
                     reason = "Connect - Connection Timed Out!";
                     break;
@@ -205,7 +205,7 @@ namespace BestHTTP.SignalR.Transports
                     reason = "Poll - Request Finished with Error! " + (req.Exception != null ? (req.Exception.Message + "\n" + req.Exception.StackTrace) : "No Exception");
                     break;
 
-                // Ceonnecting to the server is timed out.
+                // Connecting to the server is timed out.
                 case HTTPRequestStates.ConnectionTimedOut:
                     reason = "Poll - Connection Timed Out!";
                     break;

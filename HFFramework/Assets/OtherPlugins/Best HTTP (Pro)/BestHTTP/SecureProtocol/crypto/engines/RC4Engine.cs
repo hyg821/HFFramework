@@ -47,7 +47,7 @@ namespace Org.BouncyCastle.Crypto.Engines
                 return;
             }
 
-            throw new ArgumentException("invalid parameter passed to RC4 init - " + Platform.GetTypeName(parameters));
+            throw new ArgumentException("invalid parameter passed to RC4 init - " + Org.BouncyCastle.Utilities.Platform.GetTypeName(parameters));
         }
 
         public virtual string AlgorithmName

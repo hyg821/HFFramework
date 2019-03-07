@@ -11,7 +11,7 @@ namespace BestHTTP.Examples
         /// <summary>
         /// The URL of the server that will serve the image resources
         /// </summary>
-        const string BaseURL = "https://besthttp.azurewebsites.net/Content/";
+        const string BaseURL = "https://besthttpdemosite.azurewebsites.net/images/Demo/";
 
         #region Private Fields
 
@@ -164,7 +164,7 @@ namespace BestHTTP.Examples
                     Debug.LogWarning("Request Aborted!");
                     break;
 
-                // Ceonnecting to the server is timed out.
+                // Connecting to the server is timed out.
                 case HTTPRequestStates.ConnectionTimedOut:
                     Debug.LogError("Connection Timed Out!");
                     break;

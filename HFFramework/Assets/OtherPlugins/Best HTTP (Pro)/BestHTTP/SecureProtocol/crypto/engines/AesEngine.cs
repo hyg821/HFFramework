@@ -456,7 +456,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
             if (keyParameter == null)
                 throw new ArgumentException("invalid parameter passed to AES init - "
-                    + Platform.GetTypeName(parameters));
+                    + Org.BouncyCastle.Utilities.Platform.GetTypeName(parameters));
 
             WorkingKey = GenerateWorkingKey(keyParameter.GetKey(), forEncryption);
 

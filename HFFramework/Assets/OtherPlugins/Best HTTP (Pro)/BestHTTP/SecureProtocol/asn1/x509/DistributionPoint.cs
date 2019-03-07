@@ -43,7 +43,7 @@ namespace Org.BouncyCastle.Asn1.X509
                 return new DistributionPoint((Asn1Sequence) obj);
             }
 
-            throw new ArgumentException("Invalid DistributionPoint: " + Platform.GetTypeName(obj));
+            throw new ArgumentException("Invalid DistributionPoint: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj));
         }
 
 		private DistributionPoint(
@@ -120,7 +120,7 @@ namespace Org.BouncyCastle.Asn1.X509
 
 		public override string ToString()
 		{
-			string sep = Platform.NewLine;
+			string sep = Org.BouncyCastle.Utilities.Platform.NewLine;
 			StringBuilder buf = new StringBuilder();
 			buf.Append("DistributionPoint: [");
 			buf.Append(sep);

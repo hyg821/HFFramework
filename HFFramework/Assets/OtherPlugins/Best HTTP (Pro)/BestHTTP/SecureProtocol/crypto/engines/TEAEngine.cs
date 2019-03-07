@@ -69,7 +69,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			if (!(parameters is KeyParameter))
 			{
 				throw new ArgumentException("invalid parameter passed to TEA init - "
-					+ Platform.GetTypeName(parameters));
+					+ Org.BouncyCastle.Utilities.Platform.GetTypeName(parameters));
 			}
 
 			_forEncryption = forEncryption;

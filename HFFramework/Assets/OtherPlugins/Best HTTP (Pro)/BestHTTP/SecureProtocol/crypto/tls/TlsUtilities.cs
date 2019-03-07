@@ -600,7 +600,7 @@ namespace Org.BouncyCastle.Crypto.Tls
             byte[] signatureAlgorithms = new byte[]{ SignatureAlgorithm.rsa, SignatureAlgorithm.dsa,
                 SignatureAlgorithm.ecdsa };
 
-            IList result = Platform.CreateArrayList();
+            IList result = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
             for (int i = 0; i < signatureAlgorithms.Length; ++i)
             {
                 for (int j = 0; j < hashAlgorithms.Length; ++j)
@@ -744,7 +744,7 @@ namespace Org.BouncyCastle.Crypto.Tls
             if (length < 2 || (length & 1) != 0)
                 throw new TlsFatalAlert(AlertDescription.decode_error);
             int count = length / 2;
-            IList supportedSignatureAlgorithms = Platform.CreateArrayList(count);
+            IList supportedSignatureAlgorithms = Org.BouncyCastle.Utilities.Platform.CreateArrayList(count);
             for (int i = 0; i < count; ++i)
             {
                 SignatureAndHashAlgorithm entry = SignatureAndHashAlgorithm.Parse(input);
@@ -1214,7 +1214,7 @@ namespace Org.BouncyCastle.Crypto.Tls
 
         private static IList VectorOfOne(object obj)
         {
-            IList v = Platform.CreateArrayList(1);
+            IList v = Org.BouncyCastle.Utilities.Platform.CreateArrayList(1);
             v.Add(obj);
             return v;
         }

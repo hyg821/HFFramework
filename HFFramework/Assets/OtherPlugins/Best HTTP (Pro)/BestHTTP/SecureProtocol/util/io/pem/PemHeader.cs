@@ -40,8 +40,8 @@ namespace Org.BouncyCastle.Utilities.IO.Pem
 
 			PemHeader other = (PemHeader)obj;
 
-			return Platform.Equals(this.name, other.name)
-				&& Platform.Equals(this.val, other.val);
+			return Org.BouncyCastle.Utilities.Platform.Equals(this.name, other.name)
+				&& Org.BouncyCastle.Utilities.Platform.Equals(this.val, other.val);
 		}
 
 		private int GetHashCode(string s)

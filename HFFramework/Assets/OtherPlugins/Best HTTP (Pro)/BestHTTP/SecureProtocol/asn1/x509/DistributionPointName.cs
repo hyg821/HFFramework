@@ -44,7 +44,7 @@ namespace Org.BouncyCastle.Asn1.X509
                 return new DistributionPointName((Asn1TaggedObject) obj);
             }
 
-            throw new ArgumentException("unknown object in factory: " + Platform.GetTypeName(obj), "obj");
+            throw new ArgumentException("unknown object in factory: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj), "obj");
 		}
 
         public DistributionPointName(
@@ -93,7 +93,7 @@ namespace Org.BouncyCastle.Asn1.X509
 
 		public override string ToString()
 		{
-			string sep = Platform.NewLine;
+			string sep = Org.BouncyCastle.Utilities.Platform.NewLine;
 			StringBuilder buf = new StringBuilder();
 			buf.Append("DistributionPointName: [");
 			buf.Append(sep);

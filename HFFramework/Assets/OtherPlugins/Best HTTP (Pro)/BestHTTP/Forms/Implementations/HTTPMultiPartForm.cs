@@ -23,7 +23,7 @@ namespace BestHTTP.Forms
 
         public HTTPMultiPartForm()
         {
-            this.Boundary = this.GetHashCode().ToString("X");
+            this.Boundary = "BestHTTP_HTTPMultiPartForm_" + this.GetHashCode().ToString("X");
         }
 
         #region IHTTPForm Implementation

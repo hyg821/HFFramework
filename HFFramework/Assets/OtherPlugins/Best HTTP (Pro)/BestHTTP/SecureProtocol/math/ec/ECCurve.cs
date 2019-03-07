@@ -187,7 +187,7 @@ namespace Org.BouncyCastle.Math.EC
                 IDictionary table = point.m_preCompTable;
                 if (null == table)
                 {
-                    point.m_preCompTable = table = Platform.CreateHashtable(4);
+                    point.m_preCompTable = table = Org.BouncyCastle.Utilities.Platform.CreateHashtable(4);
                 }
                 table[name] = preCompInfo;
             }

@@ -30,7 +30,7 @@ namespace Org.BouncyCastle.Utilities.IO.Pem
 				throw new ArgumentNullException("writer");
 
 			this.writer = writer;
-			this.nlLength = Platform.NewLine.Length;
+			this.nlLength = Org.BouncyCastle.Utilities.Platform.NewLine.Length;
 		}
 
 		public TextWriter Writer

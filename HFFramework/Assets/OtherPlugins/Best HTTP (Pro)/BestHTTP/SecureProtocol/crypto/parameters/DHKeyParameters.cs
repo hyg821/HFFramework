@@ -59,7 +59,7 @@ namespace Org.BouncyCastle.Crypto.Parameters
 		protected bool Equals(
 			DHKeyParameters other)
 		{
-			return Platform.Equals(parameters, other.parameters)
+			return Org.BouncyCastle.Utilities.Platform.Equals(parameters, other.parameters)
 				&& base.Equals(other);
 		}
 

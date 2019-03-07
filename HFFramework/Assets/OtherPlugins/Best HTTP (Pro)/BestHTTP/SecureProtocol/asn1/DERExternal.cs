@@ -130,9 +130,9 @@ namespace Org.BouncyCastle.Asn1
 			if (other == null)
 				return false;
 
-			return Platform.Equals(directReference, other.directReference)
-				&& Platform.Equals(indirectReference, other.indirectReference)
-				&& Platform.Equals(dataValueDescriptor, other.dataValueDescriptor)
+			return Org.BouncyCastle.Utilities.Platform.Equals(directReference, other.directReference)
+				&& Org.BouncyCastle.Utilities.Platform.Equals(indirectReference, other.indirectReference)
+				&& Org.BouncyCastle.Utilities.Platform.Equals(dataValueDescriptor, other.dataValueDescriptor)
 				&& externalContent.Equals(other.externalContent);
 		}
 

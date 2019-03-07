@@ -98,7 +98,7 @@ namespace Org.BouncyCastle.Crypto.Engines
             }
             else
             {
-                throw new ArgumentException("invalid parameter passed to RC532 init - " + Platform.GetTypeName(parameters));
+                throw new ArgumentException("invalid parameter passed to RC532 init - " + Org.BouncyCastle.Utilities.Platform.GetTypeName(parameters));
             }
 
             this.forEncryption = forEncryption;

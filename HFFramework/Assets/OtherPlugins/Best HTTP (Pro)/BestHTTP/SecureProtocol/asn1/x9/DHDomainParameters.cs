@@ -25,7 +25,7 @@ namespace Org.BouncyCastle.Asn1.X9
 			if (obj is Asn1Sequence)
 				return new DHDomainParameters((Asn1Sequence)obj);
 
-			throw new ArgumentException("Invalid DHDomainParameters: " + Platform.GetTypeName(obj), "obj");
+			throw new ArgumentException("Invalid DHDomainParameters: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj), "obj");
 		}
 
 		public DHDomainParameters(DerInteger p, DerInteger g, DerInteger q, DerInteger j,

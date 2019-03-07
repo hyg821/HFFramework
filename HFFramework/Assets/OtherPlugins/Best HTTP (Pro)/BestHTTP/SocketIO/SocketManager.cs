@@ -161,11 +161,6 @@ namespace BestHTTP.SocketIO
         private DateTime LastHeartbeat = DateTime.MinValue;
 
         /// <summary>
-        /// When we received the last Pong message answering to our heartbeat(Ping) message.
-        /// </summary>
-        private DateTime LastPongReceived = DateTime.MinValue;
-
-        /// <summary>
         /// When we have to try to do a reconnect attempt
         /// </summary>
         private DateTime ReconnectAt;
@@ -179,6 +174,11 @@ namespace BestHTTP.SocketIO
         /// Private flag to avoid multiple Close call
         /// </summary>
         private bool closing;
+
+        /// <summary>
+        /// Whether the connection is waiting for a ping response.
+        /// </summary>
+        private bool IsWaitingPong;
 
         #endregion
 
@@ -352,7 +352,7 @@ namespace BestHTTP.SocketIO
                 State == States.Closed)
                 return;
 
-            if (!Options.Reconnection)
+            if (!Options.Reconnection || HTTPManager.IsQuitting)
             {
                 Close();
 
@@ -402,7 +402,6 @@ namespace BestHTTP.SocketIO
 
             State = States.Open;
 
-            LastPongReceived = DateTime.UtcNow;
             ReconnectAttempts = 0;
 
             // Send out packets that we collected while there were no available transport.
@@ -451,7 +450,7 @@ namespace BestHTTP.SocketIO
         /// </summary>
         private ITransport SelectTransport()
         {
-            if (State != States.Open)
+            if (State != States.Open || Transport == null)
                 return null;
 
             return Transport.IsRequestInProgress ? null : Transport;
@@ -531,7 +530,7 @@ namespace BestHTTP.SocketIO
                     break;
 
                 case TransportEventTypes.Pong:
-                    LastPongReceived = DateTime.UtcNow;
+                    IsWaitingPong = false;
                     break;
             }
 
@@ -658,16 +657,18 @@ namespace BestHTTP.SocketIO
                     }
 
                     // It's time to send out a ping event to the server
-                    if (DateTime.UtcNow - LastHeartbeat > Handshake.PingInterval)
+                    if (!IsWaitingPong && DateTime.UtcNow - LastHeartbeat > Handshake.PingInterval)
                     {
                         (this as IManager).SendPacket(new Packet(TransportEventTypes.Ping, SocketIOEventTypes.Unknown, "/", string.Empty));
 
                         LastHeartbeat = DateTime.UtcNow;
+                        IsWaitingPong = true;
                     }
 
                     // No pong event received in the given time, we are disconnected.
-                    if (DateTime.UtcNow - LastPongReceived > Handshake.PingTimeout)
+                    if (IsWaitingPong && DateTime.UtcNow - LastHeartbeat > Handshake.PingTimeout)
                     {
+                        IsWaitingPong = false;
                         (this as IManager).TryToReconnect();
                     }
 

@@ -19,11 +19,11 @@ namespace BestHTTP.Logger
 
         public DefaultLogger()
         {
-            FormatVerbose = "D [{0}]: {1}";
-            FormatInfo = "I [{0}]: {1}";
-            FormatWarn = "W [{0}]: {1}";
-            FormatErr = "Err [{0}]: {1}";
-            FormatEx = "Ex [{0}]: {1} - Message: {2}  StackTrace: {3}";
+            FormatVerbose = "[{0}] D [{1}]: {2}";
+            FormatInfo    = "[{0}] I [{1}]: {2}";
+            FormatWarn    = "[{0}] W [{1}]: {2}";
+            FormatErr     = "[{0}] Err [{1}]: {2}";
+            FormatEx      = "[{0}] Ex [{1}]: {2} - Message: {3}  StackTrace: {4}";
 
             Level = UnityEngine.Debug.isDebugBuild ? Loglevels.Warning : Loglevels.Error;
         }
@@ -34,7 +34,7 @@ namespace BestHTTP.Logger
             {
                 try
                 {
-                    UnityEngine.Debug.Log(string.Format(FormatVerbose, division, verb));
+                    UnityEngine.Debug.Log(string.Format(FormatVerbose, GetFormattedTime(), division, verb));
                 }
                 catch
                 { }
@@ -47,7 +47,7 @@ namespace BestHTTP.Logger
             {
                 try
                 {
-                    UnityEngine.Debug.Log(string.Format(FormatInfo, division, info));
+                    UnityEngine.Debug.Log(string.Format(FormatInfo, GetFormattedTime(), division, info));
                 }
                 catch
                 { }
@@ -60,7 +60,7 @@ namespace BestHTTP.Logger
             {
                 try
                 {
-                    UnityEngine.Debug.LogWarning(string.Format(FormatWarn, division, warn));
+                    UnityEngine.Debug.LogWarning(string.Format(FormatWarn, GetFormattedTime(), division, warn));
                 }
                 catch
                 { }
@@ -73,7 +73,7 @@ namespace BestHTTP.Logger
             {
                 try
                 {
-                    UnityEngine.Debug.LogError(string.Format(FormatErr, division, err));
+                    UnityEngine.Debug.LogError(string.Format(FormatErr, GetFormattedTime(), division, err));
                 }
                 catch
                 { }
@@ -97,7 +97,7 @@ namespace BestHTTP.Logger
                         int counter = 1;
                         while (exception != null)
                         {
-                            sb.AppendFormat("{0}: {1} {2}", counter++.ToString(), ex.Message, ex.StackTrace);
+                            sb.AppendFormat("{0}: {1} {2}", counter++.ToString(), exception.Message, exception.StackTrace);
 
                             exception = exception.InnerException;
 
@@ -109,6 +109,7 @@ namespace BestHTTP.Logger
                     }
 
                     UnityEngine.Debug.LogError(string.Format(FormatEx,
+                                                                GetFormattedTime(),
                                                                 division,
                                                                 msg,
                                                                 exceptionMessage,
@@ -117,6 +118,11 @@ namespace BestHTTP.Logger
                 catch
                 { }
             }
+        }
+
+        private string GetFormattedTime()
+        {
+            return DateTime.Now.Ticks.ToString();
         }
     }
 }

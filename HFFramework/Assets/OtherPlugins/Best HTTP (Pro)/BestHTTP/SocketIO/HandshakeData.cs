@@ -52,8 +52,9 @@ namespace BestHTTP.SocketIO
                 this.PingInterval = TimeSpan.FromMilliseconds(GetInt(dict, "pingInterval"));
                 this.PingTimeout = TimeSpan.FromMilliseconds(GetInt(dict, "pingTimeout"));
             }
-            catch
+            catch (Exception ex)
             {
+                BestHTTP.HTTPManager.Logger.Exception("HandshakeData", "Parse", ex);
                 return false;
             }
 

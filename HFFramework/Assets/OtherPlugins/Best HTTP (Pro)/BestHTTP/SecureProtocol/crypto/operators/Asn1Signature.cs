@@ -23,8 +23,8 @@ namespace Org.BouncyCastle.Crypto.Operators
 	{
         private static readonly Asn1Null derNull = DerNull.Instance;
 
-        private static readonly IDictionary algorithms = Platform.CreateHashtable();
-		private static readonly IDictionary exParams = Platform.CreateHashtable();
+        private static readonly IDictionary algorithms = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
+		private static readonly IDictionary exParams = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
 		private static readonly ISet        noParams = new HashSet();
 
 		static X509Utilities()
@@ -202,7 +202,7 @@ namespace Org.BouncyCastle.Crypto.Operators
 		internal static DerObjectIdentifier GetAlgorithmOid(
 			string algorithmName)
 		{
-			algorithmName = Platform.ToUpperInvariant(algorithmName);
+			algorithmName = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(algorithmName);
 
 			if (algorithms.Contains(algorithmName))
 			{
@@ -221,7 +221,7 @@ namespace Org.BouncyCastle.Crypto.Operators
 				return new AlgorithmIdentifier(sigOid);
 			}
 
-			algorithmName = Platform.ToUpperInvariant(algorithmName);
+			algorithmName = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(algorithmName);
 
 			if (exParams.Contains(algorithmName))
 			{

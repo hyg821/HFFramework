@@ -99,7 +99,7 @@ namespace Org.BouncyCastle.Crypto.Tls
          */
         public static OcspStatusRequest Parse(Stream input)
         {
-            IList responderIDList = Platform.CreateArrayList();
+            IList responderIDList = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
             {
                 int length = TlsUtilities.ReadUint16(input);
                 if (length > 0)

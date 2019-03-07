@@ -15,7 +15,7 @@ var Lib_BEST_HTTP_WebGL_HTTP_Bridge =
 		loglevel: 2
 	},
 
-	XHR_Create: function(method, url, user, passwd)
+	XHR_Create: function(method, url, user, passwd, withCredentials)
 	{
 		var _url = /*encodeURI*/(Pointer_stringify(url))
 					.replace(/\+/g, '%2B')
@@ -35,8 +35,10 @@ var Lib_BEST_HTTP_WebGL_HTTP_Bridge =
 			http.withCredentials = true;
 			http.open(_method, _url, /*async:*/ true , u, p);
 		}
-		else
+		else {
+            http.withCredentials = withCredentials;
 			http.open(_method, _url, /*async:*/ true);
+        }
 
 		http.responseType = 'arraybuffer';
 
@@ -60,7 +62,14 @@ var Lib_BEST_HTTP_WebGL_HTTP_Bridge =
 		if (wr.loglevel <= 1) /*information*/
 			console.log(request + ' XHR_SetRequestHeader ' + _header + ' ' + _value);
 
-		wr.requestInstances[request].setRequestHeader(_header, _value);
+        if (_header != 'Cookie')
+		    wr.requestInstances[request].setRequestHeader(_header, _value);
+        else {
+            var cookies = _value.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                document.cookie = cookies[i];
+            }
+        }
 	},
 
 	XHR_SetResponseHandler: function (request, onresponse, onerror, ontimeout, onaborted)
@@ -175,10 +184,16 @@ var Lib_BEST_HTTP_WebGL_HTTP_Bridge =
 		if (wr.loglevel <= 1) /*information*/
 			console.log(request + ' XHR_GetResponseHeaders');
 
-		var headers = wr.requestInstances[request].getAllResponseHeaders().trim() + "\r\n";
+        var headers = ''
+        var cookies = document.cookie.split(';');
+        for(var i = 0; i < cookies.length; ++i)
+            headers += "Set-Cookie:" + cookies[i] + "\r\n";
 
-		if (wr.loglevel <= 1) /*information*/
+		headers +=  wr.requestInstances[request].getAllResponseHeaders().trim() + "\r\n";
+
+		if (wr.loglevel <= 1) { /*information*/
 			console.log('  "' + headers + '"');
+        }
 
 		var byteArray = new Uint8Array(headers.length);
 		for(var i=0,j=headers.length;i<j;++i){

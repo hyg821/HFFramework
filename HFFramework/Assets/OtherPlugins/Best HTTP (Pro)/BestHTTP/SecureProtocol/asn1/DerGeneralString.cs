@@ -20,7 +20,7 @@ namespace Org.BouncyCastle.Asn1
             }
 
 			throw new ArgumentException("illegal object in GetInstance: "
-                    + Platform.GetTypeName(obj));
+                    + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj));
         }
 
         public static DerGeneralString GetInstance(

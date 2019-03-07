@@ -24,8 +24,8 @@ namespace Org.BouncyCastle.Security
         {
         }
 
-        private static readonly IDictionary algorithms = Platform.CreateHashtable();
-        //private static readonly IDictionary oids = Platform.CreateHashtable();
+        private static readonly IDictionary algorithms = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
+        //private static readonly IDictionary oids = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
 
         static MacUtilities()
         {
@@ -83,7 +83,7 @@ namespace Org.BouncyCastle.Security
 //		public static DerObjectIdentifier GetObjectIdentifier(
 //			string mechanism)
 //		{
-//			mechanism = (string) algorithms[Platform.ToUpperInvariant(mechanism)];
+//			mechanism = (string) algorithms[Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(mechanism)];
 //
 //			if (mechanism != null)
 //			{
@@ -107,7 +107,7 @@ namespace Org.BouncyCastle.Security
         public static IMac GetMac(
             string algorithm)
         {
-            string upper = Platform.ToUpperInvariant(algorithm);
+            string upper = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(algorithm);
 
             string mechanism = (string) algorithms[upper];
 
@@ -116,15 +116,15 @@ namespace Org.BouncyCastle.Security
                 mechanism = upper;
             }
 
-            if (Platform.StartsWith(mechanism, "PBEWITH"))
+            if (Org.BouncyCastle.Utilities.Platform.StartsWith(mechanism, "PBEWITH"))
             {
                 mechanism = mechanism.Substring("PBEWITH".Length);
             }
 
-            if (Platform.StartsWith(mechanism, "HMAC"))
+            if (Org.BouncyCastle.Utilities.Platform.StartsWith(mechanism, "HMAC"))
             {
                 string digestName;
-                if (Platform.StartsWith(mechanism, "HMAC-") || Platform.StartsWith(mechanism, "HMAC/"))
+                if (Org.BouncyCastle.Utilities.Platform.StartsWith(mechanism, "HMAC-") || Org.BouncyCastle.Utilities.Platform.StartsWith(mechanism, "HMAC/"))
                 {
                     digestName = mechanism.Substring(5);
                 }

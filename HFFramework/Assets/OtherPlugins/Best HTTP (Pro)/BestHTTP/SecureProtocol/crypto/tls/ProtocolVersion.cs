@@ -154,7 +154,7 @@ namespace Org.BouncyCastle.Crypto.Tls
             TlsUtilities.CheckUint8(minor);
 
             int v = (major << 8) | minor;
-            String hex = Platform.ToUpperInvariant(Convert.ToString(0x10000 | v, 16).Substring(1));
+            String hex = Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(Convert.ToString(0x10000 | v, 16).Substring(1));
             return new ProtocolVersion(v, prefix + " 0x" + hex);
         }
     }

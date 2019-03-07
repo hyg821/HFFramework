@@ -107,31 +107,31 @@ var Lib_BEST_HTTP_WebGL_WS_Bridge =
 		socket.socketImpl.onclose = function (e) {
 			console.log(id + ' WS_Create - onClose ' + e.code + ' ' + e.reason);
 
-			if (e.code != 1000)
-			{
-				if (e.reason != null && e.reason.length > 0)
-					ws._callOnError(onError, id, e.reason);
-				else
-				{
-					switch (e.code)
-					{
-						case 1001: ws._callOnError(onError, id, "Endpoint going away.");
-							break;
-						case 1002: ws._callOnError(onError, id, "Protocol error.");
-							break;
-						case 1003: ws._callOnError(onError, id, "Unsupported message.");
-							break;
-						case 1005: ws._callOnError(onError, id, "No status.");
-							break;
-						case 1006: ws._callOnError(onError, id, "Abnormal disconnection.");
-							break;
-						case 1009: ws._callOnError(onError, id, "Data frame too large.");
-							break;
-						default: ws._callOnError(onError, id, "Error " + e.code);
-					}
-				}
-			}
-			else
+			//if (e.code != 1000)
+			//{
+			//	if (e.reason != null && e.reason.length > 0)
+			//		ws._callOnError(onError, id, e.reason);
+			//	else
+			//	{
+			//		switch (e.code)
+			//		{
+			//			case 1001: ws._callOnError(onError, id, "Endpoint going away.");
+			//				break;
+			//			case 1002: ws._callOnError(onError, id, "Protocol error.");
+			//				break;
+			//			case 1003: ws._callOnError(onError, id, "Unsupported message.");
+			//				break;
+			//			case 1005: ws._callOnError(onError, id, "No status.");
+			//				break;
+			//			case 1006: ws._callOnError(onError, id, "Abnormal disconnection.");
+			//				break;
+			//			case 1009: ws._callOnError(onError, id, "Data frame too large.");
+			//				break;
+			//			default: ws._callOnError(onError, id, "Error " + e.code);
+			//		}
+			//	}
+			//}
+			//else
 				ws._callOnClose(onClose, id, e.code, e.reason);
 		};
 

@@ -12,7 +12,7 @@ namespace Org.BouncyCastle.Asn1
     {
 		public static BerOctetString FromSequence(Asn1Sequence seq)
 		{
-			IList v = Platform.CreateArrayList();
+			IList v = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 
 			foreach (Asn1Encodable obj in seq)
 			{
@@ -93,7 +93,7 @@ namespace Org.BouncyCastle.Asn1
 
 		private IList GenerateOcts()
         {
-            IList vec = Platform.CreateArrayList();
+            IList vec = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 			for (int i = 0; i < str.Length; i += MaxLength)
 			{
 				int end = System.Math.Min(str.Length, i + MaxLength);

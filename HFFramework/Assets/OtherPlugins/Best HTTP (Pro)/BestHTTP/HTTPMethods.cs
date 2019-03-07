@@ -69,6 +69,8 @@
         /// The HTTP methods PATCH can be used to update partial resources. For instance, when you only need to update one field of the resource, PUTting a complete resource representation might be cumbersome and utilizes more bandwidth.
         /// <seealso href="http://restcookbook.com/HTTP%20Methods/patch/"/>
         /// </summary>
-        Merge
+        Merge,
+
+        Options
     }
 }

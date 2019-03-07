@@ -1,4 +1,4 @@
-﻿#if !BESTHTTP_DISABLE_COOKIES && (!UNITY_WEBGL || UNITY_EDITOR)
+﻿#if !BESTHTTP_DISABLE_COOKIES //&& (!UNITY_WEBGL || UNITY_EDITOR)
 
 using System;
 using System.Collections.Generic;
@@ -35,13 +35,18 @@ namespace BestHTTP.Cookies
         {
             get
             {
+#if !BESTHTTP_DISABLE_COOKIE_SAVE
                 if (IsSupportCheckDone)
                     return _isSavingSupported;
 
                 try
                 {
+#if !UNITY_WEBGL || UNITY_EDITOR
                     File.Exists(HTTPManager.GetRootCacheFolder());
                     _isSavingSupported = true;
+#else
+                    _isSavingSupported = false;
+#endif
                 }
                 catch
                 {
@@ -55,10 +60,18 @@ namespace BestHTTP.Cookies
                 }
 
                 return _isSavingSupported;
+#else
+                return false;
+#endif
             }
         }
 
-        #region Privates
+        /// <summary>
+        /// The plugin will delete cookies that are accessed this threshold ago. Its default value is 7 days.
+        /// </summary>
+        public static TimeSpan AccessThreshold = TimeSpan.FromDays(7);
+
+#region Privates
 
         /// <summary>
         /// List of the Cookies
@@ -72,19 +85,23 @@ namespace BestHTTP.Cookies
         /// </summary>
         private static object Locker = new object();
 
+#if !BESTHTTP_DISABLE_COOKIE_SAVE
         private static bool _isSavingSupported;
         private static bool IsSupportCheckDone;
+#endif
 
         private static bool Loaded;
-        #endregion
+#endregion
 
-        #region Internal Functions
+#region Internal Functions
 
         internal static void SetupFolder()
         {
+#if !BESTHTTP_DISABLE_COOKIE_SAVE
             if (!CookieJar.IsSavingSupported)
                 return;
 
+#if !UNITY_WEBGL || UNITY_EDITOR
             try
             {
                 if (string.IsNullOrEmpty(CookieFolder) || string.IsNullOrEmpty(LibraryPath))
@@ -95,6 +112,8 @@ namespace BestHTTP.Cookies
             }
             catch
             { }
+#endif
+#endif
         }
 
         /// <summary>
@@ -180,14 +199,13 @@ namespace BestHTTP.Cookies
                 try
                 {
                     uint size = 0;
-                    TimeSpan accessThreshold = TimeSpan.FromDays(7);
 
                     for (int i = 0; i < Cookies.Count; )
                     {
                         var cookie = Cookies[i];
 
                         // Remove expired or not used cookies
-                        if (!cookie.WillExpireInTheFuture() || (cookie.LastAccess + accessThreshold) < DateTime.UtcNow)
+                        if (!cookie.WillExpireInTheFuture() || (cookie.LastAccess + AccessThreshold) < DateTime.UtcNow)
                             Cookies.RemoveAt(i);
                         else
                         {
@@ -221,6 +239,7 @@ namespace BestHTTP.Cookies
         /// <remarks>Not implemented under Unity WebPlayer</remarks>
         internal static void Persist()
         {
+#if !BESTHTTP_DISABLE_COOKIE_SAVE
             if (!IsSavingSupported)
                 return;
 
@@ -259,6 +278,7 @@ namespace BestHTTP.Cookies
                 catch
                 { }
             }
+#endif
         }
 
         /// <summary>
@@ -266,6 +286,7 @@ namespace BestHTTP.Cookies
         /// </summary>
         internal static void Load()
         {
+#if !BESTHTTP_DISABLE_COOKIE_SAVE
             if (!IsSavingSupported)
                 return;
 
@@ -311,11 +332,12 @@ namespace BestHTTP.Cookies
                     Loaded = true;
                 }
             }
+#endif
         }
 
-        #endregion
+#endregion
 
-        #region Public Functions
+#region Public Functions
 
         /// <summary>
         /// Returns all Cookies that corresponds to the given Uri.
@@ -456,9 +478,9 @@ namespace BestHTTP.Cookies
             }
         }
 
-        #endregion
+#endregion
 
-        #region Private Helper Functions
+#region Private Helper Functions
 
         /// <summary>
         /// Find and return a Cookie and his index in the list.
@@ -480,7 +502,7 @@ namespace BestHTTP.Cookies
             return null;
         }
 
-        #endregion
+#endregion
     }
 }
 

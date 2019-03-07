@@ -160,6 +160,7 @@ namespace BestHTTP.SignalR.Transports
             {
                 HTTPManager.Logger.Error("WebSocketTransport", "WSocket_OnError " + reason);
 
+                this.State = TransportStates.Closed;
                 Connection.Error(reason);
             }
         }

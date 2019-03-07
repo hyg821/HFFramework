@@ -25,14 +25,14 @@ namespace Org.BouncyCastle.Crypto.Tls
         internal DeferredHash()
         {
             this.mBuf = new DigestInputBuffer();
-            this.mHashes = Platform.CreateHashtable();
+            this.mHashes = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
             this.mPrfHashAlgorithm = -1;
         }
 
         private DeferredHash(byte prfHashAlgorithm, IDigest prfHash)
         {
             this.mBuf = null;
-            this.mHashes = Platform.CreateHashtable();
+            this.mHashes = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
             this.mPrfHashAlgorithm = prfHashAlgorithm;
             mHashes[prfHashAlgorithm] = prfHash;
         }

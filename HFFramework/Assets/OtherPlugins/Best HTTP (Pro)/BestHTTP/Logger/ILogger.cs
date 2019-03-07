@@ -36,7 +36,7 @@ namespace BestHTTP.Logger
         Exception,
 
         /// <summary>
-        /// No logging will be occur.
+        /// No logging will occur.
         /// </summary>
         None
     }

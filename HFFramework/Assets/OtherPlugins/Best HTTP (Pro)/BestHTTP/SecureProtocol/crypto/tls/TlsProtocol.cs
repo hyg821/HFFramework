@@ -1073,7 +1073,7 @@ namespace Org.BouncyCastle.Crypto.Tls
             MemoryStream buf = new MemoryStream(extBytes, false);
 
             // Integer -> byte[]
-            IDictionary extensions = Platform.CreateHashtable();
+            IDictionary extensions = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
 
             while (buf.Position < buf.Length)
             {
@@ -1100,7 +1100,7 @@ namespace Org.BouncyCastle.Crypto.Tls
 
             MemoryStream buf = new MemoryStream(supp_data, false);
 
-            IList supplementalData = Platform.CreateArrayList();
+            IList supplementalData = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 
             while (buf.Position < buf.Length)
             {
@@ -1379,7 +1379,7 @@ namespace Org.BouncyCastle.Crypto.Tls
 #endif
 
                 protocol.WriteHandshakeMessage(buf, 0, bufLen);
-                Platform.Dispose(this);
+                Org.BouncyCastle.Utilities.Platform.Dispose(this);
             }
         }
     }

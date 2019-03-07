@@ -1,9 +1,38 @@
 fileFormatVersion: 2
-guid: 68d9b88a34a418642bc61c79e1e6f274
-timeCreated: 1540888641
-licenseType: Free
+guid: ddecb9df09ed71446ba7ca31ced7e9a5
+labels:
+- http
+- www
+- web
+- cache
+- stream
+- wp8
+- wsa
+- metro
+- rest
+- api
+- socket
+- socket.io
+- websocket
+- websockets
+- cookie
+- proxy
+- il2cpp
+- android
+- tcp
+- https
+- ios
+- webrequest
+- signalr
+- eventsource
+- server-sent
+- events
+- server-sentevents
+- authentication
+- samsung
+- smart
+- tv
 TextScriptImporter:
-  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

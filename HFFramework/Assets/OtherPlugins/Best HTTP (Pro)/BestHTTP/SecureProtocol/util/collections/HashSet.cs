@@ -8,7 +8,7 @@ namespace Org.BouncyCastle.Utilities.Collections
 	public class HashSet
 		: ISet
 	{
-		private readonly IDictionary impl = Platform.CreateHashtable();
+		private readonly IDictionary impl = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
 
 		public HashSet()
 		{

@@ -3236,7 +3236,7 @@ namespace Org.BouncyCastle.Math
                 int mask = (1 << 30) - 1;
                 BigInteger u = this.Abs();
                 int bits = u.BitLength;
-                IList S = Platform.CreateArrayList();
+                IList S = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
                 while (bits > 30)
                 {
                     S.Add(Convert.ToString(u.IntValue & mask, 8));
@@ -3286,7 +3286,7 @@ namespace Org.BouncyCastle.Math
 
                 BigInteger bigPower = BigInteger.ValueOf(power);
 
-                IList S = Platform.CreateArrayList();
+                IList S = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
                 while (q.CompareTo(bigPower) >= 0)
                 {
                     BigInteger[] qr = q.DivideAndRemainder(bigPower);

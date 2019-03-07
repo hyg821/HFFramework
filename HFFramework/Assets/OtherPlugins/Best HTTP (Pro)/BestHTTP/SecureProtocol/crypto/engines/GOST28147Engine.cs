@@ -119,7 +119,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 		//
 		// pre-defined sbox table
 		//
-		private static readonly IDictionary sBoxes = Platform.CreateHashtable();
+		private static readonly IDictionary sBoxes = Org.BouncyCastle.Utilities.Platform.CreateHashtable();
 
 		static Gost28147Engine()
 		{
@@ -135,7 +135,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 
 		private static void AddSBox(string sBoxName, byte[] sBox)
 		{
-			sBoxes.Add(Platform.ToUpperInvariant(sBoxName), sBox);        
+			sBoxes.Add(Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(sBoxName), sBox);        
 		}
 
 		/**
@@ -186,7 +186,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 			else if (parameters != null)
 			{
 				throw new ArgumentException("invalid parameter passed to Gost28147 init - "
-                    + Platform.GetTypeName(parameters));
+                    + Org.BouncyCastle.Utilities.Platform.GetTypeName(parameters));
 			}
 		}
 
@@ -356,7 +356,7 @@ namespace Org.BouncyCastle.Crypto.Engines
 		public static byte[] GetSBox(
 			string sBoxName)
 		{
-			byte[] sBox = (byte[])sBoxes[Platform.ToUpperInvariant(sBoxName)];
+			byte[] sBox = (byte[])sBoxes[Org.BouncyCastle.Utilities.Platform.ToUpperInvariant(sBoxName)];
 
             if (sBox == null)
 			{

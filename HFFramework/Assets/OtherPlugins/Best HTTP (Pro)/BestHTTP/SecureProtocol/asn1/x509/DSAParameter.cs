@@ -32,7 +32,7 @@ namespace Org.BouncyCastle.Asn1.X509
                 return new DsaParameter((Asn1Sequence) obj);
             }
 
-            throw new ArgumentException("Invalid DsaParameter: " + Platform.GetTypeName(obj));
+            throw new ArgumentException("Invalid DsaParameter: " + Org.BouncyCastle.Utilities.Platform.GetTypeName(obj));
         }
 
 		public DsaParameter(

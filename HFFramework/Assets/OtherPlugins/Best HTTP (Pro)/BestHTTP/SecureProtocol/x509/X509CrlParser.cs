@@ -184,7 +184,7 @@ namespace Org.BouncyCastle.X509
 			Stream inStream)
 		{
 			X509Crl crl;
-			IList crls = Platform.CreateArrayList();
+			IList crls = Org.BouncyCastle.Utilities.Platform.CreateArrayList();
 
 			while ((crl = ReadCrl(inStream)) != null)
 			{

@@ -169,7 +169,7 @@ namespace BestHTTP.Caching
                 return Library.ContainsKey(uri);
         }
 
-        internal static bool DeleteEntity(Uri uri, bool removeFromLibrary = true)
+        public static bool DeleteEntity(Uri uri, bool removeFromLibrary = true)
         {
             if (!IsSupported)
                 return false;
@@ -408,9 +408,11 @@ namespace BestHTTP.Caching
     #if !NETFX_CORE
             ThreadPool.QueueUserWorkItem(new WaitCallback((param) => ClearImpl(param)));
             //new Thread(ClearImpl).Start();
-    #else
+#else
+#pragma warning disable 4014
             Windows.System.Threading.ThreadPool.RunAsync(ClearImpl);
-    #endif
+#pragma warning restore 4014
+#endif
         }
 
         private static void ClearImpl(object param)
@@ -465,14 +467,16 @@ namespace BestHTTP.Caching
 
             SetupCacheFolder();
 
-    #if !NETFX_CORE
+#if !NETFX_CORE
             ThreadPool.QueueUserWorkItem(new WaitCallback((param) =>
             //new Thread((param) =>
-    #else
+#else
+#pragma warning disable 4014
             Windows.System.Threading.ThreadPool.RunAsync((param) =>
-    #endif
-                {
-                    try
+#pragma warning restore 4014
+#endif
+            {
+                try
                     {
                         lock (Library)
                         {

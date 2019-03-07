@@ -38,7 +38,7 @@ namespace BestHTTP.SignalRCore.Encoders
 
         public object ConvertTo(Type toType, object obj)
         {
-            string json = LitJson.JsonMapper.ToJson(obj);
+            //string json = LitJson.JsonMapper.ToJson(obj);
             return null;
         }
     }

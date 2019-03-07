@@ -41,7 +41,7 @@ public class LoginController : UIController
 
         ReceiveNotificationMessage(this, GameConst.MSG_UI, 123, delegate (NotificationMessage msg)
         {
-            print("发送的消息是 " + msg.obj);
+            //print("发送的消息是 " + msg.obj);
         });
 
         ReceiveNotificationMessage(this, GameConst.MSG_STATE, GameStateChecker.APPPAUSE, delegate (NotificationMessage msg)

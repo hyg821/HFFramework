@@ -473,6 +473,8 @@
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameStateChecker.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameTimer.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\MessageCenter\NotificationCenter.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\MessageCenter\NotificationMessage.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\MessageCenter\ObserverDelegate.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\NetWork\HFSocket.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\NetWork\HFSocketManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\NetWork\TcpSocket.cs" />

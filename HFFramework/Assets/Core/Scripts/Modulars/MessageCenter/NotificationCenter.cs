@@ -4,95 +4,6 @@ using System;
 
 namespace HFFramework
 {
-    public struct NotificationMessage
-    {
-        /// <summary>
-        ///  模块id
-        /// </summary>
-        public ushort moduleID;
-
-        /// <summary>
-        ///  消息id
-        /// </summary>
-        public int msgID;
-
-        /// <summary>
-        ///  发送者
-        /// </summary>
-        public object sender;
-
-        /// <summary>
-        ///  消息的内容 需要as 转换成对应的类
-        /// </summary>
-        public object obj;
-
-        private ulong key;
-        public ulong Key
-        {
-            get
-            {
-                return key;
-            }
-        }
-
-        public NotificationMessage(ushort moduleID, int msgID, object sender, object obj)
-        {
-            this.moduleID = moduleID;
-            this.msgID = msgID;
-            this.sender = sender;
-            this.obj = obj;
-            this.key = NotificationCenter.ConvertToKey(moduleID, msgID);
-        }
-    }
-
-    public class ObserverDelegate
-    {
-        /// <summary>
-        ///  接收者
-        /// </summary>
-        public object receiver;
-
-        /// <summary>
-        ///  模块id
-        /// </summary>
-        public ushort moduleID;
-
-        /// <summary>
-        ///  消息id
-        /// </summary>
-        public int msgID;
-
-        /// <summary>
-        ///  消息回调
-        /// </summary>
-        public Action<NotificationMessage> callback;
-
-        private ulong key;
-        public ulong Key
-        {
-            get
-            {
-                return key;
-            }
-        }
-
-        public ObserverDelegate(object receiver, ushort moduleID, int msgID, Action<NotificationMessage> callback)
-        {
-            this.receiver = receiver;
-            this.moduleID = moduleID;
-            this.msgID = msgID;
-            this.callback = callback;
-            this.key = NotificationCenter.ConvertToKey(moduleID, msgID);
-        }
-
-        public void Destroy()
-        {
-            receiver = null;
-            callback = null;
-            msgID = 0;
-        }
-    }
-
     public class NotificationCenter : MonoBehaviour, IManager
     {
         public static NotificationCenter Instance;
@@ -121,21 +32,26 @@ namespace HFFramework
         /// <param name="callback"></param>
         public void AddObserver(object receiver, ushort moduleID, int msgID, Action<NotificationMessage> callback)
         {
+            if (receiver==null)
+            {
+                HFLog.E(" moduleID = " + moduleID + " msgID = " + msgID+" receiver 不能为空");
+                return;
+            }
+
+            if (callback==null)
+            {
+                HFLog.E(" moduleID = " + moduleID + " msgID = " + msgID+" callback 不能为空");
+                return;
+            }
+
             ObserverDelegate o = new ObserverDelegate(receiver, moduleID, msgID, callback);
             List<ObserverDelegate> list;
-            if (messagePool.TryGetValue(o.Key, out list))
-            {
-                if (list != null)
-                {
-                    list.Add(o);
-                }
-            }
-            else
+            if (!messagePool.TryGetValue(o.Key, out list))
             {
                 list = new List<ObserverDelegate>();
-                list.Add(o);
                 messagePool.Add(o.Key, list);
             }
+            list.Add(o);
         }
 
         /// <summary>
@@ -158,13 +74,9 @@ namespace HFFramework
                 for (int i = 0; i < list.Count; i++)
                 {
                     ObserverDelegate o = list[i];
-                    if (o.receiver != null || o.callback != null)
+                    if (o.receiver != null && o.callback != null)
                     {
                         o.callback(msg);
-                    }
-                    else
-                    {
-                        list.Remove(o);
                     }
                 }
             }
@@ -185,34 +97,29 @@ namespace HFFramework
             List<ObserverDelegate> list;
             if (messagePool.TryGetValue(key, out list))
             {
-                if (list != null)
+                int i = 0;
+                while (i < list.Count)
                 {
-                    int i = 0;
-                    while (true)
+                    ObserverDelegate o = list[i];
+                    if (o.receiver == receiver)
                     {
-                        if (i < list.Count)
-                        {
-                            ObserverDelegate o = list[i];
-                            if (o.receiver == receiver)
-                            {
-                                o.Destroy();
-                                list.Remove(o);
-                                break;
-                            }
-                            i++;
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        o.Destroy();
+                        list.Remove(o);
+                        break;
                     }
+                    i++;
                 }
             }
         }
 
-        public void DestroyManager()
+        public void Clear()
         {
             messagePool.Clear();
+        }          
+
+        public void DestroyManager()
+        {
+            Clear();
             Instance = null;
         }
     }

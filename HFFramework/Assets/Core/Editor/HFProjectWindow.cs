@@ -1,24 +1,31 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
-using System.IO;
-using System;
-
-namespace HFFramework
+﻿#if UNITY_EDITOR
+namespace Sirenix.OdinInspector.Demos
 {
-    public class HFProjectSetter
+    using Sirenix.OdinInspector.Editor;
+    using UnityEngine;
+    using Sirenix.Utilities.Editor;
+    using Sirenix.Serialization;
+    using UnityEditor;
+    using Sirenix.Utilities;
+
+    public class HFProjectWindow : OdinEditorWindow
     {
-        /// <summary>
-        /// 资源打包
-        /// </summary>
-        [MenuItem("游戏辅助工具/构建项目初始化设置(只需要运行第一次)")]
-        static void ProjectInit()
+        [MenuItem("游戏辅助工具/项目设置")]
+        private static void OpenWindow()
+        {
+            var window = GetWindow<HFProjectWindow>();
+            window.titleContent.text = "项目设置";
+            window.position = GUIHelper.GetEditorWindowRect().AlignCenter(1440, 900);
+        }
+
+        [Button("项目初始化 仅需要运行一次")]
+        public void ProjectInit()
         {
             PlayerSettings.companyName = "hyg";
             PlayerSettings.productName = "HFFramework";
             string identifier = "com" + "." + PlayerSettings.companyName + "." + PlayerSettings.productName;
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Standalone, identifier);
-            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, identifier) ;
+            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, identifier);
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, identifier);
             PlayerSettings.bundleVersion = "1.0.0";
 
@@ -57,3 +64,4 @@ namespace HFFramework
         }
     }
 }
+#endif

@@ -370,7 +370,7 @@
     <Compile Include="Assets\Core\Editor\HFConfigCreater.cs" />
     <Compile Include="Assets\Core\Editor\HFEditorTools.cs" />
     <Compile Include="Assets\Core\Editor\HFOpenAssetHandler.cs" />
-    <Compile Include="Assets\Core\Editor\HFProjectSetter.cs" />
+    <Compile Include="Assets\Core\Editor\HFProjectWindow.cs" />
     <Compile Include="Assets\Core\Editor\HFTextureImporter.cs" />
     <Compile Include="Assets\Core\Editor\JsonModel\JsonModel.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\Editor\ILRuntimeCLRBinding.cs" />

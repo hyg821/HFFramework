@@ -188,10 +188,6 @@
       <HintPath>..\Tools\UnityDLL\UnityEngine.TilemapModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\Tools\UnityDLL\UnityEngine.UI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEngine.UIElementsModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.UIElementsModule.dll</HintPath>
       <Private>False</Private>

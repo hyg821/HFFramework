@@ -4,7 +4,7 @@ using HFFramework;
 
 public class HotFixEnter
 {
-    public static void AwakeDLL()
+    public static void Main()
     {
         Debug.Log("AwakeDLL");
     }

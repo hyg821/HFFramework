@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using Spine;
 using Assets.Game.Scripts.HotFix;
 using ILRuntime.CLR.Method;
+using System.Reflection;
 
 namespace HFFramework
 {
@@ -73,6 +74,7 @@ namespace HFFramework
         public void Awake()
         {
             Instance = this;
+            IsActiveMonoMethod = false;
         }
 
         /// <summary>
@@ -96,14 +98,14 @@ namespace HFFramework
         /// <summary>
         /// 初始化ilruntime
         /// </summary>
-        public void HotFixInit(byte[] bytes)
+        private void HotFixInit(byte[] bytes)
         {
             codeStream = new MemoryStream(bytes);
             appdomain.LoadAssembly(codeStream);
             InitializeILRuntime();
             CacheMethod();
-            IsActiveMonoMethod = true;
             HotFixAwake();
+            IsActiveMonoMethod = true;
         }
 
         public void CacheMethod()
@@ -115,31 +117,22 @@ namespace HFFramework
 
         public void HotFixAwake()
         {
-            appdomain.Invoke(MainClassName, "AwakeDLL", null, null);
+            appdomain.Invoke(MainClassName, "Main", null, null);
         }
 
         public void Update()
         {
-            if (appdomain!=null&& updateMethod!=null)
-            {
-                appdomain.Invoke(updateMethod, null, p0);
-            }
+            appdomain.Invoke(updateMethod, null, p0);
         }
 
         public void FixedUpdate()
         {
-            if (appdomain != null && updateMethod != null)
-            {
-                appdomain.Invoke(fixedUpdateMethod, null, p0);
-            }
+            appdomain.Invoke(fixedUpdateMethod, null, p0);
         }
 
         public void LateUpdate()
         {
-            if (appdomain != null && updateMethod != null)
-            {
-                appdomain.Invoke(lateUpdateMethod, null, p0);
-            }
+            appdomain.Invoke(lateUpdateMethod, null, p0);
         }
 
         /// <summary>
@@ -231,6 +224,8 @@ namespace HFFramework
 
         public void DestroyManager()
         {
+            IsActiveMonoMethod = false;
+
             if (codeStream!=null)
             {
                 codeStream.Close();

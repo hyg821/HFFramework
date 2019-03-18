@@ -229,6 +229,7 @@ namespace HFFramework
             if (codeStream!=null)
             {
                 codeStream.Close();
+                codeStream = null;
             }
 
             if (appdomain != null)
@@ -236,6 +237,13 @@ namespace HFFramework
                 appdomain.Invoke(MainClassName, "Destroy", null, null);
                 appdomain = null;
             }
+
+            p0 = null;
+
+            updateMethod = null;
+            fixedUpdateMethod = null;
+            lateUpdateMethod = null;
+
             Instance = null;
         }
     }

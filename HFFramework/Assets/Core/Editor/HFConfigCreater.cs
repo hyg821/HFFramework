@@ -194,7 +194,7 @@ namespace HFFramework
             builder.AppendLine("        public List<" + _class + @"> list = new List<"+ _class + @">();");
             builder.AppendLine();
 
-            builder.AppendLine("        public  static "+_class+" Get("+ typeList[0]+" id)");
+            builder.AppendLine("        public static "+_class+" Get("+ typeList[0]+" id)");
             builder.AppendLine("        {");
             builder.AppendLine("            "+ _class+" temp;");
             builder.AppendLine("            Instance."+"dic.TryGetValue(id, out temp);");
@@ -385,11 +385,10 @@ namespace HFFramework
             }
         }
 
-        public  static string FirstCharToUpper(string str)
+        public static string FirstCharToUpper(string str)
         {
             return str.Substring(0, 1).ToUpper() + str.Substring(1);
         }
-
     }
 }
 

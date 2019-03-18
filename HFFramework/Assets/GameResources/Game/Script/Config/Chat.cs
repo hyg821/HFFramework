@@ -101,7 +101,7 @@ namespace Config
 
         public List<Chat> list = new List<Chat>();
 
-        public  static Chat Get(int id)
+        public static Chat Get(int id)
         {
             Chat temp;
             Instance.dic.TryGetValue(id, out temp);

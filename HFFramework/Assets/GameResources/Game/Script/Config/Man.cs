@@ -60,7 +60,7 @@ namespace Config
 
         public List<Man> list = new List<Man>();
 
-        public  static Man Get(int id)
+        public static Man Get(int id)
         {
             Man temp;
             Instance.dic.TryGetValue(id, out temp);

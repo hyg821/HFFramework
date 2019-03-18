@@ -44,7 +44,7 @@ namespace Config
 
         public List<Attribute> list = new List<Attribute>();
 
-        public  static Attribute Get(int id)
+        public static Attribute Get(int id)
         {
             Attribute temp;
             Instance.dic.TryGetValue(id, out temp);

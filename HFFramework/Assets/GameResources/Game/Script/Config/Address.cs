@@ -52,7 +52,7 @@ namespace Config
 
         public List<Address> list = new List<Address>();
 
-        public  static Address Get(string id)
+        public static Address Get(string id)
         {
             Address temp;
             Instance.dic.TryGetValue(id, out temp);

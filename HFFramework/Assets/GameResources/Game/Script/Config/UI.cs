@@ -64,7 +64,7 @@ namespace Config
 
         public List<UI> list = new List<UI>();
 
-        public  static UI Get(string id)
+        public static UI Get(string id)
         {
             UI temp;
             Instance.dic.TryGetValue(id, out temp);

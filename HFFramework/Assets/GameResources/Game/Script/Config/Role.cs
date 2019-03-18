@@ -92,7 +92,7 @@ namespace Config
 
         public List<Role> list = new List<Role>();
 
-        public  static Role Get(int id)
+        public static Role Get(int id)
         {
             Role temp;
             Instance.dic.TryGetValue(id, out temp);

@@ -48,7 +48,7 @@ namespace Config
 
         public List<Background> list = new List<Background>();
 
-        public  static Background Get(int id)
+        public static Background Get(int id)
         {
             Background temp;
             Instance.dic.TryGetValue(id, out temp);

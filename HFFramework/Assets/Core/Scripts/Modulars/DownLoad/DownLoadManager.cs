@@ -23,16 +23,16 @@ namespace HFFramework
         public string localPath;
     }
 
-    public class BestHttpHelper
+    public class DownLoadManager
     {
-        private static BestHttpHelper instance = null;
-        public static BestHttpHelper Instance
+        private static DownLoadManager instance = null;
+        public static DownLoadManager Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new BestHttpHelper();
+                    instance = new DownLoadManager();
                     HTTPManager.MaxConnectionPerServer = instance.MaxDownLoadCount;
                 }
                 return instance;
@@ -54,11 +54,11 @@ namespace HFFramework
 
         public int currentDownLoadCount = 0;
 
-        public static BestHttpDownLoadTask GetDownLoadTask()
+        public static DownLoadTask GetDownLoadTask()
         {
             if (Instance.currentDownLoadCount <= Instance.MaxDownLoadCount)
             {
-                return new BestHttpDownLoadTask();
+                return new DownLoadTask();
             }
             else
             {
@@ -67,7 +67,7 @@ namespace HFFramework
         }
     }
 
-    public class BestHttpDownLoadTask
+    public class DownLoadTask
     {
         private static ReaderWriterLockSlim writeLock = new ReaderWriterLockSlim();
         /// <summary>
@@ -114,7 +114,7 @@ namespace HFFramework
 
         public void DownLoadFilesAndWriteToLocal(WebUrlLocalPath[] allTaskPath, Action<float> progress, Action<string> fail)
         {
-            BestHttpHelper.Instance.currentDownLoadCount++;
+            DownLoadManager.Instance.currentDownLoadCount++;
             currentTaskIndex = 0;
             this.allTaskPath = allTaskPath;
             this.progress = progress;
@@ -140,7 +140,7 @@ namespace HFFramework
                 else
                 {
                     progress(1);
-                    BestHttpHelper.Instance.currentDownLoadCount--;
+                    DownLoadManager.Instance.currentDownLoadCount--;
                     HFLog.L("所有下载队列下载完成");
                 }
             });
@@ -249,19 +249,19 @@ namespace HFFramework
                 case HTTPRequestStates.Finished:
                     break;
                 case HTTPRequestStates.Error:
-                    BestHttpHelper.Instance.currentDownLoadCount--;
+                    DownLoadManager.Instance.currentDownLoadCount--;
                     fail(req.State.ToString());
                     break;
                 case HTTPRequestStates.Aborted:
-                    BestHttpHelper.Instance.currentDownLoadCount--;
+                    DownLoadManager.Instance.currentDownLoadCount--;
                     fail(req.State.ToString());
                     break;
                 case HTTPRequestStates.ConnectionTimedOut:
-                    BestHttpHelper.Instance.currentDownLoadCount--;
+                    DownLoadManager.Instance.currentDownLoadCount--;
                     fail(req.State.ToString());
                     break;
                 case HTTPRequestStates.TimedOut:
-                    BestHttpHelper.Instance.currentDownLoadCount--;
+                    DownLoadManager.Instance.currentDownLoadCount--;
                     fail(req.State.ToString());
                     break;
                 default:

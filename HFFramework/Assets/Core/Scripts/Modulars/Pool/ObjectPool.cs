@@ -7,16 +7,29 @@ namespace HFFramework
 {
     public class ObjectPool : MonoBehaviour
     {
-        public Stack<IPool> pool = new Stack<IPool>();
+        /// <summary>
+        ///  create
+        /// </summary>
         public Func<IPool> Create;
+
+        /// <summary>
+        ///  容量
+        /// </summary>
+        public int capacity = 20;
+
+        /// <summary>
+        ///  pool
+        /// </summary>
+        private Stack<IPool> pool = new Stack<IPool>();
 
         /// <summary>
         ///  必须要调用的方法 否则有可能 吐出对象为 null
         /// </summary>
         /// <param name="CreateFunc"></param>
-        public void Init(Func<IPool> CreateFunc)
+        public void Init(Func<IPool> CreateFunc,int capacity = 20)
         {
             this.Create = CreateFunc;
+            this.capacity = capacity;
         }
 
         /// <summary>
@@ -25,8 +38,18 @@ namespace HFFramework
         /// <param name="i"></param>
         public void Eat(IPool i)
         {
-            pool.Push(i);
-            i.BeEat();
+            //如果小于容量 那么直接进入
+            if (pool.Count<capacity)
+            {
+                pool.Push(i);
+                i.BeEat();
+            }
+            //否则直接销毁
+            else
+            {
+                i.BeEat();
+                i.BeDestroy();
+            }
         }
 
         /// <summary>

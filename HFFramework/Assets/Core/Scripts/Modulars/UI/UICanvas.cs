@@ -34,7 +34,7 @@ namespace HFFramework
 
     public class UICanvas : BaseMonoBehaviour
     {
-        public const string CanvasName = "UICanvas";
+        public const string CanvasName = "UILayer";
 
         /// <summary>
         ///  渲染UI的摄像机 后期可以使用第二摄像机 分离UI和 物体渲染
@@ -55,6 +55,8 @@ namespace HFFramework
         {
             base.OnAwake();
 
+            gameObject.layer = LayerMask.NameToLayer("UI"); ;
+
             canvas = gameObject.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceCamera;
 
@@ -71,7 +73,7 @@ namespace HFFramework
 
         public void SetSortingLayer(int sortingLayer)
         {
-            canvas.sortingOrder = sortingLayer;
+            canvas.sortingOrder =10 + sortingLayer*10;
             gameObject.name = CanvasName + sortingLayer;
         }
 

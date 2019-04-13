@@ -17,8 +17,6 @@ namespace HFFramework
 
         public static UIManager Instance;
 
-        public UIRoot UIRoot;
-
         public UICamera UICamera;
 
         public Dictionary<int, UICanvas> canvasDic = new Dictionary<int, UICanvas>();
@@ -28,7 +26,7 @@ namespace HFFramework
         void Awake()
         {
             Instance = this;
-            LoadScene();
+            Init();
         }
 
         public UICanvas GetCanvas(int index)
@@ -36,20 +34,15 @@ namespace HFFramework
             return canvasDic[index];
         }
 
-        public void LoadScene()
+        public void Init()
         {
-            ClearScene();
+            Clear();
             AssetBundlePackage assetBundlePackage = HFResourceManager.Instance.LoadAssetBundleFromFile("hfui");
-            GameObject  prefab= assetBundlePackage.LoadAssetWithCache<GameObject>("UIRoot");
+            GameObject prefab = assetBundlePackage.LoadAssetWithCache<GameObject>("UICamera");
             GameObject temp = Instantiate(prefab);
-            temp.name = RootName;
-            UIRoot = temp.GetComponent<UIRoot>();
-
-            prefab = assetBundlePackage.LoadAssetWithCache<GameObject>("UICamera");
-            temp = Instantiate(prefab);
             temp.name = CameraName;
             UICamera = temp.GetComponent<UICamera>();
-            UICamera.SetParent(UIRoot.gameObject);
+            UICamera.SetParent(gameObject);
         }
 
         public UICanvas AddCanvas(int canvasLayerIndex)
@@ -63,7 +56,7 @@ namespace HFFramework
                 uiCanvas.SetUICamera(UICamera);
                 uiCanvas.AutoSizeFitter();
                 uiCanvas.SetSortingLayer(canvasLayerIndex);
-                uiCanvas.SetParent(UIRoot.gameObject);
+                uiCanvas.SetParent(gameObject);
                 canvasDic.Add(canvasLayerIndex, uiCanvas);
             }
             return uiCanvas;
@@ -87,7 +80,25 @@ namespace HFFramework
             return controller as T;
         }
 
-        public void ClearScene()
+        public void OpenController(string type)
+        {
+            UIController controller;
+            if (controllerDic.TryGetValue(type, out controller))
+            {
+                controller.Open();
+            }
+        }
+
+        public void CloseController(string type)
+        {
+            UIController controller;
+            if (controllerDic.TryGetValue(type, out controller))
+            {
+                controller.Close();
+            }
+        }
+
+        public void Clear()
         {
             foreach (var item in controllerDic)
             {
@@ -95,12 +106,11 @@ namespace HFFramework
             }
             controllerDic.Clear();
             canvasDic.Clear();
-            UIRoot = null;
         }
 
         public void DestroyManager()
         {
-            ClearScene();
+            Clear();
             Instance = null;
         }
     }

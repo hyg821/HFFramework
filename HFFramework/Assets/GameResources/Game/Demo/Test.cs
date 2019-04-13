@@ -16,5 +16,6 @@ public class Test : MonoBehaviour
         }
         //创建控制器
         LoginController controller = UIManager.Instance.GetController<LoginController>("Login");
+        controller.Open();
     }
 }

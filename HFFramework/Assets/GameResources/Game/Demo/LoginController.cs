@@ -126,7 +126,10 @@ public class LoginController : UIController
 
         JumpBtn.onClick.AddListener(delegate ()
         {
-            HFResourceManager.Instance.LoadScene("SceneA", "SceneA", true,null);
+            HFResourceManager.Instance.LoadScene("SceneA", "SceneA", true,delegate()
+            {
+                UIManager.Instance.CloseController("Login");
+            });
         });
 
     }

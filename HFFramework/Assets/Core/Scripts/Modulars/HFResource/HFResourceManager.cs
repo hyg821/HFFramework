@@ -244,7 +244,8 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  加载场景  不参与 assetbundle的缓存  直接加载之后释放 所以场景里不要对别的包有依赖
+        ///  加载场景   2017必须要生成assetbundle  不能通过编辑器加载scene 因为需要把scene放到 build setting 设置里
+        ///  2018 添加了 直接editor 加载的接口 只能等2018了
         /// </summary>
         /// <param name="assetBundleName"></param>
         /// <param name="finishCallBack"></param>

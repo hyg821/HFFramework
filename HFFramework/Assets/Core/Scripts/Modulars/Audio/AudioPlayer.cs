@@ -298,7 +298,7 @@ namespace HFFramework
 
         public void SetAudioClipAndPlay(string packageName, string audioName)
         {
-            SetAudioClipAndPlay(HFResourceManager.Instance.GetAudio(packageName, audioName));
+            SetAudioClipAndPlay(HFResourceManager.Instance.GetAsset<AudioClip>(packageName, audioName));
         }
 
         /// <summary>

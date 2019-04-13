@@ -19,7 +19,7 @@ namespace HFFramework
         /// <summary>
         /// 资源打包
         /// </summary>
-        [MenuItem("游戏辅助工具/AssetBundles/构建 所有 AssetBundles")]
+        [MenuItem("游戏辅助工具/资源设置/构建 所有 AssetBundles")]
         static void BuildAllAssetBundles()
         {
             ReNameDLL();
@@ -65,7 +65,7 @@ namespace HFFramework
             Debug.Log("Assetbundle Build 完成");
         }
 
-        [MenuItem("游戏辅助工具/AssetBundles/构建 所有 AssetBundles  并且自动命名 ")]
+        [MenuItem("游戏辅助工具/资源设置/构建 所有 AssetBundles  并且自动命名 ")]
         static void SetAssetBundleNameAndBuildAllAssetBundles()
         {
             Caching.ClearCache();
@@ -73,7 +73,7 @@ namespace HFFramework
             BuildAllAssetBundles();
         }
 
-        [MenuItem("游戏辅助工具/AssetBundles/构建 单个Assetbundle")]
+        [MenuItem("游戏辅助工具/资源设置/构建 单个Assetbundle")]
         static void BuildSomeAssetBundles()
         {
             List<AssetBundleBuild> list = new List<AssetBundleBuild>();
@@ -119,7 +119,7 @@ namespace HFFramework
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("游戏辅助工具/AssetBundles/设置AssetbundleName")]
+        [MenuItem("游戏辅助工具/资源设置/设置AssetbundleName")]
         public static void SetAssetbundlesNames()
         {
             //ClearAssetBundlesName();
@@ -128,7 +128,7 @@ namespace HFFramework
             m_ExecuteAssetConfig(resourcesPath,true,false);
         }
 
-        [MenuItem("游戏辅助工具/AssetBundles/设置DLL到具体资源目录")]
+        [MenuItem("游戏辅助工具/资源设置/设置DLL到具体资源目录")]
         public static void ReNameDLL()
         {
             string str = "/GameResources/Game/DLL" + AssetFolderIde + "/";
@@ -139,7 +139,7 @@ namespace HFFramework
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("游戏辅助工具/AssetBundles/清除所有的AssetbundleName")]
+        [MenuItem("游戏辅助工具/资源设置/清除所有的AssetbundleName")]
         static void ClearAssetBundlesName()
         {
             int length = AssetDatabase.GetAllAssetBundleNames().Length;
@@ -257,7 +257,7 @@ namespace HFFramework
             }
         }
 
-        [MenuItem("游戏辅助工具/AssetBundles/删除 所有 AssetBundles")]
+        [MenuItem("游戏辅助工具/资源设置/删除 所有 AssetBundles")]
         public static void DeleteAllAssetbundle()
         {
             AssetDatabase.DeleteAsset("Assets/StreamingAssets/AssetBundles");
@@ -400,10 +400,10 @@ namespace HFFramework
             //高亮显示该资源
             ProjectWindowUtil.ShowCreatedAsset(obj);
         }
-        internal static UnityEngine.Object CreateAssetFromTemplate(string pahtName, string resourceFile)
+        internal static UnityEngine.Object CreateAssetFromTemplate(string pathName, string resourceFile)
         {
             //获取要创建的资源的绝对路径
-            string fullName = Path.GetFullPath(pahtName);
+            string fullName = Path.GetFullPath(pathName);
             //读取本地模板文件
             StreamReader reader = new StreamReader(resourceFile);
             string content = reader.ReadToEnd();
@@ -420,10 +420,10 @@ namespace HFFramework
             writer.Close();
 
             //刷新本地资源
-            AssetDatabase.ImportAsset(pahtName);
+            AssetDatabase.ImportAsset(pathName);
             AssetDatabase.Refresh();
 
-            return AssetDatabase.LoadAssetAtPath(pahtName, typeof(UnityEngine.Object));
+            return AssetDatabase.LoadAssetAtPath(pathName, typeof(UnityEngine.Object));
         }
     }
 

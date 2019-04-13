@@ -6,6 +6,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace HFFramework
 {
     public class HFResourceManager : MonoBehaviour,IManager
@@ -151,9 +155,13 @@ namespace HFFramework
         /// <returns></returns>
         public GameObject GetPrefab(string packageName, string assetName)
         {
+#if UNITY_EDITOR
+            return EditorLoadAsset<GameObject>(packageName, assetName);
+#else
             AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             GameObject g = ab.LoadAssetWithCache<GameObject>(assetName);
             return g;
+#endif
         }
 
         /// <summary>
@@ -161,11 +169,15 @@ namespace HFFramework
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public Sprite GetSprite(string packageName, string abName)
+        public Sprite GetSprite(string packageName, string assetName)
         {
+#if UNITY_EDITOR
+            return EditorLoadAsset<Sprite>(packageName, assetName);
+#else
             AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-            Sprite sp = ab.LoadAssetWithCache<Sprite>(abName);
+            Sprite sp = ab.LoadAssetWithCache<Sprite>(assetName);
             return sp;
+#endif
         }
 
         /// <summary>
@@ -183,29 +195,40 @@ namespace HFFramework
         }
 
         /// <summary>
-        /// 获取 Audio
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public AudioClip GetAudio(string packageName, string abName)
-        {
-            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-            AudioClip audio = ab.LoadAssetWithCache<AudioClip>(abName);
-            return audio;
-        }
-
-        /// <summary>
         /// 获取shader
         /// </summary>
         /// <param name="packageName"></param>
         /// <param name="abName"></param>
         /// <returns></returns>
-        public Shader GetShader(string packageName, string abName)
+        public Shader GetShader(string packageName, string assetName)
         {
-            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-            Shader shader = ab.LoadAssetWithCache<Shader>(abName);
+#if UNITY_EDITOR
+            Shader shader = EditorLoadAsset<Shader>(packageName, assetName);
             Shader.WarmupAllShaders();
             return shader;
+#else
+            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+            Shader shader = ab.LoadAssetWithCache<Shader>(assetName);
+            Shader.WarmupAllShaders();
+            return shader;
+#endif
+        }
+
+        /// <summary>
+        ///  通用的以同步方式获取一个资源  封装了编辑器 和 ab 两种加载方法
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="packageName"></param>
+        /// <param name="assetName"></param>
+        /// <returns></returns>
+        public T GetAsset<T>(string packageName, string assetName) where T : UnityEngine.Object
+        {
+#if UNITY_EDITOR
+            return EditorLoadAsset<T>(packageName, assetName);
+#else
+            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+            return ab.LoadAssetWithCache<T>(assetName);
+#endif
         }
 
         /// <summary>
@@ -215,9 +238,9 @@ namespace HFFramework
         /// <param name="autoJump"></param>
         /// <param name="sceneName"></param>
         /// <param name="finishCallBack"></param>
-        public void LoadScene(string assetBundleName, bool autoJump, string sceneName, Action finishCallback)
+        public void LoadScene(string assetBundleName,  string sceneName, bool autoJump, Action finishCallback)
         {
-            StartCoroutine(m_LoadScene(assetBundleName, autoJump, sceneName, finishCallback));
+            StartCoroutine(m_LoadScene(assetBundleName,  sceneName, autoJump, finishCallback));
         }
 
         /// <summary>
@@ -226,19 +249,25 @@ namespace HFFramework
         /// <param name="assetBundleName"></param>
         /// <param name="finishCallBack"></param>
         /// <returns></returns>
-        private IEnumerator m_LoadScene(string assetBundleName, bool autoJump, string sceneName, Action finishCallback)
+        private IEnumerator m_LoadScene(string assetBundleName, string sceneName, bool autoJump, Action finishCallback)
         {
             assetBundleName = assetBundleName.ToLower();
-            WWW www = WWW.LoadFromCacheOrDownload(AutoGetResourcePath(assetBundleName, true), 0);
+            string url = AutoGetResourcePath(assetBundleName, true);
+            WWW www = WWW.LoadFromCacheOrDownload(url, 0);
             yield return www;
             AssetBundle bundle = www.assetBundle;
-            if (finishCallback != null && autoJump && !string.IsNullOrEmpty(sceneName))
+            if (autoJump && !string.IsNullOrEmpty(sceneName))
             {
                 yield return StartCoroutine(LoadSceneAsync(sceneName));
             }
             bundle.Unload(false);
             www.Dispose();
-            finishCallback();
+            www = null;
+
+            if (finishCallback!=null)
+            {
+                finishCallback();
+            }
         }
 
         private IEnumerator LoadSceneAsync(string sceneName)
@@ -453,22 +482,18 @@ namespace HFFramework
             return null;
         }
 
-        /*
+#if UNITY_EDITOR
         /// <summary>
-        ///  在编辑器开发的时候使用的加载方式  在正式运行的时候需要改回正规写法
+        ///  在编辑器开发的时候使用的加载方式
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
-        public T EditorLoadAsset<T>(string name) where T:UnityEngine.Object
+        public T EditorLoadAsset<T>(string assetBundleName, string assetName) where T:UnityEngine.Object
         {
-            T tx = null;
-            if (GameEnvironment.self.runtimePlatform== GamePlatform.Editor)
-            {
-               tx =  AssetDatabase.LoadAssetAtPath<T>(name);
-            }
-            return tx;
+            string[] s = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(assetBundleName.ToLower(), assetName);
+            return AssetDatabase.LoadAssetAtPath<T>(s[0]);
         }
-        */
+#endif    
 
         /// <summary>
         ///  卸载某一个 assetbundle 通过名字

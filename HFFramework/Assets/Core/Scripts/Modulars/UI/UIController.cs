@@ -62,8 +62,6 @@ namespace HFFramework
         public override void Destroy()
         {
             base.Destroy();
-            Destroy(gameObject);
         }
-
     }
 }

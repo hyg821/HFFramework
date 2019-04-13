@@ -20,6 +20,7 @@ public class LoginController : UIController
     public InputField input;
     public Button loginBtn;
     public Image webImage;
+    public Button JumpBtn;
     #region
     public override void FindElement()
     {
@@ -27,8 +28,11 @@ public class LoginController : UIController
         input = AutoFind<InputField>("InputField");
         loginBtn = AutoFind<Button>("Button");
         webImage = AutoFind<Image>("Image");
+        JumpBtn = AutoFind<Button>("Button2");
     }
     #endregion
+
+
 
 
 
@@ -118,6 +122,12 @@ public class LoginController : UIController
         print(ConfigMan.Get(0).sex);
         print(ConfigChat.Get(1).ChooseCtype.name);
         print(ConfigRole.Get(1).GetTime1(1).name);
+
+
+        JumpBtn.onClick.AddListener(delegate ()
+        {
+            HFResourceManager.Instance.LoadScene("SceneA", "SceneA", true,null);
+        });
 
     }
 

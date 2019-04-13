@@ -12,6 +12,7 @@ using Lobbyservice.Protobuf;
 using Google.Protobuf;
 using Centersdk.Protobuf;
 using Loginservice.Protobuf;
+using UnityEngine.SceneManagement;
 
 public class LoginController : UIController
 {
@@ -129,9 +130,8 @@ public class LoginController : UIController
             HFResourceManager.Instance.LoadScene("SceneA", "SceneA", true,delegate()
             {
                 UIManager.Instance.CloseController("Login");
-            });
+            });    
         });
-
     }
 
     private void Update()

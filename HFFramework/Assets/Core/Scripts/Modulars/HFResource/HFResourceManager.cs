@@ -251,6 +251,7 @@ namespace HFFramework
         /// <returns></returns>
         private IEnumerator m_LoadScene(string assetBundleName, string sceneName, bool autoJump, Action finishCallback)
         {
+            /*
             assetBundleName = assetBundleName.ToLower();
             string url = AutoGetResourcePath(assetBundleName, true);
             WWW www = WWW.LoadFromCacheOrDownload(url, 0);
@@ -263,7 +264,11 @@ namespace HFFramework
             bundle.Unload(false);
             www.Dispose();
             www = null;
+            */
 
+            yield return StartCoroutine(m_LoadAssetBundleFromFileAsync(assetBundleName.ToLower()));
+            yield return StartCoroutine(LoadSceneAsync(sceneName));
+            UnloadAssetBundle(assetBundleName, false);
             if (finishCallback!=null)
             {
                 finishCallback();
@@ -342,10 +347,10 @@ namespace HFFramework
         /// <param name="finishCallback"></param>
         public void LoadAssetBundleFromFileAsync(string assetBundleName, Action<AssetBundlePackage> finishCallback)
         {
-            StartCoroutine(m_LoadAssetBundleFromFileAsyncWithCallback(assetBundleName, finishCallback));
+            StartCoroutine(m_LoadAssetBundleFromFileAsync(assetBundleName, finishCallback));
         }
 
-        private IEnumerator m_LoadAssetBundleFromFileAsyncWithCallback(string assetBundleName, Action<AssetBundlePackage> finishCallback)
+        private IEnumerator m_LoadAssetBundleFromFileAsync(string assetBundleName, Action<AssetBundlePackage> finishCallback)
         {
             assetBundleName = assetBundleName.ToLower();
             yield return StartCoroutine(m_LoadAssetBundleFromFileAsync(assetBundleName));

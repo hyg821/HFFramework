@@ -1,9 +1,22 @@
 fileFormatVersion: 2
-guid: 0bffab4df91e98141ace8114954a4467
-timeCreated: 1540888574
-licenseType: Free
+guid: 0bb6d02982978404cb4349e76c4ef869
+labels:
+- Cell
+- Cells
+- Data
+- Inventory
+- List
+- Recycle
+- Reuse
+- Scroll
+- ScrollRect
+- ScrollView
+- Scroller
+- UI
+- Virtualize
+timeCreated: 1436471659
+licenseType: Store
 MonoImporter:
-  externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0

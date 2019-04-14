@@ -12,6 +12,12 @@ namespace EnhancedUI.EnhancedScroller
     public delegate void CellViewVisibilityChangedDelegate(EnhancedScrollerCellView cellView);
 
     /// <summary>
+    /// This delegate will be fired just before the cell view is recycled
+    /// </summary>
+    /// <param name="cellView"></param>
+    public delegate void CellViewWillRecycleDelegate(EnhancedScrollerCellView cellView);
+
+    /// <summary>
     /// This delegate handles the scrolling callback of the ScrollRect.
     /// </summary>
     /// <param name="scroller">The scroller that called the delegate</param>
@@ -25,7 +31,7 @@ namespace EnhancedUI.EnhancedScroller
     /// <param name="scroller">The scroller that called the delegate</param>
     /// <param name="cellIndex">The index of the cell view snapped on (this may be different than the data index in case of looping)</param>
     /// <param name="dataIndex">The index of the data the view snapped on</param>
-    public delegate void ScrollerSnappedDelegate(EnhancedScroller scroller, int cellIndex, int dataIndex);
+    public delegate void ScrollerSnappedDelegate(EnhancedScroller scroller, int cellIndex, int dataIndex, EnhancedScrollerCellView cellView);
 
     /// <summary>
     /// This delegate handles the change in state of the scroller (scrolling or not scrolling)
@@ -40,6 +46,20 @@ namespace EnhancedUI.EnhancedScroller
     /// <param name="scroller">The scroller that changed state</param>
     /// <param name="tweening">Whether or not the scroller is tweening</param>
     public delegate void ScrollerTweeningChangedDelegate(EnhancedScroller scroller, bool tweening);
+
+    /// <summary>
+    /// This delegate is called when a cell view is created for the first time (not reused)
+    /// </summary>
+    /// <param name="scroller">The scroller that created the cell view</param>
+    /// <param name="cellView">The cell view that was created</param>
+    public delegate void CellViewInstantiated(EnhancedScroller scroller, EnhancedScrollerCellView cellView);
+
+    /// <summary>
+    /// This delegate is called when a cell view is reused from the recycled cell view list
+    /// </summary>
+    /// <param name="scroller">The scroller that reused the cell view</param>
+    /// <param name="cellView">The cell view that was resused</param>
+    public delegate void CellViewReused(EnhancedScroller scroller, EnhancedScrollerCellView cellView);
 
     /// <summary>
     /// The EnhancedScroller allows you to easily set up a dynamic scroller that will recycle views for you. This means
@@ -183,6 +203,11 @@ namespace EnhancedUI.EnhancedScroller
         public CellViewVisibilityChangedDelegate cellViewVisibilityChanged;
 
         /// <summary>
+        /// This delegate is called just before a cell view is hidden by recycling
+        /// </summary>
+        public CellViewWillRecycleDelegate cellViewWillRecycle;
+
+        /// <summary>
         /// This delegate is called when the scroll rect scrolls
         /// </summary>
         public ScrollerScrolledDelegate scrollerScrolled;
@@ -201,6 +226,16 @@ namespace EnhancedUI.EnhancedScroller
         /// This delegate is called when the scroller has started or stopped tweening
         /// </summary>
         public ScrollerTweeningChangedDelegate scrollerTweeningChanged;
+
+        /// <summary>
+        /// This delegate is called when the scroller creates a new cell view from scratch
+        /// </summary>
+        public CellViewInstantiated cellViewInstantiated;
+
+        /// <summary>
+        /// This delegate is called when the scroller reuses a recycled cell view
+        /// </summary>
+        public CellViewReused cellViewReused;
 
         /// <summary>
         /// The Delegate is what the scroller will call when it needs to know information about
@@ -229,17 +264,44 @@ namespace EnhancedUI.EnhancedScroller
                     if (scrollDirection == ScrollDirectionEnum.Vertical)
                     {
                         // set the vertical position
-                        _scrollRect.verticalNormalizedPosition = 1f - (_scrollPosition / _ScrollSize);
+                        _scrollRect.verticalNormalizedPosition = 1f - (_scrollPosition / ScrollSize);
                     }
                     else
                     {
                         // set the horizontal position
-                        _scrollRect.horizontalNormalizedPosition = (_scrollPosition / _ScrollSize);
+                        _scrollRect.horizontalNormalizedPosition = (_scrollPosition / ScrollSize);
                     }
 
                     // flag that we need to refresh
-                    _refreshActive = true;
+                    //_refreshActive = true;
                 }
+            }
+        }
+
+        /// <summary>
+        /// The size of the active cell view container minus the visibile portion
+        /// of the scroller
+        /// </summary>
+        public float ScrollSize
+        {
+            get
+            {
+                if (scrollDirection == ScrollDirectionEnum.Vertical)
+                    return Mathf.Max(_container.rect.height - _scrollRectTransform.rect.height, 0);
+                else
+                    return Mathf.Max(_container.rect.width - _scrollRectTransform.rect.width, 0);
+            }
+        }
+
+        /// <summary>
+        /// The normalized position of the scroller between 0 and 1
+        /// </summary>
+        public float NormalizedScrollPosition
+        {
+            get
+            {
+                var scrollPosition = ScrollPosition;
+                return (scrollPosition <= 0 ? 0 : _scrollPosition / ScrollSize);
             }
         }
 
@@ -414,7 +476,7 @@ namespace EnhancedUI.EnhancedScroller
                 return _activeCellViewsStartIndex % NumberOfCells;
             }
         }
-        
+
         /// <summary>
         /// This is the last data index showing in the scroller's visible area
         /// </summary>
@@ -478,6 +540,22 @@ namespace EnhancedUI.EnhancedScroller
                 var go = Instantiate(cellPrefab.gameObject);
                 cellView = go.GetComponent<EnhancedScrollerCellView>();
                 cellView.transform.SetParent(_container);
+                cellView.transform.localPosition = Vector3.zero;
+                cellView.transform.localRotation = Quaternion.identity;
+
+                // call the instantiated callback
+                if (cellViewInstantiated != null)
+                {
+                    cellViewInstantiated(this, cellView);
+                }
+            }
+            else
+            {
+                // call the reused callback
+                if (cellViewReused != null)
+                {
+                    cellViewReused(this, cellView);
+                }
             }
 
             return cellView;
@@ -486,11 +564,10 @@ namespace EnhancedUI.EnhancedScroller
         /// <summary>
         /// This resets the internal size list and refreshes the cell views
         /// </summary>
-        public void ReloadData()
+        /// <param name="scrollPositionFactor">The percentage of the scroller to start at between 0 and 1, 0 being the start of the scroller</param>
+        public void ReloadData(float scrollPositionFactor = 0)
         {
             _reloadData = false;
-
-            _scrollPosition = 0;
 
             // recycle all the active cells so
             // that we are sure to get fresh views
@@ -500,6 +577,24 @@ namespace EnhancedUI.EnhancedScroller
             // call the resize
             if (_delegate != null)
                 _Resize(false);
+
+            if (_scrollRect == null || _scrollRectTransform == null || _container == null)
+            {
+                _scrollPosition = 0f;
+                return;
+            }
+
+            _scrollPosition = Mathf.Clamp(scrollPositionFactor * ScrollSize, 0, GetScrollPositionForCellViewIndex(_cellViewSizeArray.Count - 1, CellViewPositionEnum.Before));
+            if (scrollDirection == ScrollDirectionEnum.Vertical)
+            {
+                // set the vertical position
+                _scrollRect.verticalNormalizedPosition = 1f - scrollPositionFactor;
+            }
+            else
+            {
+                // set the horizontal position
+                _scrollRect.horizontalNormalizedPosition = scrollPositionFactor;
+            }
         }
 
         /// <summary>
@@ -515,6 +610,30 @@ namespace EnhancedUI.EnhancedScroller
             {
                 _activeCellViews[i].RefreshCellView();
             }
+        }
+
+        /// <summary>
+        /// Removes all cells, both active and recycled from the scroller.
+        /// This will call garbage collection.
+        /// </summary>
+        public void ClearAll()
+        {
+            ClearActive();
+            ClearRecycled();
+        }
+
+        /// <summary>
+        /// Removes all the active cell views. This should only be used if you want
+        /// to get rid of cells because of settings set by Unity that cannot be
+        /// changed at runtime. This will call garbage collection.
+        /// </summary>
+        public void ClearActive()
+        {
+            for (var i = 0; i < _activeCellViews.Count; i++)
+            {
+                DestroyImmediate(_activeCellViews[i].gameObject);
+            }
+            _activeCellViews.Clear();
         }
 
         /// <summary>
@@ -541,6 +660,13 @@ namespace EnhancedUI.EnhancedScroller
             Loop = !loop;
         }
 
+        public enum LoopJumpDirectionEnum
+        {
+            Closest,
+            Up,
+            Down
+        }
+
         /// <summary>
         /// Jump to a position in the scroller based on a dataIndex. This overload allows you
         /// to specify a specific offset within a cell as well.
@@ -559,7 +685,8 @@ namespace EnhancedUI.EnhancedScroller
             bool useSpacing = true,
             TweenType tweenType = TweenType.immediate,
             float tweenTime = 0f,
-            Action jumpComplete = null
+            Action jumpComplete = null,
+            LoopJumpDirectionEnum loopJumpDirection = LoopJumpDirectionEnum.Closest
             )
         {
             var cellOffsetPosition = 0f;
@@ -584,10 +711,15 @@ namespace EnhancedUI.EnhancedScroller
                 cellOffsetPosition = cellSize * cellOffset;
             }
 
-            var newScrollPosition = 0f;
+            if (scrollerOffset == 1f)
+            {
+                cellOffsetPosition += padding.bottom;
+            }
 
             // cache the offset for quicker calculation
             var offset = -(scrollerOffset * ScrollRectSize) + cellOffsetPosition;
+
+            var newScrollPosition = 0f;
 
             if (loop)
             {
@@ -605,28 +737,46 @@ namespace EnhancedUI.EnhancedScroller
                 var set2Diff = (Mathf.Abs(_scrollPosition - set2Position));
                 var set3Diff = (Mathf.Abs(_scrollPosition - set3Position));
 
-                // choose the smallest offset from the current position (the closest position)
-                if (set1Diff < set2Diff)
+                switch (loopJumpDirection)
                 {
-                    if (set1Diff < set3Diff)
-                    {
+                    case LoopJumpDirectionEnum.Closest:
+
+                        // choose the smallest offset from the current position (the closest position)
+                        if (set1Diff < set2Diff)
+                        {
+                            if (set1Diff < set3Diff)
+                            {
+                                newScrollPosition = set1Position;
+                            }
+                            else
+                            {
+                                newScrollPosition = set3Position;
+                            }
+                        }
+                        else
+                        {
+                            if (set2Diff < set3Diff)
+                            {
+                                newScrollPosition = set2Position;
+                            }
+                            else
+                            {
+                                newScrollPosition = set3Position;
+                            }
+                        }
+
+                        break;
+
+                    case LoopJumpDirectionEnum.Up:
+
                         newScrollPosition = set1Position;
-                    }
-                    else
-                    {
+                        break;
+
+                    case LoopJumpDirectionEnum.Down:
+
                         newScrollPosition = set3Position;
-                    }
-                }
-                else
-                {
-                    if (set2Diff < set3Diff)
-                    {
-                        newScrollPosition = set2Position;
-                    }
-                    else
-                    {
-                        newScrollPosition = set3Position;
-                    }
+                        break;
+
                 }
             }
             else
@@ -645,31 +795,15 @@ namespace EnhancedUI.EnhancedScroller
                 newScrollPosition = Mathf.Clamp(newScrollPosition - spacing, 0, GetScrollPositionForCellViewIndex(_cellViewSizeArray.Count - 1, CellViewPositionEnum.Before));
             }
 
+            // ignore the jump if the scroll position hasn't changed
+            if (newScrollPosition == _scrollPosition)
+            {
+                if (jumpComplete != null) jumpComplete();
+                return;
+            }
+
             // start tweening
             StartCoroutine(TweenPosition(tweenType, tweenTime, ScrollPosition, newScrollPosition, jumpComplete));
-        }
-
-        /// <summary>
-        /// Jump to a position in the scroller based on a dataIndex.
-        /// </summary>
-        /// <param name="dataIndex">The data index to jump to</param>
-        /// <param name="position">Whether you should jump before or after the cell view</param>
-        [System.Obsolete("This is an obsolete method, please use the version of this function with a cell offset.")]
-        public void JumpToDataIndex(int dataIndex,
-            CellViewPositionEnum position = CellViewPositionEnum.Before,
-            bool useSpacing = true)
-        {
-            // if looping is on, we need to jump to the middle set of data, otherwise just use the dataIndex for the cellIndex
-            ScrollPosition = GetScrollPositionForDataIndex(dataIndex, position);
-
-            // if spacing is used, adjust the final position
-            if (useSpacing)
-            {
-                if (position == CellViewPositionEnum.Before)
-                    ScrollPosition = _scrollPosition - spacing;
-                else
-                    ScrollPosition = _scrollPosition + spacing;
-            }
         }
 
         /// <summary>
@@ -712,6 +846,7 @@ namespace EnhancedUI.EnhancedScroller
         public float GetScrollPositionForCellViewIndex(int cellViewIndex, CellViewPositionEnum insertPosition)
         {
             if (NumberOfCells == 0) return 0;
+            if (cellViewIndex < 0) cellViewIndex = 0;
 
             if (cellViewIndex == 0 && insertPosition == CellViewPositionEnum.Before)
             {
@@ -764,9 +899,45 @@ namespace EnhancedUI.EnhancedScroller
             return _GetCellIndexAtPosition(position, 0, _cellViewOffsetArray.Count - 1);
         }
 
+        /// <summary>
+        /// Get a cell view for a particular data index. If the cell view is not currently
+        /// in the visible range, then this method will return null.
+        /// Note: this is against MVC principles and will couple your controller to the view
+        /// more than this paradigm would suggest. Generally speaking, the view can have knowledge
+        /// about the controller, but the controller should not know anything about the view.
+        /// Use this method sparingly if you are trying to adhere to strict MVC design.
+        /// </summary>
+        /// <param name="dataIndex">The data index of the cell view to return</param>
+        /// <returns></returns>
+        public EnhancedScrollerCellView GetCellViewAtDataIndex(int dataIndex)
+        {
+            for (var i = 0; i < _activeCellViews.Count; i++)
+            {
+                if (_activeCellViews[i].dataIndex == dataIndex)
+                {
+                    return _activeCellViews[i];
+                }
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region Private
+
+        /// <summary>
+        /// Set after the scroller is first created. This allwos
+        /// us to ignore OnValidate changes at the start
+        /// </summary>
+        private bool _initialized = false;
+
+        /// <summary>
+        /// Set when the spacing is changed in the inspector. Since we cannot
+        /// make changes during the OnValidate, we have to use this flag to
+        /// later call the _UpdateSpacing method from Update()
+        /// </summary>
+        private bool _updateSpacing = false;
 
         /// <summary>
         /// Cached reference to the scrollRect
@@ -948,21 +1119,6 @@ namespace EnhancedUI.EnhancedScroller
         }
 
         /// <summary>
-        /// The size of the active cell view container minus the visibile portion
-        /// of the scroller
-        /// </summary>
-        private float _ScrollSize
-        {
-            get
-            {
-                if (scrollDirection == ScrollDirectionEnum.Vertical)
-                    return _container.rect.height - _scrollRectTransform.rect.height;
-                else
-                    return _container.rect.width - _scrollRectTransform.rect.width;
-            }
-        }
-
-        /// <summary>
         /// This function will create an internal list of sizes and offsets to be used in all calculations.
         /// It also sets up the loop triggers and positions and initializes the cell views.
         /// </summary>
@@ -1036,6 +1192,17 @@ namespace EnhancedUI.EnhancedScroller
 
             // set up the visibility of the scrollbar
             ScrollbarVisibility = scrollbarVisibility;
+        }
+
+        /// <summary>
+        /// Updates the spacing on the scroller
+        /// </summary>
+        /// <param name="spacing">new spacing value</param>
+        private void _UpdateSpacing(float spacing)
+        {
+            _updateSpacing = false;
+            _layoutGroup.spacing = spacing;
+            ReloadData(NormalizedScrollPosition);
         }
 
         /// <summary>
@@ -1200,6 +1367,8 @@ namespace EnhancedUI.EnhancedScroller
         /// <param name="cellView"></param>
         private void _RecycleCell(EnhancedScrollerCellView cellView)
         {
+            if (cellViewWillRecycle != null) cellViewWillRecycle(cellView);
+
             // remove the cell view from the active list
             _activeCellViews.Remove(cellView);
 
@@ -1305,7 +1474,7 @@ namespace EnhancedUI.EnhancedScroller
         /// </summary>
         private void _RefreshActive()
         {
-            _refreshActive = false;
+            //_refreshActive = false;
 
             int startIndex;
             int endIndex;
@@ -1317,13 +1486,13 @@ namespace EnhancedUI.EnhancedScroller
                 if (_scrollPosition < _loopFirstJumpTrigger)
                 {
                     velocity = _scrollRect.velocity;
-                    ScrollPosition = _loopLastScrollPosition - (_loopFirstJumpTrigger - _scrollPosition);
+                    ScrollPosition = _loopLastScrollPosition - (_loopFirstJumpTrigger - _scrollPosition) + spacing;
                     _scrollRect.velocity = velocity;
                 }
                 else if (_scrollPosition > _loopLastJumpTrigger)
                 {
                     velocity = _scrollRect.velocity;
-                    ScrollPosition = _loopFirstScrollPosition + (_scrollPosition - _loopLastJumpTrigger);
+                    ScrollPosition = _loopFirstScrollPosition + (_scrollPosition - _loopLastJumpTrigger) - spacing;
                     _scrollRect.velocity = velocity;
                 }
             }
@@ -1423,6 +1592,8 @@ namespace EnhancedUI.EnhancedScroller
             }
             _container.offsetMax = Vector2.zero;
             _container.offsetMin = Vector2.zero;
+            _container.localPosition = Vector3.zero;
+            _container.localRotation = Quaternion.identity;
             _container.localScale = Vector3.one;
 
             _scrollRect.content = _container;
@@ -1469,10 +1640,18 @@ namespace EnhancedUI.EnhancedScroller
             _lastScrollRectSize = ScrollRectSize;
             _lastLoop = loop;
             _lastScrollbarVisibility = scrollbarVisibility;
+
+            _initialized = true;
         }
 
         void Update()
         {
+            if (_updateSpacing)
+            {
+                _UpdateSpacing(spacing);
+                _reloadData = false;
+            }
+
             if (_reloadData)
             {
                 // if the reload flag is true, then reload the data
@@ -1514,15 +1693,31 @@ namespace EnhancedUI.EnhancedScroller
             }
         }
 
-        void LateUpdate()
+        /// <summary>
+        /// Reacts to changes in the inspector
+        /// </summary>
+        void OnValidate()
         {
-            if (_refreshActive)
+            // if spacing changed, update it
+            if (_initialized && spacing != _layoutGroup.spacing)
             {
-                // if the refresh toggle is on, then
-                // refresh the list
-                _RefreshActive();
+                _updateSpacing = true;
             }
         }
+
+        /// <summary>
+        /// This method was used in Unity 5.5.1 to get around a bug in the Unity ScrollRect component.
+        /// In Unity 2017+, this code is no longer needed and actually produces other bugs if left in.
+        /// </summary>
+        //void LateUpdate()
+        //{
+        //    if (_refreshActive)
+        //    {
+        //        // if the refresh toggle is on, then
+        //        // refresh the list
+        //        _RefreshActive();
+        //    }
+        //}
 
         void OnEnable()
         {
@@ -1544,10 +1739,11 @@ namespace EnhancedUI.EnhancedScroller
         {
             // set the internal scroll position
             if (scrollDirection == ScrollDirectionEnum.Vertical)
-                _scrollPosition = (1f - val.y) * _ScrollSize;
+                _scrollPosition = (1f - val.y) * ScrollSize;
             else
-                _scrollPosition = val.x * _ScrollSize;
-            _refreshActive = true;
+                _scrollPosition = val.x * ScrollSize;
+            //_refreshActive = true;
+            _scrollPosition = Mathf.Clamp(_scrollPosition, 0, GetScrollPositionForCellViewIndex(_cellViewSizeArray.Count - 1, CellViewPositionEnum.Before));
 
             // call the handler if it exists
             if (scrollerScrolled != null) scrollerScrolled(this, val, _scrollPosition);
@@ -1556,17 +1752,22 @@ namespace EnhancedUI.EnhancedScroller
             if (snapping && !_snapJumping)
             {
                 // if the speed has dropped below the threshhold velocity
-                if (Mathf.Abs(LinearVelocity) <= snapVelocityThreshold)
+                if (Mathf.Abs(LinearVelocity) <= snapVelocityThreshold && LinearVelocity != 0)
                 {
-                    // Call the snap function
-                    Snap();
+                    // Make sure the scroller is not on the boundary if not looping
+                    var normalized = NormalizedScrollPosition;
+                    if (loop || (!loop && normalized > 0 && normalized < 1.0f))
+                    {
+                        // Call the snap function
+                        Snap();
+                    }
                 }
             }
 
             _RefreshActive();
 
         }
-        
+
         /// <summary>
         /// This is fired by the tweener when the snap tween is completed
         /// </summary>
@@ -1576,8 +1777,18 @@ namespace EnhancedUI.EnhancedScroller
             _snapJumping = false;
             _scrollRect.inertia = _snapInertia;
 
+            EnhancedScrollerCellView cellView = null;
+            for (var i = 0; i < _activeCellViews.Count; i++)
+            {
+                if (_activeCellViews[i].dataIndex == _snapDataIndex)
+                {
+                    cellView = _activeCellViews[i];
+                    break;
+                }
+            }
+
             // fire the scroller snapped delegate
-            if (scrollerSnapped != null) scrollerSnapped(this, _snapCellViewIndex, _snapDataIndex);
+            if (scrollerSnapped != null) scrollerSnapped(this, _snapCellViewIndex, _snapDataIndex, cellView);
         }
 
         #endregion
@@ -1732,6 +1943,7 @@ namespace EnhancedUI.EnhancedScroller
             IsTweening = false;
             if (scrollerTweeningChanged != null) scrollerTweeningChanged(this, false);
         }
+
 
         private float linear(float start, float end, float val)
         {

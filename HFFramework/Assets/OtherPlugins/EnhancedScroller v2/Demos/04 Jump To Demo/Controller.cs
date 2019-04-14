@@ -52,7 +52,7 @@ namespace EnhancedScrollerDemos.JumpToDemo
 
             // set up some simple data
             _data = new List<Data>();
-            for (var i = 0; i < 1000; i++)
+            for (var i = 0; i < 100; i++)
                 _data.Add(new Data() { cellText = "Cell Data Index " + i.ToString() });
 
             // tell the scroller to reload now that we have the data
@@ -70,7 +70,7 @@ namespace EnhancedScrollerDemos.JumpToDemo
             if (int.TryParse(jumpIndexInput.text, out jumpDataIndex))
             {
                 // jump to the index
-                vScroller.JumpToDataIndex(jumpDataIndex, scrollerOffsetSlider.value, cellOffsetSlider.value, useSpacingToggle.isOn, vScrollerTweenType, vScrollerTweenTime);
+                vScroller.JumpToDataIndex(jumpDataIndex, scrollerOffsetSlider.value, cellOffsetSlider.value, useSpacingToggle.isOn, vScrollerTweenType, vScrollerTweenTime, null, EnhancedScroller.LoopJumpDirectionEnum.Down);
                 hScroller.JumpToDataIndex(jumpDataIndex, scrollerOffsetSlider.value, cellOffsetSlider.value, useSpacingToggle.isOn, hScrollerTweenType, hScrollerTweenTime);
             }
             else

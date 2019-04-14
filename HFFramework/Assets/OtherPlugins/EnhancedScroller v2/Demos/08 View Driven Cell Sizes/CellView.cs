@@ -24,20 +24,11 @@ namespace EnhancedScrollerDemos.ViewDrivenCellSizes
         {
             someTextText.text = data.someText;
 
-            // get the size of the rect transform and store it.
-            // First Pass (frame countdown 2): this will be zero
-            // Second Pass (frame countdown 1): this will be the size set by the content size fitter
-            // Third Pass (frame countdown 0): this will be redundantly set, but the scroller needs to refresh to pull the new sizes from the second pass
-            var sizeY = textRectTransform.sizeDelta.y;
-            if (sizeY > 0)
-            {
-                // if the size has been set by the content size fitter, then we add in some padding so the
-                // the text isn't up against the border of the cell
-                sizeY += textBuffer.top + textBuffer.bottom;
-            }
+            // force update the canvas so that it can calculate the size needed for the text immediately
+            Canvas.ForceUpdateCanvases();
 
-            // set the size of the cell in the model
-            data.cellSize = sizeY;
+            // set the data's cell size and add in some padding so the the text isn't up against the border of the cell
+            data.cellSize = textRectTransform.rect.height + textBuffer.top + textBuffer.bottom;
         }
     }
 }

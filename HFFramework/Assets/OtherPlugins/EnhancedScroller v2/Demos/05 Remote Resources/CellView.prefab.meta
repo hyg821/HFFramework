@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: 1db1637988deef549bf600e8cdf60563
-timeCreated: 1540888634
-licenseType: Free
+guid: f38a78cc768ad68458de5de4bc9db9e6
+labels:
+- Cell
+- Cells
+- Data
+- Inventory
+- List
+- Recycle
+- Reuse
+- Scroll
+- ScrollRect
+- ScrollView
+- Scroller
+- UI
+- Virtualize
+timeCreated: 1439562941
+licenseType: Store
 NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

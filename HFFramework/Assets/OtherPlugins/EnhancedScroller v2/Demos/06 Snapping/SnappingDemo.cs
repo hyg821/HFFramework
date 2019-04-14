@@ -244,7 +244,7 @@ namespace EnhancedScrollerDemos.SnappingDemo
         /// <param name="scroller">The EnhancedScroller that fired the event</param>
         /// <param name="cellIndex">The index of the cell that snapped on</param>
         /// <param name="dataIndex">The data index of the cell that snapped on</param>
-        private void ScrollerSnapped(EnhancedScroller scroller, int cellIndex, int dataIndex)
+		private void ScrollerSnapped(EnhancedScroller scroller, int cellIndex, int dataIndex, EnhancedScrollerCellView cellView)
         {
             // if we are not playing, ignore this event
             if (GameState != GameStateEnum.Playing) return;

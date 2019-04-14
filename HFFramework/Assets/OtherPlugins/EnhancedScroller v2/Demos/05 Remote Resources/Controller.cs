@@ -29,11 +29,13 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
         /// </summary>
         public EnhancedScrollerCellView cellViewPrefab;
 
+        /// <summary>
+        /// An array of image urls to load
+        /// </summary>
+        public string[] imageURLList;
+
         void Start()
         {
-            // set the scroller's delegate to this controller
-            scroller.Delegate = this;
-
             // set the scroller's cell view visbility changed delegate to a method in this controller
             scroller.cellViewVisibilityChanged = CellViewVisibilityChanged;
 
@@ -41,12 +43,20 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
             _data = new SmallList<Data>();
 
             // set up a list of images with their dimensions
-            for (var i = 0; i <= 12; i++)
+            for (var i = 0; i < imageURLList.Length; i++)
             {
-                _data.Add(new Data() { imageUrl = string.Format("http://echo17.com/support/enhancedscroller/{0}.jpg", i), imageDimensions = new Vector2(200f, 200f) });
+                // add the image based on the image list text file
+                _data.Add(new Data()
+                {
+                    imageUrl = imageURLList[i],
+                    imageDimensions = new Vector2(200f, 200f)
+                });
             }
 
-            // tell the scroller to reload now that we have the data
+            // set the scroller's delegate to this controller
+            scroller.Delegate = this;
+
+            // tell the scroller to reload
             scroller.ReloadData();
         }
 

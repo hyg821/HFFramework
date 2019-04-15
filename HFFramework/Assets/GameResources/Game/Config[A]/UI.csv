@@ -4,3 +4,4 @@ val,val,val,val,val,val,val
 single,single,single,single,single,single,single
 string,int,string,string,string,string,string
 Login,0,ui_prefab,LoginView,1,1,LoginController
+Debug,0,ui_prefab,DebugView,1,1,DebugController

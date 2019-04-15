@@ -296,6 +296,12 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/Administrator/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>E:/Unity/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>E:/Unity/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="HFFramework.Plugins.csproj">
@@ -508,7 +514,6 @@
     <Compile Include="Assets\GameResources\Game\Demo\Room.cs" />
     <Compile Include="Assets\GameResources\Game\Demo\RunFastRoomProto.cs" />
     <Compile Include="Assets\GameResources\Game\Demo\RunFastuser.cs" />
-    <Compile Include="Assets\GameResources\Game\Demo\Test.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\Address.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\Attribute.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\Background.cs" />
@@ -517,6 +522,10 @@
     <Compile Include="Assets\GameResources\Game\Script\Config\Man.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\Role.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Config\UI.cs" />
+    <Compile Include="Assets\GameResources\Game\Script\GameStart.cs" />
+    <Compile Include="Assets\GameResources\HFCommon\Debug[A]\DebugController.cs" />
+    <Compile Include="Assets\GameResources\HFCommon\Debug[A]\LogCell.cs" />
+    <Compile Include="Assets\GameResources\HFCommon\Debug[A]\LogView.cs" />
     <Compile Include="Assets\OtherPlugins\Best HTTP (Pro)\BestHTTP\Authentication\Credentials.cs" />
     <Compile Include="Assets\OtherPlugins\Best HTTP (Pro)\BestHTTP\Authentication\Digest.cs" />
     <Compile Include="Assets\OtherPlugins\Best HTTP (Pro)\BestHTTP\Authentication\DigestStore.cs" />

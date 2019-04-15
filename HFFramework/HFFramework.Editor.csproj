@@ -278,6 +278,9 @@
     <Reference Include="UnityEditor.Android.Extensions">
       <HintPath>E:/Unity/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions">
+      <HintPath>E:/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>E:/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
@@ -353,6 +356,12 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/Administrator/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>E:/Unity/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>E:/Unity/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="HFFramework.Plugins.csproj">
@@ -374,6 +383,7 @@
     <Compile Include="Assets\Core\Editor\HFEditorTools.cs" />
     <Compile Include="Assets\Core\Editor\HFOpenAssetHandler.cs" />
     <Compile Include="Assets\Core\Editor\HFProjectWindow.cs" />
+    <Compile Include="Assets\Core\Editor\HFRunWindow.cs" />
     <Compile Include="Assets\Core\Editor\HFTextureImporter.cs" />
     <Compile Include="Assets\Core\Editor\JsonModel\JsonModel.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\Editor\ILRuntimeCLRBinding.cs" />

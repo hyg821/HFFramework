@@ -1644,6 +1644,12 @@ namespace EnhancedUI.EnhancedScroller
             _initialized = true;
         }
 
+        private void Start()
+        {
+            _container.offsetMax = Vector2.zero;
+            _container.offsetMin = Vector2.zero;
+        }
+
         void Update()
         {
             if (_updateSpacing)

@@ -121,6 +121,9 @@ namespace HFFramework
 
                 //添加状态检查者
                 gameObject.AddComponent<GameFlowController>();
+
+                //游戏开始
+                gameObject.AddComponent<GameStart>();
             }
             else
             {

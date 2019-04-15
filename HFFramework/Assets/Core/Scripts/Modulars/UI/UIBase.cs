@@ -67,6 +67,7 @@ namespace HFFramework
                                 break;
                             case UIHideType.CanvasGroup:
                                 CanvasGroup.alpha = 1;
+                                CanvasGroup.blocksRaycasts = true;
                                 ElementDidAppear();
                                 break;
                             default:
@@ -86,6 +87,7 @@ namespace HFFramework
                                 break;
                             case UIHideType.CanvasGroup:
                                 CanvasGroup.alpha = 0;
+                                CanvasGroup.blocksRaycasts = false;
                                 ElementDidDisAppear();
                                 break;
                             default:

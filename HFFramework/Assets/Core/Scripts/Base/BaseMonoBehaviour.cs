@@ -19,8 +19,10 @@ namespace HFFramework
         [HideInInspector]
         public Transform myTransform;
 
+        [HideInInspector]
         public string gameObjectName;
 
+        [HideInInspector]
         public string gameObjectTag;
 
         /// <summary>

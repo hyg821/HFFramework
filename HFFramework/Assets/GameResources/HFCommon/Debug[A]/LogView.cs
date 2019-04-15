@@ -39,7 +39,7 @@ namespace HFFramework
                 stackTrace = stackTrace,
                 type = type
             });
-            scroller.ReloadData();
+            scroller.ReloadData(1);
         }
 
         public int GetNumberOfCells(EnhancedScroller scroller)

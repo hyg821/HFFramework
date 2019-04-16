@@ -10,9 +10,12 @@ namespace HFFramework
     {
         public Text cellText;
 
-        public void SetData(LogInfo info)
+        public int index;
+
+        public void SetData(LogInfo info,int index)
         {
             cellText.text = info.condition;
+            this.index = index;
         }
     }
 }

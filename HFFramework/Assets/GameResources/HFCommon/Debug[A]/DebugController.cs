@@ -11,23 +11,16 @@ namespace HFFramework
 
         public Button closeBtn;
 
+        GamePlatform pf;
+
         void Start()
         {
+            pf = GameEnvironment.Instance.Platform;
             closeBtn.onClick.AddListener(delegate()
             {
                 Close();
             });
             Application.logMessageReceived += LogMessageReceived;
-            StartCoroutine(Test());
-        }
-
-        IEnumerator Test()
-        {
-            for (int i = 0; i < 50; i++)
-            {
-                yield return null;
-                print(i);
-            }
         }
 
         public void LogMessageReceived(string condition, string stackTrace, LogType type)
@@ -38,18 +31,18 @@ namespace HFFramework
         // Update is called once per frame
         void Update()
         {
-            if (GameEnvironment.Instance.Platform==GamePlatform.Android|| GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            if (pf == GamePlatform.Android|| pf == GamePlatform.iOS)
             {
                 if (Input.touchCount == 3)
                 {
-                    Open();
+                    IsShow = !IsShow;
                 }
             }
-            else if (GameEnvironment.Instance.Platform == GamePlatform.Editor|| GameEnvironment.Instance.Platform == GamePlatform.Windows|| GameEnvironment.Instance.Platform == GamePlatform.Mac)
+            else if (pf == GamePlatform.Editor|| pf == GamePlatform.Windows|| pf == GamePlatform.Mac)
             {
-                if (Input.GetKey(KeyCode.LeftControl)&& Input.GetKey(KeyCode.RightControl))
+                if (Input.GetKeyDown(KeyCode.LeftControl)&& Input.GetKeyDown(KeyCode.RightControl))
                 {
-                    Open();
+                    IsShow = !IsShow;
                 }
             }
         }

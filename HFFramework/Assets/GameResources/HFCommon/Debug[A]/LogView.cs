@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
 
@@ -11,6 +12,7 @@ namespace HFFramework
         public string condition;
         public string stackTrace;
         public LogType type;
+        public float height;
     }
 
     public class LogView : MonoBehaviour, IEnhancedScrollerDelegate
@@ -24,20 +26,34 @@ namespace HFFramework
 
         public EnhancedScrollerCellView cellPrefab;
 
+        private TextGenerator cacheTextGenerator;
+
+        private TextGenerationSettings textGenerationSettings;
+
         private void Awake()
         {
-            cellPrefab = HFResourceManager.Instance.GetAsset<GameObject>("ui_prefab", "LogCell").GetComponent<EnhancedScrollerCellView>();
+            GameObject prefab = HFResourceManager.Instance.GetAsset<GameObject>("ui_prefab", "LogCell");
+            cellPrefab = prefab.GetComponent<EnhancedScrollerCellView>();
+            Text text = prefab.transform.Find("Text").GetComponent<Text>();
+            textGenerationSettings = text.GetGenerationSettings(new Vector2(700,0));
+            cacheTextGenerator = text.cachedTextGenerator;
             scroller = GetComponent<EnhancedScroller>();
             scroller.Delegate = this;
         }
 
         public void SetData(string condition, string stackTrace, LogType type)
         {
+            if (logInfos.Count>300)
+            {
+                logInfos.Clear();
+            }
+
             logInfos.Add(new LogInfo
             {
                 condition = condition,
                 stackTrace = stackTrace,
-                type = type
+                type = type,
+                height = -1
             });
             scroller.ReloadData(1);
         }
@@ -58,8 +74,12 @@ namespace HFFramework
         /// <returns>The size of the cell</returns>
         public float GetCellViewSize(EnhancedScroller scroller, int dataIndex)
         {
-            // in this example, even numbered cells are 30 pixels tall, odd numbered cells are 100 pixels tall
-            return 70;
+            LogInfo info = logInfos[dataIndex];
+            if (info.height==-1)
+            {
+                info.height = cacheTextGenerator.GetPreferredHeight(logInfos[dataIndex].condition, textGenerationSettings);
+            }
+            return info.height;
         }
 
         /// <summary>
@@ -77,13 +97,8 @@ namespace HFFramework
             // it will create a new cell.
             LogCell cellView = scroller.GetCellView(cellPrefab) as LogCell;
 
-            // set the name of the game object to the cell's data index.
-            // this is optional, but it helps up debug the objects in 
-            // the scene hierarchy.
-            cellView.name = "Cell " + dataIndex.ToString();
-
             // in this example, we just pass the data to our cell's view which will update its UI
-            cellView.SetData(logInfos[dataIndex]);
+            cellView.SetData(logInfos[dataIndex],cellIndex);
 
             // return the cell to the scroller
             return cellView;

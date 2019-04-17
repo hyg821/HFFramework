@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class HFRunWindow : EditorWindow
+    public class HFDefaultSceneWindow : EditorWindow
     {
         public string StartScenePath = "Assets/GameResources/Game/Demo/Demo.unity";
 
@@ -25,10 +25,10 @@ namespace HFFramework
                 Debug.Log("没有找到场景路径 " + scenePath);
         }
 
-        [MenuItem("游戏辅助工具/设置默认运行场景")]
+        [MenuItem("游戏辅助工具/设置默认运行场景(仅限于编辑器开发使用)")]
         static void Open()
         {
-            GetWindow<HFRunWindow>();
+            GetWindow<HFDefaultSceneWindow>();
         }
     }
 }

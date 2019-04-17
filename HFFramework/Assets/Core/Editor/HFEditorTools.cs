@@ -42,7 +42,7 @@ namespace HFFramework
             }
 
             AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", BuildAssetBundleOptions.ChunkBasedCompression, target);
-            BuildZip();
+            //BuildZip();
             if (abm)
             {
                 string[] assetBundles = abm.GetAllAssetBundles();
@@ -270,6 +270,10 @@ namespace HFFramework
         /// <param name="date"></param>
         public static void WriteMD5Diff(String date)
         {
+            if (!Directory.Exists(Application.streamingAssetsPath + "/HotFixResources"))
+            {
+                Directory.CreateDirectory(Application.streamingAssetsPath + "/HotFixResources");
+            }
             string path = Application.streamingAssetsPath + "/HotFixResources" + "/MD5Diff.json";
             using (FileStream fs = new FileStream(path, FileMode.Create))
             {

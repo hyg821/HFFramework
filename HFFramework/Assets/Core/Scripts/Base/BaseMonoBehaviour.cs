@@ -118,7 +118,7 @@ namespace HFFramework
             return myTransform.Find(path).GetComponent<T>();
         }
 
-        public T AutoFind<T>(string path)
+        public T AutoFind<T>(string path = null)
         {
             if (String.IsNullOrEmpty(path))
             {

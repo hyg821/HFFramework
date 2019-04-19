@@ -103,8 +103,8 @@ namespace HFFramework
                     ObserverDelegate o = list[i];
                     if (o.receiver == receiver)
                     {
+                        list.RemoveAt(i);
                         o.Destroy();
-                        list.Remove(o);
                         break;
                     }
                     i++;

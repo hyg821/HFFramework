@@ -25,7 +25,7 @@ public class LoginController : UIController
     #region
     public override void FindElement()
     {
-        bg = AutoFind<Image>("");
+        bg = AutoFind<Image>();
         input = AutoFind<InputField>("InputField");
         loginBtn = AutoFind<Button>("Button");
         webImage = AutoFind<Image>("Image");

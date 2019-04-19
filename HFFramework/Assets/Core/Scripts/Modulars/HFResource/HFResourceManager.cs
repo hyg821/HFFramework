@@ -16,9 +16,9 @@ namespace HFFramework
     {
         // 注意 
         // 必须每一个场景一个包 并且场景不可以和别的资源放在同一个包里
-        // 场景的包  热更新代码的包  Manifest包 不被管理  
-        // 场景不可以依赖别的包里的资源 因为场景没有做依赖递归加载 
+        // 热更新代码的包  Manifest包 不被管理  
         // 如果有依赖请把依赖做成预设体 通过加载预设体的方式 实现
+        // 如果是编辑器开发模式 那么场景需要build assetbundle 才能看到效果 其他的不需要build 因为编辑器会走AssetDatabase直接加载
 
         public static HFResourceManager Instance;
 

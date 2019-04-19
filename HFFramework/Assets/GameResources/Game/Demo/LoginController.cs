@@ -14,7 +14,7 @@ using Centersdk.Protobuf;
 using Loginservice.Protobuf;
 using UnityEngine.SceneManagement;
 
-public class LoginController : UIController
+public class LoginController : UIController,ICmdControl
 {
 
     public Image bg;
@@ -35,7 +35,7 @@ public class LoginController : UIController
 
 
 
-
+    public CmdQueue cmds;
 
     public int errorCount = 0;
 
@@ -132,6 +132,17 @@ public class LoginController : UIController
                 UIManager.Instance.CloseController("Login");
             });    
         });
+
+
+
+        cmds = new CmdQueue();
+        for (int i = 0; i < 5; i++)
+        {
+            DalyCmd cmd = new DalyCmd();
+            cmd.Init(this);
+            cmds.Enqueue(cmd);
+        }
+        cmds.Start();
     }
 
     private void Update()
@@ -145,4 +156,38 @@ public class LoginController : UIController
         t1.MergeFrom(bytes);
         return t1;
     }
+
+    public class DalyCmd : ICmd
+    {
+        public ICmdControl Control { set; get; }
+        public CmdQueue CmdQueue { set; get; }
+
+        public void Execute()
+        {
+            Debug.Log("我开始执行了");
+            GameLooper.Instance.StartCoroutine(daly());
+        }
+
+        IEnumerator daly()
+        {
+            yield return new WaitForSeconds(3);
+            OnComplete();
+        } 
+
+        public void OnComplete()
+        {
+            CmdQueue.MoveNext();
+        }
+
+        public void Undo()
+        {
+
+        }
+
+        public void Init(ICmdControl control)
+        {
+            Control = control;
+        }
+    }
+
 }

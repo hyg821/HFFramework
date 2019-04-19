@@ -17,10 +17,16 @@ namespace HFFramework
         public FSMBaseState CurrentState { set; get; }
 
         /// <summary>
+        ///  依赖反转的控制器 简而言之就是  控制 fsm 的对象
+        /// </summary>
+        public object control;
+
+        /// <summary>
         ///  构造方法
         /// </summary>
-        public FSMManager()
+        public FSMManager(object control)
         {
+            this.control = control;
             FSMBaseState rootState = new FSMBaseState(FSMBaseState.RootState,this);
             AddState(rootState);
             TranslateToState(FSMBaseState.RootState);
@@ -34,7 +40,7 @@ namespace HFFramework
         {
             if (!allStateDic.ContainsKey(state.stateName))
             {
-                this[state.stateName] = state;
+                allStateDic.Add(state.stateName, state);
             }
         }
 

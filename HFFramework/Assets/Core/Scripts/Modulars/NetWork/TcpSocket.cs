@@ -126,7 +126,7 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  socket 接收到第一层byte[]数据缓冲   MAX_BUFFER_LEN如果这个值很小那会被默认改成1024
+        ///  socket 接收到第一层byte[]数据缓冲   MAX_BUFFER_LEN如果这个值 小于你要接收的数据长度 那么异步方法不会返回 同步方法会阻塞 接收不到
         /// </summary>
         private byte[] dataBuffer = new byte[MAX_BUFFER_LEN];
 
@@ -398,10 +398,11 @@ namespace HFFramework
                 //如果读取过了消息头 并且可读取的数据大于整个数据体的长度
                 if (currentPackage.isReadHeader == true && socket.Available >= currentPackage.bodyLength)
                 {
-                    //从socket 内部缓冲区 读取 已经获取过消息体长度的 数据到自己的缓冲区  
+                    //从socket 内部缓冲区 读取 已经获取过消息体长度的 数据到自己的缓冲区 dataBuffer 
                     //需要判断消息体是否为0 因为服务器传过来的proto如果没有属性反序列化之后长度是0 
                     //但是socket.Receive 如果接收0的话 就会无限阻塞等待新消息过来 
                     //这样就会导致空消息是等到非空消息发送过来之后才能接收到 时效出现了问题
+                    //dataBuffer 的数据长度 必须要大于 我要接受的长度 否则会出现无限阻塞没办法接受的情况
                     if (currentPackage.bodyLength!=0)
                     {
                         socket.Receive(dataBuffer, currentPackage.bodyLength, 0);

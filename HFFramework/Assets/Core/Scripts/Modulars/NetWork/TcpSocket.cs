@@ -69,7 +69,7 @@ namespace HFFramework
         private const int THREAD_SLEEP_TIME = 20;
 
         /// <summary>
-        ///  最大数据缓冲长度  如果这个缓冲区小于 服务器发送的一个包的长度 比如 2048 那么会出现无法接收的情况
+        ///  最大数据缓冲长度  如果这个缓冲区小于 服务器发送的一个包的长度 比如 2048 那么会出现无法接收的情况 
         /// </summary>
         private const int MAX_BUFFER_LEN = 1024*10;
 
@@ -126,7 +126,7 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  socket 接收到第一层byte[]数据缓冲
+        ///  socket 接收到第一层byte[]数据缓冲   MAX_BUFFER_LEN如果这个值很小那会被默认改成1024
         /// </summary>
         private byte[] dataBuffer = new byte[MAX_BUFFER_LEN];
 

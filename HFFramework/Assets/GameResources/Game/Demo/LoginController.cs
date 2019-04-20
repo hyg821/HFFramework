@@ -64,7 +64,7 @@ public class LoginController : UIController,ICmdControl
 
             errorCount = 0;
             HFSocket socket = HFSocketManager.Instance.GetSocket("hyg");
-            socket.Init("10.2.0.207", 8002, delegate ()
+            socket.Init("192.168.1.110", 8080, delegate ()
             {
                 errorCount = 0;
                 HFLog.C("连接成功");

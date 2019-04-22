@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -48,8 +49,20 @@ public class LearnTask : MonoBehaviour
             print("TaskCompletionSource 结果是 :" + count);
         });
 
+
+        Task task = Task.Run(delegate ()
+        {
+            Debug.Log("我正在执行任务的线程id"+ Thread.CurrentThread.ManagedThreadId);
+            Thread.Sleep(5);
+        });
+        TaskAwaiter awaiter = task.GetAwaiter();
+        awaiter.OnCompleted(delegate ()
+        {
+            Debug.Log("我完成了的回调任务的线程id" + Thread.CurrentThread.ManagedThreadId);
+        });
         //print("最后结尾");
     }
+
 
     public async void Test2()
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using LitJson;
 using Config;
+using UnityEngine.SceneManagement;
 
 namespace HFFramework
 {
@@ -36,13 +37,31 @@ namespace HFFramework
 
         public void Init()
         {
-            Clear();
-            AssetBundlePackage assetBundlePackage = HFResourceManager.Instance.LoadAssetBundleFromFile("hfui");
-            GameObject prefab = assetBundlePackage.LoadAssetWithCache<GameObject>("UICamera");
+            SceneManager.sceneLoaded += SceneLoaded;
+            GameObject prefab = HFResourceManager.Instance.GetAsset<GameObject>("hfui", "UICamera");
             GameObject temp = Instantiate(prefab);
             temp.name = CameraName;
             UICamera = temp.GetComponent<UICamera>();
             UICamera.SetParent(gameObject);
+
+            prefab = HFResourceManager.Instance.GetAsset<GameObject>("hfui", "UIEventSystem");
+            GameObject eventSystem = Instantiate(prefab);
+            eventSystem.name = "UIEventSystem";
+            eventSystem.transform.SetParent(gameObject.transform);
+        }
+
+        private void SceneLoaded(Scene s, LoadSceneMode m)
+        {
+            //保证全局只有一个EventSystem
+            GameObject[] temp = s.GetRootGameObjects();
+            for (int i = temp.Length-1; i >0 ; i--)
+            {
+                if (temp[i].name =="EventSystem")
+                {
+                    HFLog.C("跳转场景 发现多余的EventSystem 删除");
+                    GameObject.Destroy(temp[i]);
+                }
+            }
         }
 
         public UICanvas AddCanvas(int canvasLayerIndex)
@@ -111,6 +130,7 @@ namespace HFFramework
         public void DestroyManager()
         {
             Clear();
+            SceneManager.sceneLoaded -= SceneLoaded;
             Instance = null;
         }
     }

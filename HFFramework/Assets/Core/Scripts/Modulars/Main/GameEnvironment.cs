@@ -22,6 +22,12 @@ namespace  HFFramework
         Editor
     }
 
+    public enum GameLanguage
+    {
+        Chinese,
+        English
+    }
+
     public class GameEnvironment : MonoBehaviour,IManager
     {
         public static GameEnvironment Instance;
@@ -35,6 +41,11 @@ namespace  HFFramework
         ///  运行环境
         /// </summary>
         public GameEnvironmentType RuntimeEnvironment;
+
+        /// <summary>
+        ///  运行语言
+        /// </summary>
+        public GameLanguage Language = GameLanguage.Chinese;
 
         /// <summary>
         ///  app版本
@@ -93,6 +104,7 @@ namespace  HFFramework
             SetRuntimeEnvironment(GameEnvironmentType.Develop);
             SetAppVersion("1.0.0");
             SetResourceVersion("1.0.0");
+            Language = GameLanguage.Chinese;
             OpenLog(true);
             OpenLocalLog(true);
             TargetFrame = 60;

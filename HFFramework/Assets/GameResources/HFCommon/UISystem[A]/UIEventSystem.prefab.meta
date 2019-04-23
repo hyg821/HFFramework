@@ -1,7 +1,8 @@
 fileFormatVersion: 2
-guid: 43bc31854a494d240a92d6eae3f688e5
-TextScriptImporter:
+guid: b8129a3b33f8ce340b9169327e2ed18a
+NativeFormatImporter:
   externalObjects: {}
+  mainObjectFileID: 100100000
   userData: 
   assetBundleName: hfui
   assetBundleVariant: 

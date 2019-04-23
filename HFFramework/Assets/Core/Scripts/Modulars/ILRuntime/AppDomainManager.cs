@@ -203,10 +203,12 @@ namespace HFFramework
                 });
             });
 
+
             appdomain.DelegateManager.RegisterDelegateConvertor<TweenCallback>((action) =>
             {
                 return new TweenCallback(() => { ((Action)action)(); });
             });
+
             appdomain.DelegateManager.RegisterDelegateConvertor<UnityAction<BaseEventData>>((action) =>
             {
                 return new UnityAction<BaseEventData>((p) => { ((Action<BaseEventData>)action)(p); });

@@ -299,15 +299,6 @@
     <Reference Include="DOTween">
       <HintPath>Assets/OtherPlugins/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
-    <Reference Include="DOTween43">
-      <HintPath>Assets/OtherPlugins/Demigiant/DOTween/DOTween43.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween46">
-      <HintPath>Assets/OtherPlugins/Demigiant/DOTween/DOTween46.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween50">
-      <HintPath>Assets/OtherPlugins/Demigiant/DOTween/DOTween50.dll</HintPath>
-    </Reference>
     <Reference Include="DOTweenEditor">
       <HintPath>Assets/OtherPlugins/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
     </Reference>
@@ -402,9 +393,6 @@
     <None Include="Assets\OtherPlugins\Best HTTP (Pro)\link.xml" />
     <None Include="Assets\OtherPlugins\Best HTTP (Pro)\link_android_subset.xml" />
     <None Include="Assets\OtherPlugins\Demigiant\DOTween\DOTween.XML" />
-    <None Include="Assets\OtherPlugins\Demigiant\DOTween\DOTween43.xml" />
-    <None Include="Assets\OtherPlugins\Demigiant\DOTween\DOTween46.xml" />
-    <None Include="Assets\OtherPlugins\Demigiant\DOTween\DOTween50.xml" />
     <None Include="Assets\OtherPlugins\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
     <None Include="Assets\OtherPlugins\Demigiant\DOTween\readme.txt" />
     <None Include="Assets\OtherPlugins\EasyTouchBundle\EasyTouch\How to migrate from EasyTouch 4.X.txt" />

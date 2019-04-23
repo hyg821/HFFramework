@@ -13,6 +13,7 @@ using Google.Protobuf;
 using Centersdk.Protobuf;
 using Loginservice.Protobuf;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class LoginController : UIController,ICmdControl
 {
@@ -142,6 +143,9 @@ public class LoginController : UIController,ICmdControl
             cmds.Enqueue(cmd);
         }
         cmds.Start();
+
+        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        cube.transform.DOLocalMove(new Vector3(10, 10, 10), 3);
     }
 
     private void Update()

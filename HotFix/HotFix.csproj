@@ -41,18 +41,6 @@
       <HintPath>..\HFFramework\Assets\OtherPlugins\Demigiant\DOTween\DOTween.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DOTween43">
-      <HintPath>..\HFFramework\Assets\OtherPlugins\Demigiant\DOTween\DOTween43.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DOTween46">
-      <HintPath>..\HFFramework\Assets\OtherPlugins\Demigiant\DOTween\DOTween46.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DOTween50">
-      <HintPath>..\HFFramework\Assets\OtherPlugins\Demigiant\DOTween\DOTween50.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />

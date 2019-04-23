@@ -464,8 +464,8 @@
     <Compile Include="Assets\Core\Scripts\Inherit\HFSetPropertyUtility.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Audio\AudioManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Audio\AudioPlayer.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\Command\BaseCmd.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Command\CmdQueue.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\Command\ICmd.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Command\ICmdControl.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Debug\HFLog.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\DownLoad\DownLoadManager.cs" />

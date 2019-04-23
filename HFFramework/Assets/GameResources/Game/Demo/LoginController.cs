@@ -138,8 +138,7 @@ public class LoginController : UIController,ICmdControl
         cmds = new CmdQueue();
         for (int i = 0; i < 5; i++)
         {
-            DalyCmd cmd = new DalyCmd();
-            cmd.Init(this);
+            DalyCmd cmd = new DalyCmd(cmds,this);
             cmds.Enqueue(cmd);
         }
         cmds.Start();
@@ -157,13 +156,17 @@ public class LoginController : UIController,ICmdControl
         return t1;
     }
 
-    public class DalyCmd : ICmd
+    public class DalyCmd : BaseCmd
     {
-        public ICmdControl Control { set; get; }
-        public CmdQueue CmdQueue { set; get; }
-
-        public void Execute()
+        public DalyCmd(CmdQueue queue,ICmdControl control)
         {
+            CmdQueue = queue;
+            Control = control;
+        }
+
+        public override void Execute()
+        {
+            base.Execute();
             Debug.Log("我开始执行了");
             GameLooper.Instance.StartCoroutine(daly());
         }
@@ -174,20 +177,14 @@ public class LoginController : UIController,ICmdControl
             OnComplete();
         } 
 
-        public void OnComplete()
+        public override void OnComplete()
         {
             CmdQueue.MoveNext();
         }
 
-        public void Undo()
+        public override void Undo()
         {
 
-        }
-
-        public void Init(ICmdControl control)
-        {
-            Control = control;
         }
     }
-
 }

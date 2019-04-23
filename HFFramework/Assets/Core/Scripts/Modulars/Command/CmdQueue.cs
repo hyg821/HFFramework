@@ -9,11 +9,11 @@ namespace HFFramework
     /// </summary>
     public class CmdQueue
     {
-        private Queue<ICmd> queue = new Queue<ICmd>(20);
+        private Queue<BaseCmd> queue = new Queue<BaseCmd>(20);
 
-        public ICmd currentCmd;
+        public BaseCmd currentCmd;
 
-        public void Enqueue(ICmd cmd)
+        public void Enqueue(BaseCmd cmd)
         {
             cmd.CmdQueue = this;
             queue.Enqueue(cmd);
@@ -29,15 +29,29 @@ namespace HFFramework
 
         public void MoveNext()
         {
-            if (queue.Count!=0)
+            if (queue.Count != 0)
             {
-                ICmd cmd = queue.Dequeue();
+                BaseCmd cmd = queue.Dequeue();
+                currentCmd = cmd;
                 cmd.Execute();
+            }
+            else
+            {
+                currentCmd = null;
+            }
+        }
+
+        public void Update()
+        {
+            if (currentCmd!=null)
+            {
+                currentCmd.Update();
             }
         }
 
         public void Clear()
         {
+            currentCmd = null;
             queue.Clear();
         }
     }

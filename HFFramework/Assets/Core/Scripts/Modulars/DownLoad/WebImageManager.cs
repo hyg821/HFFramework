@@ -44,7 +44,20 @@ namespace HFFramework
                 {
                     HTTPRequest request = new HTTPRequest(new Uri(url), delegate (HTTPRequest originalRequest, HTTPResponse response)
                     {
-                        Texture2D m_texture = new Texture2D(0, 0, TextureFormat.ETC2_RGBA1, false);
+                        TextureFormat format;
+                        if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+                        {
+                            format = TextureFormat.PVRTC_RGBA4;
+                        }
+                        else if (GameEnvironment.Instance.Platform == GamePlatform.Android)
+                        {
+                            format = TextureFormat.ETC2_RGBA8;
+                        }
+                        else
+                        {
+                            format = TextureFormat.DXT5;
+                        }
+                        Texture2D m_texture = new Texture2D(0, 0, format, false);
                         m_texture.LoadImage(response.Data);
                         m_texture.name = url.GetHashCode().ToString();
                         if (m_texture != null)

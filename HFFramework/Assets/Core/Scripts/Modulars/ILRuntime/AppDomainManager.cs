@@ -10,6 +10,7 @@ using Spine;
 using Assets.Game.Scripts.HotFix;
 using ILRuntime.CLR.Method;
 using System.Reflection;
+using ReflectorOptimization.Common;
 
 namespace HFFramework
 {
@@ -28,6 +29,9 @@ namespace HFFramework
         ///  全局app作用域
         /// </summary>
         private ILRuntime.Runtime.Enviorment.AppDomain appdomain;
+
+        
+        private Assembly assembly;
 
         /// <summary>
         ///  缓存Stream 2018之后新版 需要一直开启这个
@@ -52,9 +56,15 @@ namespace HFFramework
         /// <summary>
         ///  update缓存方法
         /// </summary>
-        private IMethod updateMethod;
-        private IMethod fixedUpdateMethod;
-        private IMethod lateUpdateMethod;
+        private IMethod i_updateMethod;
+        private IMethod i_fixedUpdateMethod;
+        private IMethod i_lateUpdateMethod;
+
+        private FastMethodInvoker.FastInvokeHandler m_mainMethod;
+        private FastMethodInvoker.FastInvokeHandler m_updateMethod;
+        private FastMethodInvoker.FastInvokeHandler m_fixedUpdateMethod;
+        private FastMethodInvoker.FastInvokeHandler m_lateUpdateMethod;
+        private FastMethodInvoker.FastInvokeHandler m_DestroyMethod;
 
         /// <summary>
         ///  是否激活 mono的反射方法
@@ -88,11 +98,7 @@ namespace HFFramework
         {
             DllName = dllName;
             MainClassName = mainClass;
-            if (appdomain == null)
-            {
-                appdomain = new ILRuntime.Runtime.Enviorment.AppDomain();
-                HFResourceManager.Instance.LoadHotFixAssembly(assetbundleName, dllName,HotFixInit);
-            }
+            HFResourceManager.Instance.LoadHotFixAssembly(assetbundleName, dllName, HotFixInit);
         }
 
         /// <summary>
@@ -100,9 +106,24 @@ namespace HFFramework
         /// </summary>
         private void HotFixInit(byte[] bytes)
         {
-            codeStream = new MemoryStream(bytes);
-            appdomain.LoadAssembly(codeStream);
-            InitializeILRuntime();
+            if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            {
+                if (appdomain==null)
+                {
+                    appdomain = new ILRuntime.Runtime.Enviorment.AppDomain();
+                    codeStream = new MemoryStream(bytes);
+                    appdomain.LoadAssembly(codeStream);
+                    InitializeILRuntime();
+                }
+            }
+            else
+            {
+                if (assembly==null)
+                {
+                    assembly = Assembly.Load(bytes);
+                }
+            }
+
             CacheMethod();
             HotFixAwake();
             IsActiveMonoMethod = true;
@@ -110,29 +131,69 @@ namespace HFFramework
 
         public void CacheMethod()
         {
-            updateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(updateMethodName, 0);
-            fixedUpdateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(fixedUpdateMethodName, 0);
-            lateUpdateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(lateUpdateMethodName, 0);
+            if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            {
+                i_updateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(updateMethodName, 0);
+                i_fixedUpdateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(fixedUpdateMethodName, 0);
+                i_lateUpdateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(lateUpdateMethodName, 0);
+            }
+            else
+            {
+                Type type = assembly.GetType("HotFixEnter");
+                m_mainMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod("Main"));
+                m_updateMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod("Update"));
+                m_fixedUpdateMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod("FixedUpdate"));
+                m_lateUpdateMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod("LateUpdate"));
+                m_DestroyMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod("Destroy"));
+            }
         }
 
         public void HotFixAwake()
         {
-            appdomain.Invoke(MainClassName, "Main", null, null);
+            if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            {
+                appdomain.Invoke(MainClassName, "Main", null, null);
+            }
+            else
+            {
+                m_mainMethod.Invoke(null, null);
+            }
         }
 
         public void Update()
         {
-            appdomain.Invoke(updateMethod, null, p0);
+            if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            {
+                appdomain.Invoke(i_updateMethod, null, p0);
+            }
+            else
+            {
+                m_updateMethod(null, null);
+            }
         }
 
         public void FixedUpdate()
         {
-            appdomain.Invoke(fixedUpdateMethod, null, p0);
+            if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            {
+                appdomain.Invoke(i_fixedUpdateMethod, null, p0);
+            }
+            else
+            {
+                m_fixedUpdateMethod.Invoke(null, null);
+            }
         }
 
         public void LateUpdate()
         {
-            appdomain.Invoke(lateUpdateMethod, null, p0);
+            if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            {
+                appdomain.Invoke(i_lateUpdateMethod, null, p0);
+            }
+            else
+            {
+                m_lateUpdateMethod.Invoke(null, null);
+            }
         }
 
         /// <summary>
@@ -203,7 +264,6 @@ namespace HFFramework
                 });
             });
 
-
             appdomain.DelegateManager.RegisterDelegateConvertor<TweenCallback>((action) =>
             {
                 return new TweenCallback(() => { ((Action)action)(); });
@@ -240,11 +300,23 @@ namespace HFFramework
                 appdomain = null;
             }
 
+            if (assembly != null)
+            {
+                m_DestroyMethod.Invoke(null, null);
+                assembly = null;
+            }
+
             p0 = null;
 
-            updateMethod = null;
-            fixedUpdateMethod = null;
-            lateUpdateMethod = null;
+            i_updateMethod = null;
+            i_fixedUpdateMethod = null;
+            i_lateUpdateMethod = null;
+
+            m_mainMethod = null;
+            m_updateMethod = null;
+            m_fixedUpdateMethod = null;
+            m_lateUpdateMethod = null;
+            m_DestroyMethod = null;
 
             Instance = null;
         }

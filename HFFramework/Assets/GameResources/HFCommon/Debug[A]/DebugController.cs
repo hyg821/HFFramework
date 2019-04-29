@@ -35,7 +35,11 @@ namespace HFFramework
             {
                 if (Input.touchCount == 3)
                 {
-                    IsShow = !IsShow;
+                    IsShow = true;
+                }
+                else if (Input.touchCount == 4)
+                {
+                    IsShow = false;
                 }
             }
             else if (pf == GamePlatform.Editor|| pf == GamePlatform.Windows|| pf == GamePlatform.Mac)

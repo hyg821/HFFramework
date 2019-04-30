@@ -43,6 +43,9 @@ namespace HFFramework
             //可见meta 文件
             EditorSettings.externalVersionControl = "Visible Meta Files";
 
+            //不允许横竖旋转 并且不允许上下旋转
+            PlayerSettings.allowedAutorotateToPortrait = false;
+            PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
             //左右横向显示
             PlayerSettings.allowedAutorotateToLandscapeLeft = true;
             PlayerSettings.allowedAutorotateToLandscapeRight = true;

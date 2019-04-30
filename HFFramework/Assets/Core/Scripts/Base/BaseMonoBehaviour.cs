@@ -54,15 +54,15 @@ namespace HFFramework
                 {
                     isActive = value;
                     gameObject.SetActive(isActive);
-                }
 
-                if (value == true)
-                {
-                    ElementDidAppear();
-                }
-                else
-                {
-                    ElementDidDisAppear();
+                    if (value == true)
+                    {
+                        ElementDidAppear();
+                    }
+                    else
+                    {
+                        ElementDidDisAppear();
+                    }
                 }
             }
             get

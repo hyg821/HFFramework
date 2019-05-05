@@ -60,10 +60,7 @@ namespace HFFramework
         /// <param name="msg"></param>
         public static void PostNotification(NotificationMessage msg)
         {
-            if (Instance!=null)
-            {
-                Instance.SendNotification(msg);
-            }       
+            Instance.SendNotification(msg);
         }
 
         public void SendNotification(NotificationMessage msg)

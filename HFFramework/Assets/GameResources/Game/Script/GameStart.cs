@@ -22,7 +22,7 @@ namespace HFFramework
             controller.Open();
 
             DebugController debug = UIManager.Instance.GetController<DebugController>("Debug");
-            debug.Open();
+            debug.Close();
         }
     }
 }

@@ -14,6 +14,8 @@ using Centersdk.Protobuf;
 using Loginservice.Protobuf;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using System.Threading.Tasks;
+using System.Threading;
 
 public class LoginController : UIController,ICmdControl
 {
@@ -146,7 +148,22 @@ public class LoginController : UIController,ICmdControl
 
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.DOLocalMove(new Vector3(10, 10, 10), 3);
+
+
+
+        Task.Run(async delegate()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                await Task.Delay(100);
+                GameLooper.BackToMainThread(delegate (object state)
+                {
+                    print("线程id" + Thread.CurrentThread.ManagedThreadId + " 参数" + state);
+                }, i);
+            }
+        });
     }
+
 
     private void Update()
     {

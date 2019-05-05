@@ -267,16 +267,22 @@ namespace HotFix
             return null;
         }
 
-        public void RemoveCompoment<T>(T t1) where T : BaseElement
+        public void RemoveCompoment(BaseElement t1)
         {
+            int index = -1;
             for (int i = 0; i < CompomentList.Count; i++)
             {
                 BaseElement e1 = CompomentList[i];
                 if (e1.elementID == t1.elementID)
                 {
-                    e1.Destory();
-                    CompomentList[i] = null;
+                    index = i;
+                    break;
                 }
+            }
+            if (index!=-1)
+            {
+                CompomentList[index].Destory();
+                CompomentList.RemoveAt(index);
             }
         }
 

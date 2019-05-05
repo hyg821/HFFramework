@@ -2,12 +2,23 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Threading;
 
 namespace HFFramework
 {
     public class GameLooper : MonoBehaviour, IManager
     {
         public static GameLooper Instance;
+
+        /// <summary>
+        /// 锁
+        /// </summary>
+        private static object lockObj = new object();
+
+        /// <summary>
+        ///  主线程上下文
+        /// </summary>
+        private static SynchronizationContext mainThreadContext;
 
         /// <summary>
         /// 即将在下一帧被update的列表
@@ -41,11 +52,10 @@ namespace HFFramework
         /// </summary>
         private Queue<Action> eventQueue = new Queue<Action>();
 
-        private static object lockObj = new object();
-
         void Awake()
         {
             Instance = this;
+            mainThreadContext = SynchronizationContext.Current;
         }
     
         void Update()
@@ -133,6 +143,7 @@ namespace HFFramework
             prepareLateUpdateList.Clear();
             lateUpdateList.Clear();
             eventQueue.Clear();
+            mainThreadContext = null;
             Instance = null;
         }
 
@@ -145,6 +156,16 @@ namespace HFFramework
                     Instance.eventQueue.Enqueue(e);
                 }
             }
+        }
+
+        /// <summary>
+        ///  子线程回到主线程带参数方法
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="state">传给主线程的对象</param>
+        public static void BackToMainThread(SendOrPostCallback d, object state)
+        {
+            mainThreadContext.Send(d, state);
         }
 
         public static void PrepareForUpdate(BaseMonoBehaviour mono)

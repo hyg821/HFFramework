@@ -19,6 +19,7 @@ namespace HFFramework
         // 热更新代码的包  Manifest包 不被管理  
         // 如果有依赖请把依赖做成预设体 通过加载预设体的方式 实现
         // 如果是编辑器开发模式 那么场景需要build assetbundle 才能看到效果 其他的不需要build 因为编辑器会走AssetDatabase直接加载
+        // 正常卸载明确的的bundle 比如 prefab sprite  不明确的并且被依赖的资源通过UnloadUnusedAssetBundle 来卸载（没有经过测试 谨慎使用）
 
         public static HFResourceManager Instance;
 
@@ -33,6 +34,11 @@ namespace HFFramework
         ///  缓存AssetBundlePackage字典
         /// </summary>
         public Dictionary<string, AssetBundlePackage> allAssetBundleDic = new Dictionary<string, AssetBundlePackage>();
+
+        /// <summary>
+        ///  临时存引用计数为0的数组
+        /// </summary>
+        private List<AssetBundlePackage> unusedAssetBundleList = new List<AssetBundlePackage>();
 
         /// <summary>
         ///  主要记录AssetBundle 之间的互相引用
@@ -330,14 +336,16 @@ namespace HFFramework
             if (!allAssetBundleDic.ContainsKey(assetBundleName))
             {
                 AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(assetBundleName, false));
-                //HFLog.L("同步加载AssetBundle   " + assetBundleName);
                 AssetBundlePackage tmpAssetBundle = new AssetBundlePackage(bundle, assetBundleName);
                 AddAssetBundleToDic(tmpAssetBundle);
+                //HFLog.L("同步加载AssetBundle   " + assetBundleName);
                 return tmpAssetBundle;
             }
             else
             {
-                return allAssetBundleDic[assetBundleName];
+                AssetBundlePackage ab = allAssetBundleDic[assetBundleName];
+                ab.Retain();
+                return ab;
             }
         }
 
@@ -357,7 +365,9 @@ namespace HFFramework
             yield return StartCoroutine(m_LoadAssetBundleFromFileAsync(assetBundleName));
             if (finishCallback != null)
             {
-                finishCallback(allAssetBundleDic[assetBundleName]);
+                AssetBundlePackage ab = allAssetBundleDic[assetBundleName];
+                ab.Retain();
+                finishCallback(ab);
             }
         }
 
@@ -386,6 +396,8 @@ namespace HFFramework
             }
             else
             {
+                AssetBundlePackage ab = allAssetBundleDic[assetBundleName];
+                ab.Retain();
                 //HFLog.L("异步 通过缓存加载");
             }
         }
@@ -478,7 +490,7 @@ namespace HFFramework
             }
         }
 
-        public AssetBundlePackage GetAssetBundleWithName(string name)
+        public AssetBundlePackage GetAssetBundle(string name)
         {
             name = name.ToLower();
             if (allAssetBundleDic.ContainsKey(name))
@@ -509,12 +521,31 @@ namespace HFFramework
         public void UnloadAssetBundle(string name, bool b = true)
         {
             name = name.ToLower();
-            AssetBundlePackage bundle = GetAssetBundleWithName(name);
-            if (bundle != null)
+            AssetBundlePackage bundle = GetAssetBundle(name);
+            if (bundle!=null)
             {
                 //HFLog.L("卸载Assetbundle  " + bundle.name);
+                RecursionReleaseAssetBundle(bundle.name);
                 bundle.Unload(b);
                 allAssetBundleDic.Remove(name);
+            }
+        }
+
+        /// <summary>
+        /// 递归 Release AssetBundle
+        /// </summary>
+        /// <param name="name"></param>
+        public void RecursionReleaseAssetBundle(string name)
+        {
+            AssetBundlePackage bundle =  GetAssetBundle(name);
+            if (bundle!=null)
+            {
+                bundle.Release();
+            }
+            string[] list = Instance.GetAssetBundleDependencies(name);
+            for (int i = 0; i < list.Length; i++)
+            {
+                RecursionReleaseAssetBundle(list[i]);
             }
         }
 
@@ -523,18 +554,17 @@ namespace HFFramework
         ///  卸载一系列的 的assetbundle
         /// </summary>
         /// <param name="list"></param>
-        public void UnloadAssetBundles(string[] list, Action<float> progressCallback)
+        public void UnloadAssetBundles(string[] list, bool b, Action<float> progressCallback)
         {
             for (int i = 0; i < list.Length; i++)
             {
-                UnloadAssetBundle(list[i]);
+                UnloadAssetBundle(list[i],b);
                 if (progressCallback != null)
                 {
                     progressCallback((i + 0.0f) / list.Length);
                 }
             }
         }
-
 
         public void UnloadAssetBundle(AssetBundlePackage bundle, bool b = true)
         {
@@ -546,6 +576,28 @@ namespace HFFramework
             }
         }
 
+        /// <summary>
+        ///  释放引用计数为0的bundle
+        /// </summary>
+        public void UnloadUnusedAssetBundle()
+        {
+            unusedAssetBundleList.Clear();
+            foreach (var item in allAssetBundleDic)
+            {
+                if (item.Value.RefCount == 0)
+                {
+                    unusedAssetBundleList.Add(item.Value);
+                }
+            }
+
+            foreach (var item in unusedAssetBundleList)
+            {
+                item.Unload(false);
+                allAssetBundleDic.Remove(item.name);
+            }
+
+            Resources.UnloadUnusedAssets();
+        }
 
         /// <summary>
         ///  卸载所有的 assetBundle
@@ -579,11 +631,49 @@ namespace HFFramework
         */
     }
 
-
     public class AssetBundlePackage
     {
+        /// <summary>
+        /// 名字
+        /// </summary>
         public string name;
+
+        /// <summary>
+        ///  bundle
+        /// </summary>
         public AssetBundle assetBundle;
+
+        private int refCount = 0;
+        /// <summary>
+        ///  引用计数
+        /// </summary>
+        public int RefCount
+        {
+            get
+            {
+                return refCount;
+            }
+        }
+
+        /// <summary>
+        ///  最好不要手动调用这个方法会使引用计数+1
+        /// </summary>
+        public void Retain()
+        {
+            refCount++;
+        }
+
+        /// <summary>
+        ///  可以手动调用这个 引用计数 -1
+        /// </summary>
+        public void Release()
+        {
+            if (refCount>0)
+            {
+                refCount--;
+            }
+        }
+
         private Dictionary<string, UnityEngine.Object> cacheDic;
         public Dictionary<string, UnityEngine.Object> CacheDic
         {
@@ -601,17 +691,22 @@ namespace HFFramework
             }
         }
 
-        public AssetBundlePackage(AssetBundle bundle, string n)
+        public AssetBundlePackage(AssetBundle bundle, string name)
         {
-            n = n.ToLower();
-            name = n;
+            this.name = name.ToLower();
             assetBundle = bundle;
+            refCount++;
         }
 
+        /// <summary>
+        /// 不要手动调用这个接口 通过manager卸载
+        /// </summary>
+        /// <param name="t"></param>
         public void Unload(bool t)
         {
             if (assetBundle != null)
             {
+                refCount = 0;
                 CacheDic.Clear();
                 assetBundle.Unload(t);
                 CacheDic = null;

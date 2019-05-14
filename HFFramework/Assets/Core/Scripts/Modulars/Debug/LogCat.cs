@@ -11,7 +11,7 @@ namespace HFFramework
     /// <summary>
     ///  负责写入log 到本地
     /// </summary>
-    public class GameLocalLogger : MonoBehaviour
+    public class LogCat : MonoBehaviour
     {
         public const string logFolderName = "Log";
 

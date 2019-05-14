@@ -183,10 +183,10 @@ namespace  HFFramework
         public void OpenLocalLog(bool b)
         {
             IsOpenLoaclLog = b;
-            GameLocalLogger log = gameObject.GetComponent<GameLocalLogger>();
+            LogCat log = gameObject.GetComponent<LogCat>();
             if (IsOpenLoaclLog == true && log == null)
             {
-                log = gameObject.AddComponent<GameLocalLogger>();
+                log = gameObject.AddComponent<LogCat>();
             }
             else if (log != null && IsOpenLoaclLog == false)
             {

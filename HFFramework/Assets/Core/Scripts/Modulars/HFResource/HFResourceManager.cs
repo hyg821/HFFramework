@@ -276,6 +276,7 @@ namespace HFFramework
             yield return StartCoroutine(m_LoadAssetBundleFromFileAsync(assetBundleName.ToLower()));
             yield return StartCoroutine(LoadSceneAsync(sceneName));
             UnloadAssetBundle(assetBundleName, false);
+            yield return Resources.UnloadUnusedAssets();
             if (finishCallback!=null)
             {
                 finishCallback();
@@ -664,7 +665,7 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  可以手动调用这个 引用计数 -1
+        ///  最好不要手动调用这个方法会使引用计数+1
         /// </summary>
         public void Release()
         {

@@ -24,17 +24,18 @@ public class LoginController : UIController,ICmdControl
     public InputField input;
     public Button loginBtn;
     public Image webImage;
-    public Button JumpBtn;
+    public Button jumpBtn;
     #region
     public override void FindElement()
     {
-        bg = AutoFind<Image>();
+        bg = AutoFind<Image>("");
         input = AutoFind<InputField>("InputField");
         loginBtn = AutoFind<Button>("Button");
         webImage = AutoFind<Image>("Image");
-        JumpBtn = AutoFind<Button>("Button2");
+        jumpBtn = AutoFind<Button>("Button2");
     }
     #endregion
+
 
 
 
@@ -128,7 +129,7 @@ public class LoginController : UIController,ICmdControl
         print(ConfigRole.Get(1).GetTime1(1).name);
 
 
-        JumpBtn.onClick.AddListener(delegate ()
+        jumpBtn.onClick.AddListener(delegate ()
         {
             HFResourceManager.Instance.LoadScene("SceneA", "SceneA", true,delegate()
             {

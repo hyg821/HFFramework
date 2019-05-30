@@ -150,7 +150,7 @@ public class LoginController : UIController,ICmdControl
         cube.transform.DOLocalMove(new Vector3(10, 10, 10), 3);
 
 
-
+        /*
         Task.Run(async delegate()
         {
             for (int i = 0; i < 100; i++)
@@ -162,6 +162,7 @@ public class LoginController : UIController,ICmdControl
                 }, i);
             }
         });
+        */
     }
 
 

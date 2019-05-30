@@ -15,11 +15,12 @@ namespace HFFramework
     public class HFResourceManager : MonoBehaviour,IManager
     {
         // 注意 
-        // 必须每一个场景一个包 并且场景不可以和别的资源放在同一个包里
         // 热更新代码的包  Manifest包 不被管理  
+        // 必须每一个场景一个包 并且场景不可以和别的资源放在同一个包里
         // 如果有依赖请把依赖做成预设体 通过加载预设体的方式 实现
         // 如果是编辑器开发模式 那么场景需要build assetbundle 才能看到效果 其他的不需要build 因为编辑器会走AssetDatabase直接加载
         // 正常卸载明确的的bundle 比如 prefab sprite  不明确的并且被依赖的资源通过UnloadUnusedAssetBundle 来卸载（没有经过测试 谨慎使用）
+        // 推荐shader 最开始就全部加载出来 并且都放在一个bundle下
 
         public static HFResourceManager Instance;
 
@@ -201,6 +202,17 @@ namespace HFFramework
         }
 
         /// <summary>
+        ///  这个函数推荐最开始就加载
+        /// </summary>
+        /// <param name="shaderPackageName"></param>
+        public void CacheAllShader(string shaderPackageName)
+        {
+            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(shaderPackageName);
+            ab.CacheAllAsset();
+            Shader.WarmupAllShaders();
+        }
+
+        /// <summary>
         /// 获取shader
         /// </summary>
         /// <param name="packageName"></param>
@@ -210,12 +222,10 @@ namespace HFFramework
         {
 #if UNITY_EDITOR
             Shader shader = EditorLoadAsset<Shader>(packageName, assetName);
-            Shader.WarmupAllShaders();
             return shader;
 #else
             AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
             Shader shader = ab.LoadAssetWithCache<Shader>(assetName);
-            Shader.WarmupAllShaders();
             return shader;
 #endif
         }

@@ -17,17 +17,20 @@ namespace HFFramework
         /// <summary>
         ///  是根节点 还是子节点
         /// </summary>
+        [Title("节点类型","", TitleAlignments.Left, false, false)]
         public UIType type = UIType.Child;
-
-        /// <summary>
-        ///  属性名称
-        /// </summary>
-        public string propertyName;
 
         /// <summary>
         ///  泛型名称
         /// </summary>
-        public string TName;
+        [Title("属性类型", "", TitleAlignments.Left, false, false)]
+        public string propertyType;
+
+        /// <summary>
+        ///  属性名称
+        /// </summary>
+        [Title("属性名称", "", TitleAlignments.Left, false, false)]
+        public string propertyName;
 
         [Button("自动生成代码  只对于类型是 Root 的起作用", ButtonSizes.Medium)]
         public void GeneratePath()
@@ -39,7 +42,7 @@ namespace HFFramework
                 foreach (var item in temp)
                 {
                     string P = item.propertyName;
-                    string T = item.TName;
+                    string T = item.propertyType;
                     if (string.IsNullOrEmpty(P)||string.IsNullOrEmpty(T))
                     {
                         continue;
@@ -52,7 +55,7 @@ namespace HFFramework
                 foreach (var item in temp)
                 {
                     string P = item.propertyName;
-                    string T = item.TName;
+                    string T = item.propertyType;
                     if (string.IsNullOrEmpty(P)|| string.IsNullOrEmpty(T))
                     {
                         continue;

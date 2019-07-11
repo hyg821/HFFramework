@@ -145,7 +145,7 @@ namespace HFFramework
 
                 speed = new Vector2(x, y);
                 Vector3 temp = speed;
-                myTransform.position -= temp;
+                transform.position -= temp;
             }
         }
     }

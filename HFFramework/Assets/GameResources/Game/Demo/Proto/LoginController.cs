@@ -48,12 +48,12 @@ public class LoginController : UIController,ICmdControl
     {
         FindElement();
 
-        ReceiveNotificationMessage(this, GameConst.MSG_UI, 123, delegate (NotificationMessage msg)
+        ReceiveNotificationMessage(this, GameConst.UI, 123, delegate (NotificationMessage msg)
         {
             //print("发送的消息是 " + msg.obj);
         });
 
-        ReceiveNotificationMessage(this, GameConst.MSG_STATE, GameStateChecker.APPPAUSE, delegate (NotificationMessage msg)
+        ReceiveNotificationMessage(this, GameConst.STATE, GameStateChecker.APPPAUSE, delegate (NotificationMessage msg)
         {
             print("是否暂停 " + msg.content);
         });
@@ -117,7 +117,7 @@ public class LoginController : UIController,ICmdControl
             });
             socket.StartConnect();
 
-            NotificationCenter.Instance.RemoveObserver(this, GameConst.MSG_UI, 123);
+            NotificationCenter.Instance.RemoveObserver(this, GameConst.UI, 123);
         });
 
         webImage.SetWebImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550678703691&di=ffbd41f0ddfcde0dd19ce793dad58320&imgtype=0&src=http%3A%2F%2Fpic17.nipic.com%2F20111021%2F8633866_210108284151_2.jpg");
@@ -169,7 +169,7 @@ public class LoginController : UIController,ICmdControl
 
     private void Update()
     {
-        SendNotificationMessage(GameConst.MSG_UI, 123, "str");
+        SendNotificationMessage(GameConst.UI, 123, "str");
     }
 
     public T CreateMessage<T>(byte[] bytes) where T : IMessage, new()

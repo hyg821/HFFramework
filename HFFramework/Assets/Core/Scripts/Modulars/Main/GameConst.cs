@@ -11,16 +11,16 @@ namespace HFFramework
         /// <summary>
         ///  UI 消息
         /// </summary>
-        public const ushort MSG_UI= 1;
+        public const ushort UI= 1;
 
         /// <summary>
         ///  网络消息
         /// </summary>
-        public const ushort MSG_NET = 2;
+        public const ushort NET = 2;
 
         /// <summary>
         ///  状态消息
         /// </summary>
-        public const ushort MSG_STATE = 3;
+        public const ushort STATE = 3;
     }
 }

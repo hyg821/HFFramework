@@ -101,7 +101,7 @@ namespace  HFFramework
 
         private void Init()
         {
-            SetRuntimeEnvironment(GameEnvironmentType.Release);
+            SetRuntimeEnvironment(GameEnvironmentType.Develop);
             SetAppVersion("1.0.0");
             SetResourceVersion("1.0.0");
             Language = GameLanguage.Chinese;

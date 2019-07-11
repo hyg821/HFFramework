@@ -175,11 +175,6 @@ namespace  HFFramework
             IsOpenLog = b;
         }
 
-        public void CheckHotFix(bool b)
-        {
-            IsCheckHotFix = b;
-        }
-
         public void OpenLocalLog(bool b)
         {
             IsOpenLoaclLog = b;

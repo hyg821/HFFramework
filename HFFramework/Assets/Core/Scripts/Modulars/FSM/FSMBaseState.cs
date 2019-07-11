@@ -16,7 +16,7 @@ namespace HFFramework
     {
         public const string RootState = "Root";
 
-        public FSMManager manager;
+        public FSMController controller;
 
         /// <summary>
         ///  状态名称
@@ -43,9 +43,9 @@ namespace HFFramework
 
         }
 
-        public FSMBaseState(string name, FSMManager m)
+        public FSMBaseState(string name, FSMController m)
         {
-            manager = m;
+            controller = m;
             stateName = name;
             Init();
         }

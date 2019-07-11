@@ -11,13 +11,13 @@ namespace HFFramework
         ///  每一个gameObject 独有的 id
         /// </summary>
         [HideInInspector]
-        public int myInstanceID;
+        public int instanceID;
 
         /// <summary>
         ///  缓存的transform
         /// </summary>
         [HideInInspector]
-        public Transform myTransform;
+        public new Transform transform;
 
         [HideInInspector]
         public string gameObjectName;
@@ -78,8 +78,8 @@ namespace HFFramework
 
         public virtual void OnAwake()
         {
-            myTransform = gameObject.transform;
-            myInstanceID = gameObject.GetInstanceID();
+            transform = gameObject.transform;
+            instanceID = gameObject.GetInstanceID();
             gameObjectName = gameObject.name;
             gameObjectTag = gameObject.tag;
         }
@@ -115,7 +115,7 @@ namespace HFFramework
         /// <returns></returns>
         public T FindChild<T>(string path)
         {
-            return myTransform.Find(path).GetComponent<T>();
+            return transform.Find(path).GetComponent<T>();
         }
 
         public T AutoFind<T>(string path = null)
@@ -126,7 +126,7 @@ namespace HFFramework
             }
             else
             {
-                return myTransform.Find(path).GetComponent<T>();
+                return transform.Find(path).GetComponent<T>();
             }
         }
 
@@ -137,7 +137,7 @@ namespace HFFramework
         /// <returns></returns>
         public GameObject FindChild(string path)
         {
-            return myTransform.Find(path).gameObject;
+            return transform.Find(path).gameObject;
         }
 
         /// <summary>
@@ -147,12 +147,12 @@ namespace HFFramework
         /// <param name="worldPositionStays"></param>
         public void SetParent(GameObject parent, bool worldPositionStays = false)
         {
-            myTransform.SetParent(parent.transform, worldPositionStays);
+            transform.SetParent(parent.transform, worldPositionStays);
         }
 
         public void SetParent(MonoBehaviour parent, bool worldPositionStays = false)
         {
-            myTransform.SetParent(parent.transform, worldPositionStays);
+            transform.SetParent(parent.transform, worldPositionStays);
         }
 
         bool isNeedUpdate = false;
@@ -259,12 +259,12 @@ namespace HFFramework
 
         public void BringSelfToFront()
         {
-            myTransform.SetAsLastSibling();
+            transform.SetAsLastSibling();
         }
 
         public void BringSelfToBack()
         {
-            myTransform.SetAsFirstSibling();
+            transform.SetAsFirstSibling();
         }
 
         public void OnDestroy()

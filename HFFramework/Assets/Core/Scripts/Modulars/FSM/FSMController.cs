@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class FSMManager
+    public class FSMController
     {   
         /// <summary>
         ///  缓存状态的字典
@@ -24,7 +24,7 @@ namespace HFFramework
         /// <summary>
         ///  构造方法
         /// </summary>
-        public FSMManager(object control)
+        public FSMController(object control)
         {
             this.control = control;
             FSMBaseState rootState = new FSMBaseState(FSMBaseState.RootState,this);

@@ -55,7 +55,7 @@ public class LoginController : UIController,ICmdControl
 
         ReceiveNotificationMessage(this, GameConst.MSG_STATE, GameStateChecker.APPPAUSE, delegate (NotificationMessage msg)
         {
-            print("是否暂停 " + msg.obj);
+            print("是否暂停 " + msg.content);
         });
 
         loginBtn.onClick.AddListener(delegate ()

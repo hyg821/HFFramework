@@ -143,22 +143,21 @@ namespace HotFix
             return t1;
         }
 
-        public static T CreateElementWithGameObject<T>(GameObject g = null) where T : BaseElement, new()
+        public static T CreateElement<T>(GameObject gameObject = null) where T : BaseElement, new()
         {
             T t1 = new T();
             t1.elementID = GetGlobalID();
-            t1.SetGameObject(g);
+            t1.SetGameObject(gameObject);
             t1.Awake();
             return t1;
         }
 
-
-        public static T CreateElementWithGameObjectAndParent<T>(GameObject g = null, BaseElement parent = null) where T : BaseElement, new()
+        public static T CreateElement<T>(GameObject gameObject = null, BaseElement parent = null) where T : BaseElement, new()
         {
             T t1 = new T();
             t1.elementID = GetGlobalID();
             t1.parent = parent;
-            t1.SetGameObject(g);
+            t1.SetGameObject(gameObject);
             t1.Awake();
             return t1;
         }
@@ -249,7 +248,7 @@ namespace HotFix
 
         public T AddCompoment<T>() where T : BaseElement ,new()
         {
-            T t1 = BaseElement.CreateElementWithGameObject<T>(gameObject);
+            T t1 = BaseElement.CreateElement<T>(gameObject);
             CompomentList.Add(t1);
             return t1;
         }
@@ -318,10 +317,12 @@ namespace HotFix
         ///  添加子元素 方法
         /// </summary>
         /// <param name="ele"></param>
-        public void AddSubElement<T>(GameObject obj = null) where T:BaseElement,new()
+        public void AddSubElement(BaseElement ele)
         {
-            T t1 = BaseElement.CreateElementWithGameObject<T>(obj);
-            SubElementDic.Add(t1.elementID, t1);
+            if (!SubElementDic.TryGetValue(ele.elementID,out ele))
+            {
+                SubElementDic.Add(ele.elementID, ele);
+            }
         }
 
         public void SetParent(GameObject g)
@@ -534,12 +535,9 @@ namespace HotFix
 
             if (subElementDic != null)
             {
-                if (subElementDic.Count != 0)
+                foreach (var item in subElementDic)
                 {
-                    foreach (var item in subElementDic)
-                    {
-                        item.Value.Destory();
-                    }
+                    item.Value.Destory();
                 }
                 subElementDic.Clear();
                 subElementDic = null;
@@ -581,6 +579,7 @@ namespace HotFix
         {
             GameObject.Destroy(gameObject);
             gameObject = null;
+            transform = null;
         }
     }
 }

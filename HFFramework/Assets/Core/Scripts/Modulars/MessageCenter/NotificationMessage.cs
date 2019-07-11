@@ -20,7 +20,7 @@
         /// <summary>
         ///  消息的内容 需要as 转换成对应的类
         /// </summary>
-        public object obj;
+        public object content;
 
         private ulong key;
         public ulong Key
@@ -31,12 +31,12 @@
             }
         }
 
-        public NotificationMessage(ushort moduleID, int msgID, object sender, object obj)
+        public NotificationMessage(ushort moduleID, int msgID, object sender, object content)
         {
             this.moduleID = moduleID;
             this.msgID = msgID;
             this.sender = sender;
-            this.obj = obj;
+            this.content = content;
             this.key = NotificationCenter.ConvertToKey(moduleID, msgID);
         }
     }

@@ -249,6 +249,7 @@ namespace HotFix
         public T AddCompoment<T>() where T : BaseElement ,new()
         {
             T t1 = BaseElement.CreateElement<T>(gameObject);
+            t1.parent = this;
             CompomentList.Add(t1);
             return t1;
         }
@@ -321,6 +322,7 @@ namespace HotFix
         {
             if (!SubElementDic.TryGetValue(ele.elementID,out ele))
             {
+                ele.parent = this;
                 SubElementDic.Add(ele.elementID, ele);
             }
         }

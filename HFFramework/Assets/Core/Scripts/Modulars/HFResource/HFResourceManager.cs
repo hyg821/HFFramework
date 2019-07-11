@@ -535,11 +535,16 @@ namespace HFFramework
             AssetBundlePackage bundle = GetAssetBundle(name);
             if (bundle!=null)
             {
-                //HFLog.L("卸载Assetbundle  " + bundle.name);
-                RecursionReleaseAssetBundle(bundle.name);
-                bundle.Unload(b);
-                allAssetBundleDic.Remove(name);
+                UnloadAssetBundle(bundle, b);
             }
+        }
+
+        public void UnloadAssetBundle(AssetBundlePackage bundle, bool b = true)
+        {
+            HFLog.L("卸载Assetbundle  " + bundle.name);
+            RecursionReleaseAssetBundle(bundle.name);
+            bundle.Unload(b);
+            allAssetBundleDic.Remove(name);
         }
 
         /// <summary>
@@ -560,7 +565,6 @@ namespace HFFramework
             }
         }
 
-
         /// <summary>
         ///  卸载一系列的 的assetbundle
         /// </summary>
@@ -574,16 +578,6 @@ namespace HFFramework
                 {
                     progressCallback((i + 0.0f) / list.Length);
                 }
-            }
-        }
-
-        public void UnloadAssetBundle(AssetBundlePackage bundle, bool b = true)
-        {
-            if (bundle != null && !string.IsNullOrEmpty(bundle.name))
-            {
-                //HFLog.L("卸载Assetbundle  " + bundle.name);
-                allAssetBundleDic.Remove(bundle.name);
-                bundle.Unload(b);
             }
         }
 
@@ -675,7 +669,7 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  最好不要手动调用这个方法会使引用计数+1
+        ///  最好不要手动调用这个方法会使引用计数-1
         /// </summary>
         public void Release()
         {
@@ -725,7 +719,6 @@ namespace HFFramework
                 name = null;
             }
         }
-
 
         /// <summary>
         ///  通过缓存读取 文件 比如很多情况下读取图片会有很多次 那么如果不缓存的话就会形成很多副本 

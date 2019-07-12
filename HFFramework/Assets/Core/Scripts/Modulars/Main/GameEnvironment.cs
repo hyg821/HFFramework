@@ -12,6 +12,12 @@ namespace  HFFramework
         Release
     }
 
+    public enum GameResourcesType
+    {
+        Editor,
+        AssetBundle
+    }
+
     public enum GamePlatform
     {
         Android,
@@ -45,7 +51,12 @@ namespace  HFFramework
         /// <summary>
         ///  运行语言
         /// </summary>
-        public GameLanguage Language = GameLanguage.Chinese;
+        public GameLanguage Language;
+
+        /// <summary>
+        ///  游戏资源模式 是从editor 读取 还是bundle读取
+        /// </summary>
+        public GameResourcesType ResourcesType;
 
         /// <summary>
         ///  app版本
@@ -95,16 +106,17 @@ namespace  HFFramework
         public void Awake()
         {
             Instance = this;
-            SwitchPlatform();
             Init();
         }
 
         private void Init()
         {
-            SetRuntimeEnvironment(GameEnvironmentType.Develop);
+            SwitchPlatform();
+            ResourcesType = GameResourcesType.AssetBundle;
+            RuntimeEnvironment = GameEnvironmentType.Develop;
+            Language = GameLanguage.Chinese;
             SetAppVersion("1.0.0");
             SetResourceVersion("1.0.0");
-            Language = GameLanguage.Chinese;
             OpenLog(true);
             OpenLocalLog(true);
             TargetFrame = 60;
@@ -115,11 +127,6 @@ namespace  HFFramework
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             Application.targetFrameRate = TargetFrame;
             Time.fixedDeltaTime = 1.0f / FixedUpdateFrame;
-        }
-
-        public void SetRuntimeEnvironment(GameEnvironmentType e)
-        {
-            RuntimeEnvironment = e;
         }
 
         /// <summary>

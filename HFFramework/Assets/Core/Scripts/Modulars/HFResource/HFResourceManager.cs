@@ -162,13 +162,16 @@ namespace HFFramework
         /// <returns></returns>
         public GameObject GetPrefab(string packageName, string assetName)
         {
-#if UNITY_EDITOR
-            return EditorLoadAsset<GameObject>(packageName, assetName);
-#else
-            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-            GameObject g = ab.LoadAssetWithCache<GameObject>(assetName);
-            return g;
-#endif
+            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.Editor)
+            {
+                return EditorLoadAsset<GameObject>(packageName, assetName);
+            }
+            else
+            {
+                AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+                GameObject g = ab.LoadAssetWithCache<GameObject>(assetName);
+                return g;
+            }
         }
 
         /// <summary>
@@ -178,13 +181,16 @@ namespace HFFramework
         /// <returns></returns>
         public Sprite GetSprite(string packageName, string assetName)
         {
-#if UNITY_EDITOR
-            return EditorLoadAsset<Sprite>(packageName, assetName);
-#else
-            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-            Sprite sp = ab.LoadAssetWithCache<Sprite>(assetName);
-            return sp;
-#endif
+            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.Editor)
+            {
+                return EditorLoadAsset<Sprite>(packageName, assetName);
+            }
+            else
+            {
+                AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+                Sprite sp = ab.LoadAssetWithCache<Sprite>(assetName);
+                return sp;
+            }
         }
 
         /// <summary>
@@ -220,14 +226,17 @@ namespace HFFramework
         /// <returns></returns>
         public Shader GetShader(string packageName, string assetName)
         {
-#if UNITY_EDITOR
-            Shader shader = EditorLoadAsset<Shader>(packageName, assetName);
-            return shader;
-#else
-            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-            Shader shader = ab.LoadAssetWithCache<Shader>(assetName);
-            return shader;
-#endif
+            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.Editor)
+            {
+                Shader shader = EditorLoadAsset<Shader>(packageName, assetName);
+                return shader;
+            }
+            else
+            {
+                AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+                Shader shader = ab.LoadAssetWithCache<Shader>(assetName);
+                return shader;
+            }
         }
 
         /// <summary>
@@ -239,34 +248,42 @@ namespace HFFramework
         /// <returns></returns>
         public T GetAsset<T>(string packageName, string assetName) where T : UnityEngine.Object
         {
-#if UNITY_EDITOR
-            return EditorLoadAsset<T>(packageName, assetName);
-#else
-            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-            return ab.LoadAssetWithCache<T>(assetName);
-#endif
+            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.Editor)
+            {
+                return EditorLoadAsset<T>(packageName, assetName);
+            }
+            else
+            {
+                AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+                return ab.LoadAssetWithCache<T>(assetName);
+            }
         }
 
         /// <summary>
-        ///  异步加载场景
+        ///  异步加载场景 如果从编辑器直接读取 需要把场景添加到Build Settings 里 
+        ///  2018 添加了 直接editor 加载的接口 只能等2018了
         /// </summary>
         /// <param name="assetBundleName"></param>
         /// <param name="autoJump"></param>
         /// <param name="sceneName"></param>
         /// <param name="finishCallBack"></param>
-        public void LoadScene(string assetBundleName,  string sceneName, bool autoJump, Action finishCallback)
+        public void LoadScene(string assetBundleName,  string sceneName, Action finishCallback)
         {
-            StartCoroutine(m_LoadScene(assetBundleName,  sceneName, autoJump, finishCallback));
+            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.Editor)
+            {
+                SceneManager.LoadScene(sceneName);
+                if (finishCallback != null)
+                {
+                    finishCallback();
+                }
+            }
+            else
+            {
+                StartCoroutine(m_LoadScene(assetBundleName, sceneName, finishCallback));
+            }
         }
 
-        /// <summary>
-        ///  加载场景   2017必须要生成assetbundle  不能通过编辑器加载scene 因为需要把scene放到 build setting 设置里
-        ///  2018 添加了 直接editor 加载的接口 只能等2018了
-        /// </summary>
-        /// <param name="assetBundleName"></param>
-        /// <param name="finishCallBack"></param>
-        /// <returns></returns>
-        private IEnumerator m_LoadScene(string assetBundleName, string sceneName, bool autoJump, Action finishCallback)
+        private IEnumerator m_LoadScene(string assetBundleName, string sceneName, Action finishCallback)
         {
             /*
             assetBundleName = assetBundleName.ToLower();
@@ -522,7 +539,7 @@ namespace HFFramework
             string[] s = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(assetBundleName.ToLower(), assetName);
             return AssetDatabase.LoadAssetAtPath<T>(s[0]);
         }
-#endif    
+#endif
 
         /// <summary>
         ///  卸载某一个 assetbundle 通过名字

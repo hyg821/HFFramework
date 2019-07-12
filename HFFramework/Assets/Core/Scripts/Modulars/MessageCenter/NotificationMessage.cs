@@ -18,7 +18,8 @@
         public object sender;
 
         /// <summary>
-        ///  消息的内容 需要as 转换成对应的类
+        ///  消息的内容 需要as 转换成对应的类 
+        ///  如果是值类型那么会出现 装箱拆箱
         /// </summary>
         public object content;
 

@@ -9,27 +9,30 @@ namespace HFFramework
     {
         public static GameFlowController Instance;
 
+        public FSMController fsm;
+
         private void Awake()
         {
             Instance = this;
-            SceneManager.sceneLoaded += SceneLoaded;
-            SceneManager.sceneUnloaded += SceneUnloaded;
+            fsm = new FSMController(this);
+            StartState start = new StartState("Start", fsm);
+            LoginState login = new LoginState("Login", fsm);
+            BattleState battle = new BattleState("Battle", fsm);
+            QuitState quit = new QuitState("Quit", fsm);
+            fsm.AddState(start);
+            fsm.AddState(login);
+            fsm.AddState(battle);
+            fsm.AddState(quit);
+            fsm.TranslateToState("Start");
         }
 
-        public void SceneLoaded(Scene scene, LoadSceneMode mode)
+        private void Update()
         {
-
-        }
-
-        public void SceneUnloaded(Scene scene)
-        {
-
+            fsm.Update();
         }
 
         public void DestroyManager()
         {
-            SceneManager.sceneLoaded -= SceneLoaded;
-            SceneManager.sceneUnloaded -= SceneUnloaded;
             Instance = null;
         }
     }

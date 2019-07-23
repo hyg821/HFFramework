@@ -119,11 +119,8 @@ namespace HFFramework
                 //工具箱
                 gameObject.AddComponent<GameUtils>();
 
-                //添加状态检查者
-                gameObject.AddComponent<GameFlowController>();
-
-                //游戏开始
-                gameObject.AddComponent<GameStart>();
+                //添加游戏状态机
+                gameObject.AddComponent<GameFlowController>();     
             }
             else
             {

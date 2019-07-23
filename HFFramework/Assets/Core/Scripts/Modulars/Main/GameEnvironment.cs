@@ -113,7 +113,7 @@ namespace  HFFramework
         {
             SwitchPlatform();
             ResourcesType = GameResourcesType.AssetBundle;
-            RuntimeEnvironment = GameEnvironmentType.Develop;
+            RuntimeEnvironment = GameEnvironmentType.Release;
             Language = GameLanguage.Chinese;
             SetAppVersion("1.0.0");
             SetResourceVersion("1.0.0");

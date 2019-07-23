@@ -38,15 +38,15 @@ namespace HFFramework
         public Action OnStateStayCallback;
         public Action OnStateExitCallback;
 
-        public FSMBaseState()
+        protected FSMBaseState()
         {
 
         }
 
-        public FSMBaseState(string name, FSMController m)
+        public FSMBaseState(string stateName, FSMController controller)
         {
-            controller = m;
-            stateName = name;
+            this.controller = controller;
+            this.stateName = stateName;
             Init();
         }
 

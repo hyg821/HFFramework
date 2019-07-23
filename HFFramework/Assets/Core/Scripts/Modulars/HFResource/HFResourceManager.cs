@@ -528,7 +528,7 @@ namespace HFFramework
             return null;
         }
 
-#if UNITY_EDITOR
+
         /// <summary>
         ///  在编辑器开发的时候使用的加载方式
         /// </summary>
@@ -536,10 +536,14 @@ namespace HFFramework
         /// <param name="name"></param>
         public T EditorLoadAsset<T>(string assetBundleName, string assetName) where T:UnityEngine.Object
         {
+#if UNITY_EDITOR
             string[] s = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(assetBundleName.ToLower(), assetName);
             return AssetDatabase.LoadAssetAtPath<T>(s[0]);
-        }
+#else
+            return null;
 #endif
+        }
+
 
         /// <summary>
         ///  卸载某一个 assetbundle 通过名字

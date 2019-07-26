@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 namespace HFFramework
 {
-    public class GameFlowController : MonoBehaviour,IManager
+    public class GameStateManager : MonoBehaviour,IManager
     {
-        public static GameFlowController Instance;
+        public static GameStateManager Instance;
 
         public FSMController fsm;
 

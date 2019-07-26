@@ -17,7 +17,7 @@ using DG.Tweening;
 using System.Threading.Tasks;
 using System.Threading;
 
-public class LoginController : UIController,ICmdControl
+public class LoginController : UIController
 {
 
     public Image bg;
@@ -35,11 +35,6 @@ public class LoginController : UIController,ICmdControl
         jumpBtn = AutoFind<Button>("Button2");
     }
     #endregion
-
-
-
-
-    public CmdQueue cmds;
 
     public int errorCount = 0;
 
@@ -137,20 +132,6 @@ public class LoginController : UIController,ICmdControl
             });    
         });
 
-
-
-        cmds = new CmdQueue();
-        for (int i = 0; i < 5; i++)
-        {
-            DalyCmd cmd = new DalyCmd(cmds,this);
-            cmds.Enqueue(cmd);
-        }
-        cmds.Start();
-
-        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.DOLocalMove(new Vector3(10, 10, 10), 3);
-
-
         /*
         Task.Run(async delegate()
         {
@@ -179,35 +160,4 @@ public class LoginController : UIController,ICmdControl
         return t1;
     }
 
-    public class DalyCmd : BaseCmd
-    {
-        public DalyCmd(CmdQueue queue,ICmdControl control)
-        {
-            CmdQueue = queue;
-            Control = control;
-        }
-
-        public override void Execute()
-        {
-            base.Execute();
-            Debug.Log("我开始执行了");
-            GameLooper.Instance.StartCoroutine(daly());
-        }
-
-        IEnumerator daly()
-        {
-            yield return new WaitForSeconds(3);
-            OnComplete();
-        } 
-
-        public override void OnComplete()
-        {
-            CmdQueue.MoveNext();
-        }
-
-        public override void Undo()
-        {
-
-        }
-    }
 }

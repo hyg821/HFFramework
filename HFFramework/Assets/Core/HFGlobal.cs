@@ -65,10 +65,11 @@ namespace HFFramework
             if (Instance == null)
             {
                 Instance = this;
+
+                MemoryClear();
+
                 gameObject.name = "HFGlobal";
                 DontDestroyOnLoad(gameObject);
-
-                Clear();
 
                 //添加游戏工厂
                 gameObject.AddComponent<GameFactory>();
@@ -110,9 +111,6 @@ namespace HFFramework
                 //添加游戏循环者
                 gameObject.AddComponent<GameLooper>();
 
-                //添加时间控制者
-                gameObject.AddComponent<GameTimer>();
-
                 //添加状态检查者
                 gameObject.AddComponent<GameStateChecker>();
 
@@ -120,7 +118,7 @@ namespace HFFramework
                 gameObject.AddComponent<GameUtils>();
 
                 //添加游戏状态机
-                gameObject.AddComponent<GameFlowController>();     
+                gameObject.AddComponent<GameStateManager>();     
             }
             else
             {
@@ -128,7 +126,7 @@ namespace HFFramework
             }
         }
 
-        public void Clear()
+        public void MemoryClear()
         {
             Resources.UnloadUnusedAssets();
             GC.Collect();
@@ -148,11 +146,10 @@ namespace HFFramework
             ObjectPoolManager.Instance.DestroyManager();
             AppDomainManager.Instance.DestroyManager();
             GameLooper.Instance.DestroyManager();
-            GameTimer.Instance.DestroyManager();
             GameStateChecker.Instance.DestroyManager();
             GameUtils.Instance.DestroyManager();
-            GameFlowController.Instance.DestroyManager();
-            Clear();
+            GameStateManager.Instance.DestroyManager();
+            MemoryClear();
         }
 
         public void OnApplicationQuit()

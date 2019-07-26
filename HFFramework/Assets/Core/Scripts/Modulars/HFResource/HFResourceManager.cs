@@ -483,7 +483,7 @@ namespace HFFramework
 
         public void LoadHotFixAssembly(string assetbundleName, string dllName, Action<byte[]> callback)
         {
-            if (GameEnvironment.Instance.RuntimeEnvironment == GameEnvironmentType.Develop)
+            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.Editor)
             {
                 StartCoroutine(m_EditorLoadHotFixAssembly(assetbundleName, dllName, callback));
             }

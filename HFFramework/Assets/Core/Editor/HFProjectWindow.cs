@@ -31,6 +31,9 @@ namespace HFFramework
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, identifier);
             PlayerSettings.bundleVersion = "1.0.0";
 
+            //垂直同步关闭
+            QualitySettings.vSyncCount = 0;
+
             //模式 3d  
             EditorSettings.defaultBehaviorMode = EditorBehaviorMode.Mode3D;
 

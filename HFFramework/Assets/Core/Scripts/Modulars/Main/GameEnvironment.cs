@@ -118,7 +118,7 @@ namespace  HFFramework
             SetAppVersion("1.0.0");
             SetResourceVersion("1.0.0");
             OpenLog(true);
-            OpenLocalLog(true);
+            OpenLocalLog(false);
             TargetFrame = 60;
             FixedUpdateFrame = 10;
             ServerSceneWidth = 1920;

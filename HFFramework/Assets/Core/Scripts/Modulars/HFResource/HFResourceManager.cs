@@ -483,7 +483,8 @@ namespace HFFramework
 
         public void LoadHotFixAssembly(string assetbundleName, string dllName, Action<byte[]> callback)
         {
-            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.Editor)
+            //代码 在编辑器 里默认走streamingAssets 生成dll 运行即可
+            if (GameEnvironment.Instance.Platform == GamePlatform.Editor)
             {
                 StartCoroutine(m_EditorLoadHotFixAssembly(assetbundleName, dllName, callback));
             }

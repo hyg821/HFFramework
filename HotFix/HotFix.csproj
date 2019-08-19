@@ -234,7 +234,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\BaseElement.cs" />
+    <Compile Include="Base\Entity.cs" />
     <Compile Include="Base\GameUpdate.cs" />
     <Compile Include="Base\HotFixHelper.cs" />
     <Compile Include="Base\Singleton.cs" />

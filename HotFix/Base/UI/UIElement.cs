@@ -64,11 +64,11 @@ namespace HotFix
                                 break;
                             case UIHideType.Scale:
                                 transform.localScale = Vector3.one;
-                                ElementDidAppear();
+                                OnEnable();
                                 break;
                             case UIHideType.CanvasGroup:
                                 CanvasGroup.alpha = 1;
-                                ElementDidAppear();
+                                OnEnable();
                                 break;
                             default:
                                 break;
@@ -83,11 +83,11 @@ namespace HotFix
                                 break;
                             case UIHideType.Scale:
                                 transform.localScale = Vector3.zero;
-                                ElementDidDisAppear();
+                                OnDisable();
                                 break;
                             case UIHideType.CanvasGroup:
                                 CanvasGroup.alpha = 0;
-                                ElementDidDisAppear();
+                                OnDisable();
                                 break;
                             default:
                                 break;

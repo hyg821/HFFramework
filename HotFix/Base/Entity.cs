@@ -115,11 +115,11 @@ namespace HotFix
                 }
                 if (value == true)
                 {
-                    ElementDidAppear();
+                    OnEnable();
                 }
                 else
                 {
-                    ElementDidDisAppear();
+                    OnDisable();
                 }
             }
             get
@@ -451,7 +451,7 @@ namespace HotFix
         /// <summary>
         ///  元素被显示出来
         /// </summary>
-        public virtual void ElementDidAppear()
+        public virtual void OnEnable()
         {
 
         }
@@ -459,7 +459,7 @@ namespace HotFix
         /// <summary>
         ///  元素被隐藏
         /// </summary>
-        public virtual void ElementDidDisAppear()
+        public virtual void OnDisable()
         {
 
         }

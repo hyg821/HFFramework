@@ -110,8 +110,7 @@ namespace Config
 
         public void StartAnalysis()
         {
-            AssetBundlePackage package = HFResourceManager.Instance.LoadAssetBundleFromFile("Config");
-            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("Chat");
+            TextAsset textAsset  = HFResourceManager.Instance.GetAsset<TextAsset>("Config","Chat");
             StringReader reader = new StringReader(textAsset.text);
             reader.ReadLine();
             reader.ReadLine();

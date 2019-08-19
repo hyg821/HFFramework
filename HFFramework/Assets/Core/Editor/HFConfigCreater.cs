@@ -204,8 +204,7 @@ namespace HFFramework
             builder.AppendLine();
             builder.AppendLine("        public void StartAnalysis()");
             builder.AppendLine("        {");
-            builder.AppendLine(@"            AssetBundlePackage package = HFResourceManager.Instance.LoadAssetBundleFromFile("+"\"" + ConfigAssetbundleName +"\""+ ");");
-            builder.AppendLine(@"            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>(" + "\"" + _class + "\"" + ");");
+            builder.AppendLine(@"            TextAsset textAsset  = HFResourceManager.Instance.GetAsset<TextAsset>(" + "\"" + ConfigAssetbundleName + "\""+"," + "\"" + _class + "\"" + ");");
             builder.AppendLine(@"            StringReader reader = new StringReader(textAsset.text);");
             builder.AppendLine(@"            reader.ReadLine();");
             builder.AppendLine(@"            reader.ReadLine();");

@@ -553,20 +553,26 @@ namespace HFFramework
         /// <param name="b">是否卸载压出来的的东西</param>
         public void UnloadAssetBundle(string name, bool b = true)
         {
-            name = name.ToLower();
-            AssetBundlePackage bundle = GetAssetBundle(name);
-            if (bundle!=null)
+            if (GameEnvironment.Instance.ResourcesType != GameResourcesType.Editor)
             {
-                UnloadAssetBundle(bundle, b);
+                name = name.ToLower();
+                AssetBundlePackage bundle = GetAssetBundle(name);
+                if (bundle != null)
+                {
+                    UnloadAssetBundle(bundle, b);
+                }
             }
         }
 
         public void UnloadAssetBundle(AssetBundlePackage bundle, bool b = true)
         {
-            HFLog.L("卸载Assetbundle  " + bundle.name);
-            RecursionReleaseAssetBundle(bundle.name);
-            bundle.Unload(b);
-            allAssetBundleDic.Remove(name);
+            if (GameEnvironment.Instance.ResourcesType != GameResourcesType.Editor)
+            {
+                HFLog.L("卸载Assetbundle  " + bundle.name);
+                RecursionReleaseAssetBundle(bundle.name);
+                bundle.Unload(b);
+                allAssetBundleDic.Remove(name);
+            }
         }
 
         /// <summary>
@@ -637,6 +643,21 @@ namespace HFFramework
             }
             allAssetBundleDic.Clear();
             Resources.UnloadUnusedAssets();
+        }
+
+        public void Debug()
+        {
+            if (GameEnvironment.Instance.ResourcesType != GameResourcesType.Editor)
+            {
+                foreach (var item in allAssetBundleDic)
+                {
+                    HFLog.C(item.Key + " 引用计数 ：" + item.Value.RefCount);
+                }
+            }
+            else
+            {
+                HFLog.C("编辑器模式下 没有引用计数");
+            }
         }
 
         public void DestroyManager()

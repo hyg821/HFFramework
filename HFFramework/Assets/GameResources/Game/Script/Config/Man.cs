@@ -69,8 +69,7 @@ namespace Config
 
         public void StartAnalysis()
         {
-            AssetBundlePackage package = HFResourceManager.Instance.LoadAssetBundleFromFile("Config");
-            TextAsset textAsset = package.LoadAssetWithCache<TextAsset>("Man");
+            TextAsset textAsset  = HFResourceManager.Instance.GetAsset<TextAsset>("Config","Man");
             StringReader reader = new StringReader(textAsset.text);
             reader.ReadLine();
             reader.ReadLine();

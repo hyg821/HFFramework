@@ -11,16 +11,30 @@ namespace HFFramework
 
         public Button closeBtn;
 
+        public Button refCountBtn;
+
         GamePlatform pf;
 
         void Start()
         {
             pf = GameEnvironment.Instance.Platform;
+
+            refCountBtn.onClick.AddListener(delegate ()
+            {
+                HFResourceManager.Instance.Debug();
+            });
+
             closeBtn.onClick.AddListener(delegate()
             {
                 Close();
             });
             Application.logMessageReceived += LogMessageReceived;
+        }
+
+        public override void ElementDidAppear()
+        {
+            base.ElementDidAppear();
+            BringSelfToFront();
         }
 
         public void LogMessageReceived(string condition, string stackTrace, LogType type)

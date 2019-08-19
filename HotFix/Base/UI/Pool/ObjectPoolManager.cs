@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HotFix
 {
-    public class ObjectPoolManager : BaseElement
+    public class ObjectPoolManager : Entity
     {
         private Dictionary<string, ObjectPool> cache = new Dictionary<string, ObjectPool>();
 

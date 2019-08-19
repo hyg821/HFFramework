@@ -24,35 +24,35 @@ namespace HotFix
         /// <summary>
         /// 即将在下一帧被update的列表
         /// </summary>
-        private List<BaseElement> prepareUpdateList = new List<BaseElement>();
+        private List<Entity> prepareUpdateList = new List<Entity>();
         /// <summary>
         ///  本帧执行的update的列表
         /// </summary>
-        private List<BaseElement> updateList = new List<BaseElement>();
+        private List<Entity> updateList = new List<Entity>();
 
         /// <summary>
         ///  即将在下一帧被fixedUpdate的列表
         /// </summary>
-        private List<BaseElement> prepareFixedUpdateList = new List<BaseElement>();
+        private List<Entity> prepareFixedUpdateList = new List<Entity>();
         /// <summary>
         ///  本帧执行fixedUpdate的列表
         /// </summary>
-        private List<BaseElement> fixedUpdateList = new List<BaseElement>();
+        private List<Entity> fixedUpdateList = new List<Entity>();
 
         /// <summary>
         /// 即将在下一帧被LateUpdate的列表
         /// </summary>
-        private List<BaseElement> prepareLateUpdateList = new List<BaseElement>();
+        private List<Entity> prepareLateUpdateList = new List<Entity>();
         /// <summary>
         ///  本帧执行lateUpdate的列表
         /// </summary>
-        private List<BaseElement> lateUpdateList = new List<BaseElement>();
+        private List<Entity> lateUpdateList = new List<Entity>();
 
         public void Update()
         {
             for (int i = 0; i < prepareUpdateList.Count; i++)
             {
-                BaseElement temp = prepareUpdateList[i];
+                Entity temp = prepareUpdateList[i];
                 if (temp.IsNeedUpdate)
                 {
                     updateList.Add(temp);
@@ -74,7 +74,7 @@ namespace HotFix
         {
             for (int i = 0; i < prepareFixedUpdateList.Count; i++)
             {
-                BaseElement temp = prepareFixedUpdateList[i];
+                Entity temp = prepareFixedUpdateList[i];
                 if (temp.IsNeedFixedUpdate)
                 {
                     fixedUpdateList.Add(temp);
@@ -96,7 +96,7 @@ namespace HotFix
         {
             for (int i = 0; i < prepareLateUpdateList.Count; i++)
             {
-                BaseElement temp = prepareLateUpdateList[i];
+                Entity temp = prepareLateUpdateList[i];
                 if (temp.IsNeedLateUpdate)
                 {
                     lateUpdateList.Add(temp);
@@ -125,7 +125,7 @@ namespace HotFix
             instance = null;
         }
 
-        public static void PrepareForUpdate(BaseElement mono)
+        public static void PrepareForUpdate(Entity mono)
         {
             if (Instance != null)
             {
@@ -136,7 +136,7 @@ namespace HotFix
             }
         }
 
-        public static void PrepareForFixedUpdate(BaseElement mono)
+        public static void PrepareForFixedUpdate(Entity mono)
         {
             if (Instance != null)
             {
@@ -147,7 +147,7 @@ namespace HotFix
             }
         }
 
-        public static void PrepareForLateUpdate(BaseElement mono)
+        public static void PrepareForLateUpdate(Entity mono)
         {
             if (Instance != null)
             {

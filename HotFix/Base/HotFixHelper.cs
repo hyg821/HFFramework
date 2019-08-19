@@ -6,7 +6,7 @@ using HFFramework;
 
 namespace HotFix
 {
-    public class HotFixHelper : BaseElement
+    public class HotFixHelper
     {
         public static object ReflectCreate(string nameSpace,string className)
         {

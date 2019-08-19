@@ -6,7 +6,7 @@ using HFFramework;
 
 namespace HotFix
 {
-    public class BaseElement
+    public class Entity
     {
         /// <summary>
         ///  全局控制 标记
@@ -16,7 +16,7 @@ namespace HotFix
         /// <summary>
         ///  标记每一个元素 的 id  通过GlobalIdControl 每次创建都+1
         /// </summary>
-        public long elementID;
+        public long entityID;
 
         /// <summary>
         ///  element 对应的 游戏物体
@@ -36,7 +36,7 @@ namespace HotFix
         /// <summary>
         ///  父element
         /// </summary>
-        public BaseElement parent;
+        public Entity parent;
 
         /// <summary>
         ///  获取唯一标识
@@ -47,17 +47,17 @@ namespace HotFix
             return GlobalID++;
         }
 
-        private List<BaseElement> compomentList;
+        private List<Entity> compomentList;
         /// <summary>
         /// 组件数组
         /// </summary>
-        public List<BaseElement> CompomentList
+        public List<Entity> CompomentList
         {
             get
             {
                 if (compomentList == null)
                 {
-                    compomentList = new List<BaseElement>();
+                    compomentList = new List<Entity>();
                 }
                 return compomentList;
             }
@@ -66,8 +66,8 @@ namespace HotFix
         /// <summary>
         ///  管理子物体的字典
         /// </summary>
-        private Dictionary<long, BaseElement> subElementDic;
-        public Dictionary<long, BaseElement> SubElementDic
+        private Dictionary<long, Entity> subElementDic;
+        public Dictionary<long, Entity> SubElementDic
         {
             set
             {
@@ -77,7 +77,7 @@ namespace HotFix
             {
                 if (subElementDic == null)
                 {
-                    subElementDic = new Dictionary<long, BaseElement>();
+                    subElementDic = new Dictionary<long, Entity>();
                 }
                 return subElementDic;
             }
@@ -130,32 +130,32 @@ namespace HotFix
 
         private List<Coroutine> coroutineList = new List<Coroutine>();
 
-        public BaseElement()
+        public Entity()
         {
 
         }
 
-        public static T CreateElement<T>() where T : BaseElement, new()
+        public static T CreateEntity<T>() where T : Entity, new()
         {
             T t1 = new T();
-            t1.elementID = GetGlobalID();
+            t1.entityID = GetGlobalID();
             t1.Awake();
             return t1;
         }
 
-        public static T CreateElement<T>(GameObject gameObject = null) where T : BaseElement, new()
+        public static T CreateEntity<T>(GameObject gameObject = null) where T : Entity, new()
         {
             T t1 = new T();
-            t1.elementID = GetGlobalID();
+            t1.entityID = GetGlobalID();
             t1.SetGameObject(gameObject);
             t1.Awake();
             return t1;
         }
 
-        public static T CreateElement<T>(GameObject gameObject = null, BaseElement parent = null) where T : BaseElement, new()
+        public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null) where T : Entity, new()
         {
             T t1 = new T();
-            t1.elementID = GetGlobalID();
+            t1.entityID = GetGlobalID();
             t1.parent = parent;
             t1.SetGameObject(gameObject);
             t1.Awake();
@@ -246,19 +246,19 @@ namespace HotFix
             }
         }
 
-        public T AddCompoment<T>() where T : BaseElement ,new()
+        public T AddCompoment<T>() where T : Entity, new()
         {
-            T t1 = BaseElement.CreateElement<T>(gameObject);
+            T t1 = Entity.CreateEntity<T>(gameObject);
             t1.parent = this;
             CompomentList.Add(t1);
             return t1;
         }
 
-        public T GetCompoment<T>() where T : BaseElement
+        public T GetCompoment<T>() where T : Entity
         {
             for (int i = 0; i < CompomentList.Count; i++)
             {
-                BaseElement e = CompomentList[i];
+                Entity e = CompomentList[i];
                 if (typeof(T)==e.GetType())
                 {
                     return e as T;
@@ -267,13 +267,13 @@ namespace HotFix
             return null;
         }
 
-        public void RemoveCompoment(BaseElement t1)
+        public void RemoveCompoment(Entity t1)
         {
             int index = -1;
             for (int i = 0; i < CompomentList.Count; i++)
             {
-                BaseElement e1 = CompomentList[i];
-                if (e1.elementID == t1.elementID)
+                Entity e1 = CompomentList[i];
+                if (e1.entityID == t1.entityID)
                 {
                     index = i;
                     break;
@@ -318,12 +318,12 @@ namespace HotFix
         ///  添加子元素 方法
         /// </summary>
         /// <param name="ele"></param>
-        public void AddSubElement(BaseElement ele)
+        public void AddSubElement(Entity ele)
         {
-            if (!SubElementDic.TryGetValue(ele.elementID,out ele))
+            if (!SubElementDic.TryGetValue(ele.entityID,out ele))
             {
                 ele.parent = this;
-                SubElementDic.Add(ele.elementID, ele);
+                SubElementDic.Add(ele.entityID, ele);
             }
         }
 
@@ -332,7 +332,7 @@ namespace HotFix
             transform.SetParent(g.transform, false);
         }
 
-        public void SetParent(BaseElement g)
+        public void SetParent(Entity g)
         {
             parent = g;
             transform.SetParent(g.transform, false);
@@ -342,7 +342,7 @@ namespace HotFix
         ///  显示一个 element  并且把他 作为自己的子物体
         /// </summary>
         /// <param name="e"></param>
-        public void SetChild(BaseElement child)
+        public void SetChild(Entity child)
         {
             child.transform.SetParent(transform, false);
         }

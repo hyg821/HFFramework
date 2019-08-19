@@ -84,7 +84,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* ptr_of_this_method;
             StackObject* __ret = ILIntepreter.Minus(__esp, 4);
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Object @obj = (System.Object)typeof(System.Object).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.Object @content = (System.Object)typeof(System.Object).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
@@ -98,7 +98,7 @@ namespace ILRuntime.Runtime.Generated
             System.UInt16 @moduleID = (ushort)ptr_of_this_method->Value;
 
 
-            var result_of_this_method = new HFFramework.NotificationMessage(@moduleID, @msgID, @sender, @obj);
+            var result_of_this_method = new HFFramework.NotificationMessage(@moduleID, @msgID, @sender, @content);
 
             if(!isNewObj)
             {

@@ -21,7 +21,7 @@ namespace HotFix
         CanvasGroup
     }
 
-    public class UIElement : BaseElement
+    public class UIElement : Entity
     {
         /// <summary>
         ///  UI 隐藏 类型

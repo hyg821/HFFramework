@@ -43,6 +43,11 @@ public class LoginController : UIController
     {
         FindElement();
 
+        TimerManager.Schedule(1, 10, 5, delegate ()
+        {
+            HFLog.E("定实地");
+        });
+
         ReceiveNotificationMessage(this, GameConst.UI, 123, delegate (NotificationMessage msg)
         {
             //print("发送的消息是 " + msg.obj);

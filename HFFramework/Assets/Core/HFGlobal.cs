@@ -111,6 +111,9 @@ namespace HFFramework
                 //添加游戏循环者
                 gameObject.AddComponent<GameLooper>();
 
+                //添加定时器
+                gameObject.AddComponent<TimerManager>();
+
                 //添加状态检查者
                 gameObject.AddComponent<GameStateChecker>();
 
@@ -149,6 +152,7 @@ namespace HFFramework
             GameStateChecker.Instance.DestroyManager();
             GameUtils.Instance.DestroyManager();
             GameStateManager.Instance.DestroyManager();
+            TimerManager.Instance.DestroyManager();
             MemoryClear();
         }
 

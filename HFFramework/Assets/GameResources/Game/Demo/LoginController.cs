@@ -62,7 +62,7 @@ public class LoginController : UIController
         {
             HFLog.C("点击登录的名称是" + input.text);
 
-            bg.sprite = HFResourceManager.Instance.GetSpriteByAtlas("textrure", "TestAtlas", "A");
+            bg.sprite = HFResourceManager.Instance.GetSpriteByAtlas("texture", "TestAtlas", "A");
 
             HFFramework.AppDomainManager.Instance.JumpToHotFix("hotfixdll", "HotFix", "HotFixEnter");
 

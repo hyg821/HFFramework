@@ -12,7 +12,6 @@ namespace HFFramework
         StateExit
     }
 
-    [Serializable]
     public class FSMBaseState
     {
         public const string RootState = "Root";

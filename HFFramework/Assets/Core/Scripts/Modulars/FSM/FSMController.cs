@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    [Serializable]
     public class FSMController
     {   
         /// <summary>

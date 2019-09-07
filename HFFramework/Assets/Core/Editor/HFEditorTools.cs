@@ -65,7 +65,7 @@ namespace HFFramework
             Debug.Log("Assetbundle Build 完成");
         }
 
-        [MenuItem("游戏辅助工具/资源设置/构建 所有 AssetBundles  并且自动命名 ")]
+        [MenuItem("游戏辅助工具/资源设置/构建 所有 AssetBundles  并且自动命名 (只需要在打包的时候使用)")]
         static void SetAssetBundleNameAndBuildAllAssetBundles()
         {
             Caching.ClearCache();
@@ -184,19 +184,16 @@ namespace HFFramework
             if ((directory.Name.Contains(AssetFolderIde)&& setAssetbundleName)||(directory.Name.Contains(SpriteFolderIde) && setSpriteAtlas))
             {
                 FileInfo[] file = directory.GetFiles();
-                AssetBundleConfig config = null;
 
                 //找一下配置文件
+                AssetConfig config = null;
                 foreach (FileInfo nextFile in file)
                 {
-                    if (nextFile.Name == "AssetConfig.json")
+                    if (nextFile.Name == "AssetConfig.asset")
                     {
-                        using (StreamReader sr = nextFile.OpenText())
-                        {
-                            string str = sr.ReadToEnd();
-                            HFAssetConfigRoot root = JsonMapper.ToObject<HFAssetConfigRoot>(str);
-                            config = root.AssetBundleConfig;
-                        }
+                        string assetPath = nextFile.FullName.Replace("\\", "/");
+                        assetPath = assetPath.Substring(assetPath.IndexOf("Assets"));
+                        config = AssetDatabase.LoadAssetAtPath<AssetConfig>(assetPath);
                         break;
                     }
                 }
@@ -204,7 +201,7 @@ namespace HFFramework
                 //遍历设置
                 foreach (FileInfo nextFile in file)
                 {
-                    if (nextFile.Name != "AssetConfig.json" && nextFile.Extension!=".cs")
+                    if (nextFile.Name!= "AssetConfig.asset"&&nextFile.Extension!=".cs")
                     {
                         string ex = Path.GetExtension(nextFile.FullName);
                         if (ex != ".meta")
@@ -215,23 +212,7 @@ namespace HFFramework
                             {
                                 //再拿到他的AssetImporter
                                 AssetImporter assetImporter = AssetImporter.GetAtPath(assetPath);
-
-                                if (config != null)
-                                {
-                                    string bundleName = string.Empty;
-                                    if (config.assetbundleNameType == "Default")
-                                    {
-                                        bundleName = GetMD5(assetPath);
-                                    }
-                                    else if (config.assetbundleNameType == "Custom")
-                                    {
-                                        bundleName = config.assetbundleName;
-                                    }
-                                    if (assetImporter.assetBundleName != bundleName)
-                                    {
-                                        assetImporter.assetBundleName = bundleName;
-                                    }
-                                }
+                                SetAssetbundleByAssetImporter(assetImporter, config);
                             }
 
                             if (setSpriteAtlas)
@@ -256,6 +237,27 @@ namespace HFFramework
                 }
             }
         }
+
+        public static void SetAssetbundleByAssetImporter(AssetImporter assetImporter , AssetConfig config)
+        {
+            if (config != null)
+            {
+                string bundleName = string.Empty;
+                if (config.assetbundleNameType == AssetbundleNameType.Default)
+                {
+                    bundleName = GetMD5(assetImporter.assetPath);
+                }
+                else if (config.assetbundleNameType == AssetbundleNameType.Custom)
+                {
+                    bundleName = config.assetbundleName;
+                }
+                if (assetImporter.assetBundleName != bundleName)
+                {
+                    assetImporter.assetBundleName = bundleName;
+                }
+            }
+        }
+    
 
         [MenuItem("游戏辅助工具/资源设置/删除 所有 AssetBundles")]
         public static void DeleteAllAssetbundle()
@@ -374,8 +376,15 @@ namespace HFFramework
             return sTemp.ToLower();
         }
 
-        [MenuItem("Assets/Create/HFFramework/创建一个Asset 打包配置文件", false, 80)]
-        public static void CreateAssetConfig()
+        [MenuItem("Assets/Create/HFFramework/创建一个Asset配置文件(ScriptableObject版本)", false, 80)]
+        public static void CreateAssetConfigScriptableObject()
+        {
+            AssetConfig config = ScriptableObject.CreateInstance<AssetConfig>();
+            AssetDatabase.CreateAsset(config, GetSelectedPathOrFallback() + "/AssetConfig.asset");
+        }
+
+        [MenuItem("Assets/Create/HFFramework/创建一个Asset配置文件 (json版本暂时没用)", false, 80)]
+        public static void CreateAssetConfigJson()
         {
             ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, ScriptableObject.CreateInstance<CreateScriptAssetAction>(), GetSelectedPathOrFallback() + "/AssetConfig.json", null, "Assets/Core/Template/AssetConfig.json");
         }
@@ -430,12 +439,6 @@ namespace HFFramework
 
             return AssetDatabase.LoadAssetAtPath(pathName, typeof(UnityEngine.Object));
         }
-    }
-
-    [CreateAssetMenu(menuName = "HFFramework/创建一个ScriptableObject 可以自定义 (暂时没用) ")]
-    public class GameSetting : ScriptableObject
-    {
-        
     }
 }
 

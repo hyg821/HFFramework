@@ -1,8 +1,0 @@
-﻿{
-    "AssetBundleConfig":{
-        //Default 代表使用 默认MD5创建的assetbundleName
-        //Custom 代表使用 自定义的assetbundleName
-        "assetbundleNameType":"Custom",
-        "assetbundleName":"SceneA"
-    }
-}

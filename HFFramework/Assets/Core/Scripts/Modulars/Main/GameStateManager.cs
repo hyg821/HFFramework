@@ -1,12 +1,11 @@
-﻿using Sirenix.OdinInspector;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace HFFramework
 {
-    public class GameStateManager : SerializedMonoBehaviour, IManager
+    public class GameStateManager : MonoBehaviour, IManager
     {
         public static GameStateManager Instance;
 

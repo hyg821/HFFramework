@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Sirenix.OdinInspector;
 
 namespace HFFramework
 {
-    public class TimerManager : SerializedMonoBehaviour, IManager
+    public class TimerManager : MonoBehaviour, IManager
     {
         public static TimerManager Instance;
 

@@ -8,7 +8,7 @@ using Sirenix.OdinInspector;
 
 namespace HFFramework
 {
-    public class WebImageManager : SerializedMonoBehaviour, IManager
+    public class WebImageManager : MonoBehaviour, IManager
     {
         public static WebImageManager Instance;
 

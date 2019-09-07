@@ -4,11 +4,10 @@ using UnityEngine;
 using LitJson;
 using Config;
 using UnityEngine.SceneManagement;
-using Sirenix.OdinInspector;
 
 namespace HFFramework
 {
-    public class UIManager : SerializedMonoBehaviour, IManager
+    public class UIManager : MonoBehaviour, IManager
     {
         /// <summary>
         ///  UI根物体名字

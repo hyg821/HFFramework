@@ -520,12 +520,12 @@ namespace HFFramework
             }
         }
 
-        public AssetBundlePackage GetAssetBundle(string name)
+        public AssetBundlePackage GetAssetBundle(string assetBundleName)
         {
-            name = name.ToLower();
-            if (allAssetBundleDic.ContainsKey(name))
+            assetBundleName = assetBundleName.ToLower();
+            if (allAssetBundleDic.ContainsKey(assetBundleName))
             {
-                return allAssetBundleDic[name];
+                return allAssetBundleDic[assetBundleName];
             }
             return null;
         }
@@ -552,12 +552,12 @@ namespace HFFramework
         /// </summary>
         /// <param name="name"></param>
         /// <param name="b">是否卸载压出来的的东西</param>
-        public void UnloadAssetBundle(string name, bool b = true)
+        public void UnloadAssetBundle(string assetBundleName, bool b = true)
         {
             if (GameEnvironment.Instance.ResourcesType != GameResourcesType.Editor)
             {
-                name = name.ToLower();
-                AssetBundlePackage bundle = GetAssetBundle(name);
+                assetBundleName = assetBundleName.ToLower();
+                AssetBundlePackage bundle = GetAssetBundle(assetBundleName);
                 if (bundle != null)
                 {
                     UnloadAssetBundle(bundle, b);
@@ -571,8 +571,8 @@ namespace HFFramework
             {
                 HFLog.L("卸载Assetbundle  " + bundle.name);
                 RecursionReleaseAssetBundle(bundle.name);
+                allAssetBundleDic.Remove(bundle.name);
                 bundle.Unload(b);
-                allAssetBundleDic.Remove(name);
             }
         }
 
@@ -580,14 +580,14 @@ namespace HFFramework
         /// 递归 Release AssetBundle
         /// </summary>
         /// <param name="name"></param>
-        public void RecursionReleaseAssetBundle(string name)
+        public void RecursionReleaseAssetBundle(string assetBundleName)
         {
-            AssetBundlePackage bundle =  GetAssetBundle(name);
+            AssetBundlePackage bundle =  GetAssetBundle(assetBundleName);
             if (bundle!=null)
             {
                 bundle.Release();
             }
-            string[] list = Instance.GetAssetBundleDependencies(name);
+            string[] list = Instance.GetAssetBundleDependencies(assetBundleName);
             for (int i = 0; i < list.Length; i++)
             {
                 RecursionReleaseAssetBundle(list[i]);
@@ -618,7 +618,7 @@ namespace HFFramework
             unusedAssetBundleList.Clear();
             foreach (var item in allAssetBundleDic)
             {
-                if (item.Value.RefCount == 0)
+                if (item.Value.refCount == 0)
                 {
                     unusedAssetBundleList.Add(item.Value);
                 }
@@ -652,7 +652,7 @@ namespace HFFramework
             {
                 foreach (var item in allAssetBundleDic)
                 {
-                    HFLog.C(item.Key + " 引用计数 ：" + item.Value.RefCount);
+                    HFLog.C(item.Key + " 引用计数 ：" + item.Value.refCount);
                 }
             }
             else
@@ -693,17 +693,10 @@ namespace HFFramework
         /// </summary>
         public AssetBundle assetBundle;
 
-        private int refCount = 0;
         /// <summary>
-        ///  引用计数
+        ///  引用计数 不需要手动修改
         /// </summary>
-        public int RefCount
-        {
-            get
-            {
-                return refCount;
-            }
-        }
+        public int refCount = 0;
 
         /// <summary>
         ///  最好不要手动调用这个方法会使引用计数+1

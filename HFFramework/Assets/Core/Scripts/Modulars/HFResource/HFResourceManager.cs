@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
+using Sirenix.OdinInspector;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -12,7 +13,7 @@ using UnityEditor;
 
 namespace HFFramework
 {
-    public class HFResourceManager : MonoBehaviour,IManager
+    public class HFResourceManager : SerializedMonoBehaviour, IManager
     {
         // 注意 
         // 热更新代码的包  Manifest包 不被管理  
@@ -679,6 +680,7 @@ namespace HFFramework
         */
     }
 
+    [Serializable]
     public class AssetBundlePackage
     {
         /// <summary>

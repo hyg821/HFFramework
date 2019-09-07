@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using BestHTTP;
 using System;
+using Sirenix.OdinInspector;
 
 namespace HFFramework
 {
-    public class WebImageManager : MonoBehaviour, IManager
+    public class WebImageManager : SerializedMonoBehaviour, IManager
     {
         public static WebImageManager Instance;
 

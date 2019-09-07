@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
+    [Serializable]
     public class Timer
     {
         /// <summary>

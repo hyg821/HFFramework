@@ -6,7 +6,7 @@ namespace HFFramework
     /// <summary>
     /// 路径管理器
     /// </summary>
-    public class PathManager:MonoBehaviour
+    public class PathManager: MonoBehaviour
     {
         public static PathManager Instance;
 

@@ -34,7 +34,7 @@ namespace  HFFramework
         English
     }
 
-    public class GameEnvironment : MonoBehaviour,IManager
+    public class GameEnvironment : MonoBehaviour, IManager
     {
         public static GameEnvironment Instance;
 

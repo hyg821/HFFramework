@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using System.Collections.Generic;
 using Google.Protobuf;
@@ -88,6 +89,11 @@ namespace HFFramework
         /// 线程同步
         /// </summary>
         private Queue<KeyValuePair<int, byte[]>> eventQueue = new Queue<KeyValuePair<int, byte[]>>();
+
+        /// <summary>
+        /// task cache
+        /// </summary>
+        private Dictionary<int, TaskCompletionSource<byte[]>> taskCache = new Dictionary<int, TaskCompletionSource<byte[]>>();
 
         /// <summary>
         /// 消息派发委托
@@ -185,24 +191,61 @@ namespace HFFramework
             });
         }
 
+        /// <summary>
+        ///  同步发送消息
+        /// </summary>
+        /// <param name="messageType"></param>
+        /// <param name="msg"></param>
         public void SendMessage(int messageType, IMessage msg)
         {
             SendMessage(messageType, msg.ToByteArray());
         }
 
+        /// <summary>
+        /// 同步发送消息
+        /// </summary>
+        /// <param name="messageType"></param>
+        /// <param name="msg"></param>
         public void SendMessage(int messageType, byte[] msg)
         {
             socket.Send(messageType, msg);
         }
 
-        public void Update()
+        /// <summary>
+        ///  rpc 调用 没有经过测试
+        /// </summary>
+        /// <param name="messageType"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public async Task<byte[]> Call(int messageType, byte[] msg)
+        {
+            socket.Send(messageType, msg);
+            TaskCompletionSource<byte[]> taskCompletion;
+            if (!taskCache.TryGetValue(messageType, out taskCompletion))
+            {
+                taskCompletion = new TaskCompletionSource<byte[]>();
+                taskCache.Add(messageType, taskCompletion);
+            }
+            return await taskCompletion.Task;
+        }
+
+        private void Update()
         {
             lock (eventQueue)
             {
                 while (eventQueue.Count > 0)
                 {
                     KeyValuePair<int, byte[]> e = eventQueue.Dequeue();
+
+                    //callback 方式派发消息
                     DispatchCallback(e.Key, e.Value);
+
+                    //task 用同步写法 返回异步消息
+                    TaskCompletionSource<byte[]> taskCompletion;
+                    if (taskCache.TryGetValue(e.Key, out taskCompletion))
+                    {
+                        taskCompletion.SetResult(e.Value);
+                    }
                 }
             }
         }
@@ -213,6 +256,10 @@ namespace HFFramework
             {
                 socket.Close(true);
                 socket = null;
+
+                taskCache.Clear();
+                eventQueue.Clear();
+                IsDispatch = false;
             }
         }
     }

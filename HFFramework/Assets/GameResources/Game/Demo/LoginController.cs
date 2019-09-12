@@ -25,6 +25,7 @@ public class LoginController : UIController
     public Button loginBtn;
     public Image webImage;
     public Button jumpBtn;
+    public Button TaskBtn;
     #region
     public override void FindElement()
     {
@@ -33,20 +34,21 @@ public class LoginController : UIController
         loginBtn = AutoFind<Button>("Button");
         webImage = AutoFind<Image>("Image");
         jumpBtn = AutoFind<Button>("Button2");
+        TaskBtn = AutoFind<Button>("Button3");
     }
     #endregion
 
+
     public int errorCount = 0;
 
+    public TestTask task;
     // Use this for initialization
     void Start()
     {
         FindElement();
 
-        TimerManager.Schedule(1, 10, 5, delegate ()
-        {
-            HFLog.E("定实地");
-        });
+        task = new TestTask();
+        task.Start();
 
         ReceiveNotificationMessage(this, GameConst.UI, 123, delegate (NotificationMessage msg)
         {
@@ -60,7 +62,14 @@ public class LoginController : UIController
 
         loginBtn.onClick.AddListener(delegate ()
         {
+    
+
             HFLog.C("点击登录的名称是" + input.text);
+
+            TimerManager.Schedule(1, 10, 5, delegate ()
+            {
+                HFLog.E("定实地");
+            });
 
             bg.sprite = HFResourceManager.Instance.GetSpriteByAtlas("texture", "TestAtlas", "A");
 
@@ -130,12 +139,14 @@ public class LoginController : UIController
 
 
         jumpBtn.onClick.AddListener(delegate ()
-        {
+        {           
             HFResourceManager.Instance.LoadScene("SceneA", "SceneA",delegate()
             {
                 UIManager.Instance.CloseController("Login");
             });    
         });
+
+        TaskBtn.onClick.AddListener(Test);
 
         /*
         Task.Run(async delegate()
@@ -152,10 +163,24 @@ public class LoginController : UIController
         */
     }
 
+    public async void Test()
+    {
+        HFLog.C("-------------------------------------------------------------");
+        HFLog.C("调用之前 "+Thread.CurrentThread.ManagedThreadId.ToString());
+        object o = await task.Call(UnityEngine.Random.Range(1, 100), null);
+        HFLog.C("调用之后 " + Thread.CurrentThread.ManagedThreadId.ToString());
+        HFLog.C(o.ToString());
+    }
 
     private void Update()
     {
         SendNotificationMessage(GameConst.UI, 123, "str");
+    }
+
+    public override void Destroy()
+    {
+        base.Destroy();
+        task.Close();
     }
 
     public T CreateMessage<T>(byte[] bytes) where T : IMessage, new()

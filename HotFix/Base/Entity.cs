@@ -482,10 +482,10 @@ namespace HotFix
             NotificationCenter.PostNotification(new NotificationMessage(moduleID, msgID, this, obj));
         }
 
-        public void PlayMusic(string assetBundlePackageName, string musicName)
+        public void PlayMusic(string assetBundlePackage, string musicName)
         {
             AudioPlayer player = AudioManager.Instance.GetFreeAudioPlayer();
-            player.SetAudioClipAndPlay(assetBundlePackageName, musicName);
+            player.SetAudioClipAndPlay(assetBundlePackage, musicName);
         }
 
         /// <summary>

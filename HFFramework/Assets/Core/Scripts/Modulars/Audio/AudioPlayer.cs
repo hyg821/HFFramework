@@ -29,7 +29,7 @@ namespace HFFramework
     /// <summary>
     ///  播放器播放模式
     /// </summary>
-    public enum AudioPlayerModeState
+    public enum AudioPlayerMode
     {
         /// <summary>
         ///  只播放一首
@@ -140,25 +140,25 @@ namespace HFFramework
             }
         }
 
-        private AudioPlayerModeState playMode = AudioPlayerModeState.Single;
+        private AudioPlayerMode playMode = AudioPlayerMode.Single;
         /// <summary>
         /// 循环模式
         /// </summary>
-        public AudioPlayerModeState PlayMode
+        public AudioPlayerMode PlayMode
         {
             set
             {
                 playMode = value;
                 switch (playMode)
                 {
-                    case AudioPlayerModeState.Single:
+                    case AudioPlayerMode.Single:
                         break;
-                    case AudioPlayerModeState.SingleLoop:
+                    case AudioPlayerMode.SingleLoop:
                         IsLoop = true;
                         break;
-                    case AudioPlayerModeState.Order:
+                    case AudioPlayerMode.Order:
                         break;
-                    case AudioPlayerModeState.Random:
+                    case AudioPlayerMode.Random:
                         break;
                     default:
                         break;
@@ -289,7 +289,7 @@ namespace HFFramework
         ///  给播放器设置一个 播放列表
         /// </summary>
         /// <param name="list"></param>
-        public void SetAudioListAndPlay (List<AudioClip> list,AudioPlayerModeState playMode)
+        public void SetAudioListAndPlay (List<AudioClip> list, AudioPlayerMode playMode)
         {
             PlayMode = playMode;
             audioList = list;
@@ -356,23 +356,23 @@ namespace HFFramework
         {
             switch (PlayMode)
             {
-                case AudioPlayerModeState.Single:
+                case AudioPlayerMode.Single:
                     if (audioSource.time >= CurrentAudioClip.length)
                     {
                         state = AudioPlayerState.Stop;
                         OnComplete(CurrentAudioClip.name);
                     }
                     break;
-                case AudioPlayerModeState.SingleLoop:
+                case AudioPlayerMode.SingleLoop:
                     break;
-                case AudioPlayerModeState.Order:
+                case AudioPlayerMode.Order:
                     if (audioSource.time >= CurrentAudioClip.length)
                     {
                         OnComplete(CurrentAudioClip.name);
                         Play(audioIndex++);
                     }
                     break;
-                case AudioPlayerModeState.Random:
+                case AudioPlayerMode.Random:
                     if (audioSource.time >= CurrentAudioClip.length)
                     {
                         OnComplete(CurrentAudioClip.name);

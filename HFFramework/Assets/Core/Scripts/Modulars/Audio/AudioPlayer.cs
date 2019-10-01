@@ -382,7 +382,6 @@ namespace HFFramework
                 default:
                     break;
             }
-
         }
 
         public override void Destroy()

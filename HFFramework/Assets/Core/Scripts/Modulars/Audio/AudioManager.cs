@@ -141,30 +141,34 @@ namespace HFFramework
         }
 
 
-        public AudioPlayer CreateAudioSource(string name, GameObject parent, SoundType type)
+        public AudioPlayer CreateAudioPlayer(string name, GameObject parent, SoundType type)
         {
             identifier++;
+
             GameObject temp = new GameObject();
             AudioPlayer player = temp.AddComponent<AudioPlayer>();
             temp.name = name;
             player.audioPlayerName = name;
             player.SoundType = type;
+
             temp.transform.SetParent(parent.transform);
 
-            if (type == SoundType.Music)
+            switch (type)
             {
-                player.Volume = MusicVolume;
-                audioDic.Add(name, player);
-            }
-            else if (type == SoundType.Effect)
-            {
-                player.Volume = EffectVolume;
-                audioEffectDic.Add(name, player);
-            }
-            else if (type == SoundType.Free)
-            {
-                player.Volume = FreeVolume;
-                audioPlayerPool.Add(player);
+                case SoundType.Music:
+                    player.Volume = MusicVolume;
+                    audioDic.Add(name, player);
+                    break;
+                case SoundType.Effect:
+                    player.Volume = EffectVolume;
+                    audioEffectDic.Add(name, player);
+                    break;
+                case SoundType.Free:
+                    player.Volume = FreeVolume;
+                    audioPlayerPool.Add(player);
+                    break;
+                default:
+                    break;
             }
             return player;
         }
@@ -208,7 +212,7 @@ namespace HFFramework
 
             if (player==null)
             {
-                player = CreateAudioSource("FreeAudio" + identifier, gameObject, SoundType.Free);
+                player = CreateAudioPlayer("FreeAudio" + identifier, gameObject, SoundType.Free);
             }
 
             return player;

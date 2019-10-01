@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -7,7 +6,9 @@ using System.Text;
 
 namespace HFFramework
 {
+#if UNITY_EDITOR
     [ExecuteInEditMode]
+#endif
     public class AutoGeneratePath : MonoBehaviour
     {
         public enum UIType
@@ -120,7 +121,7 @@ namespace HFFramework
                 return Recursion(root, temp, path);
             }
         }
-
+#if UNITY_EDITOR
         private void Update()
         {
             componentTypes.Clear();
@@ -130,6 +131,7 @@ namespace HFFramework
                 componentTypes.Add(monos[i].GetType().Name);
             }
         }
+#endif
     }
 }
-#endif
+

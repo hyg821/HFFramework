@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿# if UNITY_EDITOR
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -6,6 +8,7 @@ using System.Text;
 
 namespace HFFramework
 {
+    [ExecuteInEditMode]
     public class AutoGeneratePath : MonoBehaviour
     {
         public enum UIType
@@ -24,7 +27,10 @@ namespace HFFramework
         ///  泛型名称
         /// </summary>
         [Title("属性类型", "", TitleAlignments.Left, false, false)]
+        [ValueDropdown("componentTypes")]
         public string propertyType;
+
+        private List<string> componentTypes = new List<string>();
 
         /// <summary>
         ///  属性名称
@@ -115,7 +121,17 @@ namespace HFFramework
                 return Recursion(root, temp, path);
             }
         }
+
+        private void Update()
+        {
+            componentTypes.Clear();
+            MonoBehaviour[] monos = gameObject.GetComponents<MonoBehaviour>();
+            for (int i = 0; i < monos.Length; i++)
+            {
+                componentTypes.Add(monos[i].GetType().Name);
+            }
+        }
     }
 }
 
-
+# endif

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -38,7 +39,7 @@ namespace HFFramework
         public string propertyName;
 
         [ShowIf("type", UIType.Root)]
-        [Button("自动生成代码  只对于类型是 Root 的起作用", ButtonSizes.Medium)]
+        [Button("自动生成代码", ButtonSizes.Medium)]
         public void GeneratePath()
         {
             if (type == UIType.Root)
@@ -87,7 +88,7 @@ namespace HFFramework
             }
             else
             {
-                print("自动生成代码  只对于类型是 Root 的起作用");
+                print("自动生成代码");
             }
         }
 

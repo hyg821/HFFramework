@@ -1,5 +1,4 @@
-﻿# if UNITY_EDITOR
-
+﻿#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,7 +28,6 @@ namespace HFFramework
         [Title("属性类型", "", TitleAlignments.Left, false, false)]
         [ValueDropdown("componentTypes")]
         public string propertyType;
-
         private List<string> componentTypes = new List<string>();
 
         /// <summary>
@@ -38,6 +36,7 @@ namespace HFFramework
         [Title("属性名称", "", TitleAlignments.Left, false, false)]
         public string propertyName;
 
+        [ShowIf("type", UIType.Root)]
         [Button("自动生成代码  只对于类型是 Root 的起作用", ButtonSizes.Medium)]
         public void GeneratePath()
         {
@@ -133,5 +132,4 @@ namespace HFFramework
         }
     }
 }
-
-# endif
+#endif

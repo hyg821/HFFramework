@@ -47,9 +47,9 @@ namespace HotFix
             cache.Clear();
         }
 
-        public override void Destory()
+        public override void Destroy()
         {
-            base.Destory();
+            base.Destroy();
             Clear();
         }
     }

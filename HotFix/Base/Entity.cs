@@ -265,7 +265,7 @@ namespace HotFix
             }
             if (index!=-1)
             {
-                CompomentList[index].Destory();
+                CompomentList[index].Destroy();
                 CompomentList.RemoveAt(index);
             }
         }
@@ -497,13 +497,13 @@ namespace HotFix
         /// <summary>
         ///  销毁BaseElement 重载方法
         /// </summary>
-        public virtual void Destory()
+        public virtual void Destroy()
         {
             if (compomentList != null)
             {
                 for (int i = 0; i < compomentList.Count; i++)
                 {
-                    compomentList[i].Destory();
+                    compomentList[i].Destroy();
                 }
                 compomentList.Clear();
                 compomentList = null;
@@ -523,7 +523,7 @@ namespace HotFix
             {
                 foreach (var item in subElementDic)
                 {
-                    item.Value.Destory();
+                    item.Value.Destroy();
                 }
                 subElementDic.Clear();
                 subElementDic = null;

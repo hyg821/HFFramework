@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Config;
 
 namespace HFFramework
 {
@@ -14,7 +15,7 @@ namespace HFFramework
         {
             base.OnStateEnter();
             //初始化配置文件
-            Config.HFConfigManager.Instance.Init();
+            HFConfigManager.Instance.Init();
             //添加canvas
             UIManager.Instance.AddCanvas(0);
             DebugController debug = UIManager.Instance.GetController<DebugController>("Debug");

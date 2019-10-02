@@ -9,24 +9,14 @@ namespace HotFix
     public class Entity
     {
         /// <summary>
-        ///  全局控制 标记
+        ///  标记每一个元素 的 id
         /// </summary>
-        protected static long GlobalID = 0;
-
-        /// <summary>
-        ///  标记每一个元素 的 id  通过GlobalIdControl 每次创建都+1
-        /// </summary>
-        public long entityID;
+        public long instanceID;
 
         /// <summary>
         ///  element 对应的 游戏物体
         /// </summary>
         public GameObject gameObject;
-        public void SetGameObject(GameObject value)
-        {
-            gameObject = value;
-            transform = gameObject.transform;
-        }
 
         /// <summary>
         ///  gameObject 的 transform
@@ -37,15 +27,6 @@ namespace HotFix
         ///  父element
         /// </summary>
         public Entity parent;
-
-        /// <summary>
-        ///  获取唯一标识
-        /// </summary>
-        /// <returns></returns>
-        private static long GetGlobalID()
-        {
-            return GlobalID++;
-        }
 
         private List<Entity> compomentList;
         /// <summary>
@@ -132,13 +113,12 @@ namespace HotFix
 
         public Entity()
         {
-
+            instanceID = IDGenerator.GetID();
         }
 
         public static T CreateEntity<T>() where T : Entity, new()
         {
             T t1 = new T();
-            t1.entityID = GetGlobalID();
             t1.Awake();
             return t1;
         }
@@ -146,7 +126,6 @@ namespace HotFix
         public static T CreateEntity<T>(GameObject gameObject = null) where T : Entity, new()
         {
             T t1 = new T();
-            t1.entityID = GetGlobalID();
             t1.SetGameObject(gameObject);
             t1.Awake();
             return t1;
@@ -155,7 +134,6 @@ namespace HotFix
         public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null) where T : Entity, new()
         {
             T t1 = new T();
-            t1.entityID = GetGlobalID();
             t1.parent = parent;
             t1.SetGameObject(gameObject);
             t1.Awake();
@@ -211,6 +189,12 @@ namespace HotFix
                 SetGameObject(temp);
             }
             return gameObject;
+        }
+
+        public void SetGameObject(GameObject value)
+        {
+            gameObject = value;
+            transform = gameObject.transform;
         }
 
         /// <summary>
@@ -273,7 +257,7 @@ namespace HotFix
             for (int i = 0; i < CompomentList.Count; i++)
             {
                 Entity e1 = CompomentList[i];
-                if (e1.entityID == t1.entityID)
+                if (e1.instanceID == t1.instanceID)
                 {
                     index = i;
                     break;
@@ -320,10 +304,10 @@ namespace HotFix
         /// <param name="ele"></param>
         public void AddSubElement(Entity ele)
         {
-            if (!SubElementDic.TryGetValue(ele.entityID,out ele))
+            if (!SubElementDic.TryGetValue(ele.instanceID, out ele))
             {
                 ele.parent = this;
-                SubElementDic.Add(ele.entityID, ele);
+                SubElementDic.Add(ele.instanceID, ele);
             }
         }
 

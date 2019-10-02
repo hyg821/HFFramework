@@ -243,6 +243,7 @@
     <Compile Include="Base\UI\Pool\ObjectPoolManager.cs" />
     <Compile Include="Base\UI\UIElement.cs" />
     <Compile Include="HotFixEnter.cs" />
+    <Compile Include="Base\IDGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

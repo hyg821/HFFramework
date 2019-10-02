@@ -10,7 +10,7 @@
         /// <returns></returns>
         public static long GetID()
         {
-            return id++;
+            return ++id;
         }
     }
 }

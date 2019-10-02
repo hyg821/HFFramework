@@ -44,10 +44,10 @@ namespace HotFix
             }
         }
 
+        private Dictionary<long, Entity> subElementDic;
         /// <summary>
         ///  管理子物体的字典
         /// </summary>
-        private Dictionary<long, Entity> subElementDic;
         public Dictionary<long, Entity> SubElementDic
         {
             set
@@ -64,10 +64,11 @@ namespace HotFix
             }
         }
 
+
+        private Dictionary<ulong, object> messageTypeDic;
         /// <summary>
         ///  注册的消息 字典   destory会自动销毁
         /// </summary>
-        public Dictionary<ulong, object> messageTypeDic;
         public Dictionary<ulong, object> MessageTypeDic
         {
             set
@@ -110,6 +111,17 @@ namespace HotFix
         }
 
         private List<Coroutine> coroutineList = new List<Coroutine>();
+
+        /// <summary>
+        ///  是否销毁
+        /// </summary>
+        public bool IsDisposed
+        {
+            get
+            {
+                return instanceID == 0;
+            }
+        }
 
         public Entity()
         {
@@ -328,7 +340,7 @@ namespace HotFix
         /// <param name="e"></param>
         public void SetChild(Entity child)
         {
-            child.transform.SetParent(transform, false);
+            child.SetParent(this);
         }
 
         /// <summary>
@@ -466,12 +478,6 @@ namespace HotFix
             NotificationCenter.PostNotification(new NotificationMessage(moduleID, msgID, this, obj));
         }
 
-        public void PlayMusic(string assetBundlePackage, string musicName)
-        {
-            AudioPlayer player = AudioManager.Instance.GetFreeAudioPlayer();
-            player.SetAudioClipAndPlay(assetBundlePackage, musicName);
-        }
-
         /// <summary>
         ///  接收 通知中心 信息   对应发送消息 和 发送通知
         /// </summary>
@@ -489,9 +495,28 @@ namespace HotFix
             }
         }
 
+        public void PlayMusic(string assetPackage, string musicName)
+        {
+            AudioPlayer player = AudioManager.Instance.GetFreeAudioPlayer();
+            player.SetAudioClipAndPlay(assetPackage, musicName);
+        }
+
         public void ShowToast(string text)
         {
 
+        }
+
+        /// <summary>
+        ///  销毁游戏物体
+        /// </summary>
+        public void DestoryGameObject()
+        {
+            if (gameObject != null)
+            {
+                GameObject.Destroy(gameObject);
+                gameObject = null;
+                transform = null;
+            }
         }
 
         /// <summary>
@@ -539,33 +564,13 @@ namespace HotFix
                 messageTypeDic = null;
             }
 
+            IsNeedUpdate = false;
+            IsNeedFixedUpdate = false;
+            IsNeedLateUpdate = false;
+
+            DestoryGameObject();
             parent = null;
-            gameObject = null;
-
-            if (IsNeedUpdate == true)
-            {
-                IsNeedUpdate = false;
-            }
-
-            if (IsNeedFixedUpdate == true)
-            {
-                IsNeedFixedUpdate = false;
-            }
-
-            if (IsNeedLateUpdate == true)
-            {
-                IsNeedLateUpdate = false;
-            }
-        }
-
-        /// <summary>
-        ///  销毁游戏物体
-        /// </summary>
-        public void DestoryGameObject()
-        {
-            GameObject.Destroy(gameObject);
-            gameObject = null;
-            transform = null;
+            instanceID = 0;
         }
     }
 }

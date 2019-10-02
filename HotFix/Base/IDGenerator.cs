@@ -2,7 +2,7 @@
 {
     public class IDGenerator
     {
-        private static long id;
+        private static long id = 0;
 
         /// <summary>
         ///  获取唯一标识

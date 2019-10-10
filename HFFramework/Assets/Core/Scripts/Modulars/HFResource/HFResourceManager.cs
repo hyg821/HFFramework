@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 using Sirenix.OdinInspector;
+using System.Threading.Tasks;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -170,7 +171,7 @@ namespace HFFramework
             else
             {
                 AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-                GameObject g = ab.LoadAssetWithCache<GameObject>(assetName);
+                GameObject g = ab.LoadAsset<GameObject>(assetName);
                 return g;
             }
         }
@@ -189,7 +190,7 @@ namespace HFFramework
             else
             {
                 AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-                Sprite sp = ab.LoadAssetWithCache<Sprite>(assetName);
+                Sprite sp = ab.LoadAsset<Sprite>(assetName);
                 return sp;
             }
         }
@@ -204,7 +205,7 @@ namespace HFFramework
         public Sprite GetSpriteByAtlas(string packageName, string atlasName, string spriteName)
         {
             AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-            SpriteAtlas atlas = ab.LoadAssetWithCache<SpriteAtlas>(atlasName);
+            SpriteAtlas atlas = ab.LoadAsset<SpriteAtlas>(atlasName);
             return atlas.GetSprite(spriteName);
         }
 
@@ -235,7 +236,7 @@ namespace HFFramework
             else
             {
                 AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-                Shader shader = ab.LoadAssetWithCache<Shader>(assetName);
+                Shader shader = ab.LoadAsset<Shader>(assetName);
                 return shader;
             }
         }
@@ -256,7 +257,7 @@ namespace HFFramework
             else
             {
                 AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-                return ab.LoadAssetWithCache<T>(assetName);
+                return ab.LoadAsset<T>(assetName);
             }
         }
 
@@ -492,7 +493,7 @@ namespace HFFramework
             else
             {
                 AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(assetbundleName);
-                TextAsset text = ab.LoadAssetWithCache<TextAsset>(dllName + ".dll");
+                TextAsset text = ab.LoadAsset<TextAsset>(dllName + ".dll");
                 if (callback != null)
                 {
                     callback(text.bytes);
@@ -759,12 +760,12 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  通过缓存读取 文件 比如很多情况下读取图片会有很多次 那么如果不缓存的话就会形成很多副本 
+        ///  同步读取一个资源
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
         /// <returns></returns>
-        public T LoadAssetWithCache<T>(string name) where T : UnityEngine.Object
+        public T LoadAsset<T>(string name) where T : UnityEngine.Object
         {
             if (CacheDic.ContainsKey(name))
             {
@@ -785,13 +786,7 @@ namespace HFFramework
             }
         }
 
-        /// <summary>
-        ///  通过缓存读取 文件 比如很多情况下读取图片会有很多次 那么如果不缓存的话就会形成很多副本 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public UnityEngine.Object LoadAssetWithCache(string name)
+        public UnityEngine.Object LoadAsset(string name)
         {
             if (CacheDic.ContainsKey(name))
             {
@@ -813,48 +808,31 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  异步单独读取 无法使用递归加载 有可能出现 引用丢失的情况 适合读某一个图片
+        ///  异步读取一个资源
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
-        /// <param name="callback"></param>
-        public void LoadAssetWithCacheAsync<T>(string name, Action<T> callback) where T : UnityEngine.Object
+        /// <returns></returns>
+        public async Task<T> LoadAssetAsync<T>(string name) where T : UnityEngine.Object
         {
-            GameLooper.Instance.StartCoroutine(m_LoadAssetWithCacheAsync(name, callback));
-        }
-
-        private IEnumerator m_LoadAssetWithCacheAsync<T>(string name, Action<T> callback) where T : UnityEngine.Object
-        {
-            // 先判断一次 是否存在
-            if (CacheDic.ContainsKey(name))
+            TaskCompletionSource<T> completion = new TaskCompletionSource<T>();
+            UnityEngine.Object obj = null;
+            if (CacheDic.TryGetValue(name, out obj))
             {
-                callback(CacheDic[name] as T);
+                completion.SetResult(obj as T);
             }
             else
             {
                 AssetBundleRequest request = assetBundle.LoadAssetAsync<T>(name);
-                yield return request;
-
-                //因为是异步的所以 可能出现多次加载的问题 所以 再判断一次是否存在
-                if (CacheDic.ContainsKey(name))
+                Action<AsyncOperation> completed = null;
+                completed = delegate (AsyncOperation temp)
                 {
-                    callback(CacheDic[name] as T);
-                }
-                //如果还是没有 那么就加载asset 并且放到缓存里
-                else
-                {
-                    T t1 = request.asset as T;
-                    if (t1 != null)
-                    {
-                        CacheDic.Add(name, t1);
-                        callback(t1);
-                    }
-                    else
-                    {
-                        callback(null);
-                    }
-                }
+                    CacheDic.Add(name, request.asset);
+                    request.completed -= completed;
+                    completion.SetResult(request.asset as T);
+                };
+                request.completed += completed;
             }
+            return await completion.Task;
         }
 
         /// <summary>

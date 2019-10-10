@@ -71,7 +71,7 @@ namespace HFFramework
             }
 
             AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(assetBundleName);
-            grayMaterial = ab.LoadAssetWithCache<Material>(assetName);
+            grayMaterial = ab.LoadAsset<Material>(assetName);
         }
 
 

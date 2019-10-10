@@ -165,16 +165,37 @@ public class LoginController : UIController
 
     public async void Test()
     {
+        /*
         HFLog.C("-------------------------------------------------------------");
         HFLog.C("调用之前 "+Thread.CurrentThread.ManagedThreadId.ToString());
         object o = await task.Call(UnityEngine.Random.Range(1, 100), null);
         HFLog.C("调用之后 " + Thread.CurrentThread.ManagedThreadId.ToString());
         HFLog.C(o.ToString());
+        */
+
+        System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+        watch.Start();  //开始监视代码运行时间
+
+        
+        AssetBundlePackage package = HFResourceManager.Instance.LoadAssetBundleFromFile("prefab");
+        GameObject prefab = await package.LoadAssetAsync<GameObject>("Capsule");
+        GameObject.Instantiate(prefab);
+        /*
+        AssetBundlePackage package = HFResourceManager.Instance.LoadAssetBundleFromFile("prefab");
+        GameObject prefab = package.LoadAsset<GameObject>("Capsule");
+        GameObject.Instantiate(prefab);
+        */
+
+        watch.Stop();  //停止监视
+        TimeSpan timespan = watch.Elapsed;  //获取当前实例测量得出的总时间
+        HFLog.C(timespan.TotalMilliseconds.ToString());
+
     }
 
     private void Update()
     {
         SendNotificationMessage(GameConst.UI, 123, "str");
+        FindElement();
     }
 
     public override void Destroy()

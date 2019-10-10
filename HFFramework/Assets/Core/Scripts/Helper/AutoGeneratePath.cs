@@ -21,8 +21,14 @@ namespace HFFramework
         /// <summary>
         ///  是根节点 还是子节点
         /// </summary>
-        [Title("节点类型","", TitleAlignments.Left, false, false)]
+        [Title("节点类型", "", TitleAlignments.Left, false, false)]
         public UIType type = UIType.Child;
+
+        /// <summary>
+        ///  属性名称
+        /// </summary>
+        [Title("属性名称", "", TitleAlignments.Left, false, false)]
+        public string propertyName;
 
         /// <summary>
         ///  泛型名称
@@ -32,11 +38,22 @@ namespace HFFramework
         public string propertyType;
         private List<string> componentTypes = new List<string>();
 
-        /// <summary>
-        ///  属性名称
-        /// </summary>
-        [Title("属性名称", "", TitleAlignments.Left, false, false)]
-        public string propertyName;
+        public void Awake()
+        {
+            FindType();
+        }
+
+        [Button("刷新Property Type", ButtonSizes.Medium)]
+        public void FindType()
+        {
+            componentTypes.Clear();
+            MonoBehaviour[] monos = gameObject.GetComponents<MonoBehaviour>();
+            for (int i = 0; i < monos.Length; i++)
+            {
+                componentTypes.Add(monos[i].GetType().Name);
+            }
+        }
+
 
         [ShowIf("type", UIType.Root)]
         [Button("自动生成代码", ButtonSizes.Medium)]
@@ -50,11 +67,11 @@ namespace HFFramework
                 {
                     string P = item.propertyName;
                     string T = item.propertyType;
-                    if (string.IsNullOrEmpty(P)||string.IsNullOrEmpty(T))
+                    if (string.IsNullOrEmpty(P) || string.IsNullOrEmpty(T))
                     {
                         continue;
                     }
-                    str.AppendLine("        public " + T + " " + P+";");
+                    str.AppendLine("        public " + T + " " + P + ";");
                 }
                 str.AppendLine("        #region");
                 str.AppendLine("        public override void FindElement()");
@@ -63,13 +80,13 @@ namespace HFFramework
                 {
                     string P = item.propertyName;
                     string T = item.propertyType;
-                    if (string.IsNullOrEmpty(P)|| string.IsNullOrEmpty(T))
+                    if (string.IsNullOrEmpty(P) || string.IsNullOrEmpty(T))
                     {
                         continue;
                     }
                     if (T == "GameObject")
                     {
-                        str.AppendLine("            "+P + " = " + "FindChild" + "(\"" + GetRelativePath(this,item) + "\");");
+                        str.AppendLine("            " + P + " = " + "FindChild" + "(\"" + GetRelativePath(this, item) + "\");");
                     }
                     else
                     {
@@ -94,14 +111,14 @@ namespace HFFramework
 
         private string GetRelativePath(AutoGeneratePath root, AutoGeneratePath me)
         {
-            if (root==me)
+            if (root == me)
             {
                 return null;
             }
             else
             {
                 string str = Recursion(root.transform, me.transform, "");
-                if (str[0]=='/')
+                if (str[0] == '/')
                 {
                     str = str.Substring(1);
                 }
@@ -111,28 +128,25 @@ namespace HFFramework
 
         public string Recursion(Transform root, Transform temp, string path)
         {
-            if (root==temp)
+            if (root == temp)
             {
                 return path;
             }
             else
             {
-                path = "/" +temp.gameObject.name+path;
+                path = "/" + temp.gameObject.name + path;
                 temp = temp.parent;
                 return Recursion(root, temp, path);
             }
         }
-#if UNITY_EDITOR
-        private void Update()
-        {
-            componentTypes.Clear();
-            MonoBehaviour[] monos = gameObject.GetComponents<MonoBehaviour>();
-            for (int i = 0; i < monos.Length; i++)
-            {
-                componentTypes.Add(monos[i].GetType().Name);
+        /*
+        #if UNITY_EDITOR
+                private void Update()
+                {
+                    FindType();
+                }
+        #endif
             }
-        }
-#endif
+        */
     }
 }
-

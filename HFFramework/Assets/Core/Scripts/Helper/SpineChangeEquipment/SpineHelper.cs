@@ -37,7 +37,7 @@ namespace HFFramework
         public void AnalysisConfig()
         {
             AssetBundlePackage pp = HFResourceManager.Instance.LoadAssetBundleFromFile("Common_Config");
-            TextAsset tt = pp.LoadAssetWithCache<TextAsset>("SpineExchangeConfig");
+            TextAsset tt = pp.LoadAsset<TextAsset>("SpineExchangeConfig");
             SpineEquipment ex = JsonMapper.ToObject<SpineEquipment>(tt.text);
             for (int i = 0; i < ex.Equipment.Count; i++)
             {
@@ -83,7 +83,7 @@ namespace HFFramework
                 string defaultSkinName = info.defaultSkinName;
                 string spineEquipmentType = info.spineEquipmentTypeName;
                 AssetBundlePackage assetbundle = HFResourceManager.Instance.LoadAssetBundleFromFile(info.equipmentAssetbundleName);
-                AtlasAsset atlasAsset = assetbundle.LoadAssetWithCache<AtlasAsset>(info.equipmentAtlasAssetName);
+                AtlasAsset atlasAsset = assetbundle.LoadAsset<AtlasAsset>(info.equipmentAtlasAssetName);
                 float scale = skeletonAnimation.skeletonDataAsset.scale;
                 Atlas atlas = atlasAsset.GetAtlas();
                 AtlasRegion region = atlas.FindRegion(regionName);
@@ -146,7 +146,7 @@ namespace HFFramework
                 string defaultSkinName = info.defaultSkinName;
                 string spineEquipmentType = info.spineEquipmentTypeName;
                 AssetBundlePackage assetbundle = HFResourceManager.Instance.LoadAssetBundleFromFile(info.equipmentAssetbundleName);
-                AtlasAsset atlasAsset = assetbundle.LoadAssetWithCache<AtlasAsset>(info.equipmentAtlasAssetName);
+                AtlasAsset atlasAsset = assetbundle.LoadAsset<AtlasAsset>(info.equipmentAtlasAssetName);
                 float scale = skeletonAnimation.skeletonDataAsset.scale;
                 Atlas atlas = atlasAsset.GetAtlas();
                 AtlasRegion region = atlas.FindRegion(regionName);
@@ -191,7 +191,7 @@ namespace HFFramework
         public void ExchangeEquipment(SkeletonAnimation skeletonAnimation, EquipmentItem item)
         {
             AssetBundlePackage pg = HFResourceManager.Instance.LoadAssetBundleFromFile(item.equipmentAssetbundleName);
-            Texture2D equipmentTexture = pg.LoadAssetWithCache<Texture2D>(item.equipmentImageName);
+            Texture2D equipmentTexture = pg.LoadAsset<Texture2D>(item.equipmentImageName);
             // 找到具体的一个 插槽
             Slot slot = skeletonAnimation.skeleton.FindSlot(item.slotName);
             // 通过插槽和一张图片创建对应插槽下的附件

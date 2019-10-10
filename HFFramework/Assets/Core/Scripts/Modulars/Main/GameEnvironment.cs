@@ -14,7 +14,13 @@ namespace  HFFramework
 
     public enum GameResourcesType
     {
-        Editor,
+        /// <summary>
+        ///  编辑器 读取
+        /// </summary>
+        AssetDatabase,
+        /// <summary>
+        ///  资源包读取
+        /// </summary>
         AssetBundle
     }
 
@@ -112,7 +118,7 @@ namespace  HFFramework
         private void Init()
         {
             SwitchPlatform();
-            ResourcesType = GameResourcesType.Editor;
+            ResourcesType = GameResourcesType.AssetDatabase;
             RuntimeEnvironment = GameEnvironmentType.Develop;
             Language = GameLanguage.Chinese;
             SetAppVersion("1.0.0");

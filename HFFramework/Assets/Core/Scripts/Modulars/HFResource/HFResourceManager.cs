@@ -164,7 +164,7 @@ namespace HFFramework
         /// <returns></returns>
         public GameObject GetPrefab(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.Editor)
+            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
             {
                 return EditorLoadAsset<GameObject>(packageName, assetName);
             }
@@ -183,7 +183,7 @@ namespace HFFramework
         /// <returns></returns>
         public Sprite GetSprite(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.Editor)
+            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
             {
                 return EditorLoadAsset<Sprite>(packageName, assetName);
             }
@@ -228,7 +228,7 @@ namespace HFFramework
         /// <returns></returns>
         public Shader GetShader(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.Editor)
+            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
             {
                 Shader shader = EditorLoadAsset<Shader>(packageName, assetName);
                 return shader;
@@ -250,7 +250,7 @@ namespace HFFramework
         /// <returns></returns>
         public T GetAsset<T>(string packageName, string assetName) where T : UnityEngine.Object
         {
-            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.Editor)
+            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
             {
                 return EditorLoadAsset<T>(packageName, assetName);
             }
@@ -271,7 +271,7 @@ namespace HFFramework
         /// <param name="finishCallBack"></param>
         public void LoadScene(string assetBundleName,  string sceneName, Action finishCallback)
         {
-            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.Editor)
+            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
             {
                 SceneManager.LoadScene(sceneName);
                 if (finishCallback != null)
@@ -555,7 +555,7 @@ namespace HFFramework
         /// <param name="b">是否卸载压出来的的东西</param>
         public void UnloadAssetBundle(string assetBundleName, bool b = true)
         {
-            if (GameEnvironment.Instance.ResourcesType != GameResourcesType.Editor)
+            if (GameEnvironment.Instance.ResourcesType != GameResourcesType.AssetDatabase)
             {
                 assetBundleName = assetBundleName.ToLower();
                 AssetBundlePackage bundle = GetAssetBundle(assetBundleName);
@@ -568,7 +568,7 @@ namespace HFFramework
 
         public void UnloadAssetBundle(AssetBundlePackage bundle, bool b = true)
         {
-            if (GameEnvironment.Instance.ResourcesType != GameResourcesType.Editor)
+            if (GameEnvironment.Instance.ResourcesType != GameResourcesType.AssetDatabase)
             {
                 HFLog.L("卸载Assetbundle  " + bundle.name);
                 RecursionReleaseAssetBundle(bundle.name);
@@ -649,7 +649,7 @@ namespace HFFramework
 
         public void Debug()
         {
-            if (GameEnvironment.Instance.ResourcesType != GameResourcesType.Editor)
+            if (GameEnvironment.Instance.ResourcesType != GameResourcesType.AssetDatabase)
             {
                 foreach (var item in allAssetBundleDic)
                 {

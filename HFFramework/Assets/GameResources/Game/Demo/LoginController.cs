@@ -180,6 +180,7 @@ public class LoginController : UIController
         AssetBundlePackage package = HFResourceManager.Instance.LoadAssetBundleFromFile("prefab");
         GameObject prefab = await package.LoadAssetAsync<GameObject>("Capsule");
         GameObject.Instantiate(prefab);
+        HFResourceManager.Instance.UnloadAssetBundle(package);
         /*
         AssetBundlePackage package = HFResourceManager.Instance.LoadAssetBundleFromFile("prefab");
         GameObject prefab = package.LoadAsset<GameObject>("Capsule");

@@ -245,6 +245,8 @@ namespace HFFramework
                     if (taskCache.TryGetValue(e.Key, out taskCompletion))
                     {
                         taskCompletion.SetResult(e.Value);
+                        //然后移除 因为一个TaskCompletionSource 没法服用两次
+                        taskCache.Remove(e.Key);
                     }
                 }
             }

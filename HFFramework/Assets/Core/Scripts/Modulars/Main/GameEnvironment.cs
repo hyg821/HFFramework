@@ -118,7 +118,6 @@ namespace  HFFramework
         private void Init()
         {
             SwitchPlatform();
-            ResourcesType = GameResourcesType.AssetDatabase;
             RuntimeEnvironment = GameEnvironmentType.Develop;
             Language = GameLanguage.Chinese;
             SetAppVersion("1.0.0");
@@ -142,26 +141,33 @@ namespace  HFFramework
         {
             switch (Application.platform)
             {
-                case RuntimePlatform.WebGLPlayer:
-                    Platform = GamePlatform.Web;
-                    break;
                 case RuntimePlatform.OSXEditor:
                     Platform = GamePlatform.Editor;
+                    ResourcesType = GameResourcesType.AssetDatabase;
                     break;
                 case RuntimePlatform.WindowsEditor:
                     Platform = GamePlatform.Editor;
+                    ResourcesType = GameResourcesType.AssetDatabase;
                     break;
                 case RuntimePlatform.WindowsPlayer:
                     Platform = GamePlatform.Windows;
+                    ResourcesType = GameResourcesType.AssetBundle;
                     break;
                 case RuntimePlatform.OSXPlayer:
                     Platform = GamePlatform.Mac;
+                    ResourcesType = GameResourcesType.AssetBundle;
                     break;
                 case RuntimePlatform.IPhonePlayer:
                     Platform = GamePlatform.iOS;
+                    ResourcesType = GameResourcesType.AssetBundle;
                     break;
                 case RuntimePlatform.Android:
                     Platform = GamePlatform.Android;
+                    ResourcesType = GameResourcesType.AssetBundle;
+                    break;
+                case RuntimePlatform.WebGLPlayer:
+                    Platform = GamePlatform.Web;
+                    ResourcesType = GameResourcesType.AssetBundle;
                     break;
                 default:
                     break;

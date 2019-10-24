@@ -81,7 +81,7 @@ namespace HFFramework
                 resourcesManager = GameFactory.Create<HFResourceManager>("ResourcesManager", true);
                 resourcesManager.InitWithRootPath(PathManager.Instance.PersistentDataAssetBundlesPath, PathManager.Instance.StreamingAssetsAssetBundlesPath , "AssetBundles");
 
-                //添加游戏运行环境 + 配置文件
+                //添加游戏运行环境
                 gameObject.AddComponent<GameEnvironment>();
 
                 //2通知中心

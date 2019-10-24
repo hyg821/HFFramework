@@ -22,7 +22,7 @@ namespace HFFramework
         // 如果有依赖请把依赖做成预设体 通过加载预设体的方式 实现
         // 如果是编辑器开发模式 那么场景需要build assetbundle 才能看到效果 其他的不需要build 因为编辑器会走AssetDatabase直接加载
         // 正常卸载明确的的bundle 比如 prefab sprite  不明确的并且被依赖的资源通过UnloadUnusedAssetBundle 来卸载（没有经过测试 谨慎使用）
-        // 推荐shader 最开始就全部加载出来 并且都放在一个bundle下
+        // 推荐shader 通过ShaderVariantCollection 收集所有变体 最开始就全部加载出来 并且都放在一个bundle下
 
         public static HFResourceManager Instance;
 

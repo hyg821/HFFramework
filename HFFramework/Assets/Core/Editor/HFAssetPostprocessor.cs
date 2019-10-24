@@ -24,12 +24,12 @@ namespace UnityEditor
 
             for (int i = 0; i < movedAssets.Length; i++)
             {
-                SetAssetbundleName(importedAssets[i]);
+                SetAssetbundleName(movedAssets[i]);
             }
 
             for (int i = 0; i < movedFromAssetPaths.Length; i++)
             {
-                SetAssetbundleName(importedAssets[i]);
+                SetAssetbundleName(movedFromAssetPaths[i]);
             }
         }
 

@@ -460,7 +460,7 @@ namespace HFFramework
         /// </summary>
         /// <param name="list"></param>
         /// <param name="progressCallback"></param>
-        public void LoadAssetsBundlesFromFileFakeAsync(string[] list, Action<float> progressCallback)
+        public void LoadAssetsBundlesFromFileAsync(string[] list, Action<float> progressCallback)
         {
             StartCoroutine(m_LoadAssetsBundlesFromFileAsync(list, progressCallback));
         }
@@ -788,23 +788,7 @@ namespace HFFramework
 
         public UnityEngine.Object LoadAsset(string name)
         {
-            if (CacheDic.ContainsKey(name))
-            {
-                return CacheDic[name];
-            }
-            else
-            {
-                UnityEngine.Object t1 = assetBundle.LoadAsset(name);
-                if (t1 != null)
-                {
-                    CacheDic.Add(name, t1);
-                    return t1;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            return LoadAsset<UnityEngine.Object>(name);
         }
 
         /// <summary>

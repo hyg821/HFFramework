@@ -38,7 +38,10 @@ namespace HFFramework
         /// </summary>
         public float useAllTime;
 
-        public int useCount;
+        /// <summary>
+        ///  执行Task次数
+        /// </summary>
+        public int executeCount;
 
         /// <summary>
         ///  目标总时间
@@ -62,11 +65,13 @@ namespace HFFramework
 
         public void Update(float delta)
         {
+            //如果标记完成 直接退出
             if (isComplete==true)
             {
                 return;
             }
 
+            //无限执行 
             if (repeatCount<0)
             {
                 Execute(delta);
@@ -75,26 +80,34 @@ namespace HFFramework
 
             if (useAllTime > taskTime)
             {
+                //做一个特殊判断 如果 任务时间 等于 延迟 那么直接执行一次 
+                if (delay==taskTime)
+                {
+                    Execute(delta);
+                }
                 isComplete = true;
                 return;
             }
 
+            //如果使用的总时间大于延迟 那么开始执行
             if (useAllTime>= delay)
             {
                 Execute(delta);
             }
 
+            //使用总时间 递增
             useAllTime += delta;
         }
 
         private void Execute(float delta)
         {
-            //特殊判断 
-            if (useCount==0)
+            //特殊判断 如果是 第一次 那么直接执行
+            if (executeCount == 0)
             {
                 Execute();
             }
 
+            //如果经过的时间 小于 间隔时间
             if (useIntervalTime < interval)
             {
                 useIntervalTime += delta;
@@ -108,7 +121,7 @@ namespace HFFramework
         private void Execute()
         {
             useIntervalTime = 0;
-            useCount++;
+            executeCount++;
             if (task != null)
             {
                 task();
@@ -122,10 +135,10 @@ namespace HFFramework
             interval = 0;
             delay = 0;
             repeatCount = 0;
-            task = null;
             useAllTime = 0;
             taskTime = 0;
             useIntervalTime = 0;
+            task = null;
         }
     }
 }

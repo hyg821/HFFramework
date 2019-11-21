@@ -5,6 +5,9 @@ using System;
 
 namespace HFFramework
 {
+    /// <summary>
+    ///  不精准计时器 大约慢两帧
+    /// </summary>
     public class TimerManager : MonoBehaviour, IManager
     {
         public static TimerManager Instance;

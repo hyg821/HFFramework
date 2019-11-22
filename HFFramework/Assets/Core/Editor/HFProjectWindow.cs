@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-namespace HFFramework
+﻿namespace HFFramework
 {
     using Sirenix.OdinInspector.Editor;
     using UnityEngine;
@@ -50,8 +49,10 @@ namespace HFFramework
             PlayerSettings.allowedAutorotateToPortrait = false;
             PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
             //左右横向显示
-            PlayerSettings.allowedAutorotateToLandscapeLeft = true;
-            PlayerSettings.allowedAutorotateToLandscapeRight = true;
+            PlayerSettings.allowedAutorotateToLandscapeLeft = false;
+            PlayerSettings.allowedAutorotateToLandscapeRight = false;
+
+            PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeRight;
 
             //安卓 ARMv7 包体减小 
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7;
@@ -72,4 +73,3 @@ namespace HFFramework
         }
     }
 }
-#endif

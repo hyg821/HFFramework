@@ -52,7 +52,7 @@
             PlayerSettings.allowedAutorotateToLandscapeLeft = false;
             PlayerSettings.allowedAutorotateToLandscapeRight = false;
 
-            PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeRight;
+            PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
 
             //安卓 ARMv7 包体减小 
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7;

@@ -13,8 +13,8 @@ namespace HFFramework
         public static string[] split = new string[]{","};
         public static string[] arraySplit = new string[] { "[","]",";" };
 
-        public static string InputPath = "GameResources/Game/Config"+HFEditorTools.AssetFolderIde;
-        public static string OutputPath = "GameResources/Game/Script/Config";
+        public static string InputPath = "GameResources/Config"+HFEditorTools.AssetFolderIde;
+        public static string OutputPath = "GameResources/Script/Config";
 
         public static string ConfigAssetbundleName = "Config";
 

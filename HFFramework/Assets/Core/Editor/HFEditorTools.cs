@@ -131,7 +131,7 @@ namespace HFFramework
         [MenuItem("游戏辅助工具/资源设置/设置DLL到具体资源目录")]
         public static void ReNameDLL()
         {
-            string str = "/GameResources/Game/DLL" + AssetFolderIde + "/";
+            string str = "/GameResources/DLL" + AssetFolderIde + "/";
             string target = GameConst.HotFixDLLName + ".dll";
             string sourcePath = Application.streamingAssetsPath + "/DLL/" + target;
             string reNamePath = Application.dataPath + str + target + ".bytes";

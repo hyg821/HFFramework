@@ -1622,10 +1622,6 @@
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
       <Project>{F6E111FE-E295-B9E1-F04C-4F7C730347AB}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
-    <ProjectReference Include="UniRx.Async.csproj">
-      <Project>{60693578-8DE5-9662-D861-56CBFAD73156}</Project>      <Name>UniRx.Async</Name>    </ProjectReference>
-    <ProjectReference Include="UniRx.Async.Editor.csproj">
-      <Project>{7C37BF5E-6A74-E27C-916F-B30B38A1D14F}</Project>      <Name>UniRx.Async.Editor</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

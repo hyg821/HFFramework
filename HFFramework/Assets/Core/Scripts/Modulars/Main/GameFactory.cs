@@ -55,21 +55,6 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  创建一个预设体 然后获取他的控制类  out 返回的是创建出来的gameObject
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="assetPackageName"></param>
-        /// <param name="assetName"></param>
-        /// <returns></returns>
-        public static T Create<T>(string assetPackageName, string assetName,out GameObject temp)
-        {
-            GameObject prefab = HFResourceManager.Instance.GetPrefab(assetPackageName, assetName);
-            temp = GameObject.Instantiate(prefab);
-            temp.name = assetName;
-            return temp.GetComponent<T>();
-        }
-
-        /// <summary>
         ///  销毁自己 new 出来的 object
         /// </summary>
         /// <param name="asset"></param>

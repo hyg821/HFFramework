@@ -173,10 +173,10 @@ namespace HFFramework
             return path;
         }
 
-        public static string SetColor(string str, string color)
+        public static string SetColor(object obj, string color)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("<color=#{0}>{1}</color>", color, str);
+            sb.AppendFormat("<color=#{0}>{1}</color>", color, obj);
             return sb.ToString();
         }
 

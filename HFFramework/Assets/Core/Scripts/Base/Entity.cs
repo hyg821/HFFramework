@@ -2,9 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using HFFramework;
 
-namespace HotFix
+namespace HFFramework
 {
     public class Entity
     {
@@ -257,7 +256,7 @@ namespace HotFix
             for (int i = 0; i < CompomentList.Count; i++)
             {
                 Entity e = CompomentList[i];
-                if (typeof(T)==e.GetType())
+                if (typeof(T) == e.GetType())
                 {
                     return e as T;
                 }
@@ -277,7 +276,7 @@ namespace HotFix
                     break;
                 }
             }
-            if (index!=-1)
+            if (index != -1)
             {
                 CompomentList[index].Destroy();
                 CompomentList.RemoveAt(index);
@@ -325,15 +324,18 @@ namespace HotFix
             }
         }
 
-        public void SetParent(GameObject g)
+        public void SetParent(GameObject obj, bool worldPositionStays = false)
         {
-            transform.SetParent(g.transform, false);
+            transform.SetParent(obj.transform, worldPositionStays);
         }
 
-        public void SetParent(Entity g)
+        public void SetParent(Entity entity, bool worldPositionStays = false)
         {
-            parent = g;
-            transform.SetParent(g.transform, false);
+            parent = entity;
+            if (entity.gameObject!=null)
+            {
+                SetParent(entity.gameObject, worldPositionStays);
+            }
         }
 
         /// <summary>
@@ -379,7 +381,7 @@ namespace HotFix
                 if (value != isNeedUpdate)
                 {
                     isNeedUpdate = value;
-                    GameUpdate.PrepareForUpdate(this);
+                    GameLooper.PrepareForUpdate(this);
                 }
             }
             get
@@ -396,7 +398,7 @@ namespace HotFix
                 if (value != isNeedFixedUpdate)
                 {
                     isNeedFixedUpdate = value;
-                    GameUpdate.PrepareForFixedUpdate(this);
+                    GameLooper.PrepareForFixedUpdate(this);
                 }
             }
             get
@@ -413,7 +415,7 @@ namespace HotFix
                 if (value != isNeedLateUpdate)
                 {
                     isNeedLateUpdate = value;
-                    GameUpdate.PrepareForFixedUpdate(this);
+                    GameLooper.PrepareForFixedUpdate(this);
                 }
             }
             get
@@ -423,7 +425,7 @@ namespace HotFix
         }
 
         /// <summary>
-        ///  如果需要 开启update 方法 只需要设置 IsNeedLateUpdate=true 并且重载M_Update 方法
+        ///  如果需要 开启update 方法 只需要设置 IsNeedLateUpdate=true 并且重载OnUpdate 方法
         /// </summary>
         public virtual void OnUpdate(float deltaTime)
         {

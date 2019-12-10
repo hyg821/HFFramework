@@ -49,7 +49,7 @@ namespace HFFramework
         Random,
     }
 
-    public class AudioPlayer : BaseMonoBehaviour
+    public class AudioPlayer : MonoBehaviour
     {
         /// <summary>
         /// 标记 每一个 player 的名字
@@ -114,20 +114,20 @@ namespace HFFramework
                         if (!IsLoop)
                         {
                             playTime = 0;
-                            IsActive = true;
+                            enabled = true;
                         }
                         break;
                     case AudioPlayerState.Pause:
                         if (!IsLoop)
                         {
-                            IsActive = false;
+                            enabled = false;
                         }
                         break;
                     case AudioPlayerState.Stop:
                         if (!IsLoop)
                         {
                             playTime = 0;
-                            IsActive = false;
+                            enabled = false;
                         }
                         break;
                     default:
@@ -247,9 +247,8 @@ namespace HFFramework
 
         public int audioIndex = 0;
 
-        public override void OnAwake()
+        public void Awake()
         {
-            base.OnAwake();
             audioSource = gameObject.GetComponent<AudioSource>();
             if (audioSource == null)
             {
@@ -384,9 +383,13 @@ namespace HFFramework
             }
         }
 
-        public override void Destroy()
+        public void Destroy()
         {
-            base.Destroy();
+            GameObject.Destroy(this);
+        }
+
+        private void OnDestroy()
+        {
             audioSource.Stop();
             CurrentAudioClip = null;
             Destroy(gameObject);

@@ -31,9 +31,9 @@ namespace HFFramework
             Application.logMessageReceived += LogMessageReceived;
         }
 
-        public override void ElementDidAppear()
+        public override void OnEnable()
         {
-            base.ElementDidAppear();
+            base.OnEnable();
             BringSelfToFront();
         }
 

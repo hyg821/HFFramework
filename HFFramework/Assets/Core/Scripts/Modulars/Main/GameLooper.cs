@@ -23,29 +23,29 @@ namespace HFFramework
         /// <summary>
         /// 即将在下一帧被update的列表
         /// </summary>
-        private List<BaseMonoBehaviour> prepareUpdateList = new List<BaseMonoBehaviour>();
+        private List<Entity> prepareUpdateList = new List<Entity>();
         /// <summary>
         ///  本帧执行的update的列表
         /// </summary>
-        private List<BaseMonoBehaviour> updateList = new List<BaseMonoBehaviour>();
+        private List<Entity> updateList = new List<Entity>();
 
         /// <summary>
         ///  即将在下一帧被fixedUpdate的列表
         /// </summary>
-        private List<BaseMonoBehaviour> prepareFixedUpdateList = new List<BaseMonoBehaviour>();
+        private List<Entity> prepareFixedUpdateList = new List<Entity>();
         /// <summary>
         ///  本帧执行fixedUpdate的列表
         /// </summary>
-        private List<BaseMonoBehaviour> fixedUpdateList = new List<BaseMonoBehaviour>();
+        private List<Entity> fixedUpdateList = new List<Entity>();
 
         /// <summary>
         /// 即将在下一帧被LateUpdate的列表
         /// </summary>
-        private List<BaseMonoBehaviour> prepareLateUpdateList = new List<BaseMonoBehaviour>();
+        private List<Entity> prepareLateUpdateList = new List<Entity>();
         /// <summary>
         ///  本帧执行lateUpdate的列表
         /// </summary>
-        private List<BaseMonoBehaviour> lateUpdateList = new List<BaseMonoBehaviour>();
+        private List<Entity> lateUpdateList = new List<Entity>();
 
         /// <summary>
         ///  event队列
@@ -72,7 +72,7 @@ namespace HFFramework
 
             for (int i = 0; i < prepareUpdateList.Count; i++)
             {
-                BaseMonoBehaviour temp = prepareUpdateList[i];
+                Entity temp = prepareUpdateList[i];
                 if (temp.IsNeedUpdate)
                 {
                     updateList.Add(temp);
@@ -94,7 +94,7 @@ namespace HFFramework
         {
             for (int i = 0; i < prepareFixedUpdateList.Count; i++)
             {
-                BaseMonoBehaviour temp = prepareFixedUpdateList[i];
+                Entity temp = prepareFixedUpdateList[i];
                 if (temp.IsNeedFixedUpdate)
                 {
                     fixedUpdateList.Add(temp);
@@ -116,7 +116,7 @@ namespace HFFramework
         {
             for (int i = 0; i < prepareLateUpdateList.Count; i++)
             {
-                BaseMonoBehaviour temp = prepareLateUpdateList[i];
+                Entity temp = prepareLateUpdateList[i];
                 if (temp.IsNeedLateUpdate)
                 {
                     lateUpdateList.Add(temp);
@@ -168,36 +168,27 @@ namespace HFFramework
             mainThreadContext.Send(d, state);
         }
 
-        public static void PrepareForUpdate(BaseMonoBehaviour mono)
+        public static void PrepareForUpdate(Entity mono)
         {
             if (Instance != null)
             {
-                if (Instance.prepareUpdateList.Contains(mono) ==false)
-                {
-                    Instance.prepareUpdateList.Add(mono);
-                }
+                Instance.prepareUpdateList.Add(mono);
             }
         }
 
-        public static void PrepareForFixedUpdate(BaseMonoBehaviour mono)
+        public static void PrepareForFixedUpdate(Entity mono)
         {
             if (Instance != null)
             {
-                if (Instance.prepareFixedUpdateList.Contains(mono) == false)
-                {
-                    Instance.prepareFixedUpdateList.Add(mono);
-                }
+                Instance.prepareFixedUpdateList.Add(mono);
             }
         }
 
-        public static void PrepareForLateUpdate(BaseMonoBehaviour mono)
+        public static void PrepareForLateUpdate(Entity mono)
         {
             if (Instance != null)
             {
-                if (Instance.prepareLateUpdateList.Contains(mono) == false)
-                {
-                    Instance.prepareLateUpdateList.Add(mono);
-                }
+                Instance.prepareLateUpdateList.Add(mono);
             }
         }
     }

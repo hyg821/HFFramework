@@ -43,8 +43,11 @@ public class LoginController : UIController
 
     public TestTask task;
     // Use this for initialization
-    void Start()
+
+    public override void Awake()
     {
+        base.Awake();
+  
         FindElement();
 
         task = new TestTask();
@@ -57,7 +60,7 @@ public class LoginController : UIController
 
         ReceiveNotificationMessage(this, GameConst.STATE, GameStateChecker.APPPAUSE, delegate (NotificationMessage msg)
         {
-            print("是否暂停 " + msg.content);
+            HFLog.L("是否暂停 " + msg.content);
         });
 
         loginBtn.onClick.AddListener(delegate ()
@@ -131,18 +134,18 @@ public class LoginController : UIController
 
         webImage.SetWebImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550678703691&di=ffbd41f0ddfcde0dd19ce793dad58320&imgtype=0&src=http%3A%2F%2Fpic17.nipic.com%2F20111021%2F8633866_210108284151_2.jpg");
 
-        print(ConfigMan.Get(0).GetAddress("1"));
-        print(ConfigMan.Get(0).love.Count);
-        print(ConfigMan.Get(0).sex);
-        print(ConfigChat.Get(1).ChooseCtype.name);
-        print(ConfigRole.Get(1).GetTime1(1).name);
+        HFLog.L(ConfigMan.Get(0).GetAddress("1"));
+        HFLog.L(ConfigMan.Get(0).love.Count);
+        HFLog.L(ConfigMan.Get(0).sex);
+        HFLog.L(ConfigChat.Get(1).ChooseCtype.name);
+        HFLog.L(ConfigRole.Get(1).GetTime1(1).name);
 
 
         jumpBtn.onClick.AddListener(delegate ()
         {           
             HFResourceManager.Instance.LoadScene("SceneA", "SceneA",delegate()
             {
-                UIManager.Instance.CloseController("Login");
+                UIManager.Instance.CloseController<LoginController>();
             });    
         });
 

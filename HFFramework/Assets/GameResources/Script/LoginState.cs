@@ -10,7 +10,7 @@
         {
             base.OnStateEnter();
             //创建控制器
-            LoginController controller = UIManager.Instance.GetController<LoginController>("Login");
+            LoginController controller = UIManager.Instance.GetController<LoginController>();
             controller.Open();
         }
 

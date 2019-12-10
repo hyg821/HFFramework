@@ -22,17 +22,12 @@ namespace HFFramework
             set
             {
                 config = value;
-                SetParent(UIManager.Instance.GetCanvas(config.LayerIndex), false);
+                SetParent(UIManager.Instance.GetCanvas(config.LayerIndex).gameObject, false);
             }
             get
             {
                 return config;
             }
-        }
-
-        public override void OnAwake()
-        {
-            base.OnAwake();
         }
 
         /// <summary>

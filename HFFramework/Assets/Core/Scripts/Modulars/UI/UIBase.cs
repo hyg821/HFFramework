@@ -20,7 +20,7 @@ namespace HFFramework
         CanvasGroup
     }
 
-    public class UIBase : BaseMonoBehaviour
+    public class UIBase : Entity
     {
         /// <summary>
         ///  UI 隐藏 类型
@@ -63,13 +63,13 @@ namespace HFFramework
                                 break;
                             case UIHideType.Scale:
                                 transform.localScale = Vector3.one;
-                                ElementDidAppear();
+                                OnEnable();
                                 break;
                             case UIHideType.CanvasGroup:
                                 CanvasGroup.alpha = 1;
                                 CanvasGroup.blocksRaycasts = true;
                                 CanvasGroup.interactable = true;
-                                ElementDidAppear();
+                                OnEnable();
                                 break;
                             default:
                                 break;
@@ -84,13 +84,13 @@ namespace HFFramework
                                 break;
                             case UIHideType.Scale:
                                 transform.localScale = Vector3.zero;
-                                ElementDidDisAppear();
+                                OnDisable();
                                 break;
                             case UIHideType.CanvasGroup:
                                 CanvasGroup.alpha = 0;
                                 CanvasGroup.blocksRaycasts = false;
                                 CanvasGroup.interactable = false;
-                                ElementDidDisAppear();
+                                OnDisable();
                                 break;
                             default:
                                 break;

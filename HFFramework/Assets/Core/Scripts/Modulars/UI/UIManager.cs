@@ -4,6 +4,7 @@ using UnityEngine;
 using LitJson;
 using Config;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace HFFramework
 {
@@ -48,6 +49,8 @@ namespace HFFramework
             GameObject eventSystem = Instantiate(prefab);
             eventSystem.name = "UIEventSystem";
             eventSystem.transform.SetParent(gameObject.transform);
+
+            AddCanvas(0);
         }
 
         private void SceneLoaded(Scene s, LoadSceneMode m)
@@ -81,37 +84,37 @@ namespace HFFramework
             return uiCanvas;
         }
 
-        public T GetController<T>(string type) where T :UIController
+        public T GetController<T>() where T :UIController,new()
         {
             UIController controller;
-            if (controllerDic.TryGetValue(type,out controller)==false)
+            string type = typeof(T).Name;
+            if (controllerDic.TryGetValue(type, out controller)==false)
             {
                 UI config = ConfigUI.Get(type);
-                GameObject obj;
-                controller = GameFactory.Create<T>(config.AssetbundleName, config.AssetName, out obj);
-                if (controller == null)
-                {
-                    controller = obj.AddComponent<T>();
-                }
+
+                GameObject prefab = HFResourceManager.Instance.GetPrefab(config.AssetbundleName, config.AssetName);
+                GameObject sourcers = GameObject.Instantiate(prefab);
+                sourcers.name = config.AssetName;
+
+                controller = Entity.CreateEntity<T>(sourcers);
+
                 controller.Config = config;
                 controllerDic.Add(type, controller);
             }
             return controller as T;
         }
 
-        public void OpenController(string type)
+        public T OpenController<T>() where T : UIController,new()
         {
-            UIController controller;
-            if (controllerDic.TryGetValue(type, out controller))
-            {
-                controller.Open();
-            }
+            T t = GetController<T>();
+            t.Open();
+            return t;
         }
 
-        public void CloseController(string type)
+        public void CloseController<T>()
         {
             UIController controller;
-            if (controllerDic.TryGetValue(type, out controller))
+            if (controllerDic.TryGetValue(typeof(T).Name, out controller))
             {
                 controller.Close();
             }

@@ -16,9 +16,7 @@ namespace HFFramework
             base.OnStateEnter();
             //初始化配置文件
             HFConfigManager.Instance.Init();
-            //添加canvas
-            UIManager.Instance.AddCanvas(0);
-            DebugController debug = UIManager.Instance.GetController<DebugController>("Debug");
+            DebugController debug = UIManager.Instance.GetController<DebugController>();
             debug.Close();
             controller.TranslateToState("Login");
         }

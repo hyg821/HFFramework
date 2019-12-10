@@ -32,7 +32,7 @@ namespace HFFramework
         Destroy
     }
 
-    public class UICanvas : BaseMonoBehaviour
+    public class UICanvas : BaseBehaviour
     {
         public const string CanvasName = "UILayer";
 
@@ -51,10 +51,8 @@ namespace HFFramework
         /// </summary>
         public CanvasScaler canvasScaler;
 
-        public override void OnAwake()
+        public void Awake()
         {
-            base.OnAwake();
-
             gameObject.layer = LayerMask.NameToLayer("UI"); ;
 
             canvas = gameObject.GetComponent<Canvas>();

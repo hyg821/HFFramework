@@ -139,7 +139,6 @@ namespace HFFramework
         {
             GameFactory.Instance.DestroyManager();
             HFResourceManager.Instance.DestroyManager();
-            NotificationCenter.Instance.DestroyManager();
             HFSocketManager.Instance.DestroyManager();
             AudioManager.Instance.DestroyManager();
             UIManager.Instance.DestroyManager();
@@ -153,6 +152,7 @@ namespace HFFramework
             GameStateManager.Instance.DestroyManager();
             TimerManager.Instance.DestroyManager();
             GameEnvironment.Instance.DestroyManager();
+            NotificationCenter.Instance.DestroyManager();
             MemoryClear();
         }
 

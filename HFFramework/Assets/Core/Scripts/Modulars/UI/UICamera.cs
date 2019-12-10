@@ -4,13 +4,12 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class UICamera : BaseMonoBehaviour
+    public class UICamera : BaseBehaviour
     {
         public new Camera camera;
 
-        public override void OnAwake()
+        public void Awake()
         {
-            base.OnAwake();
             camera = gameObject.GetComponent<Camera>();
         }
 

@@ -172,7 +172,8 @@
      <Compile Include="Assets\Core\HotFix\LitJson\ParserToken.cs" />
      <Compile Include="Assets\Core\Scripts\Base\BaseExpressionBehaviour.cs" />
      <Compile Include="Assets\Core\Scripts\Base\BaseLogicBehaviour.cs" />
-     <Compile Include="Assets\Core\Scripts\Base\BaseMonoBehaviour.cs" />
+     <Compile Include="Assets\Core\Scripts\Base\Entity.cs" />
+     <Compile Include="Assets\Core\Scripts\Base\IDGenerator.cs" />
      <Compile Include="Assets\Core\Scripts\Base\IManager.cs" />
      <Compile Include="Assets\Core\Scripts\Functions\AStar\AStar.cs" />
      <Compile Include="Assets\Core\Scripts\Functions\BoxCollider\Box.cs" />
@@ -239,6 +240,7 @@
      <Compile Include="Assets\Core\Scripts\Modulars\Pool\ObjectPoolManager.cs" />
      <Compile Include="Assets\Core\Scripts\Modulars\Timer\Timer.cs" />
      <Compile Include="Assets\Core\Scripts\Modulars\Timer\TimerManager.cs" />
+     <Compile Include="Assets\Core\Scripts\Modulars\UI\BaseBehaviour.cs" />
      <Compile Include="Assets\Core\Scripts\Modulars\UI\UIBase.cs" />
      <Compile Include="Assets\Core\Scripts\Modulars\UI\UICamera.cs" />
      <Compile Include="Assets\Core\Scripts\Modulars\UI\UICanvas.cs" />

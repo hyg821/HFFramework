@@ -12,7 +12,7 @@ namespace HFFramework
         Up
     }
 
-    public class CameraDragMove : BaseMonoBehaviour
+    public class CameraDragMove : MonoBehaviour
     {
         private const int rate = 1600;
         public DragType dragType;

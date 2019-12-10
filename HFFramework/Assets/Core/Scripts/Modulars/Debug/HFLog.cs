@@ -15,28 +15,28 @@ namespace HFFramework
         ///  最普通的打印
         /// </summary>
         /// <param name="str"></param>
-        public static void L(string str)
+        public static void L(object obj)
         {
             if (GameEnvironment.Instance.IsOpenLog == true)
             {
-                Debug.Log(str);
+                Debug.Log(obj);
             }
         }
 
         /// <summary>
         ///  一个默认带颜色的打印
         /// </summary>
-        public static void C(string str)
+        public static void C(object obj)
         {
             if (GameEnvironment.Instance.IsOpenLog == true)
             {
                 if (GameEnvironment.Instance.Platform == GamePlatform.Editor)
                 {
-                    Debug.Log(Time.frameCount + " : " + GameUtils.SetColor(str, constColor));
+                    Debug.Log(Time.frameCount + " : " + GameUtils.SetColor(obj, constColor));
                 }
                 else
                 {
-                    Debug.Log(Time.frameCount + " : " + str);
+                    Debug.Log(Time.frameCount + " : " + obj);
                 }
             }
         }
@@ -45,20 +45,20 @@ namespace HFFramework
         ///  一个无法关闭的打印
         /// </summary>
         /// <param name="str"></param>
-        public static void X(string str)
+        public static void X(object obj)
         {
-            Debug.Log(str);
+            Debug.Log(obj);
         }
 
         /// <summary>
         ///  报错打印
         /// </summary>
         /// <param name="str"></param>
-        public static void E(string str)
+        public static void E(object obj)
         {
             if (GameEnvironment.Instance.IsOpenLog == true)
             {
-                Debug.LogError(str);
+                Debug.LogError(obj);
             }
         }
     }

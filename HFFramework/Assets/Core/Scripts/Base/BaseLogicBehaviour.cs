@@ -7,7 +7,7 @@ namespace HFFramework
     /// <summary>
     ///  基础逻辑层
     /// </summary>
-    public class BaseLogicBehaviour : BaseMonoBehaviour
+    public class BaseLogicBehaviour : Entity
     {
 
     }

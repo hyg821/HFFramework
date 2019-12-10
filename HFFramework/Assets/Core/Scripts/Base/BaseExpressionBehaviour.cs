@@ -7,7 +7,7 @@ namespace HFFramework
     /// <summary>
     ///  基础表现层
     /// </summary>
-    public class BaseExpressionBehaviour : BaseMonoBehaviour
+    public class BaseExpressionBehaviour : Entity
     {
 
     }

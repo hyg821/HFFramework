@@ -6,13 +6,13 @@ namespace HFFramework
 {
     public class HFDefaultSceneWindow : EditorWindow
     {
-        public string StartScenePath = "Assets/GameResources/Game/Demo/Demo.unity";
-
         void OnGUI()
         {
             EditorSceneManager.playModeStartScene = (SceneAsset)EditorGUILayout.ObjectField(new GUIContent("编辑器开始场景"), EditorSceneManager.playModeStartScene, typeof(SceneAsset), false);
-            if (GUILayout.Button("场景路径: " + StartScenePath))
-                SetPlayModeStartScene(StartScenePath);
+            if (GUILayout.Button("场景路径: " + GameConst.StartScenePath))
+            {
+                SetPlayModeStartScene(GameConst.StartScenePath);   
+            }
         }
 
         void SetPlayModeStartScene(string scenePath)

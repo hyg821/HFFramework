@@ -188,7 +188,7 @@ namespace UnityEditor
 
         public static void SetAssetbundleName(string assetPath)
         {
-            if (assetPath.Contains("GameResources") && assetPath.Contains(HFEditorTools.AssetFolderIde))
+            if (assetPath.Contains("GameResources") && assetPath.Contains(GameConst.AssetFolderIde))
             {
                 Debug.Log("导入或者移动 文件到 [A] 文件夹 "+ assetPath);
                 AssetImporter assetImporter = AssetImporter.GetAtPath(assetPath);

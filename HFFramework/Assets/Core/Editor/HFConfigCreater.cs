@@ -13,22 +13,17 @@ namespace HFFramework
         public static string[] split = new string[]{","};
         public static string[] arraySplit = new string[] { "[","]",";" };
 
-        public static string InputPath = "GameResources/Config"+HFEditorTools.AssetFolderIde;
-        public static string OutputPath = "GameResources/Script/Config";
-
-        public static string ConfigAssetbundleName = "Config";
-
         [MenuItem("游戏辅助工具/配置文件/生成解析 .cs文件")]
         static void GenerateConfigByAnalysis()
         {
-            string path = Application.dataPath + "/" + InputPath;
+            string path = Application.dataPath + "/" + GameConst.ConfigInputPath;
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
             DirectoryInfo directoryInfo = new DirectoryInfo(path);
 
-            path = Application.dataPath + "/" + OutputPath;
+            path = Application.dataPath + "/" + GameConst.ConfigOutputPath;
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -204,7 +199,7 @@ namespace HFFramework
             builder.AppendLine();
             builder.AppendLine("        public void StartAnalysis()");
             builder.AppendLine("        {");
-            builder.AppendLine(@"            TextAsset textAsset  = HFResourceManager.Instance.GetAsset<TextAsset>(" + "\"" + ConfigAssetbundleName + "\""+"," + "\"" + _class + "\"" + ");");
+            builder.AppendLine(@"            TextAsset textAsset  = HFResourceManager.Instance.GetAsset<TextAsset>(" + "\"" + GameConst.ConfigAssetbundleName + "\""+"," + "\"" + _class + "\"" + ");");
             builder.AppendLine(@"            StringReader reader = new StringReader(textAsset.text);");
             builder.AppendLine(@"            reader.ReadLine();");
             builder.AppendLine(@"            reader.ReadLine();");
@@ -299,7 +294,7 @@ namespace HFFramework
             builder.AppendLine(@"    }");
             builder.AppendLine(@"}");
 
-            string path = Application.dataPath + "/" + OutputPath+"/"+_class+".cs"; 
+            string path = Application.dataPath + "/" + GameConst.ConfigOutputPath+"/"+_class+".cs"; 
             byte[] b = Encoding.UTF8.GetBytes(builder.ToString());
             using (FileStream f = new FileStream(path, FileMode.Create))
             {
@@ -353,7 +348,7 @@ namespace HFFramework
                 builder.AppendLine("            "+_table+".Instance.StartAnalysis();");
             }
 
-            builder.AppendLine("            " + "HFResourceManager.Instance.UnloadAssetBundle("+"\""+ ConfigAssetbundleName + "\""+", true); ");
+            builder.AppendLine("            " + "HFResourceManager.Instance.UnloadAssetBundle("+"\""+ GameConst.ConfigAssetbundleName + "\""+", true); ");
             builder.AppendLine("            GC.Collect();");
 
             builder.AppendLine("        } ");
@@ -376,7 +371,7 @@ namespace HFFramework
             builder.AppendLine(@"    } ");
             builder.AppendLine(@"} ");
 
-            string path = Application.dataPath + "/" + OutputPath + "/" + _manager + ".cs";
+            string path = Application.dataPath + "/" + GameConst.ConfigOutputPath + "/" + _manager + ".cs";
             byte[] b = Encoding.UTF8.GetBytes(builder.ToString());
             using (FileStream f = new FileStream(path, FileMode.Create))
             {

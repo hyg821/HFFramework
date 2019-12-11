@@ -13,9 +13,6 @@ namespace HFFramework
 {
     public class HFEditorTools
     {
-        public const string AssetFolderIde = "[A]";
-        public const string SpriteFolderIde = "[S]";
-
         /// <summary>
         /// 资源打包
         /// </summary>
@@ -131,7 +128,7 @@ namespace HFFramework
         [MenuItem("游戏辅助工具/资源设置/设置DLL到具体资源目录")]
         public static void ReNameDLL()
         {
-            string str = "/GameResources/DLL" + AssetFolderIde + "/";
+            string str = "/GameResources/DLL" + GameConst.AssetFolderIde + "/";
             string target = GameConst.HotFixDLLName + ".dll";
             string sourcePath = Application.streamingAssetsPath + "/DLL/" + target;
             string reNamePath = Application.dataPath + str + target + ".bytes";
@@ -181,7 +178,7 @@ namespace HFFramework
 
             DirectoryInfo directory = new DirectoryInfo(path);
             //如果 文件夹名称有[A] 并且是需要设置 assetbundle名字   或者 文件夹名称有[S]并且需要设置图集的
-            if ((directory.Name.Contains(AssetFolderIde)&& setAssetbundleName)||(directory.Name.Contains(SpriteFolderIde) && setSpriteAtlas))
+            if ((directory.Name.Contains(GameConst.AssetFolderIde)&& setAssetbundleName)||(directory.Name.Contains(GameConst.SpriteFolderIde) && setSpriteAtlas))
             {
                 FileInfo[] file = directory.GetFiles();
 

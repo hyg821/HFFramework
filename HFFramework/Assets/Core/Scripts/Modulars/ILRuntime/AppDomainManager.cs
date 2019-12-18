@@ -16,6 +16,8 @@ namespace HFFramework
 {
     public class AppDomainManager : MonoBehaviour, IManager
     {
+        //DISABLE_ILRUNTIME_DEBUG
+
         public string updateMethodName = "Update";
         public string fixedUpdateMethodName = "FixedUpdate";
         public string lateUpdateMethodName = "LateUpdate";
@@ -67,6 +69,11 @@ namespace HFFramework
         private FastMethodInvoker.FastInvokeHandler m_DestroyMethod;
 
         /// <summary>
+        ///  执行ILRuntime 的平台
+        /// </summary>
+        public GamePlatform ILRuntimePlatform = GamePlatform.iOS;
+
+        /// <summary>
         ///  是否激活 mono的反射方法
         /// </summary>
         public bool IsActiveMonoMethod
@@ -106,7 +113,7 @@ namespace HFFramework
         /// </summary>
         private void HotFixInit(byte[] bytes)
         {
-            if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            if (GameEnvironment.Instance.Platform == ILRuntimePlatform)
             {
                 if (appdomain==null)
                 {
@@ -131,7 +138,7 @@ namespace HFFramework
 
         public void CacheMethod()
         {
-            if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            if (GameEnvironment.Instance.Platform == ILRuntimePlatform)
             {
                 i_updateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(updateMethodName, 0);
                 i_fixedUpdateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(fixedUpdateMethodName, 0);
@@ -150,7 +157,7 @@ namespace HFFramework
 
         public void HotFixAwake()
         {
-            if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            if (GameEnvironment.Instance.Platform == ILRuntimePlatform)
             {
                 appdomain.Invoke(MainClassName, "Main", null, null);
             }
@@ -162,7 +169,7 @@ namespace HFFramework
 
         public void Update()
         {
-            if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            if (GameEnvironment.Instance.Platform == ILRuntimePlatform)
             {
                 appdomain.Invoke(i_updateMethod, null, p0);
             }
@@ -174,7 +181,7 @@ namespace HFFramework
 
         public void FixedUpdate()
         {
-            if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            if (GameEnvironment.Instance.Platform == ILRuntimePlatform)
             {
                 appdomain.Invoke(i_fixedUpdateMethod, null, p0);
             }
@@ -186,7 +193,7 @@ namespace HFFramework
 
         public void LateUpdate()
         {
-            if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            if (GameEnvironment.Instance.Platform == ILRuntimePlatform)
             {
                 appdomain.Invoke(i_lateUpdateMethod, null, p0);
             }

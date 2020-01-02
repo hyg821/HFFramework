@@ -85,7 +85,7 @@ namespace HFFramework
 
         public static void SetDefaultImage(string url, Image c)
         {
-            Sprite s = new Sprite();
+            Sprite s = Sprite.Create(null,Rect.zero,Vector2.zero);
             if (c != null)
             {
                 c.sprite = s;

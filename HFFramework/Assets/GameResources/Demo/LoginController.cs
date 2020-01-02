@@ -141,13 +141,7 @@ public class LoginController : UIController
         HFLog.L(ConfigRole.Get(1).GetTime1(1).name);
 
 
-        jumpBtn.onClick.AddListener(delegate ()
-        {           
-            HFResourceManager.Instance.LoadScene("SceneA", "SceneA",delegate()
-            {
-                UIManager.Instance.CloseController<LoginController>();
-            });    
-        });
+        jumpBtn.onClick.AddListener(Jump);
 
         TaskBtn.onClick.AddListener(Test);
 
@@ -164,6 +158,12 @@ public class LoginController : UIController
             }
         });
         */
+    }
+
+    public async void Jump()
+    {
+        await HFResourceManager.Instance.LoadScene("SceneA", "SceneA");
+        UIManager.Instance.CloseController<LoginController>();
     }
 
     public async void Test()

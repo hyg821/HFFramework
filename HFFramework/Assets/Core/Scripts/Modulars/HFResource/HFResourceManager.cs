@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 using Sirenix.OdinInspector;
-using System.Threading.Tasks;
+using UniRx.Async;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -269,53 +269,24 @@ namespace HFFramework
         /// <param name="autoJump"></param>
         /// <param name="sceneName"></param>
         /// <param name="finishCallBack"></param>
-        public void LoadScene(string assetBundleName,  string sceneName, Action finishCallback)
+        public async UniTaskVoid LoadScene(string assetBundleName,  string sceneName)
         {
             if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
             {
-                SceneManager.LoadScene(sceneName);
-                if (finishCallback != null)
-                {
-                    finishCallback();
-                }
+                await SceneManager.LoadSceneAsync(sceneName);
             }
             else
             {
-                StartCoroutine(m_LoadScene(assetBundleName, sceneName, finishCallback));
+                await m_LoadScene(assetBundleName, sceneName);
             }
         }
 
-        private IEnumerator m_LoadScene(string assetBundleName, string sceneName, Action finishCallback)
+        private async UniTaskVoid m_LoadScene(string assetBundleName, string sceneName)
         {
-            /*
-            assetBundleName = assetBundleName.ToLower();
-            string url = AutoGetResourcePath(assetBundleName, true);
-            WWW www = WWW.LoadFromCacheOrDownload(url, 0);
-            yield return www;
-            AssetBundle bundle = www.assetBundle;
-            if (autoJump && !string.IsNullOrEmpty(sceneName))
-            {
-                yield return StartCoroutine(LoadSceneAsync(sceneName));
-            }
-            bundle.Unload(false);
-            www.Dispose();
-            www = null;
-            */
-
-            yield return StartCoroutine(m_LoadAssetBundleFromFileAsync(assetBundleName.ToLower()));
-            yield return StartCoroutine(LoadSceneAsync(sceneName));
+            await m_LoadAssetBundleFromFileAsync(assetBundleName.ToLower());
+            await SceneManager.LoadSceneAsync(sceneName);
             UnloadAssetBundle(assetBundleName, false);
-            yield return Resources.UnloadUnusedAssets();
-            if (finishCallback!=null)
-            {
-                finishCallback();
-            }
-        }
-
-        private IEnumerator LoadSceneAsync(string sceneName)
-        {
-            AsyncOperation ab = SceneManager.LoadSceneAsync(sceneName);
-            yield return ab;
+            await Resources.UnloadUnusedAssets();
         }
 
         /// <summary>
@@ -386,13 +357,13 @@ namespace HFFramework
         /// <param name="finishCallback"></param>
         public void LoadAssetBundleFromFileAsync(string assetBundleName, Action<AssetBundlePackage> finishCallback)
         {
-            StartCoroutine(m_LoadAssetBundleFromFileAsync(assetBundleName, finishCallback));
+            m_LoadAssetBundleFromFileAsync(assetBundleName, finishCallback);
         }
 
-        private IEnumerator m_LoadAssetBundleFromFileAsync(string assetBundleName, Action<AssetBundlePackage> finishCallback)
+        private async void m_LoadAssetBundleFromFileAsync(string assetBundleName, Action<AssetBundlePackage> finishCallback)
         {
             assetBundleName = assetBundleName.ToLower();
-            yield return StartCoroutine(m_LoadAssetBundleFromFileAsync(assetBundleName));
+            await m_LoadAssetBundleFromFileAsync(assetBundleName);
             if (finishCallback != null)
             {
                 AssetBundlePackage ab = allAssetBundleDic[assetBundleName];
@@ -401,25 +372,23 @@ namespace HFFramework
             }
         }
 
-        private IEnumerator m_LoadAssetBundleFromFileAsync(string assetBundleName)
+        private async UniTaskVoid m_LoadAssetBundleFromFileAsync(string assetBundleName)
         {
             string[] list = Instance.GetAssetBundleDependencies(assetBundleName);
             if (list.Length != 0)
             {
                 for (int i = 0; i < list.Length; i++)
                 {
-                    yield return StartCoroutine(m_LoadAssetBundleFromFileAsync(list[i]));
+                    await m_LoadAssetBundleFromFileAsync(list[i]);
                 }
             }
 
             if (!allAssetBundleDic.ContainsKey(assetBundleName))
             {
-                AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(AutoGetResourcePath(assetBundleName, false));
-                //HFLog.L("异步加载AssetBundle   " + assetBundleName);
-                yield return request;
+                AssetBundle assetBundle = await AssetBundle.LoadFromFileAsync(AutoGetResourcePath(assetBundleName, false));
                 if (!allAssetBundleDic.ContainsKey(assetBundleName))
                 {
-                    AssetBundle bundle = request.assetBundle;
+                    AssetBundle bundle = assetBundle;
                     AssetBundlePackage tmpAssetBundle = new AssetBundlePackage(bundle, assetBundleName);
                     AddAssetBundleToDic(tmpAssetBundle);
                 }
@@ -796,25 +765,19 @@ namespace HFFramework
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public async Task<T> LoadAssetAsync<T>(string name) where T : UnityEngine.Object
+        public async UniTask<T> LoadAssetAsync<T>(string name) where T : UnityEngine.Object
         {
-            TaskCompletionSource<T> completion = new TaskCompletionSource<T>();
+            UniTaskCompletionSource<T> completion = new UniTaskCompletionSource<T>();
             UnityEngine.Object obj = null;
             if (CacheDic.TryGetValue(name, out obj))
             {
-                completion.SetResult(obj as T);
+                completion.TrySetResult(obj as T);
             }
             else
             {
-                AssetBundleRequest request = assetBundle.LoadAssetAsync<T>(name);
-                Action<AsyncOperation> completed = null;
-                completed = delegate (AsyncOperation temp)
-                {
-                    CacheDic.Add(name, request.asset);
-                    request.completed -= completed;
-                    completion.SetResult(request.asset as T);
-                };
-                request.completed += completed;
+                T t = await assetBundle.LoadAssetAsync<T>(name) as T;
+                CacheDic.Add(name, t);
+                completion.TrySetResult(t);
             }
             return await completion.Task;
         }

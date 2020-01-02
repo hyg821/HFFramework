@@ -6,7 +6,6 @@ using DG.Tweening;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using Spine;
 using ILRuntime.CLR.Method;
 using System.Reflection;
 using ReflectorOptimization.Common;
@@ -235,7 +234,6 @@ namespace HFFramework
             appdomain.DelegateManager.RegisterMethodDelegate<string>();
             appdomain.DelegateManager.RegisterMethodDelegate<NotificationMessage>();
             appdomain.DelegateManager.RegisterMethodDelegate<AssetBundlePackage>();
-            appdomain.DelegateManager.RegisterMethodDelegate<TrackEntry>();
             appdomain.DelegateManager.RegisterFunctionDelegate<GameObject>();
             appdomain.DelegateManager.RegisterMethodDelegate<System.Int32, System.Byte[]>();
 
@@ -278,11 +276,6 @@ namespace HFFramework
             appdomain.DelegateManager.RegisterDelegateConvertor<UnityAction<BaseEventData>>((action) =>
             {
                 return new UnityAction<BaseEventData>((p) => { ((Action<BaseEventData>)action)(p); });
-            });
-
-            appdomain.DelegateManager.RegisterDelegateConvertor<Spine.AnimationState.TrackEntryDelegate>((action) =>
-            {
-                return new Spine.AnimationState.TrackEntryDelegate((p) => { ((Action<TrackEntry>)action)(p); });
             });
 
             //不要注释  否则会开启大量反射方法

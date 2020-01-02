@@ -180,7 +180,7 @@ public class LoginController : UIController
         watch.Start();  //开始监视代码运行时间
 
         
-        AssetBundlePackage package = HFResourceManager.Instance.LoadAssetBundleFromFile("prefab");
+        AssetBundlePackage package = await HFResourceManager.Instance.LoadAssetBundleFromFileAsync("prefab");
         GameObject prefab = await package.LoadAssetAsync<GameObject>("Capsule");
         GameObject.Instantiate(prefab);
         HFResourceManager.Instance.UnloadAssetBundle(package);

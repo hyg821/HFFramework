@@ -355,24 +355,13 @@ namespace HFFramework
         /// </summary>
         /// <param name="assetBundleName"></param>
         /// <param name="finishCallback"></param>
-        public void LoadAssetBundleFromFileAsync(string assetBundleName, Action<AssetBundlePackage> finishCallback)
-        {
-            m_LoadAssetBundleFromFileAsync(assetBundleName, finishCallback);
-        }
-
-        private async void m_LoadAssetBundleFromFileAsync(string assetBundleName, Action<AssetBundlePackage> finishCallback)
+        public async UniTask<AssetBundlePackage> LoadAssetBundleFromFileAsync(string assetBundleName)
         {
             assetBundleName = assetBundleName.ToLower();
-            await m_LoadAssetBundleFromFileAsync(assetBundleName);
-            if (finishCallback != null)
-            {
-                AssetBundlePackage ab = allAssetBundleDic[assetBundleName];
-                ab.Retain();
-                finishCallback(ab);
-            }
+            return await m_LoadAssetBundleFromFileAsync(assetBundleName);
         }
 
-        private async UniTaskVoid m_LoadAssetBundleFromFileAsync(string assetBundleName)
+        private async UniTask<AssetBundlePackage> m_LoadAssetBundleFromFileAsync(string assetBundleName)
         {
             string[] list = Instance.GetAssetBundleDependencies(assetBundleName);
             if (list.Length != 0)
@@ -383,22 +372,26 @@ namespace HFFramework
                 }
             }
 
+            AssetBundlePackage assetBundlePackage = null;
             if (!allAssetBundleDic.ContainsKey(assetBundleName))
             {
-                AssetBundle assetBundle = await AssetBundle.LoadFromFileAsync(AutoGetResourcePath(assetBundleName, false));
+                AssetBundle assetbundle = await AssetBundle.LoadFromFileAsync(AutoGetResourcePath(assetBundleName, false));
                 if (!allAssetBundleDic.ContainsKey(assetBundleName))
                 {
-                    AssetBundle bundle = assetBundle;
-                    AssetBundlePackage tmpAssetBundle = new AssetBundlePackage(bundle, assetBundleName);
-                    AddAssetBundleToDic(tmpAssetBundle);
+                    assetBundlePackage = new AssetBundlePackage(assetbundle, assetBundleName);
+                    AddAssetBundleToDic(assetBundlePackage);
+                }
+                else
+                {
+                    assetBundlePackage = allAssetBundleDic[assetBundleName];
                 }
             }
             else
             {
-                AssetBundlePackage ab = allAssetBundleDic[assetBundleName];
-                ab.Retain();
-                //HFLog.L("异步 通过缓存加载");
+                assetBundlePackage = allAssetBundleDic[assetBundleName];
             }
+            assetBundlePackage.Retain();
+            return assetBundlePackage;
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Threading;
+using System.Collections.Concurrent;
 
 namespace HFFramework
 {
@@ -50,7 +51,7 @@ namespace HFFramework
         /// <summary>
         ///  event队列
         /// </summary>
-        private Queue<Action> eventQueue = new Queue<Action>();
+        private ConcurrentQueue<Action> eventQueue = new ConcurrentQueue<Action>();
 
         void Awake()
         {
@@ -60,13 +61,13 @@ namespace HFFramework
     
         void Update()
         {
-            lock (lockObj)
+            //执行事件队列
+            while (eventQueue.Count > 0)
             {
-                //执行事件队列
-                while (eventQueue.Count > 0)
+                Action action;
+                if (eventQueue.TryDequeue(out action))
                 {
-                    Action e = eventQueue.Dequeue();
-                    e();
+                    action();
                 }
             }
 
@@ -142,19 +143,16 @@ namespace HFFramework
             fixedUpdateList.Clear();
             prepareLateUpdateList.Clear();
             lateUpdateList.Clear();
-            eventQueue.Clear();
+            eventQueue = null;
             mainThreadContext = null;
             Instance = null;
         }
 
         public static void BackToMainThread(Action e)
         {
-            lock (lockObj)
+            if (e != null && Instance != null)
             {
-                if (e != null && Instance != null)
-                {
-                    Instance.eventQueue.Enqueue(e);
-                }
+                Instance.eventQueue.Enqueue(e);
             }
         }
 

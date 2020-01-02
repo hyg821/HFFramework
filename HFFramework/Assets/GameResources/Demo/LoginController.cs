@@ -176,22 +176,46 @@ public class LoginController : UIController
         HFLog.C(o.ToString());
         */
 
-        System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
-        watch.Start();  //开始监视代码运行时间
 
-        
-        AssetBundlePackage package = await HFResourceManager.Instance.LoadAssetBundleFromFileAsync("prefab");
-        GameObject prefab = await package.LoadAssetAsync<GameObject>("Capsule");
+
+        /*
+        GameObject prefab = HFResourceManager.Instance.GetPrefab("prefab", "Capsule");
         GameObject.Instantiate(prefab);
+        */
+        System.Diagnostics.Stopwatch watch = null;
+        TimeSpan timespan ;
+
+        watch = new System.Diagnostics.Stopwatch();
+        watch.Start();  //开始监视代码运行时间
+        AssetBundlePackage package = await HFResourceManager.Instance.LoadAssetBundleFromFileAsync("prefab");
+        watch.Stop();  //停止监视
+        timespan = watch.Elapsed;  //获取当前实例测量得出的总时间
+        HFLog.C(timespan.TotalMilliseconds.ToString());
+
+        watch = new System.Diagnostics.Stopwatch();
+        watch.Start();  //开始监视代码运行时间
+        GameObject prefab = await package.LoadAssetAsync<GameObject>("Capsule");
+        watch.Stop();  //停止监视
+        timespan = watch.Elapsed;  //获取当前实例测量得出的总时间
+        HFLog.C(timespan.TotalMilliseconds.ToString());
+
+        watch = new System.Diagnostics.Stopwatch();
+        watch.Start();  //开始监视代码运行时间
+        GameObject.Instantiate(prefab);
+        watch.Stop();  //停止监视
+        timespan = watch.Elapsed;  //获取当前实例测量得出的总时间
+        HFLog.C(timespan.TotalMilliseconds.ToString());
+
+
         HFResourceManager.Instance.UnloadAssetBundle(package);
+        
         /*
         AssetBundlePackage package = HFResourceManager.Instance.LoadAssetBundleFromFile("prefab");
         GameObject prefab = package.LoadAsset<GameObject>("Capsule");
         GameObject.Instantiate(prefab);
         */
 
-        watch.Stop();  //停止监视
-        TimeSpan timespan = watch.Elapsed;  //获取当前实例测量得出的总时间
+
         HFLog.C(timespan.TotalMilliseconds.ToString());
 
     }

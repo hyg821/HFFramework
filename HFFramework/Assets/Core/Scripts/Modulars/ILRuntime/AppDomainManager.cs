@@ -7,7 +7,6 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using Spine;
-using Assets.Game.Scripts.HotFix;
 using ILRuntime.CLR.Method;
 using System.Reflection;
 using ReflectorOptimization.Common;
@@ -288,7 +287,6 @@ namespace HFFramework
 
             //不要注释  否则会开启大量反射方法
             ILRuntime.Runtime.Generated.CLRBindings.Initialize(appdomain);
-            AppDomainCommonSetting.Instance.SetupCLRRedirection(appdomain);
         }
 
         public void DestroyManager()

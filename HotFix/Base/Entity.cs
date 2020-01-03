@@ -50,10 +50,6 @@ namespace HotFix
         /// </summary>
         public Dictionary<long, Entity> SubEntityDic
         {
-            set
-            {
-                subEntityDic = value;
-            }
             get
             {
                 if (subEntityDic == null)
@@ -71,10 +67,6 @@ namespace HotFix
         /// </summary>
         public Dictionary<ulong, object> MessageTypeDic
         {
-            set
-            {
-                messageTypeDic = value;
-            }
             get
             {
                 if (messageTypeDic == null)
@@ -125,33 +117,33 @@ namespace HotFix
             }
         }
 
-        public Entity()
+        protected Entity()
         {
             instanceID = IDGenerator.GetID();
         }
 
         public static T CreateEntity<T>() where T : Entity, new()
         {
-            T t1 = new T();
-            t1.Awake();
-            return t1;
+            T t = new T();
+            t.Awake();
+            return t;
         }
 
         public static T CreateEntity<T>(GameObject gameObject = null) where T : Entity, new()
         {
-            T t1 = new T();
-            t1.SetGameObject(gameObject);
-            t1.Awake();
-            return t1;
+            T t = new T();
+            t.SetGameObject(gameObject);
+            t.Awake();
+            return t;
         }
 
         public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null) where T : Entity, new()
         {
-            T t1 = new T();
-            t1.parent = parent;
-            t1.SetGameObject(gameObject);
-            t1.Awake();
-            return t1;
+            T t = new T();
+            t.parent = parent;
+            t.SetGameObject(gameObject);
+            t.Awake();
+            return t;
         }
 
         /// <summary>
@@ -159,7 +151,10 @@ namespace HotFix
         /// </summary>
         public virtual void Awake()
         {
-
+            LoadResources();
+            FindElement();
+            ElementInit();
+            ReceiveMessage();
         }
 
         /// <summary>
@@ -246,7 +241,7 @@ namespace HotFix
 
         public T AddCompoment<T>() where T : Entity, new()
         {
-            T t1 = Entity.CreateEntity<T>(gameObject);
+            T t1 = CreateEntity<T>(gameObject);
             t1.parent = this;
             CompomentList.Add(t1);
             return t1;
@@ -257,7 +252,7 @@ namespace HotFix
             for (int i = 0; i < CompomentList.Count; i++)
             {
                 Entity e = CompomentList[i];
-                if (typeof(T)==e.GetType())
+                if (typeof(T) == e.GetType())
                 {
                     return e as T;
                 }
@@ -277,7 +272,7 @@ namespace HotFix
                     break;
                 }
             }
-            if (index!=-1)
+            if (index != -1)
             {
                 CompomentList[index].Destroy();
                 CompomentList.RemoveAt(index);
@@ -325,15 +320,18 @@ namespace HotFix
             }
         }
 
-        public void SetParent(GameObject g)
+        public void SetParent(GameObject obj, bool worldPositionStays = false)
         {
-            transform.SetParent(g.transform, false);
+            transform.SetParent(obj.transform, worldPositionStays);
         }
 
-        public void SetParent(Entity g)
+        public void SetParent(Entity entity, bool worldPositionStays = false)
         {
-            parent = g;
-            transform.SetParent(g.transform, false);
+            parent = entity;
+            if (entity.gameObject != null)
+            {
+                SetParent(entity.gameObject, worldPositionStays);
+            }
         }
 
         /// <summary>
@@ -423,7 +421,7 @@ namespace HotFix
         }
 
         /// <summary>
-        ///  如果需要 开启update 方法 只需要设置 IsNeedLateUpdate=true 并且重载M_Update 方法
+        ///  如果需要 开启update 方法 只需要设置 IsNeedLateUpdate=true 并且重载OnUpdate 方法
         /// </summary>
         public virtual void OnUpdate(float deltaTime)
         {

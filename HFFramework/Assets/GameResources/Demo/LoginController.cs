@@ -47,8 +47,7 @@ public class LoginController : UIController
     public override void Awake()
     {
         base.Awake();
-  
-        FindElement();
+
 
         task = new TestTask();
         task.Start();

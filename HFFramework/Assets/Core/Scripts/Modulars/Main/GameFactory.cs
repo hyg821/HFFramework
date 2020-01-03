@@ -63,6 +63,13 @@ namespace HFFramework
             UnityEngine.Object.Destroy(asset);
         }
 
+        public static GameObject Instantiate(GameObject prefab)
+        {
+            GameObject gameObject = GameObject.Instantiate(prefab);
+            gameObject.name = prefab.name;
+            return gameObject;
+        }
+
         public void DestroyManager()
         {
             Instance = null;

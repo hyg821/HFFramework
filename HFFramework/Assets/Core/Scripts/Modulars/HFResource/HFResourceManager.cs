@@ -282,7 +282,7 @@ namespace HFFramework
         /// <param name="autoJump"></param>
         /// <param name="sceneName"></param>
         /// <param name="finishCallBack"></param>
-        public async UniTaskVoid LoadScene(string packageName,  string sceneName)
+        public async UniTask LoadScene(string packageName,  string sceneName)
         {
             if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
             {
@@ -294,7 +294,7 @@ namespace HFFramework
             }
         }
 
-        private async UniTaskVoid m_LoadScene(string packageName, string sceneName)
+        private async UniTask m_LoadScene(string packageName, string sceneName)
         {
             await m_LoadAssetBundleFromFileAsync(packageName.ToLower());
             await SceneManager.LoadSceneAsync(sceneName);

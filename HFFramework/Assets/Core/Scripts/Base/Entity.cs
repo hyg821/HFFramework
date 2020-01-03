@@ -50,10 +50,6 @@ namespace HFFramework
         /// </summary>
         public Dictionary<long, Entity> SubEntityDic
         {
-            set
-            {
-                subEntityDic = value;
-            }
             get
             {
                 if (subEntityDic == null)
@@ -71,10 +67,6 @@ namespace HFFramework
         /// </summary>
         public Dictionary<ulong, object> MessageTypeDic
         {
-            set
-            {
-                messageTypeDic = value;
-            }
             get
             {
                 if (messageTypeDic == null)
@@ -167,7 +159,10 @@ namespace HFFramework
         /// </summary>
         public virtual void Awake()
         {
-
+            LoadResources();
+            FindElement();
+            ElementInit();
+            ReceiveMessage();
         }
 
         /// <summary>
@@ -194,11 +189,10 @@ namespace HFFramework
 
         }
 
-        public async UniTaskVoid LoadResourcesAsync(string packageName, string assetName)
+        public async UniTask LoadResourcesAsync(string packageName, string assetName)
         {
             GameObject prefab = await HFResourceManager.Instance.GetPrefabAsync(packageName, assetName);
-            GameObject temp = GameObject.Instantiate(prefab);
-            temp.name = prefab.name;
+            GameObject temp = Instantiate(prefab);
             SetGameObject(temp);
         }
 
@@ -262,7 +256,7 @@ namespace HFFramework
 
         public T AddCompoment<T>() where T : Entity, new()
         {
-            T t1 = Entity.CreateEntity<T>(gameObject);
+            T t1 = CreateEntity<T>(gameObject);
             t1.parent = this;
             CompomentList.Add(t1);
             return t1;

@@ -8,15 +8,28 @@ namespace HFFramework
     public class DebugController : UIController
     {
         public LogView logView;
-
         public Button closeBtn;
-
         public Button refCountBtn;
+        #region
+        public override void FindElement()
+        {
+            logView = AutoFind<LogView>("LogView");
+            closeBtn = AutoFind<Button>("CloseButton");
+            refCountBtn = AutoFind<Button>("RefCountButton");
+        }
+        #endregion
+
 
         GamePlatform pf;
 
-        void Start()
+        public override void Awake()
         {
+            base.Awake();
+        }
+
+        public override void ElementInit()
+        {
+            base.ElementInit();
             pf = GameEnvironment.Instance.Platform;
 
             refCountBtn.onClick.AddListener(delegate ()
@@ -24,11 +37,13 @@ namespace HFFramework
                 HFResourceManager.Instance.Debug();
             });
 
-            closeBtn.onClick.AddListener(delegate()
+            closeBtn.onClick.AddListener(delegate ()
             {
                 Close();
             });
             Application.logMessageReceived += LogMessageReceived;
+
+            IsNeedUpdate = true;
         }
 
         public override void OnEnable()
@@ -42,10 +57,11 @@ namespace HFFramework
             logView.SetData(condition, stackTrace, type);
         }
 
-        // Update is called once per frame
-        void Update()
+        public override void OnUpdate(float deltaTime)
         {
-            if (pf == GamePlatform.Android|| pf == GamePlatform.iOS)
+            base.OnUpdate(deltaTime);
+
+            if (pf == GamePlatform.Android || pf == GamePlatform.iOS)
             {
                 if (Input.touchCount == 3)
                 {
@@ -56,9 +72,9 @@ namespace HFFramework
                     IsShow = false;
                 }
             }
-            else if (pf == GamePlatform.Editor|| pf == GamePlatform.Windows|| pf == GamePlatform.Mac)
+            else if (pf == GamePlatform.Editor || pf == GamePlatform.Windows || pf == GamePlatform.Mac)
             {
-                if (Input.GetKeyDown(KeyCode.LeftControl)&& Input.GetKeyDown(KeyCode.RightControl))
+                if (Input.GetKeyDown(KeyCode.Mouse1))
                 {
                     IsShow = !IsShow;
                 }

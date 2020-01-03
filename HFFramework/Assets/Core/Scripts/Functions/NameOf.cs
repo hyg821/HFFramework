@@ -8,7 +8,7 @@ namespace HFFramework
     {
         int hyg;
 
-        List<int> hyg1;
+        List<int> hyg1 = null; 
 
         public void ZZZ()
         {

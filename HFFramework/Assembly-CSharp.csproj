@@ -1244,11 +1244,11 @@
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>D:/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.AssetBundleBrowser.Editor">
       <HintPath>D:/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.AssetBundleBrowser.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>D:/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/AllUnity/2018.4.14f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -1847,10 +1847,6 @@
       <Project>{05D5CC66-3550-BB07-5245-A1C94888D95D}</Project>
       <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj">
-      <Project>{348A06A2-D225-34F0-8234-56A1CC4136D2}</Project>
-      <Name>Sirenix.OdinInspector.CompatibilityLayer.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="UniRx.Async.csproj">
       <Project>{60693578-8DE5-9662-D861-56CBFAD73156}</Project>
       <Name>UniRx.Async</Name>
@@ -1858,6 +1854,10 @@
     <ProjectReference Include="UniRx.Async.Editor.csproj">
       <Project>{7C37BF5E-6A74-E27C-916F-B30B38A1D14F}</Project>
       <Name>UniRx.Async.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj">
+      <Project>{348A06A2-D225-34F0-8234-56A1CC4136D2}</Project>
+      <Name>Sirenix.OdinInspector.CompatibilityLayer.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

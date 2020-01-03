@@ -40,14 +40,14 @@ namespace HFFramework
         public void Init()
         {
             SceneManager.sceneLoaded += SceneLoaded;
-            GameObject prefab = HFResourceManager.Instance.GetAsset<GameObject>("hfui", "UICamera");
-            GameObject temp = Instantiate(prefab);
+            GameObject prefab = HFResourceManager.Instance.GetPrefab("hfui", "UICamera");
+            GameObject temp = GameFactory.Instantiate(prefab);
             temp.name = CameraName;
             UICamera = temp.GetComponent<UICamera>();
             UICamera.SetParent(gameObject);
 
-            prefab = HFResourceManager.Instance.GetAsset<GameObject>("hfui", "UIEventSystem");
-            GameObject eventSystem = Instantiate(prefab);
+            prefab = HFResourceManager.Instance.GetPrefab("hfui", "UIEventSystem");
+            GameObject eventSystem = GameFactory.Instantiate(prefab);
             eventSystem.name = "UIEventSystem";
             eventSystem.transform.SetParent(gameObject.transform);
 

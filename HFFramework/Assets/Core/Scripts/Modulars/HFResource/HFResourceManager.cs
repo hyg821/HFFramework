@@ -334,20 +334,20 @@ namespace HFFramework
                 }
             }
 
+            AssetBundlePackage assetBundlePackage = null;
             if (!allAssetBundleDic.ContainsKey(assetBundleName))
             {
                 AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(assetBundleName, false));
-                AssetBundlePackage tmpAssetBundle = new AssetBundlePackage(bundle, assetBundleName);
-                AddAssetBundleToDic(tmpAssetBundle);
+                assetBundlePackage = new AssetBundlePackage(bundle, assetBundleName);
+                AddAssetBundleToDic(assetBundlePackage);
                 //HFLog.L("同步加载AssetBundle   " + assetBundleName);
-                return tmpAssetBundle;
             }
             else
             {
-                AssetBundlePackage ab = allAssetBundleDic[assetBundleName];
-                ab.Retain();
-                return ab;
+                assetBundlePackage = allAssetBundleDic[assetBundleName];     
             }
+            assetBundlePackage.Retain();
+            return assetBundlePackage;
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace HFFramework
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public List<AssetBundlePackage> LoadAssetsBundlesFromFile(string[] list, Action<float> progressCallback)
+        public List<AssetBundlePackage> LoadAssetBundlesFromFile(string[] list)
         {
             List<AssetBundlePackage> bundles = new List<AssetBundlePackage>();
             for (int i = 0; i < list.Length; i++)
@@ -408,10 +408,6 @@ namespace HFFramework
                 if (bundle != null)
                 {
                     bundles.Add(bundle);
-                }
-                if (progressCallback != null)
-                {
-                    progressCallback((bundles.Count + 0.0f) / list.Length);
                 }
             }
             return bundles;
@@ -424,15 +420,15 @@ namespace HFFramework
         /// <param name="progressCallback"></param>
         public void LoadAssetsBundlesFromFileAsync(string[] list, Action<float> progressCallback)
         {
-            StartCoroutine(m_LoadAssetsBundlesFromFileAsync(list, progressCallback));
+            m_LoadAssetsBundlesFromFileAsync(list, progressCallback);
         }
 
-        private IEnumerator m_LoadAssetsBundlesFromFileAsync(string[] list, Action<float> progressCallback)
+        private async UniTaskVoid m_LoadAssetsBundlesFromFileAsync(string[] list, Action<float> progressCallback)
         {
             List<AssetBundlePackage> bundles = new List<AssetBundlePackage>();
             for (int i = 0; i < list.Length; i++)
             {
-                AssetBundlePackage bundle = LoadAssetBundleFromFile(list[i]);
+                AssetBundlePackage bundle = await LoadAssetBundleFromFileAsync(list[i]);
                 if (bundle != null)
                 {
                     bundles.Add(bundle);
@@ -441,7 +437,6 @@ namespace HFFramework
                 {
                     progressCallback((bundles.Count + 0.0f) / list.Length);
                 }
-                yield return null;
             }
         }
 
@@ -450,7 +445,7 @@ namespace HFFramework
             //代码 在编辑器 里默认走streamingAssets 生成dll 运行即可
             if (GameEnvironment.Instance.Platform == GamePlatform.Editor)
             {
-                StartCoroutine(m_EditorLoadHotFixAssembly(assetbundleName, dllName, callback));
+                EditorLoadHotFixAssembly(assetbundleName, dllName, callback);
             }
             else
             {
@@ -464,15 +459,13 @@ namespace HFFramework
             }
         }
 
-        private IEnumerator m_EditorLoadHotFixAssembly(string assetbundleName, string dllName, Action<byte[]> callback)
+        private void EditorLoadHotFixAssembly(string assetbundleName, string dllName, Action<byte[]> callback)
         {
-            WWW www = new WWW("file:///" + Application.streamingAssetsPath + "/DLL/" + dllName + ".dll");
-            yield return www;
+            byte[] bytes =File.ReadAllBytes(PathManager.Instance.StreamingAssetsPath + "DLL/" + dllName + ".dll");
             if (callback != null)
             {
-                callback(www.bytes);
+                callback(bytes);
             }
-            www.Dispose();
         }
 
         public void AddAssetBundleToDic(AssetBundlePackage bundle)
@@ -493,7 +486,6 @@ namespace HFFramework
             return null;
         }
 
-
         /// <summary>
         ///  在编辑器开发的时候使用的加载方式
         /// </summary>
@@ -508,7 +500,6 @@ namespace HFFramework
             return null;
 #endif
         }
-
 
         /// <summary>
         ///  卸载某一个 assetbundle 通过名字
@@ -701,7 +692,6 @@ namespace HFFramework
         {
             this.name = name.ToLower();
             assetBundle = bundle;
-            refCount++;
         }
 
         /// <summary>

@@ -6,12 +6,11 @@
         {
         }
 
-        public override void OnStateEnter()
+        public async override void OnStateEnter()
         {
             base.OnStateEnter();
             //创建控制器
-            LoginController controller = UIManager.Instance.GetController<LoginController>();
-            controller.Open();
+            LoginController controller = await UIManager.Instance.Open<LoginController>(true);
         }
 
         public override void OnStateStay()

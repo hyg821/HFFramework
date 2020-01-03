@@ -175,6 +175,20 @@ namespace HFFramework
             }
         }
 
+        public async UniTask<GameObject> GetPrefabAsync(string packageName, string assetName)
+        {
+            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
+            {
+                return EditorLoadAsset<GameObject>(packageName, assetName);
+            }
+            else
+            {
+                AssetBundlePackage ab = await LoadAssetBundleFromFileAsync(packageName);
+                GameObject prefab = await ab.LoadAssetAsync<GameObject>(assetName);
+                return prefab;
+            }
+        }
+
         /// <summary>
         /// 获取 Sprite 通过缓存 不会自动卸载
         /// </summary>

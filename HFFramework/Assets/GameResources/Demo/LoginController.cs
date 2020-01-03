@@ -163,7 +163,7 @@ public class LoginController : UIController
     public async void Jump()
     {
         await HFResourceManager.Instance.LoadScene("SceneA", "SceneA");
-        UIManager.Instance.CloseController<LoginController>();
+        UIManager.Instance.Close<LoginController>();
     }
 
     public async void Test()

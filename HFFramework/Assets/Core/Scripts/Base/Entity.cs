@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx.Async;
 
 namespace HFFramework
 {
@@ -124,33 +125,41 @@ namespace HFFramework
             }
         }
 
-        public Entity()
+        protected Entity()
         {
             instanceID = IDGenerator.GetID();
         }
 
         public static T CreateEntity<T>() where T : Entity, new()
         {
-            T t1 = new T();
-            t1.Awake();
-            return t1;
+            T t = new T();
+            t.Awake();
+            return t;
         }
 
         public static T CreateEntity<T>(GameObject gameObject = null) where T : Entity, new()
         {
-            T t1 = new T();
-            t1.SetGameObject(gameObject);
-            t1.Awake();
-            return t1;
+            T t = new T();
+            t.SetGameObject(gameObject);
+            t.Awake();
+            return t;
         }
 
         public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null) where T : Entity, new()
         {
-            T t1 = new T();
-            t1.parent = parent;
-            t1.SetGameObject(gameObject);
-            t1.Awake();
-            return t1;
+            T t = new T();
+            t.parent = parent;
+            t.SetGameObject(gameObject);
+            t.Awake();
+            return t;
+        }
+
+        public async static UniTask<T> CreateEntityAsync<T>(string packageName, string assetName) where T : Entity, new()
+        {
+            T t = new T();
+            await t.LoadResourcesAsync(packageName, assetName);
+            t.Awake();
+            return t;
         }
 
         /// <summary>
@@ -183,6 +192,14 @@ namespace HFFramework
         public virtual void LoadResources()
         {
 
+        }
+
+        public async UniTaskVoid LoadResourcesAsync(string packageName, string assetName)
+        {
+            GameObject prefab = await HFResourceManager.Instance.GetPrefabAsync(packageName, assetName);
+            GameObject temp = GameObject.Instantiate(prefab);
+            temp.name = prefab.name;
+            SetGameObject(temp);
         }
 
         /// <summary>

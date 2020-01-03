@@ -5,6 +5,7 @@ using LitJson;
 using Config;
 using UnityEngine.SceneManagement;
 using System;
+using UniRx.Async;
 
 namespace HFFramework
 {
@@ -84,34 +85,39 @@ namespace HFFramework
             return uiCanvas;
         }
 
-        public T GetController<T>() where T :UIController,new()
+        public async UniTask<T> GetController<T>(bool async) where T :UIController,new()
         {
             UIController controller;
             string type = typeof(T).Name;
             if (controllerDic.TryGetValue(type, out controller)==false)
             {
                 UI config = ConfigUI.Get(type);
-
-                GameObject prefab = HFResourceManager.Instance.GetPrefab(config.AssetbundleName, config.AssetName);
-                GameObject sourcers = GameObject.Instantiate(prefab);
-                sourcers.name = config.AssetName;
-
-                controller = Entity.CreateEntity<T>(sourcers);
-
+                if (async)
+                {
+                    controller = await Entity.CreateEntityAsync<T>(config.AssetbundleName, config.AssetName);
+                }
+                else
+                {
+                    GameObject prefab = HFResourceManager.Instance.GetPrefab(config.AssetbundleName, config.AssetName);
+                    GameObject sourcers = GameObject.Instantiate(prefab);
+                    sourcers.name = config.AssetName;
+                    controller = Entity.CreateEntity<T>(sourcers);
+                }
+     
                 controller.Config = config;
                 controllerDic.Add(type, controller);
             }
             return controller as T;
         }
 
-        public T OpenController<T>() where T : UIController,new()
+        public async UniTask<T> Open<T>(bool async) where T : UIController, new()
         {
-            T t = GetController<T>();
+            T t = await GetController<T>(async);
             t.Open();
             return t;
         }
 
-        public void CloseController<T>()
+        public void Close<T>()
         {
             UIController controller;
             if (controllerDic.TryGetValue(typeof(T).Name, out controller))

@@ -11,12 +11,12 @@ namespace HFFramework
         {
         }
 
-        public override void OnStateEnter()
+        public async override void OnStateEnter()
         {
             base.OnStateEnter();
             //初始化配置文件
             HFConfigManager.Instance.Init();
-            DebugController debug = UIManager.Instance.GetController<DebugController>();
+            DebugController debug = await UIManager.Instance.Open<DebugController>(true);
             debug.Close();
             controller.TranslateToState("Login");
         }

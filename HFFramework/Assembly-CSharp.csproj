@@ -178,11 +178,11 @@
     <Compile Include="Assets\Core\HotFix\LitJson\JsonWriter.cs" />
     <Compile Include="Assets\Core\HotFix\LitJson\Lexer.cs" />
     <Compile Include="Assets\Core\HotFix\LitJson\ParserToken.cs" />
-    <Compile Include="Assets\Core\Scripts\Base\BaseExpressionBehaviour.cs" />
-    <Compile Include="Assets\Core\Scripts\Base\BaseLogicBehaviour.cs" />
+    <Compile Include="Assets\Core\Scripts\Base\BehaviorEntity.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Entity.cs" />
     <Compile Include="Assets\Core\Scripts\Base\IDGenerator.cs" />
     <Compile Include="Assets\Core\Scripts\Base\IManager.cs" />
+    <Compile Include="Assets\Core\Scripts\Base\LogicEntity.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\AStar\AStar.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\BoxCollider\Box.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\BoxCollider\CameraController.cs" />

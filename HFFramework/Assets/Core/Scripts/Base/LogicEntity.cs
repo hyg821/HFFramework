@@ -5,10 +5,12 @@ using UnityEngine;
 namespace HFFramework
 {
     /// <summary>
-    ///  基础表现层
+    ///  基础逻辑层
     /// </summary>
-    public class BaseExpressionBehaviour : Entity
+    public class LogicEntity : Entity
     {
 
     }
 }
+
+

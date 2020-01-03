@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -130,14 +129,14 @@ namespace HFFramework
                 ResourceRootPath = resourceRootPath;
                 ResourceSpareRootPath = resourceSpareRootPath;
                 MainfestName = mainfestName;
-                GetAssetBundleManifest();
+                RefreshAssetBundleManifest();
             }
         }
 
         /// <summary>
         ///  拿到AssetBundleManifest 以便于收集 所有的assetbundle 依赖  如果存在动态下载 一定要刷新调用这个方法  刷新所有依赖
         /// </summary>
-        public void GetAssetBundleManifest()
+        public void RefreshAssetBundleManifest()
         {
             AssetBundle manifestAB = AssetBundle.LoadFromFile(AutoGetResourcePath(MainfestName, false));  // 加载总ManifestAssetBundle
             if (manifestAB != null)
@@ -152,9 +151,9 @@ namespace HFFramework
         /// </summary>
         /// <param name="assetbundleName"></param>
         /// <returns></returns>
-        public string[] GetAssetBundleDependencies(string assetbundleName)
+        public string[] GetAssetBundleDependencies(string packageName)
         {
-            return manifest.GetAllDependencies(assetbundleName);  // 结果 sprite1.ab 
+            return manifest.GetAllDependencies(packageName);
         }
 
         /// <summary>
@@ -170,7 +169,7 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+                AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
                 GameObject g = ab.LoadAsset<GameObject>(assetName);
                 return g;
             }
@@ -189,7 +188,7 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+                AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
                 Sprite sp = ab.LoadAsset<Sprite>(assetName);
                 return sp;
             }
@@ -204,7 +203,7 @@ namespace HFFramework
         /// <returns></returns>
         public Sprite GetSpriteByAtlas(string packageName, string atlasName, string spriteName)
         {
-            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
             SpriteAtlas atlas = ab.LoadAsset<SpriteAtlas>(atlasName);
             return atlas.GetSprite(spriteName);
         }
@@ -213,9 +212,9 @@ namespace HFFramework
         ///  这个函数推荐最开始就加载
         /// </summary>
         /// <param name="shaderPackageName"></param>
-        public void CacheAllShader(string shaderPackageName)
+        public void CacheAllShader(string packageName)
         {
-            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(shaderPackageName);
+            AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
             ab.CacheAllAsset();
             Shader.WarmupAllShaders();
         }
@@ -235,7 +234,7 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+                AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
                 Shader shader = ab.LoadAsset<Shader>(assetName);
                 return shader;
             }
@@ -256,7 +255,7 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+                AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
                 return ab.LoadAsset<T>(assetName);
             }
         }
@@ -269,7 +268,7 @@ namespace HFFramework
         /// <param name="autoJump"></param>
         /// <param name="sceneName"></param>
         /// <param name="finishCallBack"></param>
-        public async UniTaskVoid LoadScene(string assetBundleName,  string sceneName)
+        public async UniTaskVoid LoadScene(string packageName,  string sceneName)
         {
             if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
             {
@@ -277,15 +276,15 @@ namespace HFFramework
             }
             else
             {
-                await m_LoadScene(assetBundleName, sceneName);
+                await m_LoadScene(packageName, sceneName);
             }
         }
 
-        private async UniTaskVoid m_LoadScene(string assetBundleName, string sceneName)
+        private async UniTaskVoid m_LoadScene(string packageName, string sceneName)
         {
-            await m_LoadAssetBundleFromFileAsync(assetBundleName.ToLower());
+            await m_LoadAssetBundleFromFileAsync(packageName.ToLower());
             await SceneManager.LoadSceneAsync(sceneName);
-            UnloadAssetBundle(assetBundleName, false);
+            UnloadAssetBundle(packageName, false);
             await Resources.UnloadUnusedAssets();
         }
 
@@ -298,9 +297,9 @@ namespace HFFramework
         /// <param name="callBack"></param>
         public void LoadAssetWithAutoKill<T>(string packageName, string assetName, Action<T> callback) where T : UnityEngine.Object
         {
-            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
-            T ta = ab.assetBundle.LoadAsset<T>(assetName);
-            callback(ta);
+            AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
+            T t = ab.assetBundle.LoadAsset<T>(assetName);
+            callback(t);
             UnloadAssetBundle(ab, false);
         }
 
@@ -313,7 +312,7 @@ namespace HFFramework
         /// <param name="callBack"></param>
         public void LoadPrefabWithAutoKill(string packageName, string assetName, Action<GameObject> callback)
         {
-            AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
             GameObject prefab = ab.assetBundle.LoadAsset<GameObject>(assetName);
             callback(prefab);
             UnloadAssetBundle(ab, false);
@@ -322,10 +321,10 @@ namespace HFFramework
         /// <summary>
         ///  一般来说，尽可能使用AssetBundle.LoadFromFile。该API在速度，磁盘使用率和运行时内存使用方面是最有效的
         /// </summary>
-        public AssetBundlePackage LoadAssetBundleFromFile(string assetBundleName)
+        public AssetBundlePackage LoadAssetBundleFromFile(string packageName)
         {
-            assetBundleName = assetBundleName.ToLower();
-            string[] list = Instance.GetAssetBundleDependencies(assetBundleName);
+            packageName = packageName.ToLower();
+            string[] list = GetAssetBundleDependencies(packageName);
             if (list.Length != 0)
             {
                 for (int i = 0; i < list.Length; i++)
@@ -335,16 +334,16 @@ namespace HFFramework
             }
 
             AssetBundlePackage assetBundlePackage = null;
-            if (!allAssetBundleDic.ContainsKey(assetBundleName))
+            if (!allAssetBundleDic.ContainsKey(packageName))
             {
-                AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(assetBundleName, false));
-                assetBundlePackage = new AssetBundlePackage(bundle, assetBundleName);
+                AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(packageName, false));
+                assetBundlePackage = new AssetBundlePackage(bundle, packageName);
                 AddAssetBundleToDic(assetBundlePackage);
                 //HFLog.L("同步加载AssetBundle   " + assetBundleName);
             }
             else
             {
-                assetBundlePackage = allAssetBundleDic[assetBundleName];     
+                assetBundlePackage = allAssetBundleDic[packageName];     
             }
             assetBundlePackage.Retain();
             return assetBundlePackage;
@@ -355,15 +354,15 @@ namespace HFFramework
         /// </summary>
         /// <param name="assetBundleName"></param>
         /// <param name="finishCallback"></param>
-        public async UniTask<AssetBundlePackage> LoadAssetBundleFromFileAsync(string assetBundleName)
+        public async UniTask<AssetBundlePackage> LoadAssetBundleFromFileAsync(string packageName)
         {
-            assetBundleName = assetBundleName.ToLower();
-            return await m_LoadAssetBundleFromFileAsync(assetBundleName);
+            packageName = packageName.ToLower();
+            return await m_LoadAssetBundleFromFileAsync(packageName);
         }
 
-        private async UniTask<AssetBundlePackage> m_LoadAssetBundleFromFileAsync(string assetBundleName)
+        private async UniTask<AssetBundlePackage> m_LoadAssetBundleFromFileAsync(string packageName)
         {
-            string[] list = Instance.GetAssetBundleDependencies(assetBundleName);
+            string[] list = Instance.GetAssetBundleDependencies(packageName);
             if (list.Length != 0)
             {
                 for (int i = 0; i < list.Length; i++)
@@ -373,22 +372,22 @@ namespace HFFramework
             }
 
             AssetBundlePackage assetBundlePackage = null;
-            if (!allAssetBundleDic.ContainsKey(assetBundleName))
+            if (!allAssetBundleDic.ContainsKey(packageName))
             {
-                AssetBundle assetbundle = await AssetBundle.LoadFromFileAsync(AutoGetResourcePath(assetBundleName, false));
-                if (!allAssetBundleDic.ContainsKey(assetBundleName))
+                AssetBundle assetbundle = await AssetBundle.LoadFromFileAsync(AutoGetResourcePath(packageName, false));
+                if (!allAssetBundleDic.ContainsKey(packageName))
                 {
-                    assetBundlePackage = new AssetBundlePackage(assetbundle, assetBundleName);
+                    assetBundlePackage = new AssetBundlePackage(assetbundle, packageName);
                     AddAssetBundleToDic(assetBundlePackage);
                 }
                 else
                 {
-                    assetBundlePackage = allAssetBundleDic[assetBundleName];
+                    assetBundlePackage = allAssetBundleDic[packageName];
                 }
             }
             else
             {
-                assetBundlePackage = allAssetBundleDic[assetBundleName];
+                assetBundlePackage = allAssetBundleDic[packageName];
             }
             assetBundlePackage.Retain();
             return assetBundlePackage;
@@ -440,16 +439,16 @@ namespace HFFramework
             }
         }
 
-        public void LoadHotFixAssembly(string assetbundleName, string dllName, Action<byte[]> callback)
+        public void LoadHotFixAssembly(string packageName, string dllName, Action<byte[]> callback)
         {
             //代码 在编辑器 里默认走streamingAssets 生成dll 运行即可
             if (GameEnvironment.Instance.Platform == GamePlatform.Editor)
             {
-                EditorLoadHotFixAssembly(assetbundleName, dllName, callback);
+                EditorLoadHotFixAssembly(packageName, dllName, callback);
             }
             else
             {
-                AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(assetbundleName);
+                AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
                 TextAsset text = ab.LoadAsset<TextAsset>(dllName + ".dll");
                 if (callback != null)
                 {
@@ -459,7 +458,7 @@ namespace HFFramework
             }
         }
 
-        private void EditorLoadHotFixAssembly(string assetbundleName, string dllName, Action<byte[]> callback)
+        private void EditorLoadHotFixAssembly(string packageName, string dllName, Action<byte[]> callback)
         {
             byte[] bytes =File.ReadAllBytes(PathManager.Instance.StreamingAssetsPath + "DLL/" + dllName + ".dll");
             if (callback != null)
@@ -476,12 +475,12 @@ namespace HFFramework
             }
         }
 
-        public AssetBundlePackage GetAssetBundle(string assetBundleName)
+        public AssetBundlePackage GetAssetBundle(string packageName)
         {
-            assetBundleName = assetBundleName.ToLower();
-            if (allAssetBundleDic.ContainsKey(assetBundleName))
+            packageName = packageName.ToLower();
+            if (allAssetBundleDic.ContainsKey(packageName))
             {
-                return allAssetBundleDic[assetBundleName];
+                return allAssetBundleDic[packageName];
             }
             return null;
         }
@@ -491,10 +490,10 @@ namespace HFFramework
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
-        public T EditorLoadAsset<T>(string assetBundleName, string assetName) where T:UnityEngine.Object
+        public T EditorLoadAsset<T>(string packageName, string assetName) where T:UnityEngine.Object
         {
 #if UNITY_EDITOR
-            string[] s = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(assetBundleName.ToLower(), assetName);
+            string[] s = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(packageName.ToLower(), assetName);
             return AssetDatabase.LoadAssetAtPath<T>(s[0]);
 #else
             return null;
@@ -506,12 +505,12 @@ namespace HFFramework
         /// </summary>
         /// <param name="name"></param>
         /// <param name="b">是否卸载压出来的的东西</param>
-        public void UnloadAssetBundle(string assetBundleName, bool b = true)
+        public void UnloadAssetBundle(string packageName, bool b = true)
         {
             if (GameEnvironment.Instance.ResourcesType != GameResourcesType.AssetDatabase)
             {
-                assetBundleName = assetBundleName.ToLower();
-                AssetBundlePackage bundle = GetAssetBundle(assetBundleName);
+                packageName = packageName.ToLower();
+                AssetBundlePackage bundle = GetAssetBundle(packageName);
                 if (bundle != null)
                 {
                     UnloadAssetBundle(bundle, b);
@@ -534,14 +533,14 @@ namespace HFFramework
         /// 递归 Release AssetBundle
         /// </summary>
         /// <param name="name"></param>
-        public void RecursionReleaseAssetBundle(string assetBundleName)
+        public void RecursionReleaseAssetBundle(string packageName)
         {
-            AssetBundlePackage bundle =  GetAssetBundle(assetBundleName);
+            AssetBundlePackage bundle =  GetAssetBundle(packageName);
             if (bundle!=null)
             {
                 bundle.Release();
             }
-            string[] list = Instance.GetAssetBundleDependencies(assetBundleName);
+            string[] list = Instance.GetAssetBundleDependencies(packageName);
             for (int i = 0; i < list.Length; i++)
             {
                 RecursionReleaseAssetBundle(list[i]);
@@ -729,12 +728,8 @@ namespace HFFramework
                 if (t1 != null)
                 {
                     CacheDic.Add(name, t1);
-                    return t1;
                 }
-                else
-                {
-                    return null;
-                }
+                return t1;
             }
         }
 

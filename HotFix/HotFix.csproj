@@ -42,6 +42,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="UniRx.Async">
+      <HintPath>..\HFFramework\Library\ScriptAssemblies\UniRx.Async.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\Tools\UnityDLL\UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -292,10 +296,6 @@
     <Compile Include="Base\GameUpdate.cs" />
     <Compile Include="Base\HotFixHelper.cs" />
     <Compile Include="Base\Singleton.cs" />
-    <Compile Include="Base\UI\Pool\IPool.cs" />
-    <Compile Include="Base\UI\Pool\ObjectPool.cs" />
-    <Compile Include="Base\UI\Pool\ObjectPoolManager.cs" />
-    <Compile Include="Base\UI\UIElement.cs" />
     <Compile Include="HotFixEnter.cs" />
     <Compile Include="Base\IDGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

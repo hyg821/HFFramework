@@ -13,7 +13,7 @@ using UnityEditor;
 
 namespace HFFramework
 {
-    public class HFResourceManager : SerializedMonoBehaviour, IManager
+    public class HFResourceManager : MonoBehaviour, IManager
     {
         // 注意 
         // 热更新代码的包  Manifest包 不被管理  

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx.Async;
 using HFFramework;
 
 namespace HotFix
@@ -146,6 +147,14 @@ namespace HotFix
             return t;
         }
 
+        public async static UniTask<T> CreateEntityAsync<T>(string packageName, string assetName) where T : Entity, new()
+        {
+            T t = new T();
+            await t.LoadResourcesAsync(packageName, assetName);
+            t.Awake();
+            return t;
+        }
+
         /// <summary>
         ///  脚本被生成重载方法
         /// </summary>
@@ -179,6 +188,13 @@ namespace HotFix
         public virtual void LoadResources()
         {
 
+        }
+
+        public async UniTask LoadResourcesAsync(string packageName, string assetName)
+        {
+            GameObject prefab = await HFResourceManager.Instance.GetPrefabAsync(packageName, assetName);
+            GameObject temp = Instantiate(prefab);
+            SetGameObject(temp);
         }
 
         /// <summary>

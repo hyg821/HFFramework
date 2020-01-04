@@ -183,6 +183,7 @@
     <Compile Include="Assets\Core\Scripts\Base\IDGenerator.cs" />
     <Compile Include="Assets\Core\Scripts\Base\IManager.cs" />
     <Compile Include="Assets\Core\Scripts\Base\LogicEntity.cs" />
+    <Compile Include="Assets\Core\Scripts\Base\Singleton.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\AStar\AStar.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\BoxCollider\Box.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\BoxCollider\CameraController.cs" />

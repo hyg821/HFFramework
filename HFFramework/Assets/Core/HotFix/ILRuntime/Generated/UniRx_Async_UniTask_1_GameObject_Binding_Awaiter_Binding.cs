@@ -14,27 +14,27 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class System_Collections_Generic_Queue_1_ILTypeInstance_Binding_Enumerator_Binding
+    unsafe class UniRx_Async_UniTask_1_GameObject_Binding_Awaiter_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(System.Collections.Generic.Queue<ILRuntime.Runtime.Intepreter.ILTypeInstance>.Enumerator);
+            Type type = typeof(UniRx.Async.UniTask<UnityEngine.GameObject>.Awaiter);
             args = new Type[]{};
-            method = type.GetMethod("get_Current", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_Current_0);
+            method = type.GetMethod("get_IsCompleted", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_IsCompleted_0);
             args = new Type[]{};
-            method = type.GetMethod("MoveNext", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, MoveNext_1);
+            method = type.GetMethod("GetResult", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, GetResult_1);
 
-            app.RegisterCLRCreateDefaultInstance(type, () => new System.Collections.Generic.Queue<ILRuntime.Runtime.Intepreter.ILTypeInstance>.Enumerator());
+            app.RegisterCLRCreateDefaultInstance(type, () => new UniRx.Async.UniTask<UnityEngine.GameObject>.Awaiter());
 
 
         }
 
-        static void WriteBackInstance(ILRuntime.Runtime.Enviorment.AppDomain __domain, StackObject* ptr_of_this_method, IList<object> __mStack, ref System.Collections.Generic.Queue<ILRuntime.Runtime.Intepreter.ILTypeInstance>.Enumerator instance_of_this_method)
+        static void WriteBackInstance(ILRuntime.Runtime.Enviorment.AppDomain __domain, StackObject* ptr_of_this_method, IList<object> __mStack, ref UniRx.Async.UniTask<UnityEngine.GameObject>.Awaiter instance_of_this_method)
         {
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             switch(ptr_of_this_method->ObjectType)
@@ -73,14 +73,14 @@ namespace ILRuntime.Runtime.Generated
                     break;
                  case ObjectTypes.ArrayReference:
                     {
-                        var instance_of_arrayReference = __mStack[ptr_of_this_method->Value] as System.Collections.Generic.Queue<ILRuntime.Runtime.Intepreter.ILTypeInstance>.Enumerator[];
+                        var instance_of_arrayReference = __mStack[ptr_of_this_method->Value] as UniRx.Async.UniTask<UnityEngine.GameObject>.Awaiter[];
                         instance_of_arrayReference[ptr_of_this_method->ValueLow] = instance_of_this_method;
                     }
                     break;
             }
         }
 
-        static StackObject* get_Current_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_IsCompleted_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -88,28 +88,9 @@ namespace ILRuntime.Runtime.Generated
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            System.Collections.Generic.Queue<ILRuntime.Runtime.Intepreter.ILTypeInstance>.Enumerator instance_of_this_method = (System.Collections.Generic.Queue<ILRuntime.Runtime.Intepreter.ILTypeInstance>.Enumerator)typeof(System.Collections.Generic.Queue<ILRuntime.Runtime.Intepreter.ILTypeInstance>.Enumerator).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UniRx.Async.UniTask<UnityEngine.GameObject>.Awaiter instance_of_this_method = (UniRx.Async.UniTask<UnityEngine.GameObject>.Awaiter)typeof(UniRx.Async.UniTask<UnityEngine.GameObject>.Awaiter).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
-            var result_of_this_method = instance_of_this_method.Current;
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            WriteBackInstance(__domain, ptr_of_this_method, __mStack, ref instance_of_this_method);
-
-            __intp.Free(ptr_of_this_method);
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* MoveNext_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            System.Collections.Generic.Queue<ILRuntime.Runtime.Intepreter.ILTypeInstance>.Enumerator instance_of_this_method = (System.Collections.Generic.Queue<ILRuntime.Runtime.Intepreter.ILTypeInstance>.Enumerator)typeof(System.Collections.Generic.Queue<ILRuntime.Runtime.Intepreter.ILTypeInstance>.Enumerator).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-
-            var result_of_this_method = instance_of_this_method.MoveNext();
+            var result_of_this_method = instance_of_this_method.IsCompleted;
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             WriteBackInstance(__domain, ptr_of_this_method, __mStack, ref instance_of_this_method);
@@ -118,6 +99,25 @@ namespace ILRuntime.Runtime.Generated
             __ret->ObjectType = ObjectTypes.Integer;
             __ret->Value = result_of_this_method ? 1 : 0;
             return __ret + 1;
+        }
+
+        static StackObject* GetResult_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
+            UniRx.Async.UniTask<UnityEngine.GameObject>.Awaiter instance_of_this_method = (UniRx.Async.UniTask<UnityEngine.GameObject>.Awaiter)typeof(UniRx.Async.UniTask<UnityEngine.GameObject>.Awaiter).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+
+            var result_of_this_method = instance_of_this_method.GetResult();
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            WriteBackInstance(__domain, ptr_of_this_method, __mStack, ref instance_of_this_method);
+
+            __intp.Free(ptr_of_this_method);
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
 

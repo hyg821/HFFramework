@@ -212,6 +212,7 @@ namespace HFFramework
 
             appdomain.RegisterCrossBindingAdaptor(new MonoBehaviourAdapter());
             appdomain.RegisterCrossBindingAdaptor(new CoroutineAdapter());
+            appdomain.RegisterCrossBindingAdaptor(new IAsyncStateMachineClassInheritanceAdaptor());
 
             //添加值绑定
             appdomain.RegisterValueTypeBinder(typeof(Vector3), new Vector3Binder());

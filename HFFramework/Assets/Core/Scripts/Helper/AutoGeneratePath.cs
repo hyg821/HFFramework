@@ -30,11 +30,18 @@ namespace HFFramework
         /// <summary>
         ///  泛型名称
         /// </summary>
+        [HideInInspector]
+        [SerializeField]
         private string propertyType;
 
         public void SetPropertyType(string propertyType)
         {
             this.propertyType = propertyType;
+        }
+
+        public string GetPropertyType()
+        {
+            return propertyType;
         }
 
         public void GeneratePath()

@@ -15,10 +15,16 @@ namespace HFFramework
             AutoGeneratePath info = target as AutoGeneratePath;
 
             MonoBehaviour[] components = info.GetComponents<MonoBehaviour>();
+            string str = info.GetPropertyType();
             List<string> list = new List<string>();
             for (int i = 0; i < components.Length; i++)
             {
-                list.Add(components[i].GetType().Name);
+                string name = components[i].GetType().Name;
+                list.Add(name);
+                if (str== name)
+                {
+                    selectIndex = i;
+                }
             }
 
             selectIndex = EditorGUILayout.Popup("类型", selectIndex, list.ToArray(), GUILayout.Width(500));
@@ -31,8 +37,8 @@ namespace HFFramework
 
             if (GUILayout.Button("生成"))
             {
-                info.GeneratePath();
                 EditorUtility.SetDirty(info);
+                info.GeneratePath();
             }
         }
     }

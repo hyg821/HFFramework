@@ -14,11 +14,15 @@ namespace ILRuntime.Runtime.Generated
         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             UnityEngine_Debug_Binding.Register(app);
+            UniRx_Async_CompilerServices_AsyncUniTaskVoidMethodBuilder_Binding.Register(app);
+            UniRx_Async_UniTask_1_ILTypeInstance_Binding.Register(app);
+            UniRx_Async_UniTask_1_ILTypeInstance_Binding_Awaiter_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int64_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_UInt64_Object_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
             UnityEngine_GameObject_Binding.Register(app);
+            UniRx_Async_CompilerServices_AsyncUniTaskMethodBuilder_1_ILTypeInstance_Binding.Register(app);
             UniRx_Async_CompilerServices_AsyncUniTaskMethodBuilder_Binding.Register(app);
             UnityEngine_Transform_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);

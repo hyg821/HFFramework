@@ -60,13 +60,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Core\Editor\AutoGeneratePathEditor.cs" />
     <Compile Include="Assets\Core\Editor\FindReferences.cs" />
     <Compile Include="Assets\Core\Editor\HFAssetPostprocessor.cs" />
     <Compile Include="Assets\Core\Editor\HFConfigCreater.cs" />
     <Compile Include="Assets\Core\Editor\HFDefaultSceneWindow.cs" />
     <Compile Include="Assets\Core\Editor\HFEditorTools.cs" />
     <Compile Include="Assets\Core\Editor\HFOpenAssetHandler.cs" />
-    <Compile Include="Assets\Core\Editor\HFProjectWindow.cs" />
     <Compile Include="Assets\Core\Editor\JsonModel\JsonModel.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\Editor\ILRuntimeCLRBinding.cs" />
     <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\ArrayTools.cs" />
@@ -355,32 +355,14 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="ILRuntime.Mono.Cecil">
-      <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Mono.Cecil/ILRuntime.Mono.Cecil.dll</HintPath>
+    <Reference Include="ILRuntim.Mono.Cecil">
+      <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Mono.Cecil/ILRuntim.Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="ILRuntime.Mono.Cecil.Mdb">
       <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Mono.Cecil/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
     </Reference>
     <Reference Include="ILRuntime.Mono.Cecil.Pdb">
       <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Mono.Cecil/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.OdinInspector.Attributes">
-      <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Attributes.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.OdinInspector.Editor">
-      <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Sirenix/Assemblies/Sirenix.OdinInspector.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.Serialization.Config">
-      <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.Config.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.Serialization">
-      <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Sirenix/Assemblies/Sirenix.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.Utilities">
-      <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.Utilities.Editor">
-      <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Sirenix/Assemblies/Sirenix.Utilities.Editor.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/AllUnity/2018.4.14f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -746,10 +728,6 @@
       <Project>{05C05EAF-7EB1-D2C8-B66B-C830184D43B0}</Project>
       <Name>Assembly-CSharp-Editor-firstpass</Name>
     </ProjectReference>
-    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.csproj">
-      <Project>{05D5CC66-3550-BB07-5245-A1C94888D95D}</Project>
-      <Name>Sirenix.OdinInspector.CompatibilityLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="UniRx.Async.csproj">
       <Project>{60693578-8DE5-9662-D861-56CBFAD73156}</Project>
       <Name>UniRx.Async</Name>
@@ -757,10 +735,6 @@
     <ProjectReference Include="UniRx.Async.Editor.csproj">
       <Project>{7C37BF5E-6A74-E27C-916F-B30B38A1D14F}</Project>
       <Name>UniRx.Async.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj">
-      <Project>{348A06A2-D225-34F0-8234-56A1CC4136D2}</Project>
-      <Name>Sirenix.OdinInspector.CompatibilityLayer.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

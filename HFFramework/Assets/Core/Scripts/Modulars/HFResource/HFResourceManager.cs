@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
-using Sirenix.OdinInspector;
 using UniRx.Async;
 
 #if UNITY_EDITOR

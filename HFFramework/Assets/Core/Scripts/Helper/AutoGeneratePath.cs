@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
 using System.Text;
 
 namespace HFFramework
@@ -21,42 +20,23 @@ namespace HFFramework
         /// <summary>
         ///  是根节点 还是子节点
         /// </summary>
-        [Title("节点类型", "", TitleAlignments.Left, false, false)]
         public UIType type = UIType.Child;
 
         /// <summary>
         ///  属性名称
         /// </summary>
-        [Title("属性名称", "", TitleAlignments.Left, false, false)]
         public string propertyName;
 
         /// <summary>
         ///  泛型名称
         /// </summary>
-        [Title("属性类型", "", TitleAlignments.Left, false, false)]
-        [ValueDropdown("componentTypes")]
-        public string propertyType;
-        private List<string> componentTypes = new List<string>();
+        private string propertyType;
 
-        public void Awake()
+        public void SetPropertyType(string propertyType)
         {
-            FindType();
+            this.propertyType = propertyType;
         }
 
-        [Button("刷新Property Type", ButtonSizes.Medium)]
-        public void FindType()
-        {
-            componentTypes.Clear();
-            MonoBehaviour[] monos = gameObject.GetComponents<MonoBehaviour>();
-            for (int i = 0; i < monos.Length; i++)
-            {
-                componentTypes.Add(monos[i].GetType().Name);
-            }
-        }
-
-
-        [ShowIf("type", UIType.Root)]
-        [Button("自动生成代码", ButtonSizes.Medium)]
         public void GeneratePath()
         {
             if (type == UIType.Root)
@@ -139,14 +119,5 @@ namespace HFFramework
                 return Recursion(root, temp, path);
             }
         }
-        /*
-        #if UNITY_EDITOR
-                private void Update()
-                {
-                    FindType();
-                }
-        #endif
-            }
-        */
     }
 }

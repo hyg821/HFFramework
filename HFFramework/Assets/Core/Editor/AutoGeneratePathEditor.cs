@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using UnityEditor.Experimental.SceneManagement;
+using UnityEditor.SceneManagement;
 
 namespace HFFramework
 {
@@ -27,18 +29,37 @@ namespace HFFramework
                 }
             }
 
-            selectIndex = EditorGUILayout.Popup("类型", selectIndex, list.ToArray(), GUILayout.Width(500));
-            info.SetPropertyType(list[selectIndex]);
+            int currentSelect = EditorGUILayout.Popup("类型", selectIndex, list.ToArray(), GUILayout.Width(500));
+            info.SetPropertyType(list[currentSelect]);
+            //判断一下是否选择了新的 
+            if (currentSelect!=selectIndex)
+            {
+                selectIndex = currentSelect;
+                PrefabModeSave(info);
+            }
 
             if (GUILayout.Button("刷新类型"))
             {
                 EditorUtility.SetDirty(info);
+                PrefabModeSave(info);
             }
 
             if (GUILayout.Button("生成"))
             {
                 EditorUtility.SetDirty(info);
+                PrefabModeSave(info);
                 info.GeneratePath();
+            }
+        }
+
+        public void PrefabModeSave(AutoGeneratePath info)
+        {
+            //判断是否是预设体模式 
+            var prefabStage = PrefabStageUtility.GetPrefabStage(info.gameObject);
+            if (prefabStage != null)
+            {
+                //如果是那么设置场景脏  就会自动 保存
+                EditorSceneManager.MarkSceneDirty(prefabStage.scene);
             }
         }
     }

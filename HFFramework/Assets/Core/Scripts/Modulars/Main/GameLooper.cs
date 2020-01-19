@@ -161,9 +161,9 @@ namespace HFFramework
         /// </summary>
         /// <param name="d"></param>
         /// <param name="state">传给主线程的对象</param>
-        public static void BackToMainThread(SendOrPostCallback d, object state)
+        public static void BackToMainThread(SendOrPostCallback d, object param)
         {
-            mainThreadContext.Send(d, state);
+            mainThreadContext.Send(d, param);
         }
 
         public static void PrepareForUpdate(Entity mono)

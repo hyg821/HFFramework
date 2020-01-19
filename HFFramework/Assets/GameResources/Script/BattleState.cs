@@ -1,11 +1,7 @@
 ﻿namespace HFFramework
 {
-    public class BattleState : FSMBaseState
+    public class BattleState : FSMState
     {
-        public BattleState(string stateName, FSMController controller) : base(stateName, controller)
-        {
-        }
-
         public override void OnStateEnter()
         {
             base.OnStateEnter();

@@ -5,20 +5,16 @@ using Config;
 
 namespace HFFramework
 {
-    public class StartState : FSMBaseState
+    public class StartState : FSMState
     {
-        public StartState(string stateName, FSMController controller) : base(stateName, controller)
-        {
-        }
-
         public async override void OnStateEnter()
         {
             base.OnStateEnter();
             //初始化配置文件
             HFConfigManager.Instance.Init();
-            DebugController debug = await UIManager.Instance.Open<DebugController>(true);
+            DebugController debug = await UIManager.Open<DebugController>(true);
             debug.Close();
-            controller.TranslateToState("Login");
+            controller.TranslateToState<LoginState>();
         }
 
         public override void OnStateStay()

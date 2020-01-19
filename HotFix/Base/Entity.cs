@@ -495,6 +495,30 @@ namespace HotFix
         }
 
         /// <summary>
+        ///  添加 Monobehivor -> HotFix.Entity 的 linker
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void AddLinker<T>() where T:HotFixLinker
+        {
+            T t = gameObject.GetComponent<T>();
+            if (t == null)
+            {
+                t = gameObject.AddComponent<T>();
+                t.Injector(this, LinkerCall, LinkerDestroy);
+            }
+        }
+
+        public virtual void LinkerCall(string method,object param)
+        {
+
+        }
+
+        public virtual void LinkerDestroy()
+        {
+
+        }
+
+        /// <summary>
         ///  接收 通知中心 信息   对应发送消息 和 发送通知
         /// </summary>
         /// <param name="receiver">this</param>

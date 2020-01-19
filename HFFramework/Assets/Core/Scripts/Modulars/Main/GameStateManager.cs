@@ -15,11 +15,11 @@ namespace HFFramework
         {
             Instance = this;
             fsm = new FSMController(this);
-            fsm.AddState(new StartState("Start", fsm));
-            fsm.AddState(new LoginState("Login", fsm));
-            fsm.AddState(new BattleState("Battle", fsm));
-            fsm.AddState(new QuitState("Quit", fsm));
-            fsm.TranslateToState("Start");
+            fsm.AddState<StartState>();
+            fsm.AddState<LoginState>();
+            fsm.AddState<BattleState>();
+            fsm.AddState<QuitState>();
+            fsm.TranslateToState<StartState>();
         }
 
         private void Update()

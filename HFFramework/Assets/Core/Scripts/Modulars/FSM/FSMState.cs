@@ -12,7 +12,7 @@ namespace HFFramework
         StateExit
     }
 
-    public class FSMBaseState
+    public class FSMState
     {
         public const string RootState = "Root";
 
@@ -38,16 +38,18 @@ namespace HFFramework
         public Action OnStateStayCallback;
         public Action OnStateExitCallback;
 
-        protected FSMBaseState()
+        public FSMState()
         {
 
         }
 
-        public FSMBaseState(string stateName, FSMController controller)
+        public static T Create<T>(FSMController controller) where T: FSMState,new()
         {
-            this.controller = controller;
-            this.stateName = stateName;
-            Init();
+            T t = new T();
+            t.controller = controller;
+            t.stateName = typeof(T).Name;
+            t.Init();
+            return t;
         }
 
         public virtual void Init()

@@ -182,6 +182,7 @@
     <Compile Include="Assets\Core\HotFix\LitJson\ParserToken.cs" />
     <Compile Include="Assets\Core\Scripts\Base\BehaviorEntity.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Entity.cs" />
+    <Compile Include="Assets\Core\Scripts\Base\HotFixLinker.cs" />
     <Compile Include="Assets\Core\Scripts\Base\IDGenerator.cs" />
     <Compile Include="Assets\Core\Scripts\Base\IManager.cs" />
     <Compile Include="Assets\Core\Scripts\Base\LogicEntity.cs" />
@@ -229,8 +230,8 @@
     <Compile Include="Assets\Core\Scripts\Modulars\Debug\LogCat.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\DownLoad\DownLoadManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\DownLoad\WebImageManager.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\FSM\FSMBaseState.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\FSM\FSMController.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\FSM\FSMState.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\HFResource\HFResourceManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\ILRuntime\AppDomainManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Input\InputManager.cs" />

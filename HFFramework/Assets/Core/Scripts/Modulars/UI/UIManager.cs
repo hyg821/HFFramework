@@ -110,17 +110,17 @@ namespace HFFramework
             return controller as T;
         }
 
-        public async UniTask<T> Open<T>(bool async) where T : UIController, new()
+        public static async UniTask<T> Open<T>(bool async) where T : UIController, new()
         {
-            T t = await GetController<T>(async);
+            T t = await Instance.GetController<T>(async);
             t.Open();
             return t;
         }
 
-        public void Close<T>()
+        public static void Close<T>()
         {
             UIController controller;
-            if (controllerDic.TryGetValue(typeof(T).Name, out controller))
+            if (Instance.controllerDic.TryGetValue(typeof(T).Name, out controller))
             {
                 controller.Close();
             }

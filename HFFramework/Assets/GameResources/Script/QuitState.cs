@@ -4,12 +4,8 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class QuitState:FSMBaseState
+    public class QuitState: FSMState
     {
-        public QuitState(string stateName, FSMController controller) : base(stateName, controller)
-        {
-        }
-
         public override void OnStateEnter()
         {
             base.OnStateEnter();

@@ -12,11 +12,6 @@ namespace HFFramework
         public static GameLooper Instance;
 
         /// <summary>
-        /// 锁
-        /// </summary>
-        private static object lockObj = new object();
-
-        /// <summary>
         ///  主线程上下文
         /// </summary>
         private static SynchronizationContext mainThreadContext;
@@ -25,6 +20,7 @@ namespace HFFramework
         /// 即将在下一帧被update的列表
         /// </summary>
         private List<Entity> prepareUpdateList = new List<Entity>();
+
         /// <summary>
         ///  本帧执行的update的列表
         /// </summary>
@@ -34,6 +30,7 @@ namespace HFFramework
         ///  即将在下一帧被fixedUpdate的列表
         /// </summary>
         private List<Entity> prepareFixedUpdateList = new List<Entity>();
+
         /// <summary>
         ///  本帧执行fixedUpdate的列表
         /// </summary>

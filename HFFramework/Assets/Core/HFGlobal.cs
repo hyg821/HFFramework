@@ -78,35 +78,35 @@ namespace HFFramework
                 gameObject.AddComponent<PathManager>();
 
                 //资源加载
-                resourcesManager = GameFactory.Create<HFResourceManager>("ResourcesManager", true);
+                resourcesManager = GameFactory.Create<HFResourceManager>(true);
                 resourcesManager.InitWithRootPath(PathManager.Instance.PersistentDataAssetBundlesPath, PathManager.Instance.StreamingAssetsAssetBundlesPath , "AssetBundles");
 
                 //添加游戏运行环境
                 gameObject.AddComponent<GameEnvironment>();
 
                 //2通知中心
-                notificationCenter = GameFactory.Create<NotificationCenter>("NotificationCenter", true);
+                notificationCenter = GameFactory.Create<NotificationCenter>(true);
 
                 //3网络
-                socketManager = GameFactory.Create<HFSocketManager>("SocketManager", true);
+                socketManager = GameFactory.Create<HFSocketManager>(true);
 
                 //4声音
-                audioManager = GameFactory.Create<AudioManager>("AudioManager", true);
+                audioManager = GameFactory.Create<AudioManager>(true);
 
                 //5UI 
-                uiManager = GameFactory.Create<UIManager>("UIManager", true);
+                uiManager = GameFactory.Create<UIManager>(true);
 
                 //6图片下载
-                webImageManager = GameFactory.Create<WebImageManager>("WebImageManager", true);
+                webImageManager = GameFactory.Create<WebImageManager>(true);
 
                 //7游戏设置控制器
-                inputManager = GameFactory.Create<InputManager>("InputManager", true);
+                inputManager = GameFactory.Create<InputManager>(true);
 
                 //8对象池
-                poolManager = GameFactory.Create<ObjectPoolManager>("ObjectPoolManager", true);
+                poolManager = GameFactory.Create<ObjectPoolManager>(true);
                 
                 //9热更新入口
-                appDomainManager = GameFactory.Create<AppDomainManager>("AppDomainManager", true);
+                appDomainManager = GameFactory.Create<AppDomainManager>(true);
 
                 //添加游戏循环者
                 gameObject.AddComponent<GameLooper>();

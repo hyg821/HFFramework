@@ -28,7 +28,7 @@ namespace HFFramework
             ObjectPool pool;
             if (!cache.TryGetValue(name, out pool))
             {
-                pool = GameFactory.Create<ObjectPool>(name);
+                pool = GameFactory.Create<ObjectPool>(false,name);
                 cache.Add(name, pool);
             }
             return pool;

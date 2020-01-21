@@ -19,11 +19,11 @@ namespace HFFramework
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Create<T>(string name,bool isDontDestroy = false) where T : MonoBehaviour
+        public static T Create<T>(bool isDontDestroy = false, string name = null) where T : MonoBehaviour
         {
             GameObject temp = new GameObject();
             T t1 = temp.AddComponent<T>();
-            temp.name = name;
+            temp.name = name==null?typeof(T).Name:name;
             if (isDontDestroy)
             {
                 GameObject.DontDestroyOnLoad(temp);

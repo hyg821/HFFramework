@@ -12,53 +12,7 @@ namespace HFFramework
     [DisallowMultipleComponent]
     public class HFGlobal : MonoBehaviour, IManager
     {
-
         public static HFGlobal Instance;
-
-        /// <summary>
-        ///  AeestBundle管理器
-        /// </summary>
-        public HFResourceManager resourcesManager;
-
-        /// <summary>
-        ///  通知中心
-        /// </summary>
-        public NotificationCenter notificationCenter;
-
-        /// <summary>
-        ///  网络管理器
-        /// </summary>
-        public HFSocketManager socketManager;
-
-        /// <summary>
-        ///  声音管理器
-        /// </summary>
-        public AudioManager audioManager;
-
-        /// <summary>
-        /// UI管理器
-        /// </summary>
-        public UIManager uiManager;
-
-        /// <summary>
-        ///  下载图片管理器
-        /// </summary>
-        public WebImageManager webImageManager;
-
-        /// <summary>
-        ///  输入管理器
-        /// </summary>
-        public InputManager inputManager;
-
-        /// <summary>
-        ///  对象池管理器
-        /// </summary>
-        public ObjectPoolManager poolManager;
-
-        /// <summary>
-        ///  热更新管理器
-        /// </summary>
-        public AppDomainManager appDomainManager;
 
         void Awake()
         {
@@ -72,56 +26,52 @@ namespace HFFramework
                 DontDestroyOnLoad(gameObject);
 
                 //添加游戏工厂
-                gameObject.AddComponent<GameFactory>();
+                GameFactory.Create<GameFactory>(true);
 
                 //负责提供路径
-                gameObject.AddComponent<PathManager>();
+                GameFactory.Create<PathManager>(true);
 
                 //资源加载
-                resourcesManager = GameFactory.Create<HFResourceManager>(true);
-                resourcesManager.InitWithRootPath(PathManager.Instance.PersistentDataAssetBundlesPath, PathManager.Instance.StreamingAssetsAssetBundlesPath , "AssetBundles");
+                GameFactory.Create<HFResourceManager>(true);
 
                 //添加游戏运行环境
-                gameObject.AddComponent<GameEnvironment>();
+                GameFactory.Create<GameEnvironment>(true);
 
                 //2通知中心
-                notificationCenter = GameFactory.Create<NotificationCenter>(true);
+                GameFactory.Create<NotificationCenter>(true);
 
                 //3网络
-                socketManager = GameFactory.Create<HFSocketManager>(true);
+                GameFactory.Create<HFSocketManager>(true);
 
                 //4声音
-                audioManager = GameFactory.Create<AudioManager>(true);
+                GameFactory.Create<AudioManager>(true);
 
                 //5UI 
-                uiManager = GameFactory.Create<UIManager>(true);
+                GameFactory.Create<UIManager>(true);
 
                 //6图片下载
-                webImageManager = GameFactory.Create<WebImageManager>(true);
+                GameFactory.Create<WebImageManager>(true);
 
                 //7游戏设置控制器
-                inputManager = GameFactory.Create<InputManager>(true);
+                GameFactory.Create<InputManager>(true);
 
                 //8对象池
-                poolManager = GameFactory.Create<ObjectPoolManager>(true);
-                
-                //9热更新入口
-                appDomainManager = GameFactory.Create<AppDomainManager>(true);
+                GameFactory.Create<ObjectPoolManager>(true);
 
-                //添加游戏循环者
-                gameObject.AddComponent<GameLooper>();
+                //9热更新入口
+                GameFactory.Create<AppDomainManager>(true);
+
+                //10添加游戏状态机
+                GameFactory.Create<GameProcedureManager>(true);
 
                 //添加定时器
-                gameObject.AddComponent<TimerManager>();
+                GameFactory.Create<TimerManager>(true);
 
                 //添加状态检查者
-                gameObject.AddComponent<GameStateChecker>();
+                GameFactory.Create<GameStateChecker>(true);
 
                 //工具箱
-                gameObject.AddComponent<GameUtils>();
-
-                //添加游戏状态机
-                gameObject.AddComponent<GameStateManager>();     
+                GameFactory.Create<GameUtils>(true);
             }
             else
             {
@@ -138,7 +88,9 @@ namespace HFFramework
         public void DestroyManager()
         {
             GameFactory.Instance.DestroyManager();
+            PathManager.Instance.DestroyManager();
             HFResourceManager.Instance.DestroyManager();
+            GameEnvironment.Instance.DestroyManager();
             HFSocketManager.Instance.DestroyManager();
             AudioManager.Instance.DestroyManager();
             UIManager.Instance.DestroyManager();
@@ -146,12 +98,10 @@ namespace HFFramework
             InputManager.Instance.DestroyManager();
             ObjectPoolManager.Instance.DestroyManager();
             AppDomainManager.Instance.DestroyManager();
-            GameLooper.Instance.DestroyManager();
+            GameProcedureManager.Instance.DestroyManager();
+            TimerManager.Instance.DestroyManager();
             GameStateChecker.Instance.DestroyManager();
             GameUtils.Instance.DestroyManager();
-            GameStateManager.Instance.DestroyManager();
-            TimerManager.Instance.DestroyManager();
-            GameEnvironment.Instance.DestroyManager();
             NotificationCenter.Instance.DestroyManager();
             MemoryClear();
         }

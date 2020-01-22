@@ -49,6 +49,7 @@ namespace HFFramework
         public void Awake()
         {
             Instance = this;
+            InitWithRootPath(PathManager.Instance.PersistentDataAssetBundlesPath, PathManager.Instance.StreamingAssetsAssetBundlesPath, "AssetBundles");
         }
 
         /// <summary>

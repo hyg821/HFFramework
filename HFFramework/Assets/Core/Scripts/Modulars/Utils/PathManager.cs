@@ -6,7 +6,7 @@ namespace HFFramework
     /// <summary>
     /// 路径管理器
     /// </summary>
-    public class PathManager: MonoBehaviour
+    public class PathManager: MonoBehaviour,IManager
     {
         public static PathManager Instance;
 
@@ -43,7 +43,7 @@ namespace HFFramework
             StreamingAssetsAssetBundlesPath = StreamingAssetsPath + "AssetBundles";
             PersistentDataAssetBundlesPath = PersistentDataPath + "AssetBundles";
             PersistentDataCustomPath = PersistentDataPath + "GameData";
-    }
+        }
 
         private string SetPersistentDataPath()
         {
@@ -53,6 +53,11 @@ namespace HFFramework
         private string SetStreamingAssetsPath()
         {
             return Application.streamingAssetsPath + "/";
+        }
+
+        public void DestroyManager()
+        {
+            Instance = null;
         }
     }
 }

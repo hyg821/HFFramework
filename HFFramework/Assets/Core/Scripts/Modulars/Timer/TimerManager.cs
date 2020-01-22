@@ -83,7 +83,6 @@ namespace HFFramework
 
         public void DestroyManager()
         {
-            Instance = null;
             for (int i = 0; i < removeTimerList.Count; i++)
             {
                 removeTimerList[i].Close();
@@ -104,6 +103,8 @@ namespace HFFramework
             }
             currentTimerList.Clear();
             currentTimerList = null;
+
+            Instance = null;
         }
     }
 }

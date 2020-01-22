@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 namespace HFFramework
 {
-    public class GameStateManager : MonoBehaviour, IManager
+    public class GameProcedureManager : MonoBehaviour, IManager
     {
-        public static GameStateManager Instance;
+        public static GameProcedureManager Instance;
 
         public FSMController fsm;
 
@@ -29,6 +29,8 @@ namespace HFFramework
 
         public void DestroyManager()
         {
+            fsm.Destroy();
+            fsm = null;
             Instance = null;
         }
     }

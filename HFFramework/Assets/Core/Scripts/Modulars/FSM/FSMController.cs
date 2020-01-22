@@ -91,5 +91,12 @@ namespace HFFramework
                 allStateDic[name] = value;
             }
         }
+
+        public void Destroy()
+        {
+            allStateDic.Clear();
+            CurrentState = null;
+            control = null;
+        }
     }
 }

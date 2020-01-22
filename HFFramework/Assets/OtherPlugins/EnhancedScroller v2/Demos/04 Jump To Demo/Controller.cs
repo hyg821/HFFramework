@@ -70,7 +70,7 @@ namespace EnhancedScrollerDemos.JumpToDemo
             if (int.TryParse(jumpIndexInput.text, out jumpDataIndex))
             {
                 // jump to the index
-                vScroller.JumpToDataIndex(jumpDataIndex, scrollerOffsetSlider.value, cellOffsetSlider.value, useSpacingToggle.isOn, vScrollerTweenType, vScrollerTweenTime, null, EnhancedScroller.LoopJumpDirectionEnum.Down);
+                vScroller.JumpToDataIndex(jumpDataIndex, scrollerOffsetSlider.value, cellOffsetSlider.value, useSpacingToggle.isOn, vScrollerTweenType, vScrollerTweenTime, null, EnhancedScroller.LoopJumpDirectionEnum.Closest);
                 hScroller.JumpToDataIndex(jumpDataIndex, scrollerOffsetSlider.value, cellOffsetSlider.value, useSpacingToggle.isOn, hScrollerTweenType, hScrollerTweenTime);
             }
             else
@@ -129,7 +129,7 @@ namespace EnhancedScrollerDemos.JumpToDemo
             CellView cellView = scroller.GetCellView(cellViewPrefab) as CellView;
 
             // set the name of the game object to the cell's data index.
-            // this is optional, but it helps up debug the objects in 
+            // this is optional, but it helps up debug the objects in
             // the scene hierarchy.
             cellView.name = "Cell " + dataIndex.ToString();
 

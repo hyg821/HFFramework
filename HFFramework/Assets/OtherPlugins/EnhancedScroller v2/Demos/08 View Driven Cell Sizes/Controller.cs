@@ -14,6 +14,14 @@ namespace EnhancedScrollerDemos.ViewDrivenCellSizes
     {
         private List<Data> _data;
 
+        /// <summary>
+        /// This member tells the scroller that we need
+        /// the cell views to figure out how much space to use.
+        /// This is only set to true on the first pass to reduce
+        /// processing required.
+        /// </summary>
+        private bool _calculateLayout;
+
         public EnhancedScroller scroller;
         public EnhancedScrollerCellView cellViewPrefab;
 
@@ -89,13 +97,15 @@ namespace EnhancedScrollerDemos.ViewDrivenCellSizes
             rectTransform.sizeDelta = new Vector2(size.x, float.MaxValue);
 
             // First Pass: reload the scroller so that it can populate the text UI elements in the cell view.
-            // The content size fitter will determine how big the cells need to be on subsequent passes
+            // The content size fitter will determine how big the cells need to be on subsequent passes.
+            _calculateLayout = true;
             scroller.ReloadData();
 
             // reset the scroller size back to what it was originally
             rectTransform.sizeDelta = size;
 
             // Second Pass: reload the data once more with the newly set cell view sizes and scroller content size
+            _calculateLayout = false;
             scroller.ReloadData();
         }
 
@@ -118,7 +128,11 @@ namespace EnhancedScrollerDemos.ViewDrivenCellSizes
         public EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
         {
             CellView cellView = scroller.GetCellView(cellViewPrefab) as CellView;
-            cellView.SetData(_data[dataIndex]);
+
+            // tell the cell view to calculate its layout on the first pass,
+            // otherwise just use the size set in the data.
+            cellView.SetData(_data[dataIndex], _calculateLayout);
+
             return cellView;
         }
 

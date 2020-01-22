@@ -38,6 +38,7 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
         {
             // set the scroller's cell view visbility changed delegate to a method in this controller
             scroller.cellViewVisibilityChanged = CellViewVisibilityChanged;
+            scroller.cellViewWillRecycle = CellViewWillRecycle;
 
             // set up some simple data
             _data = new SmallList<Data>();
@@ -59,6 +60,11 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
             // tell the scroller to reload
             scroller.ReloadData();
         }
+
+        void HandleCellViewWillRecycleDelegate(EnhancedScrollerCellView cellView)
+        {
+        }
+
 
         #region EnhancedScroller Handlers
 
@@ -132,6 +138,15 @@ namespace EnhancedScrollerDemos.RemoteResourcesDemo
                 view.SetData(_data[cellView.dataIndex]);
             else
                 view.ClearImage();
+        }
+
+        /// <summary>
+        /// Tells the cell view that it is about to be recycled
+        /// </summary>
+        /// <param name="cellView">Cell view.</param>
+        private void CellViewWillRecycle(EnhancedScrollerCellView cellView)
+        {
+            (cellView as CellView).WillRecycle();
         }
 
         #endregion

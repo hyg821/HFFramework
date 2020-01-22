@@ -144,11 +144,11 @@ namespace EnhancedUI.EnhancedScroller
 
         /// <summary>
         /// The snap offset to watch for. When the snap occurs, this
-        /// location in the scroller will be how which cell to snap to 
+        /// location in the scroller will be how which cell to snap to
         /// is determined.
         /// Typically, the offset is in the range 0..1, with 0 being
         /// the top / left of the scroller and 1 being the bottom / right.
-        /// In most situations the watch offset and the jump offset 
+        /// In most situations the watch offset and the jump offset
         /// will be the same, they are just separated in case you need
         /// that added functionality.
         /// </summary>
@@ -160,7 +160,7 @@ namespace EnhancedUI.EnhancedScroller
         /// is moved to.
         /// Typically, the offset is in the range 0..1, with 0 being
         /// the top / left of the scroller and 1 being the bottom / right.
-        /// In most situations the watch offset and the jump offset 
+        /// In most situations the watch offset and the jump offset
         /// will be the same, they are just separated in case you need
         /// that added functionality.
         /// </summary>
@@ -169,7 +169,7 @@ namespace EnhancedUI.EnhancedScroller
         /// <summary>
         /// Once the cell has been snapped to the scroller location, this
         /// value will determine how the cell is centered on that scroller
-        /// location. 
+        /// location.
         /// Typically, the offset is in the range 0..1, with 0 being
         /// the top / left of the cell and 1 being the bottom / right.
         /// </summary>
@@ -182,17 +182,17 @@ namespace EnhancedUI.EnhancedScroller
         public bool snapUseCellSpacing;
 
         /// <summary>
-        /// What function to use when interpolating between the current 
-        /// scroll position and the snap location. This is also known as easing. 
-        /// If you want to go immediately to the snap location you can either 
+        /// What function to use when interpolating between the current
+        /// scroll position and the snap location. This is also known as easing.
+        /// If you want to go immediately to the snap location you can either
         /// set the snapTweenType to immediate or set the snapTweenTime to zero.
         /// </summary>
         public TweenType snapTweenType;
 
         /// <summary>
-        /// The time it takes to interpolate between the current scroll 
+        /// The time it takes to interpolate between the current scroll
         /// position and the snap location.
-        /// If you want to go immediately to the snap location you can either 
+        /// If you want to go immediately to the snap location you can either
         /// set the snapTweenType to immediate or set the snapTweenTime to zero.
         /// </summary>
         public float snapTweenTime;
@@ -254,8 +254,25 @@ namespace EnhancedUI.EnhancedScroller
             }
             set
             {
-                // make sure the position is in the bounds of the current set of views
-                value = Mathf.Clamp(value, 0, GetScrollPositionForCellViewIndex(_cellViewSizeArray.Count - 1, CellViewPositionEnum.Before));
+				if (loop)
+				{
+					// if we are looping, we need to make sure the new position isn't past the jump trigger.
+					// if it is we need to reset back to the jump position on the other side of the area.
+
+					if (value > _loopLastJumpTrigger)
+					{
+						value = _loopFirstScrollPosition + (value - _loopLastJumpTrigger);
+					}
+					else if (value < _loopFirstJumpTrigger)
+					{
+						value = _loopLastScrollPosition - (_loopFirstJumpTrigger - value);
+					}
+				}
+				else
+				{
+					// make sure the position is in the bounds of the current set of views
+	                value = Mathf.Clamp(value, 0, GetScrollPositionForCellViewIndex(_cellViewSizeArray.Count - 1, CellViewPositionEnum.Before));
+				}
 
                 // only if the value has changed
                 if (_scrollPosition != value)
@@ -595,6 +612,8 @@ namespace EnhancedUI.EnhancedScroller
                 // set the horizontal position
                 _scrollRect.horizontalNormalizedPosition = scrollPositionFactor;
             }
+
+            _RefreshActive();
         }
 
         /// <summary>
@@ -638,7 +657,7 @@ namespace EnhancedUI.EnhancedScroller
 
         /// <summary>
         /// Removes all the recycled cell views. This should only be used after you
-        /// load in a completely different set of cell views that will not use the 
+        /// load in a completely different set of cell views that will not use the
         /// recycled views. This will call garbage collection.
         /// </summary>
         public void ClearRecycled()
@@ -651,7 +670,7 @@ namespace EnhancedUI.EnhancedScroller
         }
 
         /// <summary>
-        /// Turn looping on or off. This is just a helper function so 
+        /// Turn looping on or off. This is just a helper function so
         /// you don't have to keep track of the state of the looping
         /// in your own scripts.
         /// </summary>
@@ -726,16 +745,50 @@ namespace EnhancedUI.EnhancedScroller
                 // if looping, then we need to determine the closest jump position.
                 // we do that by checking all three sets of data locations, and returning the closest one
 
+				var numberOfCells = NumberOfCells;
+
                 // get the scroll positions for each data set.
                 // Note: we are calculating the position based on the cell view index, not the data index here
-                var set1Position = GetScrollPositionForCellViewIndex(dataIndex, CellViewPositionEnum.Before) + offset;
-                var set2Position = GetScrollPositionForCellViewIndex(dataIndex + NumberOfCells, CellViewPositionEnum.Before) + offset;
-                var set3Position = GetScrollPositionForCellViewIndex(dataIndex + (NumberOfCells * 2), CellViewPositionEnum.Before) + offset;
+
+				var set1CellViewIndex = _loopFirstCellIndex - (numberOfCells - dataIndex);
+				var set2CellViewIndex = _loopFirstCellIndex + dataIndex;
+				var set3CellViewIndex = _loopFirstCellIndex + numberOfCells + dataIndex;
+
+                var set1Position = GetScrollPositionForCellViewIndex(set1CellViewIndex, CellViewPositionEnum.Before) + offset;
+                var set2Position = GetScrollPositionForCellViewIndex(set2CellViewIndex, CellViewPositionEnum.Before) + offset;
+                var set3Position = GetScrollPositionForCellViewIndex(set3CellViewIndex, CellViewPositionEnum.Before) + offset;
 
                 // get the offsets of each scroll position from the current scroll position
                 var set1Diff = (Mathf.Abs(_scrollPosition - set1Position));
                 var set2Diff = (Mathf.Abs(_scrollPosition - set2Position));
                 var set3Diff = (Mathf.Abs(_scrollPosition - set3Position));
+
+				var setOffset = -(scrollerOffset * ScrollRectSize);
+
+				var currentSet = 0;
+				var currentCellViewIndex = 0;
+				var nextCellViewIndex = 0;
+
+				if (loopJumpDirection == LoopJumpDirectionEnum.Up || loopJumpDirection == LoopJumpDirectionEnum.Down)
+				{
+					currentCellViewIndex = GetCellViewIndexAtPosition(_scrollPosition - setOffset + 0.0001f);
+
+					if (currentCellViewIndex < numberOfCells)
+					{
+						currentSet = 1;
+						nextCellViewIndex = dataIndex;
+					}
+					else if (currentCellViewIndex >= numberOfCells && currentCellViewIndex < (numberOfCells * 2))
+					{
+						currentSet = 2;
+						nextCellViewIndex = dataIndex + numberOfCells;
+					}
+					else
+					{
+						currentSet = 3;
+						nextCellViewIndex = dataIndex + (numberOfCells * 2);
+					}
+				}
 
                 switch (loopJumpDirection)
                 {
@@ -769,30 +822,58 @@ namespace EnhancedUI.EnhancedScroller
 
                     case LoopJumpDirectionEnum.Up:
 
-                        newScrollPosition = set1Position;
+						if (nextCellViewIndex < currentCellViewIndex)
+						{
+							newScrollPosition = (currentSet == 1 ? set1Position : (currentSet == 2 ? set2Position : set3Position));
+						}
+						else
+						{
+							if (currentSet == 1 && (currentCellViewIndex == dataIndex))
+							{
+								newScrollPosition = set1Position - _singleLoopGroupSize;
+							}
+							else
+							{
+								newScrollPosition = (currentSet == 1 ? set3Position : (currentSet == 2 ? set1Position : set2Position));
+							}
+						}
+
                         break;
 
                     case LoopJumpDirectionEnum.Down:
 
-                        newScrollPosition = set3Position;
-                        break;
+						if (nextCellViewIndex > currentCellViewIndex)
+						{
+							newScrollPosition = (currentSet == 1 ? set1Position : (currentSet == 2 ? set2Position : set3Position));
+						}
+						else
+						{
+							if (currentSet == 3 && (currentCellViewIndex == nextCellViewIndex))
+							{
+								newScrollPosition = set3Position + _singleLoopGroupSize;
+							}
+							else
+							{
+								newScrollPosition = (currentSet == 1 ? set2Position : (currentSet == 2 ? set3Position : set1Position));
+							}
+						}
+
+						break;
 
                 }
+
+				if (useSpacing)
+				{
+					newScrollPosition -= spacing;
+				}
             }
             else
             {
-                // not looping, so just get the scroll position from the dataIndex
+				// not looping, so just get the scroll position from the dataIndex
                 newScrollPosition = GetScrollPositionForDataIndex(dataIndex, CellViewPositionEnum.Before) + offset;
-            }
 
-            // clamp the scroll position to a valid location
-            newScrollPosition = Mathf.Clamp(newScrollPosition, 0, GetScrollPositionForCellViewIndex(_cellViewSizeArray.Count - 1, CellViewPositionEnum.Before));
-
-            // if spacing is used, adjust the final position
-            if (useSpacing)
-            {
-                // move back by the spacing if necessary
-                newScrollPosition = Mathf.Clamp(newScrollPosition - spacing, 0, GetScrollPositionForCellViewIndex(_cellViewSizeArray.Count - 1, CellViewPositionEnum.Before));
+				// clamp the scroll position to a valid location
+	            newScrollPosition = Mathf.Clamp(newScrollPosition - (useSpacing ? spacing : 0), 0, GetScrollPositionForCellViewIndex(_cellViewSizeArray.Count - 1, CellViewPositionEnum.Before));
             }
 
             // ignore the jump if the scroll position hasn't changed
@@ -1001,13 +1082,13 @@ namespace EnhancedUI.EnhancedScroller
         private RectTransform _recycledCellViewContainer;
 
         /// <summary>
-        /// Internal list of cell view sizes. This is created when the data is reloaded 
+        /// Internal list of cell view sizes. This is created when the data is reloaded
         /// to speed up processing.
         /// </summary>
         private SmallList<float> _cellViewSizeArray = new SmallList<float>();
 
         /// <summary>
-        /// Internal list of cell view offsets. Each cell view offset is an accumulation 
+        /// Internal list of cell view offsets. Each cell view offset is an accumulation
         /// of the offsets previous to it.
         /// This is created when the data is reloaded to speed up processing.
         /// </summary>
@@ -1016,7 +1097,7 @@ namespace EnhancedUI.EnhancedScroller
         /// <summary>
         /// The scrollers position
         /// </summary>
-        private float _scrollPosition;
+        public float _scrollPosition;
 
         /// <summary>
         /// The list of cell views that are currently being displayed
@@ -1109,6 +1190,8 @@ namespace EnhancedUI.EnhancedScroller
         /// </summary>
         private ScrollbarVisibilityEnum _lastScrollbarVisibility;
 
+		private float _singleLoopGroupSize;
+
         /// <summary>
         /// Where in the list we are
         /// </summary>
@@ -1135,20 +1218,25 @@ namespace EnhancedUI.EnhancedScroller
             // if looping, we need to create three sets of size data
             if (loop)
             {
-                // if the cells don't entirely fill up the scroll area, 
+                var cellCount = _cellViewSizeArray.Count;
+
+                // if the cells don't entirely fill up the scroll area,
                 // make some more size entries to fill it up
                 if (offset < ScrollRectSize)
                 {
-                    int additionalRounds = Mathf.CeilToInt(ScrollRectSize / offset);
-                    _DuplicateCellViewSizes(additionalRounds, _cellViewSizeArray.Count);
+                    int additionalRounds = Mathf.CeilToInt((float)Mathf.CeilToInt(ScrollRectSize / offset) / 2.0f) * 2;
+                    _DuplicateCellViewSizes(additionalRounds, cellCount);
+                    _loopFirstCellIndex = cellCount * (1 + (additionalRounds / 2));
+                }
+                else
+                {
+                    _loopFirstCellIndex = cellCount;
                 }
 
-                // set up the loop indices
-                _loopFirstCellIndex = _cellViewSizeArray.Count;
-                _loopLastCellIndex = _loopFirstCellIndex + _cellViewSizeArray.Count - 1;
+                _loopLastCellIndex = _loopFirstCellIndex + cellCount - 1;
 
                 // create two more copies of the cell sizes
-                _DuplicateCellViewSizes(2, _cellViewSizeArray.Count);
+                _DuplicateCellViewSizes(2, cellCount);
             }
 
             // calculate the offsets of each cell view
@@ -1212,11 +1300,13 @@ namespace EnhancedUI.EnhancedScroller
         private float _AddCellViewSizes()
         {
             var offset = 0f;
+			_singleLoopGroupSize = 0;
             // add a size for each row in our data based on how many the delegate tells us to create
             for (var i = 0; i < NumberOfCells; i++)
             {
                 // add the size of this cell based on what the delegate tells us to use. Also add spacing if this cell isn't the first one
                 _cellViewSizeArray.Add(_delegate.GetCellViewSize(this, i) + (i == 0 ? 0 : _layoutGroup.spacing));
+				_singleLoopGroupSize += _cellViewSizeArray[_cellViewSizeArray.Count - 1];
                 offset += _cellViewSizeArray[_cellViewSizeArray.Count - 1];
             }
 
@@ -1305,8 +1395,8 @@ namespace EnhancedUI.EnhancedScroller
 
             if (remainingCellIndices.Count == 0)
             {
-                // there were no previous active cells remaining, 
-                // this list is either brand new, or we jumped to 
+                // there were no previous active cells remaining,
+                // this list is either brand new, or we jumped to
                 // an entirely different part of the list.
                 // just add all the new cell views
 
@@ -1320,7 +1410,7 @@ namespace EnhancedUI.EnhancedScroller
                 // we are able to reuse some of the previous
                 // cell views
 
-                // first add the views that come before the 
+                // first add the views that come before the
                 // previous list, going backward so that the
                 // new views get added to the front
                 for (i = endIndex; i >= startIndex; i--)
@@ -1544,7 +1634,8 @@ namespace EnhancedUI.EnhancedScroller
 
             // if the middle index is greater than the position, then search the last
             // half of the binary tree, else search the first half
-            if ((_cellViewOffsetArray[middleIndex] + (scrollDirection == ScrollDirectionEnum.Vertical ? padding.top : padding.left)) >= position)
+            var pad = scrollDirection == ScrollDirectionEnum.Vertical ? padding.top : padding.left;
+            if ((_cellViewOffsetArray[middleIndex] + pad) >= (position + (pad == 0 ? 0 : 1.00001f)))
                 return _GetCellIndexAtPosition(position, startIndex, middleIndex);
             else
                 return _GetCellIndexAtPosition(position, middleIndex + 1, endIndex);
@@ -1642,12 +1733,6 @@ namespace EnhancedUI.EnhancedScroller
             _lastScrollbarVisibility = scrollbarVisibility;
 
             _initialized = true;
-        }
-
-        private void Start()
-        {
-            _container.offsetMax = Vector2.zero;
-            _container.offsetMin = Vector2.zero;
         }
 
         void Update()
@@ -1855,12 +1940,7 @@ namespace EnhancedUI.EnhancedScroller
         /// <returns></returns>
         IEnumerator TweenPosition(TweenType tweenType, float time, float start, float end, Action tweenComplete)
         {
-            if (tweenType == TweenType.immediate || time == 0)
-            {
-                // if the easing is immediate or the time is zero, just jump to the end position
-                ScrollPosition = end;
-            }
-            else
+            if (!(tweenType == TweenType.immediate || time == 0))
             {
                 // zero out the velocity
                 _scrollRect.velocity = Vector2.zero;
@@ -1911,23 +1991,6 @@ namespace EnhancedUI.EnhancedScroller
                         case TweenType.easeInOutElastic: newPosition = easeInOutElastic(start, end, (_tweenTimeLeft / time)); break;
                     }
 
-                    if (loop)
-                    {
-                        // if we are looping, we need to make sure the new position isn't past the jump trigger.
-                        // if it is we need to reset back to the jump position on the other side of the area.
-
-                        if (end > start && newPosition > _loopLastJumpTrigger)
-                        {
-                            //Debug.Log("name: " + name + " went past the last jump trigger, looping back around");
-                            newPosition = _loopFirstScrollPosition + (newPosition - _loopLastJumpTrigger);
-                        }
-                        else if (start > end && newPosition < _loopFirstJumpTrigger)
-                        {
-                            //Debug.Log("name: " + name + " went past the first jump trigger, looping back around");
-                            newPosition = _loopLastScrollPosition - (_loopFirstJumpTrigger - newPosition);
-                        }
-                    }
-
                     // set the scroll position to the tweened position
                     ScrollPosition = newPosition;
 
@@ -1936,11 +1999,13 @@ namespace EnhancedUI.EnhancedScroller
 
                     yield return null;
                 }
-
-                // the time has expired, so we make sure the final scroll position
-                // is the actual end position.
-                ScrollPosition = end;
             }
+
+            // the time has expired, so we make sure the final scroll position
+            // is the actual end position.
+            ScrollPosition = end;
+
+            _RefreshActive();
 
             // the tween jump is complete, so we fire the delegate
             if (tweenComplete != null) tweenComplete();

@@ -27,7 +27,7 @@ namespace EnhancedScrollerDemos.PullDownRefresh
         /// <summary>
         /// Whether the scroller is being dragged
         /// </summary>
-        private bool _dragging = true;
+        private bool _dragging = false;
 
         /// <summary>
         /// Whether we should refresh after releasing the drag

@@ -22,4 +22,4 @@ Please look through the demo scenes for various ways to configure the scroller. 
 
 
 
-For support information, please navigate to http://www.echo17.com or http://www.echo17.com/forum
+For support information, please navigate to http://www.echo17.com

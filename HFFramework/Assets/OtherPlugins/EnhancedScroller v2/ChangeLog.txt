@@ -1,6 +1,96 @@
 EnhancedScroller
 http://u3d.as/fXk
 
+Version 2.21.4
+26 September 2019
+Requires Unity 2017+
+
+    Bug Fixes:
+		- Modified JumpToDataIndex to work properly when jumping up or down while using scroller offset and looping.
+
+
+Version 2.21.3
+25 September 2019
+Requires Unity 2017+
+
+    Bug Fixes:
+		- Moved code to ensure jump locations from outside of TweenPosition to ScrollPosition property
+        - Fixed ScrollPosition to reset to correct jump group if looping
+		- Fixed JumpToDataIndex to not clamp scroller bounds if looping
+
+
+Version 2.21.2
+18 September 2019
+Requires Unity 2017+
+
+    Bug Fixes:
+        - Fixed bug in EnhancedScroller::_GetCellIndexAtPosition when padding is set to zero
+
+
+Version 2.21.1
+17 April 2019
+Requires Unity 2017+
+
+    Bug Fixes:
+        - Demo #12b: fixed HScrollbar to sync with the main scroller
+
+
+Version 2.21.0
+17 April 2019
+Requires Unity 2017+
+
+    Features:
+        - Added Demo 12b Nested Linked Scrollers (Alternative Grid)
+        - Demo #5:
+            - Modified CellView.cs: Added UnityWebRequest as a replacement for WWW in Unity versions 2017.4+
+            - Modified Controller.cs: Call the CellWillRecycle method on the cell view that is about to be recycled
+
+    Bug Fixes:
+        - Demo #4: Fixed scroll inertia decelaration
+        - Demo #11: Fixed _dragging to initialize to false so that the hint text is not visible at the start of some Unity versions.
+        - Demo #13: Fixed Controller.cs to respond to scroll positions greater than 1f and also to prevent loading data if it is already doing so.
+        - EnhancedScroller.cs: Added pixel offset to fix floating point comparison in _GetCellIndexAtPosition. This will properly calculate the Start and End data indices.
+        - EnhancedScroller.cs: Fixed JumpToDataIndex to use the _loopFirstCellIndex to properly calculate the loop jump position with small data sets where the total size of the cells is smaller than the scroll rect.
+        - EnhancedScroller.cs: Fixed _Resize to properly calculate the _loopFirstCellIndex to jump to the correct position with small data sets where the total size of the cells is smaller than the scroll rect.
+        - EnhancedScroller.cs: Modified TweenPosition to always set the end position when the coroutine is completed to make sure there is no slight offset due to device time lag.
+
+
+Version 2.20.2
+12 March 2019
+Requires Unity 2017.4.8f1+
+
+	Optimized demo #8 to only calculate the layout on the first pass
+
+
+Version 2.20.1
+11 March 2019
+Requires Unity 2017.4.8f1+
+
+    Fixed refreshing the active cell list after ReloadData and immediate jumping to index.
+    Modified Pagination to jump to the previous last index instead of calculating the normalized scroll position.
+
+
+Version 2.20.0
+1 March 2019
+Requires Unity 2017.4.8f1+
+
+    Added Pagination Demo 13
+
+
+Version 2.19.0
+25 January 2019
+Requires Unity 2017.4.8f1+
+
+    Added Grid Selection Demo 10b
+
+
+Version 2.18.2
+14 January 2019
+Requires Unity 2017.4.8f1+
+
+    Updated links in documentation
+
+
 Version 2.18.1
 26 September 2018
 Requires Unity 2017.4.8f1+
@@ -298,12 +388,3 @@ Version 1.1
 May 29, 2015
 
     Fixed canvas scaler bug. List items will now fit screens where the canvas scaler uses "scale with screen size"
-
-
-
-
-
-
-
-
-

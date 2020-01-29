@@ -82,7 +82,10 @@ namespace HFFramework
         public void MemoryClear()
         {
             Resources.UnloadUnusedAssets();
-            GC.Collect();
+            for (int i = 0; i < 6; i++)
+            {
+                GC.Collect();
+            }
         }
 
         public void DestroyManager()

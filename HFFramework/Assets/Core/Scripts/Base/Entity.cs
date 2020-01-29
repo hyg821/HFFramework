@@ -14,6 +14,11 @@ namespace HFFramework
         public long instanceID;
 
         /// <summary>
+        /// 是否异步创建
+        /// </summary>
+        private bool isAsync;
+
+        /// <summary>
         ///  element 对应的 游戏物体
         /// </summary>
         public GameObject gameObject;
@@ -60,7 +65,6 @@ namespace HFFramework
             }
         }
 
-
         private Dictionary<ulong, object> messageTypeDic;
         /// <summary>
         ///  注册的消息 字典   destory会自动销毁
@@ -85,10 +89,8 @@ namespace HFFramework
                 if (gameObject != null && gameObject.activeSelf != value)
                 {
                     isActive = value;
-
                     gameObject.SetActive(isActive);
-
-                    if (value == true)
+                    if (isActive)
                     {
                         OnEnable();
                     }
@@ -104,8 +106,6 @@ namespace HFFramework
             }
         }
 
-        private List<Coroutine> coroutineList = new List<Coroutine>();
-
         /// <summary>
         ///  是否销毁
         /// </summary>
@@ -120,6 +120,7 @@ namespace HFFramework
         protected Entity()
         {
             instanceID = IDGenerator.GetID();
+            isAsync = false;
         }
 
         public static T CreateEntity<T>() where T : Entity, new()
@@ -149,6 +150,7 @@ namespace HFFramework
         public async static UniTask<T> CreateEntityAsync<T>(string packageName, string assetName) where T : Entity, new()
         {
             T t = new T();
+            t.isAsync = true;
             await t.LoadResourcesAsync(packageName, assetName);
             t.Awake();
             return t;
@@ -159,16 +161,19 @@ namespace HFFramework
         /// </summary>
         public virtual void Awake()
         {
-            LoadResources();
+            if (!isAsync)
+            {
+                LoadResources();
+            }     
             FindElement();
             ElementInit();
             ReceiveMessage();
         }
 
         /// <summary>
-        ///  对应接收消息的 重载方法
+        /// 寻找子物体 重载方法
         /// </summary>
-        public virtual void ReceiveMessage()
+        public virtual void FindElement()
         {
 
         }
@@ -177,6 +182,14 @@ namespace HFFramework
         ///  成员变量初始化对应重载方法
         /// </summary>
         public virtual void ElementInit()
+        {
+
+        }
+
+        /// <summary>
+        ///  对应接收消息的 重载方法
+        /// </summary>
+        public virtual void ReceiveMessage()
         {
 
         }
@@ -194,14 +207,6 @@ namespace HFFramework
             GameObject prefab = await HFResourceManager.Instance.GetPrefabAsync(packageName, assetName);
             GameObject temp = Instantiate(prefab);
             SetGameObject(temp);
-        }
-
-        /// <summary>
-        /// 寻找子物体 重载方法
-        /// </summary>
-        public virtual void FindElement()
-        {
-
         }
 
         public GameObject Instantiate(GameObject prefab)
@@ -547,16 +552,6 @@ namespace HFFramework
                 }
                 compomentList.Clear();
                 compomentList = null;
-            }
-
-            if (coroutineList != null)
-            {
-                for (int i = 0; i < coroutineList.Count; i++)
-                {
-                    StopCoroutine(coroutineList[i]);
-                }
-                coroutineList.Clear();
-                coroutineList = null;
             }
 
             if (subEntityDic != null)

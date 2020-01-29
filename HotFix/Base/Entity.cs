@@ -15,6 +15,11 @@ namespace HotFix
         public long instanceID;
 
         /// <summary>
+        /// 是否异步创建
+        /// </summary>
+        private bool isAsync;
+
+        /// <summary>
         ///  element 对应的 游戏物体
         /// </summary>
         public GameObject gameObject;
@@ -61,7 +66,6 @@ namespace HotFix
             }
         }
 
-
         private Dictionary<ulong, object> messageTypeDic;
         /// <summary>
         ///  注册的消息 字典   destory会自动销毁
@@ -86,10 +90,8 @@ namespace HotFix
                 if (gameObject != null && gameObject.activeSelf != value)
                 {
                     isActive = value;
-
                     gameObject.SetActive(isActive);
-
-                    if (value == true)
+                    if (isActive)
                     {
                         OnEnable();
                     }
@@ -105,8 +107,6 @@ namespace HotFix
             }
         }
 
-        private List<Coroutine> coroutineList = new List<Coroutine>();
-
         /// <summary>
         ///  是否销毁
         /// </summary>
@@ -121,6 +121,7 @@ namespace HotFix
         protected Entity()
         {
             instanceID = IDGenerator.GetID();
+            isAsync = false;
         }
 
         public static T CreateEntity<T>() where T : Entity, new()
@@ -150,6 +151,7 @@ namespace HotFix
         public async static UniTask<T> CreateEntityAsync<T>(string packageName, string assetName) where T : Entity, new()
         {
             T t = new T();
+            t.isAsync = true;
             await t.LoadResourcesAsync(packageName, assetName);
             t.Awake();
             return t;
@@ -160,16 +162,19 @@ namespace HotFix
         /// </summary>
         public virtual void Awake()
         {
-            LoadResources();
+            if (!isAsync)
+            {
+                LoadResources();
+            }
             FindElement();
             ElementInit();
             ReceiveMessage();
         }
 
         /// <summary>
-        ///  对应接收消息的 重载方法
+        /// 寻找子物体 重载方法
         /// </summary>
-        public virtual void ReceiveMessage()
+        public virtual void FindElement()
         {
 
         }
@@ -178,6 +183,14 @@ namespace HotFix
         ///  成员变量初始化对应重载方法
         /// </summary>
         public virtual void ElementInit()
+        {
+
+        }
+
+        /// <summary>
+        ///  对应接收消息的 重载方法
+        /// </summary>
+        public virtual void ReceiveMessage()
         {
 
         }
@@ -195,14 +208,6 @@ namespace HotFix
             GameObject prefab = await HFResourceManager.Instance.GetPrefabAsync(packageName, assetName);
             GameObject temp = Instantiate(prefab);
             SetGameObject(temp);
-        }
-
-        /// <summary>
-        /// 寻找子物体 重载方法
-        /// </summary>
-        public virtual void FindElement()
-        {
-
         }
 
         public GameObject Instantiate(GameObject prefab)
@@ -495,30 +500,6 @@ namespace HotFix
         }
 
         /// <summary>
-        ///  添加 Monobehivor -> HotFix.Entity 的 linker
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public void AddLinker<T>() where T:HotFixLinker
-        {
-            T t = gameObject.GetComponent<T>();
-            if (t == null)
-            {
-                t = gameObject.AddComponent<T>();
-                t.Injector(this, LinkerCall, LinkerDestroy);
-            }
-        }
-
-        public virtual void LinkerCall(string method,object param)
-        {
-
-        }
-
-        public virtual void LinkerDestroy()
-        {
-
-        }
-
-        /// <summary>
         ///  接收 通知中心 信息   对应发送消息 和 发送通知
         /// </summary>
         /// <param name="receiver">this</param>
@@ -574,16 +555,6 @@ namespace HotFix
                 compomentList = null;
             }
 
-            if (coroutineList != null)
-            {
-                for (int i = 0; i < coroutineList.Count; i++)
-                {
-                    StopCoroutine(coroutineList[i]);
-                }
-                coroutineList.Clear();
-                coroutineList = null;
-            }
-
             if (subEntityDic != null)
             {
                 foreach (var item in subEntityDic)
@@ -611,6 +582,30 @@ namespace HotFix
             DestoryGameObject();
             parent = null;
             instanceID = 0;
+        }
+
+        /// <summary>
+        ///  添加 Monobehivor -> HotFix.Entity 的 linker
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void AddLinker<T>() where T : HotFixLinker
+        {
+            T t = gameObject.GetComponent<T>();
+            if (t == null)
+            {
+                t = gameObject.AddComponent<T>();
+                t.Injector(this, LinkerCall, LinkerDestroy);
+            }
+        }
+
+        public virtual void LinkerCall(string method, object param)
+        {
+
+        }
+
+        public virtual void LinkerDestroy()
+        {
+
         }
     }
 }

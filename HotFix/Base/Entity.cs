@@ -379,14 +379,14 @@ namespace HotFix
         /// <param name="coroutine"></param>
         public Coroutine StartCoroutine(IEnumerator c)
         {
-            return GameLooper.Instance.StartCoroutine(c);
+            return HFFramework.GameLooper.Instance.StartCoroutine(c);
         }
 
         public void StopCoroutine(Coroutine c)
         {
             if (c != null)
             {
-                GameLooper.Instance.StopCoroutine(c);
+                HFFramework.GameLooper.Instance.StopCoroutine(c);
             }
         }
 
@@ -398,7 +398,7 @@ namespace HotFix
                 if (value != isNeedUpdate)
                 {
                     isNeedUpdate = value;
-                    GameUpdate.PrepareForUpdate(this);
+                    GameLooper.PrepareForUpdate(this);
                 }
             }
             get
@@ -415,7 +415,7 @@ namespace HotFix
                 if (value != isNeedFixedUpdate)
                 {
                     isNeedFixedUpdate = value;
-                    GameUpdate.PrepareForFixedUpdate(this);
+                    GameLooper.PrepareForFixedUpdate(this);
                 }
             }
             get
@@ -432,7 +432,7 @@ namespace HotFix
                 if (value != isNeedLateUpdate)
                 {
                     isNeedLateUpdate = value;
-                    GameUpdate.PrepareForFixedUpdate(this);
+                    GameLooper.PrepareForFixedUpdate(this);
                 }
             }
             get

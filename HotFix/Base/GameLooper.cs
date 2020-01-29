@@ -6,16 +6,16 @@ using UnityEngine;
 
 namespace HotFix
 {
-    public class GameUpdate
+    public class GameLooper
     {
-        private static GameUpdate instance;
-        public static GameUpdate Instance
+        private static GameLooper instance;
+        public static GameLooper Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new GameUpdate();
+                    instance = new GameLooper();
                 }
                 return instance;
             }
@@ -25,6 +25,7 @@ namespace HotFix
         /// 即将在下一帧被update的列表
         /// </summary>
         private List<Entity> prepareUpdateList = new List<Entity>();
+
         /// <summary>
         ///  本帧执行的update的列表
         /// </summary>
@@ -34,6 +35,7 @@ namespace HotFix
         ///  即将在下一帧被fixedUpdate的列表
         /// </summary>
         private List<Entity> prepareFixedUpdateList = new List<Entity>();
+
         /// <summary>
         ///  本帧执行fixedUpdate的列表
         /// </summary>
@@ -125,36 +127,27 @@ namespace HotFix
             instance = null;
         }
 
-        public static void PrepareForUpdate(Entity mono)
+        public static void PrepareForUpdate(Entity entity)
         {
             if (Instance != null)
             {
-                if (Instance.prepareUpdateList.Contains(mono) == false)
-                {
-                    Instance.prepareUpdateList.Add(mono);
-                }
+                Instance.prepareUpdateList.Add(entity);
             }
         }
 
-        public static void PrepareForFixedUpdate(Entity mono)
+        public static void PrepareForFixedUpdate(Entity entity)
         {
             if (Instance != null)
             {
-                if (Instance.prepareFixedUpdateList.Contains(mono) == false)
-                {
-                    Instance.prepareFixedUpdateList.Add(mono);
-                }
+                Instance.prepareFixedUpdateList.Add(entity);
             }
         }
 
-        public static void PrepareForLateUpdate(Entity mono)
+        public static void PrepareForLateUpdate(Entity entity)
         {
             if (Instance != null)
             {
-                if (Instance.prepareLateUpdateList.Contains(mono) == false)
-                {
-                    Instance.prepareLateUpdateList.Add(mono);
-                }
+                Instance.prepareLateUpdateList.Add(entity);
             }
         }
     }

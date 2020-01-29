@@ -11,22 +11,22 @@ public class HotFixEnter
 
     public static void Update()
     {
-        GameUpdate.Instance.Update();
+       HotFix.GameLooper.Instance.Update();
     }
 
     public static void FixedUpdate()
     {
-        GameUpdate.Instance.FixedUpdate();
+        HotFix.GameLooper.Instance.FixedUpdate();
     }
 
     public static void LateUpdate()
     {
-        GameUpdate.Instance.LateUpdate();
+        HotFix.GameLooper.Instance.LateUpdate();
     }
 
     public static void Destroy()
     {
-        GameUpdate.Instance.Destroy();
+        HotFix.GameLooper.Instance.Destroy();
         Debug.Log("热更新被销毁");
     }
 }

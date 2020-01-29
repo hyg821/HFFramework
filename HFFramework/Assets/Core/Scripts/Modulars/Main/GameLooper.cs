@@ -55,8 +55,8 @@ namespace HFFramework
             Instance = this;
             mainThreadContext = SynchronizationContext.Current;
         }
-    
-        void Update()
+
+        public void Update()
         {
             //执行事件队列
             while (eventQueue.Count > 0)
@@ -88,7 +88,7 @@ namespace HFFramework
             }
         }
 
-        void FixedUpdate()
+        public void FixedUpdate()
         {
             for (int i = 0; i < prepareFixedUpdateList.Count; i++)
             {
@@ -110,7 +110,7 @@ namespace HFFramework
             }
         }
 
-        void LateUpdate()
+        public void LateUpdate()
         {
             for (int i = 0; i < prepareLateUpdateList.Count; i++)
             {
@@ -163,27 +163,27 @@ namespace HFFramework
             mainThreadContext.Send(d, param);
         }
 
-        public static void PrepareForUpdate(Entity mono)
+        public static void PrepareForUpdate(Entity entity)
         {
             if (Instance != null)
             {
-                Instance.prepareUpdateList.Add(mono);
+                Instance.prepareUpdateList.Add(entity);
             }
         }
 
-        public static void PrepareForFixedUpdate(Entity mono)
+        public static void PrepareForFixedUpdate(Entity entity)
         {
             if (Instance != null)
             {
-                Instance.prepareFixedUpdateList.Add(mono);
+                Instance.prepareFixedUpdateList.Add(entity);
             }
         }
 
-        public static void PrepareForLateUpdate(Entity mono)
+        public static void PrepareForLateUpdate(Entity entity)
         {
             if (Instance != null)
             {
-                Instance.prepareLateUpdateList.Add(mono);
+                Instance.prepareLateUpdateList.Add(entity);
             }
         }
     }

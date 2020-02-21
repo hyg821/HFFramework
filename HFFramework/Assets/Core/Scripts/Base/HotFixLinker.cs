@@ -35,7 +35,7 @@ namespace HFFramework
         /// </summary>
         public string[] debugMethodParams;
 
-        private Action<string, object> callMethod;
+        private Func<string, object,object> callMethod;
 
         private Action destroyCallback;
 
@@ -44,7 +44,7 @@ namespace HFFramework
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="destroyCallback"></param>
-        public virtual void Injector(long entityID, string entityClass, object entity,Action<string,object> callMethod, Action destroyCallback)
+        public virtual void Injector(long entityID, string entityClass, object entity, Func<string,object, object> callMethod, Action destroyCallback)
         {
             this.entityID = entityID;
             this.entityClass = entityClass;
@@ -58,12 +58,14 @@ namespace HFFramework
         /// </summary>
         /// <param name="method"></param>
         /// <param name="param"></param>
-        public void Call(string method,object param)
+        public object Call(string method,object param)
         {
+            object o = null;
             if (callMethod!=null)
             {
-                callMethod(method, param);
+                o = callMethod(method, param);
             }
+            return o;
         }
 
         private void OnDestroy()

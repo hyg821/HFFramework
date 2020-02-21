@@ -603,8 +603,10 @@ namespace HotFix
         /// </summary>
         /// <param name="method"></param>
         /// <param name="param"></param>
-        public virtual void InversionCall(string method, object param)
+        public virtual object InversionCall(string method, object param)
         {
+            object result = null;
+            return result;
         }
 
         public virtual void LinkerDestroy()

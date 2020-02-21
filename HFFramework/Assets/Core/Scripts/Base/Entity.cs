@@ -117,7 +117,7 @@ namespace HFFramework
             }
         }
 
-        protected Entity()
+        public Entity()
         {
             instanceID = IDGenerator.GetID();
             isAsync = false;

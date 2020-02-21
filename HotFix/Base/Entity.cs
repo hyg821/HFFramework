@@ -118,7 +118,7 @@ namespace HotFix
             }
         }
 
-        protected Entity()
+        public Entity()
         {
             instanceID = IDGenerator.GetID();
             isAsync = false;
@@ -594,18 +594,21 @@ namespace HotFix
             if (t == null)
             {
                 t = gameObject.AddComponent<T>();
-                t.Injector(this, LinkerCall, LinkerDestroy);
+                t.Injector(instanceID,GetType().Name, this, InversionCall, LinkerDestroy);
             }
         }
 
-        public virtual void LinkerCall(string method, object param)
+        /// <summary>
+        /// 通过gameObjcet.linker 调用 此方法
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="param"></param>
+        public virtual void InversionCall(string method, object param)
         {
-
         }
 
         public virtual void LinkerDestroy()
         {
-
         }
     }
 }

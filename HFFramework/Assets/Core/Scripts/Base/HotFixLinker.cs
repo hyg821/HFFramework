@@ -10,7 +10,30 @@ namespace HFFramework
     /// </summary>
     public class HotFixLinker : MonoBehaviour
     {
+        /// <summary>
+        ///  热更新层里的entity
+        /// </summary>
         public object entity;
+
+        /// <summary>
+        ///  热更新层里的entity 类名
+        /// </summary>
+        public string entityClass;
+
+        /// <summary>
+        ///  热更新层里的entity id
+        /// </summary>
+        public long entityID;
+
+        /// <summary>
+        /// 调试方法名字
+        /// </summary>
+        public string debugMethodName;
+
+        /// <summary>
+        /// 调试方法参数
+        /// </summary>
+        public string[] debugMethodParams;
 
         private Action<string, object> callMethod;
 
@@ -21,8 +44,10 @@ namespace HFFramework
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="destroyCallback"></param>
-        public virtual void Injector(object entity,Action<string,object> callMethod, Action destroyCallback)
+        public virtual void Injector(long entityID, string entityClass, object entity,Action<string,object> callMethod, Action destroyCallback)
         {
+            this.entityID = entityID;
+            this.entityClass = entityClass;
             this.entity = entity;
             this.callMethod = callMethod;
             this.destroyCallback = destroyCallback;
@@ -48,6 +73,7 @@ namespace HFFramework
                 destroyCallback();
             }
             entity = null;
+            callMethod = null;
             destroyCallback = null;
         }
     }

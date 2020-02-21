@@ -297,7 +297,6 @@
     <Compile Include="Base\HotFixHelper.cs" />
     <Compile Include="Base\Singleton.cs" />
     <Compile Include="HotFixEnter.cs" />
-    <Compile Include="Base\IDGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

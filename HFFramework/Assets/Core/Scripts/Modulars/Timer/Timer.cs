@@ -65,6 +65,11 @@ namespace HFFramework
 
         public void Update(float delta)
         {
+            if (repeatCount==0)
+            {
+                isComplete = true;
+            }
+
             //如果标记完成 直接退出
             if (isComplete==true)
             {
@@ -106,15 +111,17 @@ namespace HFFramework
             {
                 Execute();
             }
-
-            //如果经过的时间 小于 间隔时间
-            if (useIntervalTime < interval)
-            {
-                useIntervalTime += delta;
-            }
             else
             {
-                Execute();
+                //如果经过的时间 小于 间隔时间
+                if (useIntervalTime < interval)
+                {
+                    useIntervalTime += delta;
+                }
+                else
+                {
+                    Execute();
+                }
             }
         }
 

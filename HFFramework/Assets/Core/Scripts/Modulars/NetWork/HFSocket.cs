@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
+using UniRx.Async;
 using UnityEngine;
 using System.Collections.Generic;
 using Google.Protobuf;
@@ -93,7 +93,7 @@ namespace HFFramework
         /// <summary>
         /// task cache
         /// </summary>
-        private Dictionary<int, TaskCompletionSource<byte[]>> taskCache = new Dictionary<int, TaskCompletionSource<byte[]>>();
+        private Dictionary<int, UniTaskCompletionSource<byte[]>> taskCache = new Dictionary<int, UniTaskCompletionSource<byte[]>>();
 
         /// <summary>
         /// 消息派发委托
@@ -217,13 +217,13 @@ namespace HFFramework
         /// <param name="messageType"></param>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public async Task<byte[]> Call(int messageType, byte[] msg)
+        public async UniTask<byte[]> Call(int messageType, byte[] msg)
         {
             socket.Send(messageType, msg);
-            TaskCompletionSource<byte[]> taskCompletion;
+            UniTaskCompletionSource<byte[]> taskCompletion;
             if (!taskCache.TryGetValue(messageType, out taskCompletion))
             {
-                taskCompletion = new TaskCompletionSource<byte[]>();
+                taskCompletion = new UniTaskCompletionSource<byte[]>();
                 taskCache.Add(messageType, taskCompletion);
             }
             return await taskCompletion.Task;
@@ -237,16 +237,19 @@ namespace HFFramework
                 {
                     KeyValuePair<int, byte[]> e = eventQueue.Dequeue();
 
-                    //callback 方式派发消息
-                    DispatchCallback(e.Key, e.Value);
-
-                    //task 用同步写法 返回异步消息
-                    TaskCompletionSource<byte[]> taskCompletion;
+                    //优先使用同步方式返回
+                    UniTaskCompletionSource<byte[]> taskCompletion;
                     if (taskCache.TryGetValue(e.Key, out taskCompletion))
                     {
-                        taskCompletion.SetResult(e.Value);
+                        taskCompletion.TrySetResult(e.Value);
                         //然后移除 因为一个TaskCompletionSource 没法服用两次
                         taskCache.Remove(e.Key);
+                    }
+                    //如果没有通过同步方式发送 通过消息派发 返回
+                    else
+                    {
+                        //callback 方式派发消息
+                        DispatchCallback(e.Key, e.Value);
                     }
                 }
             }

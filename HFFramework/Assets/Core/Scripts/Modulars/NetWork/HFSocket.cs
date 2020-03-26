@@ -161,10 +161,7 @@ namespace HFFramework
 
         private void m_connect()
         {
-            GameLooper.BackToMainThread(delegate ()
-            {
-                ConnectedCallback();
-            });
+            GameLooper.BackToMainThread(ConnectedCallback);
         }
 
         private void m_receive(int msgType, byte[] msg)
@@ -177,18 +174,12 @@ namespace HFFramework
 
         private void m_close()
         {
-            GameLooper.BackToMainThread(delegate ()
-            {
-                CloseCallback();
-            });
+            GameLooper.BackToMainThread(CloseCallback);
         }
 
         private void m_error()
         {
-            GameLooper.BackToMainThread(delegate ()
-            {
-                ErrorCallback();
-            });
+            GameLooper.BackToMainThread(ErrorCallback);
         }
 
         /// <summary>

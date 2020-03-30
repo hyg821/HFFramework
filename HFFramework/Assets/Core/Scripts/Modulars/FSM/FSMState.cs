@@ -5,11 +5,11 @@ using System;
 
 namespace HFFramework
 {
-    public enum StateEnum
+    public enum StateType
     {
-        StateEnter,
-        StateStay,
-        StateExit
+        Enter,
+        Stay,
+        Exit
     }
 
     public class FSMState
@@ -31,7 +31,7 @@ namespace HFFramework
         /// <summary>
         ///  当前的状态类型 是 正在进入 还是持续中 还是已经退出
         /// </summary>
-        public StateEnum currentState;
+        public StateType currentState;
 
 
         public Action OnStateEnterCallback;
@@ -57,12 +57,12 @@ namespace HFFramework
 
         }
 
-        public virtual void OnStateInvoke(StateEnum s)
+        public virtual void OnStateInvoke(StateType s)
         {
             currentState = s;
             switch (s)
             {
-                case StateEnum.StateEnter:
+                case StateType.Enter:
                     OnStateEnter();
                     if (OnStateEnterCallback != null)
                     {
@@ -71,7 +71,7 @@ namespace HFFramework
                     }
                     break;
 
-                case StateEnum.StateStay:
+                case StateType.Stay:
                     OnStateStay();
                     if (OnStateStayCallback != null)
                     {
@@ -79,7 +79,7 @@ namespace HFFramework
                     }
                     break;
 
-                case StateEnum.StateExit:
+                case StateType.Exit:
                     OnStateExit();
                     if (OnStateExitCallback != null)
                     {

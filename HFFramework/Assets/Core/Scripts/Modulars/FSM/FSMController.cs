@@ -56,15 +56,15 @@ namespace HFFramework
             {
                 if (stateName != CurrentState.stateName)
                 {
-                    CurrentState.OnStateInvoke(StateEnum.StateExit);
+                    CurrentState.OnStateInvoke(StateType.Exit);
                     CurrentState = this[stateName];
-                    CurrentState.OnStateInvoke(StateEnum.StateEnter);
+                    CurrentState.OnStateInvoke(StateType.Enter);
                 }
             }
             else
             {
                 CurrentState = this[stateName];
-                CurrentState.OnStateInvoke(StateEnum.StateEnter);
+                CurrentState.OnStateInvoke(StateType.Enter);
             }
         }
 
@@ -72,7 +72,7 @@ namespace HFFramework
         {
             if (CurrentState != null)
             {
-                CurrentState.OnStateInvoke(StateEnum.StateStay);
+                CurrentState.OnStateInvoke(StateType.Stay);
             }
         }
 

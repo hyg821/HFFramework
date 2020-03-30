@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace HFFramework
 {
+    public enum UICacheType
+    {
+        Cache = 0,
+        Destroy = 1
+    }
+
     public enum UIHideType
     {
         /// <summary>

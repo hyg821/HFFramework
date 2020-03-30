@@ -110,19 +110,25 @@ namespace HFFramework
             return controller as T;
         }
 
-        public static async UniTask<T> Open<T>(bool async) where T : UIController, new()
+        public static async UniTask<T> Open<T>(object param = null,bool async = false,bool animation = false) where T : UIController, new()
         {
             T t = await Instance.GetController<T>(async);
-            t.Open();
+            await t.Open(param, animation);
             return t;
         }
 
-        public static void Close<T>()
+        public static async UniTask Close<T>(bool animation = false)
         {
             UIController controller;
-            if (Instance.controllerDic.TryGetValue(typeof(T).Name, out controller))
+            string key = typeof(T).Name;
+            if (Instance.controllerDic.TryGetValue(key, out controller))
             {
-                controller.Close();
+                await controller.Close(animation);
+                if ((UICacheType)controller.Config.CacheType ==UICacheType.Destroy)
+                {
+                    Instance.controllerDic.Remove(key);
+                    controller.Destroy();
+                }
             }
         }
 

@@ -12,7 +12,7 @@ namespace Config
     public class UI
     { 
         /// <summary>
-        /// 类型
+        /// 类型（ClassName）
         /// </summary>
         public string Type;
         /// <summary>
@@ -36,9 +36,9 @@ namespace Config
         /// </summary>
         public string HideAnimation;
         /// <summary>
-        /// 类名
+        /// 缓存类型
         /// </summary>
-        public string ClassName;
+        public int CacheType;
     }
 
     [System.Serializable]
@@ -98,7 +98,7 @@ namespace Config
                     config.AssetName = strs[3];
                     config.ShowAnimation = strs[4];
                     config.HideAnimation = strs[5];
-                    config.ClassName = strs[6];
+                    int.TryParse(strs[6], out config.CacheType);
                     dic.Add(config.Type, config );
                     list.Add(config);
                }

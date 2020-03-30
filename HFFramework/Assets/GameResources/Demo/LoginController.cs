@@ -44,10 +44,17 @@ public class LoginController : UIController
     public TestTask task;
     // Use this for initialization
 
+    public override void PlayShowAnimation()
+    {
+        base.PlayShowAnimation();
+        transform.DOScale(Vector3.one, 0.2f).OnComplete(OnShowComplete);
+    }
+
+
     public override void Awake()
     {
         base.Awake();
-
+        transform.localScale = Vector3.zero;
 
         task = new TestTask();
         task.Start();
@@ -162,7 +169,7 @@ public class LoginController : UIController
     public async void Jump()
     {
         await HFResourceManager.Instance.LoadScene("SceneA", "SceneA");
-        UIManager.Close<LoginController>();
+        await UIManager.Close<LoginController>();
     }
 
     public async void Test()

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Config;
+using UniRx.Async;
 
 namespace HFFramework
 {
@@ -13,8 +14,8 @@ namespace HFFramework
     /// <typeparam name="M"></typeparam>
     public class UIController : UIBase 
     {
-        private Action showCallback;
-        private Action hideCallback;
+        private UniTaskCompletionSource showCompletionTask;
+        private UniTaskCompletionSource hideCompletionTask;
 
         private UI config;
         public UI Config
@@ -31,21 +32,23 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  打开页面
+        ///  打开页面 open ->PlayShowAnimation -> OnShowComplete
         /// </summary>
         /// <param name="animation"></param>
         /// <param name="callback"></param>
-        public virtual void Open(bool animation = false,Action callback = null)
+        public virtual UniTask Open(object param = null, bool animation = false)
         {
-            showCallback = callback;
+            showCompletionTask = new UniTaskCompletionSource();
             if (animation)
             {
-                ShowAnimation();
+                PlayShowAnimation();
             }
             else
             {
                 IsShow = true;
+                OnShowComplete();
             }
+            return showCompletionTask.Task;
         }
 
         /// <summary>
@@ -53,17 +56,19 @@ namespace HFFramework
         /// </summary>
         /// <param name="animation"></param>
         /// <param name="callback"></param>
-        public virtual void Close(bool animation = false,Action callback = null)
+        public virtual UniTask Close(object param = null, bool animation = false)
         {
-            hideCallback = callback;
+            hideCompletionTask = new UniTaskCompletionSource();
             if (animation)
             {
-                HideAnimation();
+                PlayHideAnimation();
             }
             else
             {
                 IsShow = false;
+                OnHideComplete();
             }
+            return hideCompletionTask.Task;
         }
 
         /// <summary>
@@ -77,40 +82,40 @@ namespace HFFramework
         }
 
         /// <summary>
-        /// 展现动画
+        /// 展现动画 播放之后自行调用 OnShowComplete
         /// </summary>
-        public virtual void ShowAnimation()
+        public virtual void PlayShowAnimation()
         {
 
         }
 
         /// <summary>
-        /// 隐藏动画
+        /// 隐藏动画 播放之后自行调用 OnHideComplete
         /// </summary>
-        public virtual void HideAnimation()
+        public virtual void PlayHideAnimation()
         {
 
         }
 
         /// <summary>
-        /// 展现动画完成
+        /// 界面完全显示完成
         /// </summary>
-        public void ShowAnimationComplete()
+        public virtual void OnShowComplete()
         {
-            if (showCallback!=null)
+            if (showCompletionTask != null)
             {
-                showCallback();
+                showCompletionTask.TrySetResult();
             }
         }
 
         /// <summary>
-        /// 隐藏动画完成
+        /// 界面完全隐藏完成
         /// </summary>
-        public void HideAnimationComplete()
+        public virtual void OnHideComplete()
         {
-            if (hideCallback!=null)
+            if (hideCompletionTask != null)
             {
-                hideCallback();
+                hideCompletionTask.TrySetResult();
             }
         }
 

@@ -1,12 +1,13 @@
-﻿namespace HFFramework
+﻿using UniRx.Async;
+
+namespace HFFramework
 {
     public class LoginState : FSMState
     {
         public async override void OnStateEnter()
         {
             base.OnStateEnter();
-            //创建控制器
-            LoginController controller = await UIManager.Open<LoginController>(true);
+            LoginController controller = await UIManager.Open<LoginController>(null, false, true);
         }
 
         public override void OnStateStay()

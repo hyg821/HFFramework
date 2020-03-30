@@ -16,27 +16,29 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 using System.Threading.Tasks;
 using System.Threading;
+using TMPro;
 
 public class LoginController : UIController
 {
 
     public Image bg;
-    public InputField input;
     public Button loginBtn;
     public Image webImage;
     public Button jumpBtn;
     public Button TaskBtn;
+    public TMP_InputField input;
     #region
     public override void FindElement()
     {
         bg = AutoFind<Image>("");
-        input = AutoFind<InputField>("InputField");
         loginBtn = AutoFind<Button>("Button");
         webImage = AutoFind<Image>("Image");
         jumpBtn = AutoFind<Button>("Button2");
         TaskBtn = AutoFind<Button>("Button3");
+        input = AutoFind<TMP_InputField>("InputField");
     }
     #endregion
+
 
 
     public int errorCount = 0;
@@ -47,7 +49,7 @@ public class LoginController : UIController
     public override void PlayShowAnimation()
     {
         base.PlayShowAnimation();
-        transform.DOScale(Vector3.one, 0.2f).OnComplete(OnShowComplete);
+        transform.DOScale(Vector3.one, 1).OnComplete(OnShowComplete);
     }
 
 

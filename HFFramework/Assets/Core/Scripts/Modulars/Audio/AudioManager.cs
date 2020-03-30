@@ -173,7 +173,7 @@ namespace HFFramework
             return player;
         }
 
-        public AudioPlayer GetAudioSource(string name, SoundType type)
+        public AudioPlayer GetAudioPlayer(string name, SoundType type)
         {
             AudioPlayer player = null;
             if (type == SoundType.Music)
@@ -238,7 +238,7 @@ namespace HFFramework
 
         public void DestoryPlayer(string name, SoundType type)
         {
-            DestroyPlayer(GetAudioSource(name, type));
+            DestroyPlayer(GetAudioPlayer(name, type));
         }
 
         public void DestroyAllAudioPlayer()

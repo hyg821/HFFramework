@@ -14,7 +14,7 @@ namespace HFFramework
             HFConfigManager.Instance.Init();
             DebugController debug = await UIManager.Open<DebugController>(true);
             debug.Close();
-            controller.TranslateToState<LoginState>();
+            fsm.TranslateToState<LoginState>();
         }
 
         public override void OnStateStay()

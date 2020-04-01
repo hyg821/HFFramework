@@ -16,7 +16,7 @@ namespace HFFramework
     {
         public const string RootState = "Root";
 
-        public FSMController controller;
+        public FSMController fsm;
 
         /// <summary>
         ///  状态名称
@@ -43,10 +43,10 @@ namespace HFFramework
 
         }
 
-        public static T Create<T>(FSMController controller) where T: FSMState,new()
+        public static T Create<T>(FSMController fsm) where T: FSMState,new()
         {
             T t = new T();
-            t.controller = controller;
+            t.fsm = fsm;
             t.stateName = typeof(T).Name;
             t.Init();
             return t;

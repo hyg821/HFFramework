@@ -12,12 +12,12 @@ namespace  HFFramework
         Release
     }
 
-    public enum GameResourcesType
+    public enum LoadAssetType
     {
         /// <summary>
         ///  编辑器 读取
         /// </summary>
-        AssetDatabase,
+        Editor,
         /// <summary>
         ///  资源包读取
         /// </summary>
@@ -60,9 +60,9 @@ namespace  HFFramework
         public GameLanguage Language;
 
         /// <summary>
-        ///  游戏资源模式 是从editor 读取 还是bundle读取
+        ///  加载资源模式 是从editor 读取 还是bundle读取
         /// </summary>
-        public GameResourcesType ResourcesType;
+        public LoadAssetType LoadAssetType;
 
         /// <summary>
         ///  app版本
@@ -143,31 +143,31 @@ namespace  HFFramework
             {
                 case RuntimePlatform.OSXEditor:
                     Platform = GamePlatform.Editor;
-                    ResourcesType = GameResourcesType.AssetDatabase;
+                    LoadAssetType = LoadAssetType.Editor;
                     break;
                 case RuntimePlatform.WindowsEditor:
                     Platform = GamePlatform.Editor;
-                    ResourcesType = GameResourcesType.AssetDatabase;
+                    LoadAssetType = LoadAssetType.Editor;
                     break;
                 case RuntimePlatform.WindowsPlayer:
                     Platform = GamePlatform.Windows;
-                    ResourcesType = GameResourcesType.AssetBundle;
+                    LoadAssetType = LoadAssetType.AssetBundle;
                     break;
                 case RuntimePlatform.OSXPlayer:
                     Platform = GamePlatform.Mac;
-                    ResourcesType = GameResourcesType.AssetBundle;
+                    LoadAssetType = LoadAssetType.AssetBundle;
                     break;
                 case RuntimePlatform.IPhonePlayer:
                     Platform = GamePlatform.iOS;
-                    ResourcesType = GameResourcesType.AssetBundle;
+                    LoadAssetType = LoadAssetType.AssetBundle;
                     break;
                 case RuntimePlatform.Android:
                     Platform = GamePlatform.Android;
-                    ResourcesType = GameResourcesType.AssetBundle;
+                    LoadAssetType = LoadAssetType.AssetBundle;
                     break;
                 case RuntimePlatform.WebGLPlayer:
                     Platform = GamePlatform.Web;
-                    ResourcesType = GameResourcesType.AssetBundle;
+                    LoadAssetType = LoadAssetType.AssetBundle;
                     break;
                 default:
                     break;

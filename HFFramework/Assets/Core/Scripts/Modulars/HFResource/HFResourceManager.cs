@@ -163,7 +163,7 @@ namespace HFFramework
         /// <returns></returns>
         public GameObject GetPrefab(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
+            if (GameEnvironment.Instance.LoadAssetType == LoadAssetType.Editor)
             {
                 return EditorLoadAsset<GameObject>(packageName, assetName);
             }
@@ -177,7 +177,7 @@ namespace HFFramework
 
         public async UniTask<GameObject> GetPrefabAsync(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
+            if (GameEnvironment.Instance.LoadAssetType == LoadAssetType.Editor)
             {
                 return EditorLoadAsset<GameObject>(packageName, assetName);
             }
@@ -196,7 +196,7 @@ namespace HFFramework
         /// <returns></returns>
         public Sprite GetSprite(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
+            if (GameEnvironment.Instance.LoadAssetType == LoadAssetType.Editor)
             {
                 return EditorLoadAsset<Sprite>(packageName, assetName);
             }
@@ -241,7 +241,7 @@ namespace HFFramework
         /// <returns></returns>
         public Shader GetShader(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
+            if (GameEnvironment.Instance.LoadAssetType == LoadAssetType.Editor)
             {
                 Shader shader = EditorLoadAsset<Shader>(packageName, assetName);
                 return shader;
@@ -263,7 +263,7 @@ namespace HFFramework
         /// <returns></returns>
         public T GetAsset<T>(string packageName, string assetName) where T : UnityEngine.Object
         {
-            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
+            if (GameEnvironment.Instance.LoadAssetType == LoadAssetType.Editor)
             {
                 return EditorLoadAsset<T>(packageName, assetName);
             }
@@ -284,7 +284,7 @@ namespace HFFramework
         /// <param name="finishCallBack"></param>
         public async UniTask LoadScene(string packageName,  string sceneName)
         {
-            if (GameEnvironment.Instance.ResourcesType == GameResourcesType.AssetDatabase)
+            if (GameEnvironment.Instance.LoadAssetType == LoadAssetType.Editor)
             {
                 await SceneManager.LoadSceneAsync(sceneName);
             }
@@ -521,7 +521,7 @@ namespace HFFramework
         /// <param name="b">是否卸载压出来的的东西</param>
         public void UnloadAssetBundle(string packageName, bool b = true)
         {
-            if (GameEnvironment.Instance.ResourcesType != GameResourcesType.AssetDatabase)
+            if (GameEnvironment.Instance.LoadAssetType != LoadAssetType.Editor)
             {
                 packageName = packageName.ToLower();
                 AssetBundlePackage bundle = GetAssetBundle(packageName);
@@ -534,7 +534,7 @@ namespace HFFramework
 
         public void UnloadAssetBundle(AssetBundlePackage bundle, bool b = true)
         {
-            if (GameEnvironment.Instance.ResourcesType != GameResourcesType.AssetDatabase)
+            if (GameEnvironment.Instance.LoadAssetType != LoadAssetType.Editor)
             {
                 HFLog.L("卸载Assetbundle  " + bundle.name);
                 RecursionReleaseAssetBundle(bundle.name);
@@ -615,7 +615,7 @@ namespace HFFramework
 
         public void Debug()
         {
-            if (GameEnvironment.Instance.ResourcesType != GameResourcesType.AssetDatabase)
+            if (GameEnvironment.Instance.LoadAssetType != LoadAssetType.Editor)
             {
                 foreach (var item in allAssetBundleDic)
                 {

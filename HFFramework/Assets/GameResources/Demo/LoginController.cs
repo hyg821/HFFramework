@@ -26,7 +26,7 @@ public class LoginController : UIController
     public Image webImage;
     public Button jumpBtn;
     public Button TaskBtn;
-    public TMP_InputField input;
+    public InputField input;
     #region
     public override void FindElement()
     {
@@ -35,9 +35,10 @@ public class LoginController : UIController
         webImage = AutoFind<Image>("Image");
         jumpBtn = AutoFind<Button>("Button2");
         TaskBtn = AutoFind<Button>("Button3");
-        input = AutoFind<TMP_InputField>("InputField");
+        input = AutoFind<InputField>("InputField");
     }
     #endregion
+
 
 
 

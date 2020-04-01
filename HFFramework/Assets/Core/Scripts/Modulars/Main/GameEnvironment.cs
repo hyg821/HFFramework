@@ -202,7 +202,7 @@ namespace  HFFramework
             {
                 log = gameObject.AddComponent<LogCat>();
             }
-            else if (log != null && IsOpenLoaclLog == false)
+            else if (IsOpenLoaclLog == false && log != null)
             {
                 GameObject.Destroy(log);
                 log = null;

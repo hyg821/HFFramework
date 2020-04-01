@@ -7,7 +7,6 @@ namespace  HFFramework
 {
     public enum GameEnvironmentType
     {
-        Develop,
         Debug,
         Release
     }
@@ -118,7 +117,7 @@ namespace  HFFramework
         private void Init()
         {
             SwitchPlatform();
-            RuntimeEnvironment = GameEnvironmentType.Develop;
+            RuntimeEnvironment = GameEnvironmentType.Debug;
             Language = GameLanguage.Chinese;
             SetAppVersion("1.0.0");
             SetResourceVersion("1.0.0");

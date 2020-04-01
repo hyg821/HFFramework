@@ -10,7 +10,7 @@ namespace HFFramework
         Destroy = 1
     }
 
-    public enum UIHideType
+    public enum UIShowType
     {
         /// <summary>
         ///  通过激活非激活的方式来控制隐藏 有GC 适合一些子物体 小物体
@@ -31,7 +31,7 @@ namespace HFFramework
         /// <summary>
         ///  UI 隐藏 类型
         /// </summary>
-        public UIHideType hideType = UIHideType.Active;
+        public UIShowType showType = UIShowType.Active;
 
         private CanvasGroup canvasGroup;
         /// <summary>
@@ -62,16 +62,16 @@ namespace HFFramework
                 {
                     if (isShow == true)
                     {
-                        switch (hideType)
+                        switch (showType)
                         {
-                            case UIHideType.Active:
+                            case UIShowType.Active:
                                 IsActive = isShow;
                                 break;
-                            case UIHideType.Scale:
+                            case UIShowType.Scale:
                                 transform.localScale = Vector3.one;
                                 OnEnable();
                                 break;
-                            case UIHideType.CanvasGroup:
+                            case UIShowType.CanvasGroup:
                                 CanvasGroup.alpha = 1;
                                 CanvasGroup.blocksRaycasts = true;
                                 CanvasGroup.interactable = true;
@@ -83,16 +83,16 @@ namespace HFFramework
                     }
                     else
                     {
-                        switch (hideType)
+                        switch (showType)
                         {
-                            case UIHideType.Active:
+                            case UIShowType.Active:
                                 IsActive = false;
                                 break;
-                            case UIHideType.Scale:
+                            case UIShowType.Scale:
                                 transform.localScale = Vector3.zero;
                                 OnDisable();
                                 break;
-                            case UIHideType.CanvasGroup:
+                            case UIShowType.CanvasGroup:
                                 CanvasGroup.alpha = 0;
                                 CanvasGroup.blocksRaycasts = false;
                                 CanvasGroup.interactable = false;

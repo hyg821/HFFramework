@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HFFramework
 {
     /// <summary>
-    ///  基础表现层
+    ///  表现 实体
     /// </summary>
     public class BehaviorEntity : Entity
     {

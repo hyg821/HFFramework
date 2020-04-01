@@ -6,32 +6,6 @@ using System.Collections.Generic;
 
 namespace HFFramework
 {
-    public enum PushType
-    {
-        /// <summary>
-        ///  上一个页面在本个页面显示之后非激活提高性能
-        ///   如果想实现这个条件 必须子类view 实现 DoShowAnimation 这个重载 并且需要调用callback
-        /// </summary>
-        Navigation,
-        /// <summary>
-        ///  上一个页面在本个页面显示之后没有变化适用于弹窗
-        /// </summary>
-        Model
-    }
-
-    public enum PopType
-    {
-        /// <summary>
-        ///  页面隐藏 并且缓存
-        /// </summary>
-        Cache,
-
-        /// <summary>
-        ///  页面隐藏 并且销毁
-        /// </summary>
-        Destroy
-    }
-
     public class UICanvas : BaseBehaviour
     {
         public const string CanvasName = "UILayer";

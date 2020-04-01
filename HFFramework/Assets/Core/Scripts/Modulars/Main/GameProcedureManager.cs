@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 namespace HFFramework
 {
     /// <summary>
-    ///游戏状态机流程 每一步都通过 await 不要使用callback 以免逻辑混乱
+    /// 游戏状态机流程 每一步都通过 await 不要使用callback 以免逻辑混乱
     /// 打开loading 页面（下边每一步都会给loading 页面发送消息 同步进度）
     /// 状态A 离开
     /// 1.关闭UI

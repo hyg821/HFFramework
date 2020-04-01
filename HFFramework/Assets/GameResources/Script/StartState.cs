@@ -7,9 +7,9 @@ namespace HFFramework
 {
     public class StartState : FSMState
     {
-        public async override void OnStateEnter()
+        public async override void OnStateEnter(object param = null)
         {
-            base.OnStateEnter();
+            base.OnStateEnter(param);
             //初始化配置文件
             HFConfigManager.Instance.Init();
             DebugController debug = await UIManager.Open<DebugController>(true);
@@ -22,9 +22,9 @@ namespace HFFramework
             base.OnStateStay();
         }
 
-        public override void OnStateExit()
+        public override void OnStateExit(object param = null)
         {
-            base.OnStateExit();
+            base.OnStateExit(param);
         }
     }
 }

@@ -2,9 +2,9 @@
 {
     public class BattleState : FSMState
     {
-        public override void OnStateEnter()
+        public override void OnStateEnter(object param = null)
         {
-            base.OnStateEnter();
+            base.OnStateEnter(param);
         }
 
         public override void OnStateStay()
@@ -12,9 +12,9 @@
             base.OnStateStay();
         }
 
-        public override void OnStateExit()
+        public override void OnStateExit(object param = null)
         {
-            base.OnStateExit();
+            base.OnStateExit(param);
         }
     }
 }

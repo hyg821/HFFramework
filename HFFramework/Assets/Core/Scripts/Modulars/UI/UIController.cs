@@ -65,10 +65,15 @@ namespace HFFramework
             }
             else
             {
-                IsShow = false;
-                OnHideComplete();
+                Close();
             }
             return hideCompletionTask.Task;
+        }
+
+        public void Close()
+        {
+            IsShow = false;
+            OnHideComplete();
         }
 
         /// <summary>

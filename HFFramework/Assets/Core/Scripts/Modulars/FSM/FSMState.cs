@@ -57,20 +57,19 @@ namespace HFFramework
 
         }
 
-        public virtual void OnStateInvoke(StateType s)
+        public virtual void OnStateInvoke(StateType s,object param = null)
         {
             currentState = s;
             switch (s)
             {
                 case StateType.Enter:
-                    OnStateEnter();
+                    OnStateEnter(param);
                     if (OnStateEnterCallback != null)
                     {
                         isRunning = true;
                         OnStateEnterCallback();
                     }
                     break;
-
                 case StateType.Stay:
                     OnStateStay();
                     if (OnStateStayCallback != null)
@@ -78,22 +77,20 @@ namespace HFFramework
                         OnStateStayCallback();
                     }
                     break;
-
                 case StateType.Exit:
-                    OnStateExit();
+                    OnStateExit(param);
                     if (OnStateExitCallback != null)
                     {
                         OnStateExitCallback();
                         isRunning = false;
                     }
-
                     break;
                 default:
                     break;
             }
         }
 
-        public virtual void OnStateEnter()
+        public virtual void OnStateEnter(object param = null)
         {
 
         }
@@ -103,7 +100,7 @@ namespace HFFramework
 
         }
 
-        public virtual void OnStateExit()
+        public virtual void OnStateExit(object param = null)
         {
 
         }

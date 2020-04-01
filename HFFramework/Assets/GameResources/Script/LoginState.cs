@@ -4,9 +4,9 @@ namespace HFFramework
 {
     public class LoginState : FSMState
     {
-        public async override void OnStateEnter()
+        public async override void OnStateEnter(object param = null)
         {
-            base.OnStateEnter();
+            base.OnStateEnter(param);
             LoginController controller = await UIManager.Open<LoginController>(null, false, true);
         }
 
@@ -15,9 +15,9 @@ namespace HFFramework
             base.OnStateStay();
         }
 
-        public override void OnStateExit()
+        public override void OnStateExit(object param = null)
         {
-            base.OnStateExit();
+            base.OnStateExit(param);
         }
     }
 }

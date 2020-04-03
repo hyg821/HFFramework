@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx.Async;
 using UnityEngine;
 
 namespace HFFramework
@@ -55,7 +56,7 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  销毁自己 new 出来的 object
+        ///  销毁自己 new 出来的 object 比如texture
         /// </summary>
         /// <param name="asset"></param>
         public static void DestroyAsset(UnityEngine.Object asset)
@@ -68,6 +69,39 @@ namespace HFFramework
             GameObject gameObject = GameObject.Instantiate(prefab);
             gameObject.name = prefab.name;
             return gameObject;
+        }
+
+        public static T CreateEntity<T>() where T : Entity, new()
+        {
+            T t = new T();
+            t.Awake();
+            return t;
+        }
+
+        public static T CreateEntity<T>(GameObject gameObject = null) where T : Entity, new()
+        {
+            T t = new T();
+            t.SetGameObject(gameObject);
+            t.Awake();
+            return t;
+        }
+
+        public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null) where T : Entity, new()
+        {
+            T t = new T();
+            t.parent = parent;
+            t.SetGameObject(gameObject);
+            t.Awake();
+            return t;
+        }
+
+        public async static UniTask<T> CreateEntityAsync<T>(string packageName, string assetName) where T : Entity, new()
+        {
+            T t = new T();
+            t.isAsync = true;
+            await t.LoadResourcesAsync(packageName, assetName);
+            t.Awake();
+            return t;
         }
 
         public void DestroyManager()

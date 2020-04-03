@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -148,6 +149,19 @@ namespace HotFix
             if (Instance != null)
             {
                 Instance.prepareLateUpdateList.Add(entity);
+            }
+        }
+
+        public Coroutine StartCoroutine(IEnumerator c)
+        {
+            return HFFramework.GameLooper.Instance.StartCoroutine(c);
+        }
+
+        public void StopCoroutine(Coroutine c)
+        {
+            if (c != null)
+            {
+                HFFramework.GameLooper.Instance.StopCoroutine(c);
             }
         }
     }

@@ -148,8 +148,6 @@ namespace HFFramework
             GameUtils.Instance.StartCoroutine(GameUtils.Instance.AsyncRead(path, callback));
         }
 
-      
-
         public static void DeleteFile(string folderName, bool isRelative = true)
         {
             string path = GetPath(folderName, isRelative);

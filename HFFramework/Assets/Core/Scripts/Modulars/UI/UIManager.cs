@@ -94,14 +94,14 @@ namespace HFFramework
                 UI config = ConfigUI.Get(type);
                 if (async)
                 {
-                    controller = await Entity.CreateEntityAsync<T>(config.AssetbundleName, config.AssetName);
+                    controller = await GameFactory.CreateEntityAsync<T>(config.AssetbundleName, config.AssetName);
                 }
                 else
                 {
                     GameObject prefab = HFResourceManager.Instance.GetPrefab(config.AssetbundleName, config.AssetName);
                     GameObject sourcers = GameObject.Instantiate(prefab);
                     sourcers.name = config.AssetName;
-                    controller = Entity.CreateEntity<T>(sourcers);
+                    controller = GameFactory.CreateEntity<T>(sourcers);
                 }
      
                 controller.Config = config;

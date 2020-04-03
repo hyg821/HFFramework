@@ -294,7 +294,7 @@
   <ItemGroup>
     <Compile Include="Base\Entity.cs" />
     <Compile Include="Base\GameLooper.cs" />
-    <Compile Include="Base\HotFixHelper.cs" />
+    <Compile Include="Base\GameFactory.cs" />
     <Compile Include="Base\Singleton.cs" />
     <Compile Include="HotFixEnter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

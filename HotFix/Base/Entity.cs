@@ -7,6 +7,11 @@ using HFFramework;
 
 namespace HotFix
 {
+    /// <summary>
+    ///  对象基类 替代 MonoBehaviour  
+    ///  整体思路 Entity控制层 gameObject 视图层 
+    ///  Entity 也可以挂载 Entity（component）
+    /// </summary>
     public class Entity
     {
         /// <summary>
@@ -17,7 +22,12 @@ namespace HotFix
         /// <summary>
         /// 是否异步创建
         /// </summary>
-        private bool isAsync;
+        public bool isAsync = false;
+
+        /// <summary>
+        /// 是否是组件
+        /// </summary>
+        public bool isComponent = false;
 
         /// <summary>
         ///  element 对应的 游戏物体
@@ -47,22 +57,6 @@ namespace HotFix
                     compomentList = new List<Entity>();
                 }
                 return compomentList;
-            }
-        }
-
-        private Dictionary<long, Entity> subEntityDic;
-        /// <summary>
-        ///  管理子物体的字典
-        /// </summary>
-        public Dictionary<long, Entity> SubEntityDic
-        {
-            get
-            {
-                if (subEntityDic == null)
-                {
-                    subEntityDic = new Dictionary<long, Entity>();
-                }
-                return subEntityDic;
             }
         }
 
@@ -122,39 +116,6 @@ namespace HotFix
         {
             instanceID = IDGenerator.GetID();
             isAsync = false;
-        }
-
-        public static T CreateEntity<T>() where T : Entity, new()
-        {
-            T t = new T();
-            t.Awake();
-            return t;
-        }
-
-        public static T CreateEntity<T>(GameObject gameObject = null) where T : Entity, new()
-        {
-            T t = new T();
-            t.SetGameObject(gameObject);
-            t.Awake();
-            return t;
-        }
-
-        public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null) where T : Entity, new()
-        {
-            T t = new T();
-            t.parent = parent;
-            t.SetGameObject(gameObject);
-            t.Awake();
-            return t;
-        }
-
-        public async static UniTask<T> CreateEntityAsync<T>(string packageName, string assetName) where T : Entity, new()
-        {
-            T t = new T();
-            t.isAsync = true;
-            await t.LoadResourcesAsync(packageName, assetName);
-            t.Awake();
-            return t;
         }
 
         /// <summary>
@@ -262,10 +223,11 @@ namespace HotFix
 
         public T AddCompoment<T>() where T : Entity, new()
         {
-            T t1 = CreateEntity<T>(gameObject);
-            t1.parent = this;
-            CompomentList.Add(t1);
-            return t1;
+            T t = GameFactory.CreateEntity<T>(gameObject);
+            t.parent = this;
+            t.isComponent = true;
+            CompomentList.Add(t);
+            return t;
         }
 
         public T GetCompoment<T>() where T : Entity
@@ -328,19 +290,6 @@ namespace HotFix
             }
         }
 
-        /// <summary>
-        ///  添加子元素 方法
-        /// </summary>
-        /// <param name="ele"></param>
-        public void AddSubElement(Entity ele)
-        {
-            if (!SubEntityDic.TryGetValue(ele.instanceID, out ele))
-            {
-                ele.parent = this;
-                SubEntityDic.Add(ele.instanceID, ele);
-            }
-        }
-
         public void SetParent(GameObject obj, bool worldPositionStays = false)
         {
             transform.SetParent(obj.transform, worldPositionStays);
@@ -379,15 +328,12 @@ namespace HotFix
         /// <param name="coroutine"></param>
         public Coroutine StartCoroutine(IEnumerator c)
         {
-            return HFFramework.GameLooper.Instance.StartCoroutine(c);
+            return GameLooper.Instance.StartCoroutine(c);
         }
 
         public void StopCoroutine(Coroutine c)
         {
-            if (c != null)
-            {
-                HFFramework.GameLooper.Instance.StopCoroutine(c);
-            }
+            GameLooper.Instance.StopCoroutine(c);
         }
 
         bool isNeedUpdate = false;
@@ -545,43 +491,40 @@ namespace HotFix
         /// </summary>
         public virtual void Destroy()
         {
-            if (compomentList != null)
+            if (!IsDisposed)
             {
-                for (int i = 0; i < compomentList.Count; i++)
+                if (compomentList != null)
                 {
-                    compomentList[i].Destroy();
+                    for (int i = 0; i < compomentList.Count; i++)
+                    {
+                        compomentList[i].Destroy();
+                    }
+                    compomentList.Clear();
+                    compomentList = null;
                 }
-                compomentList.Clear();
-                compomentList = null;
-            }
 
-            if (subEntityDic != null)
-            {
-                foreach (var item in subEntityDic)
+                if (messageTypeDic != null)
                 {
-                    item.Value.Destroy();
+                    foreach (var item in messageTypeDic)
+                    {
+                        NotificationCenter.Instance.RemoveObserver(this, item.Key);
+                    }
+                    messageTypeDic.Clear();
+                    messageTypeDic = null;
                 }
-                subEntityDic.Clear();
-                subEntityDic = null;
-            }
 
-            if (messageTypeDic != null)
-            {
-                foreach (var item in messageTypeDic)
+                IsNeedUpdate = false;
+                IsNeedFixedUpdate = false;
+                IsNeedLateUpdate = false;
+
+                if (!isComponent)
                 {
-                    NotificationCenter.Instance.RemoveObserver(this, item.Key);
+                    DestoryGameObject();
                 }
-                messageTypeDic.Clear();
-                messageTypeDic = null;
+
+                parent = null;
+                instanceID = 0;
             }
-
-            IsNeedUpdate = false;
-            IsNeedFixedUpdate = false;
-            IsNeedLateUpdate = false;
-
-            DestoryGameObject();
-            parent = null;
-            instanceID = 0;
         }
 
         /// <summary>

@@ -25,6 +25,8 @@ namespace HFFramework
         /// </summary>
         public CanvasScaler canvasScaler;
 
+        public RectTransform rectTransform;
+
         public void Awake()
         {
             gameObject.layer = LayerMask.NameToLayer("UI"); ;
@@ -35,6 +37,8 @@ namespace HFFramework
             canvasScaler = gameObject.GetComponent<CanvasScaler>();
             canvasScaler.referenceResolution = new Vector2(GameEnvironment.Instance.ServerSceneWidth, GameEnvironment.Instance.ServerSceneHeight);
             canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+
+            rectTransform = transform as RectTransform;
         }
 
         public void SetUICamera(UICamera camera)

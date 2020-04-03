@@ -17,7 +17,14 @@ namespace HFFramework
         /// <param name="str"></param>
         public static void L(object obj)
         {
-            if (GameEnvironment.Instance.IsOpenLog == true)
+            if (GameEnvironment.Instance!=null)
+            {
+                if (GameEnvironment.Instance.IsOpenLog == true)
+                {
+                    Debug.Log(obj);
+                }
+            }
+            else
             {
                 Debug.Log(obj);
             }
@@ -28,16 +35,23 @@ namespace HFFramework
         /// </summary>
         public static void C(object obj)
         {
-            if (GameEnvironment.Instance.IsOpenLog == true)
+            if (GameEnvironment.Instance!=null)
             {
-                if (GameEnvironment.Instance.Platform == GamePlatform.Editor)
+                if (GameEnvironment.Instance.IsOpenLog == true)
                 {
-                    Debug.Log(Time.frameCount + " : " + GameUtils.SetColor(obj, constColor));
+                    if (GameEnvironment.Instance.Platform == GamePlatform.Editor)
+                    {
+                        Debug.Log(Time.frameCount + " : " + GameUtils.SetColor(obj, constColor));
+                    }
+                    else
+                    {
+                        Debug.Log(Time.frameCount + " : " + obj);
+                    }
                 }
-                else
-                {
-                    Debug.Log(Time.frameCount + " : " + obj);
-                }
+            }
+            else
+            {
+                Debug.Log(Time.frameCount + " : " + GameUtils.SetColor(obj, constColor));
             }
         }
 
@@ -56,7 +70,14 @@ namespace HFFramework
         /// <param name="str"></param>
         public static void E(object obj)
         {
-            if (GameEnvironment.Instance.IsOpenLog == true)
+            if (GameEnvironment.Instance!=null)
+            {
+                if (GameEnvironment.Instance.IsOpenLog == true)
+                {
+                    Debug.LogError(obj);
+                }
+            }
+            else
             {
                 Debug.LogError(obj);
             }

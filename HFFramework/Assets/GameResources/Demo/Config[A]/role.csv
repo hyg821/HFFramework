@@ -1,0 +1,6 @@
+人物id,名字,时间场景1,时间场景2,时间场景3,时间场景4,场景服装1,场景服装2,场景服装3,场景服装4
+id,name,time1,time2,time3,time4,clothes1,clothes2,clothes3,clothes4
+val,val,ref_Background,ref_Background,ref_Background,ref_Background,val,val,val,val
+single,single,array,array,array,array,array,array,array,array
+int,string,int,int,int,int,string,string,string,string
+1,王钢蛋,1;2,3;4,5;6,7;8,刚入学的学妹1;刚入学的学妹2;刚入学的学妹3,刚入学的学妹4,刚入学的学妹5,刚入学的学妹6

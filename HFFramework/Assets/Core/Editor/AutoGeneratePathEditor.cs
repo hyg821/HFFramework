@@ -19,15 +19,22 @@ namespace HFFramework
             MonoBehaviour[] components = info.GetComponents<MonoBehaviour>();
             string str = info.GetPropertyType();
             List<string> list = new List<string>();
+            list.Add("GameObject");
+            list.Add("Transform");
             for (int i = 0; i < components.Length; i++)
             {
                 string name = components[i].GetType().Name;
                 list.Add(name);
-                if (str== name)
+            }
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                string name = list[i];
+                if (str == name)
                 {
                     selectIndex = i;
                 }
-            }
+            }  
 
             int currentSelect = EditorGUILayout.Popup("类型", selectIndex, list.ToArray(), GUILayout.Width(500));
             info.SetPropertyType(list[currentSelect]);

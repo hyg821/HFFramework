@@ -44,7 +44,7 @@ namespace HFFramework
         /// <summary>
         /// demo路径
         /// </summary>
-        public const string StartScenePath = "Assets/GameResources/Game/Demo/Demo.unity";
+        public const string StartScenePath = "Assets/GameResources/Demo/Demo.unity";
 
         //--------------------------------------游戏内部消息模块id--------------------------------------//
         /// <summary>

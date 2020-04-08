@@ -61,9 +61,6 @@ namespace HFFramework
                 //9热更新入口
                 GameFactory.Create<AppDomainManager>(true);
 
-                //10添加游戏状态机
-                GameFactory.Create<GameProcedureManager>(true);
-
                 //添加定时器
                 GameFactory.Create<TimerManager>(true);
 
@@ -72,6 +69,9 @@ namespace HFFramework
 
                 //工具箱
                 GameFactory.Create<GameUtils>(true);
+
+                //10添加游戏状态机
+                GameFactory.Create<GameProcedureManager>(true);
             }
             else
             {

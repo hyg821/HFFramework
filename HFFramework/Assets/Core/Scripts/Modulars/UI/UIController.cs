@@ -14,8 +14,8 @@ namespace HFFramework
     /// <typeparam name="M"></typeparam>
     public class UIController : UIBase 
     {
-        private UniTaskCompletionSource showCompletionTask;
-        private UniTaskCompletionSource hideCompletionTask;
+        private UniTaskCompletionSource showTask;
+        private UniTaskCompletionSource hideTask;
 
         private UI config;
         public UI Config
@@ -38,7 +38,7 @@ namespace HFFramework
         /// <param name="callback"></param>
         public virtual UniTask Open(object param = null, bool animation = false)
         {
-            showCompletionTask = new UniTaskCompletionSource();
+            showTask = new UniTaskCompletionSource();
             if (animation)
             {
                 PlayShowAnimation();
@@ -48,7 +48,7 @@ namespace HFFramework
                 IsShow = true;
                 OnShowComplete();
             }
-            return showCompletionTask.Task;
+            return showTask.Task;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace HFFramework
         /// <param name="callback"></param>
         public virtual UniTask Close(object param = null, bool animation = false)
         {
-            hideCompletionTask = new UniTaskCompletionSource();
+            hideTask = new UniTaskCompletionSource();
             if (animation)
             {
                 PlayHideAnimation();
@@ -67,7 +67,7 @@ namespace HFFramework
             {
                 Close();
             }
-            return hideCompletionTask.Task;
+            return hideTask.Task;
         }
 
         public void Close()
@@ -107,9 +107,9 @@ namespace HFFramework
         /// </summary>
         public virtual void OnShowComplete()
         {
-            if (showCompletionTask != null)
+            if (showTask != null)
             {
-                showCompletionTask.TrySetResult();
+                showTask.TrySetResult();
             }
         }
 
@@ -118,9 +118,9 @@ namespace HFFramework
         /// </summary>
         public virtual void OnHideComplete()
         {
-            if (hideCompletionTask != null)
+            if (hideTask != null)
             {
-                hideCompletionTask.TrySetResult();
+                hideTask.TrySetResult();
             }
         }
 

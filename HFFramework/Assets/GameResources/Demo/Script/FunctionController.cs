@@ -20,24 +20,35 @@ using TMPro;
 
 public class FunctionController : UIController
 {
-
-
-    public GameObject BackImage;
     public Text TitleLabel;
     public GameObject Cell;
     #region
     public override void FindElement()
     {
-        BackImage = FindChild("");
         TitleLabel = AutoFind<Text>("TopBar/Text");
         Cell = FindChild("ScrollView/Viewport/Content/Cell");
-
-        HFLog.C(BackImage);
     }
     #endregion
 
+    public override void Awake()
+    {
+        base.Awake();
+        HFLog.C("页面初始化完成");
+    }
 
+    public override void PlayShowAnimation()
+    {
+        base.PlayShowAnimation();
+        transform.localScale = Vector3.zero;
+        transform.DOScale(Vector3.one, 1).OnComplete(OnShowComplete);
+        HFLog.C("播放打开动画");
+    }
 
+    public override void OnShowComplete()
+    {
+        base.OnShowComplete();
+        HFLog.C("页面完全显示");
+    }
 
 
 

@@ -29,7 +29,10 @@ namespace HFFramework
 
         public void GetWidth()
         {
-            width = image.rectTransform.rect.width;
+            if (image!=null)
+            {
+                width = image.rectTransform.rect.width;
+            }
         }
 
         public void SetProgress(float progress)

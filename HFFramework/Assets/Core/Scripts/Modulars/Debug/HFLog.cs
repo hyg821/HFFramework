@@ -6,6 +6,10 @@ namespace HFFramework
 {
     public class HFLog
     {
+        public static bool IsOpenLog = true;
+
+        public static GamePlatform Platform = GamePlatform.Editor;
+
         /// <summary>
         ///  颜色
         /// </summary>
@@ -17,14 +21,7 @@ namespace HFFramework
         /// <param name="str"></param>
         public static void L(object obj)
         {
-            if (GameEnvironment.Instance!=null)
-            {
-                if (GameEnvironment.Instance.IsOpenLog == true)
-                {
-                    Debug.Log(obj);
-                }
-            }
-            else
+            if (IsOpenLog)
             {
                 Debug.Log(obj);
             }
@@ -35,23 +32,16 @@ namespace HFFramework
         /// </summary>
         public static void C(object obj)
         {
-            if (GameEnvironment.Instance!=null)
+            if (IsOpenLog)
             {
-                if (GameEnvironment.Instance.IsOpenLog == true)
+                if (Platform == GamePlatform.Editor)
                 {
-                    if (GameEnvironment.Instance.Platform == GamePlatform.Editor)
-                    {
-                        Debug.Log(Time.frameCount + " : " + GameUtils.SetColor(obj, constColor));
-                    }
-                    else
-                    {
-                        Debug.Log(Time.frameCount + " : " + obj);
-                    }
+                    Debug.Log(Time.frameCount + " : " + GameUtils.SetColor(obj, constColor));
                 }
-            }
-            else
-            {
-                Debug.Log(Time.frameCount + " : " + GameUtils.SetColor(obj, constColor));
+                else
+                {
+                    Debug.Log(Time.frameCount + " : " + obj);
+                }
             }
         }
 
@@ -70,14 +60,7 @@ namespace HFFramework
         /// <param name="str"></param>
         public static void E(object obj)
         {
-            if (GameEnvironment.Instance!=null)
-            {
-                if (GameEnvironment.Instance.IsOpenLog == true)
-                {
-                    Debug.LogError(obj);
-                }
-            }
-            else
+            if (IsOpenLog == true)
             {
                 Debug.LogError(obj);
             }

@@ -11,7 +11,7 @@ namespace  HFFramework
         Release
     }
 
-    public enum LoadAssetType
+    public enum LoadAssetPathType
     {
         /// <summary>
         ///  编辑器 读取
@@ -20,7 +20,11 @@ namespace  HFFramework
         /// <summary>
         ///  资源包读取
         /// </summary>
-        AssetBundle
+        AssetBundle,
+        /// <summary>
+        /// 网络
+        /// </summary>
+        Web
     }
 
     public enum GamePlatform
@@ -61,7 +65,7 @@ namespace  HFFramework
         /// <summary>
         ///  加载资源模式 是从editor 读取 还是bundle读取
         /// </summary>
-        public LoadAssetType LoadAssetType;
+        public LoadAssetPathType LoadAssetPathType;
 
         /// <summary>
         ///  app版本
@@ -142,35 +146,36 @@ namespace  HFFramework
             {
                 case RuntimePlatform.OSXEditor:
                     Platform = GamePlatform.Editor;
-                    LoadAssetType = LoadAssetType.Editor;
+                    LoadAssetPathType = LoadAssetPathType.Editor;
                     break;
                 case RuntimePlatform.WindowsEditor:
                     Platform = GamePlatform.Editor;
-                    LoadAssetType = LoadAssetType.Editor;
+                    LoadAssetPathType = LoadAssetPathType.Editor;
                     break;
                 case RuntimePlatform.WindowsPlayer:
                     Platform = GamePlatform.Windows;
-                    LoadAssetType = LoadAssetType.AssetBundle;
+                    LoadAssetPathType = LoadAssetPathType.AssetBundle;
                     break;
                 case RuntimePlatform.OSXPlayer:
                     Platform = GamePlatform.Mac;
-                    LoadAssetType = LoadAssetType.AssetBundle;
+                    LoadAssetPathType = LoadAssetPathType.AssetBundle;
                     break;
                 case RuntimePlatform.IPhonePlayer:
                     Platform = GamePlatform.iOS;
-                    LoadAssetType = LoadAssetType.AssetBundle;
+                    LoadAssetPathType = LoadAssetPathType.AssetBundle;
                     break;
                 case RuntimePlatform.Android:
                     Platform = GamePlatform.Android;
-                    LoadAssetType = LoadAssetType.AssetBundle;
+                    LoadAssetPathType = LoadAssetPathType.AssetBundle;
                     break;
                 case RuntimePlatform.WebGLPlayer:
                     Platform = GamePlatform.Web;
-                    LoadAssetType = LoadAssetType.AssetBundle;
+                    LoadAssetPathType = LoadAssetPathType.AssetBundle;
                     break;
                 default:
                     break;
             }
+            HFLog.Platform = Platform;
         }
 
         public void SetAppVersion(string version)
@@ -191,6 +196,7 @@ namespace  HFFramework
         public void OpenLog(bool b)
         {
             IsOpenLog = b;
+            HFLog.IsOpenLog = IsOpenLog;
         }
 
         public void OpenLocalLog(bool b)

@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace HFFramework
 {
+    /// <summary>
+    /// 游戏工厂
+    /// </summary>
     public class GameFactory : MonoBehaviour, IManager
     {
         public static GameFactory Instance;

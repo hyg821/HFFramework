@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HFFramework
 {
     /// <summary>
-    /// 对象池 只适合 继承IPoolInterface 接口的对象才能使用 （缺点）
+    /// 对象池 管理器  继承IPool 接口的对象才能使用
     /// </summary>
     public class ObjectPoolManager : MonoBehaviour, IManager
     {

@@ -12,6 +12,9 @@ using ReflectorOptimization.Common;
 
 namespace HFFramework
 {
+    /// <summary>
+    /// 热更新管理器 负责启动热更新代码
+    /// </summary>
     public class AppDomainManager : MonoBehaviour, IManager
     {
         //DISABLE_ILRUNTIME_DEBUG

@@ -7,6 +7,9 @@ using System.Threading;
 
 namespace HFFramework
 {
+    /// <summary>
+    /// 工具箱
+    /// </summary>
     public class GameUtils : MonoBehaviour,IManager
     {
         public static GameUtils Instance;

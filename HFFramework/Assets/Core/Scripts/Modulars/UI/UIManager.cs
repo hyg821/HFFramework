@@ -9,6 +9,9 @@ using UniRx.Async;
 
 namespace HFFramework
 {
+    /// <summary>
+    /// UI管理器
+    /// </summary>
     public class UIManager : MonoBehaviour, IManager
     {
         /// <summary>

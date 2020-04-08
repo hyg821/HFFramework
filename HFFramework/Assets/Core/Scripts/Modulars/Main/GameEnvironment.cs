@@ -43,6 +43,9 @@ namespace  HFFramework
         English
     }
 
+    /// <summary>
+    /// 游戏运行环境 负责设置各种参数
+    /// </summary>
     public class GameEnvironment : MonoBehaviour, IManager
     {
         public static GameEnvironment Instance;

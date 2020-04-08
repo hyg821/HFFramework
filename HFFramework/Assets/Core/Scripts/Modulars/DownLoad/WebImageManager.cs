@@ -7,6 +7,9 @@ using System;
 
 namespace HFFramework
 {
+    /// <summary>
+    /// 图片下载管理器
+    /// </summary>
     public class WebImageManager : MonoBehaviour, IManager
     {
         public static WebImageManager Instance;

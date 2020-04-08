@@ -4,6 +4,9 @@ using System;
 
 namespace HFFramework
 {
+    /// <summary>
+    /// 消息中心
+    /// </summary>
     public class NotificationCenter : MonoBehaviour, IManager
     {
         public static NotificationCenter Instance;

@@ -14,6 +14,9 @@ namespace HFFramework
         TouchScale
     }
 
+    /// <summary>
+    /// 游戏设置控制器
+    /// </summary>
     public class InputManager : MonoBehaviour, IManager
     {
         public static InputManager Instance;

@@ -20,6 +20,9 @@ namespace HFFramework
         Free
     }
 
+    /// <summary>
+    /// 声音管理器
+    /// </summary>
     public class AudioManager : MonoBehaviour, IManager
     {
         /// <summary>

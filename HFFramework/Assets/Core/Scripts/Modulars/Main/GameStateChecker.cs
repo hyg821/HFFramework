@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace HFFramework
 {
+    /// <summary>
+    /// 状态检查器
+    /// </summary>
     public class GameStateChecker : MonoBehaviour,IManager
     {
         public static GameStateChecker Instance;

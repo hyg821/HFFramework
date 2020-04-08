@@ -12,6 +12,9 @@ using UnityEditor;
 
 namespace HFFramework
 {
+    /// <summary>
+    /// 资源加载管理器
+    /// </summary>
     public class HFResourceManager : MonoBehaviour, IManager
     {
         // 注意 

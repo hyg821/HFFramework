@@ -33,6 +33,7 @@ public class FunctionController : UIController
     public override void Awake()
     {
         base.Awake();
+        TitleLabel.text = "框架入门";
         HFLog.C("页面初始化完成");
     }
 

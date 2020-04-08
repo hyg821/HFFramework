@@ -13,7 +13,7 @@ namespace HFFramework
         /// <summary>
         ///  颜色
         /// </summary>
-        public const string constColor = "8be8f2";
+        public const string constColor = "FFFFFF";
 
         /// <summary>
         ///  最普通的打印

@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 namespace HFFramework
 {
-    /// <summary>
-    ///  适用于 九宫图片进图条
-    /// </summary>
     [ExecuteInEditMode]
     public class SlicedProgress : MonoBehaviour
     {
@@ -17,12 +14,17 @@ namespace HFFramework
         public float width;
         private Image image;
         private RectTransform rectTransform;
-        private void Start()
+
+        private void Awake()
         {
             image = GetComponent<Image>();
+        }
+
+        private void Start()
+        {
+            rectTransform = transform as RectTransform;
             image.type = Image.Type.Sliced;
             GetWidth();
-            rectTransform = transform as RectTransform;
         }
 
         public void GetWidth()
@@ -30,15 +32,31 @@ namespace HFFramework
             width = image.rectTransform.rect.width;
         }
 
+        public void SetProgress(float progress)
+        {
+            this.progress = progress;
+            Refresh();
+        }
+
+        public void Refresh()
+        {
+            rectTransform.sizeDelta = new Vector2(width * progress, rectTransform.sizeDelta.y);
+        }
+
+#if UNITY_EDITOR
         public void OnEnable()
         {
-            GetWidth();
+            if (!Application.isPlaying)
+            {
+                GetWidth();
+            }
         }
 
         void Update()
         {
-            rectTransform.sizeDelta = new Vector2(width * progress, rectTransform.sizeDelta.y);
+            Refresh();
         }
+#endif
     }
 }
 

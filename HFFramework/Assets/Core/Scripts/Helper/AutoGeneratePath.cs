@@ -14,7 +14,6 @@ namespace HFFramework
         public enum UIType
         {
             Root,
-            RootChild,
             Child
         }
 
@@ -47,7 +46,7 @@ namespace HFFramework
 
         public void GeneratePath()
         {
-            if (type == UIType.Root|| type == UIType.RootChild)
+            if (type == UIType.Root)
             {
                 StringBuilder str = new StringBuilder();
                 AutoGeneratePath[] temp = GetAllAutoGeneratePath();
@@ -132,10 +131,17 @@ namespace HFFramework
         {
             List<AutoGeneratePath> list = new List<AutoGeneratePath>();
             //先找自身的
-            AutoGeneratePath path = transform.GetComponent<AutoGeneratePath>();
-            if (path!=null)
+            AutoGeneratePath[] paths = transform.GetComponents<AutoGeneratePath>();
+            if (paths != null)
             {
-                list.Add(path);
+                for (int i = 0; i < paths.Length; i++)
+                {
+                    AutoGeneratePath path = paths[i];
+                    if (path.type==UIType.Root)
+                    {
+                        list.Add(path);
+                    }
+                }         
             }
             //找儿子的
             FindChildAutoGeneratePath(transform,list);
@@ -147,21 +153,35 @@ namespace HFFramework
             for (int i = 0; i < tas.childCount; i++)
             {
                 Transform temp = tas.GetChild(i);
-                AutoGeneratePath path = temp.GetComponent<AutoGeneratePath>();
-                if (path==null)
+                AutoGeneratePath[] paths = temp.GetComponents<AutoGeneratePath>();
+                if (paths == null||paths.Length==0)
                 {
                     FindChildAutoGeneratePath(temp, list);
                 }
                 else
                 {
-                    if (path.type == UIType.RootChild || path.type == UIType.Child)
+                    bool isFind = true;
+                    for (int j = 0; j < paths.Length; j++)
                     {
-                        list.Add(path);
+                        AutoGeneratePath path = paths[j];
+                        if (path.type==UIType.Root)
+                        {
+                            isFind = false;
+                        }
                     }
 
-                    if (path.type ==UIType.Child)
+                    for (int j = 0; j < paths.Length; j++)
                     {
-                        FindChildAutoGeneratePath(temp, list);
+                        AutoGeneratePath path = paths[j];
+                        if (path.type == UIType.Child)
+                        {
+                            list.Add(path);
+                        }
+
+                        if (path.type == UIType.Child&&isFind)
+                        {
+                            FindChildAutoGeneratePath(temp, list);
+                        }
                     }
                 }     
             }

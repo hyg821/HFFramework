@@ -16,7 +16,7 @@ namespace HFFramework
             DrawDefaultInspector();
             AutoGeneratePath info = target as AutoGeneratePath;
 
-            MonoBehaviour[] components = info.GetComponents<MonoBehaviour>();
+            Component[] components = info.GetComponents<Component>();
             string str = info.GetPropertyType();
             List<string> list = new List<string>();
             list.Add("GameObject");
@@ -36,7 +36,7 @@ namespace HFFramework
                 }
             }  
 
-            int currentSelect = EditorGUILayout.Popup("类型", selectIndex, list.ToArray(), GUILayout.Width(500));
+            int currentSelect = EditorGUILayout.Popup("类型", selectIndex, list.ToArray());
             info.SetPropertyType(list[currentSelect]);
             //判断一下是否选择了新的 
             if (currentSelect!=selectIndex)
@@ -44,18 +44,22 @@ namespace HFFramework
                 selectIndex = currentSelect;
                 PrefabModeSave(info);
             }
-
+            /*
             if (GUILayout.Button("刷新类型"))
             {
                 EditorUtility.SetDirty(info);
                 PrefabModeSave(info);
             }
+            */
 
-            if (GUILayout.Button("生成"))
+            if (info.type==AutoGeneratePath.UIType.Root)
             {
-                EditorUtility.SetDirty(info);
-                PrefabModeSave(info);
-                info.GeneratePath();
+                if (GUILayout.Button("生成"))
+                {
+                    EditorUtility.SetDirty(info);
+                    PrefabModeSave(info);
+                    info.GeneratePath();
+                }
             }
         }
 

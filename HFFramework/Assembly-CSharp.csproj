@@ -235,6 +235,7 @@
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameEnvironment.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameFactory.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameLooper.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\Main\GameProcedure.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameProcedureManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameStateChecker.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\IDGenerator.cs" />
@@ -263,7 +264,6 @@
     <Compile Include="Assets\GameResources\Default\Debug[A]\DebugController.cs" />
     <Compile Include="Assets\GameResources\Default\Debug[A]\LogCell.cs" />
     <Compile Include="Assets\GameResources\Default\Debug[A]\LogView.cs" />
-    <Compile Include="Assets\GameResources\Demo\Script\BattleState.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Config\Address.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Config\Attribute.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Config\Background.cs" />
@@ -273,7 +273,7 @@
     <Compile Include="Assets\GameResources\Demo\Script\Config\Role.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Config\UI.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\FunctionController.cs" />
-    <Compile Include="Assets\GameResources\Demo\Script\LoginState.cs" />
+    <Compile Include="Assets\GameResources\Demo\Script\LoginScene.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Proto\Common.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Proto\CommunityService.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Proto\Equipment.cs" />
@@ -289,8 +289,7 @@
     <Compile Include="Assets\GameResources\Demo\Script\Proto\Room.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Proto\RunFastRoomProto.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Proto\RunFastuser.cs" />
-    <Compile Include="Assets\GameResources\Demo\Script\QuitState.cs" />
-    <Compile Include="Assets\GameResources\Demo\Script\StartState.cs" />
+    <Compile Include="Assets\GameResources\Demo\Script\StartScene.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\TestTask.cs" />
     <Compile Include="Assets\OtherPlugins\Best HTTP (Pro)\BestHTTP\Authentication\Credentials.cs" />
     <Compile Include="Assets\OtherPlugins\Best HTTP (Pro)\BestHTTP\Authentication\Digest.cs" />

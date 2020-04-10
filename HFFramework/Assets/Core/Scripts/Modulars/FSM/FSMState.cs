@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UniRx.Async;
 
 namespace HFFramework
 {
@@ -48,22 +49,22 @@ namespace HFFramework
             T t = new T();
             t.fsm = fsm;
             t.stateName = typeof(T).Name;
-            t.Init();
+            t.Awake();
             return t;
         }
 
-        public virtual void Init()
+        public virtual void Awake()
         {
 
         }
 
-        public virtual void OnStateInvoke(StateType s,object param = null)
+        public async virtual UniTaskVoid OnStateInvoke(StateType s,object param = null)
         {
             currentState = s;
             switch (s)
             {
                 case StateType.Enter:
-                    OnStateEnter(param);
+                    await OnEnter(param);
                     if (OnStateEnterCallback != null)
                     {
                         isRunning = true;
@@ -71,14 +72,14 @@ namespace HFFramework
                     }
                     break;
                 case StateType.Stay:
-                    OnStateStay();
+                    OnStay();
                     if (OnStateStayCallback != null)
                     {
                         OnStateStayCallback();
                     }
                     break;
                 case StateType.Exit:
-                    OnStateExit(param);
+                    await OnExit(param);
                     if (OnStateExitCallback != null)
                     {
                         OnStateExitCallback();
@@ -90,17 +91,17 @@ namespace HFFramework
             }
         }
 
-        public virtual void OnStateEnter(object param = null)
+        public async virtual UniTaskVoid OnEnter(object param = null)
         {
 
         }
 
-        public virtual void OnStateStay()
+        public virtual void OnStay()
         {
 
         }
 
-        public virtual void OnStateExit(object param = null)
+        public async virtual UniTaskVoid OnExit(object param = null)
         {
 
         }

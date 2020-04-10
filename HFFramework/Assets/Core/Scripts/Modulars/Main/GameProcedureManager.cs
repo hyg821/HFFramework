@@ -27,15 +27,13 @@ namespace HFFramework
 
         public FSMController fsm;
 
-        private void Awake()
+        private async void Awake()
         {
             Instance = this;
             fsm = new FSMController(this);
-            fsm.AddState<StartState>();
-            fsm.AddState<LoginState>();
-            fsm.AddState<BattleState>();
-            fsm.AddState<QuitState>();
-            fsm.TranslateToState<StartState>();
+            fsm.AddState<StartScene>();
+            fsm.AddState<LoginScene>();
+            await fsm.TranslateToState<StartScene>();
         }
 
         private void Update()

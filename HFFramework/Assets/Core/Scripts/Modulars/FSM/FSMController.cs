@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx.Async;
 using UnityEngine;
 
 namespace HFFramework
@@ -49,18 +50,18 @@ namespace HFFramework
         ///  转移到某个状态
         /// </summary>
         /// <param name="stateName"></param>
-        public void TranslateToState<T>(object enterParams = null, object exitParams = null) where T:FSMState
+        public async UniTaskVoid TranslateToState<T>(object enterParams = null, object exitParams = null) where T:FSMState
         {
             string stateName = typeof(T).Name;
             if (CurrentState != null)
             {
                 if (stateName != CurrentState.stateName)
                 {
-                    CurrentState.OnStateInvoke(StateType.Exit,exitParams);
+                     await CurrentState.OnStateInvoke(StateType.Exit,exitParams);
                 }
             }
             CurrentState = this[stateName];
-            CurrentState.OnStateInvoke(StateType.Enter, enterParams);
+            await CurrentState.OnStateInvoke(StateType.Enter, enterParams);
         }
 
         public void Update()

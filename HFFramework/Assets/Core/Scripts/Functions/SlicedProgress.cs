@@ -18,10 +18,6 @@ namespace HFFramework
         private void Awake()
         {
             image = GetComponent<Image>();
-        }
-
-        private void Start()
-        {
             rectTransform = transform as RectTransform;
             image.type = Image.Type.Sliced;
             GetWidth();

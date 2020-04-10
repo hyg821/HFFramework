@@ -235,8 +235,8 @@
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameEnvironment.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameFactory.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameLooper.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\Main\GameProcedure.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\Main\GameProcedureManager.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\Main\GameScene.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\Main\GameSceneManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameStateChecker.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\IDGenerator.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\MessageCenter\NotificationCenter.cs" />

@@ -55,7 +55,7 @@ namespace HFFramework
 
                 GameFactory.Create<GameUtils>(true);
 
-                GameFactory.Create<GameProcedureManager>(true);
+                GameFactory.Create<GameSceneManager>(true);
             }
             else
             {
@@ -85,7 +85,7 @@ namespace HFFramework
             InputManager.Instance.DestroyManager();
             ObjectPoolManager.Instance.DestroyManager();
             AppDomainManager.Instance.DestroyManager();
-            GameProcedureManager.Instance.DestroyManager();
+            GameSceneManager.Instance.DestroyManager();
             TimerManager.Instance.DestroyManager();
             GameStateChecker.Instance.DestroyManager();
             GameUtils.Instance.DestroyManager();

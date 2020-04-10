@@ -93,7 +93,7 @@ namespace HFFramework
 
         public async virtual UniTaskVoid OnEnter(object param = null)
         {
-
+            HFLog.C("------------------------" + this.GetType().Name + "进入" + "------------------------");
         }
 
         public virtual void OnStay()
@@ -103,7 +103,7 @@ namespace HFFramework
 
         public async virtual UniTaskVoid OnExit(object param = null)
         {
-
+            HFLog.C("------------------------" + this.GetType().Name + "离开" + "------------------------");
         }
     }
 }

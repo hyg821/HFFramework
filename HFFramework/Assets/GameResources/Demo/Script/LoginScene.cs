@@ -6,6 +6,7 @@ namespace HFFramework
     {
         public async override UniTaskVoid OpenUI()
         {
+            await base.OpenUI();
             await UIManager.Open<FunctionController>(null, false, true);
         }
     }

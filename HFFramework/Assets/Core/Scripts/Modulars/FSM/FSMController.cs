@@ -29,8 +29,6 @@ namespace HFFramework
         public FSMController(object control)
         {
             this.control = control;
-            AddState<FSMState>();
-            TranslateToState<FSMState>();
         }
 
         /// <summary>

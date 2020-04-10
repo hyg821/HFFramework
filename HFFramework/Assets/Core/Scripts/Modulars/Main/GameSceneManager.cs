@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace HFFramework
 {
-    /// <summary>
-    /// 游戏状态机流程 每一步都通过 await 不要使用callback 以免逻辑混乱
+    /// 每一步都通过 await 不要使用callback 以免逻辑混乱
     /// 打开loading 页面（下边每一步都会给loading 页面发送消息 同步进度）
     /// 状态A 离开
     /// 1.关闭UI
@@ -20,10 +19,13 @@ namespace HFFramework
     /// 8.打开ui 
     /// 9.关闭 loading 
     /// 切换完成
+    
+    /// <summary>
+    /// 逻辑场景管理器
     /// </summary>
-    public class GameProcedureManager : MonoBehaviour, IManager
+    public class GameSceneManager : MonoBehaviour, IManager
     {
-        public static GameProcedureManager Instance;
+        public static GameSceneManager Instance;
 
         public FSMController fsm;
 

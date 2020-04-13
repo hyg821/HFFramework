@@ -34,8 +34,25 @@ namespace HFFramework
         ///  是否读取消息头
         /// </summary>
         public bool isReadHeader = false;
+
+        /// <summary>
+        ///  消息体长度
+        /// </summary>
         public int bodyLength = int.MinValue;
+
+        /// <summary>
+        ///  消息类型
+        /// </summary>
         public int msgType = int.MinValue;
+
+        /// <summary>
+        ///  操作符
+        /// </summary>
+        public int opCode = int.MinValue;
+
+        /// <summary>
+        /// 数据体
+        /// </summary>
         public byte[] msgBytes;
 
         public void Clear()
@@ -43,6 +60,7 @@ namespace HFFramework
             isReadHeader = false;
             bodyLength = int.MinValue;
             msgType = int.MinValue;
+            opCode = int.MinValue;
             msgBytes = null;
         }
     }
@@ -50,8 +68,8 @@ namespace HFFramework
     /// <summary>
     ///  测试使用
     ///  说明  和后端的通讯 发送逻辑 和 解析逻辑
-    ///   一个完整的数据  =  数据头  （8字节 4+4)   +  数据体 （proto包字节）  
-    ///  数据头 =  包体总长度4字节 + 数据体类型字段长度4字节  +  // 还有待完善的【(opcode 操作码 确定前后端 请求 应答的 唯一对应关系)】
+    ///   一个完整的数据  =  数据头  （12字节 4+4+4)   +  数据体 （proto包字节）  
+    ///  数据头 =  包体总长度4字节 + 数据体类型字段长度4字节  +  opcode 操作码 确定前后端 请求 应答的 唯一对应关系4字节
     ///  数据体 =  proto包字节
     ///   
     ///  因为c# 是小端编码 服务器一般使用大端编码 所以 用到了 BitConver 和  ( BinaryReader  BinaryWriter )的地方需要 Array.Reverse(temp) 来转换到大端
@@ -97,9 +115,14 @@ namespace HFFramework
         private const int MSG_TYPE_LEN = 4;
 
         /// <summary>
+        ///  操作符长度
+        /// </summary>
+        private const int MSG_OPCODE_LEN = 4;
+
+        /// <summary>
         ///  数据头长度
         /// </summary>
-        private const int MSG_HEAD_LEN = MSG_ALL_IDE_LEN + MSG_TYPE_LEN;
+        private const int MSG_HEAD_LEN = MSG_ALL_IDE_LEN + MSG_TYPE_LEN+ MSG_OPCODE_LEN;
 
         /// <summary>
         ///  socket
@@ -170,7 +193,7 @@ namespace HFFramework
         /// <summary>
         ///  接收数据回调
         /// </summary>
-        private Action<int, byte[]> receiveCallback;
+        private Action<Package> receiveCallback;
 
         /// <summary>
         ///  关闭回调
@@ -204,7 +227,7 @@ namespace HFFramework
             }
         }
 
-        public void Init(string ip, int port, Action connect, Action<int, byte[]> receive, Action close, Action error)
+        public void Init(string ip, int port, Action connect, Action<Package> receive, Action close, Action error)
         {
             this.ip = ip;
             this.port = port;
@@ -369,8 +392,7 @@ namespace HFFramework
                 if (currentPackage.isReadHeader == false && socket.Available >= MSG_HEAD_LEN)
                 {
                     //socket 接收到缓冲区 并且接收的长度是数据头长度
-                    //服务器冗余 正式时候需要删掉 + 4
-                    socket.Receive(dataBuffer, MSG_HEAD_LEN+4, 0);
+                    socket.Receive(dataBuffer, MSG_HEAD_LEN, 0);
 
                     //把数据头字节 写入 memoryStream 
                     readStream.Write(dataBuffer, 0, MSG_HEAD_LEN);
@@ -388,8 +410,13 @@ namespace HFFramework
                     //通过获得的字节 转换成 消息类型
                     currentPackage.msgType = ExtensionMethod.BitConverterToInt32(temp, 0);
 
+                    //binaryReader 读取 MSG_TYPE_LEN 长度的字节
+                    temp = binaryReader.ReadBytes(MSG_OPCODE_LEN);
+                    //通过获得的字节 转换成 消息类型
+                    currentPackage.opCode = ExtensionMethod.BitConverterToInt32(temp, 0);
+
                     //重置memoryStream 索引为0
-                    binaryReader.BaseStream.Position = 0;
+                    readStream.Position = 0;
 
                     //再减去数据头的长度得到 数据体的长度
                     currentPackage.bodyLength = messageLength - MSG_HEAD_LEN;
@@ -433,11 +460,11 @@ namespace HFFramework
 
         private void CreateMessage(StreamPackage package)
         {
-            receiveCallback(package.msgType, package.msgBytes);
+            receiveCallback(new Package(package.msgType, package.opCode, package.msgBytes));
             package.Clear();
         }
 
-        public void Send(int msgType, byte[] msg)
+        public void Send(int msgType,int opCode, byte[] msg)
         {
             if (socket.Connected)
             {
@@ -449,7 +476,8 @@ namespace HFFramework
                 temp = ExtensionMethod.BitConverterGetBytes(msgType);
                 binaryWriter.Write(temp);
 
-                //服务器冗余 正式时候需要删掉
+                //写入opcode 定义的长度 一个int 4字节
+                temp = ExtensionMethod.BitConverterGetBytes(opCode);
                 binaryWriter.Write(temp);
 
                 //写入消息体

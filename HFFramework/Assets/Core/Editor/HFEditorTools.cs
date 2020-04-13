@@ -62,6 +62,9 @@ namespace HFFramework
             //关闭剥离引擎代码
             PlayerSettings.stripEngineCode = false;
 
+            //设置编辑器 高级debug
+            //EditorPrefs.SetBool("DeveloperMode", false);
+
             AssetDatabase.Refresh();
             Debug.Log("设置完成");
         }

@@ -38,6 +38,19 @@ namespace HFFramework
             await fsm.TranslateToState<StartScene>();
         }
 
+        public GameScene CurrentScene
+        {
+            get
+            {
+                return fsm.CurrentState as GameScene;
+            }
+        }
+
+        public T GetScene<T>() where T:GameScene
+        {
+           return fsm.GetState<T>();
+        }
+
         private void Update()
         {
             fsm.Update();

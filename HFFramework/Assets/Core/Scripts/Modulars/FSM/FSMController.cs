@@ -44,6 +44,14 @@ namespace HFFramework
             }
         }
 
+        public T GetState<T>() where T : FSMState
+        {
+            string stateName = typeof(T).Name;
+            FSMState state;
+            allStateDic.TryGetValue(stateName, out state);
+            return state as T;
+        }
+
         /// <summary>
         ///  转移到某个状态
         /// </summary>

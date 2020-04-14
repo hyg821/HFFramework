@@ -13,14 +13,14 @@
             return ++id;
         }
 
-        private static int opCode = 0;
+        private static int rpcID = 0;
         /// <summary>
         /// 获取网络消息操作 id
         /// </summary>
         /// <returns></returns>
-        public static int GetOpCode()
+        public static int GetRpcID()
         {
-            return ++opCode;
+            return ++rpcID;
         }
     }
 }

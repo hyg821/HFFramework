@@ -16,17 +16,17 @@ namespace HFFramework
         /// <summary>
         ///  操作符
         /// </summary>
-        public int opCode;
+        public int rpcID;
 
         /// <summary>
         /// 数据体
         /// </summary>
         public byte[] msgBytes;
 
-        public Package(int msgType, int opCode, byte[] msgBytes)
+        public Package(int msgType, int rpcID, byte[] msgBytes)
         {
             this.msgType = msgType;
-            this.opCode = opCode;
+            this.rpcID = rpcID;
             this.msgBytes = msgBytes;
         }
     }
@@ -83,7 +83,7 @@ namespace HFFramework
                 {
                     isDispatch = value;
                     enabled = isDispatch;
-                    eventQueue.Clear();
+                    messageQueue.Clear();
                 }
             }
             get
@@ -113,7 +113,7 @@ namespace HFFramework
         /// <summary>
         /// 线程同步
         /// </summary>
-        private Queue<Package> eventQueue = new Queue<Package> ();
+        private Queue<Package> messageQueue = new Queue<Package> ();
 
         /// <summary>
         /// task cache
@@ -191,9 +191,9 @@ namespace HFFramework
 
         private void m_receive(Package package)
         {
-            lock (eventQueue)
+            lock (messageQueue)
             {
-                eventQueue.Enqueue(package);
+                messageQueue.Enqueue(package);
             }
         }
 
@@ -224,7 +224,7 @@ namespace HFFramework
         /// <param name="msg"></param>
         public void SendMessage(int messageType, byte[] msg)
         {
-            socket.Send(messageType, IDGenerator.GetOpCode(), msg);
+            socket.Send(messageType, IDGenerator.GetRpcID(), msg);
         }
 
         /// <summary>
@@ -233,33 +233,32 @@ namespace HFFramework
         /// <param name="messageType"></param>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public async UniTask<byte[]> Call(int messageType, byte[] msg)
+        public UniTask<byte[]> Call(int messageType, byte[] msg)
         {
-            UniTaskCompletionSource<byte[]> taskCompletion;
-            int opCode = IDGenerator.GetOpCode();
-            if (!completionCache.TryGetValue(opCode, out taskCompletion))
+            UniTaskCompletionSource<byte[]> taskCompletion = null;
+            int rpcID = IDGenerator.GetRpcID();
+            if (!completionCache.TryGetValue(rpcID, out taskCompletion))
             {
                 taskCompletion = new UniTaskCompletionSource<byte[]>();
                 completionCache.Add(messageType, taskCompletion);
             }
-            socket.Send(messageType, opCode, msg);
-            return await taskCompletion.Task;
+            socket.Send(messageType, rpcID, msg);
+            return taskCompletion.Task;
         }
 
         private void Update()
         {
-            lock (eventQueue)
+            lock (messageQueue)
             {
-                while (eventQueue.Count > 0)
+                while (messageQueue.Count > 0)
                 {
-                    Package package = eventQueue.Dequeue();
+                    Package package = messageQueue.Dequeue();
 
                     //优先使用同步方式返回
                     UniTaskCompletionSource<byte[]> taskCompletion;
-                    if (completionCache.TryGetValue(package.opCode, out taskCompletion))
+                    if (completionCache.TryGetValue(package.rpcID, out taskCompletion))
                     {
-                        //移除 TaskCompletionSource 没法服用两次
-                        completionCache.Remove(package.opCode);
+                        completionCache.Remove(package.rpcID);
                         taskCompletion.TrySetResult(package.msgBytes);                       
                     }
                     //如果没有通过同步方式发送 通过消息派发 返回
@@ -280,7 +279,7 @@ namespace HFFramework
                 socket = null;
 
                 completionCache.Clear();
-                eventQueue.Clear();
+                messageQueue.Clear();
                 IsDispatch = false;
             }
         }

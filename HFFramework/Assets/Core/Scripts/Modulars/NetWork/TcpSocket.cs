@@ -48,7 +48,7 @@ namespace HFFramework
         /// <summary>
         ///  操作符
         /// </summary>
-        public int opCode = int.MinValue;
+        public int rpcID = int.MinValue;
 
         /// <summary>
         /// 数据体
@@ -60,7 +60,7 @@ namespace HFFramework
             isReadHeader = false;
             bodyLength = int.MinValue;
             msgType = int.MinValue;
-            opCode = int.MinValue;
+            rpcID = int.MinValue;
             msgBytes = null;
         }
     }
@@ -69,7 +69,7 @@ namespace HFFramework
     ///  测试使用
     ///  说明  和后端的通讯 发送逻辑 和 解析逻辑
     ///   一个完整的数据  =  数据头  （12字节 4+4+4)   +  数据体 （proto包字节）  
-    ///  数据头 =  包体总长度4字节 + 数据体类型字段长度4字节  +  opcode 操作码 确定前后端 请求 应答的 唯一对应关系4字节
+    ///  数据头 =  包体总长度4字节 + 数据体类型字段长度4字节  +  rpcID 操作码 确定前后端 请求 应答的 唯一对应关系4字节
     ///  数据体 =  proto包字节
     ///   
     ///  因为c# 是小端编码 服务器一般使用大端编码 所以 用到了 BitConver 和  ( BinaryReader  BinaryWriter )的地方需要 Array.Reverse(temp) 来转换到大端
@@ -117,12 +117,12 @@ namespace HFFramework
         /// <summary>
         ///  操作符长度
         /// </summary>
-        private const int MSG_OPCODE_LEN = 4;
+        private const int MSG_RPCID_LEN = 4;
 
         /// <summary>
         ///  数据头长度
         /// </summary>
-        private const int MSG_HEAD_LEN = MSG_ALL_IDE_LEN + MSG_TYPE_LEN+ MSG_OPCODE_LEN;
+        private const int MSG_HEAD_LEN = MSG_ALL_IDE_LEN + MSG_TYPE_LEN+ MSG_RPCID_LEN;
 
         /// <summary>
         ///  socket
@@ -411,9 +411,9 @@ namespace HFFramework
                     currentPackage.msgType = ExtensionMethod.BitConverterToInt32(temp, 0);
 
                     //binaryReader 读取 MSG_TYPE_LEN 长度的字节
-                    temp = binaryReader.ReadBytes(MSG_OPCODE_LEN);
+                    temp = binaryReader.ReadBytes(MSG_RPCID_LEN);
                     //通过获得的字节 转换成 消息类型
-                    currentPackage.opCode = ExtensionMethod.BitConverterToInt32(temp, 0);
+                    currentPackage.rpcID = ExtensionMethod.BitConverterToInt32(temp, 0);
 
                     //重置memoryStream 索引为0
                     readStream.Position = 0;
@@ -460,11 +460,11 @@ namespace HFFramework
 
         private void CreateMessage(StreamPackage package)
         {
-            receiveCallback(new Package(package.msgType, package.opCode, package.msgBytes));
+            receiveCallback(new Package(package.msgType, package.rpcID, package.msgBytes));
             package.Clear();
         }
 
-        public void Send(int msgType,int opCode, byte[] msg)
+        public void Send(int msgType,int rpcID, byte[] msg)
         {
             if (socket.Connected)
             {
@@ -477,7 +477,7 @@ namespace HFFramework
                 binaryWriter.Write(temp);
 
                 //写入opcode 定义的长度 一个int 4字节
-                temp = ExtensionMethod.BitConverterGetBytes(opCode);
+                temp = ExtensionMethod.BitConverterGetBytes(rpcID);
                 binaryWriter.Write(temp);
 
                 //写入消息体

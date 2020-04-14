@@ -11,7 +11,7 @@ namespace HFFramework
         /// <summary>
         ///  消息类型
         /// </summary>
-        public int msgType;
+        public int opcode;
 
         /// <summary>
         ///  操作符
@@ -23,9 +23,9 @@ namespace HFFramework
         /// </summary>
         public byte[] msgBytes;
 
-        public Package(int msgType, int rpcID, byte[] msgBytes)
+        public Package(int opcode, int rpcID, byte[] msgBytes)
         {
-            this.msgType = msgType;
+            this.opcode = opcode;
             this.rpcID = rpcID;
             this.msgBytes = msgBytes;
         }
@@ -222,9 +222,9 @@ namespace HFFramework
         /// </summary>
         /// <param name="messageType"></param>
         /// <param name="msg"></param>
-        public void SendMessage(int messageType, byte[] msg)
+        public void SendMessage(int opcode, byte[] msg)
         {
-            socket.Send(messageType, IDGenerator.GetRpcID(), msg);
+            socket.Send(opcode, IDGenerator.GetRpcID(), msg);
         }
 
         /// <summary>
@@ -233,16 +233,16 @@ namespace HFFramework
         /// <param name="messageType"></param>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public UniTask<byte[]> Call(int messageType, byte[] msg)
+        public UniTask<byte[]> Call(int opcode, byte[] msg)
         {
             UniTaskCompletionSource<byte[]> taskCompletion = null;
             int rpcID = IDGenerator.GetRpcID();
             if (!completionCache.TryGetValue(rpcID, out taskCompletion))
             {
                 taskCompletion = new UniTaskCompletionSource<byte[]>();
-                completionCache.Add(messageType, taskCompletion);
+                completionCache.Add(rpcID, taskCompletion);
             }
-            socket.Send(messageType, rpcID, msg);
+            socket.Send(opcode, rpcID, msg);
             return taskCompletion.Task;
         }
 

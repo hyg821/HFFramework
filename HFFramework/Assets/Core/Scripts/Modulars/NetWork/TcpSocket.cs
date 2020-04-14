@@ -43,7 +43,7 @@ namespace HFFramework
         /// <summary>
         ///  消息类型
         /// </summary>
-        public int msgType = int.MinValue;
+        public int opcode = int.MinValue;
 
         /// <summary>
         ///  操作符
@@ -59,7 +59,7 @@ namespace HFFramework
         {
             isReadHeader = false;
             bodyLength = int.MinValue;
-            msgType = int.MinValue;
+            opcode = int.MinValue;
             rpcID = int.MinValue;
             msgBytes = null;
         }
@@ -408,7 +408,7 @@ namespace HFFramework
                     //binaryReader 读取 MSG_TYPE_LEN 长度的字节
                     temp = binaryReader.ReadBytes(MSG_TYPE_LEN);
                     //通过获得的字节 转换成 消息类型
-                    currentPackage.msgType = ExtensionMethod.BitConverterToInt32(temp, 0);
+                    currentPackage.opcode = ExtensionMethod.BitConverterToInt32(temp, 0);
 
                     //binaryReader 读取 MSG_TYPE_LEN 长度的字节
                     temp = binaryReader.ReadBytes(MSG_RPCID_LEN);
@@ -449,7 +449,7 @@ namespace HFFramework
                     binaryReader.BaseStream.Position = 0;
 
                     //如果读取了数据体  消息类型
-                    if (currentPackage.bodyLength != int.MinValue && currentPackage.msgType != int.MinValue)
+                    if (currentPackage.bodyLength != int.MinValue && currentPackage.opcode != int.MinValue)
                     {
                         //分发消息
                         CreateMessage(currentPackage);
@@ -460,11 +460,11 @@ namespace HFFramework
 
         private void CreateMessage(StreamPackage package)
         {
-            receiveCallback(new Package(package.msgType, package.rpcID, package.msgBytes));
+            receiveCallback(new Package(package.opcode, package.rpcID, package.msgBytes));
             package.Clear();
         }
 
-        public void Send(int msgType,int rpcID, byte[] msg)
+        public void Send(int opcode, int rpcID, byte[] msg)
         {
             if (socket.Connected)
             {
@@ -473,7 +473,7 @@ namespace HFFramework
                 binaryWriter.Write(temp);
 
                 //写入消息号 定义的长度 一个int 4字节
-                temp = ExtensionMethod.BitConverterGetBytes(msgType);
+                temp = ExtensionMethod.BitConverterGetBytes(opcode);
                 binaryWriter.Write(temp);
 
                 //写入opcode 定义的长度 一个int 4字节

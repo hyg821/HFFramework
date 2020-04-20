@@ -60,7 +60,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\aaa.cs" />
     <Compile Include="Assets\Core\HFGlobal.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\CoroutineAdapter.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\IAsyncStateMachineAdaptor.cs" />

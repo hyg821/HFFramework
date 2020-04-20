@@ -74,7 +74,7 @@ namespace HFFramework
         {
             if (CurrentState != null)
             {
-                CurrentState.OnStateInvoke(StateType.Stay);
+               CurrentState.OnStateInvoke(StateType.Stay);
             }
         }
 

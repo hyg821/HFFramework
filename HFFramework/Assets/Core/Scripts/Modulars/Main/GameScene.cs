@@ -20,7 +20,7 @@ namespace HFFramework
             base.Awake();
         }
 
-        public async override UniTaskVoid OnEnter(object param = null)
+        public async override UniTask OnEnter(object param = null)
         {
             await base.OnEnter(param);
             await LoadScene();
@@ -30,7 +30,7 @@ namespace HFFramework
             await CloseLoading();
         }
 
-        public async override UniTaskVoid OnExit(object param = null)
+        public async override UniTask OnExit(object param = null)
         {
             await base.OnExit(param);
             await OpenLoading(param as GameSceneParams);
@@ -45,7 +45,7 @@ namespace HFFramework
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public virtual async UniTaskVoid OpenLoading(GameSceneParams p)
+        public virtual async UniTask OpenLoading(GameSceneParams p)
         {
             HFLog.C("步骤1 打开loading");
         }
@@ -54,7 +54,7 @@ namespace HFFramework
         /// 发送离开网络消息
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTaskVoid SendExitRequest()
+        public virtual async UniTask SendExitRequest()
         {
             HFLog.C("步骤2 发送离开网络消息");
         }
@@ -63,7 +63,7 @@ namespace HFFramework
         ///  清理UI
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTaskVoid CloseUI()
+        public virtual async UniTask CloseUI()
         {
             HFLog.C("步骤3 清理UI");
         }
@@ -72,7 +72,7 @@ namespace HFFramework
         ///  清理对应管理器
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTaskVoid ClearManager()
+        public virtual async UniTask ClearManager()
         {
             HFLog.C("步骤4 清理对应管理器");
         }
@@ -81,7 +81,7 @@ namespace HFFramework
         ///  卸载场景
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTaskVoid UnloadScene()
+        public virtual async UniTask UnloadScene()
         {
             HFLog.C("步骤5 卸载场景");
         }
@@ -90,7 +90,7 @@ namespace HFFramework
         ///  加载场景
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTaskVoid LoadScene()
+        public virtual async UniTask LoadScene()
         {
             HFLog.C("步骤6 加载场景");
         }
@@ -99,7 +99,7 @@ namespace HFFramework
         ///  预加载资源
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTaskVoid PreLoad()
+        public virtual async UniTask PreLoad()
         {
             HFLog.C("步骤7 预加载资源");
         }
@@ -108,7 +108,7 @@ namespace HFFramework
         /// 发送进入网络消息
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTaskVoid SendEnterRequest()
+        public virtual async UniTask SendEnterRequest()
         {
             HFLog.C("步骤8 预加载资源");
         }
@@ -117,7 +117,7 @@ namespace HFFramework
         ///  打开UI
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTaskVoid OpenUI()
+        public virtual async UniTask OpenUI()
         {
             HFLog.C("步骤9  打开UI");
         }
@@ -126,7 +126,7 @@ namespace HFFramework
         ///  关闭loading
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTaskVoid CloseLoading()
+        public virtual async UniTask CloseLoading()
         {
             HFLog.C("步骤10  关闭loading");
         }

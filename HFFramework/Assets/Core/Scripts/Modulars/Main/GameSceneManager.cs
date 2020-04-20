@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UniRx.Async;
 
 namespace HFFramework
 {
@@ -33,8 +34,6 @@ namespace HFFramework
         {
             Instance = this;
             fsm = new FSM(this);
-            fsm.AddState<StartScene>();
-            fsm.AddState<LoginScene>();
             ChangeScene<StartScene>();
         }
 
@@ -56,9 +55,9 @@ namespace HFFramework
            return fsm.GetState<T>();
         }
 
-        public async void ChangeScene<T>() where T:GameScene
+        public void ChangeScene<T>() where T:GameScene,new()
         {
-            await fsm.ChangeState<T>();
+            fsm.ChangeState<T>();
         }
 
         private void Update()

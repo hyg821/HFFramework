@@ -13,7 +13,7 @@ namespace HFFramework
             await base.OnEnter(param);
             //初始化配置文件
             HFConfigManager.Instance.Init();
-            await fsm.ChangeState<LoginScene>();
+            fsm.ChangeState<LoginScene>();
         }
 
         public override void OnStay()

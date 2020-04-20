@@ -28,19 +28,17 @@ namespace HFFramework
         /// 配置文件 Assetbundle 名字
         /// </summary>
         public const string ConfigAssetbundleName = "Config";
-        
-        
+            
         //--------------------------------------自定义ide打开路径--------------------------------------//
         /// <summary>
         ///  shader ide 路径
         /// </summary>
-        public const string emacsPath = "E://VSCode/Code";
+        public const string EmacsPath = "E://VSCode/Code";
         /// <summary>
         ///  使用自定义ide 打开的扩展名
         /// </summary>
-        public const string fileExtensions = ".txt, .js, .javascript, .json, .html, .shader, .template";
-        
-        
+        public const string FileExtensions = ".txt, .js, .javascript, .json, .html, .shader, .template";
+           
         /// <summary>
         /// demo路径
         /// </summary>

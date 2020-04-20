@@ -25,7 +25,7 @@ namespace HFFramework
             }
     
             //selected.GetType().ToString() == "UnityEditor.MonoScript" ||
-            if (selected.GetType().ToString() == "UnityEngine.Shader" || GameConst.fileExtensions.IndexOf(selectedFileExt, StringComparison.OrdinalIgnoreCase) >= 0)
+            if (selected.GetType().ToString() == "UnityEngine.Shader" || GameConst.FileExtensions.IndexOf(selectedFileExt, StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 string ProjectPath = System.IO.Path.GetDirectoryName(UnityEngine.Application.dataPath);
                 string completeFilepath = ProjectPath + Path.DirectorySeparatorChar + AssetDatabase.GetAssetPath(selected);
@@ -40,7 +40,7 @@ namespace HFFramework
                 }
     
                 System.Diagnostics.Process proc = new System.Diagnostics.Process();
-                proc.StartInfo.FileName = GameConst.emacsPath;
+                proc.StartInfo.FileName = GameConst.EmacsPath;
                 proc.StartInfo.Arguments = args;
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;

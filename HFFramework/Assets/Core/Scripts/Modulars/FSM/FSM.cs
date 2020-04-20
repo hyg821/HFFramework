@@ -35,13 +35,16 @@ namespace HFFramework
         ///  添加一个状态
         /// </summary>
         /// <param name="state"></param>
-        public void AddState<T>() where T: FSMState,new()
+        public T AddState<T>() where T: FSMState,new()
         {
+            T state = null;
             string stateName = typeof(T).Name;
             if (!stateDic.ContainsKey(stateName))
             {
-                stateDic.Add(stateName, FSMState.Create<T>(this));
+                state = FSMState.Create<T>(this);
+                stateDic.Add(stateName, state);
             }
+            return state;
         }
 
         public T GetState<T>() where T : FSMState
@@ -56,7 +59,7 @@ namespace HFFramework
         ///  转移到某个状态
         /// </summary>
         /// <param name="stateName"></param>
-        public async UniTaskVoid ChangeState<T>(object enterParams = null, object exitParams = null) where T:FSMState
+        public async UniTaskVoid ChangeState<T>(object enterParams = null, object exitParams = null) where T:FSMState,new()
         {
             string stateName = typeof(T).Name;
             if (CurrentState != null)
@@ -66,7 +69,12 @@ namespace HFFramework
                      await CurrentState.OnStateInvoke(StateType.Exit,exitParams);
                 }
             }
-            CurrentState = this[stateName];
+            FSMState now;
+            if (!stateDic.TryGetValue(stateName, out now))
+            {
+                now = AddState<T>();
+            }
+            CurrentState = now;
             await CurrentState.OnStateInvoke(StateType.Enter, enterParams);
         }
 

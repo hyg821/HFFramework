@@ -114,7 +114,7 @@ namespace HotFix
 
         public Entity()
         {
-            instanceID = IDGenerator.GetID();
+            instanceID = IDGenerator.GetEntityID();
             isAsync = false;
         }
 

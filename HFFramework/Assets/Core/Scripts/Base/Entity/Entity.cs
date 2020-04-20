@@ -113,7 +113,7 @@ namespace HFFramework
 
         public Entity()
         {
-            instanceID = IDGenerator.GetID();
+            instanceID = IDGenerator.GetEntityID();
             isAsync = false;
         }
 

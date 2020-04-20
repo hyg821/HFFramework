@@ -27,15 +27,15 @@ namespace HFFramework
     {
         public static GameSceneManager Instance;
 
-        public FSMController fsm;
+        private FSM fsm;
 
-        private async void Awake()
+        private void Awake()
         {
             Instance = this;
-            fsm = new FSMController(this);
+            fsm = new FSM(this);
             fsm.AddState<StartScene>();
             fsm.AddState<LoginScene>();
-            await fsm.TranslateToState<StartScene>();
+            ChangeScene<StartScene>();
         }
 
         public GameScene CurrentScene
@@ -46,9 +46,19 @@ namespace HFFramework
             }
         }
 
+        public void AddScene<T>() where T : GameScene, new()
+        {
+            fsm.AddState<T>();
+        }
+
         public T GetScene<T>() where T:GameScene
         {
            return fsm.GetState<T>();
+        }
+
+        public async void ChangeScene<T>() where T:GameScene
+        {
+            await fsm.ChangeState<T>();
         }
 
         private void Update()

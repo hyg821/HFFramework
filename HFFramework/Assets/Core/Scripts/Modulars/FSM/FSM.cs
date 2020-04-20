@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class FSMController
+    public class FSM
     {   
         /// <summary>
         ///  缓存状态的字典
         /// </summary>
-        private Dictionary<string, FSMState> allStateDic = new Dictionary<string, FSMState>();
+        private Dictionary<string, FSMState> stateDic = new Dictionary<string, FSMState>();
 
         /// <summary>
         ///  获取当前正在执行的状态
@@ -26,7 +26,7 @@ namespace HFFramework
         /// <summary>
         ///  构造方法
         /// </summary>
-        public FSMController(object control)
+        public FSM(object control)
         {
             this.control = control;
         }
@@ -38,9 +38,9 @@ namespace HFFramework
         public void AddState<T>() where T: FSMState,new()
         {
             string stateName = typeof(T).Name;
-            if (!allStateDic.ContainsKey(stateName))
+            if (!stateDic.ContainsKey(stateName))
             {
-                allStateDic.Add(stateName, FSMState.Create<T>(this));
+                stateDic.Add(stateName, FSMState.Create<T>(this));
             }
         }
 
@@ -48,7 +48,7 @@ namespace HFFramework
         {
             string stateName = typeof(T).Name;
             FSMState state;
-            allStateDic.TryGetValue(stateName, out state);
+            stateDic.TryGetValue(stateName, out state);
             return state as T;
         }
 
@@ -56,7 +56,7 @@ namespace HFFramework
         ///  转移到某个状态
         /// </summary>
         /// <param name="stateName"></param>
-        public async UniTaskVoid TranslateToState<T>(object enterParams = null, object exitParams = null) where T:FSMState
+        public async UniTaskVoid ChangeState<T>(object enterParams = null, object exitParams = null) where T:FSMState
         {
             string stateName = typeof(T).Name;
             if (CurrentState != null)
@@ -86,17 +86,17 @@ namespace HFFramework
         {
             get
             {
-                return allStateDic[name];
+                return stateDic[name];
             }
             set
             {
-                allStateDic[name] = value;
+                stateDic[name] = value;
             }
         }
 
         public void Destroy()
         {
-            allStateDic.Clear();
+            stateDic.Clear();
             CurrentState = null;
             control = null;
         }

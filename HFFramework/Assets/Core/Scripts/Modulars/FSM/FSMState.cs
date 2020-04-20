@@ -17,7 +17,7 @@ namespace HFFramework
     {
         public const string RootState = "Root";
 
-        public FSMController fsm;
+        public FSM fsm;
 
         /// <summary>
         ///  状态名称
@@ -44,7 +44,7 @@ namespace HFFramework
 
         }
 
-        public static T Create<T>(FSMController fsm) where T: FSMState,new()
+        public static T Create<T>(FSM fsm) where T: FSMState,new()
         {
             T t = new T();
             t.fsm = fsm;
@@ -91,6 +91,7 @@ namespace HFFramework
             }
         }
 
+  
         public async virtual UniTaskVoid OnEnter(object param = null)
         {
             HFLog.C("------------------------" + this.GetType().Name + "进入" + "------------------------");

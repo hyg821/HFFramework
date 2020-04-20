@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\aaa.cs" />
     <Compile Include="Assets\Core\HFGlobal.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\CoroutineAdapter.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\IAsyncStateMachineAdaptor.cs" />
@@ -226,7 +227,7 @@
     <Compile Include="Assets\Core\Scripts\Modulars\Debug\LogCat.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\DownLoad\DownLoadManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\DownLoad\WebImageManager.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\FSM\FSMController.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\FSM\FSM.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\FSM\FSMState.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\HFResource\HFResourceManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\ILRuntime\AppDomainManager.cs" />

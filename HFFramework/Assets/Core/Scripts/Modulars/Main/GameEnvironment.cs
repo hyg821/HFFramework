@@ -51,7 +51,7 @@ namespace  HFFramework
         public static GameEnvironment Instance;
 
         /// <summary>
-        ///  运行环境的平台
+        ///  运行平台
         /// </summary>
         public GamePlatform Platform;
 
@@ -96,14 +96,9 @@ namespace  HFFramework
         public bool IsOpenLoaclLog;
 
         /// <summary>
-        ///  模拟设备宽度
+        ///  设计尺寸 和服务器对应起来
         /// </summary>
-        public float ServerSceneWidth;
-
-        /// <summary>
-        ///  模拟设备高度
-        /// </summary>
-        public float ServerSceneHeight;
+        public Vector2 SceneSize = Vector2.zero;
 
         /// <summary>
         ///  默认帧数
@@ -132,8 +127,8 @@ namespace  HFFramework
             OpenLocalLog(false);
             TargetFrame = 60;
             FixedUpdateFrame = 10;
-            ServerSceneWidth = 1920;
-            ServerSceneHeight = 1080;
+            SceneSize.x = 1920;
+            SceneSize.y = 1080;
             Application.runInBackground = true;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             Application.targetFrameRate = TargetFrame;

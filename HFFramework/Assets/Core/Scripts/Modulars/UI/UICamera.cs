@@ -11,17 +11,13 @@ namespace HFFramework
         public void Awake()
         {
             camera = gameObject.GetComponent<Camera>();
-        }
-
-        public void Start()
-        {
             camera.cullingMask = 1 << LayerMask.NameToLayer("UI");
             camera.orthographic = true;
-            camera.orthographicSize = GameEnvironment.Instance.ServerSceneWidth / 2 / 100;
+            camera.orthographicSize = GameEnvironment.Instance.SceneSize.x / 2 / 100;
             camera.clearFlags = CameraClearFlags.Depth;
             camera.depth = 10;
             AudioListener audioListener = camera.GetComponent<AudioListener>();
-            if (audioListener!=null)
+            if (audioListener != null)
             {
                 GameObject.Destroy(audioListener);
             }

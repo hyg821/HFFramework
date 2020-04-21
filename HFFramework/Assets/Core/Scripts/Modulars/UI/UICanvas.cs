@@ -35,7 +35,7 @@ namespace HFFramework
             canvas.renderMode = RenderMode.ScreenSpaceCamera;
 
             canvasScaler = gameObject.GetComponent<CanvasScaler>();
-            canvasScaler.referenceResolution = new Vector2(GameEnvironment.Instance.ServerSceneWidth, GameEnvironment.Instance.ServerSceneHeight);
+            canvasScaler.referenceResolution = new Vector2(GameEnvironment.Instance.SceneSize.x, GameEnvironment.Instance.SceneSize.y);
             canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
 
             rectTransform = transform as RectTransform;
@@ -49,7 +49,7 @@ namespace HFFramework
 
         public void SetSortingLayer(int sortingLayer)
         {
-            canvas.sortingOrder =10 + sortingLayer*10;
+            canvas.sortingOrder = 10 + sortingLayer * 100;
             gameObject.name = CanvasName + sortingLayer;
         }
 
@@ -57,7 +57,7 @@ namespace HFFramework
         {
             if (canvasScaler != null)
             {
-                if (((Screen.width + 0.0f) / (Screen.height + 0.0f)) > (GameEnvironment.Instance.ServerSceneWidth / GameEnvironment.Instance.ServerSceneHeight))
+                if (((Screen.width + 0.0f) / (Screen.height + 0.0f)) > (GameEnvironment.Instance.SceneSize.x / GameEnvironment.Instance.SceneSize.y))
                 {
                     canvasScaler.matchWidthOrHeight = 1f;
                 }

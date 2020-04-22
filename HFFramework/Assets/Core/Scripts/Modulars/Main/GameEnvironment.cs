@@ -110,6 +110,11 @@ namespace  HFFramework
         /// </summary>
         public int FixedUpdateFrame;
 
+        /// <summary>
+        /// 是否全屏 （安全区域是否绘制）
+        /// </summary>
+        public bool FullScreen;
+
         public void Awake()
         {
             Instance = this;
@@ -133,6 +138,7 @@ namespace  HFFramework
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             Application.targetFrameRate = TargetFrame;
             Time.fixedDeltaTime = 1.0f / FixedUpdateFrame;
+            SetFullScreen(false);
         }
 
         /// <summary>
@@ -210,6 +216,12 @@ namespace  HFFramework
                 GameObject.Destroy(log);
                 log = null;
             }
+        }
+
+        public void SetFullScreen(bool full)
+        {
+            FullScreen = full;
+            Screen.fullScreen = FullScreen;
         }
 
         public void DestroyManager()

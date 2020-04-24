@@ -19,9 +19,11 @@ namespace HFFramework
     {
         //DISABLE_ILRUNTIME_DEBUG
 
+        public string mainMethodName = "Main";
         public string updateMethodName = "Update";
         public string fixedUpdateMethodName = "FixedUpdate";
         public string lateUpdateMethodName = "LateUpdate";
+        public string destroyMethodName = "Destroy";
 
         /// <summary>
         ///  单例
@@ -59,15 +61,17 @@ namespace HFFramework
         /// <summary>
         ///  update缓存方法
         /// </summary>
+        private IMethod i_mainMethod;
         private IMethod i_updateMethod;
         private IMethod i_fixedUpdateMethod;
         private IMethod i_lateUpdateMethod;
+        private IMethod i_destroyMethod;
 
         private FastMethodInvoker.FastInvokeHandler m_mainMethod;
         private FastMethodInvoker.FastInvokeHandler m_updateMethod;
         private FastMethodInvoker.FastInvokeHandler m_fixedUpdateMethod;
         private FastMethodInvoker.FastInvokeHandler m_lateUpdateMethod;
-        private FastMethodInvoker.FastInvokeHandler m_DestroyMethod;
+        private FastMethodInvoker.FastInvokeHandler m_destroyMethod;
 
         /// <summary>
         ///  执行ILRuntime 的平台
@@ -141,18 +145,20 @@ namespace HFFramework
         {
             if (GameEnvironment.Instance.Platform == ILRuntimePlatform)
             {
+                i_mainMethod = appdomain.LoadedTypes[MainClassName].GetMethod(mainMethodName, 0);
                 i_updateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(updateMethodName, 0);
                 i_fixedUpdateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(fixedUpdateMethodName, 0);
                 i_lateUpdateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(lateUpdateMethodName, 0);
+                i_destroyMethod = appdomain.LoadedTypes[MainClassName].GetMethod(destroyMethodName, 0);
             }
             else
             {
                 Type type = assembly.GetType("HotFixEnter");
-                m_mainMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod("Main"));
-                m_updateMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod("Update"));
-                m_fixedUpdateMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod("FixedUpdate"));
-                m_lateUpdateMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod("LateUpdate"));
-                m_DestroyMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod("Destroy"));
+                m_mainMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod(mainMethodName));
+                m_updateMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod(updateMethodName));
+                m_fixedUpdateMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod(fixedUpdateMethodName));
+                m_lateUpdateMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod(lateUpdateMethodName));
+                m_destroyMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod(destroyMethodName));
             }
         }
 
@@ -160,7 +166,7 @@ namespace HFFramework
         {
             if (GameEnvironment.Instance.Platform == ILRuntimePlatform)
             {
-                appdomain.Invoke(MainClassName, "Main", null, null);
+                appdomain.Invoke(i_mainMethod, null, p0);
             }
             else
             {
@@ -298,27 +304,29 @@ namespace HFFramework
 
             if (appdomain != null)
             {
-                appdomain.Invoke(MainClassName, "Destroy", null, null);
+                appdomain.Invoke(i_destroyMethod, null, p0);
                 appdomain = null;
             }
 
             if (assembly != null)
             {
-                m_DestroyMethod.Invoke(null, null);
+                m_destroyMethod.Invoke(null, null);
                 assembly = null;
             }
 
             p0 = null;
 
+            i_mainMethod = null;
             i_updateMethod = null;
             i_fixedUpdateMethod = null;
             i_lateUpdateMethod = null;
+            i_destroyMethod = null;
 
             m_mainMethod = null;
             m_updateMethod = null;
             m_fixedUpdateMethod = null;
             m_lateUpdateMethod = null;
-            m_DestroyMethod = null;
+            m_destroyMethod = null;
 
             Instance = null;
         }

@@ -100,11 +100,19 @@ namespace HFFramework
 
         public async static UniTask<T> CreateEntityAsync<T>(string packageName, string assetName) where T : Entity, new()
         {
-            T t = new T();
-            t.isAsync = true;
-            await t.LoadResourcesAsync(packageName, assetName);
-            t.Awake();
-            return t;
+            try
+            {
+                T t = new T();
+                t.isAsync = true;
+                await t.LoadResourcesAsync(packageName, assetName);
+                t.Awake();
+                return t;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw;
+            }
         }
 
         public void DestroyManager()

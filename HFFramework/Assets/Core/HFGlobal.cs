@@ -25,6 +25,8 @@ namespace HFFramework
                 gameObject.name = "HFGlobal";
                 DontDestroyOnLoad(gameObject);
 
+                GameFactory.Create<GameLooper>(true);
+
                 GameFactory.Create<GameFactory>(true);
 
                 GameFactory.Create<PathManager>(true);
@@ -90,6 +92,7 @@ namespace HFFramework
             GameStateChecker.Instance.DestroyManager();
             GameUtils.Instance.DestroyManager();
             NotificationCenter.Instance.DestroyManager();
+            GameLooper.Instance.DestroyManager();
             MemoryClear();
         }
 

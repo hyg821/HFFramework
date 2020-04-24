@@ -180,15 +180,23 @@ namespace HFFramework
 
         public async UniTask<GameObject> GetPrefabAsync(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.LoadAssetPathType == LoadAssetPathType.Editor)
+            try
             {
-                return EditorLoadAsset<GameObject>(packageName, assetName);
+                if (GameEnvironment.Instance.LoadAssetPathType == LoadAssetPathType.Editor)
+                {
+                    return EditorLoadAsset<GameObject>(packageName, assetName);
+                }
+                else
+                {
+                    AssetBundlePackage ab = await LoadAssetBundleFromFileAsync(packageName);
+                    GameObject prefab = await ab.LoadAssetAsync<GameObject>(assetName);
+                    return prefab;
+                }
             }
-            else
+            catch (Exception e)
             {
-                AssetBundlePackage ab = await LoadAssetBundleFromFileAsync(packageName);
-                GameObject prefab = await ab.LoadAssetAsync<GameObject>(assetName);
-                return prefab;
+                Debug.LogError(e);
+                throw;
             }
         }
 
@@ -287,13 +295,21 @@ namespace HFFramework
         /// <param name="finishCallBack"></param>
         public async UniTask LoadScene(string packageName,  string sceneName)
         {
-            if (GameEnvironment.Instance.LoadAssetPathType == LoadAssetPathType.Editor)
+            try
             {
-                await SceneManager.LoadSceneAsync(sceneName);
+                if (GameEnvironment.Instance.LoadAssetPathType == LoadAssetPathType.Editor)
+                {
+                    await SceneManager.LoadSceneAsync(sceneName);
+                }
+                else
+                {
+                    await m_LoadScene(packageName, sceneName);
+                }
             }
-            else
+            catch (Exception e)
             {
-                await m_LoadScene(packageName, sceneName);
+                Debug.LogError(e);
+                throw;
             }
         }
 
@@ -355,7 +371,7 @@ namespace HFFramework
             {
                 AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(packageName, false));
                 assetBundlePackage = new AssetBundlePackage(bundle, packageName);
-                AddAssetBundleToDic(assetBundlePackage);
+                CachePackage(assetBundlePackage);
                 //HFLog.L("同步加载AssetBundle   " + assetBundleName);
             }
             else
@@ -373,8 +389,16 @@ namespace HFFramework
         /// <param name="finishCallback"></param>
         public async UniTask<AssetBundlePackage> LoadAssetBundleFromFileAsync(string packageName)
         {
-            packageName = packageName.ToLower();
-            return await m_LoadAssetBundleFromFileAsync(packageName);
+            try
+            {
+                packageName = packageName.ToLower();
+                return await m_LoadAssetBundleFromFileAsync(packageName);
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError(exception);
+                throw;
+            }       
         }
 
         private async UniTask<AssetBundlePackage> m_LoadAssetBundleFromFileAsync(string packageName)
@@ -392,14 +416,22 @@ namespace HFFramework
             if (!allAssetBundleDic.ContainsKey(packageName))
             {
                 AssetBundle assetbundle = await AssetBundle.LoadFromFileAsync(AutoGetResourcePath(packageName, false));
-                if (!allAssetBundleDic.ContainsKey(packageName))
+                if (assetbundle!=null)
                 {
-                    assetBundlePackage = new AssetBundlePackage(assetbundle, packageName);
-                    AddAssetBundleToDic(assetBundlePackage);
+                    if (!allAssetBundleDic.ContainsKey(packageName))
+                    {
+                        assetBundlePackage = new AssetBundlePackage(assetbundle, packageName);
+                        CachePackage(assetBundlePackage);
+                    }
+                    else
+                    {
+                        assetBundlePackage = allAssetBundleDic[packageName];
+                    }
                 }
                 else
                 {
-                    assetBundlePackage = allAssetBundleDic[packageName];
+                    Debug.LogError(packageName  + " 加载失败");
+                    return assetBundlePackage;
                 }
             }
             else
@@ -484,7 +516,7 @@ namespace HFFramework
             }
         }
 
-        public void AddAssetBundleToDic(AssetBundlePackage bundle)
+        public void CachePackage(AssetBundlePackage bundle)
         {
             if (!allAssetBundleDic.ContainsKey(bundle.name))
             {
@@ -614,21 +646,6 @@ namespace HFFramework
             }
             allAssetBundleDic.Clear();
             Resources.UnloadUnusedAssets();
-        }
-
-        public void Debug()
-        {
-            if (GameEnvironment.Instance.LoadAssetPathType != LoadAssetPathType.Editor)
-            {
-                foreach (var item in allAssetBundleDic)
-                {
-                    HFLog.C(item.Key + " 引用计数 ：" + item.Value.refCount);
-                }
-            }
-            else
-            {
-                HFLog.C("编辑器模式下 没有引用计数");
-            }
         }
 
         public void DestroyManager()
@@ -762,19 +779,27 @@ namespace HFFramework
         /// <returns></returns>
         public async UniTask<T> LoadAssetAsync<T>(string name) where T : UnityEngine.Object
         {
-            UniTaskCompletionSource<T> completion = new UniTaskCompletionSource<T>();
-            UnityEngine.Object obj = null;
-            if (CacheDic.TryGetValue(name, out obj))
+            try
             {
-                completion.TrySetResult(obj as T);
+                UniTaskCompletionSource<T> completion = new UniTaskCompletionSource<T>();
+                UnityEngine.Object obj = null;
+                if (CacheDic.TryGetValue(name, out obj))
+                {
+                    completion.TrySetResult(obj as T);
+                }
+                else
+                {
+                    T t = await assetBundle.LoadAssetAsync<T>(name) as T;
+                    CacheDic.Add(name, t);
+                    completion.TrySetResult(t);
+                }
+                return await completion.Task;
             }
-            else
+            catch (Exception e)
             {
-                T t = await assetBundle.LoadAssetAsync<T>(name) as T;
-                CacheDic.Add(name, t);
-                completion.TrySetResult(t);
+                Debug.LogError(e);
+                throw;
             }
-            return await completion.Task;
         }
 
         /// <summary>

@@ -90,27 +90,35 @@ namespace HFFramework
 
         public async UniTask<T> GetController<T>(bool async) where T :UIController,new()
         {
-            UIController controller;
-            string type = typeof(T).Name;
-            if (controllerDic.TryGetValue(type, out controller)==false)
+            try
             {
-                UI config = ConfigUI.Get(type);
-                if (async)
+                UIController controller;
+                string type = typeof(T).Name;
+                if (controllerDic.TryGetValue(type, out controller) == false)
                 {
-                    controller = await GameFactory.CreateEntityAsync<T>(config.AssetbundleName, config.AssetName);
+                    UI config = ConfigUI.Get(type);
+                    if (async)
+                    {
+                        controller = await GameFactory.CreateEntityAsync<T>(config.AssetbundleName, config.AssetName);
+                    }
+                    else
+                    {
+                        GameObject prefab = HFResourceManager.Instance.GetPrefab(config.AssetbundleName, config.AssetName);
+                        GameObject sourcers = GameObject.Instantiate(prefab);
+                        sourcers.name = config.AssetName;
+                        controller = GameFactory.CreateEntity<T>(sourcers);
+                    }
+
+                    controller.Config = config;
+                    controllerDic.Add(type, controller);
                 }
-                else
-                {
-                    GameObject prefab = HFResourceManager.Instance.GetPrefab(config.AssetbundleName, config.AssetName);
-                    GameObject sourcers = GameObject.Instantiate(prefab);
-                    sourcers.name = config.AssetName;
-                    controller = GameFactory.CreateEntity<T>(sourcers);
-                }
-     
-                controller.Config = config;
-                controllerDic.Add(type, controller);
+                return controller as T;
             }
-            return controller as T;
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw;
+            }
         }
 
         public static async UniTask<T> Open<T>(object param = null,bool async = false,bool animation = false) where T : UIController, new()

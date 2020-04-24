@@ -61,21 +61,28 @@ namespace HFFramework
         /// <param name="stateName"></param>
         public async UniTaskVoid ChangeState<T>(object enterParams = null, object exitParams = null) where T:FSMState,new()
         {
-            string stateName = typeof(T).Name;
-            if (CurrentState != null)
+            try
             {
-                if (stateName != CurrentState.stateName)
+                string stateName = typeof(T).Name;
+                if (CurrentState != null)
                 {
-                     await CurrentState.OnStateInvoke(StateType.Exit,exitParams);
+                    if (stateName != CurrentState.stateName)
+                    {
+                        await CurrentState.OnStateInvoke(StateType.Exit, exitParams);
+                    }
                 }
+                FSMState now;
+                if (!stateDic.TryGetValue(stateName, out now))
+                {
+                    now = AddState<T>();
+                }
+                CurrentState = now;
+                await CurrentState.OnStateInvoke(StateType.Enter, enterParams);
             }
-            FSMState now;
-            if (!stateDic.TryGetValue(stateName, out now))
+            catch (Exception exception)
             {
-                now = AddState<T>();
+                Debug.LogError(exception);
             }
-            CurrentState = now;
-            await CurrentState.OnStateInvoke(StateType.Enter, enterParams);
         }
 
         public void Update()

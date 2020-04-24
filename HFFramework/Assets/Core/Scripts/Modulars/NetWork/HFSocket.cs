@@ -235,15 +235,23 @@ namespace HFFramework
         /// <returns></returns>
         public UniTask<byte[]> Call(int opcode, byte[] msg)
         {
-            UniTaskCompletionSource<byte[]> taskCompletion = null;
-            int rpcID = IDGenerator.GetRpcID();
-            if (!completionCache.TryGetValue(rpcID, out taskCompletion))
+            try
             {
-                taskCompletion = new UniTaskCompletionSource<byte[]>();
-                completionCache.Add(rpcID, taskCompletion);
+                UniTaskCompletionSource<byte[]> taskCompletion = null;
+                int rpcID = IDGenerator.GetRpcID();
+                if (!completionCache.TryGetValue(rpcID, out taskCompletion))
+                {
+                    taskCompletion = new UniTaskCompletionSource<byte[]>();
+                    completionCache.Add(rpcID, taskCompletion);
+                }
+                socket.Send(opcode, rpcID, msg);
+                return taskCompletion.Task;
             }
-            socket.Send(opcode, rpcID, msg);
-            return taskCompletion.Task;
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw;
+            }
         }
 
         private void Update()

@@ -27,11 +27,7 @@ namespace Config
         public void Init()
         { 
             ConfigAddress.Instance.StartAnalysis();
-            ConfigAttribute.Instance.StartAnalysis();
-            ConfigBackground.Instance.StartAnalysis();
-            ConfigChat.Instance.StartAnalysis();
             ConfigMan.Instance.StartAnalysis();
-            ConfigRole.Instance.StartAnalysis();
             ConfigUI.Instance.StartAnalysis();
             HFResourceManager.Instance.UnloadAssetBundle("Config", true); 
             GC.Collect();
@@ -40,11 +36,7 @@ namespace Config
         public void Dispose()
         {
             ConfigAddress.Instance.Dispose();
-            ConfigAttribute.Instance.Dispose();
-            ConfigBackground.Instance.Dispose();
-            ConfigChat.Instance.Dispose();
             ConfigMan.Instance.Dispose();
-            ConfigRole.Instance.Dispose();
             ConfigUI.Instance.Dispose();
             instance = null;
             GC.Collect();

@@ -79,22 +79,17 @@ namespace HFFramework
             //第三行 值类型还是引用类型
             string valueRef = reader.ReadLine();
 
-            //第四行 单个 还是 数组 
-            string singleArray = reader.ReadLine();
-
-            //第五航 属性的类型  int float custom..
+            //第四行 属性的类型  int float custom..
             string types = reader.ReadLine();
 
             string[] cNameList;
             string[] valueRefList;
-            string[] singleArrayList;
             string[] propertyList;
             string[] typeList;
 
             cNameList = cNames.Split(split, StringSplitOptions.None);
             _column = cNameList.Length;
             valueRefList = valueRef.Split(split, StringSplitOptions.None);
-            singleArrayList = singleArray.Split(split, StringSplitOptions.None);
             propertyList = propertys.Split(split, StringSplitOptions.None);
             typeList = types.Split(split, StringSplitOptions.None);
 
@@ -118,15 +113,16 @@ namespace HFFramework
                 string property = propertyList[i];
                 string type = typeList[i].ToLower();
                 string note = cNameList[i] ;
-                string sa = singleArrayList[i];
                 string vf = valueRefList[i];
 
                 builder.AppendLine("        /// <summary>");
                 builder.AppendLine("        /// "+ note);
                 builder.AppendLine("        /// </summary>");
 
-                if (sa == "array")
+                if (type.Contains("[")&&type.Contains("]"))
                 {
+                    type = type.Replace("[", null);
+                    type = type.Replace("]", null);
                     builder.AppendLine("        public List<" + type + @">"+ property+" = new List<" + type + @">();");
                     if (vf.Contains("ref"))
                     {
@@ -140,7 +136,7 @@ namespace HFFramework
                         }
                     }
                 }
-                else if (sa == "single")
+                else
                 {
                     builder.AppendLine("        public " + type + " " + property + ";");
                     if (vf.Contains("ref"))
@@ -205,7 +201,6 @@ namespace HFFramework
             builder.AppendLine(@"            reader.ReadLine();");
             builder.AppendLine(@"            reader.ReadLine();");
             builder.AppendLine(@"            reader.ReadLine();");
-            builder.AppendLine(@"            reader.ReadLine();");
             builder.AppendLine(@"            while (true)");
             builder.AppendLine(@"            {");
             builder.AppendLine(@"                string row = reader.ReadLine();");
@@ -222,10 +217,11 @@ namespace HFFramework
             {
                 string m_type = typeList[i];
                 string m_property = propertyList[i];
-                string m_sa = singleArrayList[i];
 
-                if (m_sa == "array")
+                if (m_type.Contains("[") && m_type.Contains("]"))
                 {
+                    m_type = m_type.Replace("[", null);
+                    m_type = m_type.Replace("]", null);
                     builder.AppendLine(@"                    air = strs[" + i + "].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);");
                     builder.AppendLine(@"                    for (int x = 0; x < air.Length; x++)");
                     builder.AppendLine(@"                    {");
@@ -254,7 +250,7 @@ namespace HFFramework
                     }
                     builder.AppendLine(@"                     }");
                 }
-                else if(m_sa == "single")
+                else
                 {
                     switch (m_type)
                     {

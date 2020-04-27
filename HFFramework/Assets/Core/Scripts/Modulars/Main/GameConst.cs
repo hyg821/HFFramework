@@ -19,11 +19,11 @@ namespace HFFramework
         /// <summary>
         /// 配置文件读取路径
         /// </summary>
-        public const string ConfigInputPath = "GameResources/Config"+AssetFolderIde;
+        public const string ConfigInputPath = "GameResources/Demo/Config"+AssetFolderIde;
         /// <summary>
         /// 配置文件生成路径
         /// </summary>
-        public const string ConfigOutputPath = "GameResources/Script/Config";
+        public const string ConfigOutputPath = "GameResources/Demo/Script/Config";
         /// <summary>
         /// 配置文件 Assetbundle 名字
         /// </summary>

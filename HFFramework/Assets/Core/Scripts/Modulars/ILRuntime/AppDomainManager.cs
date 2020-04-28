@@ -14,6 +14,13 @@ namespace HFFramework
 {
     /// <summary>
     /// 热更新管理器 负责启动热更新代码
+    /// ILRuntime 注意事项 
+    /// 1.DISABLE_ILRUNTIME_DEBUG 宏定义 作用  Profiler 关闭行号 不会产生20b的方法调用分配 打包不会产生
+    /// 2.生成dll 使用release模式 vs上方解决方案配置（配置管理器） 把HotFix 改成release 然后生成
+    /// 3.自动分析生成代码 运行效率提升 2-10 倍
+    /// 4.只在iOS平台是使用ILRuntime 效率是mono调用模式的效率1/20  --- 1/100
+    /// 5.编辑器测试 10000个update 里 每次执行100次vector3+=1 大概耗时2500ms
+    /// 6.如果需要热更新代码计算量大的地方 把大量计算 转移到 HotFix.entity.gameObject.monobehivor上 然后把结果返回给entity 运行效率会有巨大提升
     /// </summary>
     public class AppDomainManager : MonoBehaviour, IManager
     {

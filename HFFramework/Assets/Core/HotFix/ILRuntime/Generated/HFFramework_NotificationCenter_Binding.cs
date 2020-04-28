@@ -39,6 +39,7 @@ namespace ILRuntime.Runtime.Generated
             field = type.GetField("Instance", flag);
             app.RegisterCLRFieldGetter(field, get_Instance_0);
             app.RegisterCLRFieldSetter(field, set_Instance_0);
+            app.RegisterCLRFieldBinding(field, CopyToStack_Instance_0, AssignFromStack_Instance_0);
 
 
         }
@@ -136,10 +137,31 @@ namespace ILRuntime.Runtime.Generated
         {
             return HFFramework.NotificationCenter.Instance;
         }
+
+        static StackObject* CopyToStack_Instance_0(ref object o, ILIntepreter __intp, StackObject* __ret, IList<object> __mStack)
+        {
+            var result_of_this_method = HFFramework.NotificationCenter.Instance;
+            object obj_result_of_this_method = result_of_this_method;
+            if(obj_result_of_this_method is CrossBindingAdaptorType)
+            {    
+                return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
+            }
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
         static void set_Instance_0(ref object o, object v)
         {
             HFFramework.NotificationCenter.Instance = (HFFramework.NotificationCenter)v;
         }
+
+        static StackObject* AssignFromStack_Instance_0(ref object o, ILIntepreter __intp, StackObject* ptr_of_this_method, IList<object> __mStack)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            HFFramework.NotificationCenter @Instance = (HFFramework.NotificationCenter)typeof(HFFramework.NotificationCenter).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            HFFramework.NotificationCenter.Instance = @Instance;
+            return ptr_of_this_method;
+        }
+
 
 
     }

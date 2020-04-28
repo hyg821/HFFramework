@@ -24,13 +24,11 @@ namespace HFFramework
     /// </summary>
     public class AppDomainManager : MonoBehaviour, IManager
     {
-        //DISABLE_ILRUNTIME_DEBUG
-
-        public string mainMethodName = "Main";
-        public string updateMethodName = "Update";
-        public string fixedUpdateMethodName = "FixedUpdate";
-        public string lateUpdateMethodName = "LateUpdate";
-        public string destroyMethodName = "Destroy";
+        public const string mainMethodName = "Main";
+        public const string updateMethodName = "Update";
+        public const string fixedUpdateMethodName = "FixedUpdate";
+        public const string lateUpdateMethodName = "LateUpdate";
+        public const string destroyMethodName = "Destroy";
 
         /// <summary>
         ///  单例

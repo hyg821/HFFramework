@@ -7,9 +7,13 @@ using UniRx.Async;
 namespace HFFramework
 {
     /// <summary>
-    ///  对象基类 替代 MonoBehaviour  
-    ///  整体思路 Entity控制层 gameObject 视图层 
-    ///  Entity 也可以挂载 Entity（component）
+    /// Entity (控制层)
+    ///     |
+    /// GameObject (视图层)
+    ///                             | 
+    ///                             | _____  Monobehivor
+    ///                             | 
+    ///                             | _____  Monobehivor
     /// </summary>
     public class Entity
     {

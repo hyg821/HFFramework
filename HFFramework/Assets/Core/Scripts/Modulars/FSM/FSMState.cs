@@ -58,40 +58,39 @@ namespace HFFramework
 
         }
 
-        public async virtual UniTask OnStateInvoke(StateType s,object param = null)
+        public async virtual UniTask OnStateEnter(object param = null)
         {
-            currentState = s;
-            switch (s)
+            currentState = StateType.Enter;
+            await OnEnter(param);
+            if (OnEnterCallback != null)
             {
-                case StateType.Enter:
-                    await OnEnter(param);
-                    if (OnEnterCallback != null)
-                    {
-                        isRunning = true;
-                        OnEnterCallback();
-                    }
-                    break;
-                case StateType.Stay:
-                    OnStay();
-                    if (OnStayCallback != null)
-                    {
-                        OnStayCallback();
-                    }
-                    break;
-                case StateType.Exit:
-                    await OnExit(param);
-                    if (OnExitCallback != null)
-                    {
-                        OnExitCallback();
-                        isRunning = false;
-                    }
-                    break;
-                default:
-                    break;
+                isRunning = true;
+                OnEnterCallback();
             }
         }
 
-  
+        public  void OnStateStay()
+        {
+            currentState = StateType.Stay;
+            OnStay();
+            if (OnStayCallback != null)
+            {
+                OnStayCallback();
+            }
+        }
+
+        public async virtual UniTask OnStateExit(object param = null)
+        {
+            currentState = StateType.Exit;
+            await OnExit(param);
+            if (OnExitCallback != null)
+            {
+                OnExitCallback();
+                isRunning = false;
+            }
+        }
+
+
         public async virtual UniTask OnEnter(object param = null)
         {
             HFLog.C("------------------------" + this.GetType().Name + "进入" + "------------------------");

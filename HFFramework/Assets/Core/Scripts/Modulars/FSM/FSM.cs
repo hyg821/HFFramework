@@ -68,7 +68,7 @@ namespace HFFramework
                 {
                     if (stateName != CurrentState.stateName)
                     {
-                        await CurrentState.OnStateInvoke(StateType.Exit, exitParams);
+                        await CurrentState.OnStateExit(exitParams);
                     }
                 }
                 FSMState now;
@@ -77,7 +77,7 @@ namespace HFFramework
                     now = AddState<T>();
                 }
                 CurrentState = now;
-                await CurrentState.OnStateInvoke(StateType.Enter, enterParams);
+                await CurrentState.OnStateEnter(enterParams);
             }
             catch (Exception exception)
             {
@@ -89,7 +89,7 @@ namespace HFFramework
         {
             if (CurrentState != null)
             {
-               CurrentState.OnStateInvoke(StateType.Stay);
+               CurrentState.OnStateStay();
             }
         }
 

@@ -216,6 +216,8 @@ namespace HFFramework
         /// </summary>
         unsafe void InitializeILRuntime()
         {
+            appdomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
+
             // 注册litjson
             LitJson.JsonMapper.RegisterILRuntimeCLRRedirection(appdomain);
 
@@ -296,12 +298,6 @@ namespace HFFramework
         {
             IsActiveMonoMethod = false;
 
-            if (codeStream!=null)
-            {
-                codeStream.Close();
-                codeStream = null;
-            }
-
             if (appdomain != null)
             {
                 appdomain.Invoke(i_destroyMethod, null, p0);
@@ -327,6 +323,12 @@ namespace HFFramework
             m_fixedUpdateMethod = null;
             m_lateUpdateMethod = null;
             m_destroyMethod = null;
+
+            if (codeStream != null)
+            {
+                codeStream.Close();
+                codeStream = null;
+            }
 
             Instance = null;
         }

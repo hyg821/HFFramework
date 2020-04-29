@@ -49,6 +49,10 @@ public class FunctionController : UIController
     {
         base.OnShowComplete();
         HFLog.C("页面完全显示");
+        AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile("texture");
+        Sprite sp = ab.assetBundle.LoadAsset<Sprite>("123");
+        Sprite sp1 = ab.assetBundle.LoadAsset<Sprite>("123");
+        HFLog.C(sp == sp1);
     }
 
 

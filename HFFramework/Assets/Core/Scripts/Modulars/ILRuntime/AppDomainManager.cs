@@ -221,8 +221,9 @@ namespace HFFramework
         /// </summary>
         unsafe void InitializeILRuntime()
         {
+#if DEBUG && (UNITY_EDITOR || UNITY_ANDROID || UNITY_IPHONE)
             appdomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
-
+#endif
             // 注册litjson
             LitJson.JsonMapper.RegisterILRuntimeCLRRedirection(appdomain);
 

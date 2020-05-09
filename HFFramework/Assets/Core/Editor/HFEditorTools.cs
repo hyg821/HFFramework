@@ -8,6 +8,7 @@ using System.Text;
 using LitJson;
 using UnityEditor.ProjectWindowCallback;
 using UnityEngine.U2D;
+using UnityEditor.U2D;
 
 namespace HFFramework
 {
@@ -33,8 +34,8 @@ namespace HFFramework
             //序列化模式 2进制
             EditorSettings.serializationMode = SerializationMode.ForceBinary;
 
-            //老精灵图集模式 并且在打包的时候才 build图集
-            EditorSettings.spritePackerMode = SpritePackerMode.BuildTimeOnly;
+            //新精灵图集模式 并且在打包的时候才 build图集
+            EditorSettings.spritePackerMode = SpritePackerMode.BuildTimeOnlyAtlas;
 
             //可见meta 文件
             EditorSettings.externalVersionControl = "Visible Meta Files";
@@ -181,6 +182,14 @@ namespace HFFramework
             m_ExecuteAssetConfig(resourcesPath,true,false);
         }
 
+        [MenuItem("游戏辅助工具/资源设置/设置图集")]
+        public static void SetAtlasNames()
+        {
+            //ClearAssetBundlesName();
+            string resourcesPath = Application.dataPath + "/GameResources";
+            m_ExecuteAssetConfig(resourcesPath, false, true);
+        }
+
         [MenuItem("游戏辅助工具/资源设置/设置DLL到具体资源目录")]
         public static void ReNameDLL()
         {
@@ -268,10 +277,22 @@ namespace HFFramework
                                 SetAssetbundleByAssetImporter(assetImporter, config);
                             }
 
-                            if (setSpriteAtlas)
+                            if (setSpriteAtlas&& ex== ".spriteatlas")
                             {
-                                //2017 没有公开创建 图集 或者 设置图集的api 所以只能等到2018.2之后再实现了
-                                //SpriteAtlas sa = AssetDatabase.LoadAssetAtPath<SpriteAtlas>(assetPath);
+                                int index = assetPath.LastIndexOf("/");
+                                string directoryPath = assetPath.Substring(0, index);
+                                SpriteAtlas atlas = AssetDatabase.LoadAssetAtPath<SpriteAtlas>(assetPath);
+                                if (atlas!=null)
+                                {
+                                    UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(directoryPath);
+                                    atlas.Remove(atlas.GetPackables());
+                                    atlas.Add(new[] { obj });
+                                    AssetDatabase.SaveAssets();
+                                }
+                                else
+                                {
+                                    HFLog.E(assetPath+" 没有找到 SpriteAtlas");
+                                } 
                             }                        
                         }
                     }

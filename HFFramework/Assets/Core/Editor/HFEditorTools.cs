@@ -13,16 +13,19 @@ using UnityEditor.U2D;
 namespace HFFramework
 {
     [InitializeOnLoad]
-    public class EditorReloadCode
-    {
-        static EditorReloadCode()
-        {
-            HFLog.C("编辑器刷新代码");
-        }
-    }
-
     public class HFEditorTools
     {
+        static HFEditorTools()
+        {
+            HFLog.C("编辑器工具刷新");
+        }
+
+        [InitializeOnLoadMethod]
+        static void ReLoadMethod()
+        {
+            HFLog.C("编辑器工具刷新方法");
+        }
+
         [MenuItem("游戏辅助工具/项目默认设置")]
         static void ProjectSetting()
         {

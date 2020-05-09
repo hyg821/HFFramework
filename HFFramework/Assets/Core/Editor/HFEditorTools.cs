@@ -12,6 +12,15 @@ using UnityEditor.U2D;
 
 namespace HFFramework
 {
+    [InitializeOnLoad]
+    public class EditorReloadCode
+    {
+        static EditorReloadCode()
+        {
+            HFLog.C("编辑器刷新代码");
+        }
+    }
+
     public class HFEditorTools
     {
         [MenuItem("游戏辅助工具/项目默认设置")]
@@ -180,7 +189,7 @@ namespace HFFramework
             //ClearAssetBundlesName();
             string resourcesPath = Application.dataPath + "/GameResources";
             ReNameDLL();
-            m_ExecuteAssetConfig(resourcesPath,true,false);
+            SetAssetConfig(resourcesPath,true,false);
         }
 
         [MenuItem("游戏辅助工具/资源设置/设置DLL到具体资源目录")]
@@ -224,7 +233,7 @@ namespace HFFramework
         public static void PackingAtlas()
         {
             string resourcesPath = Application.dataPath + "/GameResources";
-            m_ExecuteAssetConfig(resourcesPath, false, true);
+            SetAssetConfig(resourcesPath, false, true);
             SpriteAtlasUtility.PackAllAtlases(EditorUserBuildSettings.activeBuildTarget);
             AssetDatabase.Refresh();
         }
@@ -242,7 +251,7 @@ namespace HFFramework
         ///  根据 AssetConfig 设置assetbundleName 和 图集设置
         /// </summary>
         /// <param name="path"></param>
-        public static void m_ExecuteAssetConfig(string path,bool setAssetbundleName,bool setSpriteAtlas)
+        public static void SetAssetConfig(string path,bool setAssetbundleName,bool setSpriteAtlas)
         {
             if (!Directory.Exists(path))//若文件夹不存在则新建文件夹   
             {
@@ -316,7 +325,7 @@ namespace HFFramework
                 foreach (DirectoryInfo nextDirectory in subDirectory)
                 {
                     string newItem = nextDirectory.FullName.Replace("\\", "/");
-                    m_ExecuteAssetConfig(newItem,setAssetbundleName,setSpriteAtlas);
+                    SetAssetConfig(newItem,setAssetbundleName,setSpriteAtlas); 
                 }
             }
         }

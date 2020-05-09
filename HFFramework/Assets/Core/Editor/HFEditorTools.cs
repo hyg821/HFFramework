@@ -77,6 +77,8 @@ namespace HFFramework
         {
             ReNameDLL();
 
+            PackingAtlas();
+
             BuildTarget target;
             #if UNITY_STANDALONE_WIN
             target = BuildTarget.StandaloneWindows;
@@ -181,14 +183,6 @@ namespace HFFramework
             m_ExecuteAssetConfig(resourcesPath,true,false);
         }
 
-        [MenuItem("游戏辅助工具/资源设置/设置图集")]
-        public static void SetAtlasNames()
-        {
-            //ClearAssetBundlesName();
-            string resourcesPath = Application.dataPath + "/GameResources";
-            m_ExecuteAssetConfig(resourcesPath, false, true);
-        }
-
         [MenuItem("游戏辅助工具/资源设置/设置DLL到具体资源目录")]
         public static void ReNameDLL()
         {
@@ -217,7 +211,23 @@ namespace HFFramework
             }
             length = AssetDatabase.GetAllAssetBundleNames().Length;
             Debug.Log("删除之后的所有AssetBundleNames个数  " + length);
-        }    
+        }
+
+        [MenuItem("游戏辅助工具/资源设置/删除 所有 AssetBundles")]
+        public static void DeleteAllAssetbundle()
+        {
+            AssetDatabase.DeleteAsset("Assets/StreamingAssets/AssetBundles");
+            Debug.Log("删除所有 AssetBundles 完成");
+        }
+
+        [MenuItem("游戏辅助工具/资源设置/刷新图集")]
+        public static void PackingAtlas()
+        {
+            string resourcesPath = Application.dataPath + "/GameResources";
+            m_ExecuteAssetConfig(resourcesPath, false, true);
+            SpriteAtlasUtility.PackAllAtlases(EditorUserBuildSettings.activeBuildTarget);
+            AssetDatabase.Refresh();
+        }
 
         /// <summary>
         ///  获得所有编辑器的AssetBundleName
@@ -329,14 +339,6 @@ namespace HFFramework
                     assetImporter.assetBundleName = bundleName;
                 }
             }
-        }
-    
-
-        [MenuItem("游戏辅助工具/资源设置/删除 所有 AssetBundles")]
-        public static void DeleteAllAssetbundle()
-        {
-            AssetDatabase.DeleteAsset("Assets/StreamingAssets/AssetBundles");
-            Debug.Log("删除所有 AssetBundles 完成");
         }
 
         /// <summary>

@@ -34,8 +34,7 @@ namespace HFFramework
             //序列化模式 2进制
             EditorSettings.serializationMode = SerializationMode.ForceBinary;
 
-            //新精灵图集模式 并且在打包的时候才 build图集
-            EditorSettings.spritePackerMode = SpritePackerMode.BuildTimeOnlyAtlas;
+            EditorSettings.spritePackerMode = SpritePackerMode.AlwaysOnAtlas;
 
             //可见meta 文件
             EditorSettings.externalVersionControl = "Visible Meta Files";

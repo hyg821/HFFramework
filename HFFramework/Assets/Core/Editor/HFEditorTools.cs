@@ -81,6 +81,21 @@ namespace HFFramework
             Debug.Log("设置完成");
         }
 
+        public static BuildTarget GetBuildTarget()
+        {
+            BuildTarget target = BuildTarget.NoTarget;
+#if UNITY_STANDALONE_WIN
+            target = BuildTarget.StandaloneWindows;
+#elif UNITY_STANDALONE_OSX
+            target = BuildTarget.StandaloneOSXIntel;
+#elif UNITY_IPHONE
+            target = BuildTarget.iOS;
+#elif UNITY_ANDROID
+            target = BuildTarget.Android;
+#endif
+            return target;
+        }
+
         /// <summary>
         /// 资源打包
         /// </summary>
@@ -91,24 +106,13 @@ namespace HFFramework
 
             PackingAtlas();
 
-            BuildTarget target;
-            #if UNITY_STANDALONE_WIN
-            target = BuildTarget.StandaloneWindows;
-            #elif UNITY_STANDALONE_OSX
-            target = BuildTarget.StandaloneOSXIntel;
-            #elif UNITY_IPHONE
-            target = BuildTarget.iOS;
-            #elif UNITY_ANDROID
-            target = BuildTarget.Android;
-            #endif
-
             string AssetBundlesPath = Application.dataPath + "/StreamingAssets/AssetBundles";
             if (!Directory.Exists(AssetBundlesPath))
             {
                 Directory.CreateDirectory(AssetBundlesPath);
             }
 
-            AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", BuildAssetBundleOptions.ChunkBasedCompression, target);
+            AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", BuildAssetBundleOptions.ChunkBasedCompression, GetBuildTarget());
             //BuildZip();
             if (abm)
             {
@@ -164,23 +168,12 @@ namespace HFFramework
 
         static void BuildSomeAssetBundles(string outPath, AssetBundleBuild[] builds)
         {
-            BuildTarget target;
-            #if UNITY_STANDALONE_WIN
-            target = BuildTarget.StandaloneWindows;
-            #elif UNITY_STANDALONE_OSX
-            target = BuildTarget.StandaloneOSXIntel;
-            #elif UNITY_IPHONE
-            target = BuildTarget.iOS;
-            #elif UNITY_ANDROID
-            target = BuildTarget.Android;
-            #endif
-
             if (!Directory.Exists(outPath))
             {
                 Directory.CreateDirectory(outPath);
             }
 
-            BuildPipeline.BuildAssetBundles(outPath, builds, BuildAssetBundleOptions.ChunkBasedCompression, target);
+            BuildPipeline.BuildAssetBundles(outPath, builds, BuildAssetBundleOptions.ChunkBasedCompression, GetBuildTarget());
 
             //刷新编辑器
             AssetDatabase.Refresh();

@@ -35,6 +35,7 @@ public class FunctionController : UIController
         base.Awake();
         TitleLabel.text = "框架入门";
         HFLog.C("页面初始化完成");
+        IsNeedUpdate = true;
     }
 
     public override void PlayShowAnimation()
@@ -49,19 +50,12 @@ public class FunctionController : UIController
     {
         base.OnShowComplete();
         HFLog.C("页面完全显示");
-        AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile("texture");
-        Sprite sp = ab.assetBundle.LoadAsset<Sprite>("123");
-        Sprite sp1 = ab.assetBundle.LoadAsset<Sprite>("123");
-        HFLog.C(sp == sp1);
     }
 
-
-
-
-
-
-
-
+    public override void OnUpdate(float deltaTime)
+    {
+        base.OnUpdate(deltaTime);
+    }
 
 
     /*

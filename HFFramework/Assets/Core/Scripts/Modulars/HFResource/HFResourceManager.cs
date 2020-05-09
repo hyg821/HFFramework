@@ -228,9 +228,16 @@ namespace HFFramework
         /// <returns></returns>
         public Sprite GetSpriteByAtlas(string packageName, string atlasName, string spriteName)
         {
-            AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
-            SpriteAtlas atlas = ab.LoadAsset<SpriteAtlas>(atlasName);
-            return atlas.GetSprite(spriteName);
+            if (GameEnvironment.Instance.LoadAssetPathType == LoadAssetPathType.Editor)
+            {
+                SpriteAtlas atlas = EditorLoadAsset<SpriteAtlas>(packageName, atlasName);
+                return atlas.GetSprite(spriteName);
+            }
+            else
+            {
+                AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
+                return ab.LoadSprite(atlasName, spriteName);
+            }
         }
 
         /// <summary>
@@ -764,6 +771,33 @@ namespace HFFramework
                     CacheDic.Add(name, t1);
                 }
                 return t1;
+            }
+        }
+
+        /// <summary>
+        /// 做一个特殊判断 因为新图集有bug
+        /// </summary>
+        /// <param name="atlasName"></param>
+        /// <param name="spriteName"></param>
+        /// <returns></returns>
+        public Sprite LoadSprite(string atlasName, string spriteName)
+        {
+            //先加载一下图集
+            SpriteAtlas atlas = LoadAsset<SpriteAtlas>(atlasName);
+            return m_loadSprite(atlas, spriteName);
+        }
+
+        private Sprite m_loadSprite(SpriteAtlas atlas, string spriteName)
+        {
+            if (CacheDic.ContainsKey(spriteName))
+            {
+                return CacheDic[spriteName] as Sprite;
+            }
+            else
+            {
+                Sprite sprite = atlas.GetSprite(spriteName);
+                CacheDic.Add(spriteName, sprite);
+                return sprite;
             }
         }
 

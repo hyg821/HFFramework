@@ -79,10 +79,10 @@ namespace HFFramework
             }
         }
 
-        public async virtual UniTask OnStateExit(object param = null)
+        public async virtual UniTask OnStateExit(object args = null)
         {
             currentState = StateType.Exit;
-            await OnExit(param);
+            await OnExit(args);
             if (OnExitCallback != null)
             {
                 OnExitCallback();
@@ -91,7 +91,7 @@ namespace HFFramework
         }
 
 
-        public async virtual UniTask OnEnter(object param = null)
+        public async virtual UniTask OnEnter(object args = null)
         {
             HFLog.C("------------------------" + this.GetType().Name + "进入" + "------------------------");
         }
@@ -101,7 +101,7 @@ namespace HFFramework
 
         }
 
-        public async virtual UniTask OnExit(object param = null)
+        public async virtual UniTask OnExit(object args = null)
         {
             HFLog.C("------------------------" + this.GetType().Name + "离开" + "------------------------");
         }

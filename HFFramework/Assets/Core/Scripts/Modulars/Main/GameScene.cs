@@ -5,11 +5,6 @@ using UniRx.Async;
 
 namespace HFFramework
 {
-    public class GameSceneParams
-    {
-        public bool isOpenLoading = false;
-    }
-
     /// <summary>
     /// 逻辑场景  登录 大厅 主城  大世界 副本 等等
     /// </summary>
@@ -20,9 +15,9 @@ namespace HFFramework
             base.Awake();
         }
 
-        public async override UniTask OnEnter(object param = null)
+        public async override UniTask OnEnter(object args)
         {
-            await base.OnEnter(param);
+            await base.OnEnter(args);
             await LoadScene();
             await PreLoad();
             await SendEnterRequest();
@@ -30,10 +25,10 @@ namespace HFFramework
             await CloseLoading();
         }
 
-        public async override UniTask OnExit(object param = null)
+        public async override UniTask OnExit(object args)
         {
-            await base.OnExit(param);
-            await OpenLoading(param as GameSceneParams);
+            await base.OnExit(args);
+            await OpenLoading(args);
             await SendExitRequest();
             await CloseUI();
             await ClearManager();
@@ -45,7 +40,7 @@ namespace HFFramework
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public virtual async UniTask OpenLoading(GameSceneParams p)
+        public virtual async UniTask OpenLoading(object args)
         {
             HFLog.C("步骤1 打开loading");
         }

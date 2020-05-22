@@ -54,7 +54,7 @@ namespace HFFramework
         {
            return fsm.GetState<T>();
         }
-
+       
         public void ChangeScene<T>() where T:GameScene,new()
         {
             fsm.ChangeState<T>();

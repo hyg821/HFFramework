@@ -69,7 +69,7 @@ namespace HFFramework
             }
         }
 
-        public  void OnStateStay()
+        public void OnStateStay()
         {
             currentState = StateType.Stay;
             OnStay();

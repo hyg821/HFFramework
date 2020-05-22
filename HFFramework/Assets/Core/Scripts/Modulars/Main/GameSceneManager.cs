@@ -57,7 +57,7 @@ namespace HFFramework
        
         public void ChangeScene<T>() where T:GameScene,new()
         {
-            fsm.ChangeState<T>();
+            fsm.ChangeState<T>().Forget();
         }
 
         private void Update()

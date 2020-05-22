@@ -29,7 +29,6 @@ namespace UniRx.Async
             [DebuggerHidden]
             public void GetResult()
             {
-                UnityEngine.Debug.LogWarning("UniTaskVoid can't await, always fire-and-forget. use Forget instead of await.");
             }
 
             [DebuggerHidden]

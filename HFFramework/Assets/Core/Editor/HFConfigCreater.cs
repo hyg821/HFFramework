@@ -14,7 +14,7 @@ namespace HFFramework
         public static string[] arraySplit = new string[] { "[","]",";" };
 
         [MenuItem("游戏辅助工具/配置文件/生成解析 .cs文件")]
-        static void GenerateConfigByAnalysis()
+        public static void GenerateConfigByAnalysis()
         {
             string path = Application.dataPath + "/" + GameConst.ConfigInputPath;
             if (!Directory.Exists(path))

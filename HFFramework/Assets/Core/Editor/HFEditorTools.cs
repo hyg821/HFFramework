@@ -236,6 +236,40 @@ namespace HFFramework
             AssetDatabase.Refresh();
         }
 
+        [MenuItem("游戏辅助工具/安卓打包")]
+        public static void BuildAndorid()
+        {
+            if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android)
+            {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
+                AssetDatabase.Refresh();
+            }
+
+            //生成图集
+            PackingAtlas();
+            //更新配置
+            HFConfigCreater.GenerateConfigByAnalysis();
+            //清除bundleName
+            ClearAssetBundlesName();
+            SetAssetBundleNameAndBuildAllAssetBundles();
+            string outPath = Path.GetDirectoryName(Application.dataPath).Replace("\\", "/") + "/Release/Android/"+ PlayerSettings.productName + ".apk";
+            BuildPipeline.BuildPlayer(GetBuildScenes(), outPath, BuildTarget.Android, BuildOptions.None);
+        }
+
+        public static string[] GetBuildScenes()
+        {
+            List<string> names = new List<string>();
+            foreach (EditorBuildSettingsScene e in EditorBuildSettings.scenes)
+            {
+                if (e != null&& e.enabled)
+                {
+                    HFLog.C(e.path);
+                    names.Add(e.path);
+                }
+            }
+            return names.ToArray();
+        }
+
         /// <summary>
         ///  获得所有编辑器的AssetBundleName
         /// </summary>

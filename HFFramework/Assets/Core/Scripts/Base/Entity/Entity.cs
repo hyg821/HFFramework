@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx.Async;
+using Google.Protobuf;
 
 namespace HFFramework
 {
@@ -415,9 +416,23 @@ namespace HFFramework
         /// </summary>
         /// <param name="messageType"></param>
         /// <param name="msg"></param>
-        public void SendNetworkRequest(int messageType, object msg)
+        public void SendNetworkRequest(int opcode, IMessage msg)
         {
 
+        }
+
+        /// <summary>
+        ///  发送网络请求 
+        /// </summary>
+        /// <param name="messageType"></param>
+        /// <param name="msg"></param>
+        public async UniTask<T> SendRpc<T>(int opcode, IMessage msg) where T:IMessage,new()
+        {
+            HFSocket socket = null;
+            byte[] bytes = await socket.Call(opcode, msg.ToByteArray());
+            T t = new T();
+            t.MergeFrom(bytes);
+            return t;
         }
 
         /// <summary>

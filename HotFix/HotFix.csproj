@@ -41,6 +41,10 @@
       <HintPath>..\HFFramework\Assets\OtherPlugins\Demigiant\DOTween\DOTween.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>..\HFFramework\Assets\Plugins\Google.Protobuf.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="UniRx.Async">
       <HintPath>..\HFFramework\Library\ScriptAssemblies\UniRx.Async.dll</HintPath>

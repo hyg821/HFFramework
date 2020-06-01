@@ -71,6 +71,8 @@ namespace HFFramework
             //iOS IL2CPP 运行
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.iOS, ScriptingImplementation.IL2CPP);
 
+            PlayerSettings.allowUnsafeCode = true;
+
             //关闭剥离引擎代码
             PlayerSettings.stripEngineCode = false;
 

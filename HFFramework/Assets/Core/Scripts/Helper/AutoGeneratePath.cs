@@ -34,6 +34,14 @@ namespace HFFramework
         [SerializeField]
         private string propertyType;
 
+        private void Awake()
+        {
+            if (!Application.isEditor)
+            {
+                Destroy(this);
+            }
+        }
+
         public void SetPropertyType(string propertyType)
         {
             this.propertyType = propertyType;

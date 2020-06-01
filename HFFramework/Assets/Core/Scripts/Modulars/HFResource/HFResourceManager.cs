@@ -18,6 +18,7 @@ namespace HFFramework
     public class HFResourceManager : MonoBehaviour, IManager
     {
         // 注意 
+        // 一个assetbundle包合适的大小在 1-10 mb 之间
         // 热更新代码的包  Manifest包 不被管理  
         // 必须每一个场景一个包 并且场景不可以和别的资源放在同一个包里
         // 如果有依赖请把依赖做成预设体 通过加载预设体的方式 实现

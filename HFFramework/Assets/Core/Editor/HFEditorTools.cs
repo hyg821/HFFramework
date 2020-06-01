@@ -114,7 +114,7 @@ namespace HFFramework
                 Directory.CreateDirectory(AssetBundlesPath);
             }
 
-            AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", BuildAssetBundleOptions.ChunkBasedCompression, GetBuildTarget());
+            AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", BuildAssetBundleOptions.ChunkBasedCompression| BuildAssetBundleOptions.DisableWriteTypeTree, GetBuildTarget());
             //BuildZip();
             if (abm)
             {

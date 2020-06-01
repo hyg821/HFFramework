@@ -43,25 +43,19 @@ namespace HFFramework
         public Transform transform;
 
         /// <summary>
+        ///  本体entity的帮助类
+        /// </summary>
+        public List<Entity> compoments = new List<Entity>();
+
+        /// <summary>
         ///  父element
         /// </summary>
         public Entity parent;
 
-        private List<Entity> compomentList;
         /// <summary>
-        /// 组件数组
+        /// 子实体 通常是 有从属关系并且有显示意义的子实体存在的地方
         /// </summary>
-        public List<Entity> CompomentList
-        {
-            get
-            {
-                if (compomentList == null)
-                {
-                    compomentList = new List<Entity>();
-                }
-                return compomentList;
-            }
-        }
+        public List<Entity> childs = new List<Entity>();
 
         private Dictionary<ulong, object> messageTypeDic;
         /// <summary>
@@ -229,15 +223,15 @@ namespace HFFramework
             T t =GameFactory.CreateEntity<T>(gameObject);
             t.parent = this;
             t.isComponent = true;
-            CompomentList.Add(t);
+            compoments.Add(t);
             return t;
         }
 
         public T GetCompoment<T>() where T : Entity
         {
-            for (int i = 0; i < CompomentList.Count; i++)
+            for (int i = 0; i < compoments.Count; i++)
             {
-                Entity e = CompomentList[i];
+                Entity e = compoments[i];
                 if (typeof(T) == e.GetType())
                 {
                     return e as T;
@@ -246,84 +240,61 @@ namespace HFFramework
             return null;
         }
 
-        public void RemoveCompoment(Entity t1)
+        public void RemoveCompoment(Entity compoment, bool destroy)
         {
-            int index = -1;
-            for (int i = 0; i < CompomentList.Count; i++)
+            if (compoment!=null)
             {
-                Entity e1 = CompomentList[i];
-                if (e1.instanceID == t1.instanceID)
+                compoments.Remove(compoment);
+                if (destroy)
                 {
-                    index = i;
-                    break;
+                    compoment.Destroy();
                 }
             }
-            if (index != -1)
+        }
+
+        public void SetParent(Entity parent, bool isSetTransform = false, bool worldPositionStays = false)
+        {
+            this.parent = parent;
+            if (!parent.childs.Contains(this))
             {
-                CompomentList[index].Destroy();
-                CompomentList.RemoveAt(index);
+                parent.childs.Add(this);
+                if (isSetTransform&&parent.transform!=null&&this.transform!=null)
+                {
+                    transform.SetParent(parent.transform, worldPositionStays);
+                }
             }
         }
 
-        public void BringSelfToFront()
+        public void AddChild(Entity child,bool isSetTransform = false, bool worldPositionStays = false)
         {
-            if (gameObject != null)
+            child.SetParent(this, isSetTransform);
+        }
+
+        public T GetChild<T>() where T : Entity
+        {
+            for (int i = 0; i < childs.Count; i++)
             {
-                transform.SetAsLastSibling();
+                Entity e = childs[i];
+                if (typeof(T) == e.GetType())
+                {
+                    return e as T;
+                }
+            }
+            return null;
+        }
+
+        public void RemoveChild(Entity child,bool destroy)
+        {
+            if (child!=null)
+            {
+                childs.Remove(child);
+                if (destroy)
+                {
+                    child.Destroy();
+                }
             }
         }
 
-        public void BringSelfToBack()
-        {
-            if (gameObject != null)
-            {
-                transform.SetAsFirstSibling();
-            }
-        }
-
-        /// <summary>
-        ///  设置物体在父元素内的位置
-        /// </summary>
-        /// <param name="i"></param>
-        public void SetSiblingIndex(int i)
-        {
-            if (gameObject != null)
-            {
-                transform.SetSiblingIndex(i);
-            }
-        }
-
-        public void SetParent(GameObject obj, bool worldPositionStays = false)
-        {
-            transform.SetParent(obj.transform, worldPositionStays);
-        }
-
-        public void SetParent(Entity entity, bool worldPositionStays = false)
-        {
-            parent = entity;
-            if (entity.gameObject!=null)
-            {
-                SetParent(entity.gameObject, worldPositionStays);
-            }
-        }
-
-        /// <summary>
-        ///  显示一个 element  并且把他 作为自己的子物体
-        /// </summary>
-        /// <param name="e"></param>
-        public void SetChild(Entity child)
-        {
-            child.SetParent(this);
-        }
-
-        /// <summary>
-        ///  显示一个 element  并且把他 作为自己的子物体
-        /// </summary>
-        /// <param name="e"></param>
-        public void SetChild(GameObject child)
-        {
-            child.transform.SetParent(transform, false);
-        }
 
         /// <summary>
         ///  开启协程
@@ -422,7 +393,10 @@ namespace HFFramework
         /// </summary>
         public virtual void OnEnable()
         {
-
+            for (int i = 0; i < compoments.Count; i++)
+            {
+                compoments[i].OnEnable();
+            }
         }
 
         /// <summary>
@@ -430,7 +404,10 @@ namespace HFFramework
         /// </summary>
         public virtual void OnDisable()
         {
-
+            for (int i = 0; i < compoments.Count; i++)
+            {
+                compoments[i].OnDisable();
+            }
         }
 
         /// <summary>
@@ -499,7 +476,21 @@ namespace HFFramework
         {
             if (!IsDisposed)
             {
-                ApiHelper.Clear(ref compomentList);
+                for (int i = compoments.Count-1; i >= 0; i--)
+                {
+                    Entity compoment = compoments[i];
+                    compoments.RemoveAt(i);
+                    compoment.Destroy();
+                }
+
+                for (int i = childs.Count - 1; i >= 0; i--)
+                {
+                    Entity child = childs[i];
+                    childs.RemoveAt(i);
+                    child.Destroy();
+                }
+
+                parent = null;
 
                 if (messageTypeDic != null)
                 {
@@ -519,8 +510,7 @@ namespace HFFramework
                 {
                     DestoryGameObject();
                 }
-   
-                parent = null;
+               
                 instanceID = 0;
             }
         }

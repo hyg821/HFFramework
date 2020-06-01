@@ -49,7 +49,7 @@ namespace HFFramework
         public override void OnEnable()
         {
             base.OnEnable();
-            BringSelfToFront();
+            transform.SetAsLastSibling();
         }
 
         public void LogMessageReceived(string condition, string stackTrace, LogType type)

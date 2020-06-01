@@ -81,19 +81,14 @@ namespace HFFramework
             return t;
         }
 
-        public static T CreateEntity<T>(GameObject gameObject = null) where T : Entity, new()
+        public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null, bool worldPositionStays = false) where T : Entity, new()
         {
             T t = new T();
             t.SetGameObject(gameObject);
-            t.Awake();
-            return t;
-        }
-
-        public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null) where T : Entity, new()
-        {
-            T t = new T();
-            t.parent = parent;
-            t.SetGameObject(gameObject);
+            if (parent!=null)
+            {
+                t.SetParent(parent, worldPositionStays);
+            }
             t.Awake();
             return t;
         }

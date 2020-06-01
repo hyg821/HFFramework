@@ -23,7 +23,7 @@ namespace HFFramework
             set
             {
                 config = value;
-                SetParent(UIManager.Instance.GetCanvas(config.LayerIndex).gameObject, false);
+                transform.SetParent(UIManager.Instance.GetCanvas(config.LayerIndex).transform, false);
             }
             get
             {

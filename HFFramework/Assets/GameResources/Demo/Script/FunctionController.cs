@@ -57,7 +57,6 @@ public class FunctionController : UIController
         base.OnUpdate(deltaTime);
     }
 
-
     /*
     public Image bg;
     public Button loginBtn;

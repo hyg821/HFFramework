@@ -22,30 +22,33 @@ namespace HotFix
             return t;
         }
 
-        public static T CreateEntity<T>(GameObject gameObject = null) where T : Entity, new()
+        public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null, bool worldPositionStays = false) where T : Entity, new()
         {
             T t = new T();
             t.SetGameObject(gameObject);
-            t.Awake();
-            return t;
-        }
-
-        public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null) where T : Entity, new()
-        {
-            T t = new T();
-            t.parent = parent;
-            t.SetGameObject(gameObject);
+            if (parent != null)
+            {
+                t.SetParent(parent, worldPositionStays);
+            }
             t.Awake();
             return t;
         }
 
         public async static UniTask<T> CreateEntityAsync<T>(string packageName, string assetName) where T : Entity, new()
         {
-            T t = new T();
-            t.isAsync = true;
-            await t.LoadResourcesAsync(packageName, assetName);
-            t.Awake();
-            return t;
+            try
+            {
+                T t = new T();
+                t.isAsync = true;
+                await t.LoadResourcesAsync(packageName, assetName);
+                t.Awake();
+                return t;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw;
+            }
         }
     }
 }

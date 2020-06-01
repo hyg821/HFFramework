@@ -7,23 +7,22 @@ namespace HFFramework
     /// <summary>
     /// 封装一些实用功能
     /// </summary>
-    public class ApiHelper
+    public class APIHelper
     {
         /// <summary>
         /// 清理 Entity 数组
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
-        public static void Clear<T>(ref List<T> list) where T : Entity
+        public static void Clear<T>(List<T> list) where T : Entity
         {
             if (list!=null)
             {
-                foreach (var item in list)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    item.Destroy();
+                    list[i].Destroy();
                 }
                 list.Clear();
-                list = null;
             }
         }
 
@@ -33,7 +32,7 @@ namespace HFFramework
         /// <typeparam name="K"></typeparam>
         /// <typeparam name="V"></typeparam>
         /// <param name="dictionary"></param>
-        public static void Clear<K,V>(ref Dictionary<K,V> dictionary) where V : Entity
+        public static void Clear<K,V>(Dictionary<K,V> dictionary) where V : Entity
         {
             if (dictionary != null)
             {
@@ -42,7 +41,6 @@ namespace HFFramework
                     item.Value.Destroy();
                 }
                 dictionary.Clear();
-                dictionary = null;
             }
         }
 

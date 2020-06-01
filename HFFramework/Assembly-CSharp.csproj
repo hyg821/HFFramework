@@ -257,7 +257,7 @@
     <Compile Include="Assets\Core\Scripts\Modulars\UI\UICanvas.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\UI\UIController.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\UI\UIManager.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\Utils\ApiHelper.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\Utils\APIHelper.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\FastMethodInvoker.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\GameUtils.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\InstanceHelper.cs" />

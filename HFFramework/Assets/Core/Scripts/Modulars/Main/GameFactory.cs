@@ -13,6 +13,16 @@ namespace HFFramework
     {
         public static GameFactory Instance;
 
+        /// <summary>
+        /// 单帧 加载数量限制
+        /// </summary>
+        public int instantiateLimit = 10;
+
+        /// <summary>
+        /// 加载队列
+        /// </summary>
+        private Queue<InstantiateTask> instantiateQueue = new Queue<InstantiateTask>();
+
         private void Awake()
         {
             Instance = this;
@@ -71,7 +81,31 @@ namespace HFFramework
         {
             GameObject gameObject = GameObject.Instantiate(prefab);
             gameObject.name = prefab.name;
-            return gameObject;
+            return gameObject;       
+        }
+
+        /// <summary>
+        /// 单线程异步分帧加载
+        /// </summary>
+        /// <param name="prefab"></param>
+        /// <returns></returns>
+        public static async UniTask<GameObject> InstantiateAsync(GameObject prefab)
+        {
+            UniTaskCompletionSource<GameObject> source = new UniTaskCompletionSource<GameObject>();
+            InstantiateTask task = new InstantiateTask(prefab, source, null);
+            Instance.instantiateQueue.Enqueue(task);
+            return await source.Task; 
+        }
+
+        /// <summary>
+        /// 单线程异步分帧加载
+        /// </summary>
+        /// <param name="prefab"></param>
+        /// <returns></returns>
+        public static void InstantiateAsync(GameObject prefab,Action<GameObject> callback)
+        {
+            InstantiateTask task = new InstantiateTask(prefab, null, callback);
+            Instance.instantiateQueue.Enqueue(task);
         }
 
         public static T CreateEntity<T>() where T : Entity, new()
@@ -110,10 +144,53 @@ namespace HFFramework
             }
         }
 
+        public void Update()
+        {
+            int count = 0;
+            if (instantiateQueue.Count > instantiateLimit)
+            {
+                count = instantiateLimit;
+            }
+            else
+            {
+                count = instantiateQueue.Count;
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                InstantiateTask task = instantiateQueue.Dequeue();
+                GameObject result = Instantiate(task.prefab);
+                if (task.callback!=null)
+                {
+                    task.callback(result);
+                }
+                if (task.completion!=null)
+                {
+                    task.completion.TrySetResult(result);
+                }
+            }
+        }
+
         public void DestroyManager()
         {
+            instantiateQueue.Clear();
             Instance = null;
         }
     }
 
+    public class InstantiateTask
+    {
+        public GameObject prefab;
+
+        public UniTaskCompletionSource<GameObject> completion;
+
+        public Action<GameObject> callback;
+
+        public InstantiateTask(GameObject prefab, UniTaskCompletionSource<GameObject> completion, Action<GameObject> callback)
+        {
+            this.prefab = prefab;
+            this.completion = completion;
+            this.callback = callback;
+        }
+    }
 }

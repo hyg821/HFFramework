@@ -89,12 +89,12 @@ namespace HFFramework
         /// </summary>
         /// <param name="prefab"></param>
         /// <returns></returns>
-        public static async UniTask<GameObject> InstantiateAsync(GameObject prefab)
+        public static UniTask<GameObject> InstantiateAsync(GameObject prefab)
         {
             UniTaskCompletionSource<GameObject> source = new UniTaskCompletionSource<GameObject>();
             InstantiateTask task = new InstantiateTask(prefab, source, null);
             Instance.instantiateQueue.Enqueue(task);
-            return await source.Task; 
+            return source.Task; 
         }
 
         /// <summary>

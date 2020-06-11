@@ -228,7 +228,9 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  rpc 调用 没有经过测试
+        ///  rpc 调用 没有经过测试 为什么不用async修饰 因为加或者不加都可以 
+        ///  如果方法中需要await 等待的那么必须用async修饰 否则只需要在调用的那个方法里加 
+        ///  说明 await 和 async 是成对出现的
         /// </summary>
         /// <param name="messageType"></param>
         /// <param name="msg"></param>

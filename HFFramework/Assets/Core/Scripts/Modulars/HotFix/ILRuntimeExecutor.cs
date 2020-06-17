@@ -53,27 +53,27 @@ namespace HFFramework
             destroyMethod = appdomain.LoadedTypes[MainClassName].GetMethod(destroyMethodName, 0);
         }
 
-        public new void Awake()
+        public override void Awake()
         {
             appdomain.Invoke(mainMethod, null, p0);
         }
 
-        public new void Update()
+        public override void Update()
         {
             appdomain.Invoke(updateMethod, null, p0);
         }
 
-        public new void FixedUpdate()
+        public override void FixedUpdate()
         {
             appdomain.Invoke(fixedUpdateMethod, null, p0);
         }
 
-        public new void LateUpdate()
+        public override void LateUpdate()
         {
             appdomain.Invoke(lateUpdateMethod, null, p0);
         }
 
-        public new void Destroy()
+        public override void Destroy()
         {
             if (appdomain!=null)
             {

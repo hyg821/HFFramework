@@ -36,27 +36,27 @@ namespace HFFramework
             destroyMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod(destroyMethodName));
         }
 
-        public new void Awake()
+        public override void Awake()
         {
             mainMethod.Invoke(null, null);
         }
 
-        public new void Update()
+        public override void Update()
         {
             updateMethod(null, null);
         }
 
-        public new void LateUpdate()
+        public override void LateUpdate()
         {
             fixedUpdateMethod(null, null);
         }
 
-        public new void FixedUpdate()
+        public override void FixedUpdate()
         {
             lateUpdateMethod.Invoke(null, null);
         }
 
-        public new void Destroy()
+        public override void Destroy()
         {
             if (destroyMethod!=null)
             {

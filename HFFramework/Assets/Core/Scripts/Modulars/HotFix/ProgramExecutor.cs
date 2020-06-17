@@ -19,7 +19,6 @@ namespace HFFramework
 
         public virtual void Init(byte[] bytes)
         {
-
         }
 
         public virtual void CacheMethod()
@@ -27,27 +26,27 @@ namespace HFFramework
 
         }
 
-        public void Awake()
+        public virtual void Awake()
         {
 
         }
 
-        public void Update()
+        public virtual void Update()
         {
 
         }
 
-        public void FixedUpdate()
+        public virtual void FixedUpdate()
         {
 
         }
 
-        public void LateUpdate()
+        public virtual void LateUpdate()
         {
 
         }      
 
-        public void Destroy()
+        public virtual void Destroy()
         {
 
         }

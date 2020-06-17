@@ -231,7 +231,10 @@
     <Compile Include="Assets\Core\Scripts\Modulars\FSM\FSM.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\FSM\FSMState.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\HFResource\HFResourceManager.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\ILRuntime\AppDomainManager.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\HotFix\AppDomainManager.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\HotFix\AssemblyExcutor.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\HotFix\ILRuntimeExecutor.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\HotFix\ProgramExecutor.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Input\InputManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameConst.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Main\GameEnvironment.cs" />

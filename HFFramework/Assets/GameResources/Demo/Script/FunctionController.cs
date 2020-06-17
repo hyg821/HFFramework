@@ -50,6 +50,7 @@ public class FunctionController : UIController
     {
         base.OnShowComplete();
         HFLog.C("页面完全显示");
+        HFFramework.AppDomainManager.Instance.ExcuteToHotFix("hotfixdll", "HotFix");
     }
 
     public override void OnUpdate(float deltaTime)

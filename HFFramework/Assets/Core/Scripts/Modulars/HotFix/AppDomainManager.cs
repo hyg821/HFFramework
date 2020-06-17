@@ -87,7 +87,7 @@ namespace HFFramework
                     executor = new AssemblyExcutor();
                     break;
                 case GamePlatform.Editor:
-                    executor = new ILRuntimeExecutor();
+                    executor = new AssemblyExcutor();
                     break;
                 default:
                     break;

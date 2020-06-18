@@ -107,9 +107,17 @@ namespace HFFramework
         /// </summary>
         public virtual void OnShowComplete()
         {
-            if (showTask != null)
+            try
             {
-                showTask.TrySetResult();
+                if (showTask != null)
+                {
+                    showTask.TrySetResult();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw;
             }
         }
 
@@ -118,9 +126,17 @@ namespace HFFramework
         /// </summary>
         public virtual void OnHideComplete()
         {
-            if (hideTask != null)
+            try
             {
-                hideTask.TrySetResult();
+                if (hideTask != null)
+                {
+                    hideTask.TrySetResult();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw;
             }
         }
 

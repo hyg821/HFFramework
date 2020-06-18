@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Config;
+using System;
 
 namespace  HFFramework
 {
@@ -138,7 +139,8 @@ namespace  HFFramework
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             Application.targetFrameRate = TargetFrame;
             Time.fixedDeltaTime = 1.0f / FixedUpdateFrame;
-            SetFullScreen(false);
+            SetFullScreen(true);
+            //AppDomain.CurrentDomain.UnhandledException += CatchException;
         }
 
         /// <summary>
@@ -224,8 +226,14 @@ namespace  HFFramework
             Screen.fullScreen = FullScreen;
         }
 
+        private void CatchException(object sender, UnhandledExceptionEventArgs e)
+        {
+            HFLog.E("未捕获异常 "+e.ExceptionObject);
+        }
+
         public void DestroyManager()
         {
+            AppDomain.CurrentDomain.UnhandledException -= CatchException;
             Instance = null;
         }
     }

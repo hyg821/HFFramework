@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Config;
 using UniRx.Async;
+using HFFramework.Demo;
 
 namespace HFFramework
 {
@@ -13,7 +14,7 @@ namespace HFFramework
             await base.OnEnter(param);
             //初始化配置文件
             HFConfigManager.Instance.Init();
-            await fsm.ChangeState<LoginScene>();
+            await UIManager.Instance.Open<FunctionController>(); 
         }
 
         public override void OnStay()

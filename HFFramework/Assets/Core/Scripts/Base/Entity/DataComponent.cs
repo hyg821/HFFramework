@@ -5,10 +5,12 @@ using UnityEngine;
 namespace HFFramework
 {
     /// <summary>
-    ///  表现 实体
+    ///  数据层
     /// </summary>
-    public class BehaviorEntity : Entity
+    public class DataComponent : Entity
     {
 
     }
 }
+
+

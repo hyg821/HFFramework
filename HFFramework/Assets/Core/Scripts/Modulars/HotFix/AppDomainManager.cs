@@ -123,7 +123,10 @@ namespace HFFramework
    
         public void DestroyManager()
         {
-            executor.Destroy();
+            if (executor!=null)
+            {
+                executor.Destroy();
+            }
             IsActiveMethod = false;
             Instance = null;
         }

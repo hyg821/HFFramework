@@ -9,9 +9,23 @@ using Google.Protobuf;
 namespace HotFix
 {
     /// <summary>
-    ///  对象基类 替代 MonoBehaviour  
-    ///  整体思路 Entity控制层 gameObject 视图层 
-    ///  Entity 也可以挂载 Entity（component）
+    /// Entity 理解 
+    /// Entity 当作为数据层的时候 gameObject 就不需要被创建 
+    /// Entity 当作为控制层+表现层的时候 需要创建对应的 gameObject 
+    /// 
+    /// Entity
+    ///     |
+    ///     |—— component
+    ///     |
+    ///     |—— component
+    ///     |
+    ///     |—— component
+    ///     |
+    ///     GameObject (视图层)
+    ///                             | 
+    ///                             | _____  Monobehivor
+    ///                             | 
+    ///                             | _____  Monobehivor
     /// </summary>
     public class Entity
     {
@@ -164,6 +178,17 @@ namespace HotFix
             GameObject prefab = await HFResourceManager.Instance.GetPrefabAsync(packageName, assetName);
             GameObject temp = Instantiate(prefab);
             SetGameObject(temp);
+        }
+
+        /// <summary>
+        /// 外部方法调用
+        /// </summary>
+        public virtual void Start()
+        {
+            for (int i = 0; i < compoments.Count; i++)
+            {
+                compoments[i].Start();
+            }
         }
 
         public GameObject Instantiate(GameObject prefab)
@@ -455,17 +480,6 @@ namespace HotFix
                 MessageTypeDic.Add(key, null);
                 NotificationCenter.Instance.AddObserver(receiver, moduleID, msgID, callback);
             }
-        }
-
-        public void PlayMusic(string assetPackage, string musicName)
-        {
-            AudioPlayer player = AudioManager.Instance.GetFreeAudioPlayer();
-            player.SetAudioClipAndPlay(assetPackage, musicName);
-        }
-
-        public void ShowToast(string text)
-        {
-
         }
 
         /// <summary>

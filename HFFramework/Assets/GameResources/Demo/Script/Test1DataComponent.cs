@@ -32,7 +32,7 @@ namespace HFFramework.Demo
             //HFLog.C("弧度 " + a);
 
             position = new Vector3(r * Mathf.Cos(a), r * Mathf.Sin(a), 0);
-            SetValue("position", position);
+            SetFieldValue("position", position);
         }
     }
 }

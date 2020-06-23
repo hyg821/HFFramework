@@ -10,6 +10,8 @@ namespace HFFramework
     {
         public FieldInfo fieldInfo;
 
+        public PropertyInfo propertyInfo;
+
         public event Action<DataComponent> onValueChanged;
 
         public void AddEvent(Action<DataComponent> onValueChanged)
@@ -32,6 +34,8 @@ namespace HFFramework
 
         public void Destroy()
         {
+            fieldInfo = null;
+            propertyInfo = null;
             onValueChanged = null;
         }
     }
@@ -53,12 +57,7 @@ namespace HFFramework
 
         public void AddObserver(string key,Action<DataComponent> onValueChanged)
         {
-            DataObserver observer;
-            if (!observers.TryGetValue(key,out observer))
-            {
-                observer = new DataObserver();
-                observers.Add(key, observer);
-            }
+            DataObserver observer = GetObserver(key);
             observer.AddEvent(onValueChanged);
         }
 
@@ -71,7 +70,29 @@ namespace HFFramework
             }
         }
 
-        public void SetValue(string key,object value)
+        public void SetFieldValue<T>(string key,T value)
+        {
+            DataObserver observer = GetObserver(key);
+            if (observer.fieldInfo==null)
+            {
+                observer.fieldInfo = type.GetField(key);
+            }
+            observer.fieldInfo.SetValue(this, value);
+            observer.Invoke(this);
+        }
+
+        public void SetPropertyValue<T>(string key, T value)
+        {
+            DataObserver observer = GetObserver(key);
+            if (observer.propertyInfo == null)
+            {
+                observer.propertyInfo = type.GetProperty(key);
+            }
+            observer.propertyInfo.SetValue(this, value);
+            observer.Invoke(this);
+        }
+
+        public DataObserver GetObserver(string key)
         {
             DataObserver observer;
             if (!observers.TryGetValue(key, out observer))
@@ -79,12 +100,7 @@ namespace HFFramework
                 observer = new DataObserver();
                 observers.Add(key, observer);
             }
-            if (observer.fieldInfo==null)
-            {
-                observer.fieldInfo = type.GetField(key);
-            }
-            observer.fieldInfo.SetValue(this, value);
-            observer.Invoke(this);
+            return observer;
         }
 
         public override void Destroy()

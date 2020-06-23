@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using TMPro;
 using UniRx.Async;
+using System.Runtime.CompilerServices;
 
 namespace HFFramework.Demo
 {

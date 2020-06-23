@@ -7,8 +7,7 @@ namespace HFFramework.Demo
 {
     public class Test1DataComponent : DataComponent
     {
-        public float x;
-        public float y;
+        public Vector3 position;
 
         public override void Awake()
         {
@@ -31,8 +30,9 @@ namespace HFFramework.Demo
             //HFLog.C("角度 " + a);
             a *= Mathf.Deg2Rad;
             //HFLog.C("弧度 " + a);
-            x = r * Mathf.Cos(a);
-            y = r * Mathf.Sin(a);
+
+            position = new Vector3(r * Mathf.Cos(a), r * Mathf.Sin(a), 0);
+            SetValue("position", position);
         }
     }
 }

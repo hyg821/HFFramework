@@ -53,34 +53,56 @@ namespace HFFramework
         /// </summary>
         public Transform transform;
 
+        private List<Entity> m_compoments;
         /// <summary>
         ///  本体entity的帮助类
         /// </summary>
-        public List<Entity> compoments = new List<Entity>();
+        public List<Entity> compoments
+        {
+            get
+            {
+                if (m_compoments == null)
+                {
+                    m_compoments = new List<Entity>();
+                }
+                return m_compoments;
+            }
+        }
 
         /// <summary>
         ///  父element
         /// </summary>
         public Entity parent;
 
+        private List<Entity> m_childs;
         /// <summary>
         /// 子实体 通常是 有从属关系并且有显示意义的子实体存在的地方
         /// </summary>
-        public List<Entity> childs = new List<Entity>();
-
-        private Dictionary<ulong, object> messageTypeDic;
-        /// <summary>
-        ///  注册的消息 字典   destory会自动销毁
-        /// </summary>
-        public Dictionary<ulong, object> MessageTypeDic
+        public List<Entity> childs
         {
             get
             {
-                if (messageTypeDic == null)
+                if (m_childs == null)
                 {
-                    messageTypeDic = new Dictionary<ulong, object>();
+                    m_childs = new List<Entity>();
                 }
-                return messageTypeDic;
+                return m_childs;
+            }
+        }
+
+        private Dictionary<ulong, object> m_messageTypeDic;
+        /// <summary>
+        ///  注册的消息 字典   destory会自动销毁
+        /// </summary>
+        public Dictionary<ulong, object> messageTypeDic
+        {
+            get
+            {
+                if (m_messageTypeDic == null)
+                {
+                    m_messageTypeDic = new Dictionary<ulong, object>();
+                }
+                return m_messageTypeDic;
             }
         }
 
@@ -474,9 +496,9 @@ namespace HFFramework
         {
             object temp;
             ulong key = NotificationCenter.ConvertToKey(moduleID, msgID);
-            if (!MessageTypeDic.TryGetValue(key, out temp))
+            if (!messageTypeDic.TryGetValue(key, out temp))
             {
-                MessageTypeDic.Add(key, null);
+                messageTypeDic.Add(key, null);
                 NotificationCenter.Instance.AddObserver(receiver, moduleID, msgID, callback);
             }
         }
@@ -501,30 +523,34 @@ namespace HFFramework
         {
             if (!IsDisposed)
             {
-                for (int i = compoments.Count-1; i >= 0; i--)
+                if (m_compoments!=null)
                 {
-                    Entity compoment = compoments[i];
-                    compoments.RemoveAt(i);
-                    compoment.Destroy();
+                    for (int i = m_compoments.Count - 1; i >= 0; i--)
+                    {
+                        Entity compoment = m_compoments[i];
+                        m_compoments.RemoveAt(i);
+                        compoment.Destroy();
+                    }
                 }
 
-                for (int i = childs.Count - 1; i >= 0; i--)
+
+                for (int i = m_childs.Count - 1; i >= 0; i--)
                 {
-                    Entity child = childs[i];
-                    childs.RemoveAt(i);
+                    Entity child = m_childs[i];
+                    m_childs.RemoveAt(i);
                     child.Destroy();
                 }
 
                 parent = null;
 
-                if (messageTypeDic != null)
+                if (m_messageTypeDic != null)
                 {
-                    foreach (var item in messageTypeDic)
+                    foreach (var item in m_messageTypeDic)
                     {
                         NotificationCenter.Instance.RemoveObserver(this, item.Key);
                     }
-                    messageTypeDic.Clear();
-                    messageTypeDic = null;
+                    m_messageTypeDic.Clear();
+                    m_messageTypeDic = null;
                 }
 
                 IsNeedUpdate = false;

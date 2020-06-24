@@ -111,18 +111,18 @@ namespace HFFramework
         {
             set
             {
-                if (gameObject != null && gameObject.activeSelf != value)
+                isActive = value;
+                if (gameObject != null && gameObject.activeSelf != isActive)
                 {
-                    isActive = value;
                     gameObject.SetActive(isActive);
-                    if (isActive)
-                    {
-                        OnEnable();
-                    }
-                    else
-                    {
-                        OnDisable();
-                    }
+                }
+                if (isActive)
+                {
+                    OnEnable();
+                }
+                else
+                {
+                    OnDisable();
                 }
             }
             get
@@ -533,12 +533,14 @@ namespace HFFramework
                     }
                 }
 
-
-                for (int i = m_childs.Count - 1; i >= 0; i--)
+                if (m_childs!=null)
                 {
-                    Entity child = m_childs[i];
-                    m_childs.RemoveAt(i);
-                    child.Destroy();
+                    for (int i = m_childs.Count - 1; i >= 0; i--)
+                    {
+                        Entity child = m_childs[i];
+                        m_childs.RemoveAt(i);
+                        child.Destroy();
+                    }
                 }
 
                 parent = null;

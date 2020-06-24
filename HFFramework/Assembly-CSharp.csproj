@@ -60,7 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Core\HFGlobal.cs" />
+    <Compile Include="Assets\Core\Game.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\CoroutineAdapter.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\IAsyncStateMachineAdaptor.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\MonoBehaviourAdapter.cs" />
@@ -263,7 +263,6 @@
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\APIHelper.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\FastMethodInvoker.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\GameUtils.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\Utils\InstanceHelper.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\PathManager.cs" />
     <Compile Include="Assets\Core\Template\AssetConfig.cs" />
     <Compile Include="Assets\GameResources\Default\Debug[A]\DebugController.cs" />

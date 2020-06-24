@@ -10,9 +10,9 @@ namespace HFFramework
     /// </summary>
     [DefaultExecutionOrder(0)]
     [DisallowMultipleComponent]
-    public class HFGlobal : MonoBehaviour, IManager
+    public class Game : MonoBehaviour, IManager
     {
-        public static HFGlobal Instance;
+        public static Game Instance;
 
         void Awake()
         {
@@ -22,7 +22,6 @@ namespace HFFramework
 
                 MemoryClear();
 
-                gameObject.name = "HFGlobal";
                 DontDestroyOnLoad(gameObject);
 
                 GameFactory.Create<GameLooper>(true);

@@ -181,6 +181,7 @@
     <Compile Include="Assets\Core\Scripts\Base\Linker\HotFixLinker.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Singleton\Singleton.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\AStar\AStar.cs" />
+    <Compile Include="Assets\Core\Scripts\Functions\Attributes\LearnAttributes.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\BoxCollider\Box.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\BoxCollider\CameraController.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\BoxCollider\ViewConfig.cs" />

@@ -5,13 +5,14 @@ using UnityEditor;
 using System.IO;
 using System.Text;
 using System;
+using System.Reflection;
 
 namespace HFFramework
 {
     public class HFConfigCreater
     {
-        public static string[] split = new string[]{","};
-        public static string[] arraySplit = new string[] { "[","]",";" };
+        public static string[] split = new string[] { "," };
+        public static string[] arraySplit = new string[] { "[", "]", ";" };
 
         [MenuItem("游戏辅助工具/配置文件/生成解析 .cs文件")]
         public static void GenerateConfigByAnalysis()
@@ -31,7 +32,7 @@ namespace HFFramework
 
             AssetDatabase.Refresh();
 
-            FileInfo[]  files =directoryInfo.GetFiles();
+            FileInfo[] files = directoryInfo.GetFiles();
             List<FileInfo> fileList = new List<FileInfo>();
             for (int i = 0; i < files.Length; i++)
             {
@@ -54,10 +55,10 @@ namespace HFFramework
         public static void CreateConfig(FileInfo file)
         {
             string temp0 = file.Name.Replace(".csv", "");
-            string temp1 = temp0.Substring(0,1);
-            string temp2 = temp0.Substring(1, temp0.Length-1);
+            string temp1 = temp0.Substring(0, 1);
+            string temp2 = temp0.Substring(1, temp0.Length - 1);
 
-            string _class = temp1.ToUpper()+temp2;
+            string _class = temp1.ToUpper() + temp2;
             string _table = "Config" + _class;
             string _namespace = "Config";
             string _content = "";
@@ -101,6 +102,7 @@ namespace HFFramework
             builder.AppendLine(@"using System.IO;");
             builder.AppendLine(@"using System;");
             builder.AppendLine(@"using HFFramework;");
+            builder.AppendLine(@"using System.Reflection;");
             builder.AppendLine();
             builder.AppendLine(@"namespace " + _namespace);
             builder.AppendLine("{ ");
@@ -112,24 +114,24 @@ namespace HFFramework
             {
                 string property = propertyList[i];
                 string type = typeList[i].ToLower();
-                string note = cNameList[i] ;
+                string note = cNameList[i];
                 string vf = valueRefList[i];
 
                 builder.AppendLine("        /// <summary>");
-                builder.AppendLine("        /// "+ note);
+                builder.AppendLine("        /// " + note);
                 builder.AppendLine("        /// </summary>");
 
-                if (type.Contains("[")&&type.Contains("]"))
+                if (type.Contains("[") && type.Contains("]"))
                 {
                     type = type.Replace("[", null);
                     type = type.Replace("]", null);
-                    builder.AppendLine("        public List<" + type + @">"+ property+" = new List<" + type + @">();");
+                    builder.AppendLine("        public List<" + type + @">" + property + " = new List<" + type + @">();");
                     if (vf.Contains("ref"))
                     {
                         string[] valueRefTempList = vf.Split('_');
                         if (valueRefTempList.Length > 1)
                         {
-                            builder.AppendLine("        public " + valueRefTempList[1] + " " + "Get"+FirstCharToUpper(property)+"("+ type +" key"+ ")");
+                            builder.AppendLine("        public " + valueRefTempList[1] + " " + "Get" + FirstCharToUpper(property) + "(" + type + " key" + ")");
                             builder.AppendLine("        { ");
                             builder.AppendLine("              return " + "Config" + valueRefTempList[1] + ".Get(key);");
                             builder.AppendLine("        } ");
@@ -142,13 +144,13 @@ namespace HFFramework
                     if (vf.Contains("ref"))
                     {
                         string[] valueRefTempList = vf.Split('_');
-                        if (valueRefTempList.Length>1)
+                        if (valueRefTempList.Length > 1)
                         {
                             builder.AppendLine("        public " + valueRefTempList[1] + " " + FirstCharToUpper(property));
                             builder.AppendLine("        { ");
                             builder.AppendLine("            get ");
                             builder.AppendLine("            { ");
-                            builder.AppendLine("                return " + "Config" +valueRefTempList[1]+ ".Get("+ property + ");");
+                            builder.AppendLine("                return " + "Config" + valueRefTempList[1] + ".Get(" + property + ");");
                             builder.AppendLine("            } ");
                             builder.AppendLine("        } ");
                         }
@@ -160,10 +162,10 @@ namespace HFFramework
             builder.AppendLine();
 
             builder.AppendLine("    [System.Serializable]");
-            builder.AppendLine("    public class " + _table);
+            builder.AppendLine("    public partial class " + _table);
             builder.AppendLine("    { ");
             builder.AppendLine("        public static string[] split = new string[] { " + "\"" + "," + "\"" + " };");
-            builder.AppendLine("        public static string[] splitArray = new string[] { " + "\"" + ";" + "\"" +  ", "  + "\"" + "[" + "\""+ ", " + "\"" + "]" + "\"" + " };");
+            builder.AppendLine("        public static string[] splitArray = new string[] { " + "\"" + ";" + "\"" + ", " + "\"" + "[" + "\"" + ", " + "\"" + "]" + "\"" + " };");
             builder.AppendLine();
             builder.AppendLine("        " + @"private static " + _table + " instance;");
             builder.AppendLine("        " + @"public static " + _table + " Instance");
@@ -172,7 +174,7 @@ namespace HFFramework
             builder.AppendLine("            { ");
             builder.AppendLine("                if (instance==null) ");
             builder.AppendLine("                { ");
-            builder.AppendLine("                     instance = new "+_table+ " ();");
+            builder.AppendLine("                     instance = new " + _table + " ();");
             builder.AppendLine("                } ");
             builder.AppendLine("                return instance;");
             builder.AppendLine("            } ");
@@ -180,22 +182,22 @@ namespace HFFramework
 
             builder.AppendLine();
 
-            builder.AppendLine("        public Dictionary<"+ typeList[0]+" , "+_class+ @"> dic = new Dictionary<"+ typeList[0] +" , "+ _class + @">();");
+            builder.AppendLine("        public Dictionary<" + typeList[0] + " , " + _class + @"> dic = new Dictionary<" + typeList[0] + " , " + _class + @">();");
             builder.AppendLine();
-            builder.AppendLine("        public List<" + _class + @"> list = new List<"+ _class + @">();");
+            builder.AppendLine("        public List<" + _class + @"> list = new List<" + _class + @">();");
             builder.AppendLine();
 
-            builder.AppendLine("        public static "+_class+" Get("+ typeList[0]+" id)");
+            builder.AppendLine("        public static " + _class + " Get(" + typeList[0] + " id)");
             builder.AppendLine("        {");
-            builder.AppendLine("            "+ _class+" temp;");
-            builder.AppendLine("            Instance."+"dic.TryGetValue(id, out temp);");
+            builder.AppendLine("            " + _class + " temp;");
+            builder.AppendLine("            Instance." + "dic.TryGetValue(id, out temp);");
             builder.AppendLine("            return temp;");
             builder.AppendLine("        }");
 
             builder.AppendLine();
-            builder.AppendLine("        public void StartAnalysis()");
+            builder.AppendLine("        public void Init()");
             builder.AppendLine("        {");
-            builder.AppendLine(@"            TextAsset textAsset  = HFResourceManager.Instance.GetAsset<TextAsset>(" + "\"" + GameConst.ConfigAssetbundleName + "\""+"," + "\"" + _class + "\"" + ");");
+            builder.AppendLine(@"            TextAsset textAsset  = HFResourceManager.Instance.GetAsset<TextAsset>(" + "\"" + GameConst.ConfigAssetbundleName + "\"" + "," + "\"" + _class + "\"" + ");");
             builder.AppendLine(@"            StringReader reader = new StringReader(textAsset.text);");
             builder.AppendLine(@"            reader.ReadLine();");
             builder.AppendLine(@"            reader.ReadLine();");
@@ -211,7 +213,7 @@ namespace HFFramework
             builder.AppendLine(@"                string[] strs = row.Split(split, StringSplitOptions.None);");
             builder.AppendLine(@"                if (strs.Length > 0)");
             builder.AppendLine(@"                {");
-            builder.AppendLine(@"                    "+_class+ " config "+ "= new "+ _class+"();");
+            builder.AppendLine(@"                    " + _class + " config " + "= new " + _class + "();");
             builder.AppendLine(@"                    string[] air = null;");
             for (int i = 0; i < _column; i++)
             {
@@ -228,7 +230,7 @@ namespace HFFramework
                     switch (m_type)
                     {
                         case "string":
-                            builder.AppendLine(@"                       config." + m_property+ ".Add(air[x]);");
+                            builder.AppendLine(@"                       config." + m_property + ".Add(air[x]);");
                             break;
                         case "int":
                             builder.AppendLine(@"                       int ite = 0;");
@@ -272,11 +274,17 @@ namespace HFFramework
                 }
             }
 
-            builder.AppendLine(@"                    dic.Add(config."+ propertyList[0]+ ", config );" );
+            builder.AppendLine(@"                    dic.Add(config." + propertyList[0] + ", config );");
             builder.AppendLine(@"                    list.Add(config);");
             builder.AppendLine(@"               }");
             builder.AppendLine(@"           }");
             builder.AppendLine(@"           reader.Close();");
+            builder.AppendLine(@"           Type type = GetType();");
+            builder.AppendLine("           MethodInfo method = type.GetMethod( \"PostProcessing\");");
+            builder.AppendLine(@"           if (method!=null)");
+            builder.AppendLine(@"           {");
+            builder.AppendLine(@"               method.Invoke(this,null);");
+            builder.AppendLine(@"           }");
             builder.AppendLine(@"        }");
             builder.AppendLine();
             builder.AppendLine(@"        public void Dispose()");
@@ -290,7 +298,7 @@ namespace HFFramework
             builder.AppendLine(@"    }");
             builder.AppendLine(@"}");
 
-            string path = Application.dataPath + "/" + GameConst.ConfigOutputPath+"/"+_class+".cs"; 
+            string path = Application.dataPath + "/" + GameConst.ConfigOutputPath + "/" + _class + ".cs";
             byte[] b = Encoding.UTF8.GetBytes(builder.ToString());
             using (FileStream f = new FileStream(path, FileMode.Create))
             {
@@ -314,7 +322,7 @@ namespace HFFramework
             builder.AppendLine(@"namespace " + _namespace);
             builder.AppendLine("{ ");
             builder.AppendLine(@"    [System.Serializable]");
-            builder.AppendLine(@"    public class "+ _manager);
+            builder.AppendLine(@"    public class " + _manager);
             builder.AppendLine("    { ");
             builder.AppendLine("        " + @"private static " + _manager + " instance;");
             builder.AppendLine("        " + @"public static " + _manager + " Instance");
@@ -341,10 +349,10 @@ namespace HFFramework
                 string _class = temp1.ToUpper() + temp2;
                 string _table = "Config" + _class;
 
-                builder.AppendLine("            "+_table+".Instance.StartAnalysis();");
+                builder.AppendLine("            " + _table + ".Instance.Init();");
             }
 
-            builder.AppendLine("            " + "HFResourceManager.Instance.UnloadAssetBundle("+"\""+ GameConst.ConfigAssetbundleName + "\""+", true); ");
+            builder.AppendLine("            " + "HFResourceManager.Instance.UnloadAssetBundle(" + "\"" + GameConst.ConfigAssetbundleName + "\"" + ", true); ");
             builder.AppendLine("            GC.Collect();");
 
             builder.AppendLine("        } ");

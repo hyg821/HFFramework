@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System;
 using HFFramework;
+using System.Reflection;
 
 namespace Config
 { 
@@ -30,7 +31,7 @@ namespace Config
     }
 
     [System.Serializable]
-    public class ConfigAddress
+    public partial class ConfigAddress
     { 
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
@@ -59,7 +60,7 @@ namespace Config
             return temp;
         }
 
-        public void StartAnalysis()
+        public void Init()
         {
             TextAsset textAsset  = HFResourceManager.Instance.GetAsset<TextAsset>("Config","Address");
             StringReader reader = new StringReader(textAsset.text);
@@ -88,6 +89,12 @@ namespace Config
                }
            }
            reader.Close();
+           Type type = GetType();
+           MethodInfo method = type.GetMethod( "PostProcessing");
+           if (method!=null)
+           {
+               method.Invoke(this,null);
+           }
         }
 
         public void Dispose()

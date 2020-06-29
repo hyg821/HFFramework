@@ -26,9 +26,9 @@ namespace Config
 
         public void Init()
         { 
-            ConfigAddress.Instance.StartAnalysis();
-            ConfigMan.Instance.StartAnalysis();
-            ConfigUI.Instance.StartAnalysis();
+            ConfigAddress.Instance.Init();
+            ConfigMan.Instance.Init();
+            ConfigUI.Instance.Init();
             HFResourceManager.Instance.UnloadAssetBundle("Config", true); 
             GC.Collect();
         } 

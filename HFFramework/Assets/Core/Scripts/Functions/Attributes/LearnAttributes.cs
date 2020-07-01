@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace HFFramework
+namespace HFFramework.Functions
 {
     public class LearnAttributes : MonoBehaviour
     {

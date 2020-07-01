@@ -207,8 +207,6 @@
     <Compile Include="Assets\Core\Scripts\Functions\Learn\NameOf.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\Learn\T2Type.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\PinchZoom.cs" />
-    <Compile Include="Assets\Core\Scripts\Functions\SafeArea\Demos\SafeAreaDemo.cs" />
-    <Compile Include="Assets\Core\Scripts\Functions\SafeArea\SafeArea.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\SlicedProgress.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\TextNoBreakingSpace.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\UIFollowTouch.cs" />
@@ -1228,6 +1226,8 @@
     <Compile Include="Assets\OtherPlugins\EnhancedScroller v2\Plugins\EnhancedScrollerCellView.cs" />
     <Compile Include="Assets\OtherPlugins\EnhancedScroller v2\Plugins\IEnhancedScrollerDelegate.cs" />
     <Compile Include="Assets\OtherPlugins\EnhancedScroller v2\Plugins\SmallList.cs" />
+    <Compile Include="Assets\OtherPlugins\SafeArea\Demos\SafeAreaDemo.cs" />
+    <Compile Include="Assets\OtherPlugins\SafeArea\SafeArea.cs" />
     <Compile Include="Assets\OtherPlugins\TrueSyncMath\Fix64.cs" />
     <Compile Include="Assets\OtherPlugins\TrueSyncMath\Fix64AcosLut.cs" />
     <Compile Include="Assets\OtherPlugins\TrueSyncMath\Fix64SinLut.cs" />
@@ -1243,7 +1243,7 @@
     <None Include="Assets\OtherPlugins\Best HTTP (Pro)\BestHTTP\SecureProtocol\License.txt" />
     <None Include="Assets\Core\Shader\UIMask.shader" />
     <None Include="Assets\OtherPlugins\Best HTTP (Pro)\link_android_subset.xml" />
-    <None Include="Assets\Core\Scripts\Functions\SafeArea\Demos\SafeAreaDemo.txt" />
+    <None Include="Assets\OtherPlugins\SafeArea\Demos\SafeAreaDemo.txt" />
     <None Include="Assets\Core\Shader\UIGrayETCDefault.shader" />
     <None Include="Assets\OtherPlugins\Best HTTP (Pro)\ReleaseNotes.txt" />
     <None Include="Assets\Core\Shader\UIShine.shader" />

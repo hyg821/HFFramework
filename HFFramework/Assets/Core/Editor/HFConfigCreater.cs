@@ -7,7 +7,7 @@ using System.Text;
 using System;
 using System.Reflection;
 
-namespace HFFramework
+namespace HFFramework.Editor
 {
     public class HFConfigCreater
     {

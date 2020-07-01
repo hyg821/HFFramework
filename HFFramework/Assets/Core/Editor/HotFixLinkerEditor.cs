@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.SceneManagement;
 using UnityEditor.SceneManagement;
 
-namespace HFFramework
+namespace HFFramework.Editor
 {
     [CustomEditor(typeof(HotFixLinker))]
-    public class HotFixLinkerEditor : Editor
+    public class HotFixLinkerEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

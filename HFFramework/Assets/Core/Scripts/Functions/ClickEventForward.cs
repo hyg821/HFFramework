@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace HFFramework
+namespace HFFramework.Functions
 {
     /// <summary>
     ///  这个类 的主要作用是 点击事件转发 可以做点击事件渗透 比如一个按钮挡住了别的按钮

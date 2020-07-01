@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HFFramework
+namespace HFFramework.Editor
 {
     public class AssetsBundleMD5
     {
@@ -14,13 +14,5 @@ namespace HFFramework
         /// 
         /// </summary>
         public string value { get; set; }
-    }
-
-    public class MD5Diff
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<AssetsBundleMD5> AssetsBundleMD5List { get; set; }
     }
 }

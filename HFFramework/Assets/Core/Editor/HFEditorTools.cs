@@ -10,7 +10,7 @@ using UnityEditor.ProjectWindowCallback;
 using UnityEngine.U2D;
 using UnityEditor.U2D;
 
-namespace HFFramework
+namespace HFFramework.Editor
 {
     [InitializeOnLoad]
     public class HFEditorTools

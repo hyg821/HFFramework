@@ -2,23 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ViewConfig : MonoBehaviour
+namespace HFFramework.Functions
 {
-    public Transform startPosition;
-    public float xRoation;
-    public Box box;
-    private void Awake()
+    public class ViewConfig : MonoBehaviour
     {
-        box = GetComponent<Box>();
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (startPosition!=null)
+        public Transform startPosition;
+        public float xRoation;
+        public Box box;
+        private void Awake()
         {
-            Gizmos.color = Color.black;
-            Gizmos.DrawCube(startPosition.transform.position+new Vector3(0,10,0), Vector3.one);
+            box = GetComponent<Box>();
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (startPosition != null)
+            {
+                Gizmos.color = Color.black;
+                Gizmos.DrawCube(startPosition.transform.position + new Vector3(0, 10, 0), Vector3.one);
+            }
         }
     }
-
 }
+
+

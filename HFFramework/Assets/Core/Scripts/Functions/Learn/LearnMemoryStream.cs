@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
-namespace HFFramework
+namespace HFFramework.Functions
 {
     public class LearnMemoryStream : MonoBehaviour
     {

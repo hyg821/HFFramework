@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading;
 using System;
 
-namespace HFFramework
+namespace HFFramework.Functions
 {
     public class LearnCoroutine : MonoBehaviour
     {

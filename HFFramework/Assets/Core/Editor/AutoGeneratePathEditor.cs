@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.SceneManagement;
 using UnityEditor.SceneManagement;
 
-namespace HFFramework
+namespace HFFramework.Editor
 {
     [CustomEditor(typeof(AutoGeneratePath))]
-    public class AutoGeneratePathEditor : Editor
+    public class AutoGeneratePathEditor : UnityEditor.Editor
     {
         public int selectIndex = 0;
 

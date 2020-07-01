@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace HFFramework
+namespace HFFramework.Functions
 {
     [ExecuteInEditMode]
     public class SlicedProgress : MonoBehaviour

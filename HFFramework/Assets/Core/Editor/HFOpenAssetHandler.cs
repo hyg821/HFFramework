@@ -4,7 +4,7 @@ using UnityEditor.Callbacks;
 using System.IO;
 using System;
 
-namespace HFFramework
+namespace HFFramework.Editor
 {
     public class HFOpenAssetHandler
     {

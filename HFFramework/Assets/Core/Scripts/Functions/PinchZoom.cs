@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace HFFramework
+namespace HFFramework.Functions
 {
     public class PinchZoom : MonoBehaviour
     {

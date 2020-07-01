@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Core\Editor\AssetsBundleMD5.cs" />
     <Compile Include="Assets\Core\Editor\AutoGeneratePathEditor.cs" />
     <Compile Include="Assets\Core\Editor\FindReferences.cs" />
     <Compile Include="Assets\Core\Editor\HFAssetPostprocessor.cs" />
@@ -68,7 +69,7 @@
     <Compile Include="Assets\Core\Editor\HFEditorTools.cs" />
     <Compile Include="Assets\Core\Editor\HFOpenAssetHandler.cs" />
     <Compile Include="Assets\Core\Editor\HotFixLinkerEditor.cs" />
-    <Compile Include="Assets\Core\Editor\JsonModel\JsonModel.cs" />
+    <Compile Include="Assets\Core\Editor\MD5Diff.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\Editor\ILRuntimeCLRBinding.cs" />
     <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\ArrayTools.cs" />
     <Compile Include="Assets\OtherPlugins\MemoryProfiler\Editor\BytesAndOffset.cs" />

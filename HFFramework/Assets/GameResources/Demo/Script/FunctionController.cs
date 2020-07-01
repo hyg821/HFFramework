@@ -19,6 +19,7 @@ using System.Threading;
 using TMPro;
 using UniRx.Async;
 using System.Runtime.CompilerServices;
+using UnityEngine.Profiling;
 
 namespace HFFramework.Demo
 {

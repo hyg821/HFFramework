@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HFFramework
+namespace HFFramework.Functions
 {
     public class LearnTree : MonoBehaviour
     {

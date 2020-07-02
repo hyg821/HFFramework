@@ -244,6 +244,16 @@ namespace HFFramework.Editor
                 AssetDatabase.Refresh();
             }
 
+            //从sh 传递过来的环境变量 功能开关
+            foreach (string arg in System.Environment.GetCommandLineArgs())
+            {
+                Debug.Log(arg);
+                if (arg.Contains("platform"))
+                {
+
+                }
+            }
+
             //生成图集
             PackingAtlas();
             //更新配置

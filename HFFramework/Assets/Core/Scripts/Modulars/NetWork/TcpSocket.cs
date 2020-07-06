@@ -36,6 +36,11 @@ namespace HFFramework
         public bool isReadHeader = false;
 
         /// <summary>
+        /// 总长度
+        /// </summary>
+        public int length = int.MinValue;
+
+        /// <summary>
         ///  消息体长度
         /// </summary>
         public int bodyLength = int.MinValue;
@@ -403,7 +408,7 @@ namespace HFFramework
                     //binaryReader 读取 MSG_ALL_IDE_LEN长度的字节
                     byte[] temp = binaryReader.ReadBytes(MSG_ALL_IDE_LEN);
                     //通过获得的字节 转换成 数据包的总长度
-                    int messageLength = ExtensionMethod.BitConverterToInt32(temp, 0);
+                    currentPackage.length = ExtensionMethod.BitConverterToInt32(temp, 0);
 
                     //binaryReader 读取 MSG_TYPE_LEN 长度的字节
                     temp = binaryReader.ReadBytes(MSG_TYPE_LEN);
@@ -412,14 +417,14 @@ namespace HFFramework
 
                     //binaryReader 读取 MSG_TYPE_LEN 长度的字节
                     temp = binaryReader.ReadBytes(MSG_RPCID_LEN);
-                    //通过获得的字节 转换成 消息类型
+                    //通过获得的字节 转换成 rpc id
                     currentPackage.rpcID = ExtensionMethod.BitConverterToInt32(temp, 0);
 
                     //重置memoryStream 索引为0
                     readStream.Position = 0;
 
                     //再减去数据头的长度得到 数据体的长度
-                    currentPackage.bodyLength = messageLength - MSG_HEAD_LEN;
+                    currentPackage.bodyLength = currentPackage.length - MSG_HEAD_LEN;
 
                     //设置已经读取 消息头标记
                     currentPackage.isReadHeader = true;
@@ -446,7 +451,7 @@ namespace HFFramework
                     //从 memoryStream 读取 数据体长度的 数据
                     currentPackage.msgBytes = binaryReader.ReadBytes(currentPackage.bodyLength);
                     //重置memoryStream 索引为0
-                    binaryReader.BaseStream.Position = 0;
+                    readStream.Position = 0;
 
                     //如果读取了数据体  消息类型
                     if (currentPackage.bodyLength != int.MinValue && currentPackage.opcode != int.MinValue)

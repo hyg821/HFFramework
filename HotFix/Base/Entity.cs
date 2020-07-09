@@ -587,7 +587,6 @@ namespace HotFix
         ///  entity  持有---> gameObject  挂载----> HotFixLinker -- 回调
         ///       |__________________________________________________________|
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         public void AddLinker<T>() where T : HotFixLinker
         {
             T t = gameObject.GetComponent<T>();

@@ -163,7 +163,7 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  脚本被生成重载方法
+        ///  初始化
         /// </summary>
         public virtual void Awake()
         {

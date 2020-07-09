@@ -19,6 +19,7 @@ namespace HFFramework
         ///  最普通的打印
         /// </summary>
         /// <param name="str"></param>
+        [System.Diagnostics.Conditional(GameConst.DebugDefineSymbol)]
         public static void L(object obj)
         {
             if (IsOpenLog)
@@ -30,6 +31,7 @@ namespace HFFramework
         /// <summary>
         ///  一个默认带颜色的打印
         /// </summary>
+        [System.Diagnostics.Conditional(GameConst.DebugDefineSymbol)]
         public static void C(object obj)
         {
             if (IsOpenLog)
@@ -58,6 +60,7 @@ namespace HFFramework
         ///  报错打印
         /// </summary>
         /// <param name="str"></param>
+        [System.Diagnostics.Conditional(GameConst.DebugDefineSymbol)]
         public static void E(object obj)
         {
             if (IsOpenLog == true)

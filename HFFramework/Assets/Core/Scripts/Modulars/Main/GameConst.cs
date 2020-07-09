@@ -6,6 +6,11 @@ namespace HFFramework
 {
     public class GameConst : MonoBehaviour
     {
+        public const string DebugDefineSymbol = "HF_DEBUG";
+        public const string ReleaseDefineSymbol = "HF_RELEASE";
+        public const string ILRuntimeDefineSymbol = "DISABLE_ILRUNTIME_DEBUG";
+        
+
         /// <summary>
         /// 热更新dll名称
         /// </summary>

@@ -37,6 +37,8 @@ namespace HFFramework.Editor
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, identifier);
             PlayerSettings.bundleVersion = "1.0.0";
 
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, GameConst.DebugDefineSymbol+";"+GameConst.ILRuntimeDefineSymbol);
+
             //垂直同步关闭
             QualitySettings.vSyncCount = 0;
 
@@ -243,6 +245,8 @@ namespace HFFramework.Editor
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
                 AssetDatabase.Refresh();
             }
+
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, GameConst.ReleaseDefineSymbol);
 
             //从sh 传递过来的环境变量 功能开关
             foreach (string arg in System.Environment.GetCommandLineArgs())

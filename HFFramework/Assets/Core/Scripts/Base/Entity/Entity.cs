@@ -34,6 +34,11 @@ namespace HFFramework
         public long instanceID;
 
         /// <summary>
+        /// 名字
+        /// </summary>
+        public string name;
+
+        /// <summary>
         /// 是否异步创建
         /// </summary>
         public bool isAsync = false;
@@ -53,7 +58,22 @@ namespace HFFramework
         /// </summary>
         public Transform transform;
 
+        /// <summary>
+        ///  父element
+        /// </summary>
+        public Entity parent;
+
+        /// <summary>
+        /// 自定义数据
+        /// </summary>
+        public object userData;
+
+        private bool isActive;
+
         private List<Entity> m_compoments;
+
+        private List<Entity> m_childs;
+
         /// <summary>
         ///  本体entity的帮助类
         /// </summary>
@@ -69,12 +89,6 @@ namespace HFFramework
             }
         }
 
-        /// <summary>
-        ///  父element
-        /// </summary>
-        public Entity parent;
-
-        private List<Entity> m_childs;
         /// <summary>
         /// 子实体 通常是 有从属关系并且有显示意义的子实体存在的地方
         /// </summary>
@@ -106,7 +120,6 @@ namespace HFFramework
             }
         }
 
-        private bool isActive;
         public virtual bool IsActive
         {
             set

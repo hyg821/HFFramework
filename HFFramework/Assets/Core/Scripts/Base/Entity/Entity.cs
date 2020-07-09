@@ -483,7 +483,7 @@ namespace HFFramework
         /// </summary>
         /// <param name="messageType"></param>
         /// <param name="msg"></param>
-        public async UniTask<T> SendRpc<T>(int opcode, IMessage msg) where T:IMessage,new()
+        public async UniTask<T> RpcCall<T>(int opcode, IMessage msg) where T:IMessage,new()
         {
             HFSocket socket = null;
             byte[] bytes = await socket.Call(opcode, msg.ToByteArray());

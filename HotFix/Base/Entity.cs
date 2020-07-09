@@ -584,7 +584,8 @@ namespace HotFix
         }
 
         /// <summary>
-        ///  添加 Monobehivor -> HotFix.Entity 的 linker
+        ///  entity  持有---> gameObject  挂载----> HotFixLinker -- 回调
+        ///    |___________________________________________________________|
         /// </summary>
         /// <typeparam name="T"></typeparam>
         public void AddLinker<T>() where T : HotFixLinker

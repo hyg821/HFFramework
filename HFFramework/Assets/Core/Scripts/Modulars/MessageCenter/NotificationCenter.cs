@@ -112,6 +112,11 @@ namespace HFFramework
             }
         }
 
+        public void RemoveObserver(ulong key)
+        {
+            messagePool.Remove(key);
+        }
+
         public void Clear()
         {
             messagePool.Clear();

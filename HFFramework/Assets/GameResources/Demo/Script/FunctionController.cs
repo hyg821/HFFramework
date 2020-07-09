@@ -53,6 +53,8 @@ namespace HFFramework.Demo
             fun0.onClick.AddListener(Entity创建);
             fun1.onClick.AddListener(Entity作为控制器);
             fun2.onClick.AddListener(Entity数据显示分离);
+
+            HFLog.C("aaaaaaaaaaaaaa");
         }
 
         public void Entity创建()
@@ -98,9 +100,10 @@ namespace HFFramework.Demo
         {
             base.OnShowComplete();
             HFLog.C("页面完全显示");
-            HFFramework.AppDomainManager.Instance.ExcuteToHotFix("hotfixdll", "HotFix");
+            HFFramework.AppDomainManager.Instance.ExcuteHotFix("hotfixdll", "HotFix");
         }
 
+        
         public override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);

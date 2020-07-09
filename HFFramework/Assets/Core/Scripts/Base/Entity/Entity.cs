@@ -74,6 +74,8 @@ namespace HFFramework
 
         private List<Entity> m_childs;
 
+        private Dictionary<ulong, object> m_messageTypeDic;
+
         /// <summary>
         ///  本体entity的帮助类
         /// </summary>
@@ -104,7 +106,6 @@ namespace HFFramework
             }
         }
 
-        private Dictionary<ulong, object> m_messageTypeDic;
         /// <summary>
         ///  注册的消息 字典   destory会自动销毁
         /// </summary>

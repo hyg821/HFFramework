@@ -14,7 +14,7 @@ namespace HFFramework
             await base.OnEnter(param);
             //初始化配置文件
             HFConfigManager.Instance.Init();
-            await UIManager.Instance.Open<FunctionController>(); 
+            await UIManager.Instance.Open<FunctionController>(null,false,true); 
         }
 
         public override void OnStay()

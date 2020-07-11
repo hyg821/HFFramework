@@ -487,9 +487,16 @@ namespace HFFramework
         {
             HFSocket socket = null;
             byte[] bytes = await socket.Call(opcode, msg.ToByteArray());
-            T t = new T();
-            t.MergeFrom(bytes);
-            return t;
+            if (!IsDisposed)
+            {
+                T t = new T();
+                t.MergeFrom(bytes);
+                return t;
+            }
+            else
+            {
+                return await UniTask.FromException<T>(new Exception());
+            }
         }
 
         /// <summary>

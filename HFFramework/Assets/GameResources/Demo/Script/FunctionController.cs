@@ -102,8 +102,7 @@ namespace HFFramework.Demo
             HFLog.C("页面完全显示");
             HFFramework.AppDomainManager.Instance.ExcuteHotFix("hotfixdll", "HotFix");
         }
-
-        
+    
         public override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);

@@ -476,7 +476,7 @@ namespace HFFramework
         /// <param name="progressCallback"></param>
         public void LoadAssetsBundlesFromFileAsync(string[] list, Action<float> progressCallback)
         {
-            m_LoadAssetsBundlesFromFileAsync(list, progressCallback);
+            m_LoadAssetsBundlesFromFileAsync(list, progressCallback).Forget();
         }
 
         private async UniTaskVoid m_LoadAssetsBundlesFromFileAsync(string[] list, Action<float> progressCallback)

@@ -106,7 +106,7 @@ namespace HFFramework.Editor
         [MenuItem("游戏辅助工具/资源设置/构建 所有 AssetBundles")]
         static void BuildAllAssetBundles()
         {
-            ReNameDLL();
+            RenameDLL();
 
             PackingAtlas();
 
@@ -148,10 +148,11 @@ namespace HFFramework.Editor
         }
 
         [MenuItem("游戏辅助工具/资源设置/构建 单个Assetbundle")]
-        static void BuildSomeAssetBundles()
+        static void BuildSpecialAssetBundles()
         {
             List<AssetBundleBuild> list = new List<AssetBundleBuild>();
             //需要build 什么就写在这
+            string path = "";
             string[] bundleNames = new string[] { };
             for (int i = 0; i < bundleNames.Length; i++)
             {
@@ -161,15 +162,12 @@ namespace HFFramework.Editor
                 list.Add(build);
             }
 
-            BuildSomeAssetBundles(Application.dataPath + "/StreamingAssets/SimpleAssetBundles", list.ToArray());
-
-            File.Delete(Application.dataPath + "/StreamingAssets/AssetBundlesMiniGame/" + "AssetBundlesMiniGame");
-            File.Delete(Application.dataPath + "/StreamingAssets/AssetBundlesMiniGame/" + "AssetBundlesMiniGame.manifest");
+            BuildSpecialAssetBundles(Application.dataPath + "/"+ path, list.ToArray());
 
             AssetDatabase.Refresh();
         }
 
-        static void BuildSomeAssetBundles(string outPath, AssetBundleBuild[] builds)
+        static void BuildSpecialAssetBundles(string outPath, AssetBundleBuild[] builds)
         {
             if (!Directory.Exists(outPath))
             {
@@ -187,12 +185,59 @@ namespace HFFramework.Editor
         {
             //ClearAssetBundlesName();
             string resourcesPath = Application.dataPath + "/GameResources";
-            ReNameDLL();
+            RenameDLL();
             SetAssetConfig(resourcesPath,true,false);
         }
 
+        [MenuItem("游戏辅助工具/资源设置/检测循环引用")]
+        public static void CheckCircularReference()
+        {
+            string path = Application.streamingAssetsPath + "/" + "AssetBundles"+"/" + "AssetBundles";
+            AssetBundle bundle = AssetBundle.LoadFromFile(path);
+            AssetBundleManifest manifest = (AssetBundleManifest)bundle.LoadAsset("AssetBundleManifest");
+            string[] names = manifest.GetAllAssetBundles();
+            foreach (var item in names)
+            {
+                CircularReferenceSet set = new CircularReferenceSet();
+                set.name = item;
+                m_CheckCircularReference(set, manifest);
+            }
+            bundle.Unload(true);
+        }
+
+        private static void m_CheckCircularReference(CircularReferenceSet set, AssetBundleManifest manifest)
+        {
+            HFLog.C("--------------------------------------");
+            HFLog.C("开始检测 " + set.name);
+            string[] str = manifest.GetAllDependencies(set.name);
+            foreach (var item in str)
+            {
+                m_CheckCircularReference(set,item, manifest);
+            }
+            HFLog.C("检测完成√ " + set.name);
+        }
+
+        private static void m_CheckCircularReference(CircularReferenceSet set, string name, AssetBundleManifest manifest)
+        {
+            if (set.Contains(name))
+            {
+                HFLog.E("循环引用 " + set.name + "   " + name);
+                return;
+            }
+
+            HFLog.C("检测中 " + set.name  + "  "+ name);
+
+            set.Add(name);
+
+            string[] str = manifest.GetAllDependencies(name);
+            foreach (var item in str)
+            {
+                m_CheckCircularReference(set,item, manifest);
+            }
+        }
+
         [MenuItem("游戏辅助工具/资源设置/设置DLL到具体资源目录")]
-        public static void ReNameDLL()
+        public static void RenameDLL()
         {
             string str = "/GameResources/DLL" + GameConst.AssetFolderIde + "/";
             string target = GameConst.HotFixDLLName + ".dll";
@@ -531,6 +576,22 @@ namespace HFFramework.Editor
                 }
             }
             return path;
+        }
+    }
+
+    public class CircularReferenceSet
+    {
+        public string name;
+        public HashSet<string> set = new HashSet<string>();
+
+        public void Add(string str)
+        {
+            set.Add(str);
+        }
+
+        public bool Contains(string str)
+        {
+            return set.Contains(str);
         }
     }
 

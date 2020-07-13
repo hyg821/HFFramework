@@ -1,14 +1,48 @@
-﻿using System.Collections;
+﻿using System;
+using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace HFFramework
 {
-    /// <summary>
-    /// 封装一些实用功能
-    /// </summary>
-    public class APIHelper
+    public static class Extension
     {
+        public static void SetWebImage(this Image image, string url)
+        {
+            WebImageManager.DownLoadImage(image, url);
+        }
+
+        /// <summary>
+        ///  自动区分大小端
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static byte[] BitConverterGetBytes(int value)
+        {
+            byte[] temp = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(temp);
+            }
+            return temp;
+        }
+
+        /// <summary>
+        ///  BitConverter 判断大小端 自动转换
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="startIndex"></param>
+        /// <returns></returns>
+        public static int BitConverterToInt32(byte[] value, int startIndex)
+        {
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(value);
+            }
+            return BitConverter.ToInt32(value, startIndex);
+        }
+
         /// <summary>
         /// 清理 Entity 数组
         /// </summary>
@@ -16,7 +50,7 @@ namespace HFFramework
         /// <param name="list"></param>
         public static void Clear<T>(List<T> list) where T : Entity
         {
-            if (list!=null)
+            if (list != null)
             {
                 for (int i = 0; i < list.Count; i++)
                 {
@@ -32,7 +66,7 @@ namespace HFFramework
         /// <typeparam name="K"></typeparam>
         /// <typeparam name="V"></typeparam>
         /// <param name="dictionary"></param>
-        public static void Clear<K,V>(Dictionary<K,V> dictionary) where V : Entity
+        public static void Clear<K, V>(Dictionary<K, V> dictionary) where V : Entity
         {
             if (dictionary != null)
             {
@@ -64,4 +98,3 @@ namespace HFFramework
         }
     }
 }
-

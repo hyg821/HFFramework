@@ -408,17 +408,17 @@ namespace HFFramework
                     //binaryReader 读取 MSG_ALL_IDE_LEN长度的字节
                     byte[] temp = binaryReader.ReadBytes(MSG_ALL_IDE_LEN);
                     //通过获得的字节 转换成 数据包的总长度
-                    currentPackage.length = ExtensionMethod.BitConverterToInt32(temp, 0);
+                    currentPackage.length = Extension.BitConverterToInt32(temp, 0);
 
                     //binaryReader 读取 MSG_TYPE_LEN 长度的字节
                     temp = binaryReader.ReadBytes(MSG_TYPE_LEN);
                     //通过获得的字节 转换成 消息类型
-                    currentPackage.opcode = ExtensionMethod.BitConverterToInt32(temp, 0);
+                    currentPackage.opcode = Extension.BitConverterToInt32(temp, 0);
 
                     //binaryReader 读取 MSG_TYPE_LEN 长度的字节
                     temp = binaryReader.ReadBytes(MSG_RPCID_LEN);
                     //通过获得的字节 转换成 rpc id
-                    currentPackage.rpcID = ExtensionMethod.BitConverterToInt32(temp, 0);
+                    currentPackage.rpcID = Extension.BitConverterToInt32(temp, 0);
 
                     //重置memoryStream 索引为0
                     readStream.Position = 0;
@@ -474,15 +474,15 @@ namespace HFFramework
             if (socket.Connected)
             {
                 //写入 消息总长度 = 消息体长度+ 定义的消息头长度
-                byte[] temp = ExtensionMethod.BitConverterGetBytes(msg.Length + MSG_HEAD_LEN);
+                byte[] temp = Extension.BitConverterGetBytes(msg.Length + MSG_HEAD_LEN);
                 binaryWriter.Write(temp);
 
                 //写入消息号 定义的长度 一个int 4字节
-                temp = ExtensionMethod.BitConverterGetBytes(opcode);
+                temp = Extension.BitConverterGetBytes(opcode);
                 binaryWriter.Write(temp);
 
                 //写入opcode 定义的长度 一个int 4字节
-                temp = ExtensionMethod.BitConverterGetBytes(rpcID);
+                temp = Extension.BitConverterGetBytes(rpcID);
                 binaryWriter.Write(temp);
 
                 //写入消息体

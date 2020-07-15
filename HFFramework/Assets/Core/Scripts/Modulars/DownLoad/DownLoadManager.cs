@@ -29,7 +29,7 @@ namespace HFFramework
 
         public int maxDownLoaderCount = 0;
 
-        private List<DownLoader> cache = new List<DownLoader>();
+        private List<DownLoader> downLoaders = new List<DownLoader>();
 
         public void Awake()
         {
@@ -46,7 +46,7 @@ namespace HFFramework
         public  DownLoader GetDownLoader()
         {
             DownLoader temp = null;
-            if (Instance.cache.Count < maxDownLoaderCount)
+            if (Instance.downLoaders.Count < maxDownLoaderCount)
             {
                 temp = new DownLoader();
             }
@@ -55,10 +55,11 @@ namespace HFFramework
 
         public void DestroyManager()
         {
-            foreach (var item in cache)
+            foreach (var item in downLoaders)
             {
                 item.Dispose();
             }
+            downLoaders.Clear();
             Instance = null;
         }
     }
@@ -150,6 +151,7 @@ namespace HFFramework
                 DownLoadTask task = queue.Dequeue();
                 task.Dispose();
             }
+            queue = null;
         }
     }
 
@@ -273,6 +275,7 @@ namespace HFFramework
                 request.Dispose();
                 request = null;
             }
+            loc = null;
         }
 
 

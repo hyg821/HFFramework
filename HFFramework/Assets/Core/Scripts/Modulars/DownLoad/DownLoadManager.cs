@@ -192,11 +192,12 @@ namespace HFFramework
 
             if (File.Exists(path.diskPath))
             {
-                HFLog.L(name + "文件存在删除  " + path.diskPath);
                 File.Delete(path.diskPath);
             }
 
-            HFLog.L(name + "开始下载  " + path.diskPath);
+            HFLog.L(name + " 开始下载  ");
+            HFLog.L(name + " path.url  " + path.url);
+            HFLog.L(name + " path.diskPath  " + path.diskPath);
 
             request = new HTTPRequest(new Uri(path.url), OnRequest);
             request.OnProgress = OnUploadProgress;

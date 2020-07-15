@@ -44,6 +44,8 @@ namespace HFFramework
 
                 GameFactory.Create<WebImageManager>(true);
 
+                GameFactory.Create<DownLoadManager>(true);
+
                 GameFactory.Create<InputManager>(true);
 
                 GameFactory.Create<ObjectPoolManager>(true);
@@ -84,6 +86,7 @@ namespace HFFramework
             UIManager.Instance.DestroyManager();
             WebImageManager.Instance.DestroyManager();
             InputManager.Instance.DestroyManager();
+            DownLoadManager.Instance.DestroyManager();
             ObjectPoolManager.Instance.DestroyManager();
             AppDomainManager.Instance.DestroyManager();
             GameSceneManager.Instance.DestroyManager();

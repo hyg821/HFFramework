@@ -99,6 +99,31 @@ namespace HFFramework.Demo
             base.OnShowComplete();
             HFLog.C("页面完全显示");
             HFFramework.AppDomainManager.Instance.ExcuteHotFix("hotfixdll", "HotFix");
+
+            DownLoader loader = DownLoadManager.Instance.GetDownLoader();
+            UrlDiskPath path = new UrlDiskPath();
+            path.url = "https://xiazai.xiazaiba.com/Soft/C/Chrome_74.0.3729.108_XiaZaiBa.zip";
+            path.diskPath = PathManager.Instance.PersistentDataCustomPath+"/ccc.zip";
+
+            UrlDiskPath path1 = new UrlDiskPath();
+            path1.url = "https://xiazai.xiazaiba.com/Soft/C/Chrome_74.0.3729.108_XiaZaiBa.zip";
+            path1.diskPath = PathManager.Instance.PersistentDataCustomPath + "/ccc1.zip";
+
+            UrlDiskPath path2 = new UrlDiskPath();
+            path2.url = "https://xiazai.xiazaiba.com/Soft/C/Chrome_74.0.3729.108_XiaZaiBa.zip";
+            path2.diskPath = PathManager.Instance.PersistentDataCustomPath + "/ccc2.zip";
+
+            loader.DownLoadFiles(new UrlDiskPath[] { path, path1, path2 }, AAA, BBB);
+        }
+
+        public void AAA(float f)
+        {
+            //HFLog.C("总进度" + f);
+        }
+
+        public void BBB(string s)
+        {
+
         }
     
         public override void OnUpdate(float deltaTime)

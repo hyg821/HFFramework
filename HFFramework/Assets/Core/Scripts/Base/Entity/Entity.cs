@@ -211,8 +211,8 @@ namespace HFFramework
         public async UniTask LoadResourcesAsync(string packageName, string assetName)
         {
             GameObject prefab = await HFResourceManager.Instance.GetPrefabAsync(packageName, assetName);
-            GameObject temp = Instantiate(prefab);
-            SetGameObject(temp);
+            GameObject go = await GameFactory.InstantiateAsync(prefab);
+            SetGameObject(go);
         }
 
         /// <summary>
@@ -224,17 +224,6 @@ namespace HFFramework
             {
                 compoments[i].Start();
             }
-        }
-
-        public GameObject Instantiate(GameObject prefab)
-        {
-            if (prefab != null)
-            {
-                GameObject temp = GameObject.Instantiate(prefab);
-                temp.name = prefab.name;
-                SetGameObject(temp);
-            }
-            return gameObject;
         }
 
         public void SetGameObject(GameObject value)

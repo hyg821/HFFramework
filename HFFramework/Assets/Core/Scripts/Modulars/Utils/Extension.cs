@@ -96,5 +96,15 @@ namespace HFFramework
             }
             return pos;
         }
+
+        public static void SetParent(this GameObject self,GameObject parent, bool worldPositionStays = false)
+        {
+            self.transform.SetParent(parent.transform, worldPositionStays);
+        }
+
+        public static void SetParent(this MonoBehaviour self, GameObject parent, bool worldPositionStays = false)
+        {
+            self.transform.SetParent(parent.transform, worldPositionStays);
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace HFFramework
     /// </summary>
     public class LogCat : MonoBehaviour
     {
-        public const string logFolderName = "Log";
+        public const string logDirectoryName = "Log";
 
         private StringBuilder logStr;
 
@@ -23,16 +23,7 @@ namespace HFFramework
 
         private void Start()
         {
-            bool isNewCreate = GameUtils.CreateFolder(logFolderName);
-            if (isNewCreate==false)
-            {
-                int fileCount = GameUtils.GetFileCountInFolder(logFolderName);
-                if (fileCount > cacheCount)
-                {
-                    GameUtils.DeleteFolder(logFolderName);
-                    GameUtils.CreateFolder(logFolderName);
-                }
-            }
+            GameUtils.CreateDirectory(logDirectoryName);
 
             logStr = new StringBuilder();
             timeTag = "Log/"+DateTime.Now.ToString().Replace(@"/","_");
@@ -40,7 +31,9 @@ namespace HFFramework
             timeTag = timeTag.Replace(@" ", "_");
             timeTag = timeTag.Replace(@":", "_");
             timeTag = timeTag + "Log.txt";
+
             GameUtils.WriteFile(timeTag,Encoding.UTF8.GetBytes(logStr.ToString()));
+
             Application.logMessageReceived += LogMessageReceived;
         }
 

@@ -39,15 +39,13 @@ namespace HFFramework
         /// </summary>
         /// <param name="folderName"> 文件夹名字 </param>
         /// <param name="isRelative"> 是否是相对于RootPath 的相对路径 </param>
-        public static bool CreateDirectory(string directory, bool isRelative= true)
+        public static void CreateDirectory(string directory, bool isRelative= true)
         {
             string path = GetPath(directory, isRelative);
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
-                return true;
             }
-            return false;
         }
 
         /// <summary>

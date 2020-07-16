@@ -14,37 +14,18 @@ namespace HFFramework
     {
         public static GameUtils Instance;
 
+        private static ReaderWriterLockSlim writeLock = new ReaderWriterLockSlim();
+
         public void Awake()
         {
             Instance = this;
-            CreateCustomFilePathFolder();
-        }
-
-        IEnumerator AsyncRead(string path, Action<string> callback)
-        {
-            path = "file:///"+ path;
-            print(path);
-            WWW w = new WWW(path);
-            yield return w;
-            if (string.IsNullOrEmpty(w.error))
-            {
-                if (callback != null)
-                {
-                    callback(w.text);
-                }
-            }
-            else
-            {
-                print("有问题"+w.error);
-            }
-            w.Dispose();
-            w = null;
+            CreateCustomDirectory();
         }
 
         /// <summary>
         ///  创建自定义读写文件基础文件夹
         /// </summary>
-        public void CreateCustomFilePathFolder()
+        public void CreateCustomDirectory()
         {
             HFLog.C("自定义读写根目录 " + PathManager.Instance.PersistentDataCustomPath);
             if (!Directory.Exists(PathManager.Instance.PersistentDataCustomPath))
@@ -58,9 +39,9 @@ namespace HFFramework
         /// </summary>
         /// <param name="folderName"> 文件夹名字 </param>
         /// <param name="isRelative"> 是否是相对于RootPath 的相对路径 </param>
-        public static bool CreateFolder(string folderName, bool isRelative= true)
+        public static bool CreateDirectory(string directory, bool isRelative= true)
         {
-            string path = GetPath(folderName, isRelative);
+            string path = GetPath(directory, isRelative);
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -70,32 +51,18 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  获取一个文件夹下 文件个数
+        ///  删除文件夹
         /// </summary>
         /// <param name="folderName"></param>
         /// <param name="isRelative"></param>
-        /// <returns></returns>
-        public static int GetFileCountInFolder(string folderName, bool isRelative = true)
+        public static void DeleteDirectory(string directory, bool isRelative = true)
         {
-            DirectoryInfo logFolder = new DirectoryInfo(GameUtils.GetPath(folderName, true));
-            return logFolder.GetFiles().Length;
-        }
-
-        /// <summary>
-        ///  删除一个文件
-        /// </summary>
-        /// <param name="folderName"></param>
-        /// <param name="isRelative"></param>
-        public static void DeleteFolder(string folderName, bool isRelative = true)
-        {
-            string path = GetPath(folderName, isRelative);
+            string path = GetPath(directory, isRelative);
             if (Directory.Exists(path))
             {
                 Directory.Delete(path,true);
             }
         }
-
-        private static ReaderWriterLockSlim writeLock = new ReaderWriterLockSlim();
 
         /// <summary>
         ///  写入一个文件 
@@ -103,9 +70,9 @@ namespace HFFramework
         /// <param name="folderName">文件路径</param>
         /// <param name="content">内容</param>
         /// <param name="isRelative"></param>
-        public static void WriteFile(string folderName, byte[] content , FileMode mode = FileMode.Create, bool isRelative = true)
+        public static void WriteFile(string directory, byte[] content , FileMode mode = FileMode.Create, bool isRelative = true)
         {
-            string path = GetPath(folderName, isRelative);         
+            string path = GetPath(directory, isRelative);         
             writeLock.EnterWriteLock();
             using (FileStream f = new FileStream(path, mode))
             {
@@ -116,60 +83,51 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  读取一个文件 同步
+        ///  读取一个文件
         /// </summary>
         /// <param name="folderName"></param>
         /// <param name="isRelative"></param>
         /// <returns></returns>
-        public static string SyncReadFile(string folderName, bool isRelative = true)
+        public static string ReadFile(string directory, bool isRelative = true)
         {
-            string path = GetPath(folderName, isRelative);
+            string path = GetPath(directory, isRelative);
+            string result = string.Empty;
             if (File.Exists(path))
             {
                 using (FileStream f = new FileStream(path, FileMode.Open))
                 {
-                    byte[] heByte = new byte[(int)f.Length];
-                    f.Read(heByte, 0, heByte.Length);
-                    return Encoding.UTF8.GetString(heByte);
+                    byte[] bytes = new byte[(int)f.Length];
+                    f.Read(bytes, 0, bytes.Length);
+                    result = Encoding.UTF8.GetString(bytes);
                 }
             }
-            else
-            {
-                return "";
-            }
+            return result;
         }
 
         /// <summary>
-        ///  异步读取一个文件
+        /// 删除文件
         /// </summary>
         /// <param name="folderName"></param>
         /// <param name="isRelative"></param>
-        /// <returns></returns>
-        public static void AsyncReadFile(string folderName, Action<string> callback, bool isRelative = true)
+        public static void DeleteFile(string directory, bool isRelative = true)
         {
-            string path = GetPath(folderName, isRelative);
-            GameUtils.Instance.StartCoroutine(GameUtils.Instance.AsyncRead(path, callback));
-        }
-
-        public static void DeleteFile(string folderName, bool isRelative = true)
-        {
-            string path = GetPath(folderName, isRelative);
+            string path = GetPath(directory, isRelative);
             if (File.Exists(path))
             {
                 File.Delete(path);
             }
         }
 
-        public static string GetPath(string folderName, bool isRelative)
+        public static string GetPath(string directory, bool isRelative)
         {
             string path = "";
             if (isRelative)
             {
-                path = PathManager.Instance.PersistentDataCustomPath + "/" + folderName;
+                path = PathManager.Instance.PersistentDataCustomPath + "/" + directory;
             }
             else
             {
-                path = folderName;
+                path = directory;
             }
             return path;
         }

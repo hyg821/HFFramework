@@ -577,6 +577,11 @@ namespace HFFramework
                 instanceID = 0;
             }
         }
+
+        public override string ToString()
+        {
+            return "类型 : " + GetType()+ " 实例id : "+instanceID;
+        }
     }
 }
 

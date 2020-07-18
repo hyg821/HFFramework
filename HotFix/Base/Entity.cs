@@ -579,6 +579,11 @@ namespace HotFix
             }
         }
 
+        public override string ToString()
+        {
+            return "类型 : " + GetType() + " 实例id : " + instanceID;
+        }
+
         /// <summary>
         ///  entity  持有---> gameObject  挂载----> HotFixLinker -- 回调
         ///       |__________________________________________________________|

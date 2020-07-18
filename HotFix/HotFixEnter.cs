@@ -6,7 +6,7 @@ public class HotFixEnter
 {
     public static void Main()
     {
-        Debug.Log("热更新代码开始运行 Main()");
+        Debug.Log("热更新代码开始运行 Main()");        
     }
 
     public static void Update()

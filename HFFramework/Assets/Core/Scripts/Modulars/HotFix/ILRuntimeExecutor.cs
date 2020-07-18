@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using ILRuntime.CLR.Method;
+using ILRuntime.CLR.TypeSystem;
 
 namespace HFFramework
 {
@@ -46,11 +47,12 @@ namespace HFFramework
 
         public override void CacheMethod()
         {
-            mainMethod = appdomain.LoadedTypes[MainClassName].GetMethod(mainMethodName, 0);
-            updateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(updateMethodName, 0);
-            fixedUpdateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(fixedUpdateMethodName, 0);
-            lateUpdateMethod = appdomain.LoadedTypes[MainClassName].GetMethod(lateUpdateMethodName, 0);
-            destroyMethod = appdomain.LoadedTypes[MainClassName].GetMethod(destroyMethodName, 0);
+            IType hotFixEnterType = appdomain.LoadedTypes[MainClassName];
+            mainMethod = hotFixEnterType.GetMethod(mainMethodName, 0);
+            updateMethod = hotFixEnterType.GetMethod(updateMethodName, 0);
+            fixedUpdateMethod = hotFixEnterType.GetMethod(fixedUpdateMethodName, 0);
+            lateUpdateMethod = hotFixEnterType.GetMethod(lateUpdateMethodName, 0);
+            destroyMethod = hotFixEnterType.GetMethod(destroyMethodName, 0);
         }
 
         public override void Awake()

@@ -47,12 +47,12 @@ namespace HFFramework
 
         public override void CacheMethod()
         {
-            IType hotFixEnterType = appdomain.LoadedTypes[MainClassName];
-            mainMethod = hotFixEnterType.GetMethod(mainMethodName, 0);
-            updateMethod = hotFixEnterType.GetMethod(updateMethodName, 0);
-            fixedUpdateMethod = hotFixEnterType.GetMethod(fixedUpdateMethodName, 0);
-            lateUpdateMethod = hotFixEnterType.GetMethod(lateUpdateMethodName, 0);
-            destroyMethod = hotFixEnterType.GetMethod(destroyMethodName, 0);
+            IType type = appdomain.LoadedTypes[MainClassName];
+            mainMethod = type.GetMethod(mainMethodName, 0);
+            updateMethod = type.GetMethod(updateMethodName, 0);
+            fixedUpdateMethod = type.GetMethod(fixedUpdateMethodName, 0);
+            lateUpdateMethod = type.GetMethod(lateUpdateMethodName, 0);
+            destroyMethod = type.GetMethod(destroyMethodName, 0);
         }
 
         public override void Awake()

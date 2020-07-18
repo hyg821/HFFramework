@@ -150,6 +150,8 @@
     <Compile Include="Assets\Core\HotFix\ILRuntime\Runtime\Enviorment\AppDomain.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Runtime\Enviorment\CLRRedirections.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Runtime\Enviorment\CrossBindingAdaptor.cs" />
+    <Compile Include="Assets\Core\HotFix\ILRuntime\Runtime\Enviorment\CrossBindingCodeGenerator.cs" />
+    <Compile Include="Assets\Core\HotFix\ILRuntime\Runtime\Enviorment\CrossBindingMethodInfo.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Runtime\Enviorment\DelegateManager.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Runtime\Enviorment\ILContext.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Runtime\Enviorment\InvocationContext.cs" />

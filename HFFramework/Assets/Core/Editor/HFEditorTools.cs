@@ -97,6 +97,7 @@ namespace HFFramework.Editor
 #elif UNITY_ANDROID
             target = BuildTarget.Android;
 #endif
+            HFLog.C("目标平台 " + target);
             return target;
         }
 
@@ -293,6 +294,8 @@ namespace HFFramework.Editor
 
             PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, GameConst.ReleaseDefineSymbol);
 
+            AssetDatabase.Refresh();
+
             //从sh 传递过来的环境变量 功能开关
             foreach (string arg in System.Environment.GetCommandLineArgs())
             {
@@ -307,9 +310,14 @@ namespace HFFramework.Editor
             PackingAtlas();
             //更新配置
             HFConfigCreater.GenerateConfigByAnalysis();
+
             //清除bundleName
             ClearAssetBundlesName();
+
+            AssetDatabase.Refresh();
+
             SetAssetBundleNameAndBuildAllAssetBundles();
+
             string outPath = Path.GetDirectoryName(Application.dataPath).Replace("\\", "/") + "/Release/Android/"+ PlayerSettings.productName + ".apk";
             BuildPipeline.BuildPlayer(GetBuildScenes(), outPath, BuildTarget.Android, BuildOptions.None);
         }

@@ -21,6 +21,24 @@ namespace HFFramework
         ///  本地路径
         /// </summary>
         public string diskPath;
+
+        /// <summary>
+        ///  文件目录
+        /// </summary>
+        public string dirPath;
+
+        private UrlDiskPath()
+        {
+
+        }
+
+        public UrlDiskPath(string url, string diskPath)
+        {
+            this.url = url;
+            this.diskPath = diskPath;
+            this.dirPath = diskPath.Substring(0, diskPath.LastIndexOf("/"));
+            //HFLog.C("dirPath  " + dirPath);
+        }
     }
 
     public class DownLoadManager : MonoBehaviour,IManager
@@ -87,17 +105,23 @@ namespace HFFramework
         public DownLoadTask currentTask;
 
         /// <summary>
+        /// 完成
+        /// </summary>
+        private Action complete;
+
+        /// <summary>
         ///  进度
         /// </summary>
-        public Action<float> progress;
+        private Action<float> progress;
 
         /// <summary>
         ///  失败回调
         /// </summary>
-        public Action<string> error;
+        private Action<string> error;
 
-        public void DownLoadFiles(UrlDiskPath[] paths, Action<float> progress, Action<string> error)
+        public void DownLoadFiles(UrlDiskPath[] paths, Action complete , Action<float> progress, Action<string> error)
         {
+            this.complete = complete;
             this.progress = progress;
             this.error = error;
             this.taskCount = paths.Length;
@@ -113,6 +137,10 @@ namespace HFFramework
         {
             if (queue.Count>0)
             {
+                if (currentTask!=null)
+                {
+                    currentTask.Dispose();
+                }
                 currentTask = queue.Dequeue();
                 currentTask.Start();
             }
@@ -121,10 +149,7 @@ namespace HFFramework
         private void TaskProgress(float f)
         {
             //HFLog.C("下载进度 " + f * 100 + "%");
-            if (f < 1)
-            {
-                f += finishCount ;
-            }
+            f += finishCount;
             f /= taskCount;
             progress(f);
         }
@@ -132,6 +157,11 @@ namespace HFFramework
         private void TaskComplete()
         {
             finishCount++;
+            if (finishCount>= taskCount)
+            {
+                HFLog.C("所有下载任务完成");
+                complete();
+            }
             Start();
         }
 
@@ -193,6 +223,11 @@ namespace HFFramework
             if (File.Exists(path.diskPath))
             {
                 File.Delete(path.diskPath);
+            }
+
+            if (!Directory.Exists(path.dirPath))
+            {
+                Directory.CreateDirectory(path.dirPath);
             }
 
             HFLog.L(name + " 开始下载  ");
@@ -265,17 +300,24 @@ namespace HFFramework
         private void OnUploadProgress(HTTPRequest originalRequest, long uploaded, long uploadLeng)
         {
             float progressPercent = (uploaded / (float)uploadLeng);
+            //HFLog.C(name +"   "+ progressPercent);
             progress(progressPercent);
+        }
+
+        public void ClearRequest()
+        {
+            if (request != null)
+            {
+                request.OnUploadProgress = null;
+                request.Abort();
+                request.Clear();
+                request.Dispose();
+            }
         }
 
         public void Dispose()
         {
-            if (request!=null)
-            {
-                request.Abort();
-                request.Dispose();
-                request = null;
-            }
+            ClearRequest();
             loc = null;
         }
 

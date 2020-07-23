@@ -35,26 +35,34 @@ namespace HFFramework
         // Update is called once per frame
         private void Update()
         {
-            for (int i = 0; i < removeTimerList.Count; i++)
+            try
             {
-                currentTimerList.Remove(removeTimerList[i]);
-            }
-            removeTimerList.Clear();
-
-            for (int i = 0; i < addTimerList.Count; i++)
-            {
-                currentTimerList.Add(addTimerList[i]);
-            }
-            addTimerList.Clear();
-
-            for (int i = 0; i < currentTimerList.Count; i++)
-            {
-                Timer timer = currentTimerList[i];
-                timer.Update(Time.deltaTime);
-                if (timer.isComplete)
+                for (int i = 0; i < removeTimerList.Count; i++)
                 {
-                    removeTimerList.Add(timer);
+                    currentTimerList.Remove(removeTimerList[i]);
                 }
+                removeTimerList.Clear();
+
+                for (int i = 0; i < addTimerList.Count; i++)
+                {
+                    currentTimerList.Add(addTimerList[i]);
+                }
+                addTimerList.Clear();
+
+                for (int i = 0; i < currentTimerList.Count; i++)
+                {
+                    Timer timer = currentTimerList[i];
+                    timer.Update(Time.deltaTime);
+                    if (timer.isComplete)
+                    {
+                        removeTimerList.Add(timer);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                HFLog.C(e);
+                throw;
             }
         }
 

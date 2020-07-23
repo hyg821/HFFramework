@@ -20,6 +20,7 @@ using TMPro;
 using UniRx.Async;
 using System.Runtime.CompilerServices;
 using UnityEngine.Profiling;
+using LitJson;
 
 namespace HFFramework.Demo
 {
@@ -100,30 +101,51 @@ namespace HFFramework.Demo
             HFLog.C("页面完全显示");
             HFFramework.AppDomainManager.Instance.ExcuteHotFix("hotfixdll", "HotFix");
 
-            /*
+            
             DownLoader loader = DownLoadManager.Instance.GetDownLoader();
-            UrlDiskPath path = new UrlDiskPath();
-            path.url = "https://xiazai.xiazaiba.com/Soft/C/Chrome_74.0.3729.108_XiaZaiBa.zip";
-            path.diskPath = PathManager.Instance.PersistentDataCustomPath+"/ccc.zip";
-
-            UrlDiskPath path1 = new UrlDiskPath();
-            path1.url = "https://xiazai.xiazaiba.com/Soft/C/Chrome_74.0.3729.108_XiaZaiBa.zip";
-            path1.diskPath = PathManager.Instance.PersistentDataCustomPath + "/ccc1.zip";
-
-            UrlDiskPath path2 = new UrlDiskPath();
-            path2.url = "https://xiazai.xiazaiba.com/Soft/C/Chrome_74.0.3729.108_XiaZaiBa.zip";
-            path2.diskPath = PathManager.Instance.PersistentDataCustomPath + "/ccc2.zip";
-
-            loader.DownLoadFiles(new UrlDiskPath[] { path, path1, path2 }, AAA, BBB);
-            */
+            string url = "http://182.48.99.226:18080/SharedFiles/Res/Assetbundles/Android_Assetbundles/ABVersion.Json";
+            string diskPath = PathManager.Instance.PersistentDataCustomPath+ "/ABVersion.Json";
+            UrlDiskPath path = new UrlDiskPath(url, diskPath);
+            loader.DownLoadFiles(new UrlDiskPath[] { path }, DownComp, ProgressCallback, Fail);       
         }
 
-        public void AAA(float f)
+        public void DownComp()
         {
-            //HFLog.C("总进度" + f);
+            string str = GameUtils.ReadFile("ABVersion.Json");
+            JsonData data = JsonMapper.ToObject(str);
+            JsonData entries = data["Entries"];
+
+            DownLoader loader = DownLoadManager.Instance.GetDownLoader();
+            List < UrlDiskPath > temp = new List<UrlDiskPath>();
+            foreach (var item in entries.Keys)
+            {
+                JsonData it = entries[item];
+                string url = "http://182.48.99.226:18080/SharedFiles/Res/Assetbundles/Android_Assetbundles/";
+                string disk = (string)it["N"];
+                url += disk;
+                UrlDiskPath path = new UrlDiskPath(url, PathManager.Instance.PersistentDataCustomPath + "/" + disk);
+                temp.Add(path);
+            }
+
+            loader.DownLoadFiles(temp.ToArray(), DownComp1, ProgressCallback1, Fail);
         }
 
-        public void BBB(string s)
+        public void DownComp1()
+        {
+
+        }
+
+        public void ProgressCallback(float f)
+        {
+            HFLog.C("总进度" + f);
+        }
+
+        public void ProgressCallback1(float f)
+        {
+            HFLog.C("总进度  " + f);
+        }
+
+        public void Fail(string s)
         {
 
         }

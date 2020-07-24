@@ -97,7 +97,7 @@ namespace HFFramework
         /// <summary>
         /// 下载队列
         /// </summary>
-        public Queue<DownLoadTask> queue = new Queue<DownLoadTask>();
+        private Queue<DownLoadTask> queue = new Queue<DownLoadTask>();
 
         /// <summary>
         /// 当前任务
@@ -183,11 +183,11 @@ namespace HFFramework
 
     public class DownLoadTask
     {
-        public ReaderWriterLockSlim loc = new ReaderWriterLockSlim();
+        private ReaderWriterLockSlim loc = new ReaderWriterLockSlim();
 
-        public HTTPRequest request;
+        private HTTPRequest request;
 
-        public FileStream fileStream;
+        private FileStream fileStream;
 
         public int index;
 
@@ -195,11 +195,11 @@ namespace HFFramework
 
         public UrlDiskPath path;
 
-        public Action complete;
+        private Action complete;
 
-        public Action<float> progress;
+        private Action<float> progress;
 
-        public Action<string> error;
+        private Action<string> error;
 
         public DownLoadTask(int index, string name, UrlDiskPath path,Action<float>progress ,Action complete, Action<string> error)
         {
@@ -271,21 +271,21 @@ namespace HFFramework
                 case HTTPRequestStates.Processing:
                     break;
                 case HTTPRequestStates.Finished:
-                    Clear();
+                    Clear(false);
                     complete();
                     break;
                 case HTTPRequestStates.Error:
-                    Clear();
+                    Clear(true);
                     error(req.State.ToString());
                     break;
                 case HTTPRequestStates.Aborted:
                     break;
                 case HTTPRequestStates.ConnectionTimedOut:
-                    Clear();
+                    Clear(true);
                     error(req.State.ToString());
                     break;
                 case HTTPRequestStates.TimedOut:
-                    Clear();
+                    Clear(true);
                     error(req.State.ToString());
                     break;
                 default:
@@ -307,12 +307,15 @@ namespace HFFramework
             progress(progressPercent);
         }
 
-        public void Clear()
+        public void Clear(bool abort)
         {
             if (request != null)
             {
                 request.OnUploadProgress = null;
-                request.Abort();
+                if (abort)
+                {
+                    request.Abort();
+                }
                 request.Clear();
                 request.Dispose();
             }
@@ -326,7 +329,7 @@ namespace HFFramework
 
         public void Dispose()
         {
-            Clear();
+            Clear(true);
             loc = null;
         }
 

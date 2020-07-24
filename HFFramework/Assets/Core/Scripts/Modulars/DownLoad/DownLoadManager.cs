@@ -256,6 +256,7 @@ namespace HFFramework
                     {
                         byte[] data = fragments[i];
                         fileStream.Write(data, 0, data.Length);
+                        fileStream.Flush();
                     }
                 }
                 loc.ExitWriteLock();
@@ -318,7 +319,6 @@ namespace HFFramework
 
             if (fileStream!=null)
             {
-                fileStream.Flush();
                 fileStream.Close();
                 fileStream.Dispose();
             }

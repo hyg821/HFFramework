@@ -137,10 +137,6 @@ namespace HFFramework
         {
             if (queue.Count>0)
             {
-                if (currentTask!=null)
-                {
-                    currentTask.Dispose();
-                }
                 currentTask = queue.Dequeue();
                 currentTask.Start();
             }
@@ -191,6 +187,8 @@ namespace HFFramework
 
         public HTTPRequest request;
 
+        public FileStream fileStream;
+
         public int index;
 
         public string name;
@@ -230,6 +228,8 @@ namespace HFFramework
                 Directory.CreateDirectory(path.dirPath);
             }
 
+            fileStream = new FileStream(path.diskPath, FileMode.Append);
+
             HFLog.L(name + " 开始下载  ");
             HFLog.L(name + " path.url  " + path.url);
             HFLog.L(name + " path.diskPath  " + path.diskPath);
@@ -250,14 +250,12 @@ namespace HFFramework
             {
                 List<byte[]> fragments = resp.GetStreamedFragments();
                 loc.EnterWriteLock();
-                using (FileStream fs = new FileStream(path.diskPath, FileMode.Append))
+                if (fragments != null)
                 {
-                    if (fs != null && fragments != null)
+                    for (int i = 0; i < fragments.Count; i++)
                     {
-                        foreach (byte[] data in fragments)
-                        {
-                            fs.Write(data, 0, data.Length);
-                        }
+                        byte[] data = fragments[i];
+                        fileStream.Write(data, 0, data.Length);
                     }
                 }
                 loc.ExitWriteLock();
@@ -272,17 +270,21 @@ namespace HFFramework
                 case HTTPRequestStates.Processing:
                     break;
                 case HTTPRequestStates.Finished:
+                    Clear();
                     complete();
                     break;
                 case HTTPRequestStates.Error:
+                    Clear();
                     error(req.State.ToString());
                     break;
                 case HTTPRequestStates.Aborted:
                     break;
                 case HTTPRequestStates.ConnectionTimedOut:
+                    Clear();
                     error(req.State.ToString());
                     break;
                 case HTTPRequestStates.TimedOut:
+                    Clear();
                     error(req.State.ToString());
                     break;
                 default:
@@ -304,7 +306,7 @@ namespace HFFramework
             progress(progressPercent);
         }
 
-        public void ClearRequest()
+        public void Clear()
         {
             if (request != null)
             {
@@ -313,11 +315,18 @@ namespace HFFramework
                 request.Clear();
                 request.Dispose();
             }
+
+            if (fileStream!=null)
+            {
+                fileStream.Flush();
+                fileStream.Close();
+                fileStream.Dispose();
+            }
         }
 
         public void Dispose()
         {
-            ClearRequest();
+            Clear();
             loc = null;
         }
 

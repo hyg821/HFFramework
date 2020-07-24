@@ -56,12 +56,12 @@ namespace HFFramework.Demo
             fun2.onClick.AddListener(Entity数据显示分离);
         }
 
-        public void Entity创建()
+        public async void Entity创建()
         {
             Close();
             for (int i = 0; i < 10; i++)
             {
-                Entity entity = GameFactory.CreateEntity<Entity>(GameObject.CreatePrimitive(PrimitiveType.Cube));
+                TestEntity entity = await GameFactory.CreateEntityAsync<TestEntity>("prefab", "Cube");
                 entity.transform.position = new Vector3(i, i, 0);
             }
         }
@@ -71,7 +71,7 @@ namespace HFFramework.Demo
             Close();
             for (int i = 0; i < 10; i++)
             {
-                TestEntity entity = GameFactory.CreateEntity<TestEntity>(GameObject.CreatePrimitive(PrimitiveType.Cube));
+                TestEntity entity =await GameFactory.CreateEntityAsync<TestEntity>("prefab","Cube");
                 await UniTask.Delay(100);
             }
         }
@@ -81,7 +81,7 @@ namespace HFFramework.Demo
             Close();
             for (int i = 0; i < 10; i++)
             {
-                Test1Entity entity = GameFactory.CreateEntity<Test1Entity>(GameObject.CreatePrimitive(PrimitiveType.Cube));
+                TestEntity entity = await GameFactory.CreateEntityAsync<TestEntity>("prefab", "Cube");
                 entity.Start();
                 await UniTask.Delay(100);
             }

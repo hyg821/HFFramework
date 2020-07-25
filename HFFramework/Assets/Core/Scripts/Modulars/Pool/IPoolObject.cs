@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public interface IPool
+    public interface IPoolObject
     {
         /// <summary>
         ///  被对象池吃掉

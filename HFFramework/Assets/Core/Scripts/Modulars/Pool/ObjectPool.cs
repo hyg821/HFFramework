@@ -11,7 +11,7 @@ namespace HFFramework
         /// <summary>
         ///  create
         /// </summary>
-        public Func<IPool> Create;
+        public Func<IPoolObject> Create;
 
         /// <summary>
         ///  容量
@@ -21,13 +21,13 @@ namespace HFFramework
         /// <summary>
         ///  pool
         /// </summary>
-        private Stack<IPool> pool = new Stack<IPool>();
+        private Stack<IPoolObject> pool = new Stack<IPoolObject>();
 
         /// <summary>
         ///  必须要调用的方法 否则有可能 吐出对象为 null
         /// </summary>
         /// <param name="CreateFunc"></param>
-        public void Init(Func<IPool> CreateFunc,int capacity = 20)
+        public void Init(Func<IPoolObject> CreateFunc,int capacity = 20)
         {
             this.Create = CreateFunc;
             this.capacity = capacity;
@@ -37,7 +37,7 @@ namespace HFFramework
         ///  吃一个对象
         /// </summary>
         /// <param name="i"></param>
-        public void Eat(IPool i)
+        public void Eat(IPoolObject i)
         {
             //如果小于容量 那么直接进入
             if (pool.Count<capacity)
@@ -57,9 +57,9 @@ namespace HFFramework
         ///  吐一个对象
         /// </summary>
         /// <returns></returns>
-        public IPool Vomiting()
+        public IPoolObject Vomiting()
         {
-            IPool temp = null;
+            IPoolObject temp = null;
             if (pool.Count > 0)
             {
                 temp = pool.Pop();

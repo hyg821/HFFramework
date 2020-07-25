@@ -121,7 +121,7 @@ namespace HFFramework
             executor.LateUpdate();
         }
    
-        public void DestroyManager()
+        public void Shutdown()
         {
             if (executor!=null)
             {

@@ -75,32 +75,32 @@ namespace HFFramework
             }
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
-            GameFactory.Instance.DestroyManager();
-            PathManager.Instance.DestroyManager();
-            HFResourceManager.Instance.DestroyManager();
-            GameEnvironment.Instance.DestroyManager();
-            HFSocketManager.Instance.DestroyManager();
-            AudioManager.Instance.DestroyManager();
-            UIManager.Instance.DestroyManager();
-            WebImageManager.Instance.DestroyManager();
-            InputManager.Instance.DestroyManager();
-            DownLoadManager.Instance.DestroyManager();
-            ObjectPoolManager.Instance.DestroyManager();
-            AppDomainManager.Instance.DestroyManager();
-            GameSceneManager.Instance.DestroyManager();
-            TimerManager.Instance.DestroyManager();
-            GameStateChecker.Instance.DestroyManager();
-            GameUtils.Instance.DestroyManager();
-            NotificationCenter.Instance.DestroyManager();
-            GameLooper.Instance.DestroyManager();
+            GameFactory.Instance.Shutdown();
+            PathManager.Instance.Shutdown();
+            HFResourceManager.Instance.Shutdown();
+            GameEnvironment.Instance.Shutdown();
+            HFSocketManager.Instance.Shutdown();
+            AudioManager.Instance.Shutdown();
+            UIManager.Instance.Shutdown();
+            WebImageManager.Instance.Shutdown();
+            InputManager.Instance.Shutdown();
+            DownLoadManager.Instance.Shutdown();
+            ObjectPoolManager.Instance.Shutdown();
+            AppDomainManager.Instance.Shutdown();
+            GameSceneManager.Instance.Shutdown();
+            TimerManager.Instance.Shutdown();
+            GameStateChecker.Instance.Shutdown();
+            GameUtils.Instance.Shutdown();
+            NotificationCenter.Instance.Shutdown();
+            GameLooper.Instance.Shutdown();
             MemoryClear();
         }
 
         public void OnApplicationQuit()
         {
-            DestroyManager();
+            Shutdown();
             Debug.Log("应用退出");
         }
     }

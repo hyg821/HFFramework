@@ -49,7 +49,7 @@ namespace HFFramework
 #endif
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             Instance = null;
         }

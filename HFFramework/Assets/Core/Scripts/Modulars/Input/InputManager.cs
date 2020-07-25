@@ -180,7 +180,7 @@ namespace HFFramework
             touchState = TouchState.TouchScale;
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             Instance = null;
         }

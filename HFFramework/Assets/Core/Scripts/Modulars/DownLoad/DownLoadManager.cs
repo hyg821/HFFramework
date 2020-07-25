@@ -71,7 +71,7 @@ namespace HFFramework
             return temp;
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             foreach (var item in downLoaders)
             {

@@ -89,7 +89,7 @@ namespace HFFramework
             timer.Close();
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             for (int i = 0; i < removeTimerList.Count; i++)
             {

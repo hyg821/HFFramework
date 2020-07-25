@@ -105,7 +105,7 @@ namespace HFFramework
             Resources.UnloadUnusedAssets();
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             ClearCache();
             Instance = null;

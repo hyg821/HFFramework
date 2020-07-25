@@ -122,7 +122,7 @@ namespace HFFramework
             messagePool.Clear();
         }          
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             Clear();
             Instance = null;

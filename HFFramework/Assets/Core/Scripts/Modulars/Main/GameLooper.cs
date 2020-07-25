@@ -132,7 +132,7 @@ namespace HFFramework
             }
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             prepareUpdateList.Clear();
             updateList.Clear();

@@ -51,7 +51,7 @@ namespace HFFramework
             socketCache.Clear();
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             HTTPManager.OnQuit();
             CloseAllSocket();

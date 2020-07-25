@@ -153,7 +153,7 @@ namespace HFFramework
             canvasDic.Clear();
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             Clear();
             SceneManager.sceneLoaded -= SceneLoaded;

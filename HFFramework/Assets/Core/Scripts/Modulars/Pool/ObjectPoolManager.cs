@@ -48,7 +48,7 @@ namespace HFFramework
             }
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             Instance = null;
             foreach (var item in cache)

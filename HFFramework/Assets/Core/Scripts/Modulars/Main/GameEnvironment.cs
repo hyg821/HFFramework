@@ -231,7 +231,7 @@ namespace  HFFramework
             HFLog.E("未捕获异常 "+e.ExceptionObject);
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             AppDomain.CurrentDomain.UnhandledException -= CatchException;
             Instance = null;

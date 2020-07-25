@@ -137,7 +137,7 @@ namespace HFFramework
             return sb.ToString();
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             Instance = null;
         }

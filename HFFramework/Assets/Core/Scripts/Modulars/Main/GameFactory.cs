@@ -171,7 +171,7 @@ namespace HFFramework
             }
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             instantiateQueue.Clear();
             Instance = null;

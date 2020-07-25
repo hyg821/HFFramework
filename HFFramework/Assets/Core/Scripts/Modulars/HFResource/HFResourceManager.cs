@@ -656,7 +656,7 @@ namespace HFFramework
             Resources.UnloadUnusedAssets();
         }
 
-        public void DestroyManager()
+        public void Shutdown()
         {
             UnloadAllAssetBundle();
             Instance = null;

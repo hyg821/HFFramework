@@ -32,6 +32,8 @@ namespace HFFramework
         private IMethod lateUpdateMethod;
         private IMethod destroyMethod;
 
+        private Dictionary<string, Dictionary<string, IMethod>> cache = new Dictionary<string, Dictionary<string, IMethod>>();
+
         /// <summary>
         ///  空参数
         /// </summary>
@@ -73,6 +75,27 @@ namespace HFFramework
         public override void LateUpdate()
         {
             appdomain.Invoke(lateUpdateMethod, null, p0);
+        }
+
+        public override void Invoke(string className, string methodName, object instance, params object[] args)
+        {
+            base.Invoke(className, methodName, instance, args);
+            Dictionary<string, IMethod> temp;
+            if (!cache.TryGetValue(className, out temp))
+            {
+                temp = new Dictionary<string, IMethod>();
+                cache.Add(className, temp);
+            }
+
+            IMethod method;
+            if (!temp.TryGetValue(methodName, out method))
+            {
+                IType type = appdomain.LoadedTypes[className];
+                method = type.GetMethod(methodName, 0);
+                temp.Add(methodName, method);
+            }
+
+            appdomain.Invoke(method, instance, args);
         }
 
         public override void Destroy()

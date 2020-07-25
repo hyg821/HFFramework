@@ -46,6 +46,11 @@ namespace HFFramework
 
         }      
 
+        public virtual void Invoke(string className, string methodName, object instance,params object[] args)
+        {
+
+        }
+
         public virtual void Destroy()
         {
 

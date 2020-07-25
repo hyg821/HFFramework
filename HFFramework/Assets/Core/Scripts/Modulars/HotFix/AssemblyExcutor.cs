@@ -1,11 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.IO;
-using DG.Tweening;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using System.Reflection;
 using ReflectorOptimization.Common;
 
@@ -20,6 +15,8 @@ namespace HFFramework
         private FastMethodInvoker.FastInvokeHandler fixedUpdateMethod;
         private FastMethodInvoker.FastInvokeHandler lateUpdateMethod;
         private FastMethodInvoker.FastInvokeHandler destroyMethod;
+
+        private Dictionary<string, Dictionary<string, FastMethodInvoker.FastInvokeHandler>> cache = new Dictionary<string, Dictionary<string, FastMethodInvoker.FastInvokeHandler>>();
 
         public override void Init(byte[] bytes)
         {
@@ -54,6 +51,28 @@ namespace HFFramework
         public override void FixedUpdate()
         {
             lateUpdateMethod.Invoke(null, null);
+        }
+
+        public override void Invoke(string className, string methodName, object instance, params object[] args)
+        {
+            base.Invoke(className, className, instance, args);
+            
+            Dictionary<string, FastMethodInvoker.FastInvokeHandler> temp;
+            if (!cache.TryGetValue(className,out temp))
+            {
+                temp = new Dictionary<string, FastMethodInvoker.FastInvokeHandler>();
+                cache.Add(className, temp);
+            }
+
+            FastMethodInvoker.FastInvokeHandler method;
+            if (!temp.TryGetValue(methodName, out method))
+            {
+                Type type = assembly.GetType(className);
+                method = FastMethodInvoker.GetMethodInvoker(type.GetMethod(methodName));
+                temp.Add(methodName, method);
+            }
+
+            method.Invoke(instance, args);
         }
 
         public override void Destroy()

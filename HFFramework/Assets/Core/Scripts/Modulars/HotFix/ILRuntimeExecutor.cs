@@ -77,7 +77,7 @@ namespace HFFramework
             appdomain.Invoke(lateUpdateMethod, null, p0);
         }
 
-        public override void Invoke(string className, string methodName, object instance, params object[] args)
+        public override void Invoke(string className, string methodName, object instance,params object[] args)
         {
             base.Invoke(className, methodName, instance, args);
             Dictionary<string, IMethod> temp;
@@ -91,9 +91,12 @@ namespace HFFramework
             if (!temp.TryGetValue(methodName, out method))
             {
                 IType type = appdomain.LoadedTypes[className];
-                method = type.GetMethod(methodName, 0);
+                method = type.GetMethod(methodName, args.Length);
                 temp.Add(methodName, method);
             }
+
+            HFLog.C("args.Length  " + args.Length);
+            HFLog.C("method  " + method);
 
             appdomain.Invoke(method, instance, args);
         }

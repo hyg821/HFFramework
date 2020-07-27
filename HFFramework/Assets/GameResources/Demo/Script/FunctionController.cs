@@ -101,7 +101,11 @@ namespace HFFramework.Demo
             HFLog.C("页面完全显示");
             HFFramework.AppDomainManager.Instance.ExcuteHotFix("hotfixdll", "HotFix");
 
-            
+            TimerManager.Schedule(1, 5, -1, delegate (Timer timer)
+            {
+                HFFramework.AppDomainManager.Instance.executor.Invoke("HotFixEnter", "Test", null, "1", "2", "3");
+            });
+
             DownLoader loader = DownLoadManager.Instance.GetDownLoader();
             string url = "http://182.48.99.226:18080/SharedFiles/Res/Assetbundles/Android_Assetbundles/ABVersion.Json";
             string diskPath = PathManager.Instance.PersistentDataCustomPath+ "/ABVersion.Json";

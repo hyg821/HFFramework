@@ -18,6 +18,8 @@ namespace HFFramework
 
         private Dictionary<string, Dictionary<string, FastMethodInvoker.FastInvokeHandler>> cache = new Dictionary<string, Dictionary<string, FastMethodInvoker.FastInvokeHandler>>();
 
+        private object[] p0 = new object[1];
+
         public override void Init(byte[] bytes)
         {
             assembly = Assembly.Load(bytes);
@@ -53,7 +55,7 @@ namespace HFFramework
             lateUpdateMethod.Invoke(null, null);
         }
 
-        public override void Invoke(string className, string methodName, object instance, params object[] args)
+        public override void Invoke(string className, string methodName, object instance,params object[] args)
         {
             base.Invoke(className, className, instance, args);
             

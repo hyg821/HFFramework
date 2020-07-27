@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using HotFix;
 using HFFramework;
+using System.Collections.Generic;
 
 public class HotFixEnter
 {
@@ -22,6 +23,13 @@ public class HotFixEnter
     public static void LateUpdate()
     {
         HotFix.GameLooper.Instance.LateUpdate();
+    }
+
+    public static void Test(string a,string b,string c)
+    {
+        HFLog.C("a " + a);
+        HFLog.C("b " + b);
+        HFLog.C("c " + c);
     }
 
     public static void Destroy()

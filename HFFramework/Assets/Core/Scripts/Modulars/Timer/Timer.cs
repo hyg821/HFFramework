@@ -31,7 +31,7 @@ namespace HFFramework
         /// <summary>
         /// 回调
         /// </summary>
-        public Action task;
+        public Action<Timer> task;
 
         /// <summary>
         ///  已经使用的总时间
@@ -53,7 +53,7 @@ namespace HFFramework
         /// </summary>
         public float useIntervalTime;
 
-        public Timer(float interval, float delay, int repeatCount, Action task)
+        public Timer(float interval, float delay, int repeatCount, Action<Timer> task)
         {
             this.interval = interval;
             this.delay = delay;
@@ -131,7 +131,7 @@ namespace HFFramework
             executeCount++;
             if (task != null)
             {
-                task();
+                task(this);
             }
         }
 

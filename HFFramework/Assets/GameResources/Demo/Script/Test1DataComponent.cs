@@ -17,7 +17,7 @@ namespace HFFramework.Demo
 
         public float time;
 
-        public void Update()
+        public void Update(Timer timer)
         {
             time += 0.1f;
             if (time > 1)

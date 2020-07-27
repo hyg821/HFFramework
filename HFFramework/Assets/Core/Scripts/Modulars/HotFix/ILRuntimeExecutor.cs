@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using ILRuntime.CLR.Method;
 using ILRuntime.CLR.TypeSystem;
+using ILRuntime.Mono.Cecil.Pdb;
 
 namespace HFFramework
 {
@@ -22,6 +23,7 @@ namespace HFFramework
         ///  缓存Stream 2018之后新版 需要一直开启这个
         /// </summary>
         private MemoryStream codeStream;
+        private MemoryStream pdbStream;
 
         /// <summary>
         ///  update缓存方法
@@ -39,11 +41,21 @@ namespace HFFramework
         /// </summary>
         private object[] p0 = new object[0];
 
-        public override void Init(byte[] bytes)
+        public override void Init(byte[] code, byte[] pdb)
         {
             appdomain = new ILRuntime.Runtime.Enviorment.AppDomain();
-            codeStream = new MemoryStream(bytes);
-            appdomain.LoadAssembly(codeStream);
+            codeStream = new MemoryStream(code);
+            if (pdb!=null)
+            {
+                pdbStream = new MemoryStream(pdb);
+                PdbReaderProvider pv = new ILRuntime.Mono.Cecil.Pdb.PdbReaderProvider();
+                appdomain.LoadAssembly(codeStream, pdbStream, pv);
+            }
+            else
+            {
+                appdomain.LoadAssembly(codeStream);
+            }
+
             InitializeILRuntime();
         }
 
@@ -95,9 +107,6 @@ namespace HFFramework
                 temp.Add(methodName, method);
             }
 
-            HFLog.C("args.Length  " + args.Length);
-            HFLog.C("method  " + method);
-
             appdomain.Invoke(method, instance, args);
         }
 
@@ -113,6 +122,12 @@ namespace HFFramework
             {
                 codeStream.Close();
                 codeStream = null;
+            }
+
+            if (pdbStream!=null)
+            {
+                pdbStream.Close();
+                pdbStream = null;
             }
 
             p0 = null;

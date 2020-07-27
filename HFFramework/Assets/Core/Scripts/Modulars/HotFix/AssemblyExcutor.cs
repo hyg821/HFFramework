@@ -20,9 +20,9 @@ namespace HFFramework
 
         private object[] p0 = new object[1];
 
-        public override void Init(byte[] bytes)
+        public override void Init(byte[] code, byte[] pdb)
         {
-            assembly = Assembly.Load(bytes);
+            assembly = Assembly.Load(code);
         }
 
         public override void CacheMethod()

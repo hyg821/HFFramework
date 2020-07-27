@@ -17,7 +17,7 @@ namespace HFFramework
         public const string lateUpdateMethodName = "LateUpdate";
         public const string destroyMethodName = "Destroy";
 
-        public virtual void Init(byte[] bytes)
+        public virtual void Init(byte[] code, byte[] pdb)
         {
         }
 

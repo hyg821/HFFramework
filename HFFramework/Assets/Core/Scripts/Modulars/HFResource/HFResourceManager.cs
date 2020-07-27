@@ -496,7 +496,7 @@ namespace HFFramework
             }
         }
 
-        public void LoadHotFixAssembly(string packageName, string dllName, Action<byte[]> callback)
+        public void LoadHotFixAssembly(string packageName, string dllName, Action<byte[],byte[]> callback)
         {
             //代码 在编辑器 里默认走streamingAssets 生成dll 运行即可
             if (GameEnvironment.Instance.Platform == GamePlatform.Editor)
@@ -509,18 +509,19 @@ namespace HFFramework
                 TextAsset text = ab.LoadAsset<TextAsset>(dllName + ".dll");
                 if (callback != null)
                 {
-                    callback(text.bytes);
+                    callback(text.bytes,null);
                 }
                 UnloadAssetBundle(ab, true);
             }
         }
 
-        private void EditorLoadHotFixAssembly(string packageName, string dllName, Action<byte[]> callback)
+        private void EditorLoadHotFixAssembly(string packageName, string dllName, Action<byte[],byte[]> callback)
         {
-            byte[] bytes =File.ReadAllBytes(PathManager.Instance.StreamingAssetsPath + "DLL/" + dllName + ".dll");
+            byte[] codeBytes =File.ReadAllBytes(PathManager.Instance.StreamingAssetsPath + "DLL/" + dllName + ".dll");
+            byte[] pdbBytes = File.ReadAllBytes(PathManager.Instance.StreamingAssetsPath + "DLL/" + dllName + ".pdb");
             if (callback != null)
             {
-                callback(bytes);
+                callback(codeBytes, pdbBytes);
             }
         }
 

@@ -97,10 +97,10 @@ namespace HFFramework
         /// <summary>
         /// 初始化ilruntime
         /// </summary>
-        private void HotFixInit(byte[] bytes)
+        private void HotFixInit(byte[] code, byte[] pdb)
         {
             CreateProgramExecutor();
-            executor.Init(bytes);
+            executor.Init(code, pdb);
             executor.CacheMethod();
             executor.Awake();
             IsActiveMethod = true;

@@ -14,14 +14,14 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class UniRx_Async_CompilerServices_AsyncUniTaskMethodBuilder_Binding
+    unsafe class UniRx_Async_CompilerServices_AsyncUniTaskMethodBuilder_1_GameObject_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder);
+            Type type = typeof(UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>);
             args = new Type[]{};
             method = type.GetMethod("Create", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Create_0);
@@ -73,16 +73,16 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.Exception)};
             method = type.GetMethod("SetException", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, SetException_4);
-            args = new Type[]{};
+            args = new Type[]{typeof(UnityEngine.GameObject)};
             method = type.GetMethod("SetResult", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, SetResult_5);
 
-            app.RegisterCLRCreateDefaultInstance(type, () => new UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder());
+            app.RegisterCLRCreateDefaultInstance(type, () => new UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>());
 
 
         }
 
-        static void WriteBackInstance(ILRuntime.Runtime.Enviorment.AppDomain __domain, StackObject* ptr_of_this_method, IList<object> __mStack, ref UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder instance_of_this_method)
+        static void WriteBackInstance(ILRuntime.Runtime.Enviorment.AppDomain __domain, StackObject* ptr_of_this_method, IList<object> __mStack, ref UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject> instance_of_this_method)
         {
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
             switch(ptr_of_this_method->ObjectType)
@@ -121,7 +121,7 @@ namespace ILRuntime.Runtime.Generated
                     break;
                  case ObjectTypes.ArrayReference:
                     {
-                        var instance_of_arrayReference = __mStack[ptr_of_this_method->Value] as UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder[];
+                        var instance_of_arrayReference = __mStack[ptr_of_this_method->Value] as UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>[];
                         instance_of_arrayReference[ptr_of_this_method->ValueLow] = instance_of_this_method;
                     }
                     break;
@@ -134,7 +134,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
 
 
-            var result_of_this_method = UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder.Create();
+            var result_of_this_method = UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>.Create();
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
@@ -150,7 +150,7 @@ namespace ILRuntime.Runtime.Generated
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder instance_of_this_method = (UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder)typeof(UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject> instance_of_this_method = (UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>)typeof(UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             instance_of_this_method.Start<global::IAsyncStateMachineClassInheritanceAdaptor.IAsyncStateMachineAdaptor>(ref @stateMachine);
 
@@ -224,7 +224,7 @@ namespace ILRuntime.Runtime.Generated
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder instance_of_this_method = (UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder)typeof(UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject> instance_of_this_method = (UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>)typeof(UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             var result_of_this_method = instance_of_this_method.Task;
 
@@ -249,7 +249,7 @@ namespace ILRuntime.Runtime.Generated
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder instance_of_this_method = (UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder)typeof(UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject> instance_of_this_method = (UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>)typeof(UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             instance_of_this_method.AwaitUnsafeOnCompleted<UniRx.Async.UniTask<UnityEngine.GameObject>.Awaiter, global::IAsyncStateMachineClassInheritanceAdaptor.IAsyncStateMachineAdaptor>(ref @awaiter, ref @stateMachine);
 
@@ -382,7 +382,7 @@ namespace ILRuntime.Runtime.Generated
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder instance_of_this_method = (UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder)typeof(UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject> instance_of_this_method = (UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>)typeof(UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
             instance_of_this_method.SetException(@exception);
 
@@ -397,15 +397,19 @@ namespace ILRuntime.Runtime.Generated
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            UnityEngine.GameObject @result = (UnityEngine.GameObject)typeof(UnityEngine.GameObject).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder instance_of_this_method = (UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder)typeof(UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject> instance_of_this_method = (UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>)typeof(UniRx.Async.CompilerServices.AsyncUniTaskMethodBuilder<UnityEngine.GameObject>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
 
-            instance_of_this_method.SetResult();
+            instance_of_this_method.SetResult(@result);
 
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             WriteBackInstance(__domain, ptr_of_this_method, __mStack, ref instance_of_this_method);
 
             __intp.Free(ptr_of_this_method);

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public static class Extension
+    public static class Extensions
     {
         public static void SetWebImage(this Image image, string url)
         {

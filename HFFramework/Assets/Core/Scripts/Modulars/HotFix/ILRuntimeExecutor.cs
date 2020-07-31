@@ -220,7 +220,7 @@ namespace HFFramework
                 return new UnityAction<BaseEventData>((p) => { ((Action<BaseEventData>)action)(p); });
             });
 
-            //不要注释  否则会开启大量反射方法
+            //不要注释  否则会开启大量反射方法 放在最后一步
             ILRuntime.Runtime.Generated.CLRBindings.Initialize(appdomain);
         }
     }

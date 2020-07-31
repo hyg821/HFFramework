@@ -7,18 +7,32 @@ namespace HFFramework
     [ExecuteAlways]
     public class Relation : MonoBehaviour
     {
+        /// <summary>
+        /// 是否是ui
+        /// </summary>
         private bool isUI;
 
+        private Transform m_transform;
         private Vector3 m_position;
 
+        /// <summary>
+        /// 偏移量
+        /// </summary>
         public Vector3 offset;
+
+        /// <summary>
+        /// ui偏移量
+        /// </summary>
         public Vector3 uiOffset;
 
         private GameObject m_target;
-        public GameObject target;
-        private RelationTarget relationTarget;
 
-        private Transform m_transform;
+        /// <summary>
+        /// 目标
+        /// </summary>
+        public GameObject target;
+
+        private RelationTarget relationTarget;
 
         private void Awake()
         {
@@ -27,7 +41,7 @@ namespace HFFramework
             isUI = m_transform is RectTransform;
         }
 
-        void Start()
+        private void Start()
         {
             m_position = transform.position;
         }

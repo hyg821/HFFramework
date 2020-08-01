@@ -48,9 +48,19 @@ namespace HFFramework
 
         public void SetTarget(GameObject go)
         {
-            if (go==null&& target!=null)
+            if (go==gameObject)
             {
-                relationTarget.Remove(this);
+                target = null;
+                return;
+            }
+
+            if (go==null)
+            {
+                if (relationTarget != null)
+                {
+                    relationTarget.Remove(this);
+                    relationTarget = null;
+                }
             }
 
             if (target != m_target&&go!=null)
@@ -97,6 +107,7 @@ namespace HFFramework
 #if UNITY_EDITOR
         void OnValidate()
         {
+            //HFLog.C("target " + target);
             SetTarget(target);
         }
 #endif

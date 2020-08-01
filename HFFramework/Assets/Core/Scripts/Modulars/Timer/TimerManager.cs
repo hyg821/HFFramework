@@ -32,7 +32,6 @@ namespace HFFramework
             Instance = this;
         }
 
-        // Update is called once per frame
         private void Update()
         {
             try

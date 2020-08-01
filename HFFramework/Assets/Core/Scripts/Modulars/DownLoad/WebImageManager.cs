@@ -14,6 +14,8 @@ namespace HFFramework
     {
         public static WebImageManager Instance;
 
+        private Sprite defaultSprite;
+
         /// <summary>
         ///  图片缓存字典
         /// </summary>
@@ -50,7 +52,7 @@ namespace HFFramework
                         TextureFormat format;
                         if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
                         {
-                            format = TextureFormat.PVRTC_RGBA4;
+                            format = TextureFormat.ASTC_RGBA_4x4;
                         }
                         else if (GameEnvironment.Instance.Platform == GamePlatform.Android)
                         {
@@ -87,10 +89,13 @@ namespace HFFramework
 
         public static void SetDefaultImage(string url, Image c)
         {
-            Sprite s = Sprite.Create(null,Rect.zero,Vector2.zero);
+            if (Instance.defaultSprite==null)
+            {
+                Instance.defaultSprite = Sprite.Create(null, Rect.zero, Vector2.zero);
+            }
             if (c != null)
             {
-                c.sprite = s;
+                c.sprite = Instance.defaultSprite;
             }
         }
 
@@ -107,6 +112,8 @@ namespace HFFramework
 
         public void Shutdown()
         {
+            GameFactory.DestroyAsset(defaultSprite.texture);
+            defaultSprite = null;
             ClearCache();
             Instance = null;
         }

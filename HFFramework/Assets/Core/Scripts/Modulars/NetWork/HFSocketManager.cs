@@ -1,5 +1,4 @@
-﻿using BestHTTP;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -53,7 +52,6 @@ namespace HFFramework
 
         public void Shutdown()
         {
-            HTTPManager.OnQuit();
             CloseAllSocket();
             Instance = null;
         }

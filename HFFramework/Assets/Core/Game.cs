@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using Config;
+using BestHTTP;
 
 namespace HFFramework
 {
@@ -95,6 +96,7 @@ namespace HFFramework
             GameUtils.Instance.Shutdown();
             NotificationCenter.Instance.Shutdown();
             GameLooper.Instance.Shutdown();
+            HTTPManager.OnQuit();
             MemoryClear();
         }
 

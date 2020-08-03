@@ -41,7 +41,7 @@ namespace HFFramework
         }
     }
 
-    public class DownLoadManager : MonoBehaviour,IManager
+    public class DownLoadManager : MonoBehaviour, IManager
     {
         public static DownLoadManager Instance;
 
@@ -61,14 +61,26 @@ namespace HFFramework
             HTTPManager.MaxConnectionPerServer = count;
         }
 
-        public  DownLoader GetDownLoader()
+        public DownLoader GetDownLoader()
         {
-            DownLoader temp = null;
-            if (Instance.downLoaders.Count < maxDownLoaderCount)
+            DownLoader result = null;
+            for (int i = 0; i < downLoaders.Count; i++)
             {
-                temp = new DownLoader();
+                DownLoader temp = downLoaders[i];
+                if (temp.IsFree)
+                {
+                    result = temp;
+                    break;
+                }
             }
-            return temp;
+
+            if (result == null && downLoaders.Count < maxDownLoaderCount)
+            {
+                result = new DownLoader();
+                downLoaders.Add(result);
+            }
+
+            return result;
         }
 
         public void Shutdown()
@@ -95,6 +107,17 @@ namespace HFFramework
         public int finishCount = 0;
 
         /// <summary>
+        /// 是否空闲
+        /// </summary>
+        public bool IsFree
+        {
+            get
+            {
+                return finishCount == taskCount;
+            }
+        }
+
+        /// <summary>
         /// 下载队列
         /// </summary>
         private Queue<DownLoadTask> queue = new Queue<DownLoadTask>();
@@ -119,7 +142,7 @@ namespace HFFramework
         /// </summary>
         private Action<string> error;
 
-        public void DownLoadFiles(UrlDiskPath[] paths, Action complete , Action<float> progress, Action<string> error)
+        public void DownLoadFiles(UrlDiskPath[] paths, Action complete, Action<float> progress, Action<string> error)
         {
             this.complete = complete;
             this.progress = progress;
@@ -127,7 +150,7 @@ namespace HFFramework
             this.taskCount = paths.Length;
             for (int i = 0; i < paths.Length; i++)
             {
-                DownLoadTask task = new DownLoadTask(i,"Task"+i, paths[i], TaskProgress, TaskComplete, TaskError);
+                DownLoadTask task = new DownLoadTask(i, "Task" + i, paths[i], TaskProgress, TaskComplete, TaskError);
                 queue.Enqueue(task);
             }
             Start();
@@ -135,7 +158,7 @@ namespace HFFramework
 
         private void Start()
         {
-            if (queue.Count>0)
+            if (queue.Count > 0)
             {
                 currentTask = queue.Dequeue();
                 currentTask.Start();
@@ -153,7 +176,7 @@ namespace HFFramework
         private void TaskComplete()
         {
             finishCount++;
-            if (finishCount>= taskCount)
+            if (finishCount >= taskCount)
             {
                 HFLog.C("所有下载任务完成");
                 complete();
@@ -172,7 +195,7 @@ namespace HFFramework
         /// </summary>
         public void Dispose()
         {
-            while (queue.Count>0)
+            while (queue.Count > 0)
             {
                 DownLoadTask task = queue.Dequeue();
                 task.Dispose();
@@ -201,7 +224,7 @@ namespace HFFramework
 
         private Action<string> error;
 
-        public DownLoadTask(int index, string name, UrlDiskPath path,Action<float>progress ,Action complete, Action<string> error)
+        public DownLoadTask(int index, string name, UrlDiskPath path, Action<float> progress, Action complete, Action<string> error)
         {
             this.index = index;
             this.name = name;
@@ -213,7 +236,7 @@ namespace HFFramework
 
         public void Start()
         {
-            if (GameEnvironment.Instance.Platform ==GamePlatform.Editor|| GameEnvironment.Instance.Platform == GamePlatform.Windows|| GameEnvironment.Instance.Platform == GamePlatform.Mac)
+            if (GameEnvironment.Instance.Platform == GamePlatform.Editor || GameEnvironment.Instance.Platform == GamePlatform.Windows || GameEnvironment.Instance.Platform == GamePlatform.Mac)
             {
                 path.diskPath = path.diskPath.Replace("file://", "");
             }
@@ -320,7 +343,7 @@ namespace HFFramework
                 request.Dispose();
             }
 
-            if (fileStream!=null)
+            if (fileStream != null)
             {
                 fileStream.Close();
                 fileStream.Dispose();

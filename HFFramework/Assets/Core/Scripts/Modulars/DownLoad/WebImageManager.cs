@@ -112,7 +112,10 @@ namespace HFFramework
 
         public void Shutdown()
         {
-            GameFactory.DestroyAsset(defaultSprite.texture);
+            if (defaultSprite!=null)
+            {
+                GameFactory.DestroyAsset(defaultSprite.texture);
+            }
             defaultSprite = null;
             ClearCache();
             Instance = null;

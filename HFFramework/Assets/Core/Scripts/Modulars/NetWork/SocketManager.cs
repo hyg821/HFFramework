@@ -7,9 +7,9 @@ namespace HFFramework
     /// <summary>
     /// 网络管理器
     /// </summary>
-    public class HFSocketManager : MonoBehaviour, IManager
+    public class SocketManager : MonoBehaviour, IManager
     {
-        public static HFSocketManager Instance;
+        public static SocketManager Instance;
 
         /// <summary>
         ///  socket 缓存

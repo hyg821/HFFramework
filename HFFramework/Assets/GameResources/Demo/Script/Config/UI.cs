@@ -74,7 +74,7 @@ namespace Config
 
         public void Init()
         {
-            TextAsset textAsset  = HFResourceManager.Instance.GetAsset<TextAsset>("Config","UI");
+            TextAsset textAsset  = ResourceManager.Instance.GetAsset<TextAsset>("Config","UI");
             StringReader reader = new StringReader(textAsset.text);
             reader.ReadLine();
             reader.ReadLine();

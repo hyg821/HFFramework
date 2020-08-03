@@ -15,7 +15,7 @@ namespace HFFramework
     /// <summary>
     /// 资源加载管理器
     /// </summary>
-    public class HFResourceManager : MonoBehaviour, IManager
+    public class ResourceManager : MonoBehaviour, IManager
     {
         // 注意 
         // 一个assetbundle包合适的大小在 1-10 mb 之间
@@ -26,7 +26,7 @@ namespace HFFramework
         // 正常卸载明确的的bundle 比如 prefab sprite  不明确的并且被依赖的资源通过UnloadUnusedAssetBundle 来卸载（没有经过测试 谨慎使用）
         // 推荐shader 通过ShaderVariantCollection 收集所有变体 最开始就全部加载出来 并且都放在一个bundle下
 
-        public static HFResourceManager Instance;
+        public static ResourceManager Instance;
 
         /// <summary>
         ///  assetbundle位置的根目录   默认的是所有的assetbundle 都放在一个文件夹下   
@@ -505,7 +505,7 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = HFResourceManager.Instance.LoadAssetBundleFromFile(packageName);
+                AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
                 TextAsset text = ab.LoadAsset<TextAsset>(dllName + ".dll");
                 if (callback != null)
                 {

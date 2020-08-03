@@ -31,13 +31,13 @@ namespace HFFramework
 
                 GameFactory.Create<PathManager>(true);
 
-                GameFactory.Create<HFResourceManager>(true);
+                GameFactory.Create<ResourceManager>(true);
 
                 GameFactory.Create<GameEnvironment>(true);
 
                 GameFactory.Create<NotificationCenter>(true);
 
-                GameFactory.Create<HFSocketManager>(true);
+                GameFactory.Create<SocketManager>(true);
 
                 GameFactory.Create<AudioManager>(true);
 
@@ -80,9 +80,9 @@ namespace HFFramework
         {
             GameFactory.Instance.Shutdown();
             PathManager.Instance.Shutdown();
-            HFResourceManager.Instance.Shutdown();
+            ResourceManager.Instance.Shutdown();
             GameEnvironment.Instance.Shutdown();
-            HFSocketManager.Instance.Shutdown();
+            SocketManager.Instance.Shutdown();
             AudioManager.Instance.Shutdown();
             UIManager.Instance.Shutdown();
             WebImageManager.Instance.Shutdown();

@@ -62,7 +62,7 @@ namespace Config
 
         public void Init()
         {
-            TextAsset textAsset  = HFResourceManager.Instance.GetAsset<TextAsset>("Config","Address");
+            TextAsset textAsset  = ResourceManager.Instance.GetAsset<TextAsset>("Config","Address");
             StringReader reader = new StringReader(textAsset.text);
             reader.ReadLine();
             reader.ReadLine();

@@ -14,7 +14,7 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class HFFramework_HFResourceManager_Binding
+    unsafe class HFFramework_ResourceManager_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
@@ -22,7 +22,7 @@ namespace ILRuntime.Runtime.Generated
             MethodBase method;
             FieldInfo field;
             Type[] args;
-            Type type = typeof(HFFramework.HFResourceManager);
+            Type type = typeof(HFFramework.ResourceManager);
             args = new Type[]{typeof(System.String), typeof(System.String)};
             method = type.GetMethod("GetPrefabAsync", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, GetPrefabAsync_0);
@@ -51,7 +51,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            HFFramework.HFResourceManager instance_of_this_method = (HFFramework.HFResourceManager)typeof(HFFramework.HFResourceManager).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            HFFramework.ResourceManager instance_of_this_method = (HFFramework.ResourceManager)typeof(HFFramework.ResourceManager).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.GetPrefabAsync(@packageName, @assetName);
@@ -62,12 +62,12 @@ namespace ILRuntime.Runtime.Generated
 
         static object get_Instance_0(ref object o)
         {
-            return HFFramework.HFResourceManager.Instance;
+            return HFFramework.ResourceManager.Instance;
         }
 
         static StackObject* CopyToStack_Instance_0(ref object o, ILIntepreter __intp, StackObject* __ret, IList<object> __mStack)
         {
-            var result_of_this_method = HFFramework.HFResourceManager.Instance;
+            var result_of_this_method = HFFramework.ResourceManager.Instance;
             object obj_result_of_this_method = result_of_this_method;
             if(obj_result_of_this_method is CrossBindingAdaptorType)
             {    
@@ -78,14 +78,14 @@ namespace ILRuntime.Runtime.Generated
 
         static void set_Instance_0(ref object o, object v)
         {
-            HFFramework.HFResourceManager.Instance = (HFFramework.HFResourceManager)v;
+            HFFramework.ResourceManager.Instance = (HFFramework.ResourceManager)v;
         }
 
         static StackObject* AssignFromStack_Instance_0(ref object o, ILIntepreter __intp, StackObject* ptr_of_this_method, IList<object> __mStack)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            HFFramework.HFResourceManager @Instance = (HFFramework.HFResourceManager)typeof(HFFramework.HFResourceManager).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            HFFramework.HFResourceManager.Instance = @Instance;
+            HFFramework.ResourceManager @Instance = (HFFramework.ResourceManager)typeof(HFFramework.ResourceManager).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            HFFramework.ResourceManager.Instance = @Instance;
             return ptr_of_this_method;
         }
 

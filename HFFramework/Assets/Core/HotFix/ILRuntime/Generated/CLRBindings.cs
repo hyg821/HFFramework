@@ -30,7 +30,7 @@ namespace ILRuntime.Runtime.Generated
             System_IDisposable_Binding.Register(app);
             System_Object_Binding.Register(app);
             HFFramework_IDGenerator_Binding.Register(app);
-            HFFramework_HFResourceManager_Binding.Register(app);
+            HFFramework_ResourceManager_Binding.Register(app);
             UniRx_Async_UniTask_1_GameObject_Binding.Register(app);
             UniRx_Async_UniTask_1_GameObject_Binding_Awaiter_Binding.Register(app);
             UnityEngine_Time_Binding.Register(app);

@@ -17,54 +17,52 @@ namespace HFFramework
 
         void Awake()
         {
-            if (Instance == null)
+            if (Instance!=null)
             {
-                Instance = this;
-
-                MemoryClear();
-
-                DontDestroyOnLoad(gameObject);
-
-                GameFactory.Create<GameLooper>(true);
-
-                GameFactory.Create<GameFactory>(true);
-
-                GameFactory.Create<PathManager>(true);
-
-                GameFactory.Create<ResourceManager>(true);
-
-                GameFactory.Create<GameEnvironment>(true);
-
-                GameFactory.Create<NotificationCenter>(true);
-
-                GameFactory.Create<SocketManager>(true);
-
-                GameFactory.Create<AudioManager>(true);
-
-                GameFactory.Create<UIManager>(true);
-
-                GameFactory.Create<WebImageManager>(true);
-
-                GameFactory.Create<DownLoadManager>(true);
-
-                GameFactory.Create<InputManager>(true);
-
-                GameFactory.Create<ObjectPoolManager>(true);
-
-                GameFactory.Create<AppDomainManager>(true);
-
-                GameFactory.Create<TimerManager>(true);
-
-                GameFactory.Create<GameStateChecker>(true);
-
-                GameFactory.Create<GameUtils>(true);
-
-                GameFactory.Create<GameSceneManager>(true);
-            }
-            else
-            {
+                Debug.LogError("框架重复加载 Game预设体放在起始场景 起始场景不要重复加载");
                 Destroy(gameObject);
             }
+
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            MemoryClear();
+
+            GameFactory.Create<GameLooper>(true);
+
+            GameFactory.Create<GameFactory>(true);
+
+            GameFactory.Create<PathManager>(true);
+
+            GameFactory.Create<ResourceManager>(true);
+
+            GameFactory.Create<GameEnvironment>(true);
+
+            GameFactory.Create<NotificationCenter>(true);
+
+            GameFactory.Create<SocketManager>(true);
+
+            GameFactory.Create<AudioManager>(true);
+
+            GameFactory.Create<UIManager>(true);
+
+            GameFactory.Create<WebImageManager>(true);
+
+            GameFactory.Create<DownLoadManager>(true);
+
+            GameFactory.Create<InputManager>(true);
+
+            GameFactory.Create<ObjectPoolManager>(true);
+
+            GameFactory.Create<AppDomainManager>(true);
+
+            GameFactory.Create<TimerManager>(true);
+
+            GameFactory.Create<GameStateChecker>(true);
+
+            GameFactory.Create<GameUtils>(true);
+
+            GameFactory.Create<GameSceneManager>(true);
         }
 
         /// <summary>

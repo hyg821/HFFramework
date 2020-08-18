@@ -7,6 +7,9 @@ using System.Collections.Concurrent;
 
 namespace HFFramework
 {
+    /// <summary>
+    /// Update中心
+    /// </summary>
     public class GameLooper : MonoBehaviour, IManager
     {
         public static GameLooper Instance;

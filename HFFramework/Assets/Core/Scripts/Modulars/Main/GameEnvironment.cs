@@ -127,7 +127,7 @@ namespace  HFFramework
             SwitchPlatform();
             RuntimeEnvironment = GameEnvironmentType.Debug;
             Language = GameLanguage.Chinese;
-            SetAppVersion("1.0.0");
+            SetAppVersion(Application.version);
             SetResourceVersion("1.0.0");
             OpenLog(true);
             OpenLocalLog(false);

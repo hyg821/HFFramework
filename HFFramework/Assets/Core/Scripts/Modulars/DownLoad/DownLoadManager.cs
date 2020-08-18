@@ -41,6 +41,9 @@ namespace HFFramework
         }
     }
 
+    /// <summary>
+    /// 文件下载器
+    /// </summary>
     public class DownLoadManager : MonoBehaviour, IManager
     {
         public static DownLoadManager Instance;

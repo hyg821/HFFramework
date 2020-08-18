@@ -67,6 +67,9 @@ namespace HFFramework
             }
         }
 
+        /// <summary>
+        /// 内存清理
+        /// </summary>
         public void MemoryClear()
         {
             Resources.UnloadUnusedAssets();
@@ -76,6 +79,9 @@ namespace HFFramework
             }
         }
 
+        /// <summary>
+        /// 清理关闭控制器
+        /// </summary>
         public void Shutdown()
         {
             GameFactory.Instance.Shutdown();
@@ -98,6 +104,21 @@ namespace HFFramework
             GameLooper.Instance.Shutdown();
             HTTPManager.OnQuit();
             MemoryClear();
+        }
+
+        /// <summary>
+        /// 退出app
+        /// </summary>
+        public void Quit()
+        {
+            if (GameEnvironment.Instance.Platform == GamePlatform.Android)
+            {
+                Application.Quit();
+            }
+            else if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            {
+                NativeBridge.Exit();
+            }
         }
 
         public void OnApplicationQuit()

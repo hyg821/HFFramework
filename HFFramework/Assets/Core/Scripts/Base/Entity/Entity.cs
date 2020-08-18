@@ -582,6 +582,35 @@ namespace HFFramework
         {
             return "类型 : " + GetType()+ " 实例id : "+instanceID;
         }
+
+        /// <summary>
+        ///  entity  持有---> gameObject  挂载----> HotFixLinker -- 回调
+        ///       |__________________________________________________________|
+        /// </summary>
+        public void AddLinker<T>() where T : HotFixLinker
+        {
+            T t = gameObject.GetComponent<T>();
+            if (t == null)
+            {
+                t = gameObject.AddComponent<T>();
+                t.Injector(instanceID, GetType().Name, this, InversionCall, LinkerDestroy);
+            }
+        }
+
+        /// <summary>
+        /// 通过gameObjcet.linker 调用 此方法
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="param"></param>
+        public virtual object InversionCall(string method, object param)
+        {
+            object result = null;
+            return result;
+        }
+
+        public virtual void LinkerDestroy()
+        {
+        }
     }
 }
 

@@ -249,9 +249,9 @@
     <Compile Include="Assets\Core\Scripts\Modulars\MessageCenter\NotificationCenter.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\MessageCenter\NotificationMessage.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\MessageCenter\ObserverDelegate.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\NetWork\HFSocket.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\NetWork\SocketManager.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\NetWork\TcpSocket.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\Networkx\HFSocket.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\Networkx\SocketManager.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\Networkx\TcpSocket.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Pool\IPoolObject.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Pool\ObjectPool.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Pool\ObjectPoolManager.cs" />

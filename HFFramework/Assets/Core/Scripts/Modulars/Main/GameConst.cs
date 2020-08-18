@@ -4,13 +4,12 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class GameConst : MonoBehaviour
+    public class GameConst
     {
         public const string DebugDefineSymbol = "HF_DEBUG";
         public const string ReleaseDefineSymbol = "HF_RELEASE";
         public const string ILRuntimeDefineSymbol = "DISABLE_ILRUNTIME_DEBUG";
         
-
         /// <summary>
         /// 热更新dll名称
         /// </summary>
@@ -48,6 +47,14 @@ namespace HFFramework
         /// demo路径
         /// </summary>
         public const string StartScenePath = "Assets/GameResources/Demo/Demo.unity";
+
+        //-------------------------------------- 打包路径 --------------------------------------//
+        public static string ArchivePath()
+        {
+            string str = null;
+            
+            return str;
+        }
 
         //--------------------------------------游戏内部消息模块id--------------------------------------//
         /// <summary>

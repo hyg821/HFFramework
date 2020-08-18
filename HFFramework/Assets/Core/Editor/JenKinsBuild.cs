@@ -75,93 +75,6 @@ namespace HFFramework.Editor
         /// </summary>
         static string version;
 
-        /// <summary>
-        /// 解析shel参数 
-        /// </summary>
-        public static void ReceiveCommondLine()
-        {
-            Debug.Log("开始解析 shell 参数  ············");
-            foreach (string arg in System.Environment.GetCommandLineArgs())
-            {
-                Debug.Log(arg);
-                if (arg.Contains("platform"))
-                {
-
-                }
-
-                if (arg.Contains(apk))
-                {
-                    isGenerateApk = GetBool(arg);
-                }
-
-                if (arg.Contains(ipa))
-                {
-                    isGenerateIpa = GetBool(arg);
-                }
-
-                if (arg.Contains(xcode))
-                {
-                    isGenerateXcode = GetBool(arg);
-                }
-
-                if (arg.Contains(assetbundle))
-                {
-                    isGenerateAssetbundle = GetBool(arg);
-                }
-
-                if (arg.Contains(publish))
-                {
-                    isPublish = GetBool(arg);
-                }
-
-                if (arg.Contains(versioninfo))
-                {
-                    isGenerateVersionInfo = GetBool(arg);
-                }
-
-                if (arg.Contains(obb))
-                {
-                    isObb = GetBool(arg);
-                }
-
-                if (arg.Contains(log))
-                {
-                    isLog = GetBool(arg);
-                }
-
-                if (arg.Contains(ApplicationIdentifierTag))
-                {
-                    ApplicationIdentifier = GetString(arg);
-                }
-
-                if (arg.Contains(versionTag))
-                {
-                    version = GetString(arg);
-                }
-            }
-
-            Debug.Log("isGenerateApk " + isGenerateApk);
-            Debug.Log("isGenerateIpa " + isGenerateIpa);
-            Debug.Log("isGenerateXcode " + isGenerateXcode);
-            Debug.Log("isGenerateAssetbundle " + isGenerateAssetbundle);
-            Debug.Log("isPublish " + isPublish);
-            Debug.Log("isGenerateVersionInfo " + isGenerateVersionInfo);
-            Debug.Log("isObb " + isObb);
-            Debug.Log("isLog " + isLog);
-            Debug.Log("ApplicationIdentifier " + ApplicationIdentifier);
-        }
-
-        public static bool GetBool(string str)
-        {
-            Debug.Log("分割字符串 " + str);
-            return bool.Parse(str.Split(':')[1]);
-        }
-
-        public static string GetString(string str)
-        {
-            Debug.Log("分割字符串 " + str);
-            return str.Split(':')[1];
-        }
 
         /// <summary>
         /// jenkis 外部调用函数 打包
@@ -187,50 +100,6 @@ namespace HFFramework.Editor
             m_BuildForAndroid();
         }
 
-        public static void m_BuildForAndroid()
-        {
-            SwitchAndroidPlatform();
-
-            CommonSetting();
-
-            BuildAssetBundle();
-
-            if (isGenerateApk)
-            {
-                string rootPath = Path.GetDirectoryName(Application.dataPath).Replace("\\", "/") + "/Release/Android/";
-
-                Debug.Log("rootPath: " + rootPath);
-
-                string filePath = rootPath + PlayerSettings.productName + ".apk";
-
-                if (!Directory.Exists(rootPath))
-                {
-                    Directory.CreateDirectory(rootPath);
-                }
-
-                if (File.Exists(filePath))
-                {
-                    File.Delete(filePath);
-                    AssetDatabase.Refresh();
-                }
-
-                BuildReport report = BuildPipeline.BuildPlayer(GetBuildScenes(), filePath, BuildTarget.Android, BuildOptions.None);
-
-                if (report.summary.result == BuildResult.Succeeded)
-                {
-                    Debug.Log(PlayerSettings.productName + ".apk已生成");
-                    if (isGenerateVersionInfo)
-                    {
-                    }
-                }
-                else
-                {
-                    Debug.Log("Build Failed");
-                }
-            }
-        }
-
-
         /// <summary>
         /// jenkis 外部调用函数 打包
         /// </summary>
@@ -255,6 +124,47 @@ namespace HFFramework.Editor
             m_BuildForIOS();
         }
 
+        public static void m_BuildForAndroid()
+        {
+            SwitchAndroidPlatform();
+
+            CommonSetting();
+
+            BuildAssetBundle();
+
+            if (isGenerateApk)
+            {
+                string directoryPath = ArchivePath();
+
+                string filePath = directoryPath + PlayerSettings.productName + ".apk";
+
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                    AssetDatabase.Refresh();
+                }
+
+                BuildReport report = BuildPipeline.BuildPlayer(GetBuildScenes(), filePath, BuildTarget.Android, BuildOptions.None);
+
+                if (report.summary.result == BuildResult.Succeeded)
+                {
+                    Debug.Log(PlayerSettings.productName + ".apk已生成");
+                    if (isGenerateVersionInfo)
+                    {
+                    }
+                }
+                else
+                {
+                    Debug.Log("Build Failed");
+                }
+            }
+        }
+
         private static void m_BuildForIOS()
         {
             SwitchIOSPlatform();
@@ -266,9 +176,7 @@ namespace HFFramework.Editor
             if (isGenerateXcode)
             {
                 //路径不能存在中文 否则xcode报错
-                string rootPath = Path.GetDirectoryName(Application.dataPath).Replace("\\", "/") + "/Release/iOS/";
-                string filePath = rootPath;
-                Debug.Log("rootPath: " + rootPath);
+                string filePath = ArchivePath();
 
                 if (Directory.Exists(filePath))
                 {
@@ -367,9 +275,11 @@ namespace HFFramework.Editor
         {
             if (isGenerateAssetbundle)
             {
-                HFEditorTools.PackingAtlas();
-
+                //生成配置
                 HFConfigCreater.GenerateConfigByAnalysis();
+
+                //图集
+                HFEditorTools.PackingAtlas();
 
                 //清除bundleName
                 HFEditorTools.ClearAssetBundlesName();
@@ -397,6 +307,118 @@ namespace HFFramework.Editor
                 }
             }
             return names.ToArray();
+        }
+
+        [MenuItem("游戏辅助工具/打印")]
+        public static string ArchivePath()
+        {
+            string str = Application.dataPath.Replace("\\", "/") + "/../../Archive/" + GetBuildTarget().ToString()+"/";
+            Debug.LogError(str);
+            return str;
+        }
+
+        public static BuildTarget GetBuildTarget()
+        {
+            BuildTarget target = BuildTarget.NoTarget;
+#if UNITY_STANDALONE_WIN
+            target = BuildTarget.StandaloneWindows;
+#elif UNITY_STANDALONE_OSX
+            target = BuildTarget.StandaloneOSXIntel;
+#elif UNITY_IPHONE
+            target = BuildTarget.iOS;
+#elif UNITY_ANDROID
+            target = BuildTarget.Android;
+#endif
+            HFLog.C("目标平台 " + target);
+            return target;
+        }
+
+        /// <summary>
+        /// 解析shel参数 
+        /// </summary>
+        public static void ReceiveCommondLine()
+        {
+            Debug.Log("开始解析 shell 参数  ············");
+            foreach (string arg in System.Environment.GetCommandLineArgs())
+            {
+                Debug.Log(arg);
+                if (arg.Contains("platform"))
+                {
+
+                }
+
+                if (arg.Contains(apk))
+                {
+                    isGenerateApk = GetBool(arg);
+                }
+
+                if (arg.Contains(ipa))
+                {
+                    isGenerateIpa = GetBool(arg);
+                }
+
+                if (arg.Contains(xcode))
+                {
+                    isGenerateXcode = GetBool(arg);
+                }
+
+                if (arg.Contains(assetbundle))
+                {
+                    isGenerateAssetbundle = GetBool(arg);
+                }
+
+                if (arg.Contains(publish))
+                {
+                    isPublish = GetBool(arg);
+                }
+
+                if (arg.Contains(versioninfo))
+                {
+                    isGenerateVersionInfo = GetBool(arg);
+                }
+
+                if (arg.Contains(obb))
+                {
+                    isObb = GetBool(arg);
+                }
+
+                if (arg.Contains(log))
+                {
+                    isLog = GetBool(arg);
+                }
+
+                if (arg.Contains(ApplicationIdentifierTag))
+                {
+                    ApplicationIdentifier = GetString(arg);
+                }
+
+                if (arg.Contains(versionTag))
+                {
+                    version = GetString(arg);
+                }
+            }
+
+            Debug.Log("isGenerateApk " + isGenerateApk);
+            Debug.Log("isGenerateIpa " + isGenerateIpa);
+            Debug.Log("isGenerateXcode " + isGenerateXcode);
+            Debug.Log("isGenerateAssetbundle " + isGenerateAssetbundle);
+            Debug.Log("isPublish " + isPublish);
+            Debug.Log("isGenerateVersionInfo " + isGenerateVersionInfo);
+            Debug.Log("isObb " + isObb);
+            Debug.Log("isLog " + isLog);
+            Debug.Log("ApplicationIdentifier " + ApplicationIdentifier);
+        }
+
+        public static bool GetBool(string str)
+        {
+            Debug.Log("分割字符串 " + str);
+            return bool.Parse(str.Split(':')[1]);
+        }
+
+        public static string GetString(string str)
+        {
+            Debug.Log("分割字符串 " + str);
+            return str.Split(':')[1];
         }
     }
 }

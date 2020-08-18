@@ -1,0 +1,17 @@
+0. jenkins 调用 shell 调用 c#代码 JenkinsBuild 完成打包
+
+1.配置好jenkins 环境在 mac打包机上
+2.创建对应工程填入 在Execute Shell 位置填入一下代码 对应shell里的变量路径 需要更具不同电脑设置（包括shell位置 和shell里的各种路径位置）
+
+安卓设置
+chmod 777 /Users/alan/.jenkins/workspace/client/Shell/AndroidBuild.sh
+/Users/alan/.jenkins/workspace/client/Shell/AndroidBuild.sh assetbundle:$assetbundle publish:$publish apk:$apk versioninfo:$versioninfo obb:$obb log:$log ApplicationIdentifier:$ApplicationIdentifier version:$version
+
+苹果设置
+chmod 777 /Users/alan/.jenkins/workspace/IOSClient/Shell/IOSBuild.sh
+/Users/alan/.jenkins/workspace/IOSClient/Shell/IOSBuild.sh assetbundle:$assetbundle publish:$publish xcode:$xcode ipa:$ipa versioninfo:$versioninfo log:$log ApplicationIdentifier:$ApplicationIdentifier version:$version
+
+
+3.自动收集ipa&&apk
+**/*.ipa
+**/*.apk

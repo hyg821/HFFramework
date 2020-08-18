@@ -34,7 +34,6 @@ namespace HFFramework
         {
             Instance = this;
             fsm = new FSM(this);
-            ChangeScene<StartScene>();
         }
 
         public GameScene CurrentScene

@@ -63,6 +63,16 @@ namespace HFFramework
             GameFactory.Create<GameUtils>(true);
 
             GameFactory.Create<GameSceneManager>(true);
+
+            LogicStart();
+        }
+
+        /// <summary>
+        /// 业务逻辑开始
+        /// </summary>
+        public void LogicStart()
+        {
+            GameSceneManager.Instance.ChangeScene<StartScene>();
         }
 
         /// <summary>

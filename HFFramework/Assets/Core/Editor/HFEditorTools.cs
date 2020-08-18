@@ -141,7 +141,7 @@ namespace HFFramework.Editor
         }
 
         [MenuItem("游戏辅助工具/资源设置/构建 所有 AssetBundles  并且自动命名 (只需要在打包的时候使用)")]
-        static void SetAssetBundleNameAndBuildAllAssetBundles()
+        public static void SetAssetBundleNameAndBuildAllAssetBundles()
         {
             Caching.ClearCache();
             SetAssetbundlesNames();
@@ -249,7 +249,7 @@ namespace HFFramework.Editor
         }
 
         [MenuItem("游戏辅助工具/资源设置/清除所有的AssetbundleName")]
-        static void ClearAssetBundlesName()
+        public static void ClearAssetBundlesName()
         {
             int length = AssetDatabase.GetAllAssetBundleNames().Length;
             string[] oldAssetBundleNames = new string[length];
@@ -281,45 +281,6 @@ namespace HFFramework.Editor
             SetAssetConfig(resourcesPath, false, true);
             SpriteAtlasUtility.PackAllAtlases(EditorUserBuildSettings.activeBuildTarget);
             AssetDatabase.Refresh();
-        }
-
-        [MenuItem("游戏辅助工具/安卓打包")]
-        public static void BuildAndorid()
-        {
-            if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android)
-            {
-                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
-                AssetDatabase.Refresh();
-            }
-
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android, GameConst.ReleaseDefineSymbol);
-
-            AssetDatabase.Refresh();
-
-            //从sh 传递过来的环境变量 功能开关
-            foreach (string arg in System.Environment.GetCommandLineArgs())
-            {
-                Debug.Log(arg);
-                if (arg.Contains("platform"))
-                {
-
-                }
-            }
-
-            //生成图集
-            PackingAtlas();
-            //更新配置
-            HFConfigCreater.GenerateConfigByAnalysis();
-
-            //清除bundleName
-            ClearAssetBundlesName();
-
-            AssetDatabase.Refresh();
-
-            SetAssetBundleNameAndBuildAllAssetBundles();
-
-            string outPath = Path.GetDirectoryName(Application.dataPath).Replace("\\", "/") + "/Release/Android/"+ PlayerSettings.productName + ".apk";
-            BuildPipeline.BuildPlayer(GetBuildScenes(), outPath, BuildTarget.Android, BuildOptions.None);
         }
 
         public static string[] GetBuildScenes()

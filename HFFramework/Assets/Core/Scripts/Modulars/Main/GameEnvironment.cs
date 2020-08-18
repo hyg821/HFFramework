@@ -140,7 +140,7 @@ namespace  HFFramework
             Application.targetFrameRate = TargetFrame;
             Time.fixedDeltaTime = 1.0f / FixedUpdateFrame;
             SetFullScreen(true);
-            //AppDomain.CurrentDomain.UnhandledException += CatchException;
+            AppDomain.CurrentDomain.UnhandledException += CatchException;
         }
 
         /// <summary>

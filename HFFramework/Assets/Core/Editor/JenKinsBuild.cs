@@ -309,11 +309,10 @@ namespace HFFramework.Editor
             return names.ToArray();
         }
 
-        [MenuItem("游戏辅助工具/打印")]
         public static string ArchivePath()
         {
             string str = Application.dataPath.Replace("\\", "/") + "/../../Archive/" + GetBuildTarget().ToString()+"/";
-            Debug.LogError(str);
+            //Debug.LogError(str);
             return str;
         }
 

@@ -8,10 +8,10 @@ using HFFramework;
 using System.Reflection;
 
 namespace Config
-{
+{ 
     [System.Serializable]
     public class Man
-    {
+    { 
         /// <summary>
         /// 索引
         /// </summary>
@@ -29,38 +29,38 @@ namespace Config
         /// </summary>
         public string address;
         public Address Address
-        {
-            get
-            {
+        { 
+            get 
+            { 
                 return ConfigAddress.Get(address);
-            }
-        }
+            } 
+        } 
         /// <summary>
         /// 爱好
         /// </summary>
-        public List<string> love = new List<string>();
+        public List<string>love = new List<string>();
     }
 
     [System.Serializable]
     public partial class ConfigMan
-    {
+    { 
         public static string[] split = new string[] { "," };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
         private static ConfigMan instance;
         public static ConfigMan Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new ConfigMan();
-                }
+        { 
+            get 
+            { 
+                if (instance==null) 
+                { 
+                     instance = new ConfigMan ();
+                } 
                 return instance;
-            }
-        }
+            } 
+        } 
 
-        public Dictionary<int, Man> dic = new Dictionary<int, Man>();
+        public Dictionary<int , Man> dic = new Dictionary<int , Man>();
 
         public List<Man> list = new List<Man>();
 
@@ -73,7 +73,7 @@ namespace Config
 
         public void Init()
         {
-            TextAsset textAsset = ResourceManager.Instance.GetAsset<TextAsset>("Config", "Man");
+            TextAsset textAsset  = ResourceManager.Instance.GetAsset<TextAsset>("Config","Man");
             StringReader reader = new StringReader(textAsset.text);
             reader.ReadLine();
             reader.ReadLine();
@@ -98,19 +98,19 @@ namespace Config
                     air = strs[4].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);
                     for (int x = 0; x < air.Length; x++)
                     {
-                        config.love.Add(air[x]);
-                    }
-                    dic.Add(config.id, config);
+                       config.love.Add(air[x]);
+                     }
+                    dic.Add(config.id, config );
                     list.Add(config);
-                }
-            }
-            reader.Close();
-            Type type = GetType();
-            MethodInfo method = type.GetMethod("PostProcessing");
-            if (method != null)
-            {
-                method.Invoke(this, null);
-            }
+               }
+           }
+           reader.Close();
+           Type type = GetType();
+           MethodInfo method = type.GetMethod( "PostProcessing");
+           if (method!=null)
+           {
+               method.Invoke(this,null);
+           }
         }
 
         public void Dispose()

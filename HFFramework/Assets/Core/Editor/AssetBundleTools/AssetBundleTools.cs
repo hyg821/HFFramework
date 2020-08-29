@@ -110,7 +110,7 @@ namespace HFFramework.Editor
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("资源/设置AssetbundleName")]
+        [MenuItem("资源/设置 AssetbundleName")]
         public static void SetAssetbundlesNames()
         {
             //ClearAssetBundlesName();

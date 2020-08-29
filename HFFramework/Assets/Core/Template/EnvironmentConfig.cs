@@ -78,6 +78,11 @@ namespace HFFramework
         /// 是否全屏 （安全区域是否绘制）
         /// </summary>
         public bool FullScreen = true;
+
+        public void Refresh()
+        {
+
+        }
     }
 }
 

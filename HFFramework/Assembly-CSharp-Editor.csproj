@@ -67,6 +67,7 @@
     <Compile Include="Assets\Core\Editor\AssetTools\HFAssetPostprocessor.cs" />
     <Compile Include="Assets\Core\Editor\AssetTools\HFOpenAssetHandler.cs" />
     <Compile Include="Assets\Core\Editor\ConfigTools\HFConfigCreater.cs" />
+    <Compile Include="Assets\Core\Editor\EditorRefresh.cs" />
     <Compile Include="Assets\Core\Editor\HotFixLinkerEditor.cs" />
     <Compile Include="Assets\Core\Editor\JenKins\JenKinsBuild.cs" />
     <Compile Include="Assets\Core\Editor\JenKins\XCodePostProcess.cs" />

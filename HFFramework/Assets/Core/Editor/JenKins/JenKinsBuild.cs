@@ -73,7 +73,7 @@ namespace HFFramework.Editor
         /// <summary>
         /// 版本
         /// </summary>
-        static string version;
+        static string version = "1.0.0";
 
 
         /// <summary>
@@ -264,6 +264,7 @@ namespace HFFramework.Editor
             EditorUserBuildSettings.connectProfiler = isAutoConnectProfiler;
 
             EnvironmentConfig config = AssetDatabase.LoadAssetAtPath<EnvironmentConfig>("Assets/Resources/EnvironmentConfig.asset");
+            config.AppVersion = version;
             PlayerSettings.bundleVersion = config.AppVersion;
             config.AutoSwitchPlatform = true;
 

@@ -12,20 +12,8 @@ using UnityEditor.U2D;
 
 namespace HFFramework.Editor
 {
-    [InitializeOnLoad]
     public class AssetBundleTools
     {
-        static AssetBundleTools()
-        {
-            HFLog.C("编辑器工具刷新");
-        }
-
-        [InitializeOnLoadMethod]
-        static void ReLoadMethod()
-        {
-            HFLog.C("编辑器工具刷新方法");
-        }
-
         public static BuildTarget GetBuildTarget()
         {
             BuildTarget target = BuildTarget.NoTarget;

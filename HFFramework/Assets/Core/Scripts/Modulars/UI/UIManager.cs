@@ -124,7 +124,8 @@ namespace HFFramework
         public async UniTask<T> Open<T>(object param = null,bool async = false,bool animation = false) where T : UIController, new()
         {
             T t = await GetController<T>(async);
-            await t.Open(param, animation);
+            t.Refresh(param);
+            await t.Open(animation);
             return t;
         }
 

@@ -36,7 +36,7 @@ namespace HFFramework
         /// </summary>
         /// <param name="animation"></param>
         /// <param name="callback"></param>
-        public virtual UniTask Open(object param = null, bool animation = false)
+        public virtual UniTask Open(bool animation = false)
         {
             showTask = new UniTaskCompletionSource();
             if (animation)
@@ -56,7 +56,7 @@ namespace HFFramework
         /// </summary>
         /// <param name="animation"></param>
         /// <param name="callback"></param>
-        public virtual UniTask Close(object param = null, bool animation = false)
+        public virtual UniTask Close(bool animation = false)
         {
             hideTask = new UniTaskCompletionSource();
             if (animation)
@@ -81,7 +81,7 @@ namespace HFFramework
         /// </summary>
         /// <param name="tag"></param>
         /// <param name="value"></param>
-        public virtual void Refresh(string tag, object value)
+        public virtual void Refresh(object param)
         {
 
         }

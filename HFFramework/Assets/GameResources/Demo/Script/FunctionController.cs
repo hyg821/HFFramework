@@ -99,8 +99,9 @@ namespace HFFramework.Demo
         {
             base.OnShowComplete();
             HFLog.C("页面完全显示");
-            HFFramework.AppDomainManager.Instance.ExcuteHotFix("hotfixdll", "HotFix");
+            HFFramework.AppDomainManager.Instance.ExecuteHotFix("hotfixdll", "HotFix");
 
+            return;
             TimerManager.Schedule(1, 5, -1, delegate (Timer timer)
             {
                 HFFramework.AppDomainManager.Instance.executor.Invoke("HotFixEnter", "Test", null, "1", "2", "3");

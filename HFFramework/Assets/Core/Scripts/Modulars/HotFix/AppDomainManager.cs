@@ -62,7 +62,7 @@ namespace HFFramework
         /// <param name="dllName">dll名字</param>
         /// <param name="mainClass">dll被调用的方法</param>
         ///   HFFramework.AppDomainManager.Instance.Invoke(0, "HotFixDll", "HFFrameworkHotFix", "HotFixEnter");
-        public void ExcuteHotFix(string assetbundleName, string dllName)
+        public void ExecuteHotFix(string assetbundleName, string dllName)
         {
             ResourceManager.Instance.LoadHotFixAssembly(assetbundleName, dllName, HotFixInit);
         }

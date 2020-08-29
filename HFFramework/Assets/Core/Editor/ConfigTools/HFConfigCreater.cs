@@ -14,7 +14,7 @@ namespace HFFramework.Editor
         public static string[] split = new string[] { "," };
         public static string[] arraySplit = new string[] { "[", "]", ";" };
 
-        [MenuItem("游戏辅助工具/配置文件/生成解析 .cs文件")]
+        [MenuItem("配置文件/解析生成配置文件")]
         public static void GenerateConfigByAnalysis()
         {
             string path = Application.dataPath + "/" + GameConst.ConfigInputPath;

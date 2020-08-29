@@ -196,7 +196,7 @@ namespace UnityEditor
                 int index = assetPath.LastIndexOf("/");
                 string configPath = assetPath.Substring(0, index);
                 AssetConfig config = AssetDatabase.LoadAssetAtPath<AssetConfig>(configPath + "/" + "AssetConfig");
-                HFEditorTools.SetAssetbundleByAssetImporter(assetImporter, config);
+                AssetBundleTools.SetAssetbundleByAssetImporter(assetImporter, config);
             }
         }
     }

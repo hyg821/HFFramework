@@ -75,7 +75,7 @@ namespace HFFramework
                 //否则使用 StreamingAssets 文件夹下的
                 else
                 {
-                    if (GameEnvironment.Instance.Platform == GamePlatform.Android)
+                    if (GameEnvironment.Instance.config.Platform == GamePlatform.Android)
                     {
                         newPath = ResourceSpareRootPath + path;
                     }
@@ -167,7 +167,7 @@ namespace HFFramework
         /// <returns></returns>
         public GameObject GetPrefab(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.LoadAssetPathType == LoadAssetPathType.Editor)
+            if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
             {
                 return EditorLoadAsset<GameObject>(packageName, assetName);
             }
@@ -183,7 +183,7 @@ namespace HFFramework
         {
             try
             {
-                if (GameEnvironment.Instance.LoadAssetPathType == LoadAssetPathType.Editor)
+                if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
                 {
                     return EditorLoadAsset<GameObject>(packageName, assetName);
                 }
@@ -208,7 +208,7 @@ namespace HFFramework
         /// <returns></returns>
         public Sprite GetSprite(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.LoadAssetPathType == LoadAssetPathType.Editor)
+            if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
             {
                 return EditorLoadAsset<Sprite>(packageName, assetName);
             }
@@ -229,7 +229,7 @@ namespace HFFramework
         /// <returns></returns>
         public Sprite GetSpriteByAtlas(string packageName, string atlasName, string spriteName)
         {
-            if (GameEnvironment.Instance.LoadAssetPathType == LoadAssetPathType.Editor)
+            if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
             {
                 SpriteAtlas atlas = EditorLoadAsset<SpriteAtlas>(packageName, atlasName);
                 return atlas.GetSprite(spriteName);
@@ -260,7 +260,7 @@ namespace HFFramework
         /// <returns></returns>
         public Shader GetShader(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.LoadAssetPathType == LoadAssetPathType.Editor)
+            if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
             {
                 Shader shader = EditorLoadAsset<Shader>(packageName, assetName);
                 return shader;
@@ -282,7 +282,7 @@ namespace HFFramework
         /// <returns></returns>
         public T GetAsset<T>(string packageName, string assetName) where T : UnityEngine.Object
         {
-            if (GameEnvironment.Instance.LoadAssetPathType == LoadAssetPathType.Editor)
+            if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
             {
                 return EditorLoadAsset<T>(packageName, assetName);
             }
@@ -305,7 +305,7 @@ namespace HFFramework
         {
             try
             {
-                if (GameEnvironment.Instance.LoadAssetPathType == LoadAssetPathType.Editor)
+                if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
                 {
                     await SceneManager.LoadSceneAsync(sceneName);
                 }
@@ -499,7 +499,7 @@ namespace HFFramework
         public void LoadHotFixAssembly(string packageName, string dllName, Action<byte[],byte[]> callback)
         {
             //代码 在编辑器 里默认走streamingAssets 生成dll 运行即可
-            if (GameEnvironment.Instance.Platform == GamePlatform.Editor)
+            if (GameEnvironment.Instance.config.Platform == GamePlatform.Editor)
             {
                 EditorLoadHotFixAssembly(packageName, dllName, callback);
             }
@@ -565,7 +565,7 @@ namespace HFFramework
         /// <param name="b">是否卸载压出来的的东西</param>
         public void UnloadAssetBundle(string packageName, bool b = true)
         {
-            if (GameEnvironment.Instance.LoadAssetPathType != LoadAssetPathType.Editor)
+            if (GameEnvironment.Instance.config.LoadAssetPathType != LoadAssetPathType.Editor)
             {
                 packageName = packageName.ToLower();
                 AssetBundlePackage bundle = GetAssetBundle(packageName);
@@ -578,7 +578,7 @@ namespace HFFramework
 
         public void UnloadAssetBundle(AssetBundlePackage bundle, bool b = true)
         {
-            if (GameEnvironment.Instance.LoadAssetPathType != LoadAssetPathType.Editor)
+            if (GameEnvironment.Instance.config.LoadAssetPathType != LoadAssetPathType.Editor)
             {
                 HFLog.L("卸载Assetbundle  " + bundle.name);
                 RecursionReleaseAssetBundle(bundle.name);

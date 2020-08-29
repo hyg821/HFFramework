@@ -239,7 +239,7 @@ namespace HFFramework
 
         public void Start()
         {
-            if (GameEnvironment.Instance.Platform == GamePlatform.Editor || GameEnvironment.Instance.Platform == GamePlatform.Windows || GameEnvironment.Instance.Platform == GamePlatform.Mac)
+            if (GameEnvironment.Instance.config.Platform == GamePlatform.Editor || GameEnvironment.Instance.config.Platform == GamePlatform.Windows || GameEnvironment.Instance.config.Platform == GamePlatform.Mac)
             {
                 path.diskPath = path.diskPath.Replace("file://", "");
             }

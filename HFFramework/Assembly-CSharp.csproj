@@ -269,6 +269,7 @@
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\PathManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\RectTransformExtensions.cs" />
     <Compile Include="Assets\Core\Template\AssetConfig.cs" />
+    <Compile Include="Assets\Core\Template\EnvironmentConfig.cs" />
     <Compile Include="Assets\GameResources\Default\Debug[A]\DebugController.cs" />
     <Compile Include="Assets\GameResources\Default\Debug[A]\LogCell.cs" />
     <Compile Include="Assets\GameResources\Default\Debug[A]\LogView.cs" />

@@ -7,7 +7,12 @@ using UnityEngine;
 namespace HFFramework
 {
     public class FSM
-    {   
+    {
+        /// <summary>
+        /// 状态转换锁
+        /// </summary>
+        private bool locked = false;
+
         /// <summary>
         ///  缓存状态的字典
         /// </summary>
@@ -16,7 +21,7 @@ namespace HFFramework
         /// <summary>
         ///  获取当前正在执行的状态
         /// </summary>
-        public FSMState CurrentState { set; get; }
+        public FSMState currentState;
 
         /// <summary>
         ///  依赖反转的控制器 简而言之就是  控制 fsm 的对象
@@ -38,20 +43,20 @@ namespace HFFramework
         public T AddState<T>() where T: FSMState,new()
         {
             T state = null;
-            string stateName = typeof(T).Name;
-            if (!stateDic.ContainsKey(stateName))
+            string key = typeof(T).Name;
+            if (!stateDic.ContainsKey(key))
             {
                 state = FSMState.Create<T>(this);
-                stateDic.Add(stateName, state);
+                stateDic.Add(key, state);
             }
             return state;
         }
 
         public T GetState<T>() where T : FSMState
         {
-            string stateName = typeof(T).Name;
+            string key = typeof(T).Name;
             FSMState state;
-            stateDic.TryGetValue(stateName, out state);
+            stateDic.TryGetValue(key, out state);
             return state as T;
         }
 
@@ -63,21 +68,25 @@ namespace HFFramework
         {
             try
             {
-                string stateName = typeof(T).Name;
-                if (CurrentState != null)
+                if (!locked)
                 {
-                    if (stateName != CurrentState.stateName)
+                    locked = true;
+                    string key = typeof(T).Name;
+                    if (currentState != null)
                     {
-                        await CurrentState.OnStateExit(exitParams);
+                        await currentState.OnStateExit(exitParams);
                     }
+                    if (!stateDic.TryGetValue(key, out currentState))
+                    {
+                        currentState = AddState<T>();
+                    }
+                    await currentState.OnStateEnter(enterParams);
+                    locked = false;
                 }
-                FSMState now;
-                if (!stateDic.TryGetValue(stateName, out now))
+                else
                 {
-                    now = AddState<T>();
+                    HFLog.E("重复转换状态 " + typeof(T).Name);
                 }
-                CurrentState = now;
-                await CurrentState.OnStateEnter(enterParams);
             }
             catch (Exception exception)
             {
@@ -87,9 +96,9 @@ namespace HFFramework
 
         public void Update()
         {
-            if (CurrentState != null)
+            if (currentState != null)
             {
-               CurrentState.OnStateStay();
+                currentState.OnStateStay();
             }
         }
 
@@ -112,7 +121,7 @@ namespace HFFramework
         public void Destroy()
         {
             stateDic.Clear();
-            CurrentState = null;
+            currentState = null;
             control = null;
         }
     }

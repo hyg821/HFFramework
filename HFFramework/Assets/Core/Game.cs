@@ -119,11 +119,11 @@ namespace HFFramework
         /// </summary>
         public void Quit()
         {
-            if (GameEnvironment.Instance.Platform == GamePlatform.Android)
+            if (GameEnvironment.Instance.config.Platform == GamePlatform.Android)
             {
                 Application.Quit();
             }
-            else if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+            else if (GameEnvironment.Instance.config.Platform == GamePlatform.iOS)
             {
                 NativeBridge.Exit();
             }

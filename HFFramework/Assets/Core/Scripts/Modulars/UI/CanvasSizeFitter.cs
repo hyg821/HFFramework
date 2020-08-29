@@ -18,7 +18,7 @@ namespace HFFramework
         {
             if (canvasScaler != null)
             {
-                if (((Screen.width+0.0f) / Screen.height) > (GameEnvironment.Instance.SceneSize.x / GameEnvironment.Instance.SceneSize.y))
+                if (((Screen.width+0.0f) / Screen.height) > (GameEnvironment.Instance.config.SceneSize.x / GameEnvironment.Instance.config.SceneSize.y))
                 {
                     canvasScaler.matchWidthOrHeight = 1f;
                 }

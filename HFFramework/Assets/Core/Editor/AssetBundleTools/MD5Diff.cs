@@ -4,15 +4,13 @@ using UnityEngine;
 
 namespace HFFramework.Editor
 {
-    public class AssetsBundleMD5
+    public class MD5Diff
     {
         /// <summary>
         /// 
         /// </summary>
-        public string key { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string value { get; set; }
+        public List<AssetBundleMD5> AssetsBundleMD5List { get; set; }
     }
 }
+
+

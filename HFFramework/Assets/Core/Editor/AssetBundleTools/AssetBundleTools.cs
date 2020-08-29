@@ -13,9 +13,9 @@ using UnityEditor.U2D;
 namespace HFFramework.Editor
 {
     [InitializeOnLoad]
-    public class HFEditorTools
+    public class AssetBundleTools
     {
-        static HFEditorTools()
+        static AssetBundleTools()
         {
             HFLog.C("编辑器工具刷新");
         }
@@ -24,65 +24,6 @@ namespace HFFramework.Editor
         static void ReLoadMethod()
         {
             HFLog.C("编辑器工具刷新方法");
-        }
-
-        [MenuItem("游戏辅助工具/项目默认设置")]
-        static void ProjectSetting()
-        {
-            PlayerSettings.companyName = "hyg";
-            PlayerSettings.productName = "HFFramework";
-            string identifier = "com" + "." + PlayerSettings.companyName + "." + PlayerSettings.productName;
-            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Standalone, identifier);
-            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, identifier);
-            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, identifier);
-            PlayerSettings.bundleVersion = "1.0.0";
-
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, GameConst.DebugDefineSymbol+";"+GameConst.ILRuntimeDefineSymbol);
-
-            //垂直同步关闭
-            QualitySettings.vSyncCount = 0;
-
-            //模式 3d  
-            EditorSettings.defaultBehaviorMode = EditorBehaviorMode.Mode3D;
-
-            //序列化模式 2进制
-            EditorSettings.serializationMode = SerializationMode.ForceBinary;
-
-            EditorSettings.spritePackerMode = SpritePackerMode.AlwaysOnAtlas;
-
-            //可见meta 文件
-            EditorSettings.externalVersionControl = "Visible Meta Files";
-
-            //不允许横竖旋转 并且不允许上下旋转
-            PlayerSettings.allowedAutorotateToPortrait = false;
-            PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
-            //左右横向显示
-            PlayerSettings.allowedAutorotateToLandscapeLeft = false;
-            PlayerSettings.allowedAutorotateToLandscapeRight = false;
-
-            PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
-
-            //.net 4.6 代码运行
-            PlayerSettings.scriptingRuntimeVersion = ScriptingRuntimeVersion.Latest;
-
-            //安卓 mono运行
-            PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
-            //iOS IL2CPP 运行
-            PlayerSettings.SetScriptingBackend(BuildTargetGroup.iOS, ScriptingImplementation.IL2CPP);
-
-            //安卓 ARMv7 包体减小 
-            PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7 | AndroidArchitecture.ARM64;
-
-            PlayerSettings.allowUnsafeCode = true;
-
-            //关闭剥离引擎代码
-            PlayerSettings.stripEngineCode = false;
-
-            //设置编辑器 高级debug
-            //EditorPrefs.SetBool("DeveloperMode", false);
-
-            AssetDatabase.Refresh();
-            Debug.Log("设置完成");
         }
 
         public static BuildTarget GetBuildTarget()
@@ -104,7 +45,7 @@ namespace HFFramework.Editor
         /// <summary>
         /// 资源打包
         /// </summary>
-        [MenuItem("游戏辅助工具/资源设置/构建 所有 AssetBundles")]
+        [MenuItem("资源/构建 所有 AssetBundles")]
         static void BuildAllAssetBundles()
         {
             RenameDLL();
@@ -121,10 +62,10 @@ namespace HFFramework.Editor
             if (abm)
             {
                 string[] assetBundles = abm.GetAllAssetBundles();
-                List<AssetsBundleMD5> configList = new List<AssetsBundleMD5>();
+                List<AssetBundleMD5> configList = new List<AssetBundleMD5>();
                 for (int i = 0; i < assetBundles.Length; i++)
                 {
-                    AssetsBundleMD5 item = new AssetsBundleMD5();
+                    AssetBundleMD5 item = new AssetBundleMD5();
                     string path = Application.streamingAssetsPath + "/AssetBundles/" + assetBundles[i];
                     item.value = GetMD5HashFromFile(path);
                     item.key = assetBundles[i];
@@ -140,7 +81,7 @@ namespace HFFramework.Editor
             Debug.Log("Assetbundle Build 完成");
         }
 
-        [MenuItem("游戏辅助工具/资源设置/构建 所有 AssetBundles  并且自动命名 (只需要在打包的时候使用)")]
+        [MenuItem("资源/构建 所有 AssetBundles  并且自动命名 (只需要在打包的时候使用)")]
         public static void SetAssetBundleNameAndBuildAllAssetBundles()
         {
             Caching.ClearCache();
@@ -148,7 +89,7 @@ namespace HFFramework.Editor
             BuildAllAssetBundles();
         }
 
-        [MenuItem("游戏辅助工具/资源设置/构建 单个Assetbundle")]
+        [MenuItem("资源/构建 单个Assetbundle")]
         static void BuildSpecialAssetBundles()
         {
             List<AssetBundleBuild> list = new List<AssetBundleBuild>();
@@ -181,7 +122,7 @@ namespace HFFramework.Editor
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("游戏辅助工具/资源设置/设置AssetbundleName")]
+        [MenuItem("资源/设置AssetbundleName")]
         public static void SetAssetbundlesNames()
         {
             //ClearAssetBundlesName();
@@ -190,7 +131,7 @@ namespace HFFramework.Editor
             SetAssetConfig(resourcesPath,true,false);
         }
 
-        [MenuItem("游戏辅助工具/资源设置/检测循环引用")]
+        [MenuItem("资源/检测循环引用")]
         public static void CheckCircularReference()
         {
             string path = Application.streamingAssetsPath + "/" + "AssetBundles"+"/" + "AssetBundles";
@@ -237,7 +178,7 @@ namespace HFFramework.Editor
             }
         }
 
-        [MenuItem("游戏辅助工具/资源设置/设置DLL到具体资源目录")]
+        [MenuItem("资源/设置DLL到具体资源目录")]
         public static void RenameDLL()
         {
             string str = "/GameResources/DLL" + GameConst.AssetFolderIde + "/";
@@ -248,7 +189,7 @@ namespace HFFramework.Editor
             AssetDatabase.Refresh();
         }
 
-        [MenuItem("游戏辅助工具/资源设置/清除所有的AssetbundleName")]
+        [MenuItem("资源/清除所有的AssetbundleName")]
         public static void ClearAssetBundlesName()
         {
             int length = AssetDatabase.GetAllAssetBundleNames().Length;
@@ -267,14 +208,14 @@ namespace HFFramework.Editor
             Debug.Log("删除之后的所有AssetBundleNames个数  " + length);
         }
 
-        [MenuItem("游戏辅助工具/资源设置/删除 所有 AssetBundles")]
+        [MenuItem("资源/删除 所有 AssetBundles")]
         public static void DeleteAllAssetbundle()
         {
             AssetDatabase.DeleteAsset("Assets/StreamingAssets/AssetBundles");
             Debug.Log("删除所有 AssetBundles 完成");
         }
 
-        [MenuItem("游戏辅助工具/资源设置/刷新图集")]
+        [MenuItem("资源/刷新图集")]
         public static void PackingAtlas()
         {
             string resourcesPath = Application.dataPath + "/GameResources";
@@ -452,58 +393,6 @@ namespace HFFramework.Editor
             }
         }
 
-        /// <summary>
-        ///  压缩 资源
-        /// </summary>
-        //[MenuItem("Game Editor/Build zip")]
-        private static void BuildZip()
-        {
-            GoCompress(Application.streamingAssetsPath + "/AssetBundles", Application.streamingAssetsPath + "/HotFixResources" + "/AssetBundles");
-        }
-
-        public static void GoCompress(string SourceFile, string TartgetFile)
-        {
-            string Source = SourceFile;
-            string Tartget = TartgetFile + ".zip";
-            Directory.CreateDirectory(Path.GetDirectoryName(Tartget));
-            using (ZipOutputStream s = new ZipOutputStream(File.Create(Tartget)))
-            {
-                s.SetLevel(6);
-                Compress(Source, s);
-                s.Finish();
-                s.Close();
-            }
-        }
-
-        public static void Compress(string source, ZipOutputStream s)
-        {
-            string[] filenames = Directory.GetFileSystemEntries(source);
-            foreach (string file in filenames)
-            {
-                if (Directory.Exists(file))
-                {
-                    // 递归压缩子文件夹
-                    Compress(file, s);
-                }
-                else
-                {
-                    using (FileStream fs = File.OpenRead(file))
-                    {
-                        byte[] buffer = new byte[4 * 1024];
-                        ZipEntry entry = new ZipEntry(Path.GetFileName(file));
-                        entry.DateTime = DateTime.Now;
-                        s.PutNextEntry(entry);
-                        int sourceBytes;
-                        do
-                        {
-                            sourceBytes = fs.Read(buffer, 0, buffer.Length);
-                            s.Write(buffer, 0, sourceBytes);
-                        } while (sourceBytes > 0);
-                    }
-                }
-            }
-        }
-
         public static string GetMD5(string sDataIn)
         {
             System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
@@ -517,34 +406,6 @@ namespace HFFramework.Editor
                 sTemp += bytHash[i].ToString("X").PadLeft(2, '0');
             }
             return sTemp.ToLower();
-        }
-
-        [MenuItem("Assets/Create/HFFramework/创建一个Asset配置文件(ScriptableObject版本)", false, 80)]
-        public static void CreateAssetConfigScriptableObject()
-        {
-            AssetConfig config = ScriptableObject.CreateInstance<AssetConfig>();
-            AssetDatabase.CreateAsset(config, GetSelectedPathOrFallback() + "/AssetConfig.asset");
-        }
-
-        [MenuItem("Assets/Create/HFFramework/创建一个Asset配置文件 (json版本暂时没用)", false, 80)]
-        public static void CreateAssetConfigJson()
-        {
-            ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0, ScriptableObject.CreateInstance<CreateScriptAssetAction>(), GetSelectedPathOrFallback() + "/AssetConfig.json", null, "Assets/Core/Template/AssetConfig.json");
-        }
-
-        public static string GetSelectedPathOrFallback()
-        {
-            string path = "Assets";
-            foreach (UnityEngine.Object obj in Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.Assets))
-            {
-                path = AssetDatabase.GetAssetPath(obj);
-                if (!string.IsNullOrEmpty(path) && File.Exists(path))
-                {
-                    path = Path.GetDirectoryName(path);
-                    break;
-                }
-            }
-            return path;
         }
     }
 
@@ -561,42 +422,6 @@ namespace HFFramework.Editor
         public bool Contains(string str)
         {
             return set.Contains(str);
-        }
-    }
-
-    public class CreateScriptAssetAction : EndNameEditAction
-    {
-        public override void Action(int instanceId, string pathName, string resourceFile)
-        {
-            //创建资源
-            UnityEngine.Object obj = CreateAssetFromTemplate(pathName, resourceFile);
-            //高亮显示该资源
-            ProjectWindowUtil.ShowCreatedAsset(obj);
-        }
-        internal static UnityEngine.Object CreateAssetFromTemplate(string pathName, string resourceFile)
-        {
-            //获取要创建的资源的绝对路径
-            string fullName = Path.GetFullPath(pathName);
-            //读取本地模板文件
-            StreamReader reader = new StreamReader(resourceFile);
-            string content = reader.ReadToEnd();
-            reader.Close();
-
-            //获取资源的文件名
-            // string fileName = Path.GetFileNameWithoutExtension(pahtName);
-            //替换默认的文件名
-            content = content.Replace("#TIME", System.DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss dddd"));
-
-            //写入新文件
-            StreamWriter writer = new StreamWriter(fullName, false, System.Text.Encoding.UTF8);
-            writer.Write(content);
-            writer.Close();
-
-            //刷新本地资源
-            AssetDatabase.ImportAsset(pathName);
-            AssetDatabase.Refresh();
-
-            return AssetDatabase.LoadAssetAtPath(pathName, typeof(UnityEngine.Object));
         }
     }
 }

@@ -88,7 +88,7 @@ namespace HFFramework.Editor
         /// <summary>
         /// 编辑器调用打包
         /// </summary>
-        [MenuItem("游戏辅助工具/安卓打包")]
+        [MenuItem("打包/安卓打包")]
         public static void EditorBuildForAndroid()
         {
             isGenerateAssetbundle = true;
@@ -112,7 +112,7 @@ namespace HFFramework.Editor
         /// <summary>
         /// 编辑器打ios包
         /// </summary>
-        [MenuItem("游戏辅助工具/iOS打包")]
+        [MenuItem("打包/iOS打包")]
         public static void EditorBuildForIOS()
         {
             isGenerateAssetbundle = true;
@@ -258,10 +258,15 @@ namespace HFFramework.Editor
         /// </summary>
         static void CommonSetting()
         {
-            PlayerSettings.bundleVersion = version;
-            SRDebugger.Settings.Instance.IsEnabled = isLog;
             EditorUserBuildSettings.development = isDevelopmentBuild;
             EditorUserBuildSettings.connectProfiler = isAutoConnectProfiler;
+
+            EnvironmentConfig config = AssetDatabase.LoadAssetAtPath<EnvironmentConfig>("Assets/Resources/StartUpConfig.asset");
+            PlayerSettings.bundleVersion = version;
+            config.AppVersion = version;
+
+            SRDebugger.Settings.Instance.IsEnabled = isLog;
+
             if (isPublish)
             {
                 FTPTools.UpLoad();
@@ -279,17 +284,17 @@ namespace HFFramework.Editor
                 HFConfigCreater.GenerateConfigByAnalysis();
 
                 //图集
-                HFEditorTools.PackingAtlas();
+                AssetBundleTools.PackingAtlas();
 
                 //清除bundleName
-                HFEditorTools.ClearAssetBundlesName();
+                AssetBundleTools.ClearAssetBundlesName();
 
                 //打包
-                HFEditorTools.SetAssetBundleNameAndBuildAllAssetBundles();
+                AssetBundleTools.SetAssetBundleNameAndBuildAllAssetBundles();
             }
 
             //检测循环引用
-            HFEditorTools.CheckCircularReference();
+            AssetBundleTools.CheckCircularReference();
         }
 
         /// <summary>

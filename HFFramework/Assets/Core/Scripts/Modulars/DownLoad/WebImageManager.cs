@@ -50,11 +50,11 @@ namespace HFFramework
                     HTTPRequest request = new HTTPRequest(new Uri(url), delegate (HTTPRequest originalRequest, HTTPResponse response)
                     {
                         TextureFormat format;
-                        if (GameEnvironment.Instance.Platform == GamePlatform.iOS)
+                        if (GameEnvironment.Instance.config.Platform == GamePlatform.iOS)
                         {
                             format = TextureFormat.ASTC_RGBA_4x4;
                         }
-                        else if (GameEnvironment.Instance.Platform == GamePlatform.Android)
+                        else if (GameEnvironment.Instance.config.Platform == GamePlatform.Android)
                         {
                             format = TextureFormat.ETC2_RGBA8;
                         }

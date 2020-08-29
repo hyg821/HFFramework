@@ -29,7 +29,7 @@ namespace HFFramework.Editor
             }
         }
 
-        [MenuItem("游戏辅助工具/设置默认运行场景(仅限于编辑器开发使用)")]
+        [MenuItem("场景/设置默认运行场景(仅限于编辑器开发使用)")]
         static void Open()
         {
             GetWindow<HFDefaultSceneWindow>();

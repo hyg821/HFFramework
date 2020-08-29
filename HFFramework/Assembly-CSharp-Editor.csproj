@@ -60,19 +60,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Core\Editor\AssetsBundleMD5.cs" />
-    <Compile Include="Assets\Core\Editor\AutoGeneratePathEditor.cs" />
-    <Compile Include="Assets\Core\Editor\FindReferences.cs" />
-    <Compile Include="Assets\Core\Editor\FTPTools.cs" />
-    <Compile Include="Assets\Core\Editor\HFAssetPostprocessor.cs" />
-    <Compile Include="Assets\Core\Editor\HFConfigCreater.cs" />
-    <Compile Include="Assets\Core\Editor\HFDefaultSceneWindow.cs" />
-    <Compile Include="Assets\Core\Editor\HFEditorTools.cs" />
-    <Compile Include="Assets\Core\Editor\HFOpenAssetHandler.cs" />
+    <Compile Include="Assets\Core\Editor\AssetBundleTools\AssetBundleMD5.cs" />
+    <Compile Include="Assets\Core\Editor\AssetBundleTools\AssetBundleTools.cs" />
+    <Compile Include="Assets\Core\Editor\AssetBundleTools\MD5Diff.cs" />
+    <Compile Include="Assets\Core\Editor\AssetTools\CreateAssets.cs" />
+    <Compile Include="Assets\Core\Editor\AssetTools\HFAssetPostprocessor.cs" />
+    <Compile Include="Assets\Core\Editor\AssetTools\HFOpenAssetHandler.cs" />
+    <Compile Include="Assets\Core\Editor\ConfigTools\HFConfigCreater.cs" />
     <Compile Include="Assets\Core\Editor\HotFixLinkerEditor.cs" />
-    <Compile Include="Assets\Core\Editor\JenKinsBuild.cs" />
-    <Compile Include="Assets\Core\Editor\MD5Diff.cs" />
-    <Compile Include="Assets\Core\Editor\XCodePostProcess.cs" />
+    <Compile Include="Assets\Core\Editor\JenKins\JenKinsBuild.cs" />
+    <Compile Include="Assets\Core\Editor\JenKins\XCodePostProcess.cs" />
+    <Compile Include="Assets\Core\Editor\Setting\EnvironmentConfigEditor.cs" />
+    <Compile Include="Assets\Core\Editor\Setting\HFDefaultSceneWindow.cs" />
+    <Compile Include="Assets\Core\Editor\Setting\ProjectSetting.cs" />
+    <Compile Include="Assets\Core\Editor\Tools\AutoGeneratePathEditor.cs" />
+    <Compile Include="Assets\Core\Editor\Tools\FindReferences.cs" />
+    <Compile Include="Assets\Core\Editor\Tools\FTPTools.cs" />
+    <Compile Include="Assets\Core\Editor\Tools\ZipTools.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Adapters\Editor\ILRuntimeCLRBinding.cs" />
     <Compile Include="Assets\OtherPlugins\BitmapFontImporter\Editor\BFImporter.cs" />
     <Compile Include="Assets\OtherPlugins\BitmapFontImporter\Editor\BFMenuTool.cs" />

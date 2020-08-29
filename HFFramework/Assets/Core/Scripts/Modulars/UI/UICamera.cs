@@ -13,7 +13,7 @@ namespace HFFramework
             camera = gameObject.GetComponent<Camera>();
             camera.cullingMask = 1 << LayerMask.NameToLayer("UI");
             camera.orthographic = true;
-            camera.orthographicSize = GameEnvironment.Instance.SceneSize.x / 2 / 100;
+            camera.orthographicSize = GameEnvironment.Instance.config.SceneSize.x / 2 / 100;
             camera.clearFlags = CameraClearFlags.Depth;
             camera.depth = 10;
             AudioListener audioListener = camera.GetComponent<AudioListener>();

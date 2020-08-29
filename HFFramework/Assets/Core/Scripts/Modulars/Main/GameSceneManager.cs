@@ -40,7 +40,7 @@ namespace HFFramework
         {
             get
             {
-                return fsm.CurrentState as GameScene;
+                return fsm.currentState as GameScene;
             }
         }
 

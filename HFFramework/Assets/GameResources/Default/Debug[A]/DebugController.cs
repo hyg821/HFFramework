@@ -30,7 +30,7 @@ namespace HFFramework
         public override void ElementInit()
         {
             base.ElementInit();
-            pf = GameEnvironment.Instance.Platform;
+            pf = GameEnvironment.Instance.config.Platform;
 
             refCountBtn.onClick.AddListener(delegate ()
             {

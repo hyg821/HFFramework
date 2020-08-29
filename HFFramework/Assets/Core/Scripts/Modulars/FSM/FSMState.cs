@@ -22,7 +22,7 @@ namespace HFFramework
         /// <summary>
         ///  状态名称
         /// </summary>
-        public string stateName;
+        public string name;
 
         /// <summary>
         ///  是否正在运行
@@ -48,7 +48,7 @@ namespace HFFramework
         {
             T t = new T();
             t.fsm = fsm;
-            t.stateName = typeof(T).Name;
+            t.name = typeof(T).Name;
             t.Awake();
             return t;
         }

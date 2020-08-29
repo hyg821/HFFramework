@@ -69,7 +69,7 @@ namespace HFFramework
 
         public void CreateProgramExecutor()
         {
-            switch (GameEnvironment.Instance.Platform)
+            switch (GameEnvironment.Instance.config.Platform)
             {
                 case GamePlatform.Android:
                     executor = new AssemblyExcutor();

@@ -46,7 +46,7 @@ namespace HFFramework
             else
             {
                 IsShow = true;
-                OnShowComplete();
+                OnShowCompleted();
             }
             return showTask.Task;
         }
@@ -73,7 +73,7 @@ namespace HFFramework
         public void Close()
         {
             IsShow = false;
-            OnHideComplete();
+            OnHideCompleted();
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace HFFramework
         /// <summary>
         /// 界面完全显示完成
         /// </summary>
-        public virtual void OnShowComplete()
+        public virtual void OnShowCompleted()
         {
             try
             {
@@ -124,7 +124,7 @@ namespace HFFramework
         /// <summary>
         /// 界面完全隐藏完成
         /// </summary>
-        public virtual void OnHideComplete()
+        public virtual void OnHideCompleted()
         {
             try
             {

@@ -62,16 +62,16 @@ namespace HFFramework.Editor
 
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
 
-            //安卓 ARMv7 包体减小 
-            PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7;
-
             //.net 4.6 代码运行
             PlayerSettings.scriptingRuntimeVersion = ScriptingRuntimeVersion.Latest;
 
             //安卓 mono运行
-            PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.Mono2x);
+            PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
             //iOS IL2CPP 运行
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.iOS, ScriptingImplementation.IL2CPP);
+
+            //安卓 ARMv7 包体减小 
+            PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7 | AndroidArchitecture.ARM64;
 
             PlayerSettings.allowUnsafeCode = true;
 

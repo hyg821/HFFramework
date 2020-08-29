@@ -274,7 +274,7 @@
     <Compile Include="Assets\GameResources\Default\Debug[A]\LogCell.cs" />
     <Compile Include="Assets\GameResources\Default\Debug[A]\LogView.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Config\Address.cs" />
-    <Compile Include="Assets\GameResources\Demo\Script\Config\Address_Post.cs" />
+    <Compile Include="Assets\GameResources\Demo\Script\Config\AddressPost.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Config\HFConfigManager.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Config\Man.cs" />
     <Compile Include="Assets\GameResources\Demo\Script\Config\UI.cs" />

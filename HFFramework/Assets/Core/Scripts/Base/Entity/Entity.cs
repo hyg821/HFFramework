@@ -484,7 +484,7 @@ namespace HFFramework
             }
             else
             {
-                return await UniTask.FromException<T>(new Exception());
+                return await UniTask.FromException<T>(new Exception("Entity已经被dispose"));
             }
         }
 

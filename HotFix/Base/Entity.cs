@@ -75,7 +75,7 @@ namespace HotFix
 
         private List<Entity> m_childs;
 
-        private Dictionary<ulong, object> m_messageTypeDic;
+        private HashSet<ulong> m_messageTypeSet;
 
         /// <summary>
         ///  本体entity的帮助类
@@ -110,15 +110,15 @@ namespace HotFix
         /// <summary>
         ///  注册的消息 字典   destory会自动销毁
         /// </summary>
-        public Dictionary<ulong, object> messageTypeDic
+        public HashSet<ulong> messageTypeSet
         {
             get
             {
-                if (m_messageTypeDic == null)
+                if (m_messageTypeSet == null)
                 {
-                    m_messageTypeDic = new Dictionary<ulong, object>();
+                    m_messageTypeSet = new HashSet<ulong>();
                 }
-                return m_messageTypeDic;
+                return m_messageTypeSet;
             }
         }
 
@@ -505,11 +505,10 @@ namespace HotFix
         /// <param name="callback"> 信息回调 </param>
         public void ReceiveNotificationMessage(object receiver, ushort moduleID, int msgID, Action<NotificationMessage> callback)
         {
-            object temp;
             ulong key = NotificationCenter.ConvertToKey(moduleID, msgID);
-            if (!messageTypeDic.TryGetValue(key, out temp))
+            if (!messageTypeSet.Contains(key))
             {
-                messageTypeDic.Add(key, null);
+                messageTypeSet.Add(key);
                 NotificationCenter.Instance.AddObserver(receiver, moduleID, msgID, callback);
             }
         }
@@ -556,14 +555,14 @@ namespace HotFix
 
                 parent = null;
 
-                if (m_messageTypeDic != null)
+                if (m_messageTypeSet != null)
                 {
-                    foreach (var item in m_messageTypeDic)
+                    foreach (var item in m_messageTypeSet)
                     {
-                        NotificationCenter.Instance.RemoveObserver(this, item.Key);
+                        NotificationCenter.Instance.RemoveObserver(this, item);
                     }
-                    m_messageTypeDic.Clear();
-                    m_messageTypeDic = null;
+                    m_messageTypeSet.Clear();
+                    m_messageTypeSet = null;
                 }
 
                 IsNeedUpdate = false;

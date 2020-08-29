@@ -63,6 +63,7 @@
     <Compile Include="Assets\Core\Editor\AssetBundleTools\AssetBundleMD5.cs" />
     <Compile Include="Assets\Core\Editor\AssetBundleTools\AssetBundleTools.cs" />
     <Compile Include="Assets\Core\Editor\AssetBundleTools\MD5Diff.cs" />
+    <Compile Include="Assets\Core\Editor\AssetConfigEditor.cs" />
     <Compile Include="Assets\Core\Editor\AssetTools\CreateAssets.cs" />
     <Compile Include="Assets\Core\Editor\AssetTools\HFAssetPostprocessor.cs" />
     <Compile Include="Assets\Core\Editor\AssetTools\HFOpenAssetHandler.cs" />

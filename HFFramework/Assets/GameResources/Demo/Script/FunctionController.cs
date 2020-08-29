@@ -91,13 +91,13 @@ namespace HFFramework.Demo
         {
             base.PlayShowAnimation();
             transform.localScale = Vector3.zero;
-            transform.DOScale(Vector3.one, 1).OnComplete(OnShowComplete);
+            transform.DOScale(Vector3.one, 1).OnComplete(OnShowCompleted);
             HFLog.C("播放打开动画");
         }
 
-        public override void OnShowComplete()
+        public override void OnShowCompleted()
         {
-            base.OnShowComplete();
+            base.OnShowCompleted();
             HFLog.C("页面完全显示");
             HFFramework.AppDomainManager.Instance.ExecuteHotFix("hotfixdll", "HotFix");
 

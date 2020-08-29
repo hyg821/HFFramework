@@ -66,6 +66,7 @@ namespace  HFFramework
             {
                 SwitchPlatform();
             }
+            Debug.unityLogger.logEnabled = config.IsOpenLog;
             Application.targetFrameRate = config.TargetFrame;
             Time.fixedDeltaTime = 1.0f / config.FixedUpdateFrame;
             Application.runInBackground = true;

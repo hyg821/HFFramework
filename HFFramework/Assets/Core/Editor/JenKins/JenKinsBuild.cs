@@ -248,8 +248,7 @@ namespace HFFramework.Editor
                 }
             }
             PlayerSettings.iOS.appleEnableAutomaticSigning = true;
-            PlayerSettings.stripEngineCode = false;
-            PlayerSettings.allowUnsafeCode = true;
+            PlayerSettings.iOS.allowHTTPDownload = true;
             AssetDatabase.Refresh();
         }
 
@@ -258,12 +257,15 @@ namespace HFFramework.Editor
         /// </summary>
         static void CommonSetting()
         {
+            PlayerSettings.stripEngineCode = false;
+            PlayerSettings.allowUnsafeCode = true;
+
             EditorUserBuildSettings.development = isDevelopmentBuild;
             EditorUserBuildSettings.connectProfiler = isAutoConnectProfiler;
 
-            EnvironmentConfig config = AssetDatabase.LoadAssetAtPath<EnvironmentConfig>("Assets/Resources/StartUpConfig.asset");
-            PlayerSettings.bundleVersion = version;
-            config.AppVersion = version;
+            EnvironmentConfig config = AssetDatabase.LoadAssetAtPath<EnvironmentConfig>("Assets/Resources/EnvironmentConfig.asset");
+            PlayerSettings.bundleVersion = config.AppVersion;
+            config.AutoSwitchPlatform = true;
 
             SRDebugger.Settings.Instance.IsEnabled = isLog;
 

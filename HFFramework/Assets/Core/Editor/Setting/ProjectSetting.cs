@@ -46,13 +46,13 @@ namespace HFFramework.Editor
             //.net 4.6 代码运行
             PlayerSettings.scriptingRuntimeVersion = ScriptingRuntimeVersion.Latest;
 
+            //安卓 ARMv7 包体减小  64位 必须使用cpp 打包
+            PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7;// | AndroidArchitecture.ARM64;
             //安卓 mono运行
-            PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
+            PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.Mono2x);
+
             //iOS IL2CPP 运行
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.iOS, ScriptingImplementation.IL2CPP);
-
-            //安卓 ARMv7 包体减小 
-            PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7 | AndroidArchitecture.ARM64;
 
             PlayerSettings.allowUnsafeCode = true;
 

@@ -56,7 +56,7 @@ namespace HFFramework
                 appdomain.LoadAssembly(codeStream);
             }
 
-            InitializeILRuntime();
+            InitializeILRuntime(appdomain);
         }
 
         public override void CacheMethod()
@@ -143,7 +143,7 @@ namespace HFFramework
         /// 初始化一下ILRuntime框架的东西
         /// 注册一些回掉
         /// </summary>
-        unsafe void InitializeILRuntime()
+        public unsafe static void InitializeILRuntime(ILRuntime.Runtime.Enviorment.AppDomain appdomain)
         {
 #if DEBUG && (UNITY_EDITOR || UNITY_ANDROID || UNITY_IPHONE)
             appdomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;

@@ -21,7 +21,7 @@ namespace HFFramework
 
         public virtual void Awake()
         {
-            instanceID = IDGenerator.GetEntityID();
+            instanceID = IDGenerator.GetComponentID();
         }
 
         public virtual void Start()

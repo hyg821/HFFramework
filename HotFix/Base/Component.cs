@@ -19,7 +19,7 @@ namespace HotFix
 
         public virtual void Awake()
         {
-             instanceID = IDGenerator.GetEntityID();
+             instanceID = IDGenerator.GetComponentID();
         }
 
 

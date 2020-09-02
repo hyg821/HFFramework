@@ -216,7 +216,7 @@ namespace HFFramework
         }
 
         /// <summary>
-        /// 外部方法调用
+        /// 调用完Awake 之后 调用 Start
         /// </summary>
         public virtual void Start()
         {

@@ -18,6 +18,7 @@
                 {
                     instance = new T();
                     instance.Awake();
+                    instance.Start();
                 }
                 return instance;
             }

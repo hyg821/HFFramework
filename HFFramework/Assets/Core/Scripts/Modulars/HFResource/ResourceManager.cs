@@ -108,8 +108,8 @@ namespace HFFramework
         /// <param name="path"></param>
         public void InitWithRootPath(string resourceRootPath, string resourceSpareRootPath, string mainfestName)
         {
-            print("正式资源地址" + resourceRootPath);
-            print("备用资源地址" + resourceSpareRootPath);
+            HFLog.C("正式资源地址" + resourceRootPath);
+            HFLog.C("备用资源地址" + resourceSpareRootPath);
 
             Caching.ClearCache();
 

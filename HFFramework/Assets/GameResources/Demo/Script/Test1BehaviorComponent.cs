@@ -15,13 +15,12 @@ namespace HFFramework.Demo
         public override void Awake()
         {
             base.Awake();
-            IsNeedUpdate = true;
         }
 
         public override void Start()
         {
             base.Start();
-            data = parent.GetCompoment<Test1DataComponent>();
+            data = entity.GetCompoment<Test1DataComponent>();
             data.AddObserver("position", DataChanged);
         }
 
@@ -34,9 +33,9 @@ namespace HFFramework.Demo
         public override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);
-            float x = Mathf.Lerp(transform.position.x, value.x, 0.1f);
-            float y = Mathf.Lerp(transform.position.y, value.y, 0.1f);
-            transform.position = new Vector3(x, y, 0);
+            float x = Mathf.Lerp(entity.transform.position.x, value.x, 0.1f);
+            float y = Mathf.Lerp(entity.transform.position.y, value.y, 0.1f);
+            entity.transform.position = new Vector3(x, y, 0);
         }
     }
 }

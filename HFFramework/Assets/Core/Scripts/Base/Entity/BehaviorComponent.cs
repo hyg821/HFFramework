@@ -7,7 +7,7 @@ namespace HFFramework
     /// <summary>
     ///  表现组件
     /// </summary>
-    public class BehaviorComponent : Entity
+    public class BehaviorComponent : Component
     {
 
     }

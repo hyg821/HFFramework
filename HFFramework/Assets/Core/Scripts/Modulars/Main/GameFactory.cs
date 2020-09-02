@@ -116,10 +116,10 @@ namespace HFFramework
             return t;
         }
 
-        public static T CreateComponent<T>(GameObject gameObject) where T : Entity, new()
+        public static T CreateComponent<T>(Entity entity) where T : Component, new()
         {
             T t = new T();
-            t.SetGameObject(gameObject);
+            t.SetEntity(entity);
             t.Awake();
             return t;
         }

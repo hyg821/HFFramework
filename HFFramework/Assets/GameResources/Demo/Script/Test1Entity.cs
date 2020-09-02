@@ -9,6 +9,7 @@ namespace HFFramework.Demo
         public override void Awake()
         {
             base.Awake();
+            IsNeedUpdate = true;
             AddCompoment<Test1BehaviorComponent>();
             AddCompoment<Test1DataComponent>();
         }

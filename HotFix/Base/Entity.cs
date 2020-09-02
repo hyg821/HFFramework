@@ -45,11 +45,6 @@ namespace HotFix
         public bool isAsync = false;
 
         /// <summary>
-        /// 是否是组件
-        /// </summary>
-        public bool isComponent = false;
-
-        /// <summary>
         ///  element 对应的 游戏物体
         /// </summary>
         public GameObject gameObject;
@@ -71,7 +66,7 @@ namespace HotFix
 
         private bool isActive;
 
-        private List<Entity> m_compoments;
+        private List<Component> m_compoments;
 
         private List<Entity> m_childs;
 
@@ -80,13 +75,13 @@ namespace HotFix
         /// <summary>
         ///  本体entity的帮助类
         /// </summary>
-        public List<Entity> compoments
+        public List<Component> compoments
         {
             get
             {
                 if (m_compoments == null)
                 {
-                    m_compoments = new List<Entity>();
+                    m_compoments = new List<Component>();
                 }
                 return m_compoments;
             }
@@ -267,20 +262,18 @@ namespace HotFix
             }
         }
 
-        public T AddCompoment<T>() where T : Entity, new()
+        public T AddCompoment<T>() where T : Component, new()
         {
-            T t = GameFactory.CreateComponent<T>(gameObject);
-            t.parent = this;
-            t.isComponent = true;
+            T t = GameFactory.CreateComponent<T>(this);
             compoments.Add(t);
             return t;
         }
 
-        public T GetCompoment<T>() where T : Entity
+        public T GetCompoment<T>() where T : Component
         {
             for (int i = 0; i < compoments.Count; i++)
             {
-                Entity e = compoments[i];
+                Component e = compoments[i];
                 if (typeof(T) == e.GetType())
                 {
                     return e as T;
@@ -289,7 +282,7 @@ namespace HotFix
             return null;
         }
 
-        public void RemoveCompoment(Entity compoment, bool destroy)
+        public void RemoveCompoment(Component compoment, bool destroy)
         {
             if (compoment != null)
             {
@@ -418,7 +411,13 @@ namespace HotFix
         /// </summary>
         public virtual void OnUpdate(float deltaTime)
         {
-
+            if (compoments != null)
+            {
+                for (int i = 0; i < compoments.Count; i++)
+                {
+                    compoments[i].OnUpdate(deltaTime);
+                }
+            }
         }
 
         /// <summary>
@@ -426,7 +425,13 @@ namespace HotFix
         /// </summary>
         public virtual void OnFixedUpdate(float deltaTime)
         {
-
+            if (compoments != null)
+            {
+                for (int i = 0; i < compoments.Count; i++)
+                {
+                    compoments[i].OnFixedUpdate(deltaTime);
+                }
+            }
         }
 
         /// <summary>
@@ -434,7 +439,13 @@ namespace HotFix
         /// </summary>
         public virtual void OnLateUpdate(float deltaTime)
         {
-
+            if (compoments != null)
+            {
+                for (int i = 0; i < compoments.Count; i++)
+                {
+                    compoments[i].OnLateUpdate(deltaTime);
+                }
+            }
         }
 
         /// <summary>
@@ -486,7 +497,7 @@ namespace HotFix
             }
             else
             {
-                return await UniTask.FromException<T>(new Exception());
+                return await UniTask.FromException<T>(new Exception("Entity已经被dispose"));
             }
         }
 
@@ -538,7 +549,7 @@ namespace HotFix
                 {
                     for (int i = m_compoments.Count - 1; i >= 0; i--)
                     {
-                        Entity compoment = m_compoments[i];
+                        Component compoment = m_compoments[i];
                         m_compoments.RemoveAt(i);
                         compoment.Destroy();
                     }
@@ -570,14 +581,12 @@ namespace HotFix
                 IsNeedFixedUpdate = false;
                 IsNeedLateUpdate = false;
 
-                if (!isComponent)
-                {
-                    DestoryGameObject();
-                }
+                DestoryGameObject();
 
                 instanceID = 0;
             }
         }
+
 
         public override string ToString()
         {

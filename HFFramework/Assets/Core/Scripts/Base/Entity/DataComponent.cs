@@ -43,7 +43,7 @@ namespace HFFramework
     /// <summary>
     ///  数据层
     /// </summary>
-    public class DataComponent : Entity
+    public class DataComponent : Component
     {
         private Dictionary<string, DataObserver> observers = new Dictionary<string, DataObserver>();
 

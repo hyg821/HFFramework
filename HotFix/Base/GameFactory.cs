@@ -19,6 +19,7 @@ namespace HotFix
         {
             T t = new T();
             t.Awake();
+            t.Start();
             return t;
         }
 
@@ -39,6 +40,7 @@ namespace HotFix
                 t.SetParent(parent, worldPositionStays);
             }
             t.Awake();
+            t.Start();
             return t;
         }
 
@@ -50,6 +52,7 @@ namespace HotFix
                 t.isAsync = true;
                 await t.LoadResourcesAsync(packageName, assetName);
                 t.Awake();
+                t.Start();
                 return t;
             }
             catch (Exception e)

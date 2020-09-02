@@ -69,7 +69,7 @@ namespace HFFramework
             return observer;
         }
 
-        public override void Destroy()
+        public override void OnDestroy()
         {
             foreach (var item in observers)
             {
@@ -78,7 +78,7 @@ namespace HFFramework
             observers.Clear();
             observers = null;
             type = null;
-            base.Destroy();
+            base.OnDestroy();
         }
     }
 }

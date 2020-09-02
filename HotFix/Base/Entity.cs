@@ -66,56 +66,20 @@ namespace HotFix
 
         private bool isActive;
 
-        private List<Component> m_compoments;
-
-        private List<Entity> m_childs;
-
-        private HashSet<ulong> m_messageTypeSet;
-
         /// <summary>
         ///  本体entity的帮助类
         /// </summary>
-        public List<Component> compoments
-        {
-            get
-            {
-                if (m_compoments == null)
-                {
-                    m_compoments = new List<Component>();
-                }
-                return m_compoments;
-            }
-        }
+        public List<Component> components = new List<Component>();
 
         /// <summary>
         /// 子实体 通常是 有从属关系并且有显示意义的子实体存在的地方
         /// </summary>
-        public List<Entity> childs
-        {
-            get
-            {
-                if (m_childs == null)
-                {
-                    m_childs = new List<Entity>();
-                }
-                return m_childs;
-            }
-        }
+        public List<Entity> childs = new List<Entity>();
 
         /// <summary>
         ///  注册的消息 字典   destory会自动销毁
         /// </summary>
-        public HashSet<ulong> messageTypeSet
-        {
-            get
-            {
-                if (m_messageTypeSet == null)
-                {
-                    m_messageTypeSet = new HashSet<ulong>();
-                }
-                return m_messageTypeSet;
-            }
-        }
+        public HashSet<ulong> messageTypeSet = new HashSet<ulong>();
 
         public virtual bool IsActive
         {
@@ -178,9 +142,9 @@ namespace HotFix
         /// </summary>
         public virtual void Start()
         {
-            for (int i = 0; i < compoments.Count; i++)
+            for (int i = 0; i < components.Count; i++)
             {
-                compoments[i].Start();
+                components[i].Start();
             }
         }
 
@@ -265,15 +229,15 @@ namespace HotFix
         public T AddCompoment<T>() where T : Component, new()
         {
             T t = GameFactory.CreateComponent<T>(this);
-            compoments.Add(t);
+            components.Add(t);
             return t;
         }
 
         public T GetCompoment<T>() where T : Component
         {
-            for (int i = 0; i < compoments.Count; i++)
+            for (int i = 0; i < components.Count; i++)
             {
-                Component e = compoments[i];
+                Component e = components[i];
                 if (typeof(T) == e.GetType())
                 {
                     return e as T;
@@ -282,15 +246,12 @@ namespace HotFix
             return null;
         }
 
-        public void RemoveCompoment(Component compoment, bool destroy)
+        public void RemoveCompoment(Component component)
         {
-            if (compoment != null)
+            if (component != null)
             {
-                compoments.Remove(compoment);
-                if (destroy)
-                {
-                    compoment.Destroy();
-                }
+                components.Remove(component);
+                component.OnDestroy();
             }
         }
 
@@ -411,12 +372,9 @@ namespace HotFix
         /// </summary>
         public virtual void OnUpdate(float deltaTime)
         {
-            if (compoments != null)
+            for (int i = 0; i < components.Count; i++)
             {
-                for (int i = 0; i < compoments.Count; i++)
-                {
-                    compoments[i].OnUpdate(deltaTime);
-                }
+                components[i].OnUpdate(deltaTime);
             }
         }
 
@@ -425,12 +383,9 @@ namespace HotFix
         /// </summary>
         public virtual void OnFixedUpdate(float deltaTime)
         {
-            if (compoments != null)
+            for (int i = 0; i < components.Count; i++)
             {
-                for (int i = 0; i < compoments.Count; i++)
-                {
-                    compoments[i].OnFixedUpdate(deltaTime);
-                }
+                components[i].OnFixedUpdate(deltaTime);
             }
         }
 
@@ -439,12 +394,9 @@ namespace HotFix
         /// </summary>
         public virtual void OnLateUpdate(float deltaTime)
         {
-            if (compoments != null)
+            for (int i = 0; i < components.Count; i++)
             {
-                for (int i = 0; i < compoments.Count; i++)
-                {
-                    compoments[i].OnLateUpdate(deltaTime);
-                }
+                components[i].OnLateUpdate(deltaTime);
             }
         }
 
@@ -453,9 +405,9 @@ namespace HotFix
         /// </summary>
         public virtual void OnEnable()
         {
-            for (int i = 0; i < compoments.Count; i++)
+            for (int i = 0; i < components.Count; i++)
             {
-                compoments[i].OnEnable();
+                components[i].OnEnable();
             }
         }
 
@@ -464,9 +416,9 @@ namespace HotFix
         /// </summary>
         public virtual void OnDisable()
         {
-            for (int i = 0; i < compoments.Count; i++)
+            for (int i = 0; i < components.Count; i++)
             {
-                compoments[i].OnDisable();
+                components[i].OnDisable();
             }
         }
 
@@ -549,37 +501,27 @@ namespace HotFix
                 return;
             }
 
-            if (m_compoments != null)
+            for (int i = components.Count - 1; i >= 0; i--)
             {
-                for (int i = m_compoments.Count - 1; i >= 0; i--)
-                {
-                    Component compoment = m_compoments[i];
-                    m_compoments.RemoveAt(i);
-                    compoment.Destroy();
-                }
+                Component compoment = components[i];
+                components.RemoveAt(i);
+                compoment.OnDestroy();
             }
 
-            if (m_childs != null)
+            for (int i = childs.Count - 1; i >= 0; i--)
             {
-                for (int i = m_childs.Count - 1; i >= 0; i--)
-                {
-                    Entity child = m_childs[i];
-                    m_childs.RemoveAt(i);
-                    child.Destroy();
-                }
+                Entity child = childs[i];
+                childs.RemoveAt(i);
+                child.Destroy();
             }
 
             parent = null;
 
-            if (m_messageTypeSet != null)
+            foreach (var item in messageTypeSet)
             {
-                foreach (var item in m_messageTypeSet)
-                {
-                    NotificationCenter.Instance.RemoveObserver(this, item);
-                }
-                m_messageTypeSet.Clear();
-                m_messageTypeSet = null;
+                NotificationCenter.Instance.RemoveObserver(this, item);
             }
+            messageTypeSet.Clear();
 
             IsNeedUpdate = false;
             IsNeedFixedUpdate = false;

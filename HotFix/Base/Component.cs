@@ -53,7 +53,10 @@ namespace HotFix
             this.entity = entity;
         }
 
-        public virtual void Destroy()
+        /// <summary>
+        /// 通过Entity.RemoveComponent 调用
+        /// </summary>
+        public virtual void OnDestroy()
         {
 
         }

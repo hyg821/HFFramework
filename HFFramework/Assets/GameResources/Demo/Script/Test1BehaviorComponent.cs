@@ -5,7 +5,7 @@ using System;
 
 namespace HFFramework.Demo
 {
-    public class Test1BehaviorComponent : BehaviorComponent
+    public class Test1BehaviorComponent : Component
     {
 
         Test1DataComponent data;

@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace HFFramework
 {
+    /// <summary>
+    /// Entity 上 挂载的组件
+    /// </summary>
     public class Component
     {
         /// <summary>

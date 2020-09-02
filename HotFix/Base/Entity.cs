@@ -543,48 +543,51 @@ namespace HotFix
         /// </summary>
         public virtual void Destroy()
         {
-            if (!IsDisposed)
+            if (IsDisposed)
             {
-                if (m_compoments != null)
-                {
-                    for (int i = m_compoments.Count - 1; i >= 0; i--)
-                    {
-                        Component compoment = m_compoments[i];
-                        m_compoments.RemoveAt(i);
-                        compoment.Destroy();
-                    }
-                }
-
-                if (m_childs != null)
-                {
-                    for (int i = m_childs.Count - 1; i >= 0; i--)
-                    {
-                        Entity child = m_childs[i];
-                        m_childs.RemoveAt(i);
-                        child.Destroy();
-                    }
-                }
-
-                parent = null;
-
-                if (m_messageTypeSet != null)
-                {
-                    foreach (var item in m_messageTypeSet)
-                    {
-                        NotificationCenter.Instance.RemoveObserver(this, item);
-                    }
-                    m_messageTypeSet.Clear();
-                    m_messageTypeSet = null;
-                }
-
-                IsNeedUpdate = false;
-                IsNeedFixedUpdate = false;
-                IsNeedLateUpdate = false;
-
-                DestoryGameObject();
-
-                instanceID = 0;
+                HFLog.E("Entity 重复销毁 Id " + instanceID);
+                return;
             }
+
+            if (m_compoments != null)
+            {
+                for (int i = m_compoments.Count - 1; i >= 0; i--)
+                {
+                    Component compoment = m_compoments[i];
+                    m_compoments.RemoveAt(i);
+                    compoment.Destroy();
+                }
+            }
+
+            if (m_childs != null)
+            {
+                for (int i = m_childs.Count - 1; i >= 0; i--)
+                {
+                    Entity child = m_childs[i];
+                    m_childs.RemoveAt(i);
+                    child.Destroy();
+                }
+            }
+
+            parent = null;
+
+            if (m_messageTypeSet != null)
+            {
+                foreach (var item in m_messageTypeSet)
+                {
+                    NotificationCenter.Instance.RemoveObserver(this, item);
+                }
+                m_messageTypeSet.Clear();
+                m_messageTypeSet = null;
+            }
+
+            IsNeedUpdate = false;
+            IsNeedFixedUpdate = false;
+            IsNeedLateUpdate = false;
+
+            DestoryGameObject();
+
+            instanceID = 0;
         }
 
 

@@ -81,7 +81,7 @@ namespace HFFramework.Demo
             Close();
             for (int i = 0; i < 10; i++)
             {
-                TestEntity entity = await GameFactory.CreateEntityAsync<TestEntity>("prefab", "Cube");
+                Test1Entity entity = await GameFactory.CreateEntityAsync<Test1Entity>("prefab", "Cube");
                 await UniTask.Delay(100);
             }
         }

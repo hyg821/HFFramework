@@ -177,6 +177,18 @@ namespace HFFramework
         }
 
         /// <summary>
+        /// 如果是entity 那么awake之后调用 
+        /// 如果是组件 那么由所在的entity 的awake调用
+        /// </summary>
+        public virtual void Start()
+        {
+            for (int i = 0; i < compoments.Count; i++)
+            {
+                compoments[i].Start();
+            }
+        }
+
+        /// <summary>
         /// 寻找子物体 重载方法
         /// </summary>
         public virtual void FindElement()
@@ -213,17 +225,6 @@ namespace HFFramework
             GameObject prefab = await ResourceManager.Instance.GetPrefabAsync(packageName, assetName);
             GameObject go = await GameFactory.InstantiateAsync(prefab);
             SetGameObject(go);
-        }
-
-        /// <summary>
-        /// 调用完Awake 之后 调用 Start
-        /// </summary>
-        public virtual void Start()
-        {
-            for (int i = 0; i < compoments.Count; i++)
-            {
-                compoments[i].Start();
-            }
         }
 
         public void SetGameObject(GameObject value)
@@ -267,7 +268,7 @@ namespace HFFramework
 
         public T AddCompoment<T>() where T : Entity, new()
         {
-            T t =GameFactory.CreateEntity<T>(gameObject);
+            T t =GameFactory.CreateComponent<T>(gameObject);
             t.parent = this;
             t.isComponent = true;
             compoments.Add(t);

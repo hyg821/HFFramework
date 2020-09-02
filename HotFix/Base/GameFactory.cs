@@ -62,9 +62,9 @@ namespace HotFix
             }
         }
 
-        public static async UniTask<GameObject> InstantiateAsync(GameObject prefab)
+        public static UniTask<GameObject> InstantiateAsync(GameObject prefab)
         {
-            return await HFFramework.GameFactory.InstantiateAsync(prefab);
+            return HFFramework.GameFactory.InstantiateAsync(prefab);
         }
     }
 }

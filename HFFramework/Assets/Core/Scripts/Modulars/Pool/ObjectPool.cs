@@ -5,8 +5,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    [Serializable]
-    public class ObjectPool : MonoBehaviour
+    public class ObjectPool
     {
         /// <summary>
         ///  create

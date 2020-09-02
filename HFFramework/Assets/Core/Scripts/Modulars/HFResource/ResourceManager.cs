@@ -142,11 +142,14 @@ namespace HFFramework
         /// </summary>
         public void RefreshAssetBundleManifest()
         {
-            AssetBundle manifestAB = AssetBundle.LoadFromFile(AutoGetResourcePath(MainfestName, false));  // 加载总ManifestAssetBundle
-            if (manifestAB != null)
+            if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.AssetBundle)
             {
-                manifest = (AssetBundleManifest)manifestAB.LoadAsset("AssetBundleManifest");
-                manifestAB.Unload(false);  // 释放AssetBundle
+                AssetBundle manifestAB = AssetBundle.LoadFromFile(AutoGetResourcePath(MainfestName, false));  // 加载总ManifestAssetBundle
+                if (manifestAB != null)
+                {
+                    manifest = (AssetBundleManifest)manifestAB.LoadAsset("AssetBundleManifest");
+                    manifestAB.Unload(false);  // 释放AssetBundle
+                }
             }
         }
 

@@ -28,41 +28,41 @@ namespace HFFramework
 
             MemoryClear();
 
-            GameFactory.Create<GameLooper>(true);
+            GameFactory.CreateSingleton<GameEnvironment>();
 
-            GameFactory.Create<GameFactory>(true);
+            GameFactory.CreateSingleton<GameLooper>();
 
-            GameFactory.Create<PathManager>(true);
+            GameFactory.CreateSingleton<GameFactory>();
 
-            GameFactory.Create<ResourceManager>(true);
+            GameFactory.CreateSingleton<PathManager>();
 
-            GameFactory.Create<GameEnvironment>(true);
+            GameFactory.CreateSingleton<ResourceManager>();
 
-            GameFactory.Create<NotificationCenter>(true);
+            GameFactory.CreateSingleton<NotificationCenter>();
 
-            GameFactory.Create<SocketManager>(true);
+            GameFactory.CreateSingleton<SocketManager>();
 
-            GameFactory.Create<AudioManager>(true);
+            GameFactory.CreateSingleton<AudioManager>();
 
-            GameFactory.Create<UIManager>(true);
+            GameFactory.CreateSingleton<UIManager>();
 
-            GameFactory.Create<WebImageManager>(true);
+            GameFactory.CreateSingleton<WebImageManager>();
 
-            GameFactory.Create<DownLoadManager>(true);
+            GameFactory.CreateSingleton<DownLoadManager>();
 
-            GameFactory.Create<InputManager>(true);
+            GameFactory.CreateSingleton<InputManager>();
 
-            GameFactory.Create<ObjectPoolManager>(true);
+            GameFactory.CreateSingleton<ObjectPoolManager>();
 
-            GameFactory.Create<AppDomainManager>(true);
+            GameFactory.CreateSingleton<AppDomainManager>();
 
-            GameFactory.Create<TimerManager>(true);
+            GameFactory.CreateSingleton<TimerManager>();
 
-            GameFactory.Create<GameStateChecker>(true);
+            GameFactory.CreateSingleton<GameStateChecker>();
 
-            GameFactory.Create<GameUtils>(true);
+            GameFactory.CreateSingleton<GameUtils>();
 
-            GameFactory.Create<GameSceneManager>(true);
+            GameFactory.CreateSingleton<GameSceneManager>();
 
             LogicStart();
         }

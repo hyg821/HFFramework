@@ -33,16 +33,13 @@ namespace HFFramework
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Create<T>(bool isDontDestroy = false, string name = null) where T : MonoBehaviour
+        public static T CreateSingleton<T>() where T : MonoBehaviour,IManager
         {
-            GameObject temp = new GameObject();
-            T t1 = temp.AddComponent<T>();
-            temp.name = name==null?typeof(T).Name:name;
-            if (isDontDestroy)
-            {
-                GameObject.DontDestroyOnLoad(temp);
-            }
-            return t1;
+            GameObject obj = new GameObject();
+            T t = obj.AddComponent<T>();
+            obj.name = nameof(T);
+            DontDestroyOnLoad(obj);
+            return t;
         }
 
         /// <summary>

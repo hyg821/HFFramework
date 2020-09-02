@@ -58,7 +58,8 @@ namespace HotFix
         /// </summary>
         public virtual void OnDestroy()
         {
-
+            entity = null;
+            instanceID = 0;
         }
     }
 }

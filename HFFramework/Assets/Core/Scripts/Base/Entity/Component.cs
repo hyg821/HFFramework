@@ -59,7 +59,8 @@ namespace HFFramework
         /// </summary>
         public virtual void OnDestroy()
         {
-
+            entity = null;
+            instanceID = 0;
         }
     }
 }

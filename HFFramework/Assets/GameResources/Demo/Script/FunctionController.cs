@@ -76,15 +76,25 @@ namespace HFFramework.Demo
             }
         }
 
+        public List<Test1Entity> temp = new List<Test1Entity>();
+        
         public async void Entity数据显示分离()
         {
             Close();
             for (int i = 0; i < 10; i++)
             {
                 Test1Entity entity = await GameFactory.CreateEntityAsync<Test1Entity>("prefab", "Cube");
+                temp.Add(entity);
                 await UniTask.Delay(100);
             }
+
+            TimerManager.Schedule(0, 10, 1, delegate (Timer t)
+            {
+                Extensions.Clear(temp);
+            });
         }
+
+
 
         public override void PlayShowAnimation()
         {

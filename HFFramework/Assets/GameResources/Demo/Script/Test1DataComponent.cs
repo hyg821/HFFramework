@@ -8,11 +8,12 @@ namespace HFFramework.Demo
     public class Test1DataComponent : DataComponent
     {
         public Vector3 position;
+        public Timer timer;
 
         public override void Awake()
         {
             base.Awake();
-            TimerManager.Schedule(0.1f, 0, -1, Update);
+            timer = TimerManager.Schedule(0.1f, 0, -1, Update);
         }
 
         public float time;
@@ -33,6 +34,12 @@ namespace HFFramework.Demo
 
             position = new Vector3(r * Mathf.Cos(a), r * Mathf.Sin(a), 0);
             SetFieldValue("position", position);
+        }
+
+        public override void OnDestroy()
+        {
+            Extensions.CloseTimer(timer);
+            base.OnDestroy();
         }
     }
 }

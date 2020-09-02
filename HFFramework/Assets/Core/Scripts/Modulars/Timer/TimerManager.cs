@@ -72,10 +72,11 @@ namespace HFFramework
         /// <param name="delay">秒延迟</param>
         /// <param name="repeatCount">重复次数</param>
         /// <param name="callback">任务</param>
-        public static void Schedule(float interval,float delay,int repeatCount,Action<Timer> callback)
+        public static Timer Schedule(float interval,float delay,int repeatCount,Action<Timer> callback)
         {
             Timer timer = new Timer(interval, delay, repeatCount, callback);
             AddTimer(timer);
+            return timer;
         }
 
         public static void AddTimer(Timer timer)

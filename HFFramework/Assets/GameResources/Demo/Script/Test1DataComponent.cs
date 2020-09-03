@@ -13,14 +13,14 @@ namespace HFFramework.Demo
         public override void Awake()
         {
             base.Awake();
-            timer = TimerManager.Schedule(0.1f, 0, -1, Update);
+            timer = TimerManager.Schedule(0.05f, 0, -1, Update);
         }
 
         public float time;
 
         public void Update(Timer timer)
         {
-            time += 0.1f;
+            time += timer.interval;
             if (time > 1)
             {
                 time = 0;
@@ -33,7 +33,7 @@ namespace HFFramework.Demo
             //HFLog.C("弧度 " + a);
 
             position = new Vector3(r * Mathf.Cos(a), r * Mathf.Sin(a), 0);
-            SetFieldValue("position", position);
+            SetValue("position", position,true);
         }
 
         public override void OnDestroy()

@@ -14,6 +14,19 @@ namespace HFFramework
 
         public event Action<DataComponent> onValueChanged;
 
+        public DataObserver(string key, Type type)
+        {
+            if (fieldInfo == null)
+            {
+                fieldInfo = type.GetField(key);
+            }
+
+            if (propertyInfo == null)
+            {
+                propertyInfo = type.GetProperty(key);
+            }
+        }
+
         public void AddEvent(Action<DataComponent> onValueChanged)
         {
             this.onValueChanged += onValueChanged;

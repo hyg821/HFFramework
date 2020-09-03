@@ -36,34 +36,37 @@ namespace HFFramework
             }
         }
 
-        public void SetFieldValue<T>(string key,T value)
+        public void SetValue<T>(string key,T value,bool notify = false)
         {
             DataObserver observer = GetObserver(key);
-            if (observer.fieldInfo==null)
+            if (observer.fieldInfo!=null)
             {
-                observer.fieldInfo = type.GetField(key);
+                observer.fieldInfo.SetValue(this, value);
+                if (notify)
+                {
+                    observer.Invoke(this);
+                }
+                return;
             }
-            observer.fieldInfo.SetValue(this, value);
-            observer.Invoke(this);
+
+            if (observer.propertyInfo!=null)
+            {
+                observer.propertyInfo.SetValue(this, value);
+                if (notify)
+                {
+                    observer.Invoke(this);
+                }
+                return;
+            }
         }
 
-        public void SetPropertyValue<T>(string key, T value)
-        {
-            DataObserver observer = GetObserver(key);
-            if (observer.propertyInfo == null)
-            {
-                observer.propertyInfo = type.GetProperty(key);
-            }
-            observer.propertyInfo.SetValue(this, value);
-            observer.Invoke(this);
-        }
 
         public DataObserver GetObserver(string key)
         {
             DataObserver observer;
             if (!observers.TryGetValue(key, out observer))
             {
-                observer = new DataObserver();
+                observer = new DataObserver(key, type);
                 observers.Add(key, observer);
             }
             return observer;

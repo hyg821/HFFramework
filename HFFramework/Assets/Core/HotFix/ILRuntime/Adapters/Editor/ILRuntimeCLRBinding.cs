@@ -57,7 +57,7 @@ public class ILRuntimeCLRBinding
 
     static void InitILRuntime(ILRuntime.Runtime.Enviorment.AppDomain domain)
     {
-        ILRuntimeExecutor.InitializeILRuntime(domain);
+        ILRuntimeExecutor.Register(domain);
     }
 }
 #endif

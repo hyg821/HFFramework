@@ -37,7 +37,7 @@ namespace HFFramework
         {
             GameObject obj = new GameObject();
             T t = obj.AddComponent<T>();
-            obj.name = nameof(T);
+            obj.name = typeof(T).Name;
             DontDestroyOnLoad(obj);
             return t;
         }

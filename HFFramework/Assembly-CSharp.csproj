@@ -183,8 +183,9 @@
     <Compile Include="Assets\Core\HotFix\LitJson\Lexer.cs" />
     <Compile Include="Assets\Core\HotFix\LitJson\ParserToken.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Behavior\BaseBehaviour.cs" />
-    <Compile Include="Assets\Core\Scripts\Base\Entity\BehaviorComponent.cs" />
-    <Compile Include="Assets\Core\Scripts\Base\Entity\DataComponent.cs" />
+    <Compile Include="Assets\Core\Scripts\Base\Entity\Component.cs" />
+    <Compile Include="Assets\Core\Scripts\Base\Entity\Data\DataComponent.cs" />
+    <Compile Include="Assets\Core\Scripts\Base\Entity\Data\DataObserver.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Entity\Entity.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Interface\IManager.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Linker\HotFixLinker.cs" />

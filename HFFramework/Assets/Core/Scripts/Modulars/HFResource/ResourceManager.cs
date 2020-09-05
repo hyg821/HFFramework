@@ -24,7 +24,7 @@ namespace HFFramework
         // 如果有依赖请把依赖做成预设体 通过加载预设体的方式 实现
         // 如果是编辑器开发模式 那么场景需要build assetbundle 才能看到效果 其他的不需要build 因为编辑器会走AssetDatabase直接加载
         // 正常卸载明确的的bundle 比如 prefab sprite  不明确的并且被依赖的资源通过UnloadUnusedAssetBundle 来卸载（没有经过测试 谨慎使用）
-        // 推荐使用UnLoad(true) 卸载资源 卸载的比较干净
+        // 转场的时候 推荐使用UnLoad(true) 卸载资源 卸载的比较干净
         // 推荐shader 通过ShaderVariantCollection 收集所有变体 最开始就全部加载出来 并且都放在一个bundle下
 
         public static ResourceManager Instance;
@@ -40,11 +40,6 @@ namespace HFFramework
         ///  缓存AssetBundlePackage字典
         /// </summary>
         public Dictionary<string, AssetBundlePackage> allAssetBundleDic = new Dictionary<string, AssetBundlePackage>();
-
-        /// <summary>
-        ///  临时存引用计数为0的数组
-        /// </summary>
-        private List<AssetBundlePackage> unusedAssetBundleList = new List<AssetBundlePackage>();
 
         /// <summary>
         ///  主要记录AssetBundle 之间的互相引用
@@ -171,38 +166,12 @@ namespace HFFramework
         /// <returns></returns>
         public GameObject GetPrefab(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
-            {
-                return EditorLoadAsset<GameObject>(packageName, assetName);
-            }
-            else
-            {
-                AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
-                GameObject g = ab.LoadAsset<GameObject>(assetName);
-                return g;
-            }
+            return GetAsset<GameObject>(packageName, assetName);
         }
 
         public async UniTask<GameObject> GetPrefabAsync(string packageName, string assetName)
         {
-            try
-            {
-                if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
-                {
-                    return EditorLoadAsset<GameObject>(packageName, assetName);
-                }
-                else
-                {
-                    AssetBundlePackage ab = await LoadAssetBundleFromFileAsync(packageName);
-                    GameObject prefab = await ab.LoadAssetAsync<GameObject>(assetName);
-                    return prefab;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-                throw;
-            }
+            return await GetAssetAsync<GameObject>(packageName, assetName);
         }
 
         /// <summary>
@@ -212,16 +181,7 @@ namespace HFFramework
         /// <returns></returns>
         public Sprite GetSprite(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
-            {
-                return EditorLoadAsset<Sprite>(packageName, assetName);
-            }
-            else
-            {
-                AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
-                Sprite sp = ab.LoadAsset<Sprite>(assetName);
-                return sp;
-            }
+            return GetAsset<Sprite>(packageName, assetName);
         }
 
         /// <summary>
@@ -241,7 +201,9 @@ namespace HFFramework
             else
             {
                 AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
-                return ab.LoadSprite(atlasName, spriteName);
+                Sprite sp = ab.LoadSprite(atlasName, spriteName);
+                ab.Release();
+                return sp;
             }
         }
 
@@ -264,17 +226,7 @@ namespace HFFramework
         /// <returns></returns>
         public Shader GetShader(string packageName, string assetName)
         {
-            if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
-            {
-                Shader shader = EditorLoadAsset<Shader>(packageName, assetName);
-                return shader;
-            }
-            else
-            {
-                AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
-                Shader shader = ab.LoadAsset<Shader>(assetName);
-                return shader;
-            }
+            return GetAsset<Shader>(packageName, assetName);
         }
 
         /// <summary>
@@ -293,7 +245,24 @@ namespace HFFramework
             else
             {
                 AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
-                return ab.LoadAsset<T>(assetName);
+                T result = ab.LoadAsset<T>(assetName);
+                ab.Release();
+                return result;
+            }
+        }
+
+        public async UniTask<T> GetAssetAsync<T>(string packageName, string assetName) where T : UnityEngine.Object
+        {
+            if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
+            {
+                return EditorLoadAsset<T>(packageName, assetName);
+            }
+            else
+            {
+                AssetBundlePackage ab = await LoadAssetBundleFromFileAsync(packageName);
+                T result = await ab.LoadAssetAsync<T>(assetName);
+                ab.Release();
+                return result;
             }
         }
 
@@ -327,40 +296,10 @@ namespace HFFramework
 
         private async UniTask m_LoadScene(string packageName, string sceneName)
         {
-            await m_LoadAssetBundleFromFileAsync(packageName.ToLower());
+            AssetBundlePackage ab = await m_LoadAssetBundleFromFileAsync(packageName.ToLower());
             await SceneManager.LoadSceneAsync(sceneName);
-            UnloadAssetBundle(packageName, false);
+            ab.Release();
             await Resources.UnloadUnusedAssets();
-        }
-
-        /// <summary>
-        ///  获取资源 在callback 之后自动卸载assetbundle 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="packageName"></param>
-        /// <param name="assetName"></param>
-        /// <param name="callBack"></param>
-        public void LoadAssetWithAutoKill<T>(string packageName, string assetName, Action<T> callback) where T : UnityEngine.Object
-        {
-            AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
-            T t = ab.assetBundle.LoadAsset<T>(assetName);
-            callback(t);
-            UnloadAssetBundle(ab, false);
-        }
-
-        /// <summary>
-        ///  获取资源 在callback 之后自动卸载assetbundle 并且销毁对应的prefab
-        /// </summary>
-        /// <param name="packageName"></param>
-        /// <param name="assetName"></param>
-        /// <param name="autoKillPrefab"></param>
-        /// <param name="callBack"></param>
-        public void LoadPrefabWithAutoKill(string packageName, string assetName, Action<GameObject> callback)
-        {
-            AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
-            GameObject prefab = ab.assetBundle.LoadAsset<GameObject>(assetName);
-            callback(prefab);
-            UnloadAssetBundle(ab, false);
         }
 
         /// <summary>
@@ -561,6 +500,7 @@ namespace HFFramework
             if (GameEnvironment.Instance.config.LoadAssetPathType != LoadAssetPathType.Editor)
             {
                 HFLog.L("卸载Assetbundle  " + bundle.name);
+                bundle.unloading = true;
                 RecursionReleaseAssetBundle(bundle.name);
                 allAssetBundleDic.Remove(bundle.name);
                 bundle.Unload(b);
@@ -568,7 +508,7 @@ namespace HFFramework
         }
 
         /// <summary>
-        /// 递归 Release AssetBundle
+        /// 递归引用计数-1 碰到 引用计数为0 并且没有正在卸载的 bundle 自动卸载
         /// </summary>
         /// <param name="name"></param>
         public void RecursionReleaseAssetBundle(string packageName)
@@ -576,9 +516,13 @@ namespace HFFramework
             AssetBundlePackage bundle =  GetAssetBundle(packageName);
             if (bundle!=null)
             {
-                bundle.Release();
+                bundle.Release();     
+                if (bundle.refCount==0&&!bundle.unloading)
+                {
+                    UnloadAssetBundle(bundle, true);
+                }
             }
-            string[] list = Instance.GetAssetBundleDependencies(packageName);
+            string[] list = GetAssetBundleDependencies(packageName);
             for (int i = 0; i < list.Length; i++)
             {
                 RecursionReleaseAssetBundle(list[i]);
@@ -604,9 +548,10 @@ namespace HFFramework
         /// <summary>
         ///  释放引用计数为0的bundle
         /// </summary>
-        public void UnloadUnusedAssetBundle()
+        public async UniTask UnloadUnusedAssetBundle()
         {
-            unusedAssetBundleList.Clear();
+            List<AssetBundlePackage> unusedAssetBundleList = new List<AssetBundlePackage>();
+
             foreach (var item in allAssetBundleDic)
             {
                 if (item.Value.refCount == 0)
@@ -617,11 +562,10 @@ namespace HFFramework
 
             foreach (var item in unusedAssetBundleList)
             {
-                item.Unload(false);
-                allAssetBundleDic.Remove(item.name);
+                UnloadAssetBundle(item.name, true);
             }
 
-            Resources.UnloadUnusedAssets();
+            await Resources.UnloadUnusedAssets();
         }
 
         /// <summary>
@@ -635,6 +579,15 @@ namespace HFFramework
             }
             allAssetBundleDic.Clear();
             Resources.UnloadUnusedAssets();
+        }
+
+        public void RefCount()
+        {
+            Debug.Log("---------------------------------------------------------");
+            foreach (var item in allAssetBundleDic)
+            {
+                Debug.Log(item.Value.name + " 引用计数 ：" + item.Value.refCount);
+            }
         }
 
         public void Shutdown()
@@ -673,6 +626,11 @@ namespace HFFramework
         ///  引用计数 不需要手动修改
         /// </summary>
         public int refCount = 0;
+
+        /// <summary>
+        /// 是否正在卸载
+        /// </summary>
+        public bool unloading = false;
 
         /// <summary>
         ///  最好不要手动调用这个方法会使引用计数+1
@@ -724,6 +682,7 @@ namespace HFFramework
         {
             if (assetBundle != null)
             {
+                unloading = false;
                 refCount = 0;
                 CacheDic.Clear();
                 assetBundle.Unload(t);

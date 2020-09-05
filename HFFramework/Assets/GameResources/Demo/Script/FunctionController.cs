@@ -104,11 +104,16 @@ namespace HFFramework.Demo
             HFLog.C("播放打开动画");
         }
 
-        public override void OnShowCompleted()
+        public async override void OnShowCompleted()
         {
             base.OnShowCompleted();
             HFLog.C("页面完全显示");
             HFFramework.AppDomainManager.Instance.ExecuteHotFix("hotfixdll", "HotFix");
+
+
+            await UIManager.Instance.Close<FunctionController>();
+            ResourceManager.Instance.RefCount();
+            ResourceManager.Instance.UnloadUnusedAssetBundle();
 
             return;
             TimerManager.Schedule(1, 5, -1, delegate (Timer timer)

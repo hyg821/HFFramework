@@ -18,7 +18,7 @@ namespace HFFramework
         public async override UniTask OnEnter(object args)
         {
             await base.OnEnter(args);
-            await LoadScene();
+            await LoadResources();
             await PreLoad();
             await SendEnterRequest();
             await OpenUI();
@@ -32,7 +32,7 @@ namespace HFFramework
             await SendExitRequest();
             await CloseUI();
             await ClearManager();
-            await UnloadScene();
+            await UnloadResources();
         }
 
         /// <summary>
@@ -80,9 +80,9 @@ namespace HFFramework
         ///  卸载场景
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTask UnloadScene()
+        public virtual async UniTask UnloadResources()
         {
-            await new UniTaskVoid();
+            await ResourceManager.Instance.UnloadUnusedAssetBundle();
             HFLog.C("步骤5 卸载场景");
         }
 
@@ -90,7 +90,7 @@ namespace HFFramework
         ///  加载场景
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTask LoadScene()
+        public virtual async UniTask LoadResources()
         {
             await new UniTaskVoid();
             HFLog.C("步骤6 加载场景");

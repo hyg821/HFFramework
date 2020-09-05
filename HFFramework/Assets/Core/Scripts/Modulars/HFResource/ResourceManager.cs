@@ -24,6 +24,7 @@ namespace HFFramework
         // 如果有依赖请把依赖做成预设体 通过加载预设体的方式 实现
         // 如果是编辑器开发模式 那么场景需要build assetbundle 才能看到效果 其他的不需要build 因为编辑器会走AssetDatabase直接加载
         // 正常卸载明确的的bundle 比如 prefab sprite  不明确的并且被依赖的资源通过UnloadUnusedAssetBundle 来卸载（没有经过测试 谨慎使用）
+        // 推荐使用UnLoad(true) 卸载资源 卸载的比较干净
         // 推荐shader 通过ShaderVariantCollection 收集所有变体 最开始就全部加载出来 并且都放在一个bundle下
 
         public static ResourceManager Instance;
@@ -382,7 +383,7 @@ namespace HFFramework
             {
                 AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(packageName, false));
                 assetBundlePackage = new AssetBundlePackage(bundle, packageName);
-                CachePackage(assetBundlePackage);
+                allAssetBundleDic.Add(bundle.name, assetBundlePackage);
                 //HFLog.L("同步加载AssetBundle   " + assetBundleName);
             }
             else
@@ -414,7 +415,7 @@ namespace HFFramework
 
         private async UniTask<AssetBundlePackage> m_LoadAssetBundleFromFileAsync(string packageName)
         {
-            string[] list = Instance.GetAssetBundleDependencies(packageName);
+            string[] list = GetAssetBundleDependencies(packageName);
             if (list.Length != 0)
             {
                 for (int i = 0; i < list.Length; i++)
@@ -424,30 +425,14 @@ namespace HFFramework
             }
 
             AssetBundlePackage assetBundlePackage = null;
-            if (!allAssetBundleDic.ContainsKey(packageName))
+            if (!allAssetBundleDic.TryGetValue(packageName, out assetBundlePackage))
             {
                 AssetBundle assetbundle = await AssetBundle.LoadFromFileAsync(AutoGetResourcePath(packageName, false));
-                if (assetbundle!=null)
+                if (!allAssetBundleDic.TryGetValue(packageName, out assetBundlePackage))
                 {
-                    if (!allAssetBundleDic.ContainsKey(packageName))
-                    {
-                        assetBundlePackage = new AssetBundlePackage(assetbundle, packageName);
-                        CachePackage(assetBundlePackage);
-                    }
-                    else
-                    {
-                        assetBundlePackage = allAssetBundleDic[packageName];
-                    }
+                    assetBundlePackage = new AssetBundlePackage(assetbundle, packageName);
+                    allAssetBundleDic.Add(assetBundlePackage.name, assetBundlePackage);
                 }
-                else
-                {
-                    Debug.LogError(packageName  + " 加载失败");
-                    return assetBundlePackage;
-                }
-            }
-            else
-            {
-                assetBundlePackage = allAssetBundleDic[packageName];
             }
             assetBundlePackage.Retain();
             return assetBundlePackage;
@@ -525,14 +510,6 @@ namespace HFFramework
             if (callback != null)
             {
                 callback(codeBytes, pdbBytes);
-            }
-        }
-
-        public void CachePackage(AssetBundlePackage bundle)
-        {
-            if (!allAssetBundleDic.ContainsKey(bundle.name))
-            {
-                allAssetBundleDic.Add(bundle.name, bundle);
             }
         }
 

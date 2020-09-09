@@ -455,11 +455,9 @@ namespace HFFramework
         public AssetBundlePackage GetAssetBundle(string packageName)
         {
             packageName = packageName.ToLower();
-            if (allAssetBundleDic.ContainsKey(packageName))
-            {
-                return allAssetBundleDic[packageName];
-            }
-            return null;
+            AssetBundlePackage result = null;
+            allAssetBundleDic.TryGetValue(packageName, out result);
+            return result;
         }
 
         /// <summary>

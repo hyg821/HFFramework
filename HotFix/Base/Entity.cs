@@ -64,8 +64,6 @@ namespace HotFix
         /// </summary>
         public object userData;
 
-        private bool isActive;
-
         /// <summary>
         ///  本体entity的帮助类
         /// </summary>
@@ -85,12 +83,11 @@ namespace HotFix
         {
             set
             {
-                isActive = value;
-                if (gameObject != null && gameObject.activeSelf != isActive)
+                if (gameObject != null && gameObject.activeSelf != value)
                 {
-                    gameObject.SetActive(isActive);
+                    gameObject.SetActive(value);
                 }
-                if (isActive)
+                if (value)
                 {
                     OnEnable();
                 }
@@ -101,7 +98,7 @@ namespace HotFix
             }
             get
             {
-                return isActive;
+                return gameObject.activeSelf;
             }
         }
 

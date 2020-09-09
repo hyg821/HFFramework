@@ -267,13 +267,11 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  异步加载场景 如果从编辑器直接读取 需要把场景添加到Build Settings 里 
-        ///  2018 添加了 直接editor 加载的接口 只能等2018了
+        /// 加载场景
         /// </summary>
-        /// <param name="assetBundleName"></param>
-        /// <param name="autoJump"></param>
+        /// <param name="packageName"></param>
         /// <param name="sceneName"></param>
-        /// <param name="finishCallBack"></param>
+        /// <returns></returns>
         public async UniTask LoadScene(string packageName,  string sceneName)
         {
             try

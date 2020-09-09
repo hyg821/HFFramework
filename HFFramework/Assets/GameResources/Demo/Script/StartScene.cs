@@ -15,7 +15,7 @@ namespace HFFramework
             //初始化配置文件
             HFConfigManager.Instance.Init();
             await ResourceManager.Instance.LoadScene("scenea", "Demo");
-            await UIManager.Instance.Open<FunctionController>(null,false,true); 
+            await UIManager.Instance.Open<FunctionController>(false,true); 
         }
 
         public override void OnStay()

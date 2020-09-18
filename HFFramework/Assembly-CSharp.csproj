@@ -108,6 +108,7 @@
     <Compile Include="Assets\Core\HotFix\ILRuntime\Other\NeedAdaptorAttribute.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Other\ThreadSafeDictionary.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Other\UncheckedList.cs" />
+    <Compile Include="Assets\Core\HotFix\ILRuntime\Other\UncheckedStack.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Reflection\Extensions.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Reflection\ILRuntimeConstructorInfo.cs" />
     <Compile Include="Assets\Core\HotFix\ILRuntime\Reflection\ILRuntimeFieldInfo.cs" />

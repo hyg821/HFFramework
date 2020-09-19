@@ -29,9 +29,14 @@ namespace HFFramework
         public int repeatCount;
 
         /// <summary>
-        /// 回调
+        /// 执行回调
         /// </summary>
         public Action<Timer> task;
+
+        /// <summary>
+        /// 完成回调
+        /// </summary>
+        public Action<Timer> complete;
 
         /// <summary>
         ///  已经使用的总时间
@@ -53,12 +58,13 @@ namespace HFFramework
         /// </summary>
         public float useIntervalTime;
 
-        public Timer(float interval, float delay, int repeatCount, Action<Timer> task)
+        public Timer(float interval, float delay, int repeatCount, Action<Timer> task, Action<Timer> complete = null)
         {
             this.interval = interval;
             this.delay = delay;
             this.repeatCount = repeatCount;
             this.task = task;
+            this.complete = complete;
             this.isComplete = false;
             this.taskTime = delay + interval * repeatCount;
         }
@@ -146,6 +152,7 @@ namespace HFFramework
             taskTime = 0;
             useIntervalTime = 0;
             task = null;
+            complete = null;
         }
     }
 }

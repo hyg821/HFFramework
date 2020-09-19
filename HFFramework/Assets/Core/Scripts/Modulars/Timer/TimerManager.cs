@@ -55,6 +55,10 @@ namespace HFFramework
                     if (timer.isComplete)
                     {
                         removeTimerList.Add(timer);
+                        if (timer.complete!=null)
+                        {
+                            timer.complete(timer);
+                        }
                     }
                 }
             }

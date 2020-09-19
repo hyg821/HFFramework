@@ -82,7 +82,7 @@ namespace HFFramework
         {
             if (timer!=null)
             {
-                timer.isComplete = true;
+                timer.Close();
             }
         }
 

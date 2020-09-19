@@ -77,7 +77,7 @@ namespace HFFramework
             }
 
             //如果标记完成 直接退出
-            if (isComplete==true)
+            if (isComplete)
             {
                 return;
             }

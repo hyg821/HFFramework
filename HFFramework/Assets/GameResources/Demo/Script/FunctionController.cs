@@ -21,6 +21,7 @@ using UniRx.Async;
 using System.Runtime.CompilerServices;
 using UnityEngine.Profiling;
 using LitJson;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace HFFramework.Demo
 {
@@ -110,6 +111,15 @@ namespace HFFramework.Demo
             HFLog.C("页面完全显示");
             HFFramework.AppDomainManager.Instance.ExecuteHotFix("hotfixdll", "HotFix");
 
+            FileStream fs = new FileStream(Application.dataPath+ "/1.bin", FileMode.Create);
+            BinaryFormatter ff =  new BinaryFormatter();
+            ff.Serialize(fs, ConfigAddress.Instance);
+            fs.Close();
+
+            fs = new FileStream(Application.dataPath + "/1.bin", FileMode.Open);
+            ff = new BinaryFormatter();
+            ConfigAddress ss = ff.Deserialize(fs) as ConfigAddress ;
+            Debug.Log(ss);
 
             await UIManager.Instance.Close<FunctionController>();
             ResourceManager.Instance.RefCount();

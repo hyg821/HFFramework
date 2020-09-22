@@ -11,7 +11,7 @@ namespace Config
 { 
     [System.Serializable]
     public class Address
-    { 
+    {
         /// <summary>
         /// 索引
         /// </summary>

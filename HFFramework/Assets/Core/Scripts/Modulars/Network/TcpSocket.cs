@@ -173,7 +173,7 @@ namespace HFFramework
         private MemoryStream writeStream;
         private BinaryWriter binaryWriter;
 
-        private StreamPackage currentPackage = new StreamPackage();
+        private StreamPackage package = new StreamPackage();
 
         /// <summary>
         ///  检查第一次是否连接上 定时器
@@ -396,7 +396,7 @@ namespace HFFramework
                     }
 
                     //如果没有读取消息头 并且 可以读取的数据大于 头的长度
-                    if (currentPackage.isReadHeader == false && socket.Available >= MSG_HEAD_LEN)
+                    if (package.isReadHeader == false && socket.Available >= MSG_HEAD_LEN)
                     {
                         //socket 接收到缓冲区 并且接收的长度是数据头长度
                         socket.Receive(dataBuffer, MSG_HEAD_LEN, 0);
@@ -410,56 +410,56 @@ namespace HFFramework
                         //binaryReader 读取 MSG_ALL_IDE_LEN长度的字节
                         byte[] temp = binaryReader.ReadBytes(MSG_ALL_IDE_LEN);
                         //通过获得的字节 转换成 数据包的总长度
-                        currentPackage.length = Extensions.BitConverterToInt32(temp, 0);
-
-                        //binaryReader 读取 MSG_TYPE_LEN 长度的字节
-                        temp = binaryReader.ReadBytes(MSG_TYPE_LEN);
-                        //通过获得的字节 转换成 消息类型
-                        currentPackage.opcode = Extensions.BitConverterToInt32(temp, 0);
+                        package.length = Extensions.BitConverterToInt32(temp, 0);
 
                         //binaryReader 读取 MSG_TYPE_LEN 长度的字节
                         temp = binaryReader.ReadBytes(MSG_RPCID_LEN);
                         //通过获得的字节 转换成 rpc id
-                        currentPackage.rpcID = Extensions.BitConverterToInt32(temp, 0);
+                        package.rpcID = Extensions.BitConverterToInt32(temp, 0);
+
+                        //binaryReader 读取 MSG_TYPE_LEN 长度的字节
+                        temp = binaryReader.ReadBytes(MSG_TYPE_LEN);
+                        //通过获得的字节 转换成 消息类型
+                        package.opcode = Extensions.BitConverterToInt32(temp, 0);
 
                         //重置memoryStream 索引为0
                         readStream.Position = 0;
 
                         //再减去数据头的长度得到 数据体的长度
-                        currentPackage.bodyLength = currentPackage.length - MSG_HEAD_LEN;
+                        package.bodyLength = package.length - MSG_HEAD_LEN;
 
                         //设置已经读取 消息头标记
-                        currentPackage.isReadHeader = true;
+                        package.isReadHeader = true;
                     }
 
                     //如果读取过了消息头 并且可读取的数据大于整个数据体的长度
-                    if (currentPackage.isReadHeader == true && socket.Available >= currentPackage.bodyLength)
+                    if (package.isReadHeader == true && socket.Available >= package.bodyLength)
                     {
                         //从socket 内部缓冲区 读取 已经获取过消息体长度的 数据到自己的缓冲区 dataBuffer 
                         //需要判断消息体是否为0 因为服务器传过来的proto如果没有属性反序列化之后长度是0 
                         //但是socket.Receive 如果接收0的话 就会无限阻塞等待新消息过来 
                         //这样就会导致空消息是等到非空消息发送过来之后才能接收到 时效出现了问题
                         //dataBuffer 的数据长度 必须要大于 我要接受的长度 否则会出现无限阻塞没办法接受的情况
-                        if (currentPackage.bodyLength != 0)
+                        if (package.bodyLength != 0)
                         {
-                            socket.Receive(dataBuffer, currentPackage.bodyLength, 0);
+                            socket.Receive(dataBuffer, package.bodyLength, 0);
                         }
 
                         //把自己的缓冲写入 memoryStream
-                        readStream.Write(dataBuffer, 0, currentPackage.bodyLength);
+                        readStream.Write(dataBuffer, 0, package.bodyLength);
                         //重置memoryStream 索引为0
                         readStream.Position = 0;
 
                         //从 memoryStream 读取 数据体长度的 数据
-                        currentPackage.msgBytes = binaryReader.ReadBytes(currentPackage.bodyLength);
+                        package.msgBytes = binaryReader.ReadBytes(package.bodyLength);
                         //重置memoryStream 索引为0
                         readStream.Position = 0;
 
                         //如果读取了数据体  消息类型
-                        if (currentPackage.bodyLength != int.MinValue && currentPackage.opcode != int.MinValue)
+                        if (package.bodyLength != int.MinValue && package.opcode != int.MinValue)
                         {
                             //分发消息
-                            CreateMessage(currentPackage);
+                            CreateMessage(package);
                         }
                     }
                 }
@@ -487,12 +487,12 @@ namespace HFFramework
                     byte[] temp = Extensions.BitConverterGetBytes(msg.Length + MSG_HEAD_LEN);
                     binaryWriter.Write(temp);
 
-                    //写入消息号 定义的长度 一个int 4字节
-                    temp = Extensions.BitConverterGetBytes(opcode);
+                    //写入rpc 定义的长度 一个int 4字节
+                    temp = Extensions.BitConverterGetBytes(rpcID);
                     binaryWriter.Write(temp);
 
-                    //写入opcode 定义的长度 一个int 4字节
-                    temp = Extensions.BitConverterGetBytes(rpcID);
+                    //写入消息号 定义的长度 一个int 4字节
+                    temp = Extensions.BitConverterGetBytes(opcode);
                     binaryWriter.Write(temp);
 
                     //写入消息体
@@ -578,9 +578,9 @@ namespace HFFramework
                 socket.Close();
             }
 
-            if (currentPackage!=null)
+            if (package != null)
             {
-                currentPackage.Clear();
+                package.Clear();
             }
 
             if (readStream!=null)
@@ -603,7 +603,7 @@ namespace HFFramework
                 binaryWriter.Close();
             }
 
-            currentPackage = null;
+            package = null;
             receiveThread = null;
             socket = null;
 

@@ -114,25 +114,22 @@ namespace HFFramework
             MemoryClear();
         }
 
+        public void OnApplicationQuit()
+        {
+            Shutdown();
+            Debug.Log("应用退出");
+        }
+
         /// <summary>
         /// 退出app
         /// </summary>
         public void Quit()
         {
-            if (GameEnvironment.Instance.config.Platform == GamePlatform.Android)
-            {
-                Application.Quit();
-            }
-            else if (GameEnvironment.Instance.config.Platform == GamePlatform.iOS)
-            {
-                NativeBridge.Exit();
-            }
-        }
-
-        public void OnApplicationQuit()
-        {
-            Shutdown();
-            Debug.Log("应用退出");
+#if UNITY_ANDROID
+            Application.Quit();
+#elif UNITY_IOS
+            NativeBridge.Exit();
+#endif
         }
     }
 }

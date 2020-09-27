@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 68531086ec0b6d84ab7f628b6d20bb79
+guid: 15bcb7b8b200dac499952774d869f728
 labels:
 - Cell
 - Cells
@@ -15,9 +15,8 @@ labels:
 - UI
 - Virtualize
 folderAsset: yes
-timeCreated: 1438093066
-licenseType: Store
 DefaultImporter:
+  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

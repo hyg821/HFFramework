@@ -457,7 +457,7 @@ namespace HFFramework
         /// </summary>
         public void SendNotificationMessage(ushort moduleID, int msgID, object obj)
         {
-            NotificationCenter.PostNotification(new NotificationMessage(moduleID, msgID, this, obj));
+            NotificationCenter.Post(new NotificationMessage(moduleID, msgID, this, obj));
         }
 
         /// <summary>

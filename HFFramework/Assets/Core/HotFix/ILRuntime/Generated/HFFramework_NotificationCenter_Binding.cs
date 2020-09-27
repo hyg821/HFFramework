@@ -56,7 +56,7 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
 
-            HFFramework.NotificationCenter.PostNotification(@msg);
+            HFFramework.NotificationCenter.Post(@msg);
 
             return __ret;
         }

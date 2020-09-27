@@ -61,12 +61,12 @@ namespace HFFramework
         ///  发消息
         /// </summary>
         /// <param name="msg"></param>
-        public static void PostNotification(NotificationMessage msg)
+        public static void Post(NotificationMessage msg)
         {
-            Instance.SendNotification(msg);
+            Instance.Send(msg);
         }
 
-        public void SendNotification(NotificationMessage msg)
+        public void Send(NotificationMessage msg)
         {
             List<ObserverDelegate> list;
             if (messagePool.TryGetValue(msg.Key, out list))

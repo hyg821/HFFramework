@@ -68,17 +68,25 @@ namespace HFFramework
 
         public void Send(NotificationMessage msg)
         {
-            List<ObserverDelegate> list;
-            if (messagePool.TryGetValue(msg.Key, out list))
+            try
             {
-                for (int i = 0; i < list.Count; i++)
+                List<ObserverDelegate> list;
+                if (messagePool.TryGetValue(msg.Key, out list))
                 {
-                    ObserverDelegate o = list[i];
-                    if (o.receiver != null && o.callback != null)
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        o.callback(msg);
+                        ObserverDelegate o = list[i];
+                        if (o.receiver != null && o.callback != null)
+                        {
+                            o.callback(msg);
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                HFLog.E(e);
+                throw;
             }
         }
 

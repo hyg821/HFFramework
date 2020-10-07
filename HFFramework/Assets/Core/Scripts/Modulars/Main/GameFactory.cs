@@ -134,7 +134,7 @@ namespace HFFramework
             return t;
         }
 
-        public async static UniTask<T> CreateEntityAsync<T>(string packageName, string assetName) where T : Entity, new()
+        public static async UniTask<T> CreateEntityAsync<T>(string packageName, string assetName) where T : Entity, new()
         {
             try
             {

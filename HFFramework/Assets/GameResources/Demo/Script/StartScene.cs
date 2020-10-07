@@ -9,7 +9,7 @@ namespace HFFramework
 {
     public class StartScene : GameScene
     {
-        public async override UniTask OnEnter(object param = null)
+        public override async UniTask OnEnter(object param = null)
         {
             await base.OnEnter(param);
             //初始化配置文件

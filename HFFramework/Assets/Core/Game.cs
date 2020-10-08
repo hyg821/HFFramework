@@ -92,7 +92,6 @@ namespace HFFramework
         /// </summary>
         public void Shutdown()
         {
-            GameFactory.Instance.Shutdown();
             PathManager.Instance.Shutdown();
             ResourceManager.Instance.Shutdown();
             GameEnvironment.Instance.Shutdown();
@@ -110,6 +109,7 @@ namespace HFFramework
             GameUtils.Instance.Shutdown();
             NotificationCenter.Instance.Shutdown();
             GameLooper.Instance.Shutdown();
+            GameFactory.Instance.Shutdown();
             HTTPManager.OnQuit();
             MemoryClear();
         }

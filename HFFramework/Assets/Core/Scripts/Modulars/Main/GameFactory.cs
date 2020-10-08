@@ -19,6 +19,11 @@ namespace HFFramework
         public int instantiateLimit = 10;
 
         /// <summary>
+        /// 创建出来的entity的引用集合
+        /// </summary>
+        private Dictionary<long, Entity> entityRefrences = new Dictionary<long, Entity>();
+
+        /// <summary>
         /// 加载队列
         /// </summary>
         private Queue<InstantiateTask> instantiateQueue = new Queue<InstantiateTask>();
@@ -74,56 +79,19 @@ namespace HFFramework
             UnityEngine.Object.Destroy(asset);
         }
 
-        public static GameObject Instantiate(GameObject prefab)
-        {
-            GameObject gameObject = GameObject.Instantiate(prefab);
-            gameObject.name = prefab.name;
-            return gameObject;       
-        }
-
-        /// <summary>
-        /// 单线程异步分帧加载
-        /// </summary>
-        /// <param name="prefab"></param>
-        /// <returns></returns>
-        public static UniTask<GameObject> InstantiateAsync(GameObject prefab)
-        {
-            UniTaskCompletionSource<GameObject> source = new UniTaskCompletionSource<GameObject>();
-            InstantiateTask task = new InstantiateTask(prefab, source, null);
-            Instance.instantiateQueue.Enqueue(task);
-            return source.Task; 
-        }
-
-        /// <summary>
-        /// 单线程异步分帧加载
-        /// </summary>
-        /// <param name="prefab"></param>
-        /// <returns></returns>
-        public static void InstantiateAsync(GameObject prefab,Action<GameObject> callback)
-        {
-            InstantiateTask task = new InstantiateTask(prefab, null, callback);
-            Instance.instantiateQueue.Enqueue(task);
-        }
-
         public static T CreateEntity<T>() where T : Entity, new()
         {
             T t = new T();
+            CacheEntity(t);
             t.Awake();
             t.Start();
-            return t;
-        }
-
-        public static T CreateComponent<T>(Entity entity) where T : Component, new()
-        {
-            T t = new T();
-            t.SetEntity(entity);
-            t.Awake();
             return t;
         }
 
         public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null, bool worldPositionStays = false) where T : Entity, new()
         {
             T t = new T();
+            CacheEntity(t);
             t.SetGameObject(gameObject);
             if (parent!=null)
             {
@@ -139,6 +107,7 @@ namespace HFFramework
             try
             {
                 T t = new T();
+                CacheEntity(t);
                 t.isAsync = true;
                 await t.LoadResourcesAsync(packageName, assetName);
                 t.Awake();
@@ -150,6 +119,69 @@ namespace HFFramework
                 Debug.LogError(e);
                 throw;
             }
+        }
+
+        public static T CreateComponent<T>(Entity entity) where T : Component, new()
+        {
+            T t = new T();
+            t.SetEntity(entity);
+            t.Awake();
+            return t;
+        }
+
+        private static void CacheEntity<T>(T t)where T:Entity
+        {
+            if (!Instance.entityRefrences.ContainsKey(t.instanceID))
+            {
+                Instance.entityRefrences.Add(t.instanceID, t);
+            }
+            else
+            {
+                HFLog.E(typeof(T).Name + t.instanceID + "重复添加");
+            }
+        }
+
+        public static void RemoveEntity<T>(T t) where T:Entity
+        {
+            if (Instance.entityRefrences.ContainsKey(t.instanceID))
+            {
+                Instance.entityRefrences.Remove(t.instanceID);
+            }
+            else
+            {
+                HFLog.E(typeof(T).Name + t.instanceID + "引用移除失败");
+            }
+        }
+
+        public static GameObject Instantiate(GameObject prefab)
+        {
+            GameObject gameObject = GameObject.Instantiate(prefab);
+            gameObject.name = prefab.name;
+            return gameObject;
+        }
+
+        /// <summary>
+        /// 单线程异步分帧加载
+        /// </summary>
+        /// <param name="prefab"></param>
+        /// <returns></returns>
+        public static UniTask<GameObject> InstantiateAsync(GameObject prefab)
+        {
+            UniTaskCompletionSource<GameObject> source = new UniTaskCompletionSource<GameObject>();
+            InstantiateTask task = new InstantiateTask(prefab, source, null);
+            Instance.instantiateQueue.Enqueue(task);
+            return source.Task;
+        }
+
+        /// <summary>
+        /// 单线程异步分帧加载
+        /// </summary>
+        /// <param name="prefab"></param>
+        /// <returns></returns>
+        public static void InstantiateAsync(GameObject prefab, Action<GameObject> callback)
+        {
+            InstantiateTask task = new InstantiateTask(prefab, null, callback);
+            Instance.instantiateQueue.Enqueue(task);
         }
 
         public void Update()
@@ -181,24 +213,9 @@ namespace HFFramework
 
         public void Shutdown()
         {
+            entityRefrences.Clear();
             instantiateQueue.Clear();
             Instance = null;
-        }
-    }
-
-    public class InstantiateTask
-    {
-        public GameObject prefab;
-
-        public UniTaskCompletionSource<GameObject> completion;
-
-        public Action<GameObject> callback;
-
-        public InstantiateTask(GameObject prefab, UniTaskCompletionSource<GameObject> completion, Action<GameObject> callback)
-        {
-            this.prefab = prefab;
-            this.completion = completion;
-            this.callback = callback;
         }
     }
 }

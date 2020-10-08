@@ -528,6 +528,8 @@ namespace HFFramework
 
             DestoryGameObject();
 
+            GameFactory.RemoveEntity(this);
+
             instanceID = 0;
         }
 

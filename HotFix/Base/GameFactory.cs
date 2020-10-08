@@ -15,9 +15,15 @@ namespace HotFix
             return obj;
         }
 
-        public static T CreateEntity<T>() where T : Entity, new()
+        public static T NewEntity<T>() where T : Entity, new()
         {
             T t = new T();
+            return t;
+        }
+
+        public static T CreateEntity<T>() where T : Entity, new()
+        {
+            T t = NewEntity<T>();
             t.Awake();
             t.Start();
             return t;
@@ -33,7 +39,7 @@ namespace HotFix
 
         public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null, bool worldPositionStays = false) where T : Entity, new()
         {
-            T t = new T();
+            T t = NewEntity<T>();
             t.SetGameObject(gameObject);
             if (parent != null)
             {
@@ -48,7 +54,7 @@ namespace HotFix
         {
             try
             {
-                T t = new T();
+                T t = NewEntity<T>();
                 t.isAsync = true;
                 await t.LoadResourcesAsync(packageName, assetName);
                 t.Awake();

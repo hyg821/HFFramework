@@ -79,10 +79,16 @@ namespace HFFramework
             UnityEngine.Object.Destroy(asset);
         }
 
-        public static T CreateEntity<T>() where T : Entity, new()
+        public static T NewEntity<T>() where T : Entity, new()
         {
             T t = new T();
             CacheEntity(t);
+            return t;
+        }
+
+        public static T CreateEntity<T>() where T : Entity, new()
+        {
+            T t = NewEntity<T>();
             t.Awake();
             t.Start();
             return t;
@@ -90,8 +96,7 @@ namespace HFFramework
 
         public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null, bool worldPositionStays = false) where T : Entity, new()
         {
-            T t = new T();
-            CacheEntity(t);
+            T t = NewEntity<T>();
             t.SetGameObject(gameObject);
             if (parent!=null)
             {
@@ -106,8 +111,7 @@ namespace HFFramework
         {
             try
             {
-                T t = new T();
-                CacheEntity(t);
+                T t = NewEntity<T>();
                 t.isAsync = true;
                 await t.LoadResourcesAsync(packageName, assetName);
                 t.Awake();
@@ -137,7 +141,7 @@ namespace HFFramework
             }
             else
             {
-                HFLog.E(typeof(T).Name + t.instanceID + "重复添加");
+                HFLog.E(typeof(T).Name + t.instanceID + "引用重复添加");
             }
         }
 

@@ -12,19 +12,20 @@ namespace HFFramework
     /// Entity 当作为数据层的时候 gameObject 就不需要被创建 
     /// Entity 当作为控制层+表现层的时候 需要创建对应的 gameObject 
     /// 
+    /// 函数执行顺序 同步 Awake - LoadResources - FindElement - ElementInit - ReceiveMessage - Start - Component.Start
+    /// 函数执行顺序 异步 LoadResourcesAsync - Awake - FindElement - ElementInit - ReceiveMessage - Start - Component.Start
+    /// 
     /// Entity
     ///     |
     ///     |—— component
     ///     |
     ///     |—— component
     ///     |
-    ///     |—— component
-    ///     |
     ///     GameObject (视图层)
-    ///                             | 
-    ///                             | _____  Monobehivor
-    ///                             | 
-    ///                             | _____  Monobehivor
+    ///                | 
+    ///                | _____  Monobehivor
+    ///                | 
+    ///                | _____  Monobehivor
     /// </summary>
     public class Entity
     {

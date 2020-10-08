@@ -65,7 +65,6 @@ namespace HFFramework
         /// </summary>
         public List<AudioPlayer> audioPlayerPool = new List<AudioPlayer>();
 
-        private float musicVolume=1;
         /// <summary>
         ///  主音乐音量
         /// </summary>
@@ -77,17 +76,14 @@ namespace HFFramework
                 {
                     player.Volume = value;
                 }
-                musicVolume = value;
-                PlayerPrefs.SetFloat(MusicVolumeDefine, musicVolume);
+                PlayerPrefs.SetFloat(MusicVolumeDefine, value);
             }
             get
             {
-                musicVolume = PlayerPrefs.GetFloat(MusicVolumeDefine, 1);
-                return musicVolume;
+                return PlayerPrefs.GetFloat(MusicVolumeDefine, 1);
             }
         }
 
-        private float effectVolume=1;
         /// <summary>
         /// 效果声音音量
         /// </summary>
@@ -105,17 +101,14 @@ namespace HFFramework
                     audioPlayerPool[i].Volume = value;
                 }
 
-                effectVolume = value;
-                PlayerPrefs.SetFloat(EffectVolumeDefine, effectVolume);
+                PlayerPrefs.SetFloat(EffectVolumeDefine, value);
             }
             get
             {
-                effectVolume = PlayerPrefs.GetFloat(EffectVolumeDefine, 1);
-                return effectVolume;
+                return PlayerPrefs.GetFloat(EffectVolumeDefine, 1);
             }
         }
 
-        private float freeVolume=1;
         /// <summary>
         ///  自有声音音量
         /// </summary>
@@ -127,14 +120,11 @@ namespace HFFramework
                 {
                     audioPlayerPool[i].Volume = value;
                 }
-
-                freeVolume = value;
-                PlayerPrefs.SetFloat(FreeVolumeDefine, freeVolume);
+                PlayerPrefs.SetFloat(FreeVolumeDefine, value);
             }
             get
             {
-                freeVolume = PlayerPrefs.GetFloat(FreeVolumeDefine, 1);
-                return freeVolume;
+                return PlayerPrefs.GetFloat(FreeVolumeDefine, 1);
             }
         }
 

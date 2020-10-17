@@ -182,7 +182,7 @@ namespace HFFramework.Editor
             EnvironmentConfig config = AssetDatabase.LoadAssetAtPath<EnvironmentConfig>(GameConst.EnvironmentConfigPath);
             config.AppVersion = JenkinsBuild.config.version;
             PlayerSettings.bundleVersion = config.AppVersion;
-            config.AutoSwitchPlatform = true;
+            config.AutoSetting = true;
 
             SRDebugger.Settings.Instance.IsEnabled = JenkinsBuild.config.isLog;
 

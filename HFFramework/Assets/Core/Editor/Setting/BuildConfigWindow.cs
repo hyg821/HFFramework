@@ -5,16 +5,16 @@ using UnityEngine;
 
 namespace HFFramework.Editor
 {
-    public class EnvironmentConfigEditor : EditorWindow
+    public class BuildConfigWindow : EditorWindow
     {
         private UnityEditor.Editor editor;
 
-        [MenuItem("项目设置/运行时框架设置",false,1)]
+        [MenuItem("构建/构建项目", false, 1)]
         public static void ShowObjectWindow()
         {
-            var window = EditorWindow.GetWindow<EnvironmentConfigEditor>(true, "EnvironmentConfig", true);
+            var window = EditorWindow.GetWindow<BuildConfigWindow>(true, "BuildConfigWindow", true);
             // 直接根据ScriptableObject构造一个Editor
-            window.editor = UnityEditor.Editor.CreateEditor(AssetDatabase.LoadAssetAtPath<EnvironmentConfig>(GameConst.EnvironmentConfigPath));
+            window.editor = UnityEditor.Editor.CreateEditor(AssetDatabase.LoadAssetAtPath<BuildConfig>(GameConst.BuildConfigPath));
         }
 
         private void OnGUI()
@@ -24,5 +24,6 @@ namespace HFFramework.Editor
         }
     }
 }
+
 
 

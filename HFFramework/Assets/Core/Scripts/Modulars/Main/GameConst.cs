@@ -34,7 +34,14 @@ namespace HFFramework
         /// 配置文件 Assetbundle 名字
         /// </summary>
         public const string ConfigAssetbundleName = "Config";
-            
+
+        public const string EnvironmentConfigPath = "Assets/Resources/EnvironmentConfig.asset";
+
+        public const string BuildConfigPath = "Assets/Resources/BuildConfig.asset";
+
+
+
+
         //--------------------------------------自定义ide打开路径--------------------------------------//
         /// <summary>
         ///  shader ide 路径

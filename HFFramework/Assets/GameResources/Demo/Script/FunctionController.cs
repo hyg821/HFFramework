@@ -111,6 +111,7 @@ namespace HFFramework.Demo
             HFLog.C("页面完全显示");
             HFFramework.AppDomainManager.Instance.ExecuteHotFix("hotfixdll", "HotFix");
 
+            /*
             FileStream fs = new FileStream(Application.dataPath+ "/1.bin", FileMode.Create);
             BinaryFormatter ff =  new BinaryFormatter();
             ff.Serialize(fs, ConfigAddress.Instance);
@@ -124,6 +125,7 @@ namespace HFFramework.Demo
             await UIManager.Instance.Close<FunctionController>();
             ResourceManager.Instance.RefCount();
             ResourceManager.Instance.UnloadUnusedAssetBundle();
+            */
 
             return;
             TimerManager.Schedule(1, 5, -1, delegate (Timer timer)

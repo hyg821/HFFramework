@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ETModel
+namespace HFFramework
 {
     public class UIToggleGroup : MonoBehaviour
     {

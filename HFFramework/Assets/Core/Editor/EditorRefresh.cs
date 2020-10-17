@@ -11,12 +11,20 @@ namespace HFFramework.Editor
         static EditorRefresh()
         {
             HFLog.C("编辑器工具刷新");
-            EnvironmentConfig config = AssetDatabase.LoadAssetAtPath<EnvironmentConfig>("Assets/Resources/EnvironmentConfig.asset");
-            if (config == null)
+            EnvironmentConfig environmentConfig = AssetDatabase.LoadAssetAtPath<EnvironmentConfig>(GameConst.EnvironmentConfigPath);
+            if (environmentConfig == null)
             {
-                config = ScriptableObject.CreateInstance<EnvironmentConfig>();
-                AssetDatabase.CreateAsset(config, "Assets/Resources/EnvironmentConfig.asset");
-                config.Refresh();
+                environmentConfig = ScriptableObject.CreateInstance<EnvironmentConfig>();
+                AssetDatabase.CreateAsset(environmentConfig, GameConst.EnvironmentConfigPath);
+                environmentConfig.Refresh();
+            }
+
+            BuildConfig buildConfig = AssetDatabase.LoadAssetAtPath<BuildConfig>(GameConst.BuildConfigPath);
+            if (buildConfig == null)
+            {
+                buildConfig = ScriptableObject.CreateInstance<BuildConfig>();
+                AssetDatabase.CreateAsset(buildConfig, GameConst.BuildConfigPath);
+                buildConfig.Refresh();
             }
         }
 

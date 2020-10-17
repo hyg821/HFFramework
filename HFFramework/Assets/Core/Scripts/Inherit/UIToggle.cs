@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace ETModel
+namespace HFFramework
 {
     public class UIToggle : MonoBehaviour
     {

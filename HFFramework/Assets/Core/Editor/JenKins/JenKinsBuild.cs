@@ -20,61 +20,12 @@ namespace HFFramework.Editor
         const string xcode = "xcode:";
         const string assetbundle = "assetbundle:";
         const string publish = "publish:";
-        const string versioninfo = "versioninfo:";
         const string obb = "obb:";
         const string log = "log:";
         const string ApplicationIdentifierTag = "ApplicationIdentifier:";
         const string versionTag = "version:";
 
-        /// <summary>
-        /// 生成apk
-        /// </summary>
-        static bool isGenerateApk = false;
-        /// <summary>
-        /// 生成ipa
-        /// </summary>
-        static bool isGenerateIpa = false;
-        /// <summary>
-        /// 生成xcode 工程
-        /// </summary>
-        static bool isGenerateXcode = false;
-        /// <summary>
-        /// 生成assetbundle
-        /// </summary>
-        static bool isGenerateAssetbundle = false;
-        /// <summary>
-        /// 资源同步到ftp
-        /// </summary>
-        static bool isPublish = false;
-        /// <summary>
-        /// 生成版本信息
-        /// </summary>
-        static bool isGenerateVersionInfo = false;
-        /// <summary>
-        /// 打开log
-        /// </summary>
-        static bool isLog = false;
-        /// <summary>
-        /// obb分包
-        /// </summary>
-        static bool isObb = false;
-        /// <summary>
-        /// 打develop包
-        /// </summary>
-        static bool isDevelopmentBuild = false;
-        /// <summary>
-        /// 移动端连接分析器
-        /// </summary>
-        static bool isAutoConnectProfiler = false;
-        /// <summary>
-        /// app id
-        /// </summary>
-        static string ApplicationIdentifier;
-        /// <summary>
-        /// 版本
-        /// </summary>
-        static string version = "1.0.0";
-
+        public static BuildConfig config;
 
         /// <summary>
         /// jenkis 外部调用函数 打包
@@ -82,21 +33,6 @@ namespace HFFramework.Editor
         public static void BuildForAndroid()
         {
             ReceiveCommondLine();
-            m_BuildForAndroid();
-        }
-
-        /// <summary>
-        /// 编辑器调用打包
-        /// </summary>
-        [MenuItem("打包/安卓打包")]
-        public static void EditorBuildForAndroid()
-        {
-            isGenerateAssetbundle = true;
-            isGenerateApk = true;
-            isLog = true;
-            isDevelopmentBuild = true;
-            isAutoConnectProfiler = true;
-            ApplicationIdentifier = "com.test.Unity";
             m_BuildForAndroid();
         }
 
@@ -109,22 +45,7 @@ namespace HFFramework.Editor
             m_BuildForIOS();
         }
 
-        /// <summary>
-        /// 编辑器打ios包
-        /// </summary>
-        [MenuItem("打包/iOS打包")]
-        public static void EditorBuildForIOS()
-        {
-            isGenerateAssetbundle = true;
-            isGenerateXcode = true;
-            isLog = true;
-            isDevelopmentBuild = true;
-            isAutoConnectProfiler = true;
-            ApplicationIdentifier = "com.TYCH.JSZCQ3";
-            m_BuildForIOS();
-        }
-
-        public static void m_BuildForAndroid()
+        private static void m_BuildForAndroid()
         {
             SwitchAndroidPlatform();
 
@@ -132,7 +53,7 @@ namespace HFFramework.Editor
 
             BuildAssetBundle();
 
-            if (isGenerateApk)
+            if (config.isGenerateAPK)
             {
                 string directoryPath = ArchivePath();
 
@@ -153,10 +74,8 @@ namespace HFFramework.Editor
 
                 if (report.summary.result == BuildResult.Succeeded)
                 {
+                    EditorHelper.OpenDirectory(ArchivePath());
                     Debug.Log(PlayerSettings.productName + ".apk已生成");
-                    if (isGenerateVersionInfo)
-                    {
-                    }
                 }
                 else
                 {
@@ -173,7 +92,7 @@ namespace HFFramework.Editor
 
             BuildAssetBundle();
 
-            if (isGenerateXcode)
+            if (config.isGenerateXcode)
             {
                 //路径不能存在中文 否则xcode报错
                 string filePath = ArchivePath();
@@ -187,11 +106,8 @@ namespace HFFramework.Editor
 
                 if (report.summary.result == BuildResult.Succeeded)
                 {
+                    EditorHelper.OpenDirectory(ArchivePath());
                     Debug.Log(PlayerSettings.productName + " xcode工程已生成");
-                    if (isGenerateVersionInfo)
-                    {
-
-                    }
                 }
                 else
                 {
@@ -226,8 +142,8 @@ namespace HFFramework.Editor
 
             EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.Gradle;
             PlayerSettings.Android.targetSdkVersion = (AndroidSdkVersions)29;
-            PlayerSettings.Android.useAPKExpansionFiles = isObb;
-            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, ApplicationIdentifier);
+            PlayerSettings.Android.useAPKExpansionFiles = config.isObb;
+            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, config.ApplicationIdentifier);
 
             AssetDatabase.Refresh();
         }
@@ -241,9 +157,9 @@ namespace HFFramework.Editor
             {
                 Debug.Log("切换苹果平台");
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.iOS, BuildTarget.iOS);
-                if (ApplicationIdentifier == "com.TYCH.JSZCQ3")
+                if (config.ApplicationIdentifier == "com.TYCH.JSZCQ3")
                 {
-                    PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, ApplicationIdentifier);
+                    PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, config.ApplicationIdentifier);
                     PlayerSettings.iOS.appleDeveloperTeamID = "77Z7NUFARZ";
                 }
             }
@@ -260,17 +176,17 @@ namespace HFFramework.Editor
             PlayerSettings.stripEngineCode = false;
             PlayerSettings.allowUnsafeCode = true;
 
-            EditorUserBuildSettings.development = isDevelopmentBuild;
-            EditorUserBuildSettings.connectProfiler = isAutoConnectProfiler;
+            //EditorUserBuildSettings.development = config.isDevelopmentBuild;
+            //EditorUserBuildSettings.connectProfiler = config.isAutoConnectProfiler;
 
-            EnvironmentConfig config = AssetDatabase.LoadAssetAtPath<EnvironmentConfig>("Assets/Resources/EnvironmentConfig.asset");
-            config.AppVersion = version;
+            EnvironmentConfig config = AssetDatabase.LoadAssetAtPath<EnvironmentConfig>(GameConst.EnvironmentConfigPath);
+            config.AppVersion = JenkinsBuild.config.version;
             PlayerSettings.bundleVersion = config.AppVersion;
             config.AutoSwitchPlatform = true;
 
-            SRDebugger.Settings.Instance.IsEnabled = isLog;
+            SRDebugger.Settings.Instance.IsEnabled = JenkinsBuild.config.isLog;
 
-            if (isPublish)
+            if (JenkinsBuild.config.isPublish)
             {
                 FTPTools.UpLoad();
             }
@@ -281,7 +197,7 @@ namespace HFFramework.Editor
         /// </summary>
         static void BuildAssetBundle()
         {
-            if (isGenerateAssetbundle)
+            if (config.isGenerateAssetbundle)
             {
                 //生成配置
                 HFConfigCreater.GenerateConfigByAnalysis();
@@ -346,74 +262,58 @@ namespace HFFramework.Editor
         public static void ReceiveCommondLine()
         {
             Debug.Log("开始解析 shell 参数  ············");
+            config = AssetDatabase.LoadAssetAtPath<BuildConfig>(GameConst.BuildConfigPath);
             foreach (string arg in System.Environment.GetCommandLineArgs())
             {
                 Debug.Log(arg);
-                if (arg.Contains("platform"))
-                {
-
-                }
 
                 if (arg.Contains(apk))
                 {
-                    isGenerateApk = GetBool(arg);
+                    config.isGenerateAPK = GetBool(arg);
                 }
 
                 if (arg.Contains(ipa))
                 {
-                    isGenerateIpa = GetBool(arg);
+                    config.isGenerateIPA = GetBool(arg);
                 }
 
                 if (arg.Contains(xcode))
                 {
-                    isGenerateXcode = GetBool(arg);
+                    config.isGenerateXcode = GetBool(arg);
                 }
 
                 if (arg.Contains(assetbundle))
                 {
-                    isGenerateAssetbundle = GetBool(arg);
+                    config.isGenerateAssetbundle = GetBool(arg);
                 }
 
                 if (arg.Contains(publish))
                 {
-                    isPublish = GetBool(arg);
-                }
-
-                if (arg.Contains(versioninfo))
-                {
-                    isGenerateVersionInfo = GetBool(arg);
+                    config.isPublish = GetBool(arg);
                 }
 
                 if (arg.Contains(obb))
                 {
-                    isObb = GetBool(arg);
+                    config.isObb = GetBool(arg);
                 }
 
                 if (arg.Contains(log))
                 {
-                    isLog = GetBool(arg);
+                    config.isLog = GetBool(arg);
                 }
 
                 if (arg.Contains(ApplicationIdentifierTag))
                 {
-                    ApplicationIdentifier = GetString(arg);
+                    config.ApplicationIdentifier = GetString(arg);
                 }
 
                 if (arg.Contains(versionTag))
                 {
-                    version = GetString(arg);
+                    config.version = GetString(arg);
                 }
             }
 
-            Debug.Log("isGenerateApk " + isGenerateApk);
-            Debug.Log("isGenerateIpa " + isGenerateIpa);
-            Debug.Log("isGenerateXcode " + isGenerateXcode);
-            Debug.Log("isGenerateAssetbundle " + isGenerateAssetbundle);
-            Debug.Log("isPublish " + isPublish);
-            Debug.Log("isGenerateVersionInfo " + isGenerateVersionInfo);
-            Debug.Log("isObb " + isObb);
-            Debug.Log("isLog " + isLog);
-            Debug.Log("ApplicationIdentifier " + ApplicationIdentifier);
+            config.Log();
         }
 
         public static bool GetBool(string str)

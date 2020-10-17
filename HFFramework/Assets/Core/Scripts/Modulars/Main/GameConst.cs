@@ -53,9 +53,9 @@ namespace HFFramework
         public const string FileExtensions = ".txt, .js, .javascript, .json, .html, .shader, .template";
            
         /// <summary>
-        /// demo路径
+        /// 框架场景路径
         /// </summary>
-        public const string StartScenePath = "Assets/GameResources/Game/GameStart.unity";
+        public const string StartScenePath = "Assets/Core/Game.unity";
 
         //--------------------------------------游戏内部消息模块id--------------------------------------//
         /// <summary>

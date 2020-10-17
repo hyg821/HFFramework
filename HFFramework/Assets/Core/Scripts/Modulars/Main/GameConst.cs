@@ -25,11 +25,11 @@ namespace HFFramework
         /// <summary>
         /// 配置文件读取路径
         /// </summary>
-        public const string ConfigInputPath = "GameResources/Demo/Config"+AssetFolderIde;
+        public const string ConfigInputPath = "GameResources/Game/Config"+AssetFolderIde;
         /// <summary>
         /// 配置文件生成路径
         /// </summary>
-        public const string ConfigOutputPath = "GameResources/Demo/Script/Config";
+        public const string ConfigOutputPath = "GameResources/Game/Script/Config";
         /// <summary>
         /// 配置文件 Assetbundle 名字
         /// </summary>
@@ -55,7 +55,7 @@ namespace HFFramework
         /// <summary>
         /// demo路径
         /// </summary>
-        public const string StartScenePath = "Assets/GameResources/Demo/Demo.unity";
+        public const string StartScenePath = "Assets/GameResources/Game/GameStart.unity";
 
         //--------------------------------------游戏内部消息模块id--------------------------------------//
         /// <summary>

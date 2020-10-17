@@ -4,6 +4,14 @@ using System.Text;
 
 namespace HFFramework
 {
+    public enum LogColor
+    {
+        Red,
+        White,
+        Green,
+        Blue,
+    }
+
     public class HFLog
     {
         public static bool IsOpenLog = true;
@@ -13,7 +21,27 @@ namespace HFFramework
         /// <summary>
         ///  颜色
         /// </summary>
-        public const string constColor = "FFFFFF";
+        private const string color0 = "FFFFFF";
+
+        private static string GetColor(LogColor color)
+        {
+            string str = color0;
+            switch (color)
+            {
+                case LogColor.Red:
+                    break;
+                case LogColor.White:
+                    str = color0;
+                    break;
+                case LogColor.Green:
+                    break;
+                case LogColor.Blue:
+                    break;
+                default:
+                    break;
+            }
+            return str;
+        }
 
         /// <summary>
         ///  最普通的打印
@@ -32,13 +60,13 @@ namespace HFFramework
         ///  一个默认带颜色的打印
         /// </summary>
         //[System.Diagnostics.Conditional(GameConst.DebugDefineSymbol)]
-        public static void C(object obj)
+        public static void C(object obj, LogColor color = LogColor.White)
         {
             if (IsOpenLog)
             {
                 if (Platform == GamePlatform.Editor)
                 {
-                    Debug.Log(Time.frameCount + " : " + GameUtils.SetColor(obj, constColor));
+                    Debug.Log(Time.frameCount + " : " + GameUtils.SetColor(obj,GetColor(color)));
                 }
                 else
                 {

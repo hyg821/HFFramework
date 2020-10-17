@@ -12,12 +12,17 @@ namespace HFFramework
         /// <summary>
         /// 自动选择运行平台
         /// </summary>
-        public bool AutoSwitchPlatform = true;
+        public bool AutoSetting = true;
 
         /// <summary>
         ///  运行平台
         /// </summary>
         public GamePlatform Platform = GamePlatform.Windows;
+
+        /// <summary>
+        /// 运行时
+        /// </summary>
+        public GameRuntime Runtime = GameRuntime.Mono;
 
         /// <summary>
         ///  加载资源模式 是从editor 读取 还是bundle读取

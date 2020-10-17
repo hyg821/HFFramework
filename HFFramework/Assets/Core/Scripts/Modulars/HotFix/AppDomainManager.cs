@@ -69,28 +69,48 @@ namespace HFFramework
 
         public void CreateProgramExecutor()
         {
-            switch (GameEnvironment.Instance.config.Platform)
+            if (GameEnvironment.Instance.config.AutoSetting)
             {
-                case GamePlatform.Android:
-                    executor = new AssemblyExcutor();
-                    break;
-                case GamePlatform.iOS:
-                    executor = new ILRuntimeExecutor();
-                    break;
-                case GamePlatform.Web:
-                    executor = new AssemblyExcutor();
-                    break;
-                case GamePlatform.Windows:
-                    executor = new AssemblyExcutor();
-                    break;
-                case GamePlatform.Mac:
-                    executor = new AssemblyExcutor();
-                    break;
-                case GamePlatform.Editor:
-                    executor = new AssemblyExcutor();
-                    break;
-                default:
-                    break;
+                switch (GameEnvironment.Instance.config.Platform)
+                {
+                    case GamePlatform.Android:
+                        executor = new AssemblyExcutor();
+                        break;
+                    case GamePlatform.iOS:
+                        executor = new ILRuntimeExecutor();
+                        break;
+                    case GamePlatform.Web:
+                        executor = new AssemblyExcutor();
+                        break;
+                    case GamePlatform.Windows:
+                        executor = new AssemblyExcutor();
+                        break;
+                    case GamePlatform.Mac:
+                        executor = new AssemblyExcutor();
+                        break;
+                    case GamePlatform.Editor:
+                        executor = new AssemblyExcutor();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (GameEnvironment.Instance.config.Runtime)
+                {
+                    case GameRuntime.Mono:
+                        executor = new AssemblyExcutor();
+                        break;
+                    case GameRuntime.ILRuntime:
+                        executor = new ILRuntimeExecutor();
+                        break;
+                    case GameRuntime.Lua:
+                        executor = new AssemblyExcutor();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 

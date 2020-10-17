@@ -38,6 +38,13 @@ namespace  HFFramework
         Editor
     }
 
+    public enum GameRuntime
+    {
+        Mono,
+        ILRuntime,
+        Lua
+    }
+
     public enum GameLanguage
     {
         Chinese,
@@ -62,7 +69,7 @@ namespace  HFFramework
         private void Init()
         {
             config = Resources.Load<EnvironmentConfig>("EnvironmentConfig");
-            if (config.AutoSwitchPlatform)
+            if (config.AutoSetting)
             {
                 SwitchPlatform();
             }

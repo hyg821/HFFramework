@@ -5,7 +5,7 @@ using System;
 
 namespace HFFramework
 {
-    public class DataProperty<T>
+    public class DataProperty<T> where T: IComparable
     {
         private T m_value;
 
@@ -21,10 +21,13 @@ namespace HFFramework
 
         public virtual void SetValue(T value,bool notify = true)
         {
-            m_value = value;
-            if (notify)
+            if (Compare<T>.CompareGeneric(m_value, value))
             {
-                Dispatch();
+                m_value = value;
+                if (notify)
+                {
+                    Dispatch();
+                }
             }
         }
 
@@ -76,6 +79,22 @@ namespace HFFramework
         {
             entity = null;
             notify = null;
+        }
+    }
+
+    public class Compare<T> where T : IComparable
+    {
+        //使用泛型实现的比较方法
+        public static bool CompareGeneric(T t1, T t2)
+        {
+            if (t1.CompareTo(t2) > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

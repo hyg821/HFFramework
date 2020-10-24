@@ -21,6 +21,7 @@ namespace HFFramework
             {
                 Debug.LogError("框架重复加载 Game预设体放在起始场景 起始场景不要重复加载");
                 Destroy(gameObject);
+                return;
             }
 
             Instance = this;
@@ -112,6 +113,8 @@ namespace HFFramework
             GameFactory.Instance.Shutdown();
             HTTPManager.OnQuit();
             MemoryClear();
+            Destroy(gameObject);
+            Instance = null;
         }
 
         public void OnApplicationQuit()

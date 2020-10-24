@@ -19,7 +19,7 @@ namespace HFFramework
 
         private List<DataObserverPackage<T>> notifyList = new List<DataObserverPackage<T>>();
 
-        public void SetValue(T value,bool notify = true)
+        public virtual void SetValue(T value,bool notify = true)
         {
             m_value = value;
             if (notify)

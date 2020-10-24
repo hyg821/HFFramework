@@ -78,14 +78,6 @@ namespace HFFramework
             }
         }
 
-        public static void CloseTimer(Timer timer)
-        {
-            if (timer!=null)
-            {
-                timer.Close();
-            }
-        }
-
         /// <summary>
         ///  世界坐标 转UI 坐标
         /// </summary>

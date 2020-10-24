@@ -38,7 +38,7 @@ namespace HFFramework.Demo
 
         public override void OnDestroy()
         {
-            Extensions.CloseTimer(timer);
+            TimerManager.CloseTimer(timer);
             base.OnDestroy();
         }
     }

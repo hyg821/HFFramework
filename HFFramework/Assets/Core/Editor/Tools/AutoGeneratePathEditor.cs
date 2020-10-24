@@ -16,7 +16,7 @@ namespace HFFramework.Editor
             DrawDefaultInspector();
             AutoGeneratePath info = target as AutoGeneratePath;
 
-            Component[] components = info.GetComponents<Component>();
+            UnityEngine.Component[] components = info.GetComponents<UnityEngine.Component>();
             string str = info.GetPropertyType();
             List<string> list = new List<string>();
             list.Add("GameObject");

@@ -19,6 +19,17 @@ namespace HFFramework
         /// </summary>
         public Entity entity;
 
+        /// <summary>
+        ///  是否销毁
+        /// </summary>
+        public bool IsDisposed
+        {
+            get
+            {
+                return instanceID == 0;
+            }
+        }
+
         public virtual void Awake()
         {
             instanceID = IDGenerator.GetComponentID();

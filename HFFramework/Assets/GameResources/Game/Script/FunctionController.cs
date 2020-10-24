@@ -31,6 +31,7 @@ namespace HFFramework.Demo
         public Button fun0;
         public Button fun1;
         public Button fun2;
+        public Button fun3;
         #region
         public override void FindElement()
         {
@@ -38,8 +39,10 @@ namespace HFFramework.Demo
             fun0 = AutoFind<Button>("ScrollView/Viewport/Content/Cell/Button");
             fun1 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (1)/Button");
             fun2 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (2)/Button");
+            fun3 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (3)/Button");
         }
         #endregion
+
 
         public override void Awake()
         {
@@ -55,6 +58,7 @@ namespace HFFramework.Demo
             fun0.onClick.AddListener(Entity创建);
             fun1.onClick.AddListener(Entity作为控制器);
             fun2.onClick.AddListener(Entity数据显示分离);
+            fun3.onClick.AddListener(数据观察另一种实现);
         }
 
         public async void Entity创建()
@@ -93,6 +97,11 @@ namespace HFFramework.Demo
             {
                 Extensions.Clear(temp);
             });
+        }
+
+        public void 数据观察另一种实现()
+        {
+            Test2Entity entity = GameFactory.CreateEntity<Test2Entity>();
         }
 
 

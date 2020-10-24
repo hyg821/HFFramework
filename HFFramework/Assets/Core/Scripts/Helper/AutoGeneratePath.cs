@@ -7,7 +7,7 @@ using System.Text;
 namespace HFFramework
 {
 #if UNITY_EDITOR
-    [ExecuteInEditMode]
+    [ExecuteAlways]
 #endif
     public class AutoGeneratePath : MonoBehaviour
     {

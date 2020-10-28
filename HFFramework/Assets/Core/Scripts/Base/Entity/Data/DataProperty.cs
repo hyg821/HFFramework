@@ -17,7 +17,7 @@ namespace HFFramework
             }
         }
 
-        private List<DataObserverPackage<T>> notifyList = new List<DataObserverPackage<T>>();
+        private List<Observer<T>> notifyList = new List<Observer<T>>();
 
         public virtual void SetValue(T value,bool notify = true)
         {
@@ -33,7 +33,7 @@ namespace HFFramework
 
         public void OnValueChanged(Entity entity,Action<T> notify)
         {
-            DataObserverPackage<T> dop = new DataObserverPackage<T>(entity, notify);
+            Observer<T> dop = new Observer<T>(entity, notify);
             notifyList.Add(dop);
         }
 
@@ -41,7 +41,7 @@ namespace HFFramework
         {
             for (int i = notifyList.Count-1; i >=0 ; i--)
             {
-                DataObserverPackage<T> observer = notifyList[i];
+                Observer<T> observer = notifyList[i];
                 if (observer.entity.IsDisposed)
                 {
                     observer.Clear();
@@ -64,12 +64,12 @@ namespace HFFramework
         }
     }
 
-    public class DataObserverPackage<T>
+    public class Observer<T>
     {
         public Entity entity;
         public Action<T> notify;
 
-        public DataObserverPackage(Entity entity, Action<T> notify)
+        public Observer(Entity entity, Action<T> notify)
         {
             this.entity = entity;
             this.notify = notify;

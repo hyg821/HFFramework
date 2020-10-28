@@ -32,6 +32,7 @@ namespace HFFramework.Demo
         public Button fun1;
         public Button fun2;
         public Button fun3;
+        public Button fun4;
         #region
         public override void FindElement()
         {
@@ -40,8 +41,10 @@ namespace HFFramework.Demo
             fun1 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (1)/Button");
             fun2 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (2)/Button");
             fun3 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (3)/Button");
+            fun4 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (4)/Button");
         }
         #endregion
+
 
 
         public override void Awake()
@@ -59,6 +62,7 @@ namespace HFFramework.Demo
             fun1.onClick.AddListener(Entity作为控制器);
             fun2.onClick.AddListener(Entity数据显示分离);
             fun3.onClick.AddListener(数据观察另一种实现);
+            fun4.onClick.AddListener(命令队列);
         }
 
         public async void Entity创建()
@@ -104,7 +108,26 @@ namespace HFFramework.Demo
             Test2Entity entity = GameFactory.CreateEntity<Test2Entity>();
         }
 
-
+        public void 命令队列()
+        {
+            CommandQueue queue =  new CommandQueue();
+            Command cmd = new Command(async delegate ()
+            {
+                Debug.LogError("111");
+                await UniTask.Delay(1000);
+                Debug.LogError("2222");
+                await UniTask.Delay(1000);
+            });
+            queue.Enqueue(cmd);
+            cmd = new Command(async delegate ()
+            {
+                Debug.LogError("333");
+                await UniTask.Delay(1000);
+                Debug.LogError("4444");
+            });
+            queue.Enqueue(cmd);
+            queue.Run();
+        }
 
         public override void PlayShowAnimation()
         {

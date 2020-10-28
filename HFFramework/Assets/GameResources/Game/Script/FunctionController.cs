@@ -33,6 +33,7 @@ namespace HFFramework.Demo
         public Button fun2;
         public Button fun3;
         public Button fun4;
+        public Button fun5;
         #region
         public override void FindElement()
         {
@@ -42,8 +43,10 @@ namespace HFFramework.Demo
             fun2 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (2)/Button");
             fun3 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (3)/Button");
             fun4 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (4)/Button");
+            fun5 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (5)/Button");
         }
         #endregion
+
 
 
 
@@ -63,6 +66,7 @@ namespace HFFramework.Demo
             fun2.onClick.AddListener(Entity数据显示分离);
             fun3.onClick.AddListener(数据观察另一种实现);
             fun4.onClick.AddListener(命令队列);
+            fun5.onClick.AddListener(UniTask取消);
         }
 
         public async void Entity创建()
@@ -127,6 +131,28 @@ namespace HFFramework.Demo
             });
             queue.Enqueue(cmd);
             queue.Run();
+        }
+
+        public async void UniTask取消()
+        {
+            await Test();
+            Debug.Log("TaskCompletionSource 退出");
+        }
+
+        private async UniTask Test()
+        {
+            UniTaskCompletionSource sc = new UniTaskCompletionSource();
+            TimerManager.Schedule(0, 1, 1, delegate (Timer timer)
+            {
+                sc.TrySetCanceled();
+            });
+
+            TimerManager.Schedule(0, 3, 1, delegate (Timer timer)
+            {
+                sc.TrySetResult();
+            });
+
+            await sc.Task;
         }
 
         public override void PlayShowAnimation()

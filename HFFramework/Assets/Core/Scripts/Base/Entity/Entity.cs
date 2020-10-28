@@ -449,7 +449,7 @@ namespace HFFramework
             }
             else
             {
-                return await UniTask.FromException<T>(new Exception("Entity已经被dispose"));
+                return await UniTask.FromException<T>(new Exception($"Entity {this.instanceID} {this.GetType()} 已经被dispose"));
             }
         }
 

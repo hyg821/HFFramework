@@ -123,22 +123,22 @@ namespace HFFramework
         /// <summary>
         /// 消息派发委托
         /// </summary>
-        private Action<Package> DispatchCallback;
+        private Action<Package> dispatchHandler;
 
         /// <summary>
         ///  成功连接委托
         /// </summary>
-        private Action ConnectedCallback;
+        private Action connectedHandler;
 
         /// <summary>
         ///  失败委托
         /// </summary>
-        private Action ErrorCallback;
+        private Action errorHandler;
 
         /// <summary>
         ///  断开委托
         /// </summary>
-        private Action CloseCallback;
+        private Action closeHandler;
 
         public void Awake()
         {
@@ -155,10 +155,10 @@ namespace HFFramework
             serverIP = ip;
             serverPort = port;
             IsDispatch = true;
-            ConnectedCallback = connect;
-            DispatchCallback = receive;
-            CloseCallback = close;
-            ErrorCallback = error;
+            connectedHandler = connect;
+            dispatchHandler = receive;
+            closeHandler = close;
+            errorHandler = error;
             Init();
         }
 
@@ -186,7 +186,7 @@ namespace HFFramework
 
         private void m_connect()
         {
-            GameLooper.BackToMainThread(ConnectedCallback);
+            GameLooper.BackToMainThread(connectedHandler);
         }
 
         private void m_receive(Package package)
@@ -199,12 +199,12 @@ namespace HFFramework
 
         private void m_close()
         {
-            GameLooper.BackToMainThread(CloseCallback);
+            GameLooper.BackToMainThread(closeHandler);
         }
 
         private void m_error()
         {
-            GameLooper.BackToMainThread(ErrorCallback);
+            GameLooper.BackToMainThread(errorHandler);
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace HFFramework
                     else
                     {
                         //callback 方式派发消息
-                        DispatchCallback(package);
+                        dispatchHandler(package);
                     }
                 }
             }

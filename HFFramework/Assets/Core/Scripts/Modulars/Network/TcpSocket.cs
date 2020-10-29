@@ -28,7 +28,7 @@ namespace HFFramework
         Close
     }
 
-    public class StreamPackage
+    public class BufferPackage
     {
         /// <summary>
         ///  是否读取消息头
@@ -173,7 +173,7 @@ namespace HFFramework
         private MemoryStream writeStream;
         private BinaryWriter binaryWriter;
 
-        private StreamPackage package = new StreamPackage();
+        private BufferPackage package = new BufferPackage();
 
         /// <summary>
         ///  检查第一次是否连接上 定时器
@@ -193,22 +193,22 @@ namespace HFFramework
         /// <summary>
         ///  连接成功回调
         /// </summary>
-        private Action connectCallback;
+        private Action connectHandler;
 
         /// <summary>
         ///  接收数据回调
         /// </summary>
-        private Action<Package> receiveCallback;
+        private Action<Package> receiveHandler;
 
         /// <summary>
         ///  关闭回调
         /// </summary>
-        private Action closeCallback;
+        private Action closeHandler;
 
         /// <summary>
         ///  错误回调
         /// </summary>
-        private Action errorCallback;
+        private Action errorHandler;
 
         /// <summary>
         ///  是否成功连接
@@ -236,10 +236,10 @@ namespace HFFramework
         {
             this.ip = ip;
             this.port = port;
-            this.connectCallback = connect;
-            this.receiveCallback = receive;
-            this.closeCallback = close;
-            this.errorCallback = error;
+            this.connectHandler = connect;
+            this.receiveHandler = receive;
+            this.closeHandler = close;
+            this.errorHandler = error;
             AddressFamily ipv = CheckAddressFamily();
             SetState(ConnectState.UnKnow);
             socket = new Socket(ipv, SocketType.Stream, ProtocolType.Tcp);
@@ -412,7 +412,7 @@ namespace HFFramework
                         //通过获得的字节 转换成 数据包的总长度
                         package.length = Extensions.BitConverterToInt32(temp, 0);
 
-                        //binaryReader 读取 MSG_TYPE_LEN 长度的字节
+                        //binaryReader 读取 MSG_RPCID_LEN 长度的字节
                         temp = binaryReader.ReadBytes(MSG_RPCID_LEN);
                         //通过获得的字节 转换成 rpc id
                         package.rpcID = Extensions.BitConverterToInt32(temp, 0);
@@ -471,9 +471,9 @@ namespace HFFramework
             }
         }
 
-        private void CreateMessage(StreamPackage package)
+        private void CreateMessage(BufferPackage package)
         {
-            receiveCallback(new Package(package.opcode, package.rpcID, package.msgBytes));
+            receiveHandler(new Package(package.opcode, package.rpcID, package.msgBytes));
             package.Clear();
         }
 
@@ -530,21 +530,21 @@ namespace HFFramework
                         case ConnectState.UnKnow:
                             break;
                         case ConnectState.Success:
-                            if (connectCallback!=null)
+                            if (connectHandler != null)
                             {
-                                connectCallback();
+                                connectHandler();
                             }
                             break;
                         case ConnectState.Close:
-                            if (closeCallback!=null)
+                            if (closeHandler != null)
                             {
-                                closeCallback();
+                                closeHandler();
                             }
                             break;
                         case ConnectState.Fail:
-                            if (errorCallback!=null)
+                            if (errorHandler != null)
                             {
-                                errorCallback();
+                                errorHandler();
                             }
                             break;
                         default:

@@ -11,9 +11,7 @@ namespace HFFramework.Editor
         {
             if (!string.IsNullOrEmpty(path))
             {
-                path = path.Replace('\\', '/');
-                path = path.Replace("../", "..\\");
-                Debug.Log("Path " + path);
+                HFLog.C(path);
                 System.Diagnostics.Process.Start("explorer.exe", path);
             }
         }

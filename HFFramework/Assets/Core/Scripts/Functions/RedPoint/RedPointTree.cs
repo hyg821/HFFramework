@@ -9,7 +9,7 @@ namespace HFFramework.Functions
      *     2.视图层绑定 Node 然后接收node回调 设置Text 
      *     3.通过Tree 获取 特定Node 
      *     4.Node设置value 回调给视图层 
-     *     
+     *     5.并且可以动态设置树 和 绑定视图 形成动态红点
      *     tree = new RedPointTree();
             RedPointNode node =  new RedPointNode(RedPointType.Root);
             tree.SetRoot(node);

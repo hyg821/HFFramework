@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace UnityEngine.UI
 {
-    internal static class HFSetPropertyUtility
+    internal static class UISetPropertyUtility
     {
         public static bool SetColor(ref Color currentValue, Color newValue)
         {

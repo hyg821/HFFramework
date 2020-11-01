@@ -5,6 +5,11 @@ using System;
 
 namespace HFFramework
 {
+    public interface IDataPropertyObserver
+    {
+        bool IsDisposed { get; }
+    }
+
     public class DataProperty<T> where T: IComparable
     {
         private T m_value;
@@ -31,9 +36,9 @@ namespace HFFramework
             }
         }
 
-        public void OnValueChanged(Entity entity,Action<T> notify)
+        public void OnValueChanged(IDataPropertyObserver observer, Action<T> notify)
         {
-            Observer<T> dop = new Observer<T>(entity, notify);
+            Observer<T> dop = new Observer<T>(observer, notify);
             notifyList.Add(dop);
         }
 
@@ -41,15 +46,16 @@ namespace HFFramework
         {
             for (int i = notifyList.Count-1; i >=0 ; i--)
             {
-                Observer<T> observer = notifyList[i];
-                if (observer.entity.IsDisposed)
+                Observer<T> o = notifyList[i];
+                if (o.observer.IsDisposed)
                 {
-                    observer.Clear();
+                    HFLog.C("observer 被销毁 从属性观察列表移除");
+                    o.Clear();
                     notifyList.RemoveAt(i);
                 }
                 else
                 {
-                    observer.notify(value);
+                    o.notify(value);
                 }
             }
         }
@@ -66,18 +72,18 @@ namespace HFFramework
 
     public class Observer<T>
     {
-        public Entity entity;
+        public IDataPropertyObserver observer;
         public Action<T> notify;
 
-        public Observer(Entity entity, Action<T> notify)
+        public Observer(IDataPropertyObserver observer, Action<T> notify)
         {
-            this.entity = entity;
+            this.observer = observer;
             this.notify = notify;
         }
 
         public void Clear()
         {
-            entity = null;
+            observer = null;
             notify = null;
         }
     }

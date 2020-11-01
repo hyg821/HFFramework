@@ -9,8 +9,8 @@ namespace UnityEngine.UI
     /// Image is a textured element in the UI hierarchy.
     /// </summary>
 
-    [AddComponentMenu("UI/HFImage", 11)]
-    public class HFImage : MaskableGraphic, ISerializationCallbackReceiver, ILayoutElement, ICanvasRaycastFilter
+    [AddComponentMenu("UI/UIImage", 11)]
+    public class UIImage : MaskableGraphic, ISerializationCallbackReceiver, ILayoutElement, ICanvasRaycastFilter
     {
         public enum Type
         {
@@ -70,41 +70,41 @@ namespace UnityEngine.UI
         [FormerlySerializedAs("m_Frame")]
         [SerializeField]
         private Sprite m_Sprite;
-        public Sprite sprite { get { return m_Sprite; } set { if (HFSetPropertyUtility.SetClass(ref m_Sprite, value)) SetAllDirty(); } }
+        public Sprite sprite { get { return m_Sprite; } set { if (UISetPropertyUtility.SetClass(ref m_Sprite, value)) SetAllDirty(); } }
 
         [NonSerialized]
         private Sprite m_OverrideSprite;
-        public Sprite overrideSprite { get { return activeSprite; } set { if (HFSetPropertyUtility.SetClass(ref m_OverrideSprite, value)) SetAllDirty(); } }
+        public Sprite overrideSprite { get { return activeSprite; } set { if (UISetPropertyUtility.SetClass(ref m_OverrideSprite, value)) SetAllDirty(); } }
 
         private Sprite activeSprite { get { return m_OverrideSprite != null ? m_OverrideSprite : sprite; } }
 
         /// How the Image is drawn.
         [SerializeField] private Type m_Type = Type.Simple;
-        public Type type { get { return m_Type; } set { if (HFSetPropertyUtility.SetStruct(ref m_Type, value)) SetVerticesDirty(); } }
+        public Type type { get { return m_Type; } set { if (UISetPropertyUtility.SetStruct(ref m_Type, value)) SetVerticesDirty(); } }
 
         [SerializeField] private bool m_PreserveAspect = false;
-        public bool preserveAspect { get { return m_PreserveAspect; } set { if (HFSetPropertyUtility.SetStruct(ref m_PreserveAspect, value)) SetVerticesDirty(); } }
+        public bool preserveAspect { get { return m_PreserveAspect; } set { if (UISetPropertyUtility.SetStruct(ref m_PreserveAspect, value)) SetVerticesDirty(); } }
 
         [SerializeField] private bool m_FillCenter = true;
-        public bool fillCenter { get { return m_FillCenter; } set { if (HFSetPropertyUtility.SetStruct(ref m_FillCenter, value)) SetVerticesDirty(); } }
+        public bool fillCenter { get { return m_FillCenter; } set { if (UISetPropertyUtility.SetStruct(ref m_FillCenter, value)) SetVerticesDirty(); } }
 
         /// Filling method for filled sprites.
         [SerializeField] private FillMethod m_FillMethod = FillMethod.Radial360;
-        public FillMethod fillMethod { get { return m_FillMethod; } set { if (HFSetPropertyUtility.SetStruct(ref m_FillMethod, value)) { SetVerticesDirty(); m_FillOrigin = 0; } } }
+        public FillMethod fillMethod { get { return m_FillMethod; } set { if (UISetPropertyUtility.SetStruct(ref m_FillMethod, value)) { SetVerticesDirty(); m_FillOrigin = 0; } } }
 
         /// Amount of the Image shown. 0-1 range with 0 being nothing shown, and 1 being the full Image.
         [Range(0, 1)]
         [SerializeField]
         private float m_FillAmount = 1.0f;
-        public float fillAmount { get { return m_FillAmount; } set { if (HFSetPropertyUtility.SetStruct(ref m_FillAmount, Mathf.Clamp01(value))) SetVerticesDirty(); } }
+        public float fillAmount { get { return m_FillAmount; } set { if (UISetPropertyUtility.SetStruct(ref m_FillAmount, Mathf.Clamp01(value))) SetVerticesDirty(); } }
 
         /// Whether the Image should be filled clockwise (true) or counter-clockwise (false).
         [SerializeField] private bool m_FillClockwise = true;
-        public bool fillClockwise { get { return m_FillClockwise; } set { if (HFSetPropertyUtility.SetStruct(ref m_FillClockwise, value)) SetVerticesDirty(); } }
+        public bool fillClockwise { get { return m_FillClockwise; } set { if (UISetPropertyUtility.SetStruct(ref m_FillClockwise, value)) SetVerticesDirty(); } }
 
         /// Controls the origin point of the Fill process. Value means different things with each fill method.
         [SerializeField] private int m_FillOrigin;
-        public int fillOrigin { get { return m_FillOrigin; } set { if (HFSetPropertyUtility.SetStruct(ref m_FillOrigin, value)) SetVerticesDirty(); } }
+        public int fillOrigin { get { return m_FillOrigin; } set { if (UISetPropertyUtility.SetStruct(ref m_FillOrigin, value)) SetVerticesDirty(); } }
 
         // Not serialized until we support read-enabled sprites better.
         private float m_AlphaHitTestMinimumThreshold = 0;
@@ -113,7 +113,7 @@ namespace UnityEngine.UI
         public float eventAlphaThreshold { get { return 1 - alphaHitTestMinimumThreshold; } set { alphaHitTestMinimumThreshold = 1 - value; } }
         public float alphaHitTestMinimumThreshold { get { return m_AlphaHitTestMinimumThreshold; } set { m_AlphaHitTestMinimumThreshold = value; } }
 
-        protected HFImage()
+        protected UIImage()
         {
             useLegacyMeshGeneration = false;
         }

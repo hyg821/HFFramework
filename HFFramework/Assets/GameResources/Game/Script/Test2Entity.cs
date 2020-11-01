@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HFFramework.Demo
 {
-    public class Test2Entity : Entity
+    public class Test2Entity : Entity,IDataPropertyObserver
     {
         public override void Awake()
         {

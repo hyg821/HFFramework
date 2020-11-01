@@ -5,8 +5,8 @@ using UnityEngine.Sprites;
 
 namespace UnityEngine.UI
 {
-    [AddComponentMenu("UI/HFCircleImage")]
-    public class HFCircleImage : HFImage
+    [AddComponentMenu("UI/UICircleImage")]
+    public class UICircleImage : UIImage
     {
         private new void Awake()
         {

@@ -25,6 +25,7 @@ namespace HFFramework
             }
 
             Instance = this;
+
             DontDestroyOnLoad(gameObject);
 
             MemoryClear();
@@ -117,7 +118,7 @@ namespace HFFramework
             Instance = null;
         }
 
-        public void OnApplicationQuit()
+        private void OnApplicationQuit()
         {
             Shutdown();
             Debug.Log("应用退出");

@@ -178,19 +178,19 @@ namespace HFFramework.Demo
             await sc.Task;
         }
 
-        public override void PlayShowAnimation()
+        public override void OnShowAnimation()
         {
-            base.PlayShowAnimation();
+            base.OnShowAnimation();
             transform.localScale = Vector3.zero;
-            transform.DOScale(Vector3.one, 1).OnComplete(OnShowCompleted);
+            transform.DOScale(Vector3.one, 1).OnComplete(OnShow);
             HFLog.C("播放打开动画");
         }
 
-        public async override void OnShowCompleted()
+        public async override void OnShow()
         {
-            base.OnShowCompleted();
+            base.OnShow();
             HFLog.C("页面完全显示");
-            HFFramework.AppDomainManager.Instance.ExecuteHotFix("hotfixdll", "HotFix");
+            HFFramework.HotFixManager.Instance.ExecuteHotFix("hotfixdll", "HotFix");
 
             /*
             FileStream fs = new FileStream(Application.dataPath+ "/1.bin", FileMode.Create);
@@ -211,7 +211,7 @@ namespace HFFramework.Demo
             return;
             TimerManager.Schedule(1, 5, -1, delegate (Timer timer)
             {
-                HFFramework.AppDomainManager.Instance.executor.Invoke("HotFixEnter", "Test", null, "1", "2", "3");
+                HFFramework.HotFixManager.Instance.executor.Invoke("HotFixEnter", "Test", null, "1", "2", "3");
             });
 
             DownLoader loader = DownLoadManager.Instance.GetDownLoader();

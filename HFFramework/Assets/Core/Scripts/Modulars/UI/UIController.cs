@@ -15,21 +15,10 @@ namespace HFFramework
     public class UIController : UIBase 
     {
         private UniTaskCompletionSource showTask;
+
         private UniTaskCompletionSource hideTask;
 
-        private UI config;
-        public UI Config
-        {
-            set
-            {
-                config = value;
-                transform.SetParent(UIManager.Instance.GetCanvas(config.LayerIndex).transform, false);
-            }
-            get
-            {
-                return config;
-            }
-        }
+        public UI config;
 
         /// <summary>
         ///  打开页面 open ->PlayShowAnimation -> OnShowComplete
@@ -41,12 +30,12 @@ namespace HFFramework
             showTask = new UniTaskCompletionSource();
             if (animation)
             {
-                PlayShowAnimation();
+                OnShowAnimation();
             }
             else
             {
                 IsShow = true;
-                OnShowCompleted();
+                OnShow();
             }
             return showTask.Task;
         }
@@ -61,7 +50,7 @@ namespace HFFramework
             hideTask = new UniTaskCompletionSource();
             if (animation)
             {
-                PlayHideAnimation();
+                OnHideAnimation();
             }
             else
             {
@@ -73,7 +62,7 @@ namespace HFFramework
         public void Close()
         {
             IsShow = false;
-            OnHideCompleted();
+            OnHide();
         }
 
         /// <summary>
@@ -81,23 +70,23 @@ namespace HFFramework
         /// </summary>
         /// <param name="tag"></param>
         /// <param name="value"></param>
-        public virtual void Refresh(object param)
+        public virtual void Refresh(object @params)
         {
 
         }
 
         /// <summary>
-        /// 展现动画 播放之后自行调用 OnShowComplete
+        /// 展现动画 播放之后自行调用 OnShow
         /// </summary>
-        public virtual void PlayShowAnimation()
+        public virtual void OnShowAnimation()
         {
 
         }
 
         /// <summary>
-        /// 隐藏动画 播放之后自行调用 OnHideComplete
+        /// 隐藏动画 播放之后自行调用 OnHide
         /// </summary>
-        public virtual void PlayHideAnimation()
+        public virtual void OnHideAnimation()
         {
 
         }
@@ -105,7 +94,7 @@ namespace HFFramework
         /// <summary>
         /// 界面完全显示完成
         /// </summary>
-        public virtual void OnShowCompleted()
+        public virtual void OnShow()
         {
             try
             {
@@ -124,7 +113,7 @@ namespace HFFramework
         /// <summary>
         /// 界面完全隐藏完成
         /// </summary>
-        public virtual void OnHideCompleted()
+        public virtual void OnHide()
         {
             try
             {

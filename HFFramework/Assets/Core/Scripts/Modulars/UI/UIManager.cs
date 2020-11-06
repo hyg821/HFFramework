@@ -109,7 +109,10 @@ namespace HFFramework
                         controller = GameFactory.CreateEntity<T>(sourcers);
                     }
 
-                    controller.Config = config;
+                    controller.config = config;
+
+                    controller.transform.SetParent(GetCanvas(config.LayerIndex).transform, false);
+
                     controllerDic.Add(type, controller);
                 }
                 return controller as T;
@@ -136,9 +139,9 @@ namespace HFFramework
             if (controllerDic.TryGetValue(key, out controller))
             {
                 await controller.Close(animation);
-                if ((UICacheType)controller.Config.CacheType ==UICacheType.Destroy)
+                if ((UICacheType)controller.config.CacheType ==UICacheType.Destroy)
                 {
-                    Instance.controllerDic.Remove(key);
+                    controllerDic.Remove(key);
                     controller.Destroy();
                 }
             }

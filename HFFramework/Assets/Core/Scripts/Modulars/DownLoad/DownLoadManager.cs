@@ -209,17 +209,32 @@ namespace HFFramework
 
     public class DownLoadTask
     {
+        /// <summary>
+        /// 🔒
+        /// </summary>
         private ReaderWriterLockSlim loc = new ReaderWriterLockSlim();
 
+        /// <summary>
+        /// 序号
+        /// </summary>
+        public int index;
+
+        /// <summary>
+        /// 名称
+        /// </summary>
+        public string name;
+
+        /// <summary>
+        /// 路径
+        /// </summary>
+        public UrlDiskPath path;
+
+        /// <summary>
+        /// 请求 
+        /// </summary>
         private HTTPRequest request;
 
         private FileStream fileStream;
-
-        public int index;
-
-        public string name;
-
-        public UrlDiskPath path;
 
         private Action complete;
 

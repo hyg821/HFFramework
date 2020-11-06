@@ -56,7 +56,7 @@ namespace HFFramework
 
             GameFactory.CreateSingleton<ObjectPoolManager>();
 
-            GameFactory.CreateSingleton<AppDomainManager>();
+            GameFactory.CreateSingleton<HotFixManager>();
 
             GameFactory.CreateSingleton<TimerManager>();
 
@@ -104,7 +104,7 @@ namespace HFFramework
             InputManager.Instance.Shutdown();
             DownLoadManager.Instance.Shutdown();
             ObjectPoolManager.Instance.Shutdown();
-            AppDomainManager.Instance.Shutdown();
+            HotFixManager.Instance.Shutdown();
             GameSceneManager.Instance.Shutdown();
             TimerManager.Instance.Shutdown();
             GameStateChecker.Instance.Shutdown();

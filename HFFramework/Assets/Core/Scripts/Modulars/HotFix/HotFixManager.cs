@@ -22,12 +22,12 @@ namespace HFFramework
     /// 5.编辑器测试 10000个update 里 每次执行100次vector3+=1 大概耗时2500ms
     /// 6.如果需要热更新代码计算量大的地方 把大量计算 转移到 HotFix.entity.gameObject.monobehivor上 然后把结果返回给entity 运行效率会有巨大提升
     /// </summary>
-    public class AppDomainManager : MonoBehaviour, IManager
+    public class HotFixManager : MonoBehaviour, IManager
     {
         /// <summary>
         ///  单例
         /// </summary>
-        public static AppDomainManager Instance;
+        public static HotFixManager Instance;
 
         /// <summary>
         ///  当前程序执行者

@@ -251,7 +251,7 @@ namespace HFFramework
             }
         }
 
-        public async UniTask<T> GetAssetAsync<T>(string packageName, string assetName) where T : UnityEngine.Object
+        public async UniTask<T> GetAssetAsync<T>(string packageName, string assetName, ResourceLoadArgs args = null) where T : UnityEngine.Object
         {
             if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
             {
@@ -262,6 +262,12 @@ namespace HFFramework
                 AssetBundlePackage ab = await LoadAssetBundleFromFileAsync(packageName);
                 T result = await ab.LoadAssetAsync<T>(assetName);
                 ab.Release();
+
+                if (args!=null&&args.canceled)
+                {
+                    throw new OperationCanceledException(); 
+                }
+
                 return result;
             }
         }

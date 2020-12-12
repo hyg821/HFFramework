@@ -13,6 +13,12 @@ namespace HFFramework
 
         public void Refresh(List<T> dataList, Func<K> Create, Action<T, K> ViewRefresh)
         {
+            if (dataList == null)
+            {
+                HFLog.E("dataList = null");
+                return;
+            }
+
             if (dataList.Count > 20)
             {
                 HFLog.C("视图层数量大于20 适用复用滚动列表实现");

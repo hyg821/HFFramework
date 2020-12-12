@@ -10,27 +10,42 @@ namespace HFFramework
     {
         private UniTaskCompletionSource taskCompletionSource = new UniTaskCompletionSource();
 
-        private Func<UniTask> function;
+        private Func<UniTask> asyncFunction;
+
+        private Action function;
 
         public Command(Func<UniTask> function)
         {
             SetFunction(function);
         }
 
-        public void SetFunction(Func<UniTask> function)
+        public Command(Action function)
         {
             this.function = function;
         }
 
-        public async virtual UniTask Execute()
+        public void SetFunction(Func<UniTask> function)
         {
-            if (function!=null)
+            this.asyncFunction = function;
+        }
+
+        public async virtual UniTask ExecuteAsync()
+        {
+            if (asyncFunction != null)
             {
-                await function();
+                await asyncFunction();
             }
             else
             {
                 await taskCompletionSource.Task;
+            }
+        }
+
+        public virtual void Execute()
+        {
+            if (function!=null)
+            {
+                function();
             }
         }
 
@@ -46,7 +61,9 @@ namespace HFFramework
 
         public void OnDestroy()
         {
+            taskCompletionSource.TrySetCanceled();
             taskCompletionSource = null;
+            asyncFunction = null;
             function = null;
         }
     }

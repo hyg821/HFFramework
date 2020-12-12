@@ -137,7 +137,7 @@ namespace HFFramework.Demo
                 Debug.LogError("4444");
             });
             queue.Enqueue(cmd);
-            queue.Run();
+            queue.Run(CmdExecuteType.AsynchronousSerial);
         }
 
         public async void UniTask取消()

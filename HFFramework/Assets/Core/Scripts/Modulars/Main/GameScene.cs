@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UniRx.Async;
+using Cysharp.Threading.Tasks;
 
 namespace HFFramework
 {
@@ -42,7 +42,7 @@ namespace HFFramework
         /// <returns></returns>
         public virtual async UniTask OpenLoading(object args)
         {
-            await new UniTaskVoid();
+            //await new UniTaskVoid();
             HFLog.C("步骤1 打开loading");
         }
 
@@ -52,7 +52,7 @@ namespace HFFramework
         /// <returns></returns>
         public virtual async UniTask SendExitRequest()
         {
-            await new UniTaskVoid();
+            //await new UniTaskVoid();
             HFLog.C("步骤2 发送离开网络消息");
         }
 
@@ -62,7 +62,7 @@ namespace HFFramework
         /// <returns></returns>
         public virtual async UniTask CloseUI()
         {
-            await new UniTaskVoid();
+            //await new UniTaskVoid();
             HFLog.C("步骤3 清理UI");
         }
 
@@ -72,7 +72,7 @@ namespace HFFramework
         /// <returns></returns>
         public virtual async UniTask ClearManager()
         {
-            await new UniTaskVoid();
+            //await new UniTaskVoid();
             HFLog.C("步骤4 清理对应管理器");
         }
 
@@ -92,7 +92,7 @@ namespace HFFramework
         /// <returns></returns>
         public virtual async UniTask LoadResources()
         {
-            await new UniTaskVoid();
+            //await new UniTaskVoid();
             HFLog.C("步骤6 加载场景");
         }
 
@@ -102,7 +102,7 @@ namespace HFFramework
         /// <returns></returns>
         public virtual async UniTask PreLoad()
         {
-            await new UniTaskVoid();
+            //await new UniTaskVoid();
             HFLog.C("步骤7 预加载资源");
         }
 
@@ -112,7 +112,7 @@ namespace HFFramework
         /// <returns></returns>
         public virtual async UniTask SendEnterRequest()
         {
-            await new UniTaskVoid();
+            //await new UniTaskVoid();
             HFLog.C("步骤8 预加载资源");
         }
 
@@ -122,7 +122,7 @@ namespace HFFramework
         /// <returns></returns>
         public virtual async UniTask OpenUI()
         {
-            await new UniTaskVoid();
+            //await new UniTaskVoid();
             HFLog.C("步骤9  打开UI");
         }
 
@@ -132,7 +132,7 @@ namespace HFFramework
         /// <returns></returns>
         public virtual async UniTask CloseLoading()
         {
-            await new UniTaskVoid();
+            //await new UniTaskVoid();
             HFLog.C("步骤10  关闭loading");
         }
     }

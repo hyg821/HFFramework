@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <_TargetFrameworkDirectories>non_empty_path_generated_by_rider_editor_plugin</_TargetFrameworkDirectories>
-    <_FullFrameworkReferenceAssemblyPaths>non_empty_path_generated_by_rider_editor_plugin</_FullFrameworkReferenceAssemblyPaths>
-    <DisableHandlePackageFileConflicts>true</DisableHandlePackageFileConflicts>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -61,22 +58,16 @@
     <Reference Include="UnityEditor">
       <HintPath>D:\Unity\Editor\Data\Managed/UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp">
-      <HintPath>D:\Unity\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Microsoft.CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions">
-      <HintPath>D:\Unity\Editor\Data\PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions">
-      <HintPath>D:\Unity\Editor\Data\PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Core\Game.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Behavior\BaseBehaviour.cs" />
+    <Compile Include="Assets\Core\Scripts\Base\Command\Command.cs" />
+    <Compile Include="Assets\Core\Scripts\Base\Command\CommandQueue.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Entity\Component.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Entity\Data\DataComponent.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Entity\Data\DataObserver.cs" />
+    <Compile Include="Assets\Core\Scripts\Base\Entity\Data\DataProperty.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Entity\Entity.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Interface\IManager.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Linker\HotFixLinker.cs" />
@@ -108,6 +99,8 @@
     <Compile Include="Assets\Core\Scripts\Functions\Learn\NameOf.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\Learn\T2Type.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\PinchZoom.cs" />
+    <Compile Include="Assets\Core\Scripts\Functions\RedPoint\RedPointNode.cs" />
+    <Compile Include="Assets\Core\Scripts\Functions\RedPoint\RedPointTree.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\RelationPosition\Relation.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\RelationPosition\RelationTarget.cs" />
     <Compile Include="Assets\Core\Scripts\Functions\SlicedProgress.cs" />
@@ -115,9 +108,10 @@
     <Compile Include="Assets\Core\Scripts\Functions\UIFollowTouch.cs" />
     <Compile Include="Assets\Core\Scripts\Helper\AutoGeneratePath.cs" />
     <Compile Include="Assets\Core\Scripts\Helper\FindHierarchyPath.cs" />
-    <Compile Include="Assets\Core\Scripts\Inherit\HFCircleImage.cs" />
-    <Compile Include="Assets\Core\Scripts\Inherit\HFImage.cs" />
-    <Compile Include="Assets\Core\Scripts\Inherit\HFSetPropertyUtility.cs" />
+    <Compile Include="Assets\Core\Scripts\Inherit\UICircleImage.cs" />
+    <Compile Include="Assets\Core\Scripts\Inherit\UIImage.cs" />
+    <Compile Include="Assets\Core\Scripts\Inherit\UILabel.cs" />
+    <Compile Include="Assets\Core\Scripts\Inherit\UISetPropertyUtility.cs" />
     <Compile Include="Assets\Core\Scripts\Inherit\UIToggle.cs" />
     <Compile Include="Assets\Core\Scripts\Inherit\UIToggleGroup.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Audio\AudioManager.cs" />
@@ -129,10 +123,11 @@
     <Compile Include="Assets\Core\Scripts\Modulars\FSM\FSM.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\FSM\FSMState.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\HFResource\AssetBundlePackage.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\HFResource\ResourceLoadArgs.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\HFResource\ResourceManager.cs" />
-    <Compile Include="Assets\Core\Scripts\Modulars\HotFix\AppDomainManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\HotFix\AssemblyExcutor.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\HotFix\FastMethodInvoker.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\HotFix\HotFixManager.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\HotFix\ILRuntimeExecutor.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\HotFix\ProgramExecutor.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Input\InputManager.cs" />
@@ -162,6 +157,7 @@
     <Compile Include="Assets\Core\Scripts\Modulars\UI\UICanvas.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\UI\UIController.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\UI\UIManager.cs" />
+    <Compile Include="Assets\Core\Scripts\Modulars\UI\ViewListRefresher.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\Extensions.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\GameUtils.cs" />
     <Compile Include="Assets\Core\Scripts\Modulars\Utils\NativeBridge.cs" />
@@ -198,6 +194,8 @@
     <Compile Include="Assets\GameResources\Game\Script\Test1BehaviorComponent.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Test1DataComponent.cs" />
     <Compile Include="Assets\GameResources\Game\Script\Test1Entity.cs" />
+    <Compile Include="Assets\GameResources\Game\Script\Test2DataComponent.cs" />
+    <Compile Include="Assets\GameResources\Game\Script\Test2Entity.cs" />
     <Compile Include="Assets\GameResources\Game\Script\TestEntity.cs" />
     <Compile Include="Assets\OtherPlugins\Best HTTP (Pro)\BestHTTP\Authentication\Credentials.cs" />
     <Compile Include="Assets\OtherPlugins\Best HTTP (Pro)\BestHTTP\Authentication\Digest.cs" />
@@ -1160,9 +1158,6 @@
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\System_Object_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\System_String_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\System_Type_Binding.cs" />
-    <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\UniRx_Async_CompilerServices_AsyncUniTaskMethodBuilder_Bindi.cs" />
-    <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\UniRx_Async_UniTask_1_GameObject_Binding.cs" />
-    <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\UniRx_Async_UniTask_1_GameObject_Binding_Awaiter_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\UnityEngine_Component_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\UnityEngine_Debug_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\UnityEngine_GameObject_Binding.cs" />
@@ -2022,13 +2017,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="UniRx.Async.csproj">
-      <Project>{60693578-8DE5-9662-D861-56CBFAD73156}</Project>
-      <Name>UniRx.Async</Name>
+    <ProjectReference Include="UniTask.Addressables.csproj">
+      <Project>{4BDEB438-6ADE-C802-36DA-F492F5B8AB06}</Project>
+      <Name>UniTask.Addressables</Name>
     </ProjectReference>
-    <ProjectReference Include="UniRx.Async.Editor.csproj">
-      <Project>{7C37BF5E-6A74-E27C-916F-B30B38A1D14F}</Project>
-      <Name>UniRx.Async.Editor</Name>
+    <ProjectReference Include="UniTask.csproj">
+      <Project>{91E9BBDF-74EF-67C6-8CC1-E5C82DDA85BC}</Project>
+      <Name>UniTask</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.DOTween.csproj">
+      <Project>{09541F4B-8936-E66C-5D90-C26F141776C9}</Project>
+      <Name>UniTask.DOTween</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.TextMeshPro.csproj">
+      <Project>{79A1D6C5-6E6E-31D1-18E3-7AD7FDF1F0F7}</Project>
+      <Name>UniTask.TextMeshPro</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.Linq.csproj">
+      <Project>{292E8E64-F8D7-A3A3-0C6A-0EA37A98A2FD}</Project>
+      <Name>UniTask.Linq</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

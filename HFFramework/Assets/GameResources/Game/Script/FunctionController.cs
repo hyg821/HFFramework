@@ -17,7 +17,7 @@ using DG.Tweening;
 using System.Threading.Tasks;
 using System.Threading;
 using TMPro;
-using UniRx.Async;
+using Cysharp.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using UnityEngine.Profiling;
 using LitJson;

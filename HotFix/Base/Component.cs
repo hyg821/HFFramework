@@ -5,6 +5,9 @@ using HFFramework;
 
 namespace HotFix
 {
+    /// <summary>
+    /// Entity 上 挂载的组件
+    /// </summary>
     public class Component
     {
         /// <summary>
@@ -17,15 +20,29 @@ namespace HotFix
         /// </summary>
         public Entity entity;
 
-        public virtual void Awake()
+        public void SetEntity(Entity entity)
         {
-             instanceID = IDGenerator.GetComponentID();
+            this.entity = entity;
         }
 
+        /// <summary>
+        ///  是否销毁
+        /// </summary>
+        public bool IsDisposed
+        {
+            get
+            {
+                return instanceID == 0;
+            }
+        }
+
+        public virtual void Awake()
+        {
+            instanceID = IDGenerator.GetComponentID();
+        }
 
         public virtual void Start()
         {
-
         }
 
         public virtual void OnEnable()
@@ -46,11 +63,6 @@ namespace HotFix
 
         public virtual void OnLateUpdate(float deltaTime)
         {
-        }
-
-        public void SetEntity(Entity entity)
-        {
-            this.entity = entity;
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UniRx.Async;
+using Cysharp.Threading.Tasks;
 
 namespace HFFramework
 {
@@ -93,7 +93,7 @@ namespace HFFramework
 
         public async virtual UniTask OnEnter(object args = null)
         {
-            await new UniTaskVoid();
+            //await new UniTaskVoid();
             HFLog.C("------------------------" + this.GetType().Name + "进入" + "------------------------");
         }
 
@@ -104,7 +104,7 @@ namespace HFFramework
 
         public async virtual UniTask OnExit(object args = null)
         {
-            await new UniTaskVoid();
+            //await new UniTaskVoid();
             HFLog.C("------------------------" + this.GetType().Name + "离开" + "------------------------");
         }
     }

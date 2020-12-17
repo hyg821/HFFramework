@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Config;
-using UniRx.Async;
+using Cysharp.Threading.Tasks;
 using HFFramework.Demo;
 
 namespace HFFramework
@@ -15,7 +15,7 @@ namespace HFFramework
             //初始化配置文件
             HFConfigManager.Instance.Init();
             await ResourceManager.Instance.LoadScene("Scene", "GameStart");
-            await UIManager.Instance.Open<FunctionController>(false,true); 
+            await UIManager.Instance.Open<FunctionController>(false,true);
         }
 
         public override void OnStay()

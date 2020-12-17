@@ -19,6 +19,11 @@ namespace HFFramework
         /// </summary>
         public Entity entity;
 
+        public void SetEntity(Entity entity)
+        {
+            this.entity = entity;
+        }
+
         /// <summary>
         ///  是否销毁
         /// </summary>
@@ -37,7 +42,6 @@ namespace HFFramework
 
         public virtual void Start()
         {
-
         }
 
         public virtual void OnEnable()
@@ -58,11 +62,6 @@ namespace HFFramework
 
         public virtual void OnLateUpdate(float deltaTime)
         {
-        }
-
-        public void SetEntity(Entity entity)
-        {
-            this.entity = entity;
         }
 
         /// <summary>

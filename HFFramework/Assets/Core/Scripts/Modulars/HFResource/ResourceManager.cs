@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
-using UniRx.Async;
+using Cysharp.Threading.Tasks;
 
 #if UNITY_EDITOR
 using UnityEditor;

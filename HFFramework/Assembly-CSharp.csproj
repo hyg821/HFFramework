@@ -1143,6 +1143,12 @@
     <Compile Include="Assets\OtherPlugins\ILRuntime\CLR\TypeSystem\IType.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\CLR\Utils\Extensions.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\CLRBindings.cs" />
+    <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\Cysharp_Threading_Tasks_CompilerServices_AsyncUniTaskMethodB.cs" />
+    <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\Cysharp_Threading_Tasks_CompilerServices_AsyncUniTaskVoidMet.cs" />
+    <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\Cysharp_Threading_Tasks_UniTask_1_GameObject_Binding.cs" />
+    <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\Cysharp_Threading_Tasks_UniTask_1_GameObject_Binding_Awaiter.cs" />
+    <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\Cysharp_Threading_Tasks_UniTask_Binding.cs" />
+    <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\Cysharp_Threading_Tasks_UniTask_Binding_Awaiter_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\HFFramework_GameFactory_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\HFFramework_GameLooper_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\HFFramework_HFLog_Binding.cs" />

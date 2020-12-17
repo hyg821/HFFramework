@@ -430,7 +430,7 @@ namespace HFFramework
         public void LoadHotFixAssembly(string packageName, string dllName, Action<byte[],byte[]> callback)
         {
             //代码 在编辑器 里默认走streamingAssets 生成dll 运行即可
-            if (GameEnvironment.Instance.config.Platform == GamePlatform.Editor)
+            if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
             {
                 EditorLoadHotFixAssembly(packageName, dllName, callback);
             }

@@ -17,12 +17,16 @@ namespace ILRuntime.Runtime.Generated
         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             UnityEngine_Debug_Binding.Register(app);
+            Cysharp_Threading_Tasks_CompilerServices_AsyncUniTaskVoidMethodBuilder_Binding.Register(app);
             System_String_Binding.Register(app);
             HFFramework_HFLog_Binding.Register(app);
+            Cysharp_Threading_Tasks_UniTask_Binding.Register(app);
+            Cysharp_Threading_Tasks_UniTask_Binding_Awaiter_Binding.Register(app);
             HFFramework_IDGenerator_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
             UnityEngine_GameObject_Binding.Register(app);
             System_Collections_Generic_List_1_ILTypeInstance_Binding.Register(app);
+            Cysharp_Threading_Tasks_CompilerServices_AsyncUniTaskMethodBuilder_Binding.Register(app);
             UnityEngine_Transform_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);
             HFFramework_NotificationMessage_Binding.Register(app);
@@ -32,6 +36,8 @@ namespace ILRuntime.Runtime.Generated
             System_IDisposable_Binding.Register(app);
             System_Object_Binding.Register(app);
             HFFramework_ResourceManager_Binding.Register(app);
+            Cysharp_Threading_Tasks_UniTask_1_GameObject_Binding.Register(app);
+            Cysharp_Threading_Tasks_UniTask_1_GameObject_Binding_Awaiter_Binding.Register(app);
             UnityEngine_Time_Binding.Register(app);
             HFFramework_GameLooper_Binding.Register(app);
             UnityEngine_MonoBehaviour_Binding.Register(app);

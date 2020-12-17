@@ -22,7 +22,7 @@ namespace ILRuntime.Runtime.Generated
             MethodBase method;
             Type[] args;
             Type type = typeof(HFFramework.HFLog);
-            args = new Type[]{typeof(System.Object)};
+            args = new Type[]{typeof(System.Object), typeof(HFFramework.LogColor)};
             method = type.GetMethod("C", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, C_0);
             args = new Type[]{typeof(System.Object)};
@@ -37,14 +37,18 @@ namespace ILRuntime.Runtime.Generated
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            HFFramework.LogColor @color = (HFFramework.LogColor)typeof(HFFramework.LogColor).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             System.Object @obj = (System.Object)typeof(System.Object).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
 
-            HFFramework.HFLog.C(@obj);
+            HFFramework.HFLog.C(@obj, @color);
 
             return __ret;
         }

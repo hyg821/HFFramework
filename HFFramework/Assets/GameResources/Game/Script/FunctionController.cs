@@ -36,6 +36,7 @@ namespace HFFramework.Demo
         public Button fun5;
         public Button fun6;
         public UILabel Label;
+        public Button fun7;
         #region
         public override void FindElement()
         {
@@ -48,8 +49,11 @@ namespace HFFramework.Demo
             fun5 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (5)/Button");
             fun6 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (6)/Button");
             Label = AutoFind<UILabel>("ScrollView/Viewport/Content/Cell (6)/Button/Text");
+            fun7 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (7)/Button");
         }
         #endregion
+
+
 
 
 
@@ -74,6 +78,7 @@ namespace HFFramework.Demo
             fun4.onClick.AddListener(命令队列);
             fun5.onClick.AddListener(UniTask取消);
             fun6.onClick.AddListener(数据绑定控件);
+            fun7.onClick.AddListener(CancellationToken取消UniTask);
         }
 
         public async void Entity创建()
@@ -160,6 +165,19 @@ namespace HFFramework.Demo
             {
                 hp.SetValue(hp.value+1);
             });
+        }
+
+        public async void CancellationToken取消UniTask()
+        {
+            CancellationTokenSource cancellation = new CancellationTokenSource();
+
+            TimerManager.Schedule(0, 1, 1, delegate (Timer t)
+            {
+                cancellation.Cancel();
+            });
+
+            await UniTask.Delay(5000,false,PlayerLoopTiming.Update, cancellation.Token);
+            Debug.LogError("时间到");
         }
 
         private async UniTask Test()

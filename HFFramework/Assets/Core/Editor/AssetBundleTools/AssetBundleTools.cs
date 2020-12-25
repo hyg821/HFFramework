@@ -2,11 +2,9 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
-using ICSharpCode.SharpZipLib.Zip;
 using System;
 using System.Text;
 using LitJson;
-using UnityEditor.ProjectWindowCallback;
 using UnityEngine.U2D;
 using UnityEditor.U2D;
 

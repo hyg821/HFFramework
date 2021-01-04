@@ -66,7 +66,7 @@ namespace HFFramework
             Instance.Send(msg);
         }
 
-        public void Send(NotificationMessage msg)
+        private void Send(NotificationMessage msg)
         {
             try
             {

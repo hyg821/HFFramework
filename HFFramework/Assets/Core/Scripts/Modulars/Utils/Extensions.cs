@@ -106,5 +106,19 @@ namespace HFFramework
         {
             self.transform.SetParent(parent.transform, worldPositionStays);
         }
+
+        public static  float TextWidth(Font font, string text, int fontSize, FontStyle sytle)
+        {
+            float width = 0f;
+            TextGenerator textGenerator = new TextGenerator();
+            TextGenerationSettings setting = new TextGenerationSettings();
+            setting.font = font;
+            setting.fontSize = fontSize;
+            setting.lineSpacing = 1;
+            setting.scaleFactor = 1;
+            setting.horizontalOverflow = HorizontalWrapMode.Overflow;
+            width = textGenerator.GetPreferredWidth(text, setting);
+            return width;
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
 
 
-            var result_of_this_method = HFFramework.IDGenerator.GetComponentID();
+            var result_of_this_method = HFFramework.IDGenerator.GetComponentId();
 
             __ret->ObjectType = ObjectTypes.Long;
             *(long*)&__ret->Value = result_of_this_method;
@@ -52,7 +52,7 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
 
 
-            var result_of_this_method = HFFramework.IDGenerator.GetEntityID();
+            var result_of_this_method = HFFramework.IDGenerator.GetEntityId();
 
             __ret->ObjectType = ObjectTypes.Long;
             *(long*)&__ret->Value = result_of_this_method;

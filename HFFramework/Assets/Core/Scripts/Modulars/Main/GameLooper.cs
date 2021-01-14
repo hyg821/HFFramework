@@ -24,6 +24,7 @@ namespace HFFramework
         /// </summary>
         private List<Entity> prepareUpdateList = new List<Entity>();
 
+        [SerializeField]
         /// <summary>
         ///  本帧执行的update的列表
         /// </summary>
@@ -34,6 +35,7 @@ namespace HFFramework
         /// </summary>
         private List<Entity> prepareFixedUpdateList = new List<Entity>();
 
+        [SerializeField]
         /// <summary>
         ///  本帧执行fixedUpdate的列表
         /// </summary>
@@ -43,6 +45,8 @@ namespace HFFramework
         /// 即将在下一帧被LateUpdate的列表
         /// </summary>
         private List<Entity> prepareLateUpdateList = new List<Entity>();
+
+        [SerializeField]
         /// <summary>
         ///  本帧执行lateUpdate的列表
         /// </summary>

@@ -477,7 +477,7 @@ namespace HFFramework
             package.Clear();
         }
 
-        public void Send(int opcode, int rpcID, byte[] msg)
+        public void Send(int opcode, int rpcId, byte[] msg)
         {
             try
             {
@@ -488,7 +488,7 @@ namespace HFFramework
                     binaryWriter.Write(temp);
 
                     //写入rpc 定义的长度 一个int 4字节
-                    temp = Extensions.BitConverterGetBytes(rpcID);
+                    temp = Extensions.BitConverterGetBytes(rpcId);
                     binaryWriter.Write(temp);
 
                     //写入消息号 定义的长度 一个int 4字节

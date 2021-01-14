@@ -133,27 +133,27 @@ namespace HFFramework
             return t;
         }
 
-        private static void CacheEntity<T>(T t)where T:Entity
+        private static void CacheEntity<T>(T entity)where T:Entity
         {
-            if (!Instance.entityRefrences.ContainsKey(t.instanceID))
+            if (!Instance.entityRefrences.ContainsKey(entity.instanceId))
             {
-                Instance.entityRefrences.Add(t.instanceID, t);
+                Instance.entityRefrences.Add(entity.instanceId, entity);
             }
             else
             {
-                HFLog.E(typeof(T).Name + t.instanceID + "引用重复添加");
+                HFLog.E(typeof(T).Name + entity.instanceId + "引用重复添加");
             }
         }
 
-        public static void RemoveEntity<T>(T t) where T:Entity
+        public static void RemoveEntity<T>(T entity) where T:Entity
         {
-            if (Instance.entityRefrences.ContainsKey(t.instanceID))
+            if (Instance.entityRefrences.ContainsKey(entity.instanceId))
             {
-                Instance.entityRefrences.Remove(t.instanceID);
+                Instance.entityRefrences.Remove(entity.instanceId);
             }
             else
             {
-                HFLog.E(typeof(T).Name + t.instanceID + "引用移除失败");
+                HFLog.E(typeof(T).Name + entity.instanceId + "引用移除失败");
             }
         }
 

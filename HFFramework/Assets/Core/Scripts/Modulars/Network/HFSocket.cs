@@ -224,7 +224,7 @@ namespace HFFramework
         /// <param name="msg"></param>
         public void SendMessage(int opcode, byte[] msg)
         {
-            socket.Send(opcode, IDGenerator.GetRpcID(), msg);
+            socket.Send(opcode, IDGenerator.GetRpcId(), msg);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace HFFramework
             try
             {
                 UniTaskCompletionSource<byte[]> taskCompletion = null;
-                int rpcID = IDGenerator.GetRpcID();
+                int rpcID = IDGenerator.GetRpcId();
                 if (!completionCache.TryGetValue(rpcID, out taskCompletion))
                 {
                     taskCompletion = new UniTaskCompletionSource<byte[]>();

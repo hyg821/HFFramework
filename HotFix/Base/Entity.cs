@@ -31,9 +31,14 @@ namespace HotFix
     public class Entity
     {
         /// <summary>
+        /// 类型名字
+        /// </summary>
+        public string typeName;
+
+        /// <summary>
         ///  标记每一个元素 的 id
         /// </summary>
-        public long instanceID;
+        public long instanceId;
 
         /// <summary>
         /// 名字
@@ -110,14 +115,15 @@ namespace HotFix
         {
             get
             {
-                return instanceID == 0;
+                return instanceId == 0;
             }
         }
 
         public Entity()
         {
-            instanceID = IDGenerator.GetEntityID();
+            instanceId = IDGenerator.GetEntityId();
             isAsync = false;
+            typeName = GetType().Name;
         }
 
         /// <summary>
@@ -495,7 +501,7 @@ namespace HotFix
         {
             if (IsDisposed)
             {
-                HFLog.E("Entity 重复销毁 Id " + instanceID);
+                HFLog.E("Entity 重复销毁 Id " + instanceId);
                 return;
             }
 
@@ -527,13 +533,13 @@ namespace HotFix
 
             DestoryGameObject();
 
-            instanceID = 0;
+            instanceId = 0;
         }
 
 
         public override string ToString()
         {
-            return "类型 : " + GetType() + " 实例id : " + instanceID;
+            return "类型 : " + GetType() + " 实例id : " + instanceId;
         }
 
         /// <summary>
@@ -546,7 +552,7 @@ namespace HotFix
             if (t == null)
             {
                 t = gameObject.AddComponent<T>();
-                t.Injector(instanceID,GetType().Name, this, InversionCall, LinkerDestroy);
+                t.Injector(instanceId, GetType().Name, this, InversionCall, LinkerDestroy);
             }
         }
 

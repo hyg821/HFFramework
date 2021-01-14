@@ -27,12 +27,18 @@ namespace HFFramework
     ///                | 
     ///                | _____  Monobehivor
     /// </summary>
+    [Serializable]
     public class Entity
     {
         /// <summary>
+        /// 类型名字
+        /// </summary>
+        public string typeName;
+
+        /// <summary>
         ///  标记每一个元素 的 id
         /// </summary>
-        public long instanceID;
+        public long instanceId;
 
         /// <summary>
         /// 名字
@@ -112,14 +118,15 @@ namespace HFFramework
         {
             get
             {
-                return instanceID == 0;
+                return instanceId == 0;
             }
         }
 
         public Entity()
         {
-            instanceID = IDGenerator.GetEntityID();
+            instanceId = IDGenerator.GetEntityId();
             isAsync = false;
+            typeName = GetType().Name;
         }
 
         /// <summary>
@@ -449,7 +456,7 @@ namespace HFFramework
             }
             else
             {
-                return await UniTask.FromException<T>(new Exception($"Entity {this.instanceID} {this.GetType()} 已经被dispose"));
+                return await UniTask.FromException<T>(new Exception($"Entity {this.instanceId} {this.GetType()} 已经被dispose"));
             }
         }
 
@@ -497,7 +504,7 @@ namespace HFFramework
         {
             if (IsDisposed)
             {
-                HFLog.E("Entity 重复销毁 Id " + instanceID);
+                HFLog.E("Entity 重复销毁 Id " + instanceId);
                 return;
             }
 
@@ -531,13 +538,13 @@ namespace HFFramework
 
             GameFactory.RemoveEntity(this);
 
-            instanceID = 0;
+            instanceId = 0;
         }
 
 
         public override string ToString()
         {
-            return "类型 : " + GetType()+ " 实例id : "+instanceID;
+            return "类型 : " + GetType()+ " 实例id : "+instanceId;
         }
 
         /// <summary>
@@ -550,7 +557,7 @@ namespace HFFramework
             if (t == null)
             {
                 t = gameObject.AddComponent<T>();
-                t.Injector(instanceID, GetType().Name, this, InversionCall, LinkerDestroy);
+                t.Injector(instanceId, GetType().Name, this, InversionCall, LinkerDestroy);
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,12 +8,13 @@ namespace HFFramework
     /// <summary>
     /// Entity 上 挂载的组件
     /// </summary>
+    [Serializable]
     public class Component
     {
         /// <summary>
         ///  标记每一个元素 的 id
         /// </summary>
-        public long instanceID;
+        public long instanceId;
 
         /// <summary>
         /// 组件所属于的实体
@@ -31,13 +33,13 @@ namespace HFFramework
         {
             get
             {
-                return instanceID == 0;
+                return instanceId == 0;
             }
         }
 
         public virtual void Awake()
         {
-            instanceID = IDGenerator.GetComponentID();
+            instanceId = IDGenerator.GetComponentId();
         }
 
         public virtual void Start()
@@ -70,7 +72,7 @@ namespace HFFramework
         public virtual void OnDestroy()
         {
             entity = null;
-            instanceID = 0;
+            instanceId = 0;
         }
     }
 }

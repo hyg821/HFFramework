@@ -11,6 +11,8 @@ namespace HFFramework
     [Serializable]
     public class Component
     {
+        public string typeName;
+
         /// <summary>
         ///  标记每一个元素 的 id
         /// </summary>
@@ -40,6 +42,7 @@ namespace HFFramework
         public virtual void Awake()
         {
             instanceId = IDGenerator.GetComponentId();
+            typeName = GetType().Name;
         }
 
         public virtual void Start()

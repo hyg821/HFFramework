@@ -21,7 +21,10 @@ namespace HFFramework
         /// <summary>
         /// 创建出来的entity的引用集合
         /// </summary>
-        private Dictionary<long, Entity> entityRefrences = new Dictionary<long, Entity>();
+        private Dictionary<long, Entity> refrencesDic = new Dictionary<long, Entity>();
+
+        [SerializeField]
+        private List<Entity> refrencesList = new List<Entity>();
 
         /// <summary>
         /// 加载队列
@@ -135,9 +138,10 @@ namespace HFFramework
 
         private static void CacheEntity<T>(T entity)where T:Entity
         {
-            if (!Instance.entityRefrences.ContainsKey(entity.instanceId))
+            if (!Instance.refrencesDic.ContainsKey(entity.instanceId))
             {
-                Instance.entityRefrences.Add(entity.instanceId, entity);
+                Instance.refrencesDic.Add(entity.instanceId, entity);
+                Instance.refrencesList.Add(entity);
             }
             else
             {
@@ -147,9 +151,10 @@ namespace HFFramework
 
         public static void RemoveEntity<T>(T entity) where T:Entity
         {
-            if (Instance.entityRefrences.ContainsKey(entity.instanceId))
+            if (Instance.refrencesDic.ContainsKey(entity.instanceId))
             {
-                Instance.entityRefrences.Remove(entity.instanceId);
+                Instance.refrencesDic.Remove(entity.instanceId);
+                Instance.refrencesList.Remove(entity);
             }
             else
             {
@@ -217,7 +222,8 @@ namespace HFFramework
 
         public void Shutdown()
         {
-            entityRefrences.Clear();
+            refrencesDic.Clear();
+            refrencesList.Clear();
             instantiateQueue.Clear();
             Instance = null;
         }

@@ -14,7 +14,7 @@ namespace HFFramework
             await base.OnEnter(param);
             //初始化配置文件
             HFConfigManager.Instance.Init();
-            await ResourceManager.Instance.LoadScene("Scene", "GameStart");
+            await ResourceManager.Instance.LoadScene("GameStart", "GameStart");
             await UIManager.Instance.Open<FunctionController>(false,true);
         }
 

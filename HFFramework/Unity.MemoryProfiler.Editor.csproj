@@ -5,9 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6877705C-FBD9-0C4F-5AFB-6FB431E5D39D}</ProjectGuid>
+    <ProjectGuid>{EE55D56A-9C67-44B4-BB32-2052720E927F}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Unity.PackageManagerUI.Editor</AssemblyName>
+    <AssemblyName>Unity.MemoryProfiler.Editor</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
@@ -652,58 +652,149 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\AssemblyInfo.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\External\SemVersion.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\External\SemVersionExtension.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Common\ApplicationUtil.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Common\OperationSignal.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Common\Resources.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Common\ThreadedDelay.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Interfaces\IAddOperation.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Interfaces\IBaseOperation.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Interfaces\IListOperation.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Interfaces\IOperationFactory.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Interfaces\IRemoveOperation.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Interfaces\ISearchOperation.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\OperationFactory.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\Package.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageAssetPostprocessor.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageCollection.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageError.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageFilter.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageGroupOrigins.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageInfo.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageInfoListExtensions.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageJsonHelper.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageListExtensions.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageOrigin.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageSearchFilter.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageState.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Packages\PackageTag.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Upm\UpmAddOperation.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Upm\UpmBaseOperation.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Upm\UpmListOperation.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Upm\UpmOperationFactory.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Upm\UpmRemoveOperation.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\Services\Upm\UpmSearchOperation.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\Common\Alert.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\Common\LoadingSpinner.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\Common\PopupField.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\Common\UIUtils.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\Common\VersionItem.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\Interfaces\IPackageManagerExtension.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\PackageAddFromUrlField.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\PackageDetails.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\PackageFiltering.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\PackageGroup.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\PackageItem.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\PackageList.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\PackageManagerExtensions.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\PackageManagerPrefs.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\PackageManagerToolbar.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\PackageManagerWindow.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\PackageSearchToolbar.cs" />
-    <Compile Include="Packages\com.unity.package-manager-ui\Editor\Sources\UI\PackageStatusBar.cs" />
+    <ProjectReference Include="Unity.EditorCoroutines.Editor.csproj">
+      <Project>{96ECCFEF-5198-45F9-0FC4-375A65AC960E}</Project>
+      <Name>Unity.EditorCoroutines.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.MemoryProfiler.csproj">
+      <Project>{4CEAA275-0A0A-3961-4807-9986486FC4E7}</Project>
+      <Name>Unity.MemoryProfiler</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Containers\BlockList.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Containers\NativeBlockList.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Column\Column.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Column\ColumnError.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Column\ColumnRef.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Column\ColumnTyped.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Column\ExpandColumnTyped.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Column\MetaColumn.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\DataFormatter.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Link.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\AscendingComparer.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\ColumnCreator.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\DescendingComparer.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\DiffTable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\Expression.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\filter\DefaultSort.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\filter\Filter.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\filter\Group.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\filter\Match.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\filter\Multi.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\filter\Sort.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\GroupedColumnTyped.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\GroupedTable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\Grouping.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\IGroupedColumn.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\IndexedColumnTyped.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\IndexedTable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\Operation.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\SortOrder.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Operation\ValueStringArrayCache.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Schema\ParameterSet.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Schema\Schema.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Schema\SchemaAggregate.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\SizeDataFormatter.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Soa\DataArray.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Soa\DataChunk.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Soa\DataSource.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Soa\SoADataSet.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Table\ExpandTable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Table\MetaTable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\Table\Table.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\View\Select.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\View\ViewColumn.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\View\ViewColumnConst.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\View\ViewColumnExpressionType.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\View\ViewColumnFirstMatch.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\View\ViewColumnNode.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\View\ViewColumnNodeMergeTyped.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\View\ViewColumnRowIndex.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\View\ViewColumnTyped.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\View\ViewScheme.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\View\ViewTable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Database\View\Where.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Diagnostics\Diagnostics.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\LegacyFormatReader\JsonNetConverter.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\LegacyFormatReader\LegacyFormat.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\LegacyFormatReader\LegacyFormatSerializationSurogates.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\LegacyFormatReader\LegacyReader.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemoryProfilerWindow.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\ArrayEntries.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\BlockSection.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\ChapterSection.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\Format\IReader.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\Format\ISnapshot.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\Format\LowLevel\LowLevelFileReader.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\Format\LowLevel\ReadCommandBufferUtils.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\Format\ModularMemorySnapshot\CaptureMetadata.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\Format\QueriedSnapshot\Block.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\Format\QueriedSnapshot\Entry.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\Format\QueriedSnapshot\EntryType.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\Format\QueriedSnapshot\FileReader.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\Format\QueriedSnapshot\GenericReadOperation.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\Format\QueriedSnapshot\ReadError.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\MemorySnapshot.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\MemorySnapshot\MemorySnapshotFileReader.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\APITable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\CachedSnapshot.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\DataSourceFromAPI.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\ManagedDataCrawler.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\ObjectAllTable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\ObjectArrayTable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\ObjectData.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\ObjectDataFormatter.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\ObjectDataTypeFormatter.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\ObjectFieldTable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\ObjectListTable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\ObjectReferenceTable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\ObjectSingleTable.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Profiler\RawScheme.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\DatabaseSpreadsheet.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\EditorUtilityCompatibilityHelper.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\History.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\Hotkey.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\Icons.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\MemoryMap\MemoryMap.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\MemoryMap\MemoryMapBase.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\MemoryMap\MemoryMapDiff.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\MemoryMap\MemoryRegion.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\MemoryMapDiffPane.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\MemoryMapPane.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\MemoryProfilerAnalytics.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\MemoryProfilerSettings.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\MeshBuilder.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\OpenSnapshotsManager.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\ProfilerColors.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\ProgressBar\ProgressBar.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\SplitterStateEx.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\SpreadsheetLogic.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\SpreadsheetPane.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\Styles.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\TextSpreadsheet.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\Treemap\Group.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\Treemap\Item.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\Treemap\TreeMapView.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\Treemap\Utility.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\TreeMapPane.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\UIElementsHelper.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\UIElementsStyleCompatibilityExtensions.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\UIState.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\ViewPane.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\Workbench\OpenSnapshotsWindow.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\Workbench\SnapshotCollection.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\Workbench\SnapshotFileData.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\Workbench\WorkbenchSplitter.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\UI\ZoomArea.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Utilities\Algorithm.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Utilities\CallDelay.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Utilities\EnumerationStatus.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Utilities\Math.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Utilities\NativeArrayAlgorithms.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Utilities\NativeArrayExt.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Utilities\Range.cs" />
+    <Compile Include="Packages\com.unity.memoryprofiler\Editor\Utilities\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Core\Scripts\Functions\CombinMesh\合并网格.txt" />

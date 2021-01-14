@@ -92,13 +92,13 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            System.Int32 @msgID = ptr_of_this_method->Value;
+            System.Int32 @msgId = ptr_of_this_method->Value;
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
-            System.UInt16 @moduleID = (ushort)ptr_of_this_method->Value;
+            System.UInt16 @moduleId = (ushort)ptr_of_this_method->Value;
 
 
-            var result_of_this_method = new HFFramework.NotificationMessage(@moduleID, @msgID, @sender, @content);
+            var result_of_this_method = new HFFramework.NotificationMessage(@moduleId, @msgId, @sender, @content);
 
             if(!isNewObj)
             {

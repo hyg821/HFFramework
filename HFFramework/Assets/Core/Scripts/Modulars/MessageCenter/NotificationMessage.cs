@@ -5,12 +5,12 @@
         /// <summary>
         ///  模块id
         /// </summary>
-        public ushort moduleID;
+        public ushort moduleId;
 
         /// <summary>
         ///  消息id
         /// </summary>
-        public int msgID;
+        public int msgId;
 
         /// <summary>
         ///  发送者
@@ -23,22 +23,15 @@
         /// </summary>
         public object content;
 
-        private ulong key;
-        public ulong Key
-        {
-            get
-            {
-                return key;
-            }
-        }
+        public ulong Key { get; }
 
-        public NotificationMessage(ushort moduleID, int msgID, object sender, object content)
+        public NotificationMessage(ushort moduleId, int msgId, object sender, object content)
         {
-            this.moduleID = moduleID;
-            this.msgID = msgID;
+            this.moduleId = moduleId;
+            this.msgId = msgId;
             this.sender = sender;
             this.content = content;
-            this.key = NotificationCenter.ConvertToKey(moduleID, msgID);
+            this.Key = NotificationCenter.ConvertToKey(moduleId, msgId);
         }
     }
 }

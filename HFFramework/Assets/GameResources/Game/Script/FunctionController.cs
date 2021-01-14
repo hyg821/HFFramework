@@ -87,7 +87,6 @@ namespace HFFramework.Demo
             for (int i = 0; i < 10; i++)
             {
                 TestEntity entity = await GameFactory.CreateEntityAsync<TestEntity>("prefab", "Cube");
-                entity.transform.position = new Vector3(i, i, 0);
             }
         }
 

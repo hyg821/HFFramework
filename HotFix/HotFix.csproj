@@ -48,6 +48,27 @@
     <Reference Include="System" />
     <Reference Include="UniTask">
       <HintPath>..\HFFramework\Library\ScriptAssemblies\UniTask.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Cecil">
+      <HintPath>..\Tools\UnityDLL\Unity.Cecil.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Cecil.Mdb">
+      <HintPath>..\Tools\UnityDLL\Unity.Cecil.Mdb.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Cecil.Pdb">
+      <HintPath>..\Tools\UnityDLL\Unity.Cecil.Pdb.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Legacy.NRefactory">
+      <HintPath>..\Tools\UnityDLL\Unity.Legacy.NRefactory.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\Tools\UnityDLL\UnityEngine.dll</HintPath>
@@ -59,6 +80,10 @@
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.AIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AndroidJNIModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.AndroidJNIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule">
@@ -75,10 +100,6 @@
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.AudioModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.BaselibModule">
-      <HintPath>..\Tools\UnityDLL\UnityEngine.BaselibModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
@@ -105,8 +126,8 @@
       <HintPath>..\Tools\UnityDLL\UnityEngine.DirectorModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.FileSystemHttpModule">
-      <HintPath>..\Tools\UnityDLL\UnityEngine.FileSystemHttpModule.dll</HintPath>
+    <Reference Include="UnityEngine.DSPGraphModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.DSPGraphModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.GameCenterModule">
@@ -127,6 +148,10 @@
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.InputLegacyModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.InputModule">
@@ -169,10 +194,6 @@
       <HintPath>..\Tools\UnityDLL\UnityEngine.SharedInternalsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.SpatialTrackingModule">
-      <HintPath>..\Tools\UnityDLL\UnityEngine.SpatialTrackingModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEngine.SpriteMaskModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.SpriteMaskModule.dll</HintPath>
       <Private>False</Private>
@@ -185,12 +206,12 @@
       <HintPath>..\Tools\UnityDLL\UnityEngine.StreamingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.StyleSheetsModule">
-      <HintPath>..\Tools\UnityDLL\UnityEngine.StyleSheetsModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEngine.SubstanceModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.SubstanceModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.SubsystemsModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.SubsystemsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TerrainModule">
@@ -211,10 +232,6 @@
     </Reference>
     <Reference Include="UnityEngine.TilemapModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.TilemapModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.TimelineModule">
-      <HintPath>..\Tools\UnityDLL\UnityEngine.TimelineModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TLSModule">

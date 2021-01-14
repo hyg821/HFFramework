@@ -61,7 +61,7 @@
                 return false;
             }
 
-            Debug.LogWarning("[SRDebugger] No EventSystem found in scene - creating a default one.");
+            Debug.LogWarning("[SRDebugger] No EventSystem found in scene - creating a default one. Disable this behaviour in Window -> SRDebugger -> Settings Window -> Advanced)");
 
             CreateDefaultEventSystem();
             return true;
@@ -69,7 +69,7 @@
 
         public static void CreateDefaultEventSystem()
         {
-            var go = new GameObject("EventSystem");
+            var go = new GameObject("EventSystem (Created by SRDebugger, disable in Window -> SRDebugger -> Settings Window -> Advanced)");
             go.AddComponent<EventSystem>();
             go.AddComponent<StandaloneInputModule>();
         }
@@ -100,12 +100,12 @@
                 var category = categoryAttribute == null ? "Default" : categoryAttribute.Category;
 
                 // Find user-specified sorting priority from attribute
-                var sortAttribute = SRReflection.GetAttribute<SROptions.SortAttribute>(memberInfo);
+                var sortAttribute = SRReflection.GetAttribute<SortAttribute>(memberInfo);
                 var sortPriority = sortAttribute == null ? 0 : sortAttribute.SortPriority;
 
                 // Find user-specified display name from attribute
-                var nameAttribute = SRReflection.GetAttribute<SROptions.DisplayNameAttribute>(memberInfo);
-                var name = nameAttribute == null ? memberInfo.Name : nameAttribute.Name;
+                var nameAttribute = SRReflection.GetAttribute<DisplayNameAttribute>(memberInfo);
+                var name = nameAttribute == null ? memberInfo.Name : nameAttribute.DisplayName;
 
                 if (memberInfo is PropertyInfo)
                 {

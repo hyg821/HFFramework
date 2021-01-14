@@ -27,6 +27,7 @@
         public int InfoCount { get; private set; }
 
         public event ConsoleUpdatedEventHandler Updated;
+        public event ConsoleUpdatedEventHandler Error;
 
         public IReadOnlyList<ConsoleEntry> Entries
         {
@@ -55,6 +56,10 @@
                 if (_consoleEntries == null)
                 {
                     _consoleEntries = new CircularBuffer<ConsoleEntry>(Settings.Instance.MaximumConsoleEntries);
+                }
+                else
+                {
+                    _consoleEntries.Clear();
                 }
 
                 ErrorCount = WarningCount = InfoCount = 0;
@@ -121,10 +126,11 @@
 
             lock (_threadLock)
             {
-
                 var prevMessage = _collapseEnabled && _allConsoleEntries.Count > 0
                     ? _allConsoleEntries[_allConsoleEntries.Count - 1]
                     : null;
+
+                AdjustCounter(type, 1);
 
                 if (prevMessage != null && prevMessage.LogType == type && prevMessage.Message == condition &&
                     prevMessage.StackTrace == stackTrace)
@@ -142,8 +148,6 @@
 
                     OnEntryAdded(newEntry);
                 }
-
-                AdjustCounter(type, 1);
             }
         }
 
@@ -155,6 +159,11 @@
                 case LogType.Error:
                 case LogType.Exception:
                     ErrorCount += amount;
+
+                    if (Error != null)
+                    {
+                        Error.Invoke(this);
+                    }
                     break;
 
                 case LogType.Warning:

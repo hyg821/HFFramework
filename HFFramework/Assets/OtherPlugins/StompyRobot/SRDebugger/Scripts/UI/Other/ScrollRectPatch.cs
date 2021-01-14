@@ -27,7 +27,11 @@
                 Destroy(go.GetComponent<CanvasRenderer>());
                 Destroy(ReplaceMask);
 
-                go.AddComponent<RectMask2D>();
+                RectMask2D rt = go.GetComponent<RectMask2D>();
+                if (rt==null)
+                {
+                    go.AddComponent<RectMask2D>();
+                }
             }
         }
 

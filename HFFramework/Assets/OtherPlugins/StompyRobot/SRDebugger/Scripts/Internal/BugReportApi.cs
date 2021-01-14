@@ -1,6 +1,7 @@
 ﻿
 using System.IO;
 using System.Text;
+using SRF.Service;
 using UnityEngine.Networking;
 
 #if NETFX_CORE
@@ -117,10 +118,10 @@ namespace SRDebugger.Internal
             yield return _webRequest.SendWebRequest();
 #endif
 
-#if !UNITY_2017_2_OR_NEWER
-            if (_webRequest.isError)
-#else			
-            if (_webRequest.isNetworkError)
+#if !UNITY_2017_1_OR_NEWER
+            if(_webRequest.isError)
+#else
+                if (_webRequest.isNetworkError)
 #endif
             {
                 ErrorMessage = "Request Error: " + _webRequest.error;
@@ -165,8 +166,12 @@ namespace SRDebugger.Internal
             ht.Add("userDescription", report.UserDescription);
 
             ht.Add("console", CreateConsoleDump());
-            ht.Add("systemInformation", report.SystemInformation);
 
+            var d = new Dictionary<string, object> {{"", SRServiceManager.GetPlayerData.Invoke()}};
+            report.SystemInformation.Add("PlayerData", d);
+
+            ht.Add("systemInformation", report.SystemInformation);
+            
             if (report.ScreenshotData != null)
             {
                 ht.Add("screenshot", Convert.ToBase64String(report.ScreenshotData));

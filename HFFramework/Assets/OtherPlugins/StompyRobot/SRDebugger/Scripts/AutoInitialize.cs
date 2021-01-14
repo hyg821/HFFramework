@@ -1,5 +1,4 @@
 ﻿using SRDebugger.Services;
-using SRDebugger.Services.Implementation;
 using SRF.Service;
 
 namespace SRDebugger
@@ -14,6 +13,9 @@ namespace SRDebugger
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void OnLoadBeforeScene()
         {
+            // Populate service manager with types from SRDebugger assembly (asmdef)
+            SRServiceManager.RegisterAssembly<IDebugService>();
+
             if (Settings.Instance.IsEnabled)
             {
                 // Initialize console if it hasn't already initialized.

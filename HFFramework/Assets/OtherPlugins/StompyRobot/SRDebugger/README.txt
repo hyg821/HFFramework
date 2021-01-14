@@ -1,5 +1,5 @@
 =====================
-SRDebugger - (C) Stompy Robot LTD 2018
+SRDebugger - (C) Stompy Robot LTD 2020
 =====================
 
 Visit https://www.stompyrobot.uk/tools/srdebugger/documentation for more detailed documentation.
@@ -10,7 +10,7 @@ Open StompyRobot/SRDebugger/Scenes/Sample.unity for a simple example scene.
 
 ## Setup
 
-### Unity 5 / 2017 / 2018
+### Unity 2017 / 2018 / 2019
 
 No setup is required. SRDebugger will automatically load at runtime unless disabled in settings. 
 By default, the trigger to open the debug panel is attached to the top-left of the game view. Triple-tap there to open the panel. (This can be changed in the settings)
@@ -37,6 +37,59 @@ For documentation on other features, including the options tab, bug reporter, pr
 - Source Code Pro font provided by Adobe (github.com/adobe-fonts/source-code-pro) (Open Font License 1.1)
 
 # Change Log
+
+1.9.1
+----------
+
+Fixed:
+- No longer auto-initializes when auto-initialization is disabled. 
+- Improved support for higher levels of 'managed stripping' in AOT compiled platforms (IL2CPP)
+- Fix error notifier calling native Unity methods from background thread.
+- Fix number increment/decrement issues on non-english language platforms.
+
+1.9.0
+----------
+
+Attention: If upgrading from a previous version, please see upgrade notes below.
+
+New:
+- Added a notification to the trigger whenever an error is added to the console log (disable in settings).
+
+Changed:
+- Converted to asmdef packages.
+- Added note to auto-created event system to inform that it is created by SRDebugger and how to disable it.
+
+Fixed:
+- Support Domain Reload in 2019.3
+- Fix settings window display in 2019.3
+
+
+Upgrade Notes:
+
+This package now uses assembly definition files (asmdef) to isolate the script assets. 
+Please import this new version over your existing implementation and overwrite any modified files.
+
+For more information on assembly definition files, see the Unity docs: 
+https://docs.unity3d.com/Manual/ScriptCompilationAssemblyDefinitionFiles.html
+
+The options panel (SROptions) has required some changes to support asmdef, however most user code interacting with SROptions should not require any changes.
+
+For assistance please contact us at contact@stompyrobot.uk or post on the forums.
+
+1.8.4
+----------
+
+New:
+- Support for 2019.3.
+- Added option to completely unload the debug panel whenever it is closed.
+
+Changed:
+- Use https for bug reporter on all platforms.
+
+Fixed:
+- Console not clearing correctly after the first time.
+- Obsolete API warnings.
+- Incorrect layout on options tab when running on Unity 2019.1
 
 1.8.2
 ----------

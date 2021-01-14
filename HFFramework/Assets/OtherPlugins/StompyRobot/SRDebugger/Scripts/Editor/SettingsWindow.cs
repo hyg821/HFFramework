@@ -190,6 +190,12 @@
                     EditorGUILayout.EnumPopup(new GUIContent("Trigger Behaviour"),
                         Settings.Instance.TriggerBehaviour);
 
+            Settings.Instance.ErrorNotification =
+                EditorGUILayout.Toggle(
+                    new GUIContent("Error Notification",
+                        "Display a notification on the panel trigger when an error is printed to the log."),
+                    Settings.Instance.ErrorNotification);
+            
             EditorGUI.EndDisabledGroup();
 
             EditorGUILayout.Space();
@@ -232,11 +238,15 @@
 
             EditorGUI.EndDisabledGroup();
 
+            EditorGUILayout.Space();
+
             Settings.Instance.AutomaticallyShowCursor =
                 EditorGUILayout.Toggle(
                     new GUIContent("Show Cursor",
                         "Automatically set the cursor to visible when the debug panel is opened, and revert when closed."),
                     Settings.Instance.AutomaticallyShowCursor);
+
+
 
             // Expand content area to fit all available space
             GUILayout.FlexibleSpace();
@@ -712,6 +722,15 @@
             EditorGUILayout.Toggle(
                 new GUIContent("Automatic Event System", "Automatically create a UGUI EventSystem if none is found in the scene."),
                 Settings.Instance.EnableEventSystemGeneration);
+
+            Settings.Instance.UnloadOnClose =
+            EditorGUILayout.Toggle(
+                new GUIContent("Unload When Closed", "Unload the debug panel from the scene when it is closed."),
+                Settings.Instance.UnloadOnClose);
+
+            EditorGUILayout.HelpBox(
+                "The panel loads again automatically when opened. You can always unload the panel by holding down the close button.",
+                MessageType.Info);
 
             EditorGUILayout.Separator();
 

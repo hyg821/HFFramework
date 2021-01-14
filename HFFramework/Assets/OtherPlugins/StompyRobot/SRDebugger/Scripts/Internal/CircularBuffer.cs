@@ -149,6 +149,13 @@ namespace SRDebugger
             }
         }
 
+        public void Clear()
+        {
+            _count = 0;
+            _start = 0;
+            _end = 0;
+        }
+
         #region IEnumerable<T> implementation
 
         public IEnumerator<T> GetEnumerator()

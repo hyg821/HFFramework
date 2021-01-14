@@ -219,6 +219,17 @@ namespace SRDebugger
 #endif
         }
 
+        /// <summary>
+        /// Enable a notification when a new error is logged.
+        /// </summary>
+        public bool ErrorNotification
+        {
+            get { return _errorNotification; }
+#if UNITY_EDITOR
+            set { _errorNotification = value; }
+#endif
+        }
+
         public bool EnableKeyboardShortcuts
         {
             get { return _enableKeyboardShortcuts; }
@@ -505,6 +516,17 @@ namespace SRDebugger
             }
         }
 
+        public bool UnloadOnClose
+        {
+            get { return _unloadOnClose; }
+#if UNITY_EDITOR
+            set
+            {
+                _unloadOnClose = value;
+            }
+#endif
+        }
+
         #endregion
 
         #region Serialization
@@ -516,6 +538,8 @@ namespace SRDebugger
         [SerializeField] private TriggerEnableModes _triggerEnableMode = TriggerEnableModes.Enabled;
 
         [SerializeField] private TriggerBehaviours _triggerBehaviour = TriggerBehaviours.TripleTap;
+
+        [SerializeField] private bool _errorNotification = true;
 
         [SerializeField] private bool _enableKeyboardShortcuts = true;
 
@@ -572,6 +596,8 @@ namespace SRDebugger
         [SerializeField] private bool _automaticShowCursor = true;
 
         [SerializeField] private float _uiScale = 1;
+
+        [SerializeField] private bool _unloadOnClose = false;
 
         #endregion
 

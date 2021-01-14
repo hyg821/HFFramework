@@ -190,7 +190,7 @@ namespace SRDebugger.Internal.Editor
 
             if (_middleAlign == null)
             {
-                _middleAlign = new GUIStyle(GUI.skin.box);
+                _middleAlign = new GUIStyle(EditorStyles.helpBox);
                 _middleAlign.alignment = TextAnchor.MiddleCenter;
             }
 
@@ -198,7 +198,7 @@ namespace SRDebugger.Internal.Editor
 
             const float consoleHeight = 90;
 
-            GUI.Box(rect, "");
+            GUI.Box(rect, "", EditorStyles.helpBox);
 
             var consoleAlignment = Settings.Instance.ConsoleAlignment;
 

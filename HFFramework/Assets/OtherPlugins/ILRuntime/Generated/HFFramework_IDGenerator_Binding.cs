@@ -23,17 +23,17 @@ namespace ILRuntime.Runtime.Generated
             Type[] args;
             Type type = typeof(HFFramework.IDGenerator);
             args = new Type[]{};
-            method = type.GetMethod("GetComponentID", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, GetComponentID_0);
+            method = type.GetMethod("GetComponentId", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, GetComponentId_0);
             args = new Type[]{};
-            method = type.GetMethod("GetEntityID", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, GetEntityID_1);
+            method = type.GetMethod("GetEntityId", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, GetEntityId_1);
 
 
         }
 
 
-        static StackObject* GetComponentID_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* GetComponentId_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);
@@ -46,7 +46,7 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* GetEntityID_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* GetEntityId_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* __ret = ILIntepreter.Minus(__esp, 0);

@@ -76,9 +76,9 @@ namespace HFFramework
                     for (int i = 0; i < list.Count; i++)
                     {
                         ObserverDelegate o = list[i];
-                        if (o.receiver != null && o.callback != null)
+                        if (o.receiver != null && o.handler != null)
                         {
-                            o.callback(msg);
+                            o.handler(msg);
                         }
                     }
                 }
@@ -118,11 +118,6 @@ namespace HFFramework
                     i++;
                 }
             }
-        }
-
-        public void RemoveObserver(ulong key)
-        {
-            messagePool.Remove(key);
         }
 
         public void Clear()

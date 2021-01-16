@@ -21,31 +21,25 @@ namespace HFFramework
         /// <summary>
         ///  消息回调
         /// </summary>
-        public Action<NotificationMessage> callback;
+        public Action<NotificationMessage> handler;
 
-        private ulong key;
-        public ulong Key
-        {
-            get
-            {
-                return key;
-            }
-        }
+        public ulong Key { get; }
 
-        public ObserverDelegate(object receiver, ushort moduleID, int msgID, Action<NotificationMessage> callback)
+        public ObserverDelegate(object receiver, ushort moduleID, int msgID, Action<NotificationMessage> handler)
         {
             this.receiver = receiver;
             this.moduleID = moduleID;
             this.msgID = msgID;
-            this.callback = callback;
-            this.key = NotificationCenter.ConvertToKey(moduleID, msgID);
+            this.handler = handler;
+            this.Key = NotificationCenter.ConvertToKey(moduleID, msgID);
         }
 
         public void Destroy()
         {
-            receiver = null;
-            callback = null;
             msgID = 0;
+            moduleID = 0;
+            receiver = null;
+            handler = null;
         }
     }
 }

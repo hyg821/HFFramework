@@ -11,11 +11,11 @@ namespace HFFramework
     {
         public static NotificationCenter Instance;
 
-        public static ulong ConvertToKey(ushort moduleID, int msgID)
+        public static ulong ConvertToKey(ushort moduleId, int msgId)
         {
             ulong key = 0x0;
-            key = key | (uint)msgID;
-            uint temp= (uint)(moduleID << 35);
+            key = key | (uint)msgId;
+            uint temp= (uint)(moduleId << 35);
             key = key | temp;
             return key;
         }
@@ -33,21 +33,21 @@ namespace HFFramework
         /// <param name="receiver"></param>
         /// <param name="msgID"></param>
         /// <param name="callback"></param>
-        public void AddObserver(object receiver, ushort moduleID, int msgID, Action<NotificationMessage> callback)
+        public void AddObserver(object receiver, ushort moduleId, int msgId, Action<NotificationMessage> callback)
         {
             if (receiver==null)
             {
-                HFLog.E(" moduleID = " + moduleID + " msgID = " + msgID+" receiver 不能为空");
+                HFLog.E(" moduleID = " + moduleId + " msgID = " + msgId + " receiver 不能为空");
                 return;
             }
 
             if (callback==null)
             {
-                HFLog.E(" moduleID = " + moduleID + " msgID = " + msgID+" callback 不能为空");
+                HFLog.E(" moduleID = " + moduleId + " msgID = " + msgId + " callback 不能为空");
                 return;
             }
 
-            ObserverDelegate o = new ObserverDelegate(receiver, moduleID, msgID, callback);
+            ObserverDelegate o = new ObserverDelegate(receiver, moduleId, msgId, callback);
             List<ObserverDelegate> list;
             if (!messagePool.TryGetValue(o.Key, out list))
             {
@@ -86,16 +86,16 @@ namespace HFFramework
             }
         }
 
-        public void RemoveObserver(object receiver, ushort moduleID, int msgID)
+        public void RemoveObserver(object receiver, ushort moduleId, int msgId)
         {
-            RemoveObserver(receiver, ConvertToKey(moduleID, msgID));
+            RemoveObserver(receiver, ConvertToKey(moduleId, msgId));
         }
 
         /// <summary>
         ///  移除观察者
         /// </summary>
         /// <param name="receiver"></param>
-        /// <param name="msgID"></param>
+        /// <param name="msgId"></param>
         public void RemoveObserver(object receiver, ulong key)
         {
             List<ObserverDelegate> list;

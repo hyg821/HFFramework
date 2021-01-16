@@ -11,12 +11,12 @@ namespace HFFramework
         /// <summary>
         ///  模块id
         /// </summary>
-        public ushort moduleID;
+        public ushort moduleId;
 
         /// <summary>
         ///  消息id
         /// </summary>
-        public int msgID;
+        public int msgId;
 
         /// <summary>
         ///  消息回调
@@ -25,19 +25,19 @@ namespace HFFramework
 
         public ulong Key { get; }
 
-        public ObserverDelegate(object receiver, ushort moduleID, int msgID, Action<NotificationMessage> handler)
+        public ObserverDelegate(object receiver, ushort moduleId, int msgId, Action<NotificationMessage> handler)
         {
             this.receiver = receiver;
-            this.moduleID = moduleID;
-            this.msgID = msgID;
+            this.moduleId = moduleId;
+            this.msgId = msgId;
             this.handler = handler;
-            this.Key = NotificationCenter.ConvertToKey(moduleID, msgID);
+            this.Key = NotificationCenter.ConvertToKey(moduleId, msgId);
         }
 
         public void Destroy()
         {
-            msgID = 0;
-            moduleID = 0;
+            msgId = 0;
+            moduleId = 0;
             receiver = null;
             handler = null;
         }

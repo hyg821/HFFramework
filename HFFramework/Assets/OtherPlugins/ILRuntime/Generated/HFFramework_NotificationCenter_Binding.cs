@@ -81,13 +81,13 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Int32 @msgID = ptr_of_this_method->Value;
+            System.Int32 @msgId = ptr_of_this_method->Value;
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            System.UInt16 @moduleID = (ushort)ptr_of_this_method->Value;
+            System.UInt16 @moduleId = (ushort)ptr_of_this_method->Value;
 
 
-            var result_of_this_method = HFFramework.NotificationCenter.ConvertToKey(@moduleID, @msgID);
+            var result_of_this_method = HFFramework.NotificationCenter.ConvertToKey(@moduleId, @msgId);
 
             __ret->ObjectType = ObjectTypes.Long;
             *(ulong*)&__ret->Value = result_of_this_method;
@@ -105,10 +105,10 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            System.Int32 @msgID = ptr_of_this_method->Value;
+            System.Int32 @msgId = ptr_of_this_method->Value;
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            System.UInt16 @moduleID = (ushort)ptr_of_this_method->Value;
+            System.UInt16 @moduleId = (ushort)ptr_of_this_method->Value;
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
             System.Object @receiver = (System.Object)typeof(System.Object).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
@@ -118,7 +118,7 @@ namespace ILRuntime.Runtime.Generated
             HFFramework.NotificationCenter instance_of_this_method = (HFFramework.NotificationCenter)typeof(HFFramework.NotificationCenter).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
-            instance_of_this_method.AddObserver(@receiver, @moduleID, @msgID, @callback);
+            instance_of_this_method.AddObserver(@receiver, @moduleId, @msgId, @callback);
 
             return __ret;
         }

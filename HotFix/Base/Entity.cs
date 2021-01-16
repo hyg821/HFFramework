@@ -460,9 +460,9 @@ namespace HotFix
         /// <summary>
         ///  发送消息
         /// </summary>
-        public void SendNotificationMessage(ushort moduleID, int msgID, object obj)
+        public void SendNotificationMessage(ushort moduleId, int msgId, object obj)
         {
-            NotificationCenter.Instance.Send(moduleID, msgID, this, obj);
+            NotificationCenter.Instance.Send(moduleId, msgId, this, obj);
         }
 
         /// <summary>
@@ -471,13 +471,13 @@ namespace HotFix
         /// <param name="receiver">this</param>
         /// <param name="messageType"> 消息类型 int  </param>
         /// <param name="callback"> 信息回调 </param>
-        public void ReceiveNotificationMessage(object receiver, ushort moduleID, int msgID, Action<NotificationMessage> callback)
+        public void ReceiveNotificationMessage(object receiver, ushort moduleId, int msgId, Action<NotificationMessage> callback)
         {
-            ulong key = NotificationCenter.ConvertToKey(moduleID, msgID);
+            ulong key = NotificationCenter.ConvertToKey(moduleId, msgId);
             if (!messageTypeSet.Contains(key))
             {
                 messageTypeSet.Add(key);
-                NotificationCenter.Instance.AddObserver(receiver, moduleID, msgID, callback);
+                NotificationCenter.Instance.AddObserver(receiver, moduleId, msgId, callback);
             }
         }
 

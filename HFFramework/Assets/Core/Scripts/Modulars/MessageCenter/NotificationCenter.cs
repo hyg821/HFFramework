@@ -57,16 +57,12 @@ namespace HFFramework
             list.Add(o);
         }
 
-        /// <summary>
-        ///  发消息
-        /// </summary>
-        /// <param name="msg"></param>
-        public static void Post(NotificationMessage msg)
+        public void Send(ushort moduleId, int msgId, object sender, object content)
         {
-            Instance.Send(msg);
+            Send(new NotificationMessage(moduleId, msgId, sender, content));
         }
 
-        private void Send(NotificationMessage msg)
+        public void Send(NotificationMessage msg)
         {
             try
             {

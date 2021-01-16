@@ -1153,7 +1153,6 @@
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\HFFramework_HFLog_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\HFFramework_IDGenerator_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\HFFramework_NotificationCenter_Binding.cs" />
-    <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\HFFramework_NotificationMessage_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\HFFramework_ResourceManager_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\System_Activator_Binding.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Generated\System_Collections_Generic_HashSet_1_UInt64_Binding.cs" />

@@ -23,9 +23,9 @@ namespace ILRuntime.Runtime.Generated
             FieldInfo field;
             Type[] args;
             Type type = typeof(HFFramework.NotificationCenter);
-            args = new Type[]{typeof(HFFramework.NotificationMessage)};
-            method = type.GetMethod("Post", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Post_0);
+            args = new Type[]{typeof(System.UInt16), typeof(System.Int32), typeof(System.Object), typeof(System.Object)};
+            method = type.GetMethod("Send", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, Send_0);
             args = new Type[]{typeof(System.UInt16), typeof(System.Int32)};
             method = type.GetMethod("ConvertToKey", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, ConvertToKey_1);
@@ -45,18 +45,31 @@ namespace ILRuntime.Runtime.Generated
         }
 
 
-        static StackObject* Post_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* Send_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+            StackObject* __ret = ILIntepreter.Minus(__esp, 5);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            HFFramework.NotificationMessage @msg = (HFFramework.NotificationMessage)typeof(HFFramework.NotificationMessage).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.Object @content = (System.Object)typeof(System.Object).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
             __intp.Free(ptr_of_this_method);
 
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            System.Object @sender = (System.Object)typeof(System.Object).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
 
-            HFFramework.NotificationCenter.Post(@msg);
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
+            System.Int32 @msgId = ptr_of_this_method->Value;
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 4);
+            System.UInt16 @moduleId = (ushort)ptr_of_this_method->Value;
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 5);
+            HFFramework.NotificationCenter instance_of_this_method = (HFFramework.NotificationCenter)typeof(HFFramework.NotificationCenter).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            instance_of_this_method.Send(@moduleId, @msgId, @sender, @content);
 
             return __ret;
         }

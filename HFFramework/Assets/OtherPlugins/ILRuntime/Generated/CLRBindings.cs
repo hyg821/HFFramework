@@ -26,7 +26,6 @@ namespace ILRuntime.Runtime.Generated
             Cysharp_Threading_Tasks_CompilerServices_AsyncUniTaskMethodBuilder_Binding.Register(app);
             UnityEngine_Transform_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);
-            HFFramework_NotificationMessage_Binding.Register(app);
             HFFramework_NotificationCenter_Binding.Register(app);
             System_Collections_Generic_HashSet_1_UInt64_Binding.Register(app);
             System_Collections_Generic_HashSet_1_UInt64_Binding_Enumerator_Binding.Register(app);

@@ -27,7 +27,7 @@ namespace HFFramework
                 if (isPaused!=value)
                 {
                     isPaused = value;
-                    NotificationCenter.Post(new NotificationMessage(GameConst.STATE, APPPAUSE, this, isPaused));
+                    NotificationCenter.Instance.Send(GameConst.STATE, APPPAUSE, this, isPaused);
                 }
             }
             get

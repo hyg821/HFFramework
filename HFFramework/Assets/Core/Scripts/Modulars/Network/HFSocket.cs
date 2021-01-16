@@ -36,7 +36,7 @@ namespace HFFramework
         /// <summary>
         ///  socket的名字
         /// </summary>
-        public string socketName;
+        public string name;
 
         /// <summary>
         ///  连接的ip
@@ -145,9 +145,9 @@ namespace HFFramework
             IsDispatch = false;
         }
 
-        public void SetName(string tag)
+        public void SetName(string name)
         {
-            this.socketName = tag;
+            this.name = name;
         }
 
         public void Init(string ip, int port, Action connect, Action<Package> receive, Action close, Action error)

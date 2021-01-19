@@ -139,6 +139,18 @@ namespace HFFramework
             destroyMethod = null;
         }
 
+
+        /// <summary>
+        /// 初始化一下ILRuntime框架的东西
+        /// 注册一些回掉
+        /// </summary>
+        public unsafe static void InitILRuntime(ILRuntime.Runtime.Enviorment.AppDomain appdomain)
+        {
+            Register(appdomain);
+            //不要注释  否则会开启大量反射方法 放在最后一步
+            ILRuntime.Runtime.Generated.CLRBindings.Initialize(appdomain);
+        }
+
         public unsafe static void Register(ILRuntime.Runtime.Enviorment.AppDomain appdomain)
         {
 #if DEBUG && (UNITY_EDITOR || UNITY_ANDROID || UNITY_IPHONE)
@@ -215,17 +227,6 @@ namespace HFFramework
             {
                 return new UnityAction<BaseEventData>((p) => { ((Action<BaseEventData>)action)(p); });
             });
-        }
-
-        /// <summary>
-        /// 初始化一下ILRuntime框架的东西
-        /// 注册一些回掉
-        /// </summary>
-        public unsafe static void InitILRuntime(ILRuntime.Runtime.Enviorment.AppDomain appdomain)
-        {
-            Register(appdomain);
-            //不要注释  否则会开启大量反射方法 放在最后一步
-            ILRuntime.Runtime.Generated.CLRBindings.Initialize(appdomain);
         }
     }
 }

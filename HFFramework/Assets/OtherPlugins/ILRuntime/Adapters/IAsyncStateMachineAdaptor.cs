@@ -47,6 +47,8 @@ public class IAsyncStateMachineClassInheritanceAdaptor : CrossBindingAdaptor
         {
             this.appDomain = appDomain;
             this.instance = instance;
+            mMoveNext = ILInstance.Type.GetMethod("MoveNext", 0);
+            mSetStateMachine = ILInstance.Type.GetMethod("SetStateMachine", 1);
         }
 
         public ILTypeInstance ILInstance
@@ -59,25 +61,26 @@ public class IAsyncStateMachineClassInheritanceAdaptor : CrossBindingAdaptor
 
         public void MoveNext()
         {
-            if (this.mMoveNext == null)
+            using (var ctx = appDomain.BeginInvoke(mMoveNext))
             {
-                mMoveNext = instance.Type.GetMethod("MoveNext", 0);
+                ctx.PushObject(ILInstance);
+                ctx.Invoke();
             }
-            this.appDomain.Invoke(mMoveNext, instance, null);
         }
 
         public void SetStateMachine(IAsyncStateMachine stateMachine)
         {
-            if (this.mSetStateMachine == null)
+            using (var ctx = appDomain.BeginInvoke(mSetStateMachine))
             {
-                mSetStateMachine = instance.Type.GetMethod("SetStateMachine");
+                ctx.PushObject(ILInstance);
+                ctx.PushObject(stateMachine);
+                ctx.Invoke();
             }
-            this.appDomain.Invoke(mSetStateMachine, instance, stateMachine);
         }
 
         public override string ToString()
         {
-            IMethod m = this.appDomain.ObjectType.GetMethod("ToString", 0);
+            IMethod m = appDomain.ObjectType.GetMethod("ToString", 0);
             m = instance.Type.GetVirtualMethod(m);
             if (m == null || m is ILMethod)
             {

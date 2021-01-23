@@ -90,38 +90,30 @@ namespace HFFramework
 
         public async UniTask<T> GetController<T>(bool async) where T :UIController,new()
         {
-            try
+            UIController controller;
+            string type = typeof(T).Name;
+            if (controllerDic.TryGetValue(type, out controller) == false)
             {
-                UIController controller;
-                string type = typeof(T).Name;
-                if (controllerDic.TryGetValue(type, out controller) == false)
+                UI config = ConfigUI.Get(type);
+                if (async)
                 {
-                    UI config = ConfigUI.Get(type);
-                    if (async)
-                    {
-                        controller = await GameFactory.CreateEntityAsync<T>(config.AssetbundleName, config.AssetName);
-                    }
-                    else
-                    {
-                        GameObject prefab = ResourceManager.Instance.GetPrefab(config.AssetbundleName, config.AssetName);
-                        GameObject sourcers = GameObject.Instantiate(prefab);
-                        sourcers.name = config.AssetName;
-                        controller = GameFactory.CreateEntity<T>(sourcers);
-                    }
-
-                    controller.config = config;
-
-                    controller.transform.SetParent(GetCanvas(config.LayerIndex).transform, false);
-
-                    controllerDic.Add(type, controller);
+                    controller = await GameFactory.CreateEntityAsync<T>(config.AssetbundleName, config.AssetName);
                 }
-                return controller as T;
+                else
+                {
+                    GameObject prefab = ResourceManager.Instance.GetPrefab(config.AssetbundleName, config.AssetName);
+                    GameObject sourcers = GameObject.Instantiate(prefab);
+                    sourcers.name = config.AssetName;
+                    controller = GameFactory.CreateEntity<T>(sourcers);
+                }
+
+                controller.config = config;
+
+                controller.transform.SetParent(GetCanvas(config.LayerIndex).transform, false);
+
+                controllerDic.Add(type, controller);
             }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-                throw;
-            }
+            return controller as T;
         }
 
         public async UniTask<T> Open<T>(bool async = false,bool animation = false,object param = null) where T : UIController, new()

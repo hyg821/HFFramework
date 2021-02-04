@@ -200,7 +200,7 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
+                AssetBundlePackage ab = LoadAssetBundle(packageName);
                 Sprite sp = ab.LoadSprite(atlasName, spriteName);
                 ab.Release();
                 return sp;
@@ -213,7 +213,7 @@ namespace HFFramework
         /// <param name="shaderPackageName"></param>
         public void CacheAllShader(string packageName)
         {
-            AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
+            AssetBundlePackage ab = LoadAssetBundle(packageName);
             ab.CacheAllAsset();
             Shader.WarmupAllShaders();
         }
@@ -244,7 +244,7 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
+                AssetBundlePackage ab = LoadAssetBundle(packageName);
                 T result = ab.LoadAsset<T>(assetName);
                 ab.Release();
                 return result;
@@ -259,7 +259,7 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = await LoadAssetBundleFromFileAsync(packageName);
+                AssetBundlePackage ab = await LoadAssetBundleAsync(packageName);
                 T result = await ab.LoadAssetAsync<T>(assetName);
                 ab.Release();
 
@@ -300,7 +300,7 @@ namespace HFFramework
 
         private async UniTask m_LoadScene(string packageName, string sceneName)
         {
-            AssetBundlePackage ab = await m_LoadAssetBundleFromFileAsync(packageName.ToLower());
+            AssetBundlePackage ab = await m_LoadAssetBundleAsync(packageName.ToLower());
             await SceneManager.LoadSceneAsync(sceneName);
             ab.Release();
             await Resources.UnloadUnusedAssets();
@@ -309,7 +309,7 @@ namespace HFFramework
         /// <summary>
         ///  一般来说，尽可能使用AssetBundle.LoadFromFile。该API在速度，磁盘使用率和运行时内存使用方面是最有效的
         /// </summary>
-        public AssetBundlePackage LoadAssetBundleFromFile(string packageName)
+        public AssetBundlePackage LoadAssetBundle(string packageName)
         {
             packageName = packageName.ToLower();
             string[] list = GetAssetBundleDependencies(packageName);
@@ -317,7 +317,7 @@ namespace HFFramework
             {
                 for (int i = 0; i < list.Length; i++)
                 {
-                    LoadAssetBundleFromFile(list[i]);
+                    LoadAssetBundle(list[i]);
                 }
             }
 
@@ -342,12 +342,12 @@ namespace HFFramework
         /// </summary>
         /// <param name="assetBundleName"></param>
         /// <param name="finishCallback"></param>
-        public async UniTask<AssetBundlePackage> LoadAssetBundleFromFileAsync(string packageName)
+        public async UniTask<AssetBundlePackage> LoadAssetBundleAsync(string packageName)
         {
             try
             {
                 packageName = packageName.ToLower();
-                return await m_LoadAssetBundleFromFileAsync(packageName);
+                return await m_LoadAssetBundleAsync(packageName);
             }
             catch (Exception exception)
             {
@@ -356,14 +356,14 @@ namespace HFFramework
             }       
         }
 
-        private async UniTask<AssetBundlePackage> m_LoadAssetBundleFromFileAsync(string packageName)
+        private async UniTask<AssetBundlePackage> m_LoadAssetBundleAsync(string packageName)
         {
             string[] list = GetAssetBundleDependencies(packageName);
             if (list.Length != 0)
             {
                 for (int i = 0; i < list.Length; i++)
                 {
-                    await m_LoadAssetBundleFromFileAsync(list[i]);
+                    await m_LoadAssetBundleAsync(list[i]);
                 }
             }
 
@@ -386,12 +386,12 @@ namespace HFFramework
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public List<AssetBundlePackage> LoadAssetBundlesFromFile(string[] list)
+        public List<AssetBundlePackage> LoadAssetBundles(string[] list)
         {
             List<AssetBundlePackage> bundles = new List<AssetBundlePackage>();
             for (int i = 0; i < list.Length; i++)
             {
-                AssetBundlePackage bundle = LoadAssetBundleFromFile(list[i]);
+                AssetBundlePackage bundle = LoadAssetBundle(list[i]);
                 if (bundle != null)
                 {
                     bundles.Add(bundle);
@@ -405,17 +405,17 @@ namespace HFFramework
         /// </summary>
         /// <param name="list"></param>
         /// <param name="progressCallback"></param>
-        public void LoadAssetsBundlesFromFileAsync(string[] list, Action<float> progressCallback)
+        public void LoadAssetsBundlesAsync(string[] list, Action<float> progressCallback)
         {
-            m_LoadAssetsBundlesFromFileAsync(list, progressCallback).Forget();
+            m_LoadAssetsBundlesAsync(list, progressCallback).Forget();
         }
 
-        private async UniTaskVoid m_LoadAssetsBundlesFromFileAsync(string[] list, Action<float> progressCallback)
+        private async UniTaskVoid m_LoadAssetsBundlesAsync(string[] list, Action<float> progressCallback)
         {
             List<AssetBundlePackage> bundles = new List<AssetBundlePackage>();
             for (int i = 0; i < list.Length; i++)
             {
-                AssetBundlePackage bundle = await LoadAssetBundleFromFileAsync(list[i]);
+                AssetBundlePackage bundle = await LoadAssetBundleAsync(list[i]);
                 if (bundle != null)
                 {
                     bundles.Add(bundle);
@@ -436,7 +436,7 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = LoadAssetBundleFromFile(packageName);
+                AssetBundlePackage ab = LoadAssetBundle(packageName);
                 TextAsset text = ab.LoadAsset<TextAsset>(dllName + ".dll");
                 if (callback != null)
                 {

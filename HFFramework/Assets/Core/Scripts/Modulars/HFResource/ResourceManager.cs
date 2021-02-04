@@ -311,25 +311,30 @@ namespace HFFramework
         public AssetBundlePackage LoadAssetBundle(string packageName)
         {
             packageName = packageName.ToLower();
-            string[] list = GetAssetBundleDependencies(packageName);
-            for (int i = 0; i < list.Length; i++)
+            AssetBundlePackage package = null;
+            //判断是否已经加载bundle
+            if (!allAssetBundleDic.TryGetValue(packageName, out package))
             {
-                LoadAssetBundle(list[i]);
+                //获取依赖
+                string[] list = GetAssetBundleDependencies(packageName);
+                for (int i = 0; i < list.Length; i++)
+                {
+                    //加载依赖
+                    LoadAssetBundle(list[i]);
+                }
+
+                package = RawLoadAssetBundle(packageName);
             }
 
-            AssetBundlePackage package = null;
-            if (!allAssetBundleDic.ContainsKey(packageName))
-            {
-                AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(packageName, false));
-                package = new AssetBundlePackage(bundle, packageName);
-                allAssetBundleDic.Add(bundle.name, package);
-                //HFLog.L("同步加载AssetBundle   " + assetBundleName);
-            }
-            else
-            {
-                package = allAssetBundleDic[packageName];     
-            }
             package.Retain();
+            return package;
+        }
+
+        private AssetBundlePackage RawLoadAssetBundle(string packageName) 
+        {
+            AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(packageName, false));
+            AssetBundlePackage package = new AssetBundlePackage(bundle, packageName);
+            allAssetBundleDic.Add(bundle.name, package);
             return package;
         }
 
@@ -342,8 +347,7 @@ namespace HFFramework
         {
             try
             {
-                packageName = packageName.ToLower();
-                return await m_LoadAssetBundleAsync(packageName);
+                return await m_LoadAssetBundleAsync(packageName.ToLower());
             }
             catch (Exception exception)
             {
@@ -354,23 +358,26 @@ namespace HFFramework
 
         private async UniTask<AssetBundlePackage> m_LoadAssetBundleAsync(string packageName)
         {
-            string[] list = GetAssetBundleDependencies(packageName);
-            if (list.Length != 0)
+            AssetBundlePackage package = null;
+            if (!allAssetBundleDic.TryGetValue(packageName, out package))
             {
+                string[] list = GetAssetBundleDependencies(packageName);
                 for (int i = 0; i < list.Length; i++)
                 {
                     await m_LoadAssetBundleAsync(list[i]);
                 }
-            }
 
-            AssetBundlePackage package = null;
-            if (!allAssetBundleDic.TryGetValue(packageName, out package))
-            {
-                AssetBundle assetbundle = await AssetBundle.LoadFromFileAsync(AutoGetResourcePath(packageName, false));
-                package = new AssetBundlePackage(assetbundle, packageName);
-                allAssetBundleDic.Add(package.name, package);
+                package = await RawLoadAssetBundleAsync(packageName);
             }
             package.Retain();
+            return package;
+        }
+
+        private async UniTask<AssetBundlePackage> RawLoadAssetBundleAsync(string packageName)
+        {
+            AssetBundle assetbundle = await AssetBundle.LoadFromFileAsync(AutoGetResourcePath(packageName, false));
+            AssetBundlePackage package = new AssetBundlePackage(assetbundle, packageName);
+            allAssetBundleDic.Add(package.name, package);
             return package;
         }
 

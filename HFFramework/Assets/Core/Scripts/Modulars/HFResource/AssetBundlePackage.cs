@@ -35,6 +35,7 @@ namespace HFFramework
         public void Retain()
         {
             refCount++;
+            //HFLog.C("AssetBundle : " + name + " 引用计数 : " + refCount);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace HFFramework
                 unloading = false;
                 refCount = 0;
                 CacheDic.Clear();
-                assetBundle.Unload(t);
+                assetBundle.Unload(unloadAllLoadedObjects);
                 CacheDic = null;
                 assetBundle = null;
                 name = null;

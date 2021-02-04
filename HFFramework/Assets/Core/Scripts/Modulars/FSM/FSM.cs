@@ -66,31 +66,24 @@ namespace HFFramework
         /// <param name="stateName"></param>
         public async UniTaskVoid ChangeState<T>(object enterParams = null, object exitParams = null) where T:FSMState,new()
         {
-            try
+            if (!locked)
             {
-                if (!locked)
+                locked = true;
+                string key = typeof(T).Name;
+                if (currentState != null)
                 {
-                    locked = true;
-                    string key = typeof(T).Name;
-                    if (currentState != null)
-                    {
-                        await currentState.OnStateExit(exitParams);
-                    }
-                    if (!stateDic.TryGetValue(key, out currentState))
-                    {
-                        currentState = AddState<T>();
-                    }
-                    await currentState.OnStateEnter(enterParams);
-                    locked = false;
+                    await currentState.OnStateExit(exitParams);
                 }
-                else
+                if (!stateDic.TryGetValue(key, out currentState))
                 {
-                    HFLog.E("重复转换状态 " + typeof(T).Name);
+                    currentState = AddState<T>();
                 }
+                await currentState.OnStateEnter(enterParams);
+                locked = false;
             }
-            catch (Exception exception)
+            else
             {
-                Debug.LogError(exception);
+                HFLog.E("重复转换状态 " + typeof(T).Name);
             }
         }
 

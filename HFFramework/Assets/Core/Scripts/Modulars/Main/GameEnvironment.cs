@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Config;
 using System;
+using Cysharp.Threading.Tasks;
 
 namespace  HFFramework
 {
@@ -81,6 +82,7 @@ namespace  HFFramework
             OpenLocalLog(config.IsOpenLoaclLog);
             SetFullScreen(config.FullScreen);
             AppDomain.CurrentDomain.UnhandledException += CatchException;
+            UniTaskScheduler.UnobservedTaskException += UniTaskCatchException;
         }
 
         /// <summary>
@@ -143,6 +145,11 @@ namespace  HFFramework
             Screen.fullScreen = full;
         }
 
+        private void UniTaskCatchException(Exception e)
+        {
+            HFLog.E(e);
+        }
+
         private void CatchException(object sender, UnhandledExceptionEventArgs e)
         {
             HFLog.E("未捕获异常 "+e.ExceptionObject);
@@ -151,6 +158,7 @@ namespace  HFFramework
         public void Shutdown()
         {
             AppDomain.CurrentDomain.UnhandledException -= CatchException;
+            UniTaskScheduler.UnobservedTaskException -= UniTaskCatchException;
             Instance = null;
         }
     }

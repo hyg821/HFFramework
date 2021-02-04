@@ -259,15 +259,14 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = await LoadAssetBundleAsync(packageName);
-                T result = await ab.LoadAssetAsync<T>(assetName);
-                ab.Release();
+                AssetBundlePackage package = await LoadAssetBundleAsync(packageName);
+                T result = await package.LoadAssetAsync<T>(assetName);
+                package.Release();
 
                 if (args!=null&&args.canceled)
                 {
                     throw new OperationCanceledException(); 
                 }
-
                 return result;
             }
         }
@@ -313,28 +312,25 @@ namespace HFFramework
         {
             packageName = packageName.ToLower();
             string[] list = GetAssetBundleDependencies(packageName);
-            if (list.Length != 0)
+            for (int i = 0; i < list.Length; i++)
             {
-                for (int i = 0; i < list.Length; i++)
-                {
-                    LoadAssetBundle(list[i]);
-                }
+                LoadAssetBundle(list[i]);
             }
 
-            AssetBundlePackage assetBundlePackage = null;
+            AssetBundlePackage package = null;
             if (!allAssetBundleDic.ContainsKey(packageName))
             {
                 AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(packageName, false));
-                assetBundlePackage = new AssetBundlePackage(bundle, packageName);
-                allAssetBundleDic.Add(bundle.name, assetBundlePackage);
+                package = new AssetBundlePackage(bundle, packageName);
+                allAssetBundleDic.Add(bundle.name, package);
                 //HFLog.L("同步加载AssetBundle   " + assetBundleName);
             }
             else
             {
-                assetBundlePackage = allAssetBundleDic[packageName];     
+                package = allAssetBundleDic[packageName];     
             }
-            assetBundlePackage.Retain();
-            return assetBundlePackage;
+            package.Retain();
+            return package;
         }
 
         /// <summary>
@@ -367,18 +363,15 @@ namespace HFFramework
                 }
             }
 
-            AssetBundlePackage assetBundlePackage = null;
-            if (!allAssetBundleDic.TryGetValue(packageName, out assetBundlePackage))
+            AssetBundlePackage package = null;
+            if (!allAssetBundleDic.TryGetValue(packageName, out package))
             {
                 AssetBundle assetbundle = await AssetBundle.LoadFromFileAsync(AutoGetResourcePath(packageName, false));
-                if (!allAssetBundleDic.TryGetValue(packageName, out assetBundlePackage))
-                {
-                    assetBundlePackage = new AssetBundlePackage(assetbundle, packageName);
-                    allAssetBundleDic.Add(assetBundlePackage.name, assetBundlePackage);
-                }
+                package = new AssetBundlePackage(assetbundle, packageName);
+                allAssetBundleDic.Add(package.name, package);
             }
-            assetBundlePackage.Retain();
-            return assetBundlePackage;
+            package.Retain();
+            return package;
         }
 
         /// <summary>
@@ -484,7 +477,7 @@ namespace HFFramework
         /// </summary>
         /// <param name="name"></param>
         /// <param name="b">是否卸载压出来的的东西</param>
-        public void UnloadAssetBundle(string packageName, bool b = true)
+        public void UnloadAssetBundle(string packageName, bool unloadAllLoadedObjects = true)
         {
             if (GameEnvironment.Instance.config.LoadAssetPathType != LoadAssetPathType.Editor)
             {
@@ -492,12 +485,12 @@ namespace HFFramework
                 AssetBundlePackage bundle = GetAssetBundle(packageName);
                 if (bundle != null)
                 {
-                    UnloadAssetBundle(bundle, b);
+                    UnloadAssetBundle(bundle, unloadAllLoadedObjects);
                 }
             }
         }
 
-        public void UnloadAssetBundle(AssetBundlePackage bundle, bool b = true)
+        public void UnloadAssetBundle(AssetBundlePackage bundle, bool unloadAllLoadedObjects = true)
         {
             if (GameEnvironment.Instance.config.LoadAssetPathType != LoadAssetPathType.Editor)
             {
@@ -505,7 +498,7 @@ namespace HFFramework
                 bundle.unloading = true;
                 RecursionReleaseAssetBundle(bundle.name);
                 allAssetBundleDic.Remove(bundle.name);
-                bundle.Unload(b);
+                bundle.Unload(unloadAllLoadedObjects);
             }
         }
 
@@ -535,11 +528,11 @@ namespace HFFramework
         ///  卸载一系列的 的assetbundle
         /// </summary>
         /// <param name="list"></param>
-        public void UnloadAssetBundles(string[] list, bool b, Action<float> progressCallback)
+        public void UnloadAssetBundles(string[] list, bool unloadAllLoadedObjects, Action<float> progressCallback)
         {
             for (int i = 0; i < list.Length; i++)
             {
-                UnloadAssetBundle(list[i],b);
+                UnloadAssetBundle(list[i], unloadAllLoadedObjects);
                 if (progressCallback != null)
                 {
                     progressCallback((i + 0.0f) / list.Length);

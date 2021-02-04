@@ -75,7 +75,7 @@ namespace HFFramework
         /// 不要手动调用这个接口 通过manager卸载
         /// </summary>
         /// <param name="t"></param>
-        public void Unload(bool t)
+        public void Unload(bool unloadAllLoadedObjects)
         {
             if (assetBundle != null)
             {

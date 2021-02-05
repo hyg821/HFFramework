@@ -64,7 +64,7 @@ namespace HFFramework
             fsm.Update();
         }
 
-        public void Shutdown()
+        public void Dispose()
         {
             fsm.Destroy();
             fsm = null;

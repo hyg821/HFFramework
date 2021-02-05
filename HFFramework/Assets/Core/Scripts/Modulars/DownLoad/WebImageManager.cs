@@ -110,7 +110,7 @@ namespace HFFramework
             Resources.UnloadUnusedAssets();
         }
 
-        public void Shutdown()
+        public void Dispose()
         {
             if (defaultSprite!=null)
             {

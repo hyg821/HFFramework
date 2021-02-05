@@ -155,7 +155,7 @@ namespace  HFFramework
             HFLog.E("未捕获异常 "+e.ExceptionObject);
         }
 
-        public void Shutdown()
+        public void Dispose()
         {
             AppDomain.CurrentDomain.UnhandledException -= CatchException;
             UniTaskScheduler.UnobservedTaskException -= UniTaskCatchException;

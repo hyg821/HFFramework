@@ -220,7 +220,7 @@ namespace HFFramework
             }
         }
 
-        public void Shutdown()
+        public void Dispose()
         {
             refrencesDic.Clear();
             refrencesList.Clear();

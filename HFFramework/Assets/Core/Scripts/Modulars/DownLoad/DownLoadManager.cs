@@ -86,7 +86,7 @@ namespace HFFramework
             return result;
         }
 
-        public void Shutdown()
+        public void Dispose()
         {
             foreach (var item in downLoaders)
             {

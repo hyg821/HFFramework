@@ -6,6 +6,6 @@ namespace HFFramework
 {
     public interface IManager
     {
-        void Shutdown();
+        void Dispose();
     }
 }

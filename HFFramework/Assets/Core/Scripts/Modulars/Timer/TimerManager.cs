@@ -93,7 +93,7 @@ namespace HFFramework
             timer.Close();
         }
 
-        public void Shutdown()
+        public void Dispose()
         {
             for (int i = 0; i < removeTimerList.Count; i++)
             {

@@ -70,11 +70,13 @@ namespace HFFramework
         /// </summary>
         public object userData;
 
+        [NonSerialized]
         /// <summary>
         ///  本体entity的帮助类
         /// </summary>
         public List<Component> components = new List<Component>();
 
+        [NonSerialized]
         /// <summary>
         /// 子实体 通常是 有从属关系并且有显示意义的子实体存在的地方
         /// </summary>

@@ -592,7 +592,7 @@ namespace HFFramework
             }
         }
 
-        public void Shutdown()
+        public void Dispose()
         {
             UnloadAllAssetBundle();
             Instance = null;

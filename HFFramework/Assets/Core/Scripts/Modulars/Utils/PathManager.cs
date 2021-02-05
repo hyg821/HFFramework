@@ -55,7 +55,7 @@ namespace HFFramework
             return Application.streamingAssetsPath + "/";
         }
 
-        public void Shutdown()
+        public void Dispose()
         {
             Instance = null;
         }

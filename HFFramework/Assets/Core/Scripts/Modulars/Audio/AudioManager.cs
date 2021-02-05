@@ -257,7 +257,7 @@ namespace HFFramework
             identifier = 0;
         }
 
-        public void Shutdown()
+        public void Dispose()
         {
             DestroyAllAudioPlayer();
             Instance = null;

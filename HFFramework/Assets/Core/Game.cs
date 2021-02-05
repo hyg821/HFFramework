@@ -92,26 +92,26 @@ namespace HFFramework
         /// <summary>
         /// 清理关闭控制器
         /// </summary>
-        public void Shutdown()
+        public void Dispose()
         {
-            PathManager.Instance.Shutdown();
-            ResourceManager.Instance.Shutdown();
-            GameEnvironment.Instance.Shutdown();
-            SocketManager.Instance.Shutdown();
-            AudioManager.Instance.Shutdown();
-            UIManager.Instance.Shutdown();
-            WebImageManager.Instance.Shutdown();
-            InputManager.Instance.Shutdown();
-            DownLoadManager.Instance.Shutdown();
-            ObjectPoolManager.Instance.Shutdown();
-            HotFixManager.Instance.Shutdown();
-            GameSceneManager.Instance.Shutdown();
-            TimerManager.Instance.Shutdown();
-            GameStateChecker.Instance.Shutdown();
-            GameUtils.Instance.Shutdown();
-            NotificationCenter.Instance.Shutdown();
-            GameLooper.Instance.Shutdown();
-            GameFactory.Instance.Shutdown();
+            PathManager.Instance.Dispose();
+            ResourceManager.Instance.Dispose();
+            GameEnvironment.Instance.Dispose();
+            SocketManager.Instance.Dispose();
+            AudioManager.Instance.Dispose();
+            UIManager.Instance.Dispose();
+            WebImageManager.Instance.Dispose();
+            InputManager.Instance.Dispose();
+            DownLoadManager.Instance.Dispose();
+            ObjectPoolManager.Instance.Dispose();
+            HotFixManager.Instance.Dispose();
+            GameSceneManager.Instance.Dispose();
+            TimerManager.Instance.Dispose();
+            GameStateChecker.Instance.Dispose();
+            GameUtils.Instance.Dispose();
+            NotificationCenter.Instance.Dispose();
+            GameLooper.Instance.Dispose();
+            GameFactory.Instance.Dispose();
             HTTPManager.OnQuit();
             MemoryClear();
             Destroy(gameObject);
@@ -120,7 +120,7 @@ namespace HFFramework
 
         private void OnApplicationQuit()
         {
-            Shutdown();
+            Dispose();
             Debug.Log("应用退出");
         }
 

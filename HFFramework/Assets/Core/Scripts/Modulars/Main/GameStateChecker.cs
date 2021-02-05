@@ -49,7 +49,7 @@ namespace HFFramework
 #endif
         }
 
-        public void Shutdown()
+        public void Dispose()
         {
             Instance = null;
         }

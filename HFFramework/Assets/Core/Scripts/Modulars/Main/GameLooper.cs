@@ -139,19 +139,6 @@ namespace HFFramework
             }
         }
 
-        public void Shutdown()
-        {
-            prepareUpdateList.Clear();
-            updateList.Clear();
-            prepareFixedUpdateList.Clear();
-            fixedUpdateList.Clear();
-            prepareLateUpdateList.Clear();
-            lateUpdateList.Clear();
-            eventQueue = null;
-            mainThreadContext = null;
-            Instance = null;
-        }
-
         public static void BackToMainThread(Action e)
         {
             if (e != null && Instance != null)
@@ -192,6 +179,19 @@ namespace HFFramework
             {
                 Instance.prepareLateUpdateList.Add(entity);
             }
+        }
+
+        public void Dispose()
+        {
+            prepareUpdateList.Clear();
+            updateList.Clear();
+            prepareFixedUpdateList.Clear();
+            fixedUpdateList.Clear();
+            prepareLateUpdateList.Clear();
+            lateUpdateList.Clear();
+            eventQueue = null;
+            mainThreadContext = null;
+            Instance = null;
         }
     }
 }

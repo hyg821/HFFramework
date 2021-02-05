@@ -141,7 +141,7 @@ namespace HFFramework
             executor.LateUpdate();
         }
    
-        public void Shutdown()
+        public void Dispose()
         {
             if (executor!=null)
             {

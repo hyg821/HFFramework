@@ -50,7 +50,7 @@ namespace HFFramework
             socketCache.Clear();
         }
 
-        public void Shutdown()
+        public void Dispose()
         {
             CloseAllSocket();
             Instance = null;

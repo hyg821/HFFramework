@@ -53,7 +53,7 @@ namespace HFFramework
         /// <summary>
         ///  操作符
         /// </summary>
-        public int rpcID = int.MinValue;
+        public int rpcId = int.MinValue;
 
         /// <summary>
         /// 数据体
@@ -65,7 +65,7 @@ namespace HFFramework
             isReadHeader = false;
             bodyLength = int.MinValue;
             opcode = int.MinValue;
-            rpcID = int.MinValue;
+            rpcId = int.MinValue;
             msgBytes = null;
         }
     }
@@ -415,7 +415,7 @@ namespace HFFramework
                         //binaryReader 读取 MSG_RPCID_LEN 长度的字节
                         temp = binaryReader.ReadBytes(MSG_RPCID_LEN);
                         //通过获得的字节 转换成 rpc id
-                        package.rpcID = Extensions.BitConverterToInt32(temp, 0);
+                        package.rpcId = Extensions.BitConverterToInt32(temp, 0);
 
                         //binaryReader 读取 MSG_TYPE_LEN 长度的字节
                         temp = binaryReader.ReadBytes(MSG_TYPE_LEN);
@@ -473,7 +473,7 @@ namespace HFFramework
 
         private void CreateMessage(BufferPackage package)
         {
-            receiveHandler(new Package(package.opcode, package.rpcID, package.msgBytes));
+            receiveHandler(new Package(package.opcode, package.rpcId, package.msgBytes));
             package.Clear();
         }
 

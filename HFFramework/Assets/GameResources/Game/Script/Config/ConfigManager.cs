@@ -9,16 +9,16 @@ using HFFramework;
 namespace Config
 { 
     [System.Serializable]
-    public class HFConfigManager
+    public class ConfigManager
     { 
-        private static HFConfigManager instance;
-        public static HFConfigManager Instance
+        private static ConfigManager instance;
+        public static ConfigManager Instance
         { 
             get 
             { 
                 if (instance==null) 
                 { 
-                     instance = new HFConfigManager ();
+                     instance = new ConfigManager ();
                 } 
                 return instance;
             } 

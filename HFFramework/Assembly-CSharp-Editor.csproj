@@ -71,7 +71,7 @@
     <Compile Include="Assets\Core\Editor\AssetTools\HFAssetPostprocessor.cs" />
     <Compile Include="Assets\Core\Editor\AssetTools\HFOpenAssetHandler.cs" />
     <Compile Include="Assets\Core\Editor\BuildConfigEditor.cs" />
-    <Compile Include="Assets\Core\Editor\ConfigTools\HFConfigCreater.cs" />
+    <Compile Include="Assets\Core\Editor\ConfigTools\ConfigCreater.cs" />
     <Compile Include="Assets\Core\Editor\EditorHelper.cs" />
     <Compile Include="Assets\Core\Editor\EditorRefresh.cs" />
     <Compile Include="Assets\Core\Editor\HotFixLinkerEditor.cs" />

@@ -200,7 +200,7 @@ namespace HFFramework.Editor
             if (config.isGenerateAssetbundle)
             {
                 //生成配置
-                HFConfigCreater.GenerateConfigByAnalysis();
+                ConfigCreater.GenerateConfigByAnalysis();
 
                 //图集
                 AssetBundleTools.PackingAtlas();

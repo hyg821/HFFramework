@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace HFFramework.Editor
 {
-    public class HFConfigCreater
+    public class ConfigCreater
     {
         public static string[] split = new string[] { "," };
         public static string[] arraySplit = new string[] { "[", "]", ";" };
@@ -309,7 +309,7 @@ namespace HFFramework.Editor
         public static void CreateConfigManager(List<FileInfo> files)
         {
             string _namespace = "Config";
-            string _manager = "HFConfigManager";
+            string _manager = "ConfigManager";
             StringBuilder builder = new StringBuilder();
             builder.AppendLine(@"using System.Collections;");
             builder.AppendLine(@"using System.Collections.Generic;");

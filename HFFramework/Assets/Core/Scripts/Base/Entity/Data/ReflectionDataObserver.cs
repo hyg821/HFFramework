@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace HFFramework
 {
-    public class DataObserver
+    public class ReflectionDataObserver
     {
         public FieldInfo fieldInfo;
 
@@ -14,7 +14,7 @@ namespace HFFramework
 
         public event Action<DataComponent> onValueChanged;
 
-        public DataObserver(string key, Type type)
+        public ReflectionDataObserver(string key, Type type)
         {
             if (fieldInfo == null)
             {

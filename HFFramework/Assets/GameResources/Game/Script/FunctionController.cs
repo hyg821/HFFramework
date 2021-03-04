@@ -153,12 +153,18 @@ namespace HFFramework.Demo
         public async void 数据绑定控件()
         {
             DataProperty<int> hp = new DataProperty<int>();
-            Label.BindDataProperty(hp);
 
+            Bind(Label,hp,delegate(int value,Text label)
+            {
+                label.text = value.ToString();
+            });
+
+            
             TimerManager.Schedule(0, 3, 1, delegate (Timer t)
             {
                 GameFactory.Destroy(Label.gameObject);
             });
+            
 
             TimerManager.Schedule(1, 0, 10, delegate (Timer t)
             {

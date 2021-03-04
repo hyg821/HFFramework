@@ -6,37 +6,24 @@ using UnityEngine.UI;
 
 namespace HFFramework
 {
-    public class UILabel : Text,IDataPropertyObserver
+    public class UILabel : Text
     {
-        private bool isDisposed = false;
-
-        public bool IsDisposed
-        {
-            get
-            {
-                return isDisposed;
-            }
-        }
-
         protected override void Awake()
         {
             base.Awake();
             raycastTarget = false;
         }
 
-        public void BindDataProperty<T>(DataProperty<T> property) where T : IComparable
+        public override string text
         {
-            property.OnValueChanged(this, OnValueChanged);
-        }
-
-        private void OnValueChanged<T>(T value) where T : IComparable
-        {
-            this.text = value.ToString();
-        }
-
-        protected override void OnDestroy()
-        {
-            isDisposed = true;
+            set
+            {
+                base.text = value;
+            }
+            get
+            {
+                return base.text;
+            }
         }
     }
 }

@@ -5,12 +5,7 @@ using System;
 
 namespace HFFramework
 {
-    public interface IDataPropertyObserver
-    {
-        bool IsDisposed { get; }
-    }
-
-    public class DataProperty<T> where T: IComparable
+    public class DataProperty<T> where T : IComparable
     {
         private T m_value;
 
@@ -22,7 +17,17 @@ namespace HFFramework
             }
         }
 
-        private List<Observer<T>> notifyList = new List<Observer<T>>();
+        private List<DataObserver<T>> notifyList = new List<DataObserver<T>>();
+
+        public DataProperty()
+        {
+
+        }
+
+        public DataProperty(T value)
+        {
+            m_value = value;
+        }
 
         public virtual void SetValue(T value,bool notify = true)
         {
@@ -38,7 +43,7 @@ namespace HFFramework
 
         public void OnValueChanged(IDataPropertyObserver observer, Action<T> notify)
         {
-            Observer<T> dop = new Observer<T>(observer, notify);
+            DataObserver<T> dop = new DataObserver<T>(observer, notify);
             notifyList.Add(dop);
         }
 
@@ -46,7 +51,7 @@ namespace HFFramework
         {
             for (int i = notifyList.Count-1; i >=0 ; i--)
             {
-                Observer<T> o = notifyList[i];
+                DataObserver<T> o = notifyList[i];
                 if (o.observer.IsDisposed)
                 {
                     HFLog.C("observer 被销毁 从属性观察列表移除");
@@ -67,40 +72,6 @@ namespace HFFramework
                 notifyList[i].Clear();
             }
             notifyList.Clear();
-        }
-    }
-
-    public class Observer<T>
-    {
-        public IDataPropertyObserver observer;
-        public Action<T> notify;
-
-        public Observer(IDataPropertyObserver observer, Action<T> notify)
-        {
-            this.observer = observer;
-            this.notify = notify;
-        }
-
-        public void Clear()
-        {
-            observer = null;
-            notify = null;
-        }
-    }
-
-    public class Compare<T> where T : IComparable
-    {
-        //使用泛型实现的比较方法
-        public static bool CompareGeneric(T t1, T t2)
-        {
-            if (t1.CompareTo(t2) > 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
         }
     }
 }

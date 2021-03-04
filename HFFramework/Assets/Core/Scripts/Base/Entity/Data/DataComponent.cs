@@ -11,7 +11,7 @@ namespace HFFramework
     /// </summary>
     public class DataComponent : Component
     {
-        private Dictionary<string, DataObserver> observers = new Dictionary<string, DataObserver>();
+        private Dictionary<string, ReflectionDataObserver> observers = new Dictionary<string, ReflectionDataObserver>();
 
         private Type type;
 
@@ -23,13 +23,13 @@ namespace HFFramework
 
         public void AddObserver(string key,Action<DataComponent> onValueChanged)
         {
-            DataObserver observer = GetObserver(key);
+            ReflectionDataObserver observer = GetObserver(key);
             observer.AddEvent(onValueChanged);
         }
 
         public void RemoveObserver(string key, Action<DataComponent> onValueChanged)
         {
-            DataObserver observer;
+            ReflectionDataObserver observer;
             if (observers.TryGetValue(key, out observer))
             {
                 observer.RemoveEvent(onValueChanged);
@@ -38,7 +38,7 @@ namespace HFFramework
 
         public void SetValue<T>(string key,T value,bool notify = false)
         {
-            DataObserver observer = GetObserver(key);
+            ReflectionDataObserver observer = GetObserver(key);
             if (observer.fieldInfo!=null)
             {
                 observer.fieldInfo.SetValue(this, value);
@@ -61,12 +61,12 @@ namespace HFFramework
         }
 
 
-        public DataObserver GetObserver(string key)
+        public ReflectionDataObserver GetObserver(string key)
         {
-            DataObserver observer;
+            ReflectionDataObserver observer;
             if (!observers.TryGetValue(key, out observer))
             {
-                observer = new DataObserver(key, type);
+                observer = new ReflectionDataObserver(key, type);
                 observers.Add(key, observer);
             }
             return observer;

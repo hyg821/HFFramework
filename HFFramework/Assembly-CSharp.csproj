@@ -68,6 +68,7 @@
     <Compile Include="Assets\Core\Scripts\Base\Command\CommandQueue.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Entity\Component.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Entity\Data\DataBind\DataBinder.cs" />
+    <Compile Include="Assets\Core\Scripts\Base\Entity\Data\DataBind\DataBinderCollection.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Entity\Data\DataBind\DataObserver.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Entity\Data\DataBind\DataProperty.cs" />
     <Compile Include="Assets\Core\Scripts\Base\Entity\Data\DataBind\IDataPropertyObserver.cs" />

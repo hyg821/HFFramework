@@ -7,6 +7,7 @@ namespace HFFramework
 {
     public interface IDataBinder
     {
+        void Invoke();
         void UnBind();
     }
 
@@ -42,7 +43,7 @@ namespace HFFramework
             Invoke();
         }
 
-        private void Invoke()
+        public void Invoke()
         {
             if (callback != null)
             {

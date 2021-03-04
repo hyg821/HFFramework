@@ -162,6 +162,7 @@ namespace HFFramework.Demo
             
             TimerManager.Schedule(0, 3, 1, delegate (Timer t)
             {
+                binder.Clear();
                 GameFactory.Destroy(Label.gameObject);
             });
             

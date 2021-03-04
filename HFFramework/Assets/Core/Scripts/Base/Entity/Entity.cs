@@ -88,9 +88,9 @@ namespace HFFramework
         public HashSet<ulong> messageTypeSet = new HashSet<ulong>();
 
         /// <summary>
-        /// 绑定列表
+        /// 绑定集合
         /// </summary>
-        public List<IDataBinder> binderList = new List<IDataBinder>();
+        public DataBinderCollection binder = new DataBinderCollection();
 
         /// <summary>
         /// 是否激活
@@ -497,7 +497,7 @@ namespace HFFramework
             {
                 DataBinder<T, V> db = new DataBinder<T, V>();
                 db.Bind(data, view, callback);
-                binderList.Add(db);
+                binder.Add(db);
             }
         }
 
@@ -539,11 +539,7 @@ namespace HFFramework
                 child.Destroy();
             }
 
-            for (int i = 0; i < binderList.Count; i++)
-            {
-                binderList[i].UnBind();
-            }
-            binderList.Clear();
+            binder.Clear();
 
             parent = null;
 

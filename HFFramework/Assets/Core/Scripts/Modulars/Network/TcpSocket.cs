@@ -58,7 +58,7 @@ namespace HFFramework
         /// <summary>
         /// 数据体
         /// </summary>
-        public byte[] msgBytes;
+        public byte[] bytes;
 
         public void Clear()
         {
@@ -66,7 +66,7 @@ namespace HFFramework
             bodyLength = int.MinValue;
             opcode = int.MinValue;
             rpcId = int.MinValue;
-            msgBytes = null;
+            bytes = null;
         }
     }
 
@@ -451,7 +451,7 @@ namespace HFFramework
                         readStream.Position = 0;
 
                         //从 memoryStream 读取 数据体长度的 数据
-                        package.msgBytes = binaryReader.ReadBytes(package.bodyLength);
+                        package.bytes = binaryReader.ReadBytes(package.bodyLength);
                         //重置memoryStream 索引为0
                         readStream.Position = 0;
 
@@ -473,7 +473,7 @@ namespace HFFramework
 
         private void CreateMessage(BufferPackage package)
         {
-            receiveHandler(new Package(package.opcode, package.rpcId, package.msgBytes));
+            receiveHandler(new Package(package.opcode, package.rpcId, package.bytes));
             package.Clear();
         }
 

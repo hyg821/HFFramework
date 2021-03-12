@@ -21,13 +21,13 @@ namespace HFFramework
         /// <summary>
         /// 数据体
         /// </summary>
-        public byte[] msgBytes;
+        public byte[] bytes;
 
-        public Package(int opcode, int rpcID, byte[] msgBytes)
+        public Package(int opcode, int rpcID, byte[] bytes)
         {
             this.opcode = opcode;
             this.rpcID = rpcID;
-            this.msgBytes = msgBytes;
+            this.bytes = bytes;
         }
     }
 
@@ -269,7 +269,7 @@ namespace HFFramework
                     if (completionCache.TryGetValue(package.rpcID, out taskCompletion))
                     {
                         completionCache.Remove(package.rpcID);
-                        taskCompletion.TrySetResult(package.msgBytes);                       
+                        taskCompletion.TrySetResult(package.bytes);                       
                     }
                     //如果没有通过同步方式发送 通过消息派发 返回
                     else

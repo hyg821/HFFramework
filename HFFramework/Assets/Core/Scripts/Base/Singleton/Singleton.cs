@@ -16,9 +16,7 @@
             {
                 if (instance == null)
                 {
-                    instance = GameFactory.NewEntity<T>();
-                    instance.Awake();
-                    instance.Start();
+                    instance = GameFactory.CreateEntity<T>();
                 }
                 return instance;
             }

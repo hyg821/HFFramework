@@ -15,7 +15,7 @@ namespace HotFix
             return obj;
         }
 
-        public static T NewEntity<T>() where T : Entity, new()
+        private static T NewEntity<T>() where T : Entity, new()
         {
             T t = new T();
             return t;

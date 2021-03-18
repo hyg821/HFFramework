@@ -1191,6 +1191,7 @@
     <Compile Include="Assets\OtherPlugins\ILRuntime\Runtime\Adaptors\CLRCrossBindingAdaptors.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Runtime\CLRBinding\BindingCodeGenerator.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Runtime\CLRBinding\BindingGeneratorExtensions.cs" />
+    <Compile Include="Assets\OtherPlugins\ILRuntime\Runtime\CLRBinding\CLRBindingUtils.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Runtime\CLRBinding\CommonBindingGenerator.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Runtime\CLRBinding\ConstructorBindingGenerator.cs" />
     <Compile Include="Assets\OtherPlugins\ILRuntime\Runtime\CLRBinding\FieldBindingGenerator.cs" />
@@ -1479,8 +1480,8 @@
     <Reference Include="Google.Protobuf">
       <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Google.Protobuf.dll</HintPath>
     </Reference>
-    <Reference Include="ILRuntim.Mono.Cecil">
-      <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Mono.Cecil/ILRuntim.Mono.Cecil.dll</HintPath>
+    <Reference Include="ILRuntime.Mono.Cecil">
+      <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Mono.Cecil/ILRuntime.Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="ILRuntime.Mono.Cecil.Mdb">
       <HintPath>D:/HFFramework/HFFramework/Assets/Plugins/Mono.Cecil/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>

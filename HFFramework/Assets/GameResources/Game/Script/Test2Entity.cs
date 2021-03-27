@@ -9,7 +9,7 @@ namespace HFFramework.Demo
         public override void Awake()
         {
             base.Awake();
-            Test2DataComponent t2 = AddCompoment<Test2DataComponent>();
+            Test2DataComponent t2 = AddComponent<Test2DataComponent>();
             t2.hp.OnValueChanged(this, HPChanged);
         }
 

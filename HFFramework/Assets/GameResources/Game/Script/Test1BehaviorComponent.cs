@@ -20,7 +20,7 @@ namespace HFFramework.Demo
         public override void Start()
         {
             base.Start();
-            data = entity.GetCompoment<Test1DataComponent>();
+            data = entity.GetComponent<Test1DataComponent>();
             data.AddObserver("position", DataChanged);
         }
 

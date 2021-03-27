@@ -10,8 +10,8 @@ namespace HFFramework.Demo
         {
             base.Awake();
             IsNeedUpdate = true;
-            AddCompoment<Test1BehaviorComponent>();
-            AddCompoment<Test1DataComponent>();
+            AddComponent<Test1BehaviorComponent>();
+            AddComponent<Test1DataComponent>();
         }
     }
 }

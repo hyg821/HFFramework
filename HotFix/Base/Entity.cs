@@ -230,14 +230,14 @@ namespace HotFix
             }
         }
 
-        public T AddCompoment<T>() where T : Component, new()
+        public T AddComponent<T>() where T : Component, new()
         {
             T t = GameFactory.CreateComponent<T>(this);
             components.Add(t);
             return t;
         }
 
-        public T GetCompoment<T>() where T : Component
+        public T GetComponent<T>() where T : Component
         {
             for (int i = 0; i < components.Count; i++)
             {
@@ -250,7 +250,7 @@ namespace HotFix
             return null;
         }
 
-        public void RemoveCompoment(Component component)
+        public void RemoveComponent(Component component)
         {
             if (component != null)
             {
@@ -507,9 +507,9 @@ namespace HotFix
 
             for (int i = components.Count - 1; i >= 0; i--)
             {
-                Component compoment = components[i];
+                Component Component = components[i];
                 components.RemoveAt(i);
-                compoment.OnDestroy();
+                Component.OnDestroy();
             }
 
             for (int i = childs.Count - 1; i >= 0; i--)

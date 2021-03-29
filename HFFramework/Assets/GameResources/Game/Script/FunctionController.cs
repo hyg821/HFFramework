@@ -37,6 +37,7 @@ namespace HFFramework.Demo
         public Button fun6;
         public UILabel Label;
         public Button fun7;
+        public Button fun8;
         #region
         public override void FindElement()
         {
@@ -50,8 +51,10 @@ namespace HFFramework.Demo
             fun6 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (6)/Button");
             Label = AutoFind<UILabel>("ScrollView/Viewport/Content/Cell (6)/Button/Text");
             fun7 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (7)/Button");
+            fun8 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (8)/Button");
         }
         #endregion
+
 
 
 
@@ -79,6 +82,7 @@ namespace HFFramework.Demo
             fun5.onClick.AddListener(UniTask取消);
             fun6.onClick.AddListener(数据绑定控件);
             fun7.onClick.AddListener(CancellationToken取消UniTask);
+            fun8.onClick.AddListener(局部刷新Task);
         }
 
         public async void Entity创建()
@@ -184,6 +188,23 @@ namespace HFFramework.Demo
 
             await UniTask.Delay(5000,false,PlayerLoopTiming.Update, cancellation.Token);
             Debug.LogError("时间到");
+        }
+
+        public async void 局部刷新Task()
+        {
+            HFLog.C("开始局部刷新task");
+            LambdaUpdateTask task = GameFactory.CreateEntity<LambdaUpdateTask>();
+            int a = 0;
+            await task.Wait(delegate (LambdaUpdateTask t,  object o)
+            {
+                a += (int)o;
+                HFLog.C("局部刷新task " + a);
+                if (a>=100)
+                {
+                    t.CompleteTask();
+                }
+            }, new UniTaskCompletionSource(), 1);
+            HFLog.C("完成局部刷新task");
         }
 
         private async UniTask Test()

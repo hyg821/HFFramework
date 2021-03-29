@@ -75,12 +75,14 @@ namespace HFFramework
                 }
             }
 
-            for (int i = 0; i < prepareUpdateList.Count; i++)
+            int index = 0;
+            while (index < prepareUpdateList.Count)
             {
-                Entity temp = prepareUpdateList[i];
+                Entity temp = prepareUpdateList[index];
                 if (temp.IsNeedUpdate)
                 {
                     updateList.Add(temp);
+                    index++;
                 }
                 else
                 {
@@ -97,12 +99,14 @@ namespace HFFramework
 
         public void FixedUpdate()
         {
-            for (int i = 0; i < prepareFixedUpdateList.Count; i++)
+            int index = 0;
+            while (index < prepareFixedUpdateList.Count)
             {
-                Entity temp = prepareFixedUpdateList[i];
+                Entity temp = prepareFixedUpdateList[index];
                 if (temp.IsNeedFixedUpdate)
                 {
                     fixedUpdateList.Add(temp);
+                    index++;
                 }
                 else
                 {
@@ -119,12 +123,14 @@ namespace HFFramework
 
         public void LateUpdate()
         {
-            for (int i = 0; i < prepareLateUpdateList.Count; i++)
+            int index = 0;
+            while (index < prepareLateUpdateList.Count)
             {
-                Entity temp = prepareLateUpdateList[i];
+                Entity temp = prepareLateUpdateList[index];
                 if (temp.IsNeedLateUpdate)
                 {
                     lateUpdateList.Add(temp);
+                    index++;
                 }
                 else
                 {

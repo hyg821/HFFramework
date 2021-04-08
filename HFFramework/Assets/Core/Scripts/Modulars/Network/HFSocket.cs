@@ -36,7 +36,7 @@ namespace HFFramework
         /// <summary>
         ///  socket的名字
         /// </summary>
-        public string name;
+        public new string name;
 
         /// <summary>
         ///  连接的ip
@@ -70,6 +70,11 @@ namespace HFFramework
         /// 真正的socket 
         /// </summary>
         private TcpSocket socket;
+
+        /// <summary>
+        /// ping
+        /// </summary>
+        private HFPing ping;
 
         private bool isDispatch = false;
         /// <summary>
@@ -186,6 +191,11 @@ namespace HFFramework
 
         private void m_connect()
         {
+            if (ping != null)
+            {
+                ping.Dispose();
+            }
+            ping = new HFPing(serverIP, 5);
             GameLooper.BackToMainThread(connectedHandler);
         }
 
@@ -287,10 +297,14 @@ namespace HFFramework
             {
                 socket.Close(true);
                 socket = null;
-
                 completionCache.Clear();
                 messageQueue.Clear();
                 IsDispatch = false;
+            }
+
+            if (ping!=null)
+            {
+                ping.Dispose();
             }
         }
     }

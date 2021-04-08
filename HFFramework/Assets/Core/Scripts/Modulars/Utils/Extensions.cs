@@ -120,5 +120,26 @@ namespace HFFramework
             width = textGenerator.GetPreferredWidth(text, setting);
             return width;
         }
+
+        public static void FontBestFit(Text text)
+        {
+            text.resizeTextForBestFit = false;
+            float heigth = float.MaxValue;
+            int fontSize = text.fontSize;
+            while (true)
+            {
+                TextGenerator textGenerator = text.cachedTextGenerator;
+                TextGenerationSettings setting = text.GetGenerationSettings(new Vector2(text.rectTransform.rect.width, text.rectTransform.rect.height));
+                setting.fontSize = fontSize;
+                heigth = textGenerator.GetPreferredHeight(text.text, setting);
+                if (heigth <= text.rectTransform.rect.height || fontSize <= 8)
+                {
+                    break;
+                }
+
+                fontSize--;
+            }
+            text.fontSize = fontSize;
+        }
     }
 }

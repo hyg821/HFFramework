@@ -65,7 +65,6 @@ namespace HFFramework
             catch (Exception e)
             {
                 HFLog.C(e);
-                throw;
             }
         }
 

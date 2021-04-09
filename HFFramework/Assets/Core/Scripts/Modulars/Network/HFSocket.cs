@@ -16,17 +16,17 @@ namespace HFFramework
         /// <summary>
         ///  操作符
         /// </summary>
-        public int rpcID;
+        public int rpcId;
 
         /// <summary>
         /// 数据体
         /// </summary>
         public byte[] bytes;
 
-        public Package(int opcode, int rpcID, byte[] bytes)
+        public Package(int opcode, int rpcId, byte[] bytes)
         {
             this.opcode = opcode;
-            this.rpcID = rpcID;
+            this.rpcId = rpcId;
             this.bytes = bytes;
         }
     }
@@ -194,6 +194,7 @@ namespace HFFramework
             if (ping != null)
             {
                 ping.Dispose();
+                ping = null;
             }
             ping = new HFPing(serverIP, 5);
             GameLooper.BackToMainThread(connectedHandler);
@@ -276,9 +277,9 @@ namespace HFFramework
 
                     //优先使用同步方式返回
                     UniTaskCompletionSource<byte[]> taskCompletion;
-                    if (completionCache.TryGetValue(package.rpcID, out taskCompletion))
+                    if (completionCache.TryGetValue(package.rpcId, out taskCompletion))
                     {
-                        completionCache.Remove(package.rpcID);
+                        completionCache.Remove(package.rpcId);
                         taskCompletion.TrySetResult(package.bytes);                       
                     }
                     //如果没有通过同步方式发送 通过消息派发 返回

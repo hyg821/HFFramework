@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class ResourceLoadArgs
+    public class AssetLoadArgs
     {
         public bool canceled = false;
 

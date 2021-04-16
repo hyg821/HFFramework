@@ -32,7 +32,7 @@ namespace HFFramework
 
         private void Awake()
         {
-            GameObject prefab = ResourceManager.Instance.GetAsset<GameObject>("ui_prefab", "LogCell");
+            GameObject prefab = AssetManager.Instance.GetAsset<GameObject>("ui_prefab", "LogCell");
             cellPrefab = prefab.GetComponent<EnhancedScrollerCellView>();
             Text text = prefab.transform.Find("Text").GetComponent<Text>();
             textGenerationSettings = text.GetGenerationSettings(new Vector2(700,0));

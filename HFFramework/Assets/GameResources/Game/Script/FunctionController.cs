@@ -249,8 +249,8 @@ namespace HFFramework.Demo
             Debug.Log(ss);
 
             await UIManager.Instance.Close<FunctionController>();
-            ResourceManager.Instance.RefCount();
-            ResourceManager.Instance.UnloadUnusedAssetBundle();
+            AssetManager.Instance.RefCount();
+            AssetManager.Instance.UnloadUnusedAssetBundle();
             */
 
             return;
@@ -375,7 +375,7 @@ namespace HFFramework.Demo
                     HFLog.E("定实地");
                 });
 
-                bg.sprite = HFResourceManager.Instance.GetSpriteByAtlas("texture", "TestAtlas", "A");
+                bg.sprite = HFAssetManager.Instance.GetSpriteByAtlas("texture", "TestAtlas", "A");
 
                 HFFramework.AppDomainManager.Instance.JumpToHotFix("hotfixdll", "HotFix", "HotFixEnter");
 
@@ -463,7 +463,7 @@ namespace HFFramework.Demo
 
         public async void Jump()
         {
-            await HFResourceManager.Instance.LoadScene("SceneA", "SceneA");
+            await HFAssetManager.Instance.LoadScene("SceneA", "SceneA");
             await UIManager.Close<FunctionController>();
         }
 
@@ -480,7 +480,7 @@ namespace HFFramework.Demo
 
 
 
-            GameObject prefab = HFResourceManager.Instance.GetPrefab("prefab", "Capsule");
+            GameObject prefab = HFAssetManager.Instance.GetPrefab("prefab", "Capsule");
             GameObject.Instantiate(prefab);
 
             System.Diagnostics.Stopwatch watch = null;
@@ -488,7 +488,7 @@ namespace HFFramework.Demo
 
             watch = new System.Diagnostics.Stopwatch();
             watch.Start();  //开始监视代码运行时间
-            AssetBundlePackage package = await HFResourceManager.Instance.LoadAssetBundleFromFileAsync("prefab");
+            AssetBundlePackage package = await HFAssetManager.Instance.LoadAssetBundleFromFileAsync("prefab");
             watch.Stop();  //停止监视
             timespan = watch.Elapsed;  //获取当前实例测量得出的总时间
             HFLog.C(timespan.TotalMilliseconds.ToString());
@@ -508,10 +508,10 @@ namespace HFFramework.Demo
             HFLog.C(timespan.TotalMilliseconds.ToString());
 
 
-            HFResourceManager.Instance.UnloadAssetBundle(package);
+            HFAssetManager.Instance.UnloadAssetBundle(package);
 
 
-            AssetBundlePackage package = HFResourceManager.Instance.LoadAssetBundleFromFile("prefab");
+            AssetBundlePackage package = HFAssetManager.Instance.LoadAssetBundleFromFile("prefab");
             GameObject prefab = package.LoadAsset<GameObject>("Capsule");
             GameObject.Instantiate(prefab);
 

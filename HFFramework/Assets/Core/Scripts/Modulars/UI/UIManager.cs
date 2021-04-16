@@ -43,13 +43,13 @@ namespace HFFramework
         public void Init()
         {
             SceneManager.sceneLoaded += SceneLoaded;
-            GameObject prefab = ResourceManager.Instance.GetPrefab("hfui", "UICamera");
+            GameObject prefab = AssetManager.Instance.GetPrefab("hfui", "UICamera");
             GameObject temp = GameFactory.Instantiate(prefab);
             temp.name = CameraName;
             UICamera = temp.GetComponent<UICamera>();
             UICamera.SetParent(gameObject);
 
-            prefab = ResourceManager.Instance.GetPrefab("hfui", "UIEventSystem");
+            prefab = AssetManager.Instance.GetPrefab("hfui", "UIEventSystem");
             GameObject eventSystem = GameFactory.Instantiate(prefab);
             eventSystem.name = "UIEventSystem";
             eventSystem.transform.SetParent(gameObject.transform);
@@ -76,7 +76,7 @@ namespace HFFramework
             UICanvas uiCanvas;
             if (!canvasDic.TryGetValue(canvasLayerIndex, out uiCanvas))
             {
-                GameObject canvasPrefab = ResourceManager.Instance.GetPrefab("hfui","UICanvas");
+                GameObject canvasPrefab = AssetManager.Instance.GetPrefab("hfui","UICanvas");
                 GameObject canvasObject = Instantiate(canvasPrefab);
                 uiCanvas = canvasObject.AddComponent<UICanvas>();
                 uiCanvas.SetUICamera(UICamera);
@@ -101,7 +101,7 @@ namespace HFFramework
                 }
                 else
                 {
-                    GameObject prefab = ResourceManager.Instance.GetPrefab(config.AssetbundleName, config.AssetName);
+                    GameObject prefab = AssetManager.Instance.GetPrefab(config.AssetbundleName, config.AssetName);
                     GameObject sourcers = GameObject.Instantiate(prefab);
                     sourcers.name = config.AssetName;
                     controller = GameFactory.CreateEntity<T>(sourcers);

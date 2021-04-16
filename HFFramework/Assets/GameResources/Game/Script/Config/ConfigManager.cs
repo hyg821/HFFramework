@@ -29,7 +29,7 @@ namespace Config
             ConfigAddress.Instance.Init();
             ConfigMan.Instance.Init();
             ConfigUI.Instance.Init();
-            ResourceManager.Instance.UnloadAssetBundle("Config", true); 
+            AssetManager.Instance.UnloadAssetBundle("Config", true); 
             GC.Collect();
         } 
 

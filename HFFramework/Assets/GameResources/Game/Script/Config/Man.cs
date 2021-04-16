@@ -73,7 +73,7 @@ namespace Config
 
         public void Init()
         {
-            TextAsset textAsset  = ResourceManager.Instance.GetAsset<TextAsset>("Config","Man");
+            TextAsset textAsset  = AssetManager.Instance.GetAsset<TextAsset>("Config","Man");
             StringReader reader = new StringReader(textAsset.text);
             reader.ReadLine();
             reader.ReadLine();

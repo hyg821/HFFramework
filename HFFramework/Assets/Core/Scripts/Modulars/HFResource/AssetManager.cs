@@ -15,7 +15,7 @@ namespace HFFramework
     /// <summary>
     /// 资源加载管理器
     /// </summary>
-    public class ResourceManager : MonoBehaviour, IManager
+    public class AssetManager : MonoBehaviour, IManager
     {
         // 注意 
         // 一个assetbundle包合适的大小在 1-10 mb 之间
@@ -27,7 +27,7 @@ namespace HFFramework
         // 转场的时候 推荐使用UnLoad(true) 卸载资源 卸载的比较干净
         // 推荐shader 通过ShaderVariantCollection 收集所有变体 最开始就全部加载出来 并且都放在一个bundle下
 
-        public static ResourceManager Instance;
+        public static AssetManager Instance;
 
         /// <summary>
         ///  assetbundle位置的根目录   默认的是所有的assetbundle 都放在一个文件夹下   
@@ -37,9 +37,9 @@ namespace HFFramework
         public string MainfestName;
 
         /// <summary>
-        ///  缓存AssetBundlePackage字典
+        ///  缓存AssetPackage字典
         /// </summary>
-        public Dictionary<string, AssetBundlePackage> allAssetBundleDic = new Dictionary<string, AssetBundlePackage>();
+        public Dictionary<string, AssetPackage> allAssetBundleDic = new Dictionary<string, AssetPackage>();
 
         /// <summary>
         ///  主要记录AssetBundle 之间的互相引用
@@ -200,7 +200,7 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = LoadAssetBundle(packageName);
+                AssetPackage ab = LoadAssetBundle(packageName);
                 Sprite sp = ab.LoadSprite(atlasName, spriteName);
                 ab.Release();
                 return sp;
@@ -213,7 +213,7 @@ namespace HFFramework
         /// <param name="shaderPackageName"></param>
         public void CacheAllShader(string packageName)
         {
-            AssetBundlePackage ab = LoadAssetBundle(packageName);
+            AssetPackage ab = LoadAssetBundle(packageName);
             ab.CacheAllAsset();
             Shader.WarmupAllShaders();
         }
@@ -244,14 +244,14 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = LoadAssetBundle(packageName);
+                AssetPackage ab = LoadAssetBundle(packageName);
                 T result = ab.LoadAsset<T>(assetName);
                 ab.Release();
                 return result;
             }
         }
 
-        public async UniTask<T> GetAssetAsync<T>(string packageName, string assetName, ResourceLoadArgs args = null) where T : UnityEngine.Object
+        public async UniTask<T> GetAssetAsync<T>(string packageName, string assetName, AssetLoadArgs args = null) where T : UnityEngine.Object
         {
             if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
             {
@@ -259,7 +259,7 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage package = await LoadAssetBundleAsync(packageName);
+                AssetPackage package = await LoadAssetBundleAsync(packageName);
                 T result = await package.LoadAssetAsync<T>(assetName);
                 package.Release();
 
@@ -299,7 +299,7 @@ namespace HFFramework
 
         private async UniTask m_LoadScene(string packageName, string sceneName)
         {
-            AssetBundlePackage ab = await m_LoadAssetBundleAsync(packageName.ToLower());
+            AssetPackage ab = await m_LoadAssetBundleAsync(packageName.ToLower());
             await SceneManager.LoadSceneAsync(sceneName);
             ab.Release();
             await Resources.UnloadUnusedAssets();
@@ -308,10 +308,10 @@ namespace HFFramework
         /// <summary>
         ///  一般来说，尽可能使用AssetBundle.LoadFromFile。该API在速度，磁盘使用率和运行时内存使用方面是最有效的
         /// </summary>
-        public AssetBundlePackage LoadAssetBundle(string packageName)
+        public AssetPackage LoadAssetBundle(string packageName)
         {
             packageName = packageName.ToLower();
-            AssetBundlePackage package = null;
+            AssetPackage package = null;
             //判断是否已经加载bundle
             if (!allAssetBundleDic.TryGetValue(packageName, out package))
             {
@@ -330,10 +330,10 @@ namespace HFFramework
             return package;
         }
 
-        private AssetBundlePackage RawLoadAssetBundle(string packageName) 
+        private AssetPackage RawLoadAssetBundle(string packageName) 
         {
             AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(packageName, false));
-            AssetBundlePackage package = new AssetBundlePackage(bundle, packageName);
+            AssetPackage package = new AssetPackage(bundle, packageName);
             allAssetBundleDic.Add(bundle.name, package);
             return package;
         }
@@ -343,7 +343,7 @@ namespace HFFramework
         /// </summary>
         /// <param name="assetBundleName"></param>
         /// <param name="finishCallback"></param>
-        public async UniTask<AssetBundlePackage> LoadAssetBundleAsync(string packageName)
+        public async UniTask<AssetPackage> LoadAssetBundleAsync(string packageName)
         {
             try
             {
@@ -356,9 +356,9 @@ namespace HFFramework
             }       
         }
 
-        private async UniTask<AssetBundlePackage> m_LoadAssetBundleAsync(string packageName)
+        private async UniTask<AssetPackage> m_LoadAssetBundleAsync(string packageName)
         {
-            AssetBundlePackage package = null;
+            AssetPackage package = null;
             if (!allAssetBundleDic.TryGetValue(packageName, out package))
             {
                 string[] list = GetAssetBundleDependencies(packageName);
@@ -373,10 +373,10 @@ namespace HFFramework
             return package;
         }
 
-        private async UniTask<AssetBundlePackage> RawLoadAssetBundleAsync(string packageName)
+        private async UniTask<AssetPackage> RawLoadAssetBundleAsync(string packageName)
         {
             AssetBundle assetbundle = await AssetBundle.LoadFromFileAsync(AutoGetResourcePath(packageName, false));
-            AssetBundlePackage package = new AssetBundlePackage(assetbundle, packageName);
+            AssetPackage package = new AssetPackage(assetbundle, packageName);
             allAssetBundleDic.Add(package.name, package);
             return package;
         }
@@ -386,12 +386,12 @@ namespace HFFramework
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public List<AssetBundlePackage> LoadAssetBundles(string[] list)
+        public List<AssetPackage> LoadAssetBundles(string[] list)
         {
-            List<AssetBundlePackage> bundles = new List<AssetBundlePackage>();
+            List<AssetPackage> bundles = new List<AssetPackage>();
             for (int i = 0; i < list.Length; i++)
             {
-                AssetBundlePackage bundle = LoadAssetBundle(list[i]);
+                AssetPackage bundle = LoadAssetBundle(list[i]);
                 if (bundle != null)
                 {
                     bundles.Add(bundle);
@@ -412,10 +412,10 @@ namespace HFFramework
 
         private async UniTaskVoid m_LoadAssetsBundlesAsync(string[] list, Action<float> progressCallback)
         {
-            List<AssetBundlePackage> bundles = new List<AssetBundlePackage>();
+            List<AssetPackage> bundles = new List<AssetPackage>();
             for (int i = 0; i < list.Length; i++)
             {
-                AssetBundlePackage bundle = await LoadAssetBundleAsync(list[i]);
+                AssetPackage bundle = await LoadAssetBundleAsync(list[i]);
                 if (bundle != null)
                 {
                     bundles.Add(bundle);
@@ -436,7 +436,7 @@ namespace HFFramework
             }
             else
             {
-                AssetBundlePackage ab = LoadAssetBundle(packageName);
+                AssetPackage ab = LoadAssetBundle(packageName);
                 TextAsset text = ab.LoadAsset<TextAsset>(dllName + ".dll");
                 if (callback != null)
                 {
@@ -456,10 +456,10 @@ namespace HFFramework
             }
         }
 
-        public AssetBundlePackage GetAssetBundle(string packageName)
+        public AssetPackage GetAssetBundle(string packageName)
         {
             packageName = packageName.ToLower();
-            AssetBundlePackage result = null;
+            AssetPackage result = null;
             allAssetBundleDic.TryGetValue(packageName, out result);
             return result;
         }
@@ -489,7 +489,7 @@ namespace HFFramework
             if (GameEnvironment.Instance.config.LoadAssetPathType != LoadAssetPathType.Editor)
             {
                 packageName = packageName.ToLower();
-                AssetBundlePackage bundle = GetAssetBundle(packageName);
+                AssetPackage bundle = GetAssetBundle(packageName);
                 if (bundle != null)
                 {
                     UnloadAssetBundle(bundle, unloadAllLoadedObjects);
@@ -497,7 +497,7 @@ namespace HFFramework
             }
         }
 
-        public void UnloadAssetBundle(AssetBundlePackage bundle, bool unloadAllLoadedObjects = true)
+        public void UnloadAssetBundle(AssetPackage bundle, bool unloadAllLoadedObjects = true)
         {
             if (GameEnvironment.Instance.config.LoadAssetPathType != LoadAssetPathType.Editor)
             {
@@ -515,7 +515,7 @@ namespace HFFramework
         /// <param name="name"></param>
         public void RecursionReleaseAssetBundle(string packageName)
         {
-            AssetBundlePackage bundle =  GetAssetBundle(packageName);
+            AssetPackage bundle =  GetAssetBundle(packageName);
             if (bundle!=null)
             {
                 bundle.Release();     
@@ -552,7 +552,7 @@ namespace HFFramework
         /// </summary>
         public async UniTask UnloadUnusedAssetBundle()
         {
-            List<AssetBundlePackage> unusedAssetBundleList = new List<AssetBundlePackage>();
+            List<AssetPackage> unusedAssetBundleList = new List<AssetPackage>();
 
             foreach (var item in allAssetBundleDic)
             {

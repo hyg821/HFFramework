@@ -7,7 +7,7 @@ using UnityEngine.U2D;
 
 namespace HFFramework
 {
-    public class AssetBundlePackage
+    public class AssetPackage
     {
         /// <summary>
         /// 名字
@@ -66,7 +66,7 @@ namespace HFFramework
             }
         }
 
-        public AssetBundlePackage(AssetBundle bundle, string name)
+        public AssetPackage(AssetBundle bundle, string name)
         {
             this.name = name.ToLower();
             assetBundle = bundle;

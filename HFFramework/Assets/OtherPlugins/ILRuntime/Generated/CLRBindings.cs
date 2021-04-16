@@ -41,7 +41,7 @@ namespace ILRuntime.Runtime.Generated
             System_IDisposable_Binding.Register(app);
             System_Object_Binding.Register(app);
             System_Reflection_MemberInfo_Binding.Register(app);
-            HFFramework_ResourceManager_Binding.Register(app);
+            HFFramework_AssetManager_Binding.Register(app);
             Cysharp_Threading_Tasks_UniTask_1_GameObject_Binding.Register(app);
             Cysharp_Threading_Tasks_UniTask_1_GameObject_Binding_Awaiter_Binding.Register(app);
             UnityEngine_Time_Binding.Register(app);

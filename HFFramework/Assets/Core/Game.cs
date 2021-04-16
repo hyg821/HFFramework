@@ -38,7 +38,7 @@ namespace HFFramework
 
             GameFactory.CreateSingleton<PathManager>();
 
-            GameFactory.CreateSingleton<ResourceManager>();
+            GameFactory.CreateSingleton<AssetManager>();
 
             GameFactory.CreateSingleton<NotificationCenter>();
 
@@ -95,7 +95,7 @@ namespace HFFramework
         public void Dispose()
         {
             PathManager.Instance.Dispose();
-            ResourceManager.Instance.Dispose();
+            AssetManager.Instance.Dispose();
             GameEnvironment.Instance.Dispose();
             SocketManager.Instance.Dispose();
             AudioManager.Instance.Dispose();

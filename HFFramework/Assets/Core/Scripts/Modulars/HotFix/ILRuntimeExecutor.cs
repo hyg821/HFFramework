@@ -183,7 +183,7 @@ namespace HFFramework
             appdomain.DelegateManager.RegisterMethodDelegate<Dictionary<string, string>>();
             appdomain.DelegateManager.RegisterMethodDelegate<string>();
             appdomain.DelegateManager.RegisterMethodDelegate<NotificationMessage>();
-            appdomain.DelegateManager.RegisterMethodDelegate<AssetBundlePackage>();
+            appdomain.DelegateManager.RegisterMethodDelegate<AssetPackage>();
             appdomain.DelegateManager.RegisterFunctionDelegate<GameObject>();
             appdomain.DelegateManager.RegisterMethodDelegate<System.Int32, System.Byte[]>();
 

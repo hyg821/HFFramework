@@ -82,7 +82,7 @@ namespace HFFramework
         /// <returns></returns>
         public virtual async UniTask UnloadResources()
         {
-            await ResourceManager.Instance.UnloadUnusedAssetBundle();
+            await AssetManager.Instance.UnloadUnusedAssetBundle();
             HFLog.C("步骤5 卸载场景");
         }
 

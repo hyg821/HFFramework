@@ -197,7 +197,7 @@ namespace HFFramework.Editor
             builder.AppendLine();
             builder.AppendLine("        public void Init()");
             builder.AppendLine("        {");
-            builder.AppendLine(@"            TextAsset textAsset  = ResourceManager.Instance.GetAsset<TextAsset>(" + "\"" + GameConst.ConfigAssetbundleName + "\"" + "," + "\"" + _class + "\"" + ");");
+            builder.AppendLine(@"            TextAsset textAsset  = AssetManager.Instance.GetAsset<TextAsset>(" + "\"" + GameConst.ConfigAssetbundleName + "\"" + "," + "\"" + _class + "\"" + ");");
             builder.AppendLine(@"            StringReader reader = new StringReader(textAsset.text);");
             builder.AppendLine(@"            reader.ReadLine();");
             builder.AppendLine(@"            reader.ReadLine();");
@@ -352,7 +352,7 @@ namespace HFFramework.Editor
                 builder.AppendLine("            " + _table + ".Instance.Init();");
             }
 
-            builder.AppendLine("            " + "ResourceManager.Instance.UnloadAssetBundle(" + "\"" + GameConst.ConfigAssetbundleName + "\"" + ", true); ");
+            builder.AppendLine("            " + "AssetManager.Instance.UnloadAssetBundle(" + "\"" + GameConst.ConfigAssetbundleName + "\"" + ", true); ");
             builder.AppendLine("            GC.Collect();");
 
             builder.AppendLine("        } ");

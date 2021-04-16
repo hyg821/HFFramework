@@ -82,12 +82,12 @@ namespace HFFramework
                 if (temp.IsNeedUpdate)
                 {
                     updateList.Add(temp);
-                    index++;
                 }
                 else
                 {
                     updateList.Remove(temp);
                 }
+                index++;
             }
             prepareUpdateList.Clear();
 
@@ -106,12 +106,12 @@ namespace HFFramework
                 if (temp.IsNeedFixedUpdate)
                 {
                     fixedUpdateList.Add(temp);
-                    index++;
                 }
                 else
                 {
                     fixedUpdateList.Remove(temp);
                 }
+                index++;
             }
             prepareFixedUpdateList.Clear();
 
@@ -130,12 +130,12 @@ namespace HFFramework
                 if (temp.IsNeedLateUpdate)
                 {
                     lateUpdateList.Add(temp);
-                    index++;
                 }
                 else
                 {
                     lateUpdateList.Remove(temp);
                 }
+                index++;
             }
             prepareLateUpdateList.Clear();
 

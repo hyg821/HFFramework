@@ -19,8 +19,8 @@ namespace HFFramework.Editor
             {
                 string path = Application.dataPath.Substring(0, Application.dataPath.LastIndexOf("/Assets")) +"/"+ AssetDatabase.GetAssetPath(info);
                 path = path.Substring(0, path.LastIndexOf("/"));
-                //Debug.LogError("path  " + path);
-                AssetBundleTools.SetAssetConfig(path, true, false);
+                info.RefreshSetting();
+                AssetDatabase.Refresh();
             }
         }
     }

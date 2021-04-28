@@ -112,9 +112,8 @@ namespace HFFramework.Editor
         public static void SetAssetbundlesNames()
         {
             //ClearAssetBundlesName();
-            string resourcesPath = Application.dataPath + "/GameResources";
             RenameDLL();
-            SetAssetConfig(resourcesPath,true,false);
+            SetAssetConfig(true,false);
         }
 
         [MenuItem("资源/检测循环引用")]
@@ -204,8 +203,7 @@ namespace HFFramework.Editor
         [MenuItem("资源/刷新图集")]
         public static void PackingAtlas()
         {
-            string resourcesPath = Application.dataPath + "/GameResources";
-            SetAssetConfig(resourcesPath, false, true);
+            SetAssetConfig(false,true);
             SpriteAtlasUtility.PackAllAtlases(EditorUserBuildSettings.activeBuildTarget);
             AssetDatabase.Refresh();
         }
@@ -232,106 +230,33 @@ namespace HFFramework.Editor
             AssetDatabase.RemoveUnusedAssetBundleNames();
             return AssetDatabase.GetAllAssetBundleNames();
         }
-    
+
         /// <summary>
         ///  根据 AssetConfig 设置assetbundleName 和 图集设置
         /// </summary>
         /// <param name="path"></param>
-        public static void SetAssetConfig(string path,bool setAssetbundleName,bool setSpriteAtlas)
+        public static void SetAssetConfig(bool assetBundle,bool atlas)
         {
+            string path = Application.dataPath + "/GameResources";
             if (!Directory.Exists(path))//若文件夹不存在则新建文件夹   
             {
                 Directory.CreateDirectory(path); //新建文件夹   
                 AssetDatabase.Refresh();
             }
 
-            DirectoryInfo directory = new DirectoryInfo(path);
-            //如果 文件夹名称有[A] 并且是需要设置 assetbundle名字   或者 文件夹名称有[S]并且需要设置图集的
-            if ((directory.Name.Contains(GameConst.AssetFolderIde)&& setAssetbundleName)||(directory.Name.Contains(GameConst.SpriteFolderIde) && setSpriteAtlas))
+            string [] guids = AssetDatabase.FindAssets("t:AssetConfig");
+            for (int i = 0; i < guids.Length; i++)
             {
-                FileInfo[] file = directory.GetFiles();
-
-                //找一下配置文件
-                AssetConfig config = null;
-                foreach (FileInfo nextFile in file)
+                string guid = guids[i];
+                string configPath = AssetDatabase.GUIDToAssetPath(guid);
+                AssetConfig assetConfig = AssetDatabase.LoadAssetAtPath(configPath, typeof(AssetConfig)) as AssetConfig;
+                if (atlas)
                 {
-                    if (nextFile.Name == "AssetConfig.asset")
-                    {
-                        string assetPath = nextFile.FullName.Replace("\\", "/");
-                        assetPath = assetPath.Substring(assetPath.IndexOf("Assets"));
-                        config = AssetDatabase.LoadAssetAtPath<AssetConfig>(assetPath);
-                        break;
-                    }
+                    assetConfig.RefreshAtlas();
                 }
-
-                //遍历设置
-                foreach (FileInfo nextFile in file)
+                if (assetBundle)
                 {
-                    if (nextFile.Name!= "AssetConfig.asset"&&nextFile.Extension!=".cs")
-                    {
-                        string ex = Path.GetExtension(nextFile.FullName);
-                        if (ex != ".meta")
-                        {
-                            string assetPath = nextFile.FullName.Replace("\\", "/");
-                            assetPath = assetPath.Substring(assetPath.IndexOf("Assets"));
-                            if (setAssetbundleName)
-                            {
-                                //再拿到他的AssetImporter
-                                AssetImporter assetImporter = AssetImporter.GetAtPath(assetPath);
-                                SetAssetbundleByAssetImporter(assetImporter, config);
-                            }
-
-                            if (setSpriteAtlas&& ex== ".spriteatlas")
-                            {
-                                int index = assetPath.LastIndexOf("/");
-                                string directoryPath = assetPath.Substring(0, index);
-                                SpriteAtlas atlas = AssetDatabase.LoadAssetAtPath<SpriteAtlas>(assetPath);
-                                if (atlas!=null)
-                                {
-                                    UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(directoryPath);
-                                    atlas.Remove(atlas.GetPackables());
-                                    atlas.Add(new[] { obj });
-                                    AssetDatabase.SaveAssets();
-                                }
-                                else
-                                {
-                                    HFLog.E(assetPath+" 没有找到 SpriteAtlas");
-                                } 
-                            }                        
-                        }
-                    }
-                }
-            }
-
-            //获取子文件夹
-            DirectoryInfo[] subDirectory = directory.GetDirectories();
-            if (subDirectory.Length != 0)
-            {
-                //便利递归子文件夹
-                foreach (DirectoryInfo nextDirectory in subDirectory)
-                {
-                    string newItem = nextDirectory.FullName.Replace("\\", "/");
-                    SetAssetConfig(newItem,setAssetbundleName,setSpriteAtlas); 
-                }
-            }
-        }
-
-        public static void SetAssetbundleByAssetImporter(AssetImporter assetImporter , AssetConfig config)
-        {
-            if (config != null)
-            {
-                string bundleName = string.Empty;
-                if (config.assetbundleNameType == AssetbundleNameType.Default)
-                {
-                    bundleName = GetMD5(assetImporter.assetPath);
-                }
-                else if (config.assetbundleNameType == AssetbundleNameType.Custom)
-                {
-                    bundleName = config.assetbundleName;
-                }
-                if (assetImporter.assetBundleName != bundleName)
-                {
-                    assetImporter.assetBundleName = bundleName;
+                    assetConfig.RefreshSetting();
                 }
             }
         }

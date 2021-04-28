@@ -216,6 +216,7 @@ namespace UnityEditor
 
         public static void SetAssetbundleName(string assetPath)
         {
+            /*
             if (assetPath.Contains("GameResources") && assetPath.Contains(GameConst.AssetFolderIde))
             {
                 Debug.Log("导入或者移动 文件到 [A] 文件夹 "+ assetPath);
@@ -223,8 +224,12 @@ namespace UnityEditor
                 int index = assetPath.LastIndexOf("/");
                 string configPath = assetPath.Substring(0, index);
                 AssetConfig config = AssetDatabase.LoadAssetAtPath<AssetConfig>(configPath + "/" + "AssetConfig");
-                AssetBundleTools.SetAssetbundleByAssetImporter(assetImporter, config);
+                if (config!=null)
+                {
+                    config.RefreshSetting();
+                }
             }
+            */
         }
     }
 }

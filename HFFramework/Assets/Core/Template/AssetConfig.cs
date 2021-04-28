@@ -53,7 +53,7 @@ namespace HFFramework
                 string str = temp.Substring(index, temp.Length - index);
                 if (!str.EndsWith(".cs")&&!str.EndsWith(".meta")&&!str.Contains("AssetConfig.asset"))
                 {
-                    Debug.LogError(str);
+                    //Debug.LogError(str);
                     result.Add(str);
                 }
             }

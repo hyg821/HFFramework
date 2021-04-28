@@ -32,11 +32,15 @@ namespace HFFramework.Editor
         /// 资源打包
         /// </summary>
         [MenuItem("资源/构建 所有 AssetBundles")]
-        static void BuildAllAssetBundles()
+        public static void BuildAllAssetBundles()
         {
+            Caching.ClearCache();
+
             RenameDLL();
 
             PackingAtlas();
+
+            SetAssetbundlesNames();
 
             string AssetBundlesPath = Application.dataPath + "/StreamingAssets/AssetBundles";
             if (!Directory.Exists(AssetBundlesPath))
@@ -65,14 +69,6 @@ namespace HFFramework.Editor
             //刷新编辑器
             AssetDatabase.Refresh();
             Debug.Log("Assetbundle Build 完成");
-        }
-
-        [MenuItem("资源/构建 所有 AssetBundles  并且自动命名 (只需要在打包的时候使用)")]
-        public static void SetAssetBundleNameAndBuildAllAssetBundles()
-        {
-            Caching.ClearCache();
-            SetAssetbundlesNames();
-            BuildAllAssetBundles();
         }
 
         [MenuItem("资源/构建 单个Assetbundle")]

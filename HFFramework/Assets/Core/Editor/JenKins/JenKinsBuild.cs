@@ -209,7 +209,7 @@ namespace HFFramework.Editor
                 AssetBundleTools.ClearAssetBundlesName();
 
                 //打包
-                AssetBundleTools.SetAssetBundleNameAndBuildAllAssetBundles();
+                AssetBundleTools.BuildAllAssetBundles();
             }
 
             //检测循环引用

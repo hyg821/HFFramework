@@ -43,11 +43,11 @@ namespace HFFramework
         /// </summary>
         public void RefreshSetting()
         {
-            string [] guids = AssetDatabase.FindAssets(null, new string[] { folderPath });
+            string[] guids = AssetDatabase.FindAssets(null, new string[] { folderPath });
             foreach (var guid in guids)
             {
                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-                if (!assetPath.EndsWith(".cs")&& !assetPath.EndsWith("AssetConfig.asset"))
+                if (!assetPath.EndsWith(".cs") && !assetPath.EndsWith("AssetConfig.asset"))
                 {
                     AssetImporter assetImporter = AssetImporter.GetAtPath(assetPath);
                     string bundleName = assetbundleName;
@@ -62,62 +62,69 @@ namespace HFFramework
 
         public void RefreshAtlas()
         {
-            string[] guids = AssetDatabase.FindAssets("t:spriteatlas", new string[] { folderPath });
-            SpriteAtlas atlas = null;
-            foreach (var guid in guids)
+            if (!string.IsNullOrEmpty(atlasName))
             {
-                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-                atlas = AssetDatabase.LoadAssetAtPath<SpriteAtlas>(assetPath);
+                string[] guids = AssetDatabase.FindAssets("t:spriteatlas", new string[] { folderPath });
+                SpriteAtlas atlas = null;
+                foreach (var guid in guids)
+                {
+                    string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                    atlas = AssetDatabase.LoadAssetAtPath<SpriteAtlas>(assetPath);
+                    if (atlas != null)
+                    {
+                        break;
+                    }
+                }
+
+                if (atlas == null)
+                {
+                    atlas = new SpriteAtlas();
+                    // 设置参数 可根据项目具体情况进行设置
+                    SpriteAtlasPackingSettings packSetting = new SpriteAtlasPackingSettings()
+                    {
+                        blockOffset = 1,
+                        enableRotation = false,
+                        enableTightPacking = false,
+                        padding = 2,
+                    };
+                    atlas.SetPackingSettings(packSetting);
+
+                    SpriteAtlasTextureSettings textureSetting = new SpriteAtlasTextureSettings()
+                    {
+                        readable = false,
+                        generateMipMaps = false,
+                        sRGB = true,
+                        filterMode = FilterMode.Bilinear,
+                    };
+                    atlas.SetTextureSettings(textureSetting);
+
+                    TextureImporterPlatformSettings platformSetting = new TextureImporterPlatformSettings()
+                    {
+                        maxTextureSize = 1024,
+                        format = TextureImporterFormat.Automatic,
+                        crunchedCompression = true,
+                        textureCompression = TextureImporterCompression.Compressed,
+                        compressionQuality = 50,
+                    };
+                    atlas.SetPlatformSettings(platformSetting);
+                    AssetDatabase.CreateAsset(atlas, folderPath + "/" + atlasName + ".spriteatlas");
+                }
+
                 if (atlas != null)
                 {
-                    break;
+                    UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(folderPath);
+                    atlas.Remove(atlas.GetPackables());
+                    atlas.Add(new[] { obj });
+                    EditorUtility.SetDirty(atlas);
+                    AssetDatabase.SaveAssets();
                 }
-            }
 
-            if (atlas == null&&!string.IsNullOrEmpty(atlasName))
+                AssetDatabase.Refresh();
+            }
+            else
             {
-                atlas = new SpriteAtlas();
-                // 设置参数 可根据项目具体情况进行设置
-                SpriteAtlasPackingSettings packSetting = new SpriteAtlasPackingSettings()
-                {
-                    blockOffset = 1,
-                    enableRotation = false,
-                    enableTightPacking = false,
-                    padding = 2,
-                };
-                atlas.SetPackingSettings(packSetting);
-
-                SpriteAtlasTextureSettings textureSetting = new SpriteAtlasTextureSettings()
-                {
-                    readable = false,
-                    generateMipMaps = false,
-                    sRGB = true,
-                    filterMode = FilterMode.Bilinear,
-                };
-                atlas.SetTextureSettings(textureSetting);
-
-                TextureImporterPlatformSettings platformSetting = new TextureImporterPlatformSettings()
-                {
-                    maxTextureSize = 2048,
-                    format = TextureImporterFormat.Automatic,
-                    crunchedCompression = true,
-                    textureCompression = TextureImporterCompression.Compressed,
-                    compressionQuality = 50,
-                };
-                atlas.SetPlatformSettings(platformSetting);
-                AssetDatabase.CreateAsset(atlas, folderPath + "/" + atlasName+ ".spriteatlas");
+                HFLog.E("没有设置 图集名称");
             }
-
-            if (atlas!=null)
-            {
-                UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(folderPath);
-                atlas.Remove(atlas.GetPackables());
-                atlas.Add(new[] { obj });
-                EditorUtility.SetDirty(atlas);
-                AssetDatabase.SaveAssets();
-            }
-
-            AssetDatabase.Refresh();
         }
 
 #endif

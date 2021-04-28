@@ -17,9 +17,13 @@ namespace HFFramework.Editor
 
             if (GUILayout.Button("设置文件夹AssetBundleName"))
             {
-                string path = Application.dataPath.Substring(0, Application.dataPath.LastIndexOf("/Assets")) +"/"+ AssetDatabase.GetAssetPath(info);
-                path = path.Substring(0, path.LastIndexOf("/"));
                 info.RefreshSetting();
+                AssetDatabase.Refresh();
+            }
+
+            if (GUILayout.Button("创建图集"))
+            {
+                info.RefreshAtlas();
                 AssetDatabase.Refresh();
             }
         }

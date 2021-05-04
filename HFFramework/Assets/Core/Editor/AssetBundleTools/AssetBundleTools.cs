@@ -36,8 +36,6 @@ namespace HFFramework.Editor
         {
             Caching.ClearCache();
 
-            RenameDLL();
-
             PackingAtlas();
 
             SetAssetbundlesNames();

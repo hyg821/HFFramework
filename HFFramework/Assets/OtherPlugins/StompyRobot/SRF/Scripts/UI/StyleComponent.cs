@@ -83,7 +83,7 @@
 
             if (s == null)
             {
-                Debug.LogWarning("[StyleComponent] Style not found ({0})".Fmt(StyleKey), this);
+                //Debug.LogWarning("[StyleComponent] Style not found ({0})".Fmt(StyleKey), this);
                 _activeStyle = null;
                 return;
             }

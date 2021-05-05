@@ -26,8 +26,8 @@ namespace HFFramework.Editor
             //模式 3d  
             EditorSettings.defaultBehaviorMode = EditorBehaviorMode.Mode3D;
 
-            //序列化模式 2进制
-            EditorSettings.serializationMode = SerializationMode.ForceBinary;
+            //序列化模式
+            EditorSettings.serializationMode = SerializationMode.ForceText;
 
             EditorSettings.spritePackerMode = SpritePackerMode.AlwaysOnAtlas;
 
@@ -44,7 +44,7 @@ namespace HFFramework.Editor
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
 
             //.net 4.6 代码运行
-            PlayerSettings.scriptingRuntimeVersion = ScriptingRuntimeVersion.Latest;
+            //PlayerSettings.scriptingRuntimeVersion = ScriptingRuntimeVersion.Latest;
 
             //安卓 ARMv7 包体减小  64位 必须使用cpp 打包
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7;// | AndroidArchitecture.ARM64;

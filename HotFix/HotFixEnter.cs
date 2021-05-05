@@ -3,6 +3,10 @@ using HotFix;
 using HFFramework;
 using System.Collections.Generic;
 
+/// <summary>
+/// 热更新逻辑里 尽量只使用 一层 await 不要嵌套 await 
+/// 具体参考 HFSocket Call方法注释 能不要async的地方 尽量不用 直接返回 tcs.task 
+/// </summary>
 public class HotFixEnter
 {
     public static void Main()

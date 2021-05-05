@@ -51,9 +51,8 @@ namespace HFFramework
                 string temp = item.FullName.Replace("\\", "/");
                 int index = temp.IndexOf("Assets");
                 string str = temp.Substring(index, temp.Length - index);
-                if (!str.EndsWith(".cs")&&!str.EndsWith(".meta")&&!str.Contains("AssetConfig.asset"))
+                if (!str.EndsWith(".cs")&&!str.EndsWith(".meta"))
                 {
-                    //Debug.LogError(str);
                     result.Add(str);
                 }
             }
@@ -72,8 +71,17 @@ namespace HFFramework
             {
                 //Debug.LogError("assetPath " + assetPath);
                 AssetImporter assetImporter = AssetImporter.GetAtPath(assetPath);
-                string bundleName = assetbundleName;
+                string bundleName = string.Empty;
+                if (assetPath.Contains("AssetConfig.asset"))
+                {
+                    bundleName = string.Empty;
+                }
+                else
+                {
+                    bundleName = assetbundleName;
+                }
                 assetImporter.assetBundleName = bundleName;
+                assetImporter.SaveAndReimport();
                 EditorUtility.SetDirty(assetImporter);
             }
 

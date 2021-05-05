@@ -185,6 +185,7 @@ namespace HFFramework.Editor
             }
             length = AssetDatabase.GetAllAssetBundleNames().Length;
             Debug.Log("删除之后的所有AssetBundleNames个数  " + length);
+            AssetDatabase.Refresh();
         }
 
         [MenuItem("资源/删除 所有 AssetBundles")]

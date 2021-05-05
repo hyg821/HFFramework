@@ -44,7 +44,9 @@ namespace HFFramework.Editor
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
 
             //.net 4.6 代码运行
-            //PlayerSettings.scriptingRuntimeVersion = ScriptingRuntimeVersion.Latest;
+            PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Android, ApiCompatibilityLevel.NET_4_6);
+            PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.iOS, ApiCompatibilityLevel.NET_4_6);
+            PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Standalone, ApiCompatibilityLevel.NET_4_6);
 
             //安卓 ARMv7 包体减小  64位 必须使用cpp 打包
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARMv7;// | AndroidArchitecture.ARM64;

@@ -1,45 +1,52 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
+using UnityEngine;
 
 namespace HFFramework
 {
-    public class HFPing 
+    public class HFPing :UnityEngine.Component
     {
         public string address;
 
         public Ping ping;
 
-        public PingReply reply;
-
         public Timer timer;
 
-        public HFPing(string address,float interval)
+        public float time;
+
+        public void Init(string address,float interval)
         {
             this.address = address;
-            ping =  new Ping();
-            ping.PingCompleted += OnPingCompleted;
             timer = TimerManager.Schedule(interval, 0, -1, PingSend);
         }
 
         private void PingSend(Timer t)
         {
-            ping.SendAsync(address, null);
+            DestroyPing();
+            ping = new Ping(address);
         }
 
-        public void OnPingCompleted(object sender, PingCompletedEventArgs e)
+        public void Update()
         {
-            reply = e.Reply;
+            if (ping!=null&&ping.isDone)
+            {
+                time = ping.time;
+            }
         }
 
-        public void Dispose()
+        public void DestroyPing()
         {
-            ping.PingCompleted -= OnPingCompleted;
-            ping.SendAsyncCancel();
-            ping.Dispose();
+            if (ping != null)
+            {
+                ping.DestroyPing();
+                ping = null;
+            }
+        }
+
+        public void Destroy()
+        {
             timer.Close();
-            reply = null;
-            ping = null;
+            DestroyPing();
         }
     }
 }

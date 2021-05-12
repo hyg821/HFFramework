@@ -193,10 +193,10 @@ namespace HFFramework
         {
             if (ping != null)
             {
-                ping.Dispose();
-                ping = null;
+                Destroy(ping);
             }
-            ping = new HFPing(serverIP, 5);
+            ping = gameObject.AddComponent<HFPing>();
+            ping.Init(serverIP, 5);
             GameLooper.BackToMainThread(connectedHandler);
         }
 
@@ -305,11 +305,11 @@ namespace HFFramework
 
             if (ping!=null)
             {
-                ping.Dispose();
+                Destroy(ping);
+                ping = null;
             }
+
+            Destroy(this);
         }
     }
 }
-
-
-

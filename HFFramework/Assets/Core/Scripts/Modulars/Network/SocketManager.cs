@@ -31,7 +31,10 @@ namespace HFFramework
             HFSocket socket;
             if (!socketCache.TryGetValue(name, out socket))
             {
-                socket = gameObject.AddComponent<HFSocket>();
+                GameObject go = new GameObject();
+                go.name = name;
+                go.transform.SetParent(gameObject.transform);
+                socket = go.AddComponent<HFSocket>();
                 socket.SetName(name);
                 socketCache.Add(name, socket);
             }

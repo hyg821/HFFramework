@@ -283,7 +283,11 @@ namespace HFFramework
             {
                 if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
                 {
-                    await SceneManager.LoadSceneAsync(sceneName);
+#if UNITY_EDITOR
+                    string[] paths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(packageName.ToLower(), sceneName);
+                    await UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(paths[0], new LoadSceneParameters(LoadSceneMode.Single));
+                    //await SceneManager.LoadSceneAsync(sceneName);
+#endif
                 }
                 else
                 {
@@ -472,8 +476,8 @@ namespace HFFramework
         public T EditorLoadAsset<T>(string packageName, string assetName) where T:UnityEngine.Object
         {
 #if UNITY_EDITOR
-            string[] s = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(packageName.ToLower(), assetName);
-            return AssetDatabase.LoadAssetAtPath<T>(s[0]);
+            string[] paths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(packageName.ToLower(), assetName);
+            return AssetDatabase.LoadAssetAtPath<T>(paths[0]);
 #else
             return null;
 #endif

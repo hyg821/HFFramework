@@ -75,6 +75,21 @@ namespace HFFramework
             }
         }
 
+        public static void A(object obj, object obj1,LogColor color = LogColor.White)
+        {
+            if (IsOpenLog)
+            {
+                if (Platform == GamePlatform.Editor)
+                {
+                    Debug.Log(Time.frameCount + " : " + GameUtils.SetColor(obj, GetColor(color)) + "\n" + obj1);
+                }
+                else
+                {
+                    Debug.Log(Time.frameCount + " : " + obj+"\n"+obj1);
+                }
+            }
+        }
+
         /// <summary>
         ///  一个无法关闭的打印
         /// </summary>

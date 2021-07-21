@@ -37,6 +37,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Component_Binding.Register(app);
             HFFramework_NotificationCenter_Binding.Register(app);
             System_Collections_Generic_HashSet_1_UInt64_Binding.Register(app);
+            System_Int64_Binding.Register(app);
             System_Collections_Generic_HashSet_1_UInt64_Binding_Enumerator_Binding.Register(app);
             System_IDisposable_Binding.Register(app);
             System_Object_Binding.Register(app);

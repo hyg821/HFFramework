@@ -12,6 +12,10 @@ namespace HFFramework.Editor
 {
     public class AutoCompilerEditor
     {
+        public static string RootPath;
+
+        public static string ReferenceRootPath;
+
         [InitializeOnLoadMethod]
         public static void RegisterPlayMode()
         {
@@ -38,9 +42,6 @@ namespace HFFramework.Editor
             }
         }
 
-        public static string RootPath;
-        public static string ReferenceRootPath;
-
         public static void CompilerHotFixDLL()
         {
             string outPath = Application.dataPath+ "/StreamingAssets/DLL/HotFix.dll";
@@ -50,9 +51,6 @@ namespace HFFramework.Editor
 
             if (complier.Supports(GeneratorSupport.EntryPointMethod))
             {
-                // Specify the class that contains 
-                // the main method of the executable.
-                Debug.LogError("AAAAAAAAAAAAAA");
                 paras.MainClass = "Program";
             }
 
@@ -110,7 +108,7 @@ namespace HFFramework.Editor
             XmlElement path = element["HintPath"];
             if (path!=null)
             {
-                Debug.LogError(path.InnerXml);
+                //Debug.LogError(path.InnerXml);
                 string refPath = ReferenceRootPath + path.InnerXml;
                 args.ReferencedAssemblies.Add(refPath);
                 //Debug.LogError(ReferenceRootPath + path.InnerXml);

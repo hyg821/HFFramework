@@ -9,7 +9,7 @@ namespace HFFramework
         /// <summary>
         ///  dll入口类名字
         /// </summary>
-        public const string MainClassName = "HotFixEnter";
+        public const string MainClassName = "Program";
 
         public const string mainMethodName = "Main";
         public const string updateMethodName = "Update";

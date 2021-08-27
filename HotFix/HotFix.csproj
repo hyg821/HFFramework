@@ -317,7 +317,7 @@
     <Compile Include="Base\GameLooper.cs" />
     <Compile Include="Base\GameFactory.cs" />
     <Compile Include="Base\Singleton.cs" />
-    <Compile Include="HotFixEnter.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -27,7 +27,7 @@ namespace HFFramework
 
         public override void CacheMethod()
         {
-            Type type = assembly.GetType("HotFixEnter");
+            Type type = assembly.GetType(MainClassName);
             mainMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod(mainMethodName));
             updateMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod(updateMethodName));
             fixedUpdateMethod = FastMethodInvoker.GetMethodInvoker(type.GetMethod(fixedUpdateMethodName));

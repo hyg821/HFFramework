@@ -2,17 +2,19 @@
 using HotFix;
 using HFFramework;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// 热更新逻辑里 尽量只使用 一层 await 不要嵌套 await 
 /// 具体参考 HFSocket Call方法注释 能不要async的地方 尽量不用 直接返回 tcs.task 
 /// </summary>
-public class HotFixEnter
+public class Program
 {
     public static void Main()
     {
         Debug.Log("热更新代码开始运行 Main()");
     }
+    
 
     public static void Update()
     {

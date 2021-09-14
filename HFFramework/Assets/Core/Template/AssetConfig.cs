@@ -80,9 +80,12 @@ namespace HFFramework
                 {
                     bundleName = assetbundleName;
                 }
-                assetImporter.assetBundleName = bundleName;
-                assetImporter.SaveAndReimport();
-                EditorUtility.SetDirty(assetImporter);
+                if (assetImporter.assetBundleName!= bundleName)
+                {
+                    assetImporter.assetBundleName = bundleName;
+                    assetImporter.SaveAndReimport();
+                    EditorUtility.SetDirty(assetImporter);
+                }
             }
 
             AssetDatabase.SaveAssets();

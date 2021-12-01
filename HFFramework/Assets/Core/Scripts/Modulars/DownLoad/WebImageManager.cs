@@ -52,7 +52,7 @@ namespace HFFramework
                         TextureFormat format;
                         if (GameEnvironment.Instance.config.Platform == GamePlatform.iOS)
                         {
-                            format = TextureFormat.ASTC_RGBA_4x4;
+                            format = TextureFormat.ASTC_4x4;
                         }
                         else if (GameEnvironment.Instance.config.Platform == GamePlatform.Android)
                         {

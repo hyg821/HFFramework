@@ -57,7 +57,7 @@ namespace ILRuntime.Runtime.Generated
         static StackObject* AssignFromStack_Instance_0(ref object o, ILIntepreter __intp, StackObject* ptr_of_this_method, IList<object> __mStack)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            HFFramework.GameLooper @Instance = (HFFramework.GameLooper)typeof(HFFramework.GameLooper).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            HFFramework.GameLooper @Instance = (HFFramework.GameLooper)typeof(HFFramework.GameLooper).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             HFFramework.GameLooper.Instance = @Instance;
             return ptr_of_this_method;
         }

@@ -88,7 +88,7 @@ namespace ILRuntime.Runtime.Generated
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            Cysharp.Threading.Tasks.UniTask<UnityEngine.GameObject>.Awaiter instance_of_this_method = (Cysharp.Threading.Tasks.UniTask<UnityEngine.GameObject>.Awaiter)typeof(Cysharp.Threading.Tasks.UniTask<UnityEngine.GameObject>.Awaiter).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Cysharp.Threading.Tasks.UniTask<UnityEngine.GameObject>.Awaiter instance_of_this_method = (Cysharp.Threading.Tasks.UniTask<UnityEngine.GameObject>.Awaiter)typeof(Cysharp.Threading.Tasks.UniTask<UnityEngine.GameObject>.Awaiter).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)16);
 
             var result_of_this_method = instance_of_this_method.IsCompleted;
 
@@ -109,7 +109,7 @@ namespace ILRuntime.Runtime.Generated
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
             ptr_of_this_method = ILIntepreter.GetObjectAndResolveReference(ptr_of_this_method);
-            Cysharp.Threading.Tasks.UniTask<UnityEngine.GameObject>.Awaiter instance_of_this_method = (Cysharp.Threading.Tasks.UniTask<UnityEngine.GameObject>.Awaiter)typeof(Cysharp.Threading.Tasks.UniTask<UnityEngine.GameObject>.Awaiter).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            Cysharp.Threading.Tasks.UniTask<UnityEngine.GameObject>.Awaiter instance_of_this_method = (Cysharp.Threading.Tasks.UniTask<UnityEngine.GameObject>.Awaiter)typeof(Cysharp.Threading.Tasks.UniTask<UnityEngine.GameObject>.Awaiter).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)16);
 
             var result_of_this_method = instance_of_this_method.GetResult();
 

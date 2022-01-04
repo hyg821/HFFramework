@@ -43,15 +43,15 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 3);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.String @assetName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.String @assetName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            System.String @packageName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            System.String @packageName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
-            HFFramework.AssetManager instance_of_this_method = (HFFramework.AssetManager)typeof(HFFramework.AssetManager).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            HFFramework.AssetManager instance_of_this_method = (HFFramework.AssetManager)typeof(HFFramework.AssetManager).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             var result_of_this_method = instance_of_this_method.GetPrefabAsync(@packageName, @assetName);
@@ -84,7 +84,7 @@ namespace ILRuntime.Runtime.Generated
         static StackObject* AssignFromStack_Instance_0(ref object o, ILIntepreter __intp, StackObject* ptr_of_this_method, IList<object> __mStack)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            HFFramework.AssetManager @Instance = (HFFramework.AssetManager)typeof(HFFramework.AssetManager).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            HFFramework.AssetManager @Instance = (HFFramework.AssetManager)typeof(HFFramework.AssetManager).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             HFFramework.AssetManager.Instance = @Instance;
             return ptr_of_this_method;
         }

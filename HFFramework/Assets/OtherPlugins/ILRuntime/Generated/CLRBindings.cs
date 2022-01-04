@@ -45,12 +45,12 @@ namespace ILRuntime.Runtime.Generated
             HFFramework_AssetManager_Binding.Register(app);
             Cysharp_Threading_Tasks_UniTask_1_GameObject_Binding.Register(app);
             Cysharp_Threading_Tasks_UniTask_1_GameObject_Binding_Awaiter_Binding.Register(app);
-            UnityEngine_Time_Binding.Register(app);
-            HFFramework_GameLooper_Binding.Register(app);
-            UnityEngine_MonoBehaviour_Binding.Register(app);
             System_Type_Binding.Register(app);
             System_Activator_Binding.Register(app);
             HFFramework_GameFactory_Binding.Register(app);
+            UnityEngine_Time_Binding.Register(app);
+            HFFramework_GameLooper_Binding.Register(app);
+            UnityEngine_MonoBehaviour_Binding.Register(app);
 
             ILRuntime.CLR.TypeSystem.CLRType __clrType = null;
             __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Vector3));

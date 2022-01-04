@@ -54,16 +54,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/field/IPolynomial.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/CSDeleteBreakpoint.cs" />
     <Compile Include="Assets/Core/Scripts/Inherit/SlicedFilledImage.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/cryptopro/CryptoProObjectIdentifiers.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT283FieldElement.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/Main/GameEnvironment.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/Asn1ParsingException.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Collections_Generic_HashSet_1_UInt64_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x9/X9ObjectIdentifiers.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/modes/CbcBlockCipher.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Enviorment/AppDomain.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/RSACoreEngine.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/01 Simple Demo/SimpleDemo.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/zlib/StaticTree.cs" />
@@ -81,7 +78,6 @@
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/10 Grid Simulation/Controller.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/DsaKeyGenerationParameters.cs" />
     <Compile Include="Assets/GameResources/Game/Script/Proto/MailServiceService.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Enviorment/InvocationContext.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/multiplier/WNafPreCompInfo.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/BufferedStreamCipher.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/KeyUsage.cs" />
@@ -97,7 +93,6 @@
     <Compile Include="Assets/Core/Scripts/Base/Entity/Data/DataBind/DataProperty.cs" />
     <Compile Include="Assets/GameResources/Game/Script/Test2DataComponent.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsDHUtilities.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/CLRBinding/MethodBindingGenerator.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/security/GeneralSecurityException.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/ClickEventForward.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/KeyGenerationParameters.cs" />
@@ -105,11 +100,9 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/WebSocket/WebSocketResponse.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SignalRCore/HubConnection.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/HotFix/ProgramExecutor.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_MonoBehaviour_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsPeer.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/RedPoint/RedPointTree.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/Inherit&amp;Interface/Hero.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Stack/StackFrame.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/Learn/LearnMatrix/LearnMatrix.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/multiplier/WNafUtilities.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SignalR/Messages/ServerMessages.cs" />
@@ -119,15 +112,12 @@
     <Compile Include="Assets/Core/Scripts/Base/Command/CommandQueue.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SignalR/Transports/ServerSentEventsTransport.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/BerSequence.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/CSEnumChildren.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/Learn/LearnTree.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/04 Jump To Demo/CellView.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/Learn/LearnMemoryStream.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/IXof.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/cryptopro/GOST3410PublicKeyAlgParameters.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/BreakpointInfo.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/11 Pull Down Refresh/Data.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/HFFramework_NotificationCenter_Binding.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/MessageCenter/ObserverDelegate.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/SignalR/DemoHubSample.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/BlowfishEngine.cs" />
@@ -137,7 +127,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/generators/DHKeyGeneratorHelper.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP256K1Curve.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/10b Grid Selection/Data.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/HFFramework_HFLog_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/RC4Engine.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/12b Nested Linked Scrollers (Alternate Grid)/ScrollRectEx.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/DesEdeParameters.cs" />
@@ -147,14 +136,11 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DerGeneralString.cs" />
     <Compile Include="Assets/OtherPlugins/ILRuntime/Adapters/MonoBehaviourAdapter.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/BERBitString.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Reflection/ILRuntimeFieldInfo.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/AlertDescription.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/ILTypeInstance.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/Learn/LearnByteOperation.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/SCEnumChildrenResult.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT233K1Point.cs" />
-    <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Plugins/EnhancedScroller.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/IStreamCipher.cs" />
+    <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Plugins/EnhancedScroller.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/GOST3410PrivateKeyParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/AbstractTlsCredentials.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/X509NameEntryConverter.cs" />
@@ -185,7 +171,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SocketIO/Events/EventNames.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/multiplier/FixedPointCombMultiplier.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Logger/DefaultLogger.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/SCResolveVariableResult.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/security/cert/CertificateParsingException.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/CRLReason.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/digests/GeneralDigest.cs" />
@@ -193,9 +178,7 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT131FieldElement.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/ASN1StreamParser.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/07 Refreshing/CellView.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Other/NeedAdaptorAttribute.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/PlatformSupport/TcpClient/WinRT/DataReaderWriterStream.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/CLRBindings.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/paddings/PaddedBufferedBlockCipher.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/HTTPRange.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/field/IFiniteField.cs" />
@@ -229,8 +212,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP160R2Point.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsAgreementCredentials.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT409R1Point.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/CSExecute.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/Cysharp_Threading_Tasks_CompilerServices_AsyncUniTaskMethodB.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP256K1FieldElement.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/RSAPublicKeyStructure.cs" />
     <Compile Include="Assets/GameResources/Game/Script/Config/Man.cs" />
@@ -241,7 +222,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/SignalR/Json Encoders/LitJsonEncoder.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/ECPoint.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/io/TeeInputStream.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/CLR/TypeSystem/CLRType.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SocketIO/HandshakeData.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/nist/NISTNamedCurves.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT239Field.cs" />
@@ -252,7 +232,6 @@
     <Compile Include="Assets/Core/Scripts/Functions/RelationPosition/Relation.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/AlgorithmIdentifier.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/Main/GameLooper.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/ILIntepreter.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/GOST28147Engine.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/BEROctetStringParser.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/AbstractTlsSigner.cs" />
@@ -263,22 +242,15 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/HeartbeatExtension.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/12b Nested Linked Scrollers (Alternate Grid)/DetailData.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/signers/ECDsaSigner.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/CLRBinding/BindingGeneratorExtensions.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/AbstractTlsPeer.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Other/ThreadSafeDictionary.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Enviorment/CrossBindingMethodInfo.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsNullCompression.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/OpCodes/OpCode.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/IAsn1Choice.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/x509/X509SignatureUtil.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsRsaUtilities.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Enviorment/DelegateManager.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/RsaKeyGenerationParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Extensions/WWWAuthenticateHeaderParser.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsECDsaSigner.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT163FieldElement.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Other/UncheckedList.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_Time_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/BerSet.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/X509Extensions.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP160R2Curve.cs" />
@@ -293,27 +265,21 @@
     <Compile Include="Assets/Core/Scripts/Modulars/Debug/LogCat.cs" />
     <Compile Include="Assets/GameResources/Game/Script/Proto/Room.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsECDheKeyExchange.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/HFFramework_AssetManager_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsAeadCipher.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsCipherFactory.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/encoders/HexEncoder.cs" />
     <Compile Include="Assets/Core/Scripts/Base/Entity/Data/DataBind/DataBinder.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/DesParameters.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/CLR/Method/CLRMethod.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/LazyASN1InputStream.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/RFC3394WrapEngine.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/StepTypes.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/08 View Driven Cell Sizes/Data.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/RsaPrivateCrtKeyParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/CipherKeyGenerator.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_GameObject_Binding.cs" />
-    <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/JSON/JSON.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SignalR/Transports/PostSendTransportBase.cs" />
+    <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/JSON/JSON.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/SignalR/Authentication Providers/SampleCookieAuthentication.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT283R1Point.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Reflection_MemberInfo_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/WebSocket/WebSocket.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/Cysharp_Threading_Tasks_UniTask_1_GameObject_Binding_Awaiter.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsSigner.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/raw/Nat320.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DerUniversalString.cs" />
@@ -330,9 +296,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/field/IExtensionField.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/Main/GameScene.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/12b Nested Linked Scrollers (Alternate Grid)/MasterCellView.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/CLR/TypeSystem/ILGenericParameterType.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/CLRBinding/FieldBindingGenerator.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/DebugService.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/zlib/Inflate.cs" />
     <Compile Include="Assets/Core/Scripts/Base/Singleton/Singleton.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsStreamCipher.cs" />
@@ -342,7 +305,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/BERTaggedObjectParser.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/12b Nested Linked Scrollers (Alternate Grid)/Controller.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/multiplier/FixedPointUtilities.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/HFFramework_GameFactory_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/Time.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SignalRCore/Messages/NegotiationResult.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/digests/MD2Digest.cs" />
@@ -361,12 +323,10 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/ReflectionHelpers.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/security/cert/CertificateEncodingException.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/io/pem/PemWriter.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/CLRBinding/ValueTypeBindingGenerator.cs" />
     <Compile Include="Assets/OtherPlugins/Demigiant/DOTween/Modules/DOTweenModulePhysics2D.cs" />
     <Compile Include="Assets/Core/Scripts/Inherit/UIImage.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/IDSA.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/ElGamalKeyGenerationParameters.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Reflection/ILRuntimeConstructorInfo.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/DHKeyGenerationParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/ASN1Generator.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/UIFollowTouch.cs" />
@@ -378,7 +338,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT409K1Curve.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DerTaggedObject.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/ReasonFlags.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Other/DelegateExportAttribute.cs" />
     <Compile Include="Assets/GameResources/Game/Script/Proto/LoginService.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT193R2Curve.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT233FieldElement.cs" />
@@ -395,9 +354,7 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/DsaPublicKeyParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/macs/VMPCMac.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsRsaKeyExchange.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/SCThreadStarted.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/Main/GameConst.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/DelegateAdapter.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/CertificateStatusRequest.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsSessionImpl.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/Asn1Tags.cs" />
@@ -425,7 +382,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/multiplier/WTauNafPreCompInfo.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/DigestInputBuffer.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/SocketIO/SocketIOChatSample.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Activator_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/raw/Nat.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DerVideotexString.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/Inherit&amp;Interface/Interface/IDescribe.cs" />
@@ -446,7 +402,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Forms/HTTPFieldData.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/BERSequenceGenerator.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SignalR/Messages/IServerMessage.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/ILRuntimeException.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/generators/DHBasicKeyPairGenerator.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Authentication/DigestStore.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP224R1Curve.cs" />
@@ -454,20 +409,16 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT113FieldElement.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/modes/gcm/Tables1kGcmExponentiator.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/PlatformSupport/IO/FileHelper.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Type_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Decompression/CRC32.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/SerpentEngine.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/zlib/JZlib.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT131R2Point.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Extensions.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Statistics/Statistics.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/GOST3410Parameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP256R1Curve.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/ElGamalKeyParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/LazyDERSequence.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/SCAttachResult.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/SessionParameters.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Collections_Generic_List_1_ILTypeInstance_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP256R1Point.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/raw/Mod.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/nist/NISTObjectIdentifiers.cs" />
@@ -479,9 +430,7 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/x509/X509ExtensionBase.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/GOST3410PublicKeyParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Demigiant/DOTween/Modules/DOTweenModuleUnityVersion.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/SCStepComplete.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/DHValidationParameters.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Reflection/ILRuntimePropertyInfo.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/IVerifierFactoryProvider.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/ECPublicKeyParameters.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/12 Nested Scrollers/ScrollRectEx.cs" />
@@ -499,7 +448,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/misc/NetscapeCertType.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT571FieldElement.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/PlatformSupport/IO/File.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Enviorment/CLRRedirections.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/paddings/X923Padding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/BigInteger.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/06 Snapping/SlotData.cs" />
@@ -519,11 +467,9 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SocketIO/JsonEncoders/DefaultJSonEncoder.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/IAsymmetricBlockCipher.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP128R1Curve.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/VariableInfo.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/Attributes/LearnAttributes.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP256R1Field.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/SlicedProgress.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Enviorment/CrossBindingAdaptor.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/DSAParameter.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/generators/DHParametersHelper.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/BerOctetString.cs" />
@@ -547,11 +493,9 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/modes/EAXBlockCipher.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/DsaKeyParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/io/pem/PemReader.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/CLR/TypeSystem/IType.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/HTTP/UploadStream.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP160R1Point.cs" />
     <Compile Include="Assets/GameResources/Game/Script/Proto/Friend.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_Component_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x9/X9FieldID.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/06 Snapping/SlotCellView.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP256R1FieldElement.cs" />
@@ -562,7 +506,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/HTTPMethods.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/Check.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/KdfParameters.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Stack/StackObject.cs" />
     <Compile Include="Assets/GameResources/Game/Script/Proto/Item.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/DHKeyParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/digests/MD5Digest.cs" />
@@ -570,7 +513,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/AbstractTlsSignerCredentials.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Decompression/ZlibConstants.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/io/pem/PemGenerationException.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_String_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/paddings/ZeroBytePadding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT193R2Point.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsProtocol.cs" />
@@ -579,7 +521,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/io/FilterStream.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Decompression/ZlibCodec.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/HotFix/FastMethodInvoker.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/CSStep.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/ClientCertificateType.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/ChaCha7539Engine.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Extensions/HeaderParser.cs" />
@@ -592,7 +533,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/field/IPolynomialExtensionField.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT239FieldElement.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/Learn/NameOf.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/SCBreakpointHit.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/Utils/RectTransformExtensions.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/CertificateRequest.cs" />
     <Compile Include="Assets/GameResources/Game/Script/Proto/MjRoom.cs" />
@@ -614,21 +554,15 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/IssuingDistributionPoint.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/paddings/BlockCipherPadding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/BERSetGenerator.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/CLR/Method/IMethod.cs" />
     <Compile Include="Assets/Core/Scripts/Functions/Inherit&amp;Interface/Monster.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsBlockCipher.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/CLR/Method/ILMethod.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/CSBindBreakpoint.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/HTTPManager.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/HFResource/AssetManager.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/IMac.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Adaptors/CLRCrossBindingAdaptors.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DerBMPString.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/VMPCKSA3Engine.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Caching/HTTPCacheMaintananceParams.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/03 Selection Demo/InventoryData.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/CLR/Utils/Extensions.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Int64_Binding.cs" />
     <Compile Include="Assets/Core/Scripts/Base/Entity/Data/DataBind/IDataPropertyObserver.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/BERGenerator.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/SignalRCore/TestHubExample.cs" />
@@ -643,9 +577,7 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Authentication/Credentials.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/LongArray.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x9/DHPublicKey.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/OpCodes/OpCodeEnum.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/ConnectionEnd.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Reflection/Extensions.cs" />
     <Compile Include="Assets/Core/Template/AssetConfig.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/djb/Curve25519Field.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Plugins/SmallList.cs" />
@@ -670,7 +602,6 @@
     <Compile Include="Assets/Core/Scripts/Modulars/Main/IDGenerator.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/OutputLengthException.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/DsaValidationParameters.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Other/ByReferenceKeyComparer.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/Main Menu/MainMenu.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/paddings/ISO7816d4Padding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/macs/CMac.cs" />
@@ -698,7 +629,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/djb/Curve25519.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/raw/Nat512.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/12 Nested Scrollers/DetailCellView.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/CLR/Method/ExceptionHandler.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Extensions/KeyValuePairList.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/misc/VerisignCzagExtension.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/SignatureAndHashAlgorithm.cs" />
@@ -721,7 +651,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/Salsa20Engine.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/ByteQueueStream.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/digests/Sha1Digest.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_Debug_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DerUTF8String.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/ElGamalEngine.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT113Field.cs" />
@@ -789,23 +718,18 @@
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/01 Simple Demo/CellView.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/macs/GOST28147Mac.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/AbstractTlsKeyExchange.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/CLR/TypeSystem/ILType.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SocketIO/Transports/WebSocketTransport.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SocketIO/Transports/PollingTransport.cs" />
     <Compile Include="Assets/Core/Scripts/Inherit/UICircleImage.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/ScaleXPointMap.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/09 Cell Events/Controller.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_IDisposable_Binding.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_Transform_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/11 Pull Down Refresh/Controller.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/RSABlindingParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/ocsp/OCSPResponseStatus.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/macs/CbcBlockCipherMac.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT283K1Curve.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/CSResolveIndexer.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT113R1Curve.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/modes/GOFBBlockCipher.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Reflection/ILRuntimeType.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/10b Grid Selection/CellView.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/ServerNameList.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SignalR/Authentication/IAuthenticationProvider.cs" />
@@ -816,13 +740,10 @@
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/03 Selection Demo/SelectionDemo.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/DeferredHash.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsClient.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/CLRBinding/CommonBindingGenerator.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/UI/UIManager.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/AsymmetricKeyParameter.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/TBSCertList.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Collections_Generic_HashSet_1_UInt64_Binding_Enumerat.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP192R1Point.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/CLRBinding/CLRBindingUtils.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DEROctetStringParser.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Decompression/ZlibBaseStream.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP160R1FieldElement.cs" />
@@ -864,7 +785,6 @@
     <Compile Include="Assets/Core/Scripts/Base/Behavior/BaseBehaviour.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/zlib/InfTree.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP128R1Point.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/DebuggerServer/DebuggerServer.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Extensions/HeartbeatManager.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/ECKeyParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/Certificate.cs" />
@@ -880,7 +800,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/SocketIO/SocketIO Json Encoders/LitJsonEncoder.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/digests/GOST3411Digest.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/ECAlgorithms.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Enviorment/CrossBindingCodeGenerator.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DerOutputStream.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/digests/ShakeDigest.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Plugins/EnhancedScrollerCellView.cs" />
@@ -889,10 +808,8 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/DHPrivateKeyParameters.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/HotFix/AssemblyExcutor.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/security/cert/CertificateException.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/HFFramework_IDGenerator_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/agreement/DHBasicAgreement.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/ICertificateVerifyer.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/CLRBinding/ConstructorBindingGenerator.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/HTTP/TextureDownloadSample.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/HTTPUpdateDelegator.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/AbstractTlsAgreementCredentials.cs" />
@@ -906,7 +823,6 @@
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/12 Nested Scrollers/Controller.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/oiw/OIWObjectIdentifiers.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/12 Nested Scrollers/DetailData.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/CLRBinding/BindingCodeGenerator.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/Strings.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT233R1Curve.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsNullCipher.cs" />
@@ -958,7 +874,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/raw/Nat160.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP160K1Point.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/field/GF2Polynomial.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Reflection/ILRuntimeParameterInfo.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/ParametersWithSalt.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP160K1Curve.cs" />
     <Compile Include="Assets/Core/Scripts/Base/Entity/Data/DataBind/DataBinderCollection.cs" />
@@ -969,10 +884,8 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/ASN1TaggedObjectParser.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/ConstructedOctetStream.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/05 Remote Resources/CellView.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/HFFramework_GameLooper_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/signers/GOST3410DigestSigner.cs" />
     <Compile Include="Assets/Core/Template/EnvironmentConfig.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/CLRBinding/Vector3Binder.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/PlatformSupport/Collections/ObjectModel/ObservableDictionary.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/CRLDistPoint.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/IVerifier.cs" />
@@ -982,7 +895,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/endo/GlvTypeBParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT113R1Point.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/ISignerWithRecovery.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/BreakPointContext.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/PlatformSupport/TcpClient/WinRT/TcpClient.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x9/X9ECParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/raw/Nat448.cs" />
@@ -992,14 +904,12 @@
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/08 View Driven Cell Sizes/Controller.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/io/pem/PemHeader.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/paddings/Pkcs7Padding.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Reflection/ILRuntimeWrapperType.cs" />
-    <Compile Include="Assets/GameResources/Game/Script/Test2Entity.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsStream.cs" />
+    <Compile Include="Assets/GameResources/Game/Script/Test2Entity.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/04 Jump To Demo/Data.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DerNull.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/X509ObjectIdentifiers.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/BERSetParser.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/StackFrameInfo.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/ECCurveType.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/MemoableResetException.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/security/cert/CertificateExpiredException.cs" />
@@ -1012,7 +922,6 @@
     <Compile Include="Assets/OtherPlugins/LitJson/JsonWriter.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Forms/Implementations/RawJSonForm.cs" />
     <Compile Include="Assets/GameResources/Game/Script/TestEntity.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/Cysharp_Threading_Tasks_UniTask_1_GameObject_Binding.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/SignalRCore/Encoders/LitJsonEncoder.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/RSABlindedEngine.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/DefaultTlsClient.cs" />
@@ -1022,14 +931,12 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/date/DateTimeUtilities.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/01 Simple Demo/Data.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Plugins/IEnhancedScrollerDelegate.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Other/UncheckedStack.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsKeyExchange.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SignalR/JsonEncoders/IJsonEncoder.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/ECFieldElement.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/ECCurve.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SignalRCore/JsonProtocol.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/Decompression/DeflateStream.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/SCModuleLoaded.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/BufferedIesCipher.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/Utils/GameUtils.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/ServerName.cs" />
@@ -1042,7 +949,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x9/X9Curve.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/MaxBytesExceededException.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/HTTPRequest.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/SCBindBreakpointResult.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/Asn1Null.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/PlatformSupport/TcpClient/TcpClient.cs" />
     <Compile Include="Assets/OtherPlugins/LitJson/JsonMapper.cs" />
@@ -1053,7 +959,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT113R2Point.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/HeartbeatMessageType.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/RC5Parameters.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/DebugSocket.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP256K1Field.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/generators/ECKeyPairGenerator.cs" />
     <Compile Include="Assets/OtherPlugins/Demigiant/DOTween/Modules/DOTweenModulePhysics.cs" />
@@ -1064,7 +969,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x9/X962NamedCurves.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DERExternal.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/AbstractTlsClient.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/DebugMessageType.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/security/PublicKeyFactory.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/BufferedAsymmetricBlockCipher.cs" />
     <Compile Include="Assets/GameResources/Game/Script/Proto/Mail.cs" />
@@ -1103,7 +1007,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/ECPointFormat.cs" />
     <Compile Include="Assets/GameResources/Game/Script/Proto/Phzroom.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SocketIO/JsonEncoders/IJSonEncoder.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/CLRBinding/QuaternionBinder.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/SocketIO/SocketIOWePlaySample.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/util/zlib/Adler32.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/ServerDHParams.cs" />
@@ -1112,7 +1015,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DerUTCTime.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/Websocket/WebSocketSample.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsFatalAlert.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/CLRBinding/Vector2Binder.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/DsaPrivateKeyParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/tls/TlsDheKeyExchange.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/ocsp/ResponderID.cs" />
@@ -1132,7 +1034,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/parameters/AEADParameters.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DERSetGenerator.cs" />
     <Compile Include="Assets/Core/Scripts/Inherit/UIToggleGroup.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Debugger/Protocol/CSResolveVariable.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/multiplier/WTauNafMultiplier.cs" />
     <Compile Include="Assets/Core/Scripts/Inherit/UIToggle.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecT131R2Curve.cs" />
@@ -1145,12 +1046,9 @@
     <Compile Include="Assets/OtherPlugins/LitJson/JsonException.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/abc/Tnaf.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/PlatformSupport/Collections/Specialized/NotifyCollectionChangedEventArgs.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Object_Binding.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Reflection/ILRuntimeMethodInfo.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/SignalRCore/Authentication Providers/HeaderAuthenticator.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/abc/SimpleBigDecimal.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/digests/RipeMD256Digest.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Enviorment/ValueTypeBinder.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP160R2Field.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x9/X9FieldElement.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/IBufferedCipher.cs" />
@@ -1164,7 +1062,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/BERSequenceParser.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/10b Grid Selection/RowCellView.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/x509/TBSCertificateStructure.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_Object_Binding.cs" />
     <Compile Include="Assets/Core/Scripts/Modulars/UI/UICamera.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/modes/CtsBlockCipher.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/RC564Engine.cs" />
@@ -1194,7 +1091,6 @@
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/Examples/SignalR/SimpleStreamingSample.cs" />
     <Compile Include="Assets/OtherPlugins/EnhancedScroller v2/Demos/12 Nested Scrollers/MasterCellView.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/field/GenericPolynomialExtensionField.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Stack/RuntimeStack.cs" />
     <Compile Include="Assets/OtherPlugins/LitJson/Lexer.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/asn1/DERGenerator.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/engines/RijndaelEngine.cs" />
@@ -1253,20 +1149,36 @@
     <Compile Include="Assets/Core/Scripts/Modulars/Network/SocketManager.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/crypto/digests/WhirlpoolDigest.cs" />
     <Compile Include="Assets/OtherPlugins/Best HTTP (Pro)/BestHTTP/SecureProtocol/math/ec/custom/sec/SecP192R1FieldElement.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/RegisterVM/Optimizer.ELDC.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/CLR/Method/IMethodExtensions.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/RegisterVM/CodeBasicBlock.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/RegisterVM/Optimizer.RegisterCleanup.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/RegisterVM/Optimizer.Utils.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/ILRuntimeJITAttribute.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/RegisterVM/AsyncJITCompileWorker.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/RegisterVM/JITCompiler.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/RegisterVM/Optimizer.FCP.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/RegisterVM/Optimizer.InlineMethod.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/RegisterVM/ILIntepreter.Register.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/OpCodes/OpCodeREnum.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Stack/StackObjectAllocator.cs" />
-    <Compile Include="Assets/OtherPlugins/ILRuntime/Runtime/Intepreter/RegisterVM/Optimizer.BCP.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_Debug_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Collections_Generic_HashSet_1_UInt64_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/HFFramework_NotificationCenter_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/HFFramework_HFLog_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/CLRBindings.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Activator_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_String_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/HFFramework_IDGenerator_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_MonoBehaviour_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_GameObject_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/HFFramework_GameFactory_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Object_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Collections_Generic_List_1_ILTypeInstance_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Reflection_MemberInfo_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Int64_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Type_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_Time_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/Cysharp_Threading_Tasks_UniTask_1_GameObject_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/Cysharp_Threading_Tasks_UniTask_1_GameObject_Binding_Awaiter.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_Object_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_Collections_Generic_HashSet_1_UInt64_Binding_Enumerat.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_Component_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/HFFramework_AssetManager_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/System_IDisposable_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/UnityEngine_Transform_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/Cysharp_Threading_Tasks_CompilerServices_AsyncUniTaskMethodB.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Generated/HFFramework_GameLooper_Binding.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Adapters/Vector3Binder.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Adapters/QuaternionBinder.cs" />
+    <Compile Include="Assets/OtherPlugins/ILRuntime/Adapters/Vector2Binder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/OtherPlugins/EnhancedScroller v2/upgrading from 1.x to 2.x.txt" />
@@ -1542,11 +1454,14 @@
     <Reference Include="Unity.Analytics.StandardEvents">
       <HintPath>Library/PackageCache/com.unity.analytics@3.6.12/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
-    <Reference Include="ILRuntime.Mono.Cecil.Pdb">
-      <HintPath>Assets/Plugins/Mono.Cecil/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Analytics.Editor">
       <HintPath>Library/PackageCache/com.unity.analytics@3.6.12/Unity.Analytics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="ILRuntime.Mono.Cecil.Mdb">
+      <HintPath>Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="ILRuntime.Mono.Cecil">
+      <HintPath>Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
       <HintPath>Assets/OtherPlugins/Demigiant/DOTween/DOTween.dll</HintPath>
@@ -1554,17 +1469,14 @@
     <Reference Include="Google.Protobuf">
       <HintPath>Assets/Plugins/Google.Protobuf.dll</HintPath>
     </Reference>
+    <Reference Include="ILRuntime.Mono.Cecil.Pdb">
+      <HintPath>Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>Library/PackageCache/com.unity.analytics@3.6.12/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
-    <Reference Include="ILRuntime.Mono.Cecil.Mdb">
-      <HintPath>Assets/Plugins/Mono.Cecil/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="ILRuntime.Mono.Cecil">
-      <HintPath>Assets/Plugins/Mono.Cecil/ILRuntime.Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>/Applications/Unity/Hub/Editor/2021.2.7f1c1/Unity.app/Contents/UnityReferenceAssemblies/unity-4.8-api/mscorlib.dll</HintPath>
@@ -1958,6 +1870,9 @@
     </Reference>
     <Reference Include="UnityEngine.Purchasing.SecurityStub">
       <HintPath>Library/ScriptAssemblies/UnityEngine.Purchasing.SecurityStub.dll</HintPath>
+    </Reference>
+    <Reference Include="ILRuntime">
+      <HintPath>Library/ScriptAssemblies/ILRuntime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.MemoryProfiler.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.MemoryProfiler.Editor.dll</HintPath>

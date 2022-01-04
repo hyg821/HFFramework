@@ -74,8 +74,8 @@ namespace HFFramework.Editor
 
                 if (report.summary.result == BuildResult.Succeeded)
                 {
-                    EditorHelper.OpenDirectory(ArchivePath());
                     Debug.Log(PlayerSettings.productName + ".apk已生成");
+                    //EditorHelper.OpenDirectory(ArchivePath());
                 }
                 else
                 {

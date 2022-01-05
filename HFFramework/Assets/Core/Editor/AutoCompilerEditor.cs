@@ -46,13 +46,18 @@ namespace HFFramework.Editor
         }
 
 
-        [MenuItem("构建/编译热更代码")]
+        [MenuItem("构建/编译热更代码 %e")]
         public static void CompilerHotFixDLL()
         {
-            BuildMuteAssembly("HotFix", new[] { "../HotFix" }, GetReferences(), CodeOptimization.Release);
+            m_CompilerHotFixDLL();
         }
 
-        private static void BuildMuteAssembly(string assemblyName, string[] CodeDirectorys, string[] additionalReferences, CodeOptimization codeOptimization)
+        public static void m_CompilerHotFixDLL(Action completed = null)
+        {
+            BuildMuteAssembly("HotFix", new[] { "../HotFix" }, GetReferences(), CodeOptimization.Release, completed);
+        }
+
+        private static void BuildMuteAssembly(string assemblyName, string[] CodeDirectorys, string[] additionalReferences, CodeOptimization codeOptimization, Action completed)
         {
             List<string> scripts = new List<string>();
             for (int i = 0; i < CodeDirectorys.Length; i++)
@@ -103,7 +108,12 @@ namespace HFFramework.Editor
                     Debug.LogFormat("有{0}个Warning!!!", warningCount);
                 }
 
-                if (errorCount > 0)
+                if (errorCount == 0)
+                {
+                    Debug.Log("热更代码编译成功");
+                    completed?.Invoke();
+                }
+                else
                 {
                     for (int i = 0; i < compilerMessages.Length; i++)
                     {
@@ -112,11 +122,6 @@ namespace HFFramework.Editor
                             Debug.LogError(compilerMessages[i].message);
                         }
                     }
-                }
-                else
-                {
-          
-                    Debug.Log("热更代码编译成功");
                 }
             };
 

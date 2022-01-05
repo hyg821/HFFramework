@@ -192,28 +192,43 @@ namespace HFFramework.Editor
             }
         }
 
+        private static void DeleteDLL()
+        {
+            string path = Application.streamingAssetsPath + "/DLL";
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, true);
+                AssetDatabase.Refresh();
+            }
+        }
+
         /// <summary>
         /// 构建资源
         /// </summary>
         static void BuildAssetBundle()
         {
-            if (config.isGenerateAssetbundle)
+            AutoCompilerEditor.m_CompilerHotFixDLL(delegate()
             {
-                //生成配置
-                ConfigCreater.GenerateConfigByAnalysis();
+                if (config.isGenerateAssetbundle)
+                {
+                    //生成配置
+                    ConfigCreater.GenerateConfigByAnalysis();
 
-                //图集
-                AssetBundleTools.PackingAtlas();
+                    //图集
+                    AssetBundleTools.PackingAtlas();
 
-                //清除bundleName
-                AssetBundleTools.ClearAssetBundlesName();
+                    //清除bundleName
+                    AssetBundleTools.ClearAssetBundlesName();
 
-                //打包
-                AssetBundleTools.BuildAllAssetBundles();
-            }
+                    //打包
+                    AssetBundleTools.BuildAllAssetBundles();
+                }
 
-            //检测循环引用
-            AssetBundleTools.CheckCircularReference();
+                //检测循环引用
+                AssetBundleTools.CheckCircularReference();
+
+                DeleteDLL();
+            }); 
         }
 
         /// <summary>

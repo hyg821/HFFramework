@@ -157,10 +157,10 @@ namespace HFFramework.Editor
             {
                 Debug.Log("切换苹果平台");
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.iOS, BuildTarget.iOS);
-                if (config.ApplicationIdentifier == "com.TYCH.JSZCQ3")
+                if (config.ApplicationIdentifier == "")
                 {
                     PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, config.ApplicationIdentifier);
-                    PlayerSettings.iOS.appleDeveloperTeamID = "77Z7NUFARZ";
+                    PlayerSettings.iOS.appleDeveloperTeamID = "";
                 }
             }
             PlayerSettings.iOS.appleEnableAutomaticSigning = true;

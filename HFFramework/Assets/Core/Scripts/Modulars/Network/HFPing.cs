@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HFFramework
 {
-    public class HFPing :UnityEngine.Component
+    public class HFPing :MonoBehaviour
     {
         public string address;
 

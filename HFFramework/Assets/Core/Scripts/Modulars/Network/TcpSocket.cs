@@ -85,7 +85,7 @@ namespace HFFramework
         /// <summary>
         ///  锁
         /// </summary>
-        private static object lockObj = new object();
+        private object lockObj = new object();
 
         private byte[] checkBytes = new byte[1];
 

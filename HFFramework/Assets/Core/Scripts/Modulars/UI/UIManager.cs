@@ -57,10 +57,10 @@ namespace HFFramework
             AddCanvas(0);
         }
 
-        private void SceneLoaded(Scene s, LoadSceneMode m)
+        private void SceneLoaded(Scene scene, LoadSceneMode mode)
         {
             //保证全局只有一个EventSystem
-            GameObject[] temp = s.GetRootGameObjects();
+            GameObject[] temp = scene.GetRootGameObjects();
             for (int i = temp.Length-1; i >0 ; i--)
             {
                 if (temp[i].name =="EventSystem")
@@ -114,6 +114,12 @@ namespace HFFramework
                 controllerDic.Add(type, controller);
             }
             return controller as T;
+        }
+
+        public async UniTaskVoid PreLoad<T>() where T : UIController, new()
+        {
+            T t = await GetController<T>(false);
+            t.Close();
         }
 
         public async UniTask<T> Open<T>(bool async = false,bool animation = false,object param = null) where T : UIController, new()

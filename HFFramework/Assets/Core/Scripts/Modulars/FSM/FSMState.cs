@@ -9,7 +9,7 @@ namespace HFFramework
     public enum StateType
     {
         Enter,
-        Stay,
+        Update,
         Exit
     }
 
@@ -69,10 +69,10 @@ namespace HFFramework
             }
         }
 
-        public void OnStateStay()
+        public void OnStateUpdate()
         {
-            currentState = StateType.Stay;
-            OnStay();
+            currentState = StateType.Update;
+            OnUpdate();
             if (OnStayCallback != null)
             {
                 OnStayCallback();
@@ -97,7 +97,7 @@ namespace HFFramework
             HFLog.C("------------------------" + this.GetType().Name + "进入" + "------------------------");
         }
 
-        public virtual void OnStay()
+        public virtual void OnUpdate()
         {
 
         }

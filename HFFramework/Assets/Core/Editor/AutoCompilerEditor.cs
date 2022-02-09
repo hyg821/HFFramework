@@ -49,10 +49,10 @@ namespace HFFramework.Editor
         [MenuItem("构建/编译热更代码 %e")]
         public static void CompilerHotFixDLL()
         {
-            m_CompilerHotFixDLL();
+            CompilerHotFixDLL(null);
         }
 
-        public static void m_CompilerHotFixDLL(Action completed = null)
+        public static void CompilerHotFixDLL(Action completed = null)
         {
             BuildMuteAssembly("HotFix", new[] { "../HotFix" }, GetReferences(), CodeOptimization.Release, completed);
         }

@@ -36,78 +36,83 @@ namespace HFFramework.Editor
         {
             Caching.ClearCache();
 
+            ClearAssetBundlesName();
+
             PackingAtlas();
 
-            SetAssetbundlesNames();
+            AutoCompilerEditor.CompilerHotFixDLL(delegate()
+            {
+                CopyDLL();
 
-            string AssetBundlesPath = Application.dataPath + "/StreamingAssets/AssetBundles";
-            if (!Directory.Exists(AssetBundlesPath))
-            {
-                Directory.CreateDirectory(AssetBundlesPath);
-            }
-            AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.DisableWriteTypeTree, GetBuildTarget());
-            //BuildZip();
-            if (abm)
-            {
-                string[] assetBundles = abm.GetAllAssetBundles();
-                List<AssetBundleMD5> configList = new List<AssetBundleMD5>();
-                for (int i = 0; i < assetBundles.Length; i++)
+                string AssetBundlesPath = Application.dataPath + "/StreamingAssets/AssetBundles";
+                if (!Directory.Exists(AssetBundlesPath))
                 {
-                    AssetBundleMD5 item = new AssetBundleMD5();
-                    string path = Application.streamingAssetsPath + "/AssetBundles/" + assetBundles[i];
-                    item.value = GetMD5HashFromFile(path);
-                    item.key = assetBundles[i];
-                    configList.Add(item);
+                    Directory.CreateDirectory(AssetBundlesPath);
                 }
-                MD5Diff config = new MD5Diff();
-                config.AssetsBundleMD5List = configList;
-                string json = JsonMapper.ToJson(config);
-                WriteMD5Diff(json);
-            }
-            //刷新编辑器
-            AssetDatabase.Refresh();
-            Debug.Log("Assetbundle Build 完成");
+
+                List<AssetBundleBuild> buildsInfos = new List<AssetBundleBuild>();
+                foreach (var item in GetAssetBundleInfos())
+                {
+                    AssetBundleBuild build = new AssetBundleBuild();
+                    build.assetBundleName = item.Key;
+                    build.assetNames = item.Value.ToArray();
+                    buildsInfos.Add(build);
+
+                    /*
+                    Debug.LogError("----------------assetBundleName " + build.assetBundleName);
+                    foreach (var xxx in build.assetNames)
+                    {
+                        Debug.LogError(xxx);
+                    }
+                    */
+                }
+
+                AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", buildsInfos.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.DisableWriteTypeTree, GetBuildTarget());
+                //BuildZip();
+                if (abm)
+                {
+                    string[] assetBundles = abm.GetAllAssetBundles();
+                    List<AssetBundleMD5> configList = new List<AssetBundleMD5>();
+                    for (int i = 0; i < assetBundles.Length; i++)
+                    {
+                        AssetBundleMD5 item = new AssetBundleMD5();
+                        string path = Application.streamingAssetsPath + "/AssetBundles/" + assetBundles[i];
+                        item.value = GetMD5HashFromFile(path);
+                        item.key = assetBundles[i];
+                        configList.Add(item);
+                    }
+                    MD5Diff config = new MD5Diff();
+                    config.AssetsBundleMD5List = configList;
+                    string json = JsonMapper.ToJson(config);
+                    WriteMD5Diff(json);
+                }
+                //刷新编辑器
+                AssetDatabase.Refresh();
+                Debug.Log("Assetbundle Build 完成");
+            });
         }
 
-        [MenuItem("资源/构建 单个Assetbundle")]
-        static void BuildSpecialAssetBundles()
+        public static Dictionary<string, List<string>> GetAssetBundleInfos()
         {
-            List<AssetBundleBuild> list = new List<AssetBundleBuild>();
-            //需要build 什么就写在这
-            string path = "";
-            string[] bundleNames = new string[] { };
-            for (int i = 0; i < bundleNames.Length; i++)
+            Dictionary<string, List<string>> result = new Dictionary<string, List<string>>();
+            ForeachAssetConfig(delegate (int index, AssetConfig assetConfig)
             {
-                AssetBundleBuild build = new AssetBundleBuild();
-                build.assetBundleName = bundleNames[i];
-                build.assetNames = AssetDatabase.GetAssetPathsFromAssetBundle(build.assetBundleName);
-                list.Add(build);
-            }
-
-            BuildSpecialAssetBundles(Application.dataPath + "/"+ path, list.ToArray());
-
-            AssetDatabase.Refresh();
-        }
-
-        static void BuildSpecialAssetBundles(string outPath, AssetBundleBuild[] builds)
-        {
-            if (!Directory.Exists(outPath))
-            {
-                Directory.CreateDirectory(outPath);
-            }
-
-            BuildPipeline.BuildAssetBundles(outPath, builds, BuildAssetBundleOptions.ChunkBasedCompression, GetBuildTarget());
-
-            //刷新编辑器
-            AssetDatabase.Refresh();
-        }
-
-        [MenuItem("资源/设置 AssetbundleName")]
-        public static void SetAssetbundlesNames()
-        {
-            //ClearAssetBundlesName();
-            RenameDLL();
-            SetAssetConfig(true,false);
+                //合并bundleName一样的配置
+                if (assetConfig.assetbundleName != null)
+                {
+                    List<string> list;
+                    if (!result.TryGetValue(assetConfig.assetbundleName, out list))
+                    {
+                        list = new List<string>();
+                        result.Add(assetConfig.assetbundleName, list);
+                    }
+                    foreach (var item in assetConfig.GetAllAssetInFolder())
+                    {
+                        list.Add(item);
+                    }
+                }
+            });
+            return result;
         }
 
         [MenuItem("资源/检测循环引用")]
@@ -158,7 +163,7 @@ namespace HFFramework.Editor
         }
 
         [MenuItem("资源/设置DLL到具体资源目录")]
-        public static void RenameDLL()
+        public static void CopyDLL()
         {
             string str = "/GameResources/DLL" + GameConst.AssetFolderIde + "/";
             string target = GameConst.HotFixDLLName + ".dll";
@@ -198,7 +203,7 @@ namespace HFFramework.Editor
         [MenuItem("资源/刷新图集")]
         public static void PackingAtlas()
         {
-            SetAssetConfig(false,true);
+            SetAssetConfig(true);
             SpriteAtlasUtility.PackAllAtlases(EditorUserBuildSettings.activeBuildTarget);
             AssetDatabase.Refresh();
         }
@@ -218,19 +223,10 @@ namespace HFFramework.Editor
         }
 
         /// <summary>
-        ///  获得所有编辑器的AssetBundleName
-        /// </summary>
-        static string[] GetAllAssetBundlesName()
-        {
-            AssetDatabase.RemoveUnusedAssetBundleNames();
-            return AssetDatabase.GetAllAssetBundleNames();
-        }
-
-        /// <summary>
         ///  根据 AssetConfig 设置assetbundleName 和 图集设置
         /// </summary>
         /// <param name="path"></param>
-        public static void SetAssetConfig(bool assetBundle,bool atlas)
+        public static void SetAssetConfig(bool atlas)
         {
             string path = Application.dataPath + "/GameResources";
             if (!Directory.Exists(path))//若文件夹不存在则新建文件夹   
@@ -239,19 +235,26 @@ namespace HFFramework.Editor
                 AssetDatabase.Refresh();
             }
 
-            string [] guids = AssetDatabase.FindAssets("t:AssetConfig");
+            ForeachAssetConfig(delegate (int index,AssetConfig config)
+            {
+                if (atlas)
+                {
+                    config.RefreshAtlas();
+                }
+            });
+        }
+
+        private static void ForeachAssetConfig(Action<int,AssetConfig> calllback)
+        {
+            string[] guids = AssetDatabase.FindAssets("t:AssetConfig");
             for (int i = 0; i < guids.Length; i++)
             {
                 string guid = guids[i];
                 string configPath = AssetDatabase.GUIDToAssetPath(guid);
                 AssetConfig assetConfig = AssetDatabase.LoadAssetAtPath(configPath, typeof(AssetConfig)) as AssetConfig;
-                if (atlas)
+                if (calllback!=null)
                 {
-                    assetConfig.RefreshAtlas();
-                }
-                if (assetBundle)
-                {
-                    assetConfig.RefreshSetting();
+                    calllback(i,assetConfig);
                 }
             }
         }

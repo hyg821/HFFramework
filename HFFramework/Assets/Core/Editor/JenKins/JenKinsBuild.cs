@@ -207,7 +207,7 @@ namespace HFFramework.Editor
         /// </summary>
         static void BuildAssetBundle()
         {
-            AutoCompilerEditor.m_CompilerHotFixDLL(delegate()
+            AutoCompilerEditor.CompilerHotFixDLL(delegate()
             {
                 if (config.isGenerateAssetbundle)
                 {

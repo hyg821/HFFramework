@@ -51,7 +51,7 @@ namespace HFFramework
                 string temp = item.FullName.Replace("\\", "/");
                 int index = temp.IndexOf("Assets");
                 string str = temp.Substring(index, temp.Length - index);
-                if (!str.EndsWith(".cs")&&!str.EndsWith(".meta"))
+                if (!str.EndsWith(".cs")&&!str.EndsWith(".meta")&&!str.EndsWith("AssetConfig.asset"))
                 {
                     result.Add(str);
                 }
@@ -62,6 +62,7 @@ namespace HFFramework
         /// <summary>
         /// 刷新所有 同层 的资源 bundle name
         /// </summary>
+        /*
         public void RefreshSetting()
         {
             //Debug.LogError("---------------------------------------------------");
@@ -81,23 +82,27 @@ namespace HFFramework
                     bundleName = assetbundleName;
                 }
 
-                /*
-                Debug.LogError(assetImporter.assetBundleName);
+           
+                //Debug.LogError(assetImporter.assetBundleName);
 
-                if (assetImporter.assetBundleName!= bundleName)
-                {
-                    assetImporter.assetBundleName = bundleName;
-                    assetImporter.SaveAndReimport();
-                }
-                */
+                //if (assetImporter.assetBundleName!= bundleName)
+                //{
+                //    assetImporter.assetBundleName = bundleName;
+                //    assetImporter.SaveAndReimport();
+                //}
+              
 
                 assetImporter.assetBundleName = bundleName;
                 assetImporter.SaveAndReimport();
             }
+        
 
             AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
+                AssetDatabase.Refresh();
+      }
+         */
+
+
 
         public void RefreshAtlas()
         {

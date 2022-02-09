@@ -18,9 +18,9 @@ namespace HFFramework
             await UIManager.Instance.Open<FunctionController>(true,true);
         }
 
-        public override void OnStay()
+        public override void OnUpdate()
         {
-            base.OnStay();
+            base.OnUpdate();
         }
 
         public async override UniTask OnExit(object param = null)

@@ -15,11 +15,13 @@ namespace HFFramework.Editor
 
             AssetConfig info = target as AssetConfig;
 
+            /*
             if (GUILayout.Button("设置文件夹AssetBundleName"))
             {
                 info.RefreshSetting();
                 AssetDatabase.Refresh();
             }
+            */
 
             if (GUILayout.Button("创建图集"))
             {

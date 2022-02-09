@@ -36,6 +36,13 @@ namespace HFFramework
         public string ResourceSpareRootPath;
         public string MainfestName;
 
+#if UNITY_EDITOR
+        /// <summary>
+        ///  bundleName  assetName  assetPath 映射
+        /// </summary>
+        private Dictionary<string, Dictionary<string, string>> allAssetPathDic = new Dictionary<string, Dictionary<string, string>>();
+#endif
+
         /// <summary>
         ///  缓存AssetPackage字典
         /// </summary>
@@ -131,7 +138,81 @@ namespace HFFramework
                 MainfestName = mainfestName;
                 RefreshAssetBundleManifest();
             }
+
+#if UNITY_EDITOR
+            InitEditor();
+#endif
+
         }
+
+#if UNITY_EDITOR
+        public void InitEditor()
+        {
+            foreach (var item in GetAssetBundleInfos())
+            {
+                Dictionary<string, string> temp = new Dictionary<string, string>();
+                if (!allAssetPathDic.TryGetValue(item.Key,out temp))
+                {
+                    temp = new Dictionary<string, string>();
+                    allAssetPathDic.Add(item.Key.ToLower(),temp);
+                }
+
+                for (int i = 0; i < item.Value.Count; i++)
+                {
+                    string path = item.Value[i];
+                    int a = path.LastIndexOf("/");
+                    int b = path.LastIndexOf(".");
+                    string assetName = path.Substring(a+1, b - a-1);
+                    temp.Add(assetName.ToLower(), path);
+                }
+            }
+        }
+
+
+        public Dictionary<string, List<string>> GetAssetBundleInfos()
+        {
+            Dictionary<string, List<string>> result = new Dictionary<string, List<string>>();
+            ForeachAssetConfig(delegate (int index, AssetConfig assetConfig)
+            {
+                //合并bundleName一样的配置
+                if (assetConfig.assetbundleName != null)
+                {
+                    List<string> list;
+                    if (!result.TryGetValue(assetConfig.assetbundleName, out list))
+                    {
+                        list = new List<string>();
+                        result.Add(assetConfig.assetbundleName, list);
+                    }
+                    foreach (var item in assetConfig.GetAllAssetInFolder())
+                    {
+                        list.Add(item);
+                    }
+                }
+            });
+            return result;
+        }
+
+        private void ForeachAssetConfig(Action<int, AssetConfig> calllback)
+        {
+            string[] guids = AssetDatabase.FindAssets("t:AssetConfig");
+            for (int i = 0; i < guids.Length; i++)
+            {
+                string guid = guids[i];
+                string configPath = AssetDatabase.GUIDToAssetPath(guid);
+                AssetConfig assetConfig = AssetDatabase.LoadAssetAtPath(configPath, typeof(AssetConfig)) as AssetConfig;
+                if (calllback != null)
+                {
+                    calllback(i, assetConfig);
+                }
+            }
+        }
+
+        private string GetAssetPath(string packageName,string assetName)
+        {
+            return allAssetPathDic[packageName.ToLower()][assetName.ToLower()];
+        }
+
+#endif
 
         /// <summary>
         ///  拿到AssetBundleManifest 以便于收集 所有的assetbundle 依赖  如果存在动态下载 一定要刷新调用这个方法  刷新所有依赖
@@ -284,8 +365,8 @@ namespace HFFramework
                 if (GameEnvironment.Instance.config.LoadAssetPathType == LoadAssetPathType.Editor)
                 {
 #if UNITY_EDITOR
-                    string[] paths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(packageName.ToLower(), sceneName);
-                    await UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(paths[0], new LoadSceneParameters(LoadSceneMode.Single));
+                    //string[] paths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(packageName.ToLower(), sceneName);
+                    await UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(GetAssetPath(packageName,sceneName), new LoadSceneParameters(LoadSceneMode.Single));
                     //await SceneManager.LoadSceneAsync(sceneName);
 #endif
                 }
@@ -476,8 +557,8 @@ namespace HFFramework
         public T EditorLoadAsset<T>(string packageName, string assetName) where T:UnityEngine.Object
         {
 #if UNITY_EDITOR
-            string[] paths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(packageName.ToLower(), assetName);
-            return AssetDatabase.LoadAssetAtPath<T>(paths[0]);
+            //string[] paths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(packageName.ToLower(), assetName);
+            return AssetDatabase.LoadAssetAtPath<T>(GetAssetPath(packageName,assetName));
 #else
             return null;
 #endif

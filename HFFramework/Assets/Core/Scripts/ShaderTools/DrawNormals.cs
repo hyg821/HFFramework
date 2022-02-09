@@ -3,7 +3,7 @@
 using UnityEditor;
 #endif
 
-namespace HFFramework.Editor
+namespace HFFramework
 {
     public class DrawNormals : MonoBehaviour
     {

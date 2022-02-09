@@ -91,7 +91,7 @@ namespace HFFramework
         {
             if (currentState != null)
             {
-                currentState.OnStateStay();
+                currentState.OnStateUpdate();
             }
         }
 

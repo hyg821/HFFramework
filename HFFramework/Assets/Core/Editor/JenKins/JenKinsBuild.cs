@@ -47,6 +47,7 @@ namespace HFFramework.Editor
 
         private static void m_BuildForAndroid()
         {
+            
             SwitchAndroidPlatform();
 
             CommonSetting();
@@ -82,6 +83,7 @@ namespace HFFramework.Editor
                     Debug.Log("Build Failed");
                 }
             }
+            
         }
 
         private static void m_BuildForIOS()
@@ -140,10 +142,15 @@ namespace HFFramework.Editor
             PlayerSettings.Android.keyaliasPass = "111222";
             */
 
+
             EditorUserBuildSettings.androidBuildSystem = AndroidBuildSystem.Gradle;
-            PlayerSettings.Android.targetSdkVersion = (AndroidSdkVersions)29;
+
+            PlayerSettings.Android.targetSdkVersion = AndroidSdkVersions.AndroidApiLevelAuto;
+
             PlayerSettings.Android.useAPKExpansionFiles = config.isObb;
-            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, config.ApplicationIdentifier);
+
+            PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "com."+ PlayerSettings.companyName+"."+PlayerSettings.productName);
+
 
             AssetDatabase.Refresh();
         }
@@ -157,11 +164,8 @@ namespace HFFramework.Editor
             {
                 Debug.Log("切换苹果平台");
                 EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.iOS, BuildTarget.iOS);
-                if (config.ApplicationIdentifier == "")
-                {
-                    PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, config.ApplicationIdentifier);
-                    PlayerSettings.iOS.appleDeveloperTeamID = "";
-                }
+                PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, "com." + PlayerSettings.companyName + "." + PlayerSettings.productName);
+                PlayerSettings.iOS.appleDeveloperTeamID = "";
             }
             PlayerSettings.iOS.appleEnableAutomaticSigning = true;
             PlayerSettings.iOS.allowHTTPDownload = true;
@@ -192,43 +196,22 @@ namespace HFFramework.Editor
             }
         }
 
-        private static void DeleteDLL()
-        {
-            string path = Application.streamingAssetsPath + "/DLL";
-            if (Directory.Exists(path))
-            {
-                Directory.Delete(path, true);
-                AssetDatabase.Refresh();
-            }
-        }
-
         /// <summary>
         /// 构建资源
         /// </summary>
         static void BuildAssetBundle()
         {
-            AutoCompilerEditor.CompilerHotFixDLL(delegate()
+            if (config.isGenerateAssetbundle)
             {
-                if (config.isGenerateAssetbundle)
-                {
-                    //生成配置
-                    ConfigCreater.GenerateConfigByAnalysis();
+                //生成配置
+                ConfigCreater.GenerateConfigByAnalysis();
 
-                    //图集
-                    AssetBundleTools.PackingAtlas();
+                //打包
+                AssetBundleTools.BuildAllAssetBundles();
+            }
 
-                    //清除bundleName
-                    AssetBundleTools.ClearAssetBundlesName();
-
-                    //打包
-                    AssetBundleTools.BuildAllAssetBundles();
-                }
-
-                //检测循环引用
-                AssetBundleTools.CheckCircularReference();
-
-                DeleteDLL();
-            }); 
+            //检测循环引用
+            AssetBundleTools.CheckCircularReference();
         }
 
         /// <summary>
@@ -317,10 +300,6 @@ namespace HFFramework.Editor
                     config.isLog = GetBool(arg);
                 }
 
-                if (arg.Contains(ApplicationIdentifierTag))
-                {
-                    config.ApplicationIdentifier = GetString(arg);
-                }
 
                 if (arg.Contains(versionTag))
                 {

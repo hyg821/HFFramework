@@ -86,6 +86,10 @@ namespace HFFramework.Editor
                     string json = JsonMapper.ToJson(config);
                     WriteMD5Diff(json);
                 }
+
+
+                DeleteDLL();
+
                 //刷新编辑器
                 AssetDatabase.Refresh();
                 Debug.Log("Assetbundle Build 完成");
@@ -171,6 +175,16 @@ namespace HFFramework.Editor
             string reNamePath = Application.dataPath + str + target + ".bytes";
             File.Copy(sourcePath, reNamePath, true);
             AssetDatabase.Refresh();
+        }
+
+        private static void DeleteDLL()
+        {
+            string path = Application.streamingAssetsPath + "/DLL";
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, true);
+                AssetDatabase.Refresh();
+            }
         }
 
         [MenuItem("资源/清除所有的AssetbundleName")]

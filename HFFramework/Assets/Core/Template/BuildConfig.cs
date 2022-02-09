@@ -10,7 +10,6 @@ namespace HFFramework
     [CreateAssetMenu(menuName = "HFFramework/BuildConfig(打包配置文件)", fileName = "BuildConfig")]
     public class BuildConfig : ScriptableObject
     {
-        public string ApplicationIdentifier;
         public string version = "1.0.0";
         public bool isLog = false;
         public bool isGenerateAssetbundle = false;
@@ -28,7 +27,6 @@ namespace HFFramework
         public void Log()
         {
             Debug.Log("--------------------打包配置信息--------------------");
-            Debug.Log("ApplicationIdentifier " + ApplicationIdentifier);
             Debug.Log("version " + version);
             Debug.Log("isLog " + isLog);
             Debug.Log("isGenerateAssetbundle " + isGenerateAssetbundle);

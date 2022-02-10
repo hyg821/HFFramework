@@ -19,6 +19,26 @@ namespace HFFramework
         /// </summary>
         public AssetBundle assetBundle;
 
+        private bool m_keepAlive = false;
+        /// <summary>
+        /// 一直存活
+        /// </summary>
+        public bool keepAlive
+        {
+            set
+            {
+                if (value)
+                {
+                    refCount = 1;
+                }
+                m_keepAlive = value;
+            }
+            get
+            {
+                return m_keepAlive;
+            }
+        }
+
         /// <summary>
         ///  引用计数 不需要手动修改
         /// </summary>
@@ -43,7 +63,7 @@ namespace HFFramework
         /// </summary>
         public void Release()
         {
-            if (refCount > 0)
+            if (!keepAlive && refCount > 0)
             {
                 refCount--;
             }

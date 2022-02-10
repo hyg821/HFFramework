@@ -53,6 +53,8 @@ namespace HFFramework
         /// </summary>
         private AssetBundleManifest manifest;
 
+        private List<AssetPackage> unusedAssetBundleList = new List<AssetPackage>();
+
         public void Awake()
         {
             Instance = this;
@@ -283,7 +285,7 @@ namespace HFFramework
             {
                 AssetPackage ab = LoadAssetBundle(packageName);
                 Sprite sp = ab.LoadSprite(atlasName, spriteName);
-                ab.Release();
+                ReleaseAssetBundle(ab.name);
                 return sp;
             }
         }
@@ -297,6 +299,7 @@ namespace HFFramework
             AssetPackage ab = LoadAssetBundle(packageName);
             ab.CacheAllAsset();
             Shader.WarmupAllShaders();
+            ReleaseAssetBundle(ab.name);
         }
 
         /// <summary>
@@ -327,7 +330,7 @@ namespace HFFramework
             {
                 AssetPackage ab = LoadAssetBundle(packageName);
                 T result = ab.LoadAsset<T>(assetName);
-                ab.Release();
+                ReleaseAssetBundle(ab.name);
                 return result;
             }
         }
@@ -342,9 +345,9 @@ namespace HFFramework
             {
                 AssetPackage package = await LoadAssetBundleAsync(packageName);
                 T result = await package.LoadAssetAsync<T>(assetName);
-                package.Release();
+                ReleaseAssetBundle(package.name);
 
-                if (args!=null&&args.canceled)
+                if (args!=null && args.canceled)
                 {
                     throw new OperationCanceledException(); 
                 }
@@ -386,8 +389,7 @@ namespace HFFramework
         {
             AssetPackage ab = await m_LoadAssetBundleAsync(packageName.ToLower());
             await SceneManager.LoadSceneAsync(sceneName);
-            ab.Release();
-            await Resources.UnloadUnusedAssets();
+            ReleaseAssetBundle(ab.name);
         }
 
         /// <summary>
@@ -564,6 +566,51 @@ namespace HFFramework
 #endif
         }
 
+
+        /// <summary>
+        /// 递归引用计数-1
+        /// </summary>
+        /// <param name="name"></param>
+        public void ReleaseAssetBundle(string packageName)
+        {
+            AssetPackage bundle =  GetAssetBundle(packageName);
+            if (bundle!=null)
+            {
+                bundle.Release();     
+            }
+            string[] list = GetAssetBundleDependencies(packageName);
+            for (int i = 0; i < list.Length; i++)
+            {
+                ReleaseAssetBundle(list[i]);
+            }
+        }
+
+
+        /// <summary>
+        ///  释放引用计数为0的bundle
+        /// </summary>
+        public async UniTask UnloadUnusedAssetBundle(bool unloadAllLoadedObjects = false,bool resourcesUnloadUnused = false)
+        {
+            unusedAssetBundleList.Clear();
+            foreach (var item in allAssetBundleDic)
+            {
+                if (item.Value.refCount == 0)
+                {
+                    unusedAssetBundleList.Add(item.Value);
+                }
+            }
+
+            foreach (var item in unusedAssetBundleList)
+            {
+                UnloadAssetBundle(item.name, unloadAllLoadedObjects);
+            }
+
+            if (resourcesUnloadUnused)
+            {
+                //await Resources.UnloadUnusedAssets();
+            }
+        }
+
         /// <summary>
         ///  卸载某一个 assetbundle 通过名字
         /// </summary>
@@ -588,71 +635,10 @@ namespace HFFramework
             {
                 HFLog.L("卸载Assetbundle  " + bundle.name);
                 bundle.unloading = true;
-                RecursionReleaseAssetBundle(bundle.name);
+                ReleaseAssetBundle(bundle.name);
                 allAssetBundleDic.Remove(bundle.name);
                 bundle.Unload(unloadAllLoadedObjects);
             }
-        }
-
-        /// <summary>
-        /// 递归引用计数-1 碰到 引用计数为0 并且没有正在卸载的 bundle 自动卸载
-        /// </summary>
-        /// <param name="name"></param>
-        public void RecursionReleaseAssetBundle(string packageName)
-        {
-            AssetPackage bundle =  GetAssetBundle(packageName);
-            if (bundle!=null)
-            {
-                bundle.Release();     
-                if (bundle.refCount==0&&!bundle.unloading)
-                {
-                    UnloadAssetBundle(bundle, true);
-                }
-            }
-            string[] list = GetAssetBundleDependencies(packageName);
-            for (int i = 0; i < list.Length; i++)
-            {
-                RecursionReleaseAssetBundle(list[i]);
-            }
-        }
-
-        /// <summary>
-        ///  卸载一系列的 的assetbundle
-        /// </summary>
-        /// <param name="list"></param>
-        public void UnloadAssetBundles(string[] list, bool unloadAllLoadedObjects, Action<float> progressCallback)
-        {
-            for (int i = 0; i < list.Length; i++)
-            {
-                UnloadAssetBundle(list[i], unloadAllLoadedObjects);
-                if (progressCallback != null)
-                {
-                    progressCallback((i + 0.0f) / list.Length);
-                }
-            }
-        }
-
-        /// <summary>
-        ///  释放引用计数为0的bundle
-        /// </summary>
-        public async UniTask UnloadUnusedAssetBundle()
-        {
-            List<AssetPackage> unusedAssetBundleList = new List<AssetPackage>();
-
-            foreach (var item in allAssetBundleDic)
-            {
-                if (item.Value.refCount == 0)
-                {
-                    unusedAssetBundleList.Add(item.Value);
-                }
-            }
-
-            foreach (var item in unusedAssetBundleList)
-            {
-                UnloadAssetBundle(item.name, true);
-            }
-
-            await Resources.UnloadUnusedAssets();
         }
 
         /// <summary>
@@ -670,7 +656,7 @@ namespace HFFramework
 
         public void RefCount()
         {
-            Debug.Log("---------------------------------------------------------");
+            Debug.Log("--------------------------------------------------------- allAssetBundleDic "+ allAssetBundleDic.Count);
             foreach (var item in allAssetBundleDic)
             {
                 Debug.Log(item.Value.name + " 引用计数 ：" + item.Value.refCount);

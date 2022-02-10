@@ -237,6 +237,35 @@ namespace HFFramework.Demo
             HFLog.C("页面完全显示");
             HFFramework.HotFixManager.Instance.ExecuteHotFix("hotfixdll", "HotFix");
 
+
+            AssetManager.Instance.RefCount();
+
+            AssetManager.Instance.GetSprite("texture", "123");
+
+            AssetManager.Instance.RefCount();
+            AssetManager.Instance.UnloadUnusedAssetBundle();
+
+            Material mat = AssetManager.Instance.GetAsset<Material>("mat", "mat");
+            HFLog.C(mat);
+            mat.name = "12";
+
+            AssetPackage ap = AssetManager.Instance.GetAssetBundle("mat");
+            Material mat1 =  ap.assetBundle.LoadAsset<Material>("mat");
+            HFLog.C(mat1);
+
+            mat1 = GameObject.Instantiate(mat);
+
+            HFLog.C(mat == mat1);
+            HFLog.C(mat1.name);
+
+            GameObject g = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            g.GetComponent<MeshRenderer>().material = mat;
+            mat.color = Color.red;
+
+            GameObject g1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            g1.GetComponent<MeshRenderer>().material = mat1;
+
+
             /*
             FileStream fs = new FileStream(Application.dataPath+ "/1.bin", FileMode.Create);
             BinaryFormatter ff =  new BinaryFormatter();

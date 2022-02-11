@@ -49,6 +49,19 @@ namespace HFFramework.Editor
             {
                 AssetConfigInfo configInfo = configList[i];
                 EditorGUILayout.ObjectField(configInfo.config.assetbundleName, configInfo.config, typeof(AssetConfig),true);
+                if (Application.isPlaying&&AssetManager.Instance!=null)
+                {
+                    AssetPackage ap = AssetManager.Instance.GetAssetBundle(configInfo.config.assetbundleName);
+                    int refCount = 0;
+                    if (ap!=null)
+                    {
+                        refCount = ap.refCount;
+                    }
+
+                    EditorGUILayout.LabelField("RefCount : " + refCount);
+
+                    EditorGUILayout.Space();
+                }
             }
 
             EditorGUILayout.EndVertical();

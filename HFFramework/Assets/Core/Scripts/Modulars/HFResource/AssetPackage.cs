@@ -55,7 +55,6 @@ namespace HFFramework
         public void Retain()
         {
             refCount++;
-            //HFLog.C("AssetBundle : " + name + " 引用计数 : " + refCount);
         }
 
         /// <summary>

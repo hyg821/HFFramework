@@ -14,6 +14,7 @@ public class Program
     {
         Debug.Log("热更新代码开始运行 Main()");
         Debug.Log("测试自动编译是否成功");
+        Debug.Log("测试");
     }
     
 

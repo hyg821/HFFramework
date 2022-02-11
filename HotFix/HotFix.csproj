@@ -62,12 +62,64 @@
       <HintPath>..\Tools\UnityDLL\Unity.Cecil.Pdb.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.Legacy.NRefactory">
-      <HintPath>..\Tools\UnityDLL\Unity.Legacy.NRefactory.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>..\Tools\UnityDLL\UnityEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.CoreModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.DeviceSimulatorModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.DeviceSimulatorModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.DiagnosticsModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.DiagnosticsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.GraphViewModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.GraphViewModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.PackageManagerUIModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.PackageManagerUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.QuickSearchModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.QuickSearchModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.SceneTemplateModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.SceneTemplateModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.TextCoreFontEngineModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.TextCoreFontEngineModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.TextCoreTextEngineModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.TextCoreTextEngineModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.UIBuilderModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.UIBuilderModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.UIElementsModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.UIElementsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.UIElementsSamplesModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.UIElementsSamplesModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.UIServiceModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.UIServiceModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.UnityConnectModule">
+      <HintPath>..\Tools\UnityDLL\UnityEditor.UnityConnectModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
@@ -102,6 +154,10 @@
       <HintPath>..\Tools\UnityDLL\UnityEngine.AudioModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.AutoStreamingModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.AutoStreamingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.ClothModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.ClothModule.dll</HintPath>
       <Private>False</Private>
@@ -132,6 +188,10 @@
     </Reference>
     <Reference Include="UnityEngine.GameCenterModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.GameCenterModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.GIModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.GIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.GridModule">
@@ -166,6 +226,10 @@
       <HintPath>..\Tools\UnityDLL\UnityEngine.LocalizationModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.NVIDIAModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.NVIDIAModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.ParticleSystemModule.dll</HintPath>
       <Private>False</Private>
@@ -184,6 +248,10 @@
     </Reference>
     <Reference Include="UnityEngine.ProfilerModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.ProfilerModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ScreenCaptureModule">
@@ -222,8 +290,12 @@
       <HintPath>..\Tools\UnityDLL\UnityEngine.TerrainPhysicsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.TextCoreModule">
-      <HintPath>..\Tools\UnityDLL\UnityEngine.TextCoreModule.dll</HintPath>
+    <Reference Include="UnityEngine.TextCoreFontEngineModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreTextEngineModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.TextCoreTextEngineModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
@@ -238,8 +310,16 @@
       <HintPath>..\Tools\UnityDLL\UnityEngine.TLSModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.UaaLAnalyticsModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.UaaLAnalyticsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.UIElementsModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.UIElementsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsNativeModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.UIElementsNativeModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
@@ -260,6 +340,10 @@
     </Reference>
     <Reference Include="UnityEngine.UnityConnectModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.UnityConnectModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UnityCurlModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.UnityCurlModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UnityTestProtocolModule">
@@ -296,6 +380,10 @@
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
       <HintPath>..\Tools\UnityDLL\UnityEngine.VideoModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.VirtualTexturingModule">
+      <HintPath>..\Tools\UnityDLL\UnityEngine.VirtualTexturingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.VRModule">

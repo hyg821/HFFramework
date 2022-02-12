@@ -224,10 +224,13 @@ namespace HFFramework
         private string StringToLower(string src)
         {
             string dest = null;
-            if (!lowerStringDic.TryGetValue(src, out dest))
+            if (!string.IsNullOrEmpty(src))
             {
-                dest = src.ToLower();
-                lowerStringDic.Add(src, dest);
+                if (!lowerStringDic.TryGetValue(src, out dest))
+                {
+                    dest = src.ToLower();
+                    lowerStringDic.Add(src, dest);
+                }
             }
             return dest;
         }
@@ -300,7 +303,7 @@ namespace HFFramework
             else
             {
                 AssetPackage ab = LoadAssetBundle(packageName);
-                Sprite sp = ab.LoadSprite(atlasName, spriteName);
+                Sprite sp = ab?.LoadSprite(atlasName, spriteName);
                 ReleaseAssetBundle(ab.name);
                 return sp;
             }
@@ -313,9 +316,9 @@ namespace HFFramework
         public void CacheAllShader(string packageName)
         {
             AssetPackage ab = LoadAssetBundle(packageName);
-            ab.CacheAllAsset();
+            ab?.CacheAllAsset();
             Shader.WarmupAllShaders();
-            ReleaseAssetBundle(ab.name);
+            ReleaseAssetBundle(ab?.name);
         }
 
         /// <summary>
@@ -345,8 +348,8 @@ namespace HFFramework
             else
             {
                 AssetPackage ab = LoadAssetBundle(packageName);
-                T result = ab.LoadAsset<T>(assetName);
-                ReleaseAssetBundle(ab.name);
+                T result = ab?.LoadAsset<T>(assetName);
+                ReleaseAssetBundle(ab?.name);
                 return result;
             }
         }
@@ -360,13 +363,21 @@ namespace HFFramework
             else
             {
                 AssetPackage package = await LoadAssetBundleAsync(packageName);
-                T result = await package.LoadAssetAsync<T>(assetName);
-                ReleaseAssetBundle(package.name);
 
-                if (args!=null && args.canceled)
+                if (package==null)
                 {
-                    throw new OperationCanceledException(); 
+                    throw new OperationCanceledException();
                 }
+
+                T result = await package.LoadAssetAsync<T>(assetName);
+
+                ReleaseAssetBundle(package?.name);
+
+                if (args != null && args.canceled)
+                {
+                    throw new OperationCanceledException();
+                }
+
                 return result;
             }
         }
@@ -429,15 +440,19 @@ namespace HFFramework
                 package = RawLoadAssetBundle(packageName);
             }
 
-            package.Retain();
+            package?.Retain();
             return package;
         }
 
         private AssetPackage RawLoadAssetBundle(string packageName) 
         {
             AssetBundle bundle = AssetBundle.LoadFromFile(AutoGetResourcePath(packageName, false));
-            AssetPackage package = new AssetPackage(bundle, packageName);
-            allAssetBundleDic.Add(bundle.name, package);
+            AssetPackage package = null;
+            if (bundle!=null)
+            {
+                package = new AssetPackage(bundle, packageName);
+                allAssetBundleDic.Add(bundle.name, package);
+            }
             return package;
         }
 
@@ -460,15 +475,19 @@ namespace HFFramework
 
                 package = await RawLoadAssetBundleAsync(packageName);
             }
-            package.Retain();
+            package?.Retain();
             return package;
         }
 
         private async UniTask<AssetPackage> RawLoadAssetBundleAsync(string packageName)
         {
             AssetBundle assetbundle = await AssetBundle.LoadFromFileAsync(AutoGetResourcePath(packageName, false));
-            AssetPackage package = new AssetPackage(assetbundle, packageName);
-            allAssetBundleDic.Add(package.name, package);
+            AssetPackage package = null;
+            if (assetbundle!=null)
+            {
+                package = new AssetPackage(assetbundle, packageName);
+                allAssetBundleDic.Add(package.name, package);
+            }
             return package;
         }
 
@@ -528,7 +547,7 @@ namespace HFFramework
             else
             {
                 AssetPackage ab = LoadAssetBundle(packageName);
-                TextAsset text = ab.LoadAsset<TextAsset>(dllName + ".dll");
+                TextAsset text = ab?.LoadAsset<TextAsset>(dllName + ".dll");
                 if (callback != null)
                 {
                     callback(text.bytes,null);
@@ -551,7 +570,10 @@ namespace HFFramework
         {
             packageName = StringToLower(packageName);
             AssetPackage result = null;
-            allAssetBundleDic.TryGetValue(packageName, out result);
+            if (!string.IsNullOrEmpty(packageName))
+            {
+                allAssetBundleDic.TryGetValue(packageName, out result);
+            }
             return result;
         }
 

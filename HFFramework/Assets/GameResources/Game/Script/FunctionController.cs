@@ -266,14 +266,11 @@ namespace HFFramework.Demo
             g1.GetComponent<MeshRenderer>().material = mat1;
             */
 
-            HFLog.C("aaa");
-            
-            await  AssetManager.Instance.GetAssetAsync<Sprite>("texture", "123");
-            HFLog.C("aaa");
 
-            HFLog.C("aaa");
+            AssetManager.Instance.GetAssetAsync<Sprite>("texture", "123");
 
-            await AssetManager.Instance.GetAssetAsync<Sprite>("texture", "123");
+
+            AssetManager.Instance.GetAssetAsync<Sprite>("texture", "123");
 
             /*
             FileStream fs = new FileStream(Application.dataPath+ "/1.bin", FileMode.Create);

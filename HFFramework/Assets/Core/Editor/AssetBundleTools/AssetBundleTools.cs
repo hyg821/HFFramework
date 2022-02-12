@@ -67,7 +67,8 @@ namespace HFFramework.Editor
                     */
                 }
 
-                AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", buildsInfos.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression | BuildAssetBundleOptions.DisableWriteTypeTree, GetBuildTarget());
+                // | BuildAssetBundleOptions.DisableWriteTypeTree
+                AssetBundleManifest abm = BuildPipeline.BuildAssetBundles("Assets/StreamingAssets/AssetBundles", buildsInfos.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression, GetBuildTarget());
                 //BuildZip();
                 if (abm)
                 {

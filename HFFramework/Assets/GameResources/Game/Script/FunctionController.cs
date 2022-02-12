@@ -237,7 +237,7 @@ namespace HFFramework.Demo
             HFLog.C("页面完全显示");
             HFFramework.HotFixManager.Instance.ExecuteHotFix("hotfixdll", "HotFix");
 
-
+            /*
             AssetManager.Instance.RefCount();
 
             AssetManager.Instance.GetSprite("texture", "123");
@@ -264,7 +264,16 @@ namespace HFFramework.Demo
 
             GameObject g1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             g1.GetComponent<MeshRenderer>().material = mat1;
+            */
 
+            HFLog.C("aaa");
+            
+            await  AssetManager.Instance.GetAssetAsync<Sprite>("texture", "123");
+            HFLog.C("aaa");
+
+            HFLog.C("aaa");
+
+            await AssetManager.Instance.GetAssetAsync<Sprite>("texture", "123");
 
             /*
             FileStream fs = new FileStream(Application.dataPath+ "/1.bin", FileMode.Create);
@@ -339,6 +348,8 @@ namespace HFFramework.Demo
         public override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);
+            string a = "AAA";
+            a.ToLower();
         }
 
         /*

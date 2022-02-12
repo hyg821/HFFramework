@@ -22,7 +22,7 @@ namespace HFFramework
             await PreLoad();
             await SendEnterRequest();
             await OpenUI();
-            await CloseLoading();
+            CloseLoading();
         }
 
         public async override UniTask OnExit(object args)
@@ -30,9 +30,9 @@ namespace HFFramework
             await base.OnExit(args);
             await OpenLoading(args);
             await SendExitRequest();
-            await CloseUI();
-            await ClearManager();
-            await UnloadResources();
+            CloseUI();
+            ClearManager();
+            UnloadResources();
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace HFFramework
         ///  清理UI
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTask CloseUI()
+        public virtual void CloseUI()
         {
             //await new UniTaskVoid();
             HFLog.C("步骤3 清理UI");
@@ -70,7 +70,7 @@ namespace HFFramework
         ///  清理对应管理器
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTask ClearManager()
+        public virtual void ClearManager()
         {
             //await new UniTaskVoid();
             HFLog.C("步骤4 清理对应管理器");
@@ -80,9 +80,9 @@ namespace HFFramework
         ///  卸载场景
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTask UnloadResources()
+        public virtual void UnloadResources()
         {
-            await AssetManager.Instance.UnloadUnusedAssetBundle(false,true);
+            AssetManager.Instance.UnloadUnusedAssetBundle(false,true);
             HFLog.C("步骤5 卸载场景");
         }
 
@@ -130,7 +130,7 @@ namespace HFFramework
         ///  关闭loading
         /// </summary>
         /// <returns></returns>
-        public virtual async UniTask CloseLoading()
+        public virtual void CloseLoading()
         {
             //await new UniTaskVoid();
             HFLog.C("步骤10  关闭loading");

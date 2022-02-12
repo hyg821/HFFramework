@@ -72,13 +72,13 @@ namespace HFFramework
                 string key = typeof(T).Name;
                 if (currentState != null)
                 {
-                    await currentState.OnStateExit(exitParams);
+                    await currentState.Exit(exitParams);
                 }
                 if (!stateDic.TryGetValue(key, out currentState))
                 {
                     currentState = AddState<T>();
                 }
-                await currentState.OnStateEnter(enterParams);
+                await currentState.Enter(enterParams);
                 locked = false;
             }
             else
@@ -91,7 +91,7 @@ namespace HFFramework
         {
             if (currentState != null)
             {
-                currentState.OnStateUpdate();
+                currentState.Update();
             }
         }
 

@@ -53,7 +53,15 @@ namespace HFFramework
         /// </summary>
         private AssetBundleManifest manifest;
 
+        /// <summary>
+        /// 将要被卸载的 引用计数为0 的列表
+        /// </summary>
         private List<AssetPackage> unusedAssetBundleList = new List<AssetPackage>();
+
+        /// <summary>
+        /// 小写字符串字典
+        /// </summary>
+        public Dictionary<string, string> lowerStringDic = new Dictionary<string, string>();
 
         public void Awake()
         {
@@ -169,8 +177,6 @@ namespace HFFramework
                 }
             }
         }
-
-
         public Dictionary<string, List<string>> GetAssetBundleInfos()
         {
             Dictionary<string, List<string>> result = new Dictionary<string, List<string>>();
@@ -211,10 +217,20 @@ namespace HFFramework
 
         private string GetAssetPath(string packageName,string assetName)
         {
-            return allAssetPathDic[packageName.ToLower()][assetName.ToLower()];
+            return allAssetPathDic[StringToLower(packageName)][StringToLower(assetName)];
         }
-
 #endif
+
+        private string StringToLower(string src)
+        {
+            string dest = null;
+            if (!lowerStringDic.TryGetValue(src, out dest))
+            {
+                dest = src.ToLower();
+                lowerStringDic.Add(src, dest);
+            }
+            return dest;
+        }
 
         /// <summary>
         ///  拿到AssetBundleManifest 以便于收集 所有的assetbundle 依赖  如果存在动态下载 一定要刷新调用这个方法  刷新所有依赖
@@ -252,9 +268,9 @@ namespace HFFramework
             return GetAsset<GameObject>(packageName, assetName);
         }
 
-        public async UniTask<GameObject> GetPrefabAsync(string packageName, string assetName)
+        public UniTask<GameObject> GetPrefabAsync(string packageName, string assetName)
         {
-            return await GetAssetAsync<GameObject>(packageName, assetName);
+            return GetAssetAsync<GameObject>(packageName, assetName);
         }
 
         /// <summary>
@@ -387,7 +403,7 @@ namespace HFFramework
 
         private async UniTask m_LoadScene(string packageName, string sceneName)
         {
-            AssetPackage ab = await m_LoadAssetBundleAsync(packageName.ToLower());
+            AssetPackage ab = await LoadAssetBundleAsync(StringToLower(packageName));
             await SceneManager.LoadSceneAsync(sceneName);
             ReleaseAssetBundle(ab.name);
         }
@@ -397,7 +413,7 @@ namespace HFFramework
         /// </summary>
         public AssetPackage LoadAssetBundle(string packageName)
         {
-            packageName = packageName.ToLower();
+            packageName = StringToLower(packageName);
             AssetPackage package = null;
             //判断是否已经加载bundle
             if (!allAssetBundleDic.TryGetValue(packageName, out package))
@@ -432,26 +448,14 @@ namespace HFFramework
         /// <param name="finishCallback"></param>
         public async UniTask<AssetPackage> LoadAssetBundleAsync(string packageName)
         {
-            try
-            {
-                return await m_LoadAssetBundleAsync(packageName.ToLower());
-            }
-            catch (Exception exception)
-            {
-                Debug.LogError(exception);
-                throw;
-            }       
-        }
-
-        private async UniTask<AssetPackage> m_LoadAssetBundleAsync(string packageName)
-        {
+            packageName = StringToLower(packageName);
             AssetPackage package = null;
             if (!allAssetBundleDic.TryGetValue(packageName, out package))
             {
                 string[] list = GetAssetBundleDependencies(packageName);
                 for (int i = 0; i < list.Length; i++)
                 {
-                    await m_LoadAssetBundleAsync(list[i]);
+                    await LoadAssetBundleAsync(list[i]);
                 }
 
                 package = await RawLoadAssetBundleAsync(packageName);
@@ -545,7 +549,7 @@ namespace HFFramework
 
         public AssetPackage GetAssetBundle(string packageName)
         {
-            packageName = packageName.ToLower();
+            packageName = StringToLower(packageName);
             AssetPackage result = null;
             allAssetBundleDic.TryGetValue(packageName, out result);
             return result;
@@ -589,7 +593,7 @@ namespace HFFramework
         /// <summary>
         ///  释放引用计数为0的bundle
         /// </summary>
-        public async UniTask UnloadUnusedAssetBundle(bool unloadAllLoadedObjects = false,bool resourcesUnloadUnused = false)
+        public void UnloadUnusedAssetBundle(bool unloadAllLoadedObjects = false,bool resourcesUnloadUnused = false)
         {
             unusedAssetBundleList.Clear();
             foreach (var item in allAssetBundleDic)
@@ -620,7 +624,6 @@ namespace HFFramework
         {
             if (GameEnvironment.Instance.config.LoadAssetPathType != LoadAssetPathType.Editor)
             {
-                packageName = packageName.ToLower();
                 AssetPackage bundle = GetAssetBundle(packageName);
                 if (bundle != null)
                 {

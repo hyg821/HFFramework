@@ -58,7 +58,7 @@ namespace HFFramework
 
         }
 
-        public async virtual UniTask OnStateEnter(object param = null)
+        public async virtual UniTask Enter(object param = null)
         {
             currentState = StateType.Enter;
             await OnEnter(param);
@@ -69,7 +69,7 @@ namespace HFFramework
             }
         }
 
-        public void OnStateUpdate()
+        public void Update()
         {
             currentState = StateType.Update;
             OnUpdate();
@@ -79,7 +79,7 @@ namespace HFFramework
             }
         }
 
-        public async virtual UniTask OnStateExit(object args = null)
+        public async virtual UniTask Exit(object args = null)
         {
             currentState = StateType.Exit;
             await OnExit(args);

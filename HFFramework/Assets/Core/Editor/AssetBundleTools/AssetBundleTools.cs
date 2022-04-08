@@ -18,7 +18,7 @@ namespace HFFramework.Editor
 #if UNITY_STANDALONE_WIN
             target = BuildTarget.StandaloneWindows;
 #elif UNITY_STANDALONE_OSX
-            target = BuildTarget.StandaloneOSXIntel;
+            target = BuildTarget.StandaloneOSX;
 #elif UNITY_IPHONE
             target = BuildTarget.iOS;
 #elif UNITY_ANDROID

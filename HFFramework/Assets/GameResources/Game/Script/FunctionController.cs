@@ -267,10 +267,10 @@ namespace HFFramework.Demo
             */
 
 
-            AssetManager.Instance.GetAssetAsync<Sprite>("texture", "123");
+            //AssetManager.Instance.GetAssetAsync<Sprite>("texture", "123");
 
 
-            AssetManager.Instance.GetAssetAsync<Sprite>("texture", "123");
+            //AssetManager.Instance.GetAssetAsync<Sprite>("texture", "123");
 
             /*
             FileStream fs = new FileStream(Application.dataPath+ "/1.bin", FileMode.Create);

@@ -8,6 +8,16 @@ namespace HFFramework
 {
     public static class Extensions
     {
+        public static T TryGetComponent<T>(this GameObject gameObject) where T : UnityEngine.Component
+        {
+            T t = gameObject.GetComponent<T>();
+            if (t==null)
+            {
+                t =  gameObject.AddComponent<T>();
+            }
+            return t;
+        }
+        
         public static void SetWebImage(this Image image, string url)
         {
             WebImageManager.DownLoadImage(image, url);

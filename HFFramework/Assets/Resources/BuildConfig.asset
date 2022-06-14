@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e8ce10d6f694d439e7997902c9ceb9, type: 3}
   m_Name: BuildConfig
   m_EditorClassIdentifier: 
-  ApplicationIdentifier: 
   version: 1.0.0
   isLog: 0
   isGenerateAssetbundle: 0

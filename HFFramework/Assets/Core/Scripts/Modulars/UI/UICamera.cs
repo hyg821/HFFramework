@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace HFFramework
 {
@@ -10,7 +11,13 @@ namespace HFFramework
 
         public void Awake()
         {
+            //CameraData
             camera = gameObject.GetComponent<Camera>();
+            UniversalAdditionalCameraData urpCamera = camera.GetUniversalAdditionalCameraData();
+            if (urpCamera!=null)
+            {
+                urpCamera.renderType = CameraRenderType.Overlay;
+            }
             camera.cullingMask = 1 << LayerMask.NameToLayer("UI");
             camera.orthographic = true;
             camera.orthographicSize = GameEnvironment.Instance.config.SceneSize.x / 2 / 100;

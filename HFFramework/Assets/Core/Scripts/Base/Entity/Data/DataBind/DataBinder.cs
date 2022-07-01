@@ -23,11 +23,11 @@ namespace HFFramework
         /// </summary>
         public V view;
 
-        private Action<T,V> callback;
+        private Action<V,T> callback;
 
         public bool IsDisposed { get; private set; } = false;
 
-        public virtual void Bind(DataProperty<T> data, V view, Action<T,V> callback = null)
+        public virtual void Bind(DataProperty<T> data, V view, Action<V,T> callback = null)
         {
             this.data = data;
             this.view = view;
@@ -49,7 +49,7 @@ namespace HFFramework
             {
                 if (view!=null)
                 {
-                    callback(data.value, view);
+                    callback(view,data.value);
                 }
                 else
                 {

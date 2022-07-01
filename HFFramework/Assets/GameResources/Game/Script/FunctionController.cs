@@ -158,12 +158,20 @@ namespace HFFramework.Demo
         {
             DataProperty<int> hp = new DataProperty<int>();
 
-            Bind(Label,hp,delegate(int value,Text label)
+            /*
+            Bind(Label,hp,delegate(Text label,int value)
             {
                 label.text = value.ToString();
             });
-
+            */
             
+            /*
+            Label.Bind<int>(hp, delegate(int i)
+            {
+                Label.text = i + " xxxxx";
+            });
+            */
+
             TimerManager.Schedule(0, 3, 1, delegate (Timer t)
             {
                 binder.Clear();

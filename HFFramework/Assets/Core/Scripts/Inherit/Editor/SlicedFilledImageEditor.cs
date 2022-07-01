@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HFFramework;
 using UnityEngine;
 using UnityEngine.UI;
 #if UNITY_2017_4 || UNITY_2018_2_OR_NEWER
@@ -9,7 +10,7 @@ using Sprites = UnityEngine.Sprites;
 
 using UnityEditor;
 // Custom Editor to order the variables in the Inspector similar to Image component
-[CustomEditor( typeof( SlicedFilledImage ) )]
+[CustomEditor( typeof( UISlicedFilledImage ) )]
 [CanEditMultipleObjects]
 public class SlicedFilledImageEditor : Editor
 {

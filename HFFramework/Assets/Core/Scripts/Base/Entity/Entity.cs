@@ -491,7 +491,7 @@ namespace HFFramework
             }
         }
 
-        public void Bind<T, V>(V view, DataProperty<T> data, Action<T,V> callback = null) where T : IComparable
+        public void Bind<T, V>(V view, DataProperty<T> data, Action<V,T> callback = null) where T : IComparable
         {
             if (data!=null && view != null)
             {

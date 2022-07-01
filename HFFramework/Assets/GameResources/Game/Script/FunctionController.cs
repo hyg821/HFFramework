@@ -27,7 +27,7 @@ namespace HFFramework.Demo
 {
     public class FunctionController : UIController
     {
-        public Text TitleLabel;
+        public TextMeshProUGUI TitleLabel;
         public Button fun0;
         public Button fun1;
         public Button fun2;
@@ -41,7 +41,7 @@ namespace HFFramework.Demo
         #region
         public override void FindElement()
         {
-            TitleLabel = AutoFind<Text>("TopBar/Text");
+            TitleLabel = AutoFind<TextMeshProUGUI>("TopBar/Text");
             fun0 = AutoFind<Button>("ScrollView/Viewport/Content/Cell/Button");
             fun1 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (1)/Button");
             fun2 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (2)/Button");
@@ -54,6 +54,7 @@ namespace HFFramework.Demo
             fun8 = AutoFind<Button>("ScrollView/Viewport/Content/Cell (8)/Button");
         }
         #endregion
+
 
 
 

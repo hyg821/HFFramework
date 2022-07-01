@@ -345,8 +345,6 @@ namespace HFFramework.Demo
         public override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);
-            string a = "AAA";
-            a.ToLower();
         }
 
         /*

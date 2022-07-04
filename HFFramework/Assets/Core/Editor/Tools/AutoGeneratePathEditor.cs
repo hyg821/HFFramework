@@ -11,33 +11,38 @@ namespace HFFramework.Editor
     {
         public int selectIndex = 0;
 
+        public List<string> propertyList = new List<string>();
+        
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
+            
+            propertyList.Clear();
+            
             AutoGeneratePath info = target as AutoGeneratePath;
 
             UnityEngine.Component[] components = info.GetComponents<UnityEngine.Component>();
             string str = info.GetPropertyType();
-            List<string> list = new List<string>();
-            list.Add("GameObject");
-            list.Add("Transform");
+      
+            propertyList.Add("GameObject");
+            propertyList.Add("Transform");
             for (int i = 0; i < components.Length; i++)
             {
                 string name = components[i].GetType().Name;
-                list.Add(name);
+                propertyList.Add(name);
             }
 
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < propertyList.Count; i++)
             {
-                string name = list[i];
+                string name = propertyList[i];
                 if (str == name)
                 {
                     selectIndex = i;
                 }
             }  
 
-            int currentSelect = EditorGUILayout.Popup("类型", selectIndex, list.ToArray());
-            info.SetPropertyType(list[currentSelect]);
+            int currentSelect = EditorGUILayout.Popup("类型", selectIndex, propertyList.ToArray());
+            info.SetPropertyType(propertyList[currentSelect]);
             //判断一下是否选择了新的 
             if (currentSelect!=selectIndex)
             {

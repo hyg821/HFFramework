@@ -39,12 +39,16 @@ namespace Config
         /// 爱好
         /// </summary>
         public List<string>love = new List<string>();
+        /// <summary>
+        /// 标记
+        /// </summary>
+        public List<int>index = new List<int>();
     }
 
     [System.Serializable]
     public partial class ConfigMan
     { 
-        public static string[] split = new string[] {"    "  };
+        public static string[] split = new string[] {"    "};
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
         private static ConfigMan instance;
@@ -99,18 +103,25 @@ namespace Config
                     for (int x = 0; x < air.Length; x++)
                     {
                        config.love.Add(air[x]);
-                     }
-                    dic.Add(config.id, config );
+                    }
+                    air = strs[5].Split(splitArray, StringSplitOptions.RemoveEmptyEntries);
+                    for (int x = 0; x < air.Length; x++)
+                    {
+                       int ite = 0;
+                       int.TryParse(air[x], out ite);
+                       config.index.Add(ite);
+                    }
+                    dic.Add(config.id, config);
                     list.Add(config);
-               }
-           }
-           reader.Close();
-           Type type = GetType();
-           MethodInfo method = type.GetMethod( "PostProcessing");
-           if (method!=null)
-           {
-               method.Invoke(this,null);
-           }
+                }
+            }
+            reader.Close();
+            Type type = GetType();
+            MethodInfo method = type.GetMethod( "PostProcessing");
+            if (method!=null)
+            {
+                method.Invoke(this,null);
+            }
         }
 
         public void Dispose()

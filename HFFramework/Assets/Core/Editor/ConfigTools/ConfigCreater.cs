@@ -204,7 +204,7 @@ namespace HFFramework.Editor
             builder.AppendLine("    [System.Serializable]");
             builder.AppendLine("    public partial class " + _table);
             builder.AppendLine("    { ");
-            builder.AppendLine("        public static string[] split = new string[] {" + "\"" + "    " + "\"" + "  };");
+            builder.AppendLine("        public static string[] split = new string[] {" + "\"" + "    " + "\"" + "};");
             builder.AppendLine("        public static string[] splitArray = new string[] { " + "\"" + ";" + "\"" + ", " + "\"" + "[" + "\"" + ", " + "\"" + "]" + "\"" + " };");
             builder.AppendLine();
             builder.AppendLine("        " + @"private static " + _table + " instance;");
@@ -290,7 +290,7 @@ namespace HFFramework.Editor
                         default:
                             break;
                     }
-                    builder.AppendLine(@"                     }");
+                    builder.AppendLine(@"                    }");
                 }
                 else
                 {
@@ -314,17 +314,17 @@ namespace HFFramework.Editor
                 }
             }
 
-            builder.AppendLine(@"                    dic.Add(config." + propertyList[0] + ", config );");
+            builder.AppendLine(@"                    dic.Add(config." + propertyList[0] + ", config);");
             builder.AppendLine(@"                    list.Add(config);");
-            builder.AppendLine(@"               }");
-            builder.AppendLine(@"           }");
-            builder.AppendLine(@"           reader.Close();");
-            builder.AppendLine(@"           Type type = GetType();");
-            builder.AppendLine("           MethodInfo method = type.GetMethod( \"PostProcessing\");");
-            builder.AppendLine(@"           if (method!=null)");
-            builder.AppendLine(@"           {");
-            builder.AppendLine(@"               method.Invoke(this,null);");
-            builder.AppendLine(@"           }");
+            builder.AppendLine(@"                }");
+            builder.AppendLine(@"            }");
+            builder.AppendLine(@"            reader.Close();");
+            builder.AppendLine(@"            Type type = GetType();");
+            builder.AppendLine("            MethodInfo method = type.GetMethod( \"PostProcessing\");");
+            builder.AppendLine(@"            if (method!=null)");
+            builder.AppendLine(@"            {");
+            builder.AppendLine(@"                method.Invoke(this,null);");
+            builder.AppendLine(@"            }");
             builder.AppendLine(@"        }");
             builder.AppendLine();
             builder.AppendLine(@"        public void Dispose()");

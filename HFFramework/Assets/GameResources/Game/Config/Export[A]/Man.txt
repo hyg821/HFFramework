@@ -1,4 +1,4 @@
-索引    人名    性别    家庭地址    爱好
-id    name    sex    address    love
-val    val    val    ref_Address    val
-int    string    bool    string    string[]
+索引    人名    性别    家庭地址    爱好    标记
+id    name    sex    address    love    index
+val    val    val    ref_Address    val    val
+int    string    bool    string    string[]    int[]

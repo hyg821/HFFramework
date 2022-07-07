@@ -45,7 +45,7 @@ namespace Config
     [System.Serializable]
     public partial class ConfigUI
     { 
-        public static string[] split = new string[] {"    "  };
+        public static string[] split = new string[] {"    "};
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
         private static ConfigUI instance;
@@ -99,17 +99,17 @@ namespace Config
                     config.ShowAnimation = strs[4];
                     config.HideAnimation = strs[5];
                     int.TryParse(strs[6], out config.CacheType);
-                    dic.Add(config.Type, config );
+                    dic.Add(config.Type, config);
                     list.Add(config);
-               }
-           }
-           reader.Close();
-           Type type = GetType();
-           MethodInfo method = type.GetMethod( "PostProcessing");
-           if (method!=null)
-           {
-               method.Invoke(this,null);
-           }
+                }
+            }
+            reader.Close();
+            Type type = GetType();
+            MethodInfo method = type.GetMethod( "PostProcessing");
+            if (method!=null)
+            {
+                method.Invoke(this,null);
+            }
         }
 
         public void Dispose()

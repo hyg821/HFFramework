@@ -33,7 +33,7 @@ namespace Config
     [System.Serializable]
     public partial class ConfigAddress
     { 
-        public static string[] split = new string[] {"    "  };
+        public static string[] split = new string[] {"    "};
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
         private static ConfigAddress instance;
@@ -84,17 +84,17 @@ namespace Config
                     config.country = strs[1];
                     config.city = strs[2];
                     config.street = strs[3];
-                    dic.Add(config.id, config );
+                    dic.Add(config.id, config);
                     list.Add(config);
-               }
-           }
-           reader.Close();
-           Type type = GetType();
-           MethodInfo method = type.GetMethod( "PostProcessing");
-           if (method!=null)
-           {
-               method.Invoke(this,null);
-           }
+                }
+            }
+            reader.Close();
+            Type type = GetType();
+            MethodInfo method = type.GetMethod( "PostProcessing");
+            if (method!=null)
+            {
+                method.Invoke(this,null);
+            }
         }
 
         public void Dispose()

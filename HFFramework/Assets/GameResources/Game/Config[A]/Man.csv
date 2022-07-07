@@ -1,5 +1,0 @@
-索引,人名,性别,家庭地址,爱好
-id,name,sex,address,love
-val,val,val,ref_Address,val
-int,string,bool,string,string[]
-0,东方,TRUE,0,吃饭;睡觉;玩游戏

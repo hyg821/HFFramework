@@ -22,10 +22,16 @@ namespace HFFramework
         public const string SpriteFolderIde = "[S]";
         
         //--------------------------------------配置文件--------------------------------------//
+        
+        /// <summary>
+        /// excel 读取路径
+        /// </summary>
+        public const string ConfigExcelInputPath = "GameResources/Game/Config/Excel";
+        
         /// <summary>
         /// 配置文件读取路径
         /// </summary>
-        public const string ConfigInputPath = "GameResources/Game/Config"+AssetFolderIde;
+        public const string ConfigInputPath = "GameResources/Game/Config/Export"+AssetFolderIde;
         /// <summary>
         /// 配置文件生成路径
         /// </summary>

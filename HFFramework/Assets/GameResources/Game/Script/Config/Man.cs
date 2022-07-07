@@ -44,7 +44,7 @@ namespace Config
     [System.Serializable]
     public partial class ConfigMan
     { 
-        public static string[] split = new string[] { "," };
+        public static string[] split = new string[] {"    "  };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
         private static ConfigMan instance;
@@ -54,7 +54,7 @@ namespace Config
             { 
                 if (instance==null) 
                 { 
-                     instance = new ConfigMan ();
+                     instance = new ConfigMan();
                 } 
                 return instance;
             } 

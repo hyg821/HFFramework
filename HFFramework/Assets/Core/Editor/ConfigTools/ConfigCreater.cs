@@ -7,37 +7,51 @@ using System.Text;
 using System;
 using System.Reflection;
 
+
+
 namespace HFFramework.Editor
 {
     public class ConfigCreater
     {
-        public static string[] split = new string[] { "," };
+        public static string[] split = new string[] { "    " };
         public static string[] arraySplit = new string[] { "[", "]", ";" };
 
-        [MenuItem("配置文件/解析生成配置文件")]
-        public static void GenerateConfigByAnalysis()
+        [MenuItem("配置文件/Excel导出文本")]
+        public static void ExcelToTxt()
         {
-            string path = Application.dataPath + "/" + GameConst.ConfigInputPath;
-            if (!Directory.Exists(path))
+            CheckDirectory();
+            string inputPath = Application.dataPath + "/" + GameConst.ConfigExcelInputPath;
+            string outPath = Application.dataPath + "/" + GameConst.ConfigInputPath;
+            DirectoryInfo directoryInfo = new DirectoryInfo(inputPath);
+            FileInfo[] files = directoryInfo.GetFiles();
+            for (int i = 0; i < files.Length; i++)
             {
-                Directory.CreateDirectory(path);
+                FileInfo file = files[i];
+                if (file.Name.EndsWith(".xlsx"))
+                {
+                    ExcelTools.ExcelToTxt(inputPath+"/"+file.Name,outPath+"/"+file.Name.Replace(".xlsx",".txt"));
+                }
             }
-            DirectoryInfo directoryInfo = new DirectoryInfo(path);
-
-            path = Application.dataPath + "/" + GameConst.ConfigOutputPath;
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
+            
+            Debug.Log("Excel导出文本完成");
 
             AssetDatabase.Refresh();
+            
 
+        }
+        
+        [MenuItem("配置文件/解析生成配置文件")]
+        public static void GenerateConfigs()
+        {
+            CheckDirectory();
+            
+            DirectoryInfo directoryInfo = new DirectoryInfo( Application.dataPath + "/" + GameConst.ConfigInputPath);
             FileInfo[] files = directoryInfo.GetFiles();
             List<FileInfo> fileList = new List<FileInfo>();
             for (int i = 0; i < files.Length; i++)
             {
                 FileInfo file = files[i];
-                if (file.Name.EndsWith(".csv"))
+                if (file.Name.EndsWith(".txt"))
                 {
                     CreateConfig(file);
                     fileList.Add(file);
@@ -51,10 +65,36 @@ namespace HFFramework.Editor
             AssetDatabase.Refresh();
         }
 
+        [MenuItem("配置文件/一键生成")]
+        public static void GenerateAll()
+        {
+            ExcelToTxt();
+            GenerateConfigs();
+        }
+
+        private static void CheckDirectory()
+        {
+            string path = Application.dataPath + "/" + GameConst.ConfigInputPath;
+            
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            
+            path = Application.dataPath + "/" + GameConst.ConfigOutputPath;
+            
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            AssetDatabase.Refresh();
+        }
+
 
         public static void CreateConfig(FileInfo file)
         {
-            string temp0 = file.Name.Replace(".csv", "");
+            string temp0 = file.Name.Replace(".txt", "");
             string temp1 = temp0.Substring(0, 1);
             string temp2 = temp0.Substring(1, temp0.Length - 1);
 
@@ -164,7 +204,7 @@ namespace HFFramework.Editor
             builder.AppendLine("    [System.Serializable]");
             builder.AppendLine("    public partial class " + _table);
             builder.AppendLine("    { ");
-            builder.AppendLine("        public static string[] split = new string[] { " + "\"" + "," + "\"" + " };");
+            builder.AppendLine("        public static string[] split = new string[] {" + "\"" + "    " + "\"" + "  };");
             builder.AppendLine("        public static string[] splitArray = new string[] { " + "\"" + ";" + "\"" + ", " + "\"" + "[" + "\"" + ", " + "\"" + "]" + "\"" + " };");
             builder.AppendLine();
             builder.AppendLine("        " + @"private static " + _table + " instance;");
@@ -174,7 +214,7 @@ namespace HFFramework.Editor
             builder.AppendLine("            { ");
             builder.AppendLine("                if (instance==null) ");
             builder.AppendLine("                { ");
-            builder.AppendLine("                     instance = new " + _table + " ();");
+            builder.AppendLine("                     instance = new " + _table + "();");
             builder.AppendLine("                } ");
             builder.AppendLine("                return instance;");
             builder.AppendLine("            } ");
@@ -343,7 +383,7 @@ namespace HFFramework.Editor
             for (int i = 0; i < files.Count; i++)
             {
                 FileInfo file = files[i];
-                string temp0 = file.Name.Replace(".csv", "");
+                string temp0 = file.Name.Replace(".txt", "");
                 string temp1 = temp0.Substring(0, 1);
                 string temp2 = temp0.Substring(1, temp0.Length - 1);
                 string _class = temp1.ToUpper() + temp2;
@@ -362,7 +402,7 @@ namespace HFFramework.Editor
             for (int i = 0; i < files.Count; i++)
             {
                 FileInfo file = files[i];
-                string temp0 = file.Name.Replace(".csv", "");
+                string temp0 = file.Name.Replace(".txt", "");
                 string temp1 = temp0.Substring(0, 1);
                 string temp2 = temp0.Substring(1, temp0.Length - 1);
                 string _class = temp1.ToUpper() + temp2;

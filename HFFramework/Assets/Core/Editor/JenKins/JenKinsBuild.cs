@@ -204,7 +204,7 @@ namespace HFFramework.Editor
             if (config.isGenerateAssetbundle)
             {
                 //生成配置
-                ConfigCreater.GenerateConfigByAnalysis();
+                ConfigCreater.GenerateAll();
 
                 //打包
                 AssetBundleTools.BuildAllAssetBundles();

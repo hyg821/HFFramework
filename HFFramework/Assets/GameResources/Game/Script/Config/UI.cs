@@ -45,7 +45,7 @@ namespace Config
     [System.Serializable]
     public partial class ConfigUI
     { 
-        public static string[] split = new string[] { "," };
+        public static string[] split = new string[] {"    "  };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
         private static ConfigUI instance;
@@ -55,7 +55,7 @@ namespace Config
             { 
                 if (instance==null) 
                 { 
-                     instance = new ConfigUI ();
+                     instance = new ConfigUI();
                 } 
                 return instance;
             } 

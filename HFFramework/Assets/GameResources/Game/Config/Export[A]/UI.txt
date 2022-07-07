@@ -1,0 +1,5 @@
+类型（ClassName）    层级    包名    资源名字    显示动画    消失动画    缓存类型
+Type    LayerIndex    AssetbundleName    AssetName    ShowAnimation    HideAnimation    CacheType
+val    val    val    val    val    val    val
+string    int    string    string    string    string    int
+FunctionController    0    ui_prefab    FunctionView    1    1    0

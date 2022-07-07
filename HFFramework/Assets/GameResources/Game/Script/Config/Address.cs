@@ -33,7 +33,7 @@ namespace Config
     [System.Serializable]
     public partial class ConfigAddress
     { 
-        public static string[] split = new string[] { "," };
+        public static string[] split = new string[] {"    "  };
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
         private static ConfigAddress instance;
@@ -43,7 +43,7 @@ namespace Config
             { 
                 if (instance==null) 
                 { 
-                     instance = new ConfigAddress ();
+                     instance = new ConfigAddress();
                 } 
                 return instance;
             } 

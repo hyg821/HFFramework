@@ -45,13 +45,13 @@ Shader "TestShader"
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
 
-                
+                return col;
                 
                 // apply fog
                 //UNITY_APPLY_FOG(i.fogCoord, col);
 
-                return 1- fixed4(i.uv,i.uv);
-                return col+fixed4(0.5f,0.5f,0.5f,1);
+                //return 1- fixed4(i.uv,i.uv);
+                //return col+fixed4(0.5f,0.5f,0.5f,1);
             }
             ENDCG
         }

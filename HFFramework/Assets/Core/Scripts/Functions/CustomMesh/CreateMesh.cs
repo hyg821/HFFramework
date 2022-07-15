@@ -60,11 +60,12 @@ public class CreateMesh : MonoBehaviour
         posList.Add(new  Vector2(2, -1));
      
         
-        
+        /*
         posList.Add(new  Vector2(-1 ,-1));
         posList.Add(new  Vector2(3, -1));
         posList.Add(new  Vector2(3, 3));
         posList.Add(new  Vector2(-1, 3));
+        */
         
         //posList.Add(new Vector2(1, 1));
         
@@ -207,22 +208,16 @@ public class CreateMesh : MonoBehaviour
 
         uvList.Clear();
      
-        //左上
-        bool contains = indexCache.Contains(pos + new Vector2(-1, 1));
-        //右上
-        contains = indexCache.Contains(pos + new Vector2(1, 1));
-        //右下
-        contains = indexCache.Contains(pos + new Vector2(1, -1));
-        //左下
-        contains = indexCache.Contains(pos + new Vector2(-1, -1));
+
 
 
         for (int j = 0; j < 24; j++)
         {
             uvList.Add(new Vector2(0,0));
-        }        
-        
-        
+        }
+
+        bool contains = false;
+
         //上
         contains = indexCache.Contains(pos + new Vector2(0, 1));
         if (!contains)
@@ -269,6 +264,38 @@ public class CreateMesh : MonoBehaviour
             uvList[16] = Vector2.one;
             uvList[17] = Vector2.one;
             uvList[19] = Vector2.one;
+        }
+        
+        //左上
+        contains = indexCache.Contains(pos + new Vector2(-1, 1));
+        if (!contains)
+        {
+            uvList[5] = Vector2.one;
+            uvList[7] = Vector2.one;
+        }
+        
+        //右上
+        contains = indexCache.Contains(pos + new Vector2(1, 1));
+        if (!contains)
+        {
+            uvList[11] = Vector2.one;
+            uvList[13] = Vector2.one;
+        }
+        
+        //右下
+        contains = indexCache.Contains(pos + new Vector2(1, -1));
+        if (!contains)
+        {
+            uvList[17] = Vector2.one;
+            uvList[19] = Vector2.one;
+        }
+        
+        //左下
+        contains = indexCache.Contains(pos + new Vector2(-1, -1));
+        if (!contains)
+        {
+            uvList[1] = Vector2.one;
+            uvList[23] = Vector2.one;
         }
         
 

@@ -50,7 +50,7 @@ Shader "TestShader"
                 // apply fog
                 //UNITY_APPLY_FOG(i.fogCoord, col);
 
-                //return fixed4(i.uv,i.uv);
+                return 1- fixed4(i.uv,i.uv);
                 return col+fixed4(0.5f,0.5f,0.5f,1);
             }
             ENDCG

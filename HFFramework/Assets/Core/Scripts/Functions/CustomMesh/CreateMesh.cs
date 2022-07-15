@@ -31,6 +31,16 @@ public class CreateMesh : MonoBehaviour
         mesh = new Mesh();
 
         List<Vector2> posList = new List<Vector2>();
+
+        
+        for (int i = 0; i < 100; i++)
+        {
+            float x = Random.Range(-5, 5);
+            float y = Random.Range(-5, 5);
+            posList.Add(new  Vector2(x,y));
+        }
+        
+        /*
         posList.Add(new  Vector2(0,0));
         
         posList.Add(new  Vector2(0,1));
@@ -58,6 +68,9 @@ public class CreateMesh : MonoBehaviour
         posList.Add(new  Vector2(0 ,-1));
         posList.Add(new  Vector2(1, -1));
         posList.Add(new  Vector2(2, -1));
+        */
+        
+        
      
         
         /*

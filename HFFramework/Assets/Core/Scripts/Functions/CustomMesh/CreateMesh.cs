@@ -98,6 +98,19 @@ public class CreateMesh : MonoBehaviour
 
     public void DrawSquare(Vector2 pos,int i)
     {
+        /*
+        A(5)(7)                        B(8)(10)                                       C(11)(13)
+
+
+
+        D(2)(4)                        E(0)(3)(6)(9)(12)(15)(18) (21)                 F(14)(16)
+
+
+
+        G(1)(23)                       H (20)(22)                                      I(17)(19)
+        */
+
+        
         Vector2 vE = pos + Vector2.one / 2;
 
         
@@ -119,6 +132,7 @@ public class CreateMesh : MonoBehaviour
         Vector2 vH = pos + new  Vector2(0.5f,0);
 
         
+
         
         vex.Add(vE);
         tri.Add(i*24+0);

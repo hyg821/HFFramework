@@ -33,10 +33,10 @@ public class CreateMesh : MonoBehaviour
         List<Vector2> posList = new List<Vector2>();
 
         
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 2600; i++)
         {
-            float x = Random.Range(-5, 5);
-            float y = Random.Range(-5, 5);
+            float x = Random.Range(-50, 50);
+            float y = Random.Range(-50, 50);
             posList.Add(new  Vector2(x,y));
         }
         

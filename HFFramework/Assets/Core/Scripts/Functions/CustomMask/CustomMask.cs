@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CustomMask : MonoBehaviour
 {
-    public Image keyPoint;
+    public RectTransform keyPoint;
 
     public Vector3[] corner;
 
@@ -27,7 +27,7 @@ public class CustomMask : MonoBehaviour
     void Update()
     {
         canvasTransform.GetWorldCorners(canvasCorner);
-        keyPoint.rectTransform.GetWorldCorners(corner);
+        keyPoint.GetWorldCorners(corner);
 
         float height = (canvasCorner[1].y - canvasCorner[0].y) / 2;
         float width = (canvasCorner[2].x - canvasCorner[1].x) / 2;

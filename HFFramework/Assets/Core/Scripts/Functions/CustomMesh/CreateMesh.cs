@@ -102,7 +102,7 @@ public class CreateMesh : MonoBehaviour
 
         meshFilter.mesh = mesh;
         
-        Material mat = new Material( Shader.Find("TestShader"));
+        Material mat = new Material( Shader.Find("Test/CustomMesh"));
         mat.SetTexture("_MainTex",tex);
 
         meshRenderer.material = mat;

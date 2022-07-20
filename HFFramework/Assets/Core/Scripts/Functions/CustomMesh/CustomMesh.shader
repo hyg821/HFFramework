@@ -1,4 +1,4 @@
-Shader "TestShader"
+Shader "Test/CustomMesh"
 {
     Properties
     {

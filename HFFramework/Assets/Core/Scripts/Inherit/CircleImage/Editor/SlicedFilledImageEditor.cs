@@ -10,7 +10,7 @@ using Sprites = UnityEngine.Sprites;
 
 using UnityEditor;
 // Custom Editor to order the variables in the Inspector similar to Image component
-[CustomEditor( typeof( UISlicedFilledImage ) )]
+[CustomEditor( typeof( SlicedFilledImage ) )]
 [CanEditMultipleObjects]
 public class SlicedFilledImageEditor : Editor
 {

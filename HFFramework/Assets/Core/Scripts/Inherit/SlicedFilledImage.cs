@@ -45,7 +45,7 @@ namespace HFFramework
 {
     [RequireComponent(typeof(CanvasRenderer))]
     [AddComponentMenu("UI/Sliced Filled Image", 11)]
-    public class UISlicedFilledImage : MaskableGraphic, ISerializationCallbackReceiver, ILayoutElement,
+    public class SlicedFilledImage : MaskableGraphic, ISerializationCallbackReceiver, ILayoutElement,
         ICanvasRaycastFilter
     {
         private static class SetPropertyUtility
@@ -231,7 +231,7 @@ namespace HFFramework
 #pragma warning restore IDE1006
 #pragma warning restore 1692
 
-        protected UISlicedFilledImage()
+        protected SlicedFilledImage()
         {
             useLegacyMeshGeneration = false;
         }
@@ -647,7 +647,7 @@ namespace HFFramework
         private bool m_Tracked = false;
 
 #if UNITY_2017_4 || UNITY_2018_2_OR_NEWER
-        private static List<UISlicedFilledImage> m_TrackedTexturelessImages = new List<UISlicedFilledImage>();
+        private static List<SlicedFilledImage> m_TrackedTexturelessImages = new List<SlicedFilledImage>();
         private static bool s_Initialized;
 #endif
 
@@ -681,7 +681,7 @@ namespace HFFramework
         {
             for (int i = m_TrackedTexturelessImages.Count - 1; i >= 0; i--)
             {
-                UISlicedFilledImage image = m_TrackedTexturelessImages[i];
+                SlicedFilledImage image = m_TrackedTexturelessImages[i];
                 if (spriteAtlas.CanBindTo(image.activeSprite))
                 {
                     image.SetAllDirty();

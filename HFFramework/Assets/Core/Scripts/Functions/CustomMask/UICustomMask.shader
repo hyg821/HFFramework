@@ -5,7 +5,7 @@ Shader "Test/UICustomMask"
         _MaskTex("MaskTex",2D) = "white"{}
         _Rect("Rect",Vector) = (0,0,0,0)
         _Gray("Gray",float) = 0.4
-        _Alpha("Gray",float) = 0.4
+        _Alpha("Alpha",float) = 0.4
     }
     
     SubShader

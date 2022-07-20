@@ -32,9 +32,6 @@ namespace HFFramework
             this.data = data;
             this.view = view;
             this.callback = callback;
-
-            Invoke();
-
             data.OnValueChanged(this, OnValueChanged);
         } 
 

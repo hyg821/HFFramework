@@ -166,12 +166,14 @@ namespace HFFramework.Demo
             });
             */
             
-            /*
+            
+            
             Label.Bind<int>(hp, delegate(int i)
             {
                 Label.text = i + " xxxxx";
             });
-            */
+            
+            
 
             TimerManager.Schedule(0, 3, 1, delegate (Timer t)
             {

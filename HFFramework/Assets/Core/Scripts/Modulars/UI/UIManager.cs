@@ -122,10 +122,10 @@ namespace HFFramework
             t.Close();
         }
 
-        public async UniTask<T> Open<T>(bool async = false,bool animation = false,object param = null) where T : UIController, new()
+        public async UniTask<T> Open<T>(bool async = false,bool animation = false,object args = null) where T : UIController, new()
         {
             T t = await GetController<T>(async);
-            t.Refresh(param);
+            t.Refresh(args);
             await t.Open(animation);
             return t;
         }

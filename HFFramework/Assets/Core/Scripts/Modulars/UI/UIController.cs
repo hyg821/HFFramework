@@ -70,7 +70,7 @@ namespace HFFramework
         /// </summary>
         /// <param name="tag"></param>
         /// <param name="value"></param>
-        public virtual void Refresh(object @params)
+        public virtual void Refresh(object args)
         {
 
         }

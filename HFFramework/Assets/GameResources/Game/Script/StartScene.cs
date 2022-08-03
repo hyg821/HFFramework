@@ -15,7 +15,7 @@ namespace HFFramework
             //初始化配置文件
             ConfigManager.Instance.Init();
             await AssetManager.Instance.LoadScene("GameStart", "GameStart");
-            //await UIManager.Instance.Open<DebugController>(true,true);
+            await UIManager.Instance.Open<DebugController>(true,false);
             await UIManager.Instance.Open<FunctionController>(true,true);
         }
 

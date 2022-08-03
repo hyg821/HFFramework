@@ -15,7 +15,7 @@ namespace HFFramework
             base.Awake();
         }
 
-        public async override UniTask OnEnter(object args)
+        public override async UniTask OnEnter(object args = null)
         {
             await base.OnEnter(args);
             await LoadResources();
@@ -25,7 +25,7 @@ namespace HFFramework
             CloseLoading();
         }
 
-        public async override UniTask OnExit(object args)
+        public override async UniTask OnExit(object args = null)
         {
             await base.OnExit(args);
             await OpenLoading(args);
@@ -36,11 +36,10 @@ namespace HFFramework
         }
 
         /// <summary>
-        ///  打开loading
+        /// 打开loading
         /// </summary>
-        /// <param name="p"></param>
-        /// <returns></returns>
-        public virtual async UniTask OpenLoading(object args)
+        /// <param name="args"></param>
+        public virtual async UniTask OpenLoading(object args = null)
         {
             await UniTask.Yield();
             HFLog.C("步骤1 打开loading");

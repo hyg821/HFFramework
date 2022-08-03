@@ -9,9 +9,9 @@ namespace HFFramework
 {
     public class StartScene : GameScene
     {
-        public override async UniTask OnEnter(object param = null)
+        public override async UniTask OnEnter(object args = null)
         {
-            await base.OnEnter(param);
+            await base.OnEnter(args);
             //初始化配置文件
             ConfigManager.Instance.Init();
             await AssetManager.Instance.LoadScene("GameStart", "GameStart");

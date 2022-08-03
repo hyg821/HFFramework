@@ -21,7 +21,7 @@ namespace HFFramework.Editor
             XSSFWorkbook book = new XSSFWorkbook(inPath);
             ISheet sheet = book.GetSheetAt(0);
             
-            for (int i = 0; i < sheet.LastRowNum; i++)
+            for (int i = 0; i <= sheet.LastRowNum; i++)
             {
                 IRow row = sheet.GetRow(i);
                 if (row!=null)
@@ -52,7 +52,7 @@ namespace HFFramework.Editor
 
                     sheetString.Append(rowString);
                 
-                    if (i != sheet.LastRowNum -1)
+                    if (i != sheet.LastRowNum)
                     {
                         sheetString.Append("\n");
                     }   

@@ -3,3 +3,4 @@ Type    LayerIndex    AssetbundleName    AssetName    ShowAnimation    HideAnima
 val    val    val    val    val    val    val
 string    int    string    string    string    string    int
 FunctionController    0    ui_prefab    FunctionView    1    1    0
+DebugController    0    ui_prefab    DebugView    1    1    1

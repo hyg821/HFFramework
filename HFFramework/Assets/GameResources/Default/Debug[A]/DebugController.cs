@@ -34,7 +34,7 @@ namespace HFFramework
 
             refCountBtn.onClick.AddListener(delegate ()
             {
-                //HFAssetManager.Instance.Debug();
+                AssetManager.Instance.RefCount();
             });
 
             closeBtn.onClick.AddListener(delegate ()

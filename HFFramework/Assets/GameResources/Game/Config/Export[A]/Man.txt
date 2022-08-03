@@ -2,3 +2,4 @@
 id    name    sex    address    love    index
 val    val    val    ref_Address    val    val
 int    string    bool    string    string[]    int[]
+0    东方    TRUE    0    吃饭;睡觉;玩游戏    1;3;5;6;2

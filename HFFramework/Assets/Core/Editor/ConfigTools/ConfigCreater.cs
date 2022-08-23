@@ -13,7 +13,7 @@ namespace HFFramework.Editor
 {
     public class ConfigCreater
     {
-        public static string[] split = new string[] { "    " };
+        public static string[] split = new string[] { "\t" };
         public static string[] arraySplit = new string[] { "[", "]", ";" };
 
         [MenuItem("配置文件/Excel导出文本")]
@@ -204,7 +204,7 @@ namespace HFFramework.Editor
             builder.AppendLine("    [System.Serializable]");
             builder.AppendLine("    public partial class " + _table);
             builder.AppendLine("    { ");
-            builder.AppendLine("        public static string[] split = new string[] {" + "\"" + "    " + "\"" + "};");
+            builder.AppendLine("        public static string[] split = new string[] {" + "\"" + "\t" + "\"" + "};");
             builder.AppendLine("        public static string[] splitArray = new string[] { " + "\"" + ";" + "\"" + ", " + "\"" + "[" + "\"" + ", " + "\"" + "]" + "\"" + " };");
             builder.AppendLine();
             builder.AppendLine("        " + @"private static " + _table + " instance;");

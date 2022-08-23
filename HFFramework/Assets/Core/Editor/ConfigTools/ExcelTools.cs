@@ -13,7 +13,7 @@ namespace HFFramework.Editor
 {
     public class ExcelTools
     {
-        public static string splitStr = "    ";
+        public static string splitStr = "\t";
         
         public static void ExcelToTxt(string inPath,string outPath)
         {

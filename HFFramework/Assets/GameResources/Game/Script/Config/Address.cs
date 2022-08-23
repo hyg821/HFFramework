@@ -29,11 +29,11 @@ namespace Config
         /// </summary>
         public string street;
     }
-
+        
     [System.Serializable]
     public partial class ConfigAddress
     { 
-        public static string[] split = new string[] {"    "};
+        public static string[] split = new string[] {"	"};
         public static string[] splitArray = new string[] { ";", "[", "]" };
 
         private static ConfigAddress instance;

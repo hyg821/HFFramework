@@ -74,7 +74,7 @@ namespace HFFramework
     ///  测试使用
     ///  说明  和后端的通讯 发送逻辑 和 解析逻辑
     ///   一个完整的数据  =  数据头  （12字节 4+4+4)   +  数据体 （proto包字节）  
-    ///  数据头 =  包体总长度4字节  + rpcID 操作码 + 数据体类型字段长度4字节  +  确定前后端 请求 应答的 唯一对应关系4字节
+    ///  数据头 =  包体总长度4字节 + rpcID 操作码(确定前后端 请求 应答的 唯一对应关系4字节) + 数据体类型字段长度4字节
     ///  数据体 =  proto包字节
     ///   
     ///  因为c# 是小端编码 服务器一般使用大端编码 所以 用到了 BitConver 和  ( BinaryReader  BinaryWriter )的地方需要 Array.Reverse(temp) 来转换到大端
@@ -127,7 +127,7 @@ namespace HFFramework
         /// <summary>
         ///  数据头长度
         /// </summary>
-        private const int MSG_HEAD_LEN = MSG_ALL_IDE_LEN + MSG_TYPE_LEN+ MSG_RPCID_LEN;
+        private const int MSG_HEAD_LEN = MSG_ALL_IDE_LEN + MSG_RPCID_LEN + MSG_TYPE_LEN;
 
         /// <summary>
         ///  socket

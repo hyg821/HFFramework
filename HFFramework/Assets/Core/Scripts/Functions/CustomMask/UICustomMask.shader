@@ -31,7 +31,7 @@ Shader "Test/UICustomMask"
             struct Appdata
             {
                 float4 position: POSITION;
-                float2 uv:TEXCORRD0;
+                float2 uv:TEXCOORD0;
             };
 
             struct V2F

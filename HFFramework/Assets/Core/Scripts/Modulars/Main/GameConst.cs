@@ -15,7 +15,7 @@ namespace HFFramework
         /// </summary>
         public const string HotFixDLLName = "HotFix";
 
-        public const string CLRBindingGeneratedPath = "Assets/OtherPlugins/ILRuntime/Generated";
+        public const string CLRBindingGeneratedPath = "Assets/ThirdParty/ILRuntime/Generated";
 
         //--------------------------------------自定义文件夹过滤标签--------------------------------------//
         public const string AssetFolderIde = "[A]";

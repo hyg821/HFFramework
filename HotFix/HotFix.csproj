@@ -38,8 +38,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>..\HFFramework\Assets\OtherPlugins\Demigiant\DOTween\DOTween.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\HFFramework\Assets\ThirdParty\Demigiant\DOTween\DOTween.dll</HintPath>
     </Reference>
     <Reference Include="Google.Protobuf">
       <HintPath>..\HFFramework\Assets\Plugins\Google.Protobuf.dll</HintPath>

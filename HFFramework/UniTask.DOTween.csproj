@@ -289,50 +289,56 @@
      <Reference Include="UnityEditor.Graphs">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/Unity.app/Contents/Managed/UnityEditor.Graphs.dll</HintPath>
      </Reference>
+     <Reference Include="UnityEditor.WebGL.Extensions">
+     <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
+     </Reference>
      <Reference Include="UnityEditor.OSXStandalone.Extensions">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEditor.iOS.Extensions">
-     <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
+     <Reference Include="NPOI">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/Plugins/npoi/NPOI.dll</HintPath>
+     </Reference>
+     <Reference Include="NPOI.OpenXmlFormats">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/Plugins/npoi/NPOI.OpenXmlFormats.dll</HintPath>
+     </Reference>
+     <Reference Include="NPOI.OOXML">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/Plugins/npoi/NPOI.OOXML.dll</HintPath>
      </Reference>
      <Reference Include="DOTweenEditor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Assets/OtherPlugins/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil.Mdb">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil.Pdb">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
-     </Reference>
-     <Reference Include="DOTween">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Assets/OtherPlugins/Demigiant/DOTween/DOTween.dll</HintPath>
-     </Reference>
-     <Reference Include="Google.Protobuf">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Assets/Plugins/Google.Protobuf.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/ThirdParty/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Unsafe">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.Unsafe.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.Unsafe.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Mdb">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.Mdb.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.Mdb.dll</HintPath>
+     </Reference>
+     <Reference Include="NPOI.OpenXml4Net">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/Plugins/npoi/NPOI.OpenXml4Net.dll</HintPath>
+     </Reference>
+     <Reference Include="ILRuntime.Mono.Cecil.Mdb">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Pdb">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.Pdb.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.Pdb.dll</HintPath>
+     </Reference>
+     <Reference Include="ILRuntime.Mono.Cecil">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.dll</HintPath>
+     </Reference>
+     <Reference Include="ILRuntime.Mono.Cecil.Pdb">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+     </Reference>
+     <Reference Include="DOTween">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/ThirdParty/Demigiant/DOTween/DOTween.dll</HintPath>
+     </Reference>
+     <Reference Include="Google.Protobuf">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/Plugins/Google.Protobuf.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Rocks">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.Rocks.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-     <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEditor.iOS.Extensions.Common">
-     <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.Rocks.dll</HintPath>
      </Reference>
      <Reference Include="mscorlib">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/Unity.app/Contents/UnityReferenceAssemblies/unity-4.8-api/mscorlib.dll</HintPath>
@@ -710,10 +716,10 @@
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/Unity.app/Contents/UnityReferenceAssemblies/unity-4.8-api/Facades/netstandard.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.UI">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.UI">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

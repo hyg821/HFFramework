@@ -44,30 +44,34 @@
      <Compile Include="Assets/Core/Editor/AssetBundleTools/AssetBundleWindow.cs" />
      <Compile Include="Assets/Core/Editor/Setting/BuildConfigWindow.cs" />
      <Compile Include="Assets/Core/Editor/MeshRendererEditor.cs" />
-     <Compile Include="Assets/OtherPlugins/BitmapFontImporter/Editor/FntParse.cs" />
+     <Compile Include="Assets/ThirdParty/BitmapFontImporter/Editor/FntParse.cs" />
+     <Compile Include="Assets/Core/Editor/ReferenceFinder/AssetTreeView.cs" />
      <Compile Include="Assets/Core/Editor/AssetTools/CreateAssets.cs" />
      <Compile Include="Assets/Core/Editor/JenKins/JenKinsBuild.cs" />
      <Compile Include="Assets/Core/Editor/AssetTools/HFOpenAssetHandler.cs" />
      <Compile Include="Assets/Core/Scripts/Attribute/Editor/SetPropertyDrawer.cs" />
+     <Compile Include="Assets/Core/Editor/ConfigTools/ExcelTools.cs" />
      <Compile Include="Assets/Core/Editor/AssetBundleTools/AssetBundleMD5.cs" />
      <Compile Include="Assets/Core/Editor/EditorHelper.cs" />
-     <Compile Include="Assets/OtherPlugins/BitmapFontImporter/Editor/BFImporter.cs" />
+     <Compile Include="Assets/ThirdParty/BitmapFontImporter/Editor/BFImporter.cs" />
      <Compile Include="Assets/Core/Editor/AssetTools/HFAssetPostprocessor.cs" />
      <Compile Include="Assets/Core/Editor/AssetConfigEditor.cs" />
      <Compile Include="Assets/Core/Editor/EditorRefresh.cs" />
      <Compile Include="Assets/Core/Editor/Tools/AutoGeneratePathEditor.cs" />
-     <Compile Include="Assets/OtherPlugins/BitmapFontImporter/Editor/BFMenuTool.cs" />
+     <Compile Include="Assets/ThirdParty/BitmapFontImporter/Editor/BFMenuTool.cs" />
      <Compile Include="Assets/Core/Editor/Setting/ProjectSetting.cs" />
      <Compile Include="Assets/Core/Editor/Setting/HFDefaultSceneWindow.cs" />
      <Compile Include="Assets/Core/Editor/ConfigTools/ConfigCreater.cs" />
      <Compile Include="Assets/Core/Editor/Tools/FindReferences.cs" />
-     <Compile Include="Assets/Core/Scripts/Inherit/Editor/SlicedFilledImageEditor.cs" />
+     <Compile Include="Assets/Core/Scripts/Inherit/CircleImage/Editor/SlicedFilledImageEditor.cs" />
      <Compile Include="Assets/Core/Editor/AssetBundleTools/MD5Diff.cs" />
      <Compile Include="Assets/Core/Editor/AutoCompilerEditor.cs" />
      <Compile Include="Assets/Core/Editor/AssetBundleTools/AssetBundleTools.cs" />
      <Compile Include="Assets/Core/Editor/Setting/EnvironmentConfigEditor.cs" />
      <Compile Include="Assets/Core/Editor/Tools/FTPTools.cs" />
-     <Compile Include="Assets/OtherPlugins/ILRuntime/Editor/ILRuntimeCLRBinding.cs" />
+     <Compile Include="Assets/ThirdParty/ILRuntime/Editor/ILRuntimeCLRBinding.cs" />
+     <Compile Include="Assets/Core/Editor/ReferenceFinder/ReferenceFinderData.cs" />
+     <Compile Include="Assets/Core/Editor/ReferenceFinder/ReferenceFinderWindow.cs" />
      <Compile Include="Assets/Core/Editor/APITestEditor.cs" />
      <Compile Include="Assets/Core/Editor/HotFixLinkerEditor.cs" />
      <Compile Include="Assets/Core/Editor/JenKins/XCodePostProcess.cs" />
@@ -324,53 +328,59 @@
      <Reference Include="UnityEditor.Graphs">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/Unity.app/Contents/Managed/UnityEditor.Graphs.dll</HintPath>
      </Reference>
+     <Reference Include="UnityEditor.WebGL.Extensions">
+     <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
+     </Reference>
      <Reference Include="UnityEditor.OSXStandalone.Extensions">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEditor.iOS.Extensions">
-     <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
+     <Reference Include="NPOI">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/Plugins/npoi/NPOI.dll</HintPath>
+     </Reference>
+     <Reference Include="NPOI.OpenXmlFormats">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/Plugins/npoi/NPOI.OpenXmlFormats.dll</HintPath>
+     </Reference>
+     <Reference Include="NPOI.OOXML">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/Plugins/npoi/NPOI.OOXML.dll</HintPath>
      </Reference>
      <Reference Include="DOTweenEditor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Assets/OtherPlugins/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil.Mdb">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil.Pdb">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
-     </Reference>
-     <Reference Include="DOTween">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Assets/OtherPlugins/Demigiant/DOTween/DOTween.dll</HintPath>
-     </Reference>
-     <Reference Include="Google.Protobuf">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Assets/Plugins/Google.Protobuf.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/ThirdParty/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Unsafe">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.Unsafe.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.Unsafe.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Mdb">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.Mdb.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.Mdb.dll</HintPath>
+     </Reference>
+     <Reference Include="NPOI.OpenXml4Net">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/Plugins/npoi/NPOI.OpenXml4Net.dll</HintPath>
+     </Reference>
+     <Reference Include="ILRuntime.Mono.Cecil.Mdb">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Pdb">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.Pdb.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.Pdb.dll</HintPath>
+     </Reference>
+     <Reference Include="ILRuntime.Mono.Cecil">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.dll</HintPath>
+     </Reference>
+     <Reference Include="ILRuntime.Mono.Cecil.Pdb">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.ourpalm.ilruntime@2.0.2/Plugins/ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+     </Reference>
+     <Reference Include="DOTween">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/ThirdParty/Demigiant/DOTween/DOTween.dll</HintPath>
+     </Reference>
+     <Reference Include="Google.Protobuf">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Assets/Plugins/Google.Protobuf.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Rocks">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.Rocks.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.unity.burst@1.6.5/Unity.Burst.CodeGen/Unity.Burst.Cecil.Rocks.dll</HintPath>
      </Reference>
      <Reference Include="nunit.framework">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-     <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEditor.iOS.Extensions.Common">
-     <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
      </Reference>
      <Reference Include="mscorlib">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/Unity.app/Contents/UnityReferenceAssemblies/unity-4.8-api/mscorlib.dll</HintPath>
@@ -748,113 +758,109 @@
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.4f1c1/Unity.app/Contents/UnityReferenceAssemblies/unity-4.8-api/Facades/netstandard.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.TestRunner">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.TestRunner">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
      </Reference>
      <Reference Include="Unity.AssetBundleBrowser.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.AssetBundleBrowser.Editor.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.AssetBundleBrowser.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.MemoryProfiler">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.MemoryProfiler.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.MemoryProfiler.dll</HintPath>
      </Reference>
      <Reference Include="Unity.2D.Tilemap.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TextMeshPro.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualStudio.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Timeline.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Timeline">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.TextMeshPro">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/ILRuntime.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.MemoryProfiler.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.MemoryProfiler.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.Sprite.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.MemoryProfiler.Editor.MemoryProfilerModule">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.MemoryProfiler.Editor.MemoryProfilerModule.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEditor.UI">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Rider.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEngine.UI">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.EditorCoroutines.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.Universal.Shaders">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Searcher.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="PPv2URPConverters">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.Universal.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Mathematics.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.Core.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Mathematics">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Burst">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.ShaderGraph.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
      </Reference>
      <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="PPv2URPConverters">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.TextMeshPro.Editor">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualStudio.Editor">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Timeline">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.TextMeshPro">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Editor">
-     <HintPath>/Users/houyingge/Desktop/HFFramework/HFFramework/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Searcher.Editor">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="ILRuntime">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/ILRuntime.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Sprite.Editor">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEditor.UI">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Rider.Editor">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.UI">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Core.Runtime">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.EditorCoroutines.Editor">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Mathematics">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.ShaderGraph.Editor">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.MemoryProfiler.Editor">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.MemoryProfiler.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Burst">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Universal.Editor">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Timeline.Editor">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Mathematics.Editor">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.MemoryProfiler.Editor.MemoryProfilerModule">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.MemoryProfiler.Editor.MemoryProfilerModule.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Core.Editor">
+     <HintPath>/Users/apple/Desktop/TTT/HFFramework/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{6968ef37-2528-16c1-7dba-4addf051aa8d}</Project>
       <Name>Assembly-CSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="UniTask.TextMeshPro.csproj">
-      <Project>{c5d6a179-6e6e-d131-18e3-7ad7fdf1f0f7}</Project>
-      <Name>UniTask.TextMeshPro</Name>
     </ProjectReference>
     <ProjectReference Include="StompyRobot.SRF.Editor.csproj">
       <Project>{db8cffe9-47c8-d8dc-bb1e-64e8f8832ec2}</Project>
@@ -876,6 +882,14 @@
       <Project>{1a317cd2-45c7-5b2a-235f-049fb294cc56}</Project>
       <Name>taecg.shaderReference.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="UniTask.Linq.csproj">
+      <Project>{648e2e29-d7f8-a3a3-0c6a-0ea37a98a2fd}</Project>
+      <Name>UniTask.Linq</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.TextMeshPro.csproj">
+      <Project>{c5d6a179-6e6e-d131-18e3-7ad7fdf1f0f7}</Project>
+      <Name>UniTask.TextMeshPro</Name>
+    </ProjectReference>
     <ProjectReference Include="UniTask.csproj">
       <Project>{dfbbe991-ef74-c667-8cc1-e5c82dda85bc}</Project>
       <Name>UniTask</Name>
@@ -887,10 +901,6 @@
     <ProjectReference Include="StompyRobot.SRF.csproj">
       <Project>{a0c92ba2-b31d-740a-009b-3089251be8a9}</Project>
       <Name>StompyRobot.SRF</Name>
-    </ProjectReference>
-    <ProjectReference Include="UniTask.Linq.csproj">
-      <Project>{648e2e29-d7f8-a3a3-0c6a-0ea37a98a2fd}</Project>
-      <Name>UniTask.Linq</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -14,8 +14,8 @@ namespace HFFramework
 
         public void SetData(LogInfo info,int index)
         {
-            cellText.text = info.condition;
             this.index = index;
+            cellText.text = info.condition;
         }
     }
 }

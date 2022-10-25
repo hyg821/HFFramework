@@ -35,7 +35,7 @@ namespace HFFramework
             GameObject prefab = AssetManager.Instance.GetAsset<GameObject>("ui_prefab", "LogCell");
             cellPrefab = prefab.GetComponent<EnhancedScrollerCellView>();
             Text text = prefab.transform.Find("Text").GetComponent<Text>();
-            textGenerationSettings = text.GetGenerationSettings(new Vector2(700,0));
+            textGenerationSettings = text.GetGenerationSettings(new Vector2(680,0));
             cacheTextGenerator = text.cachedTextGenerator;
             scroller = GetComponent<EnhancedScroller>();
             scroller.Delegate = this;
@@ -77,7 +77,12 @@ namespace HFFramework
             LogInfo info = logInfos[dataIndex];
             if (info.height==-1)
             {
-                info.height = cacheTextGenerator.GetPreferredHeight(logInfos[dataIndex].condition, textGenerationSettings);
+                textGenerationSettings.updateBounds = true;
+                textGenerationSettings.horizontalOverflow = HorizontalWrapMode.Wrap;
+                textGenerationSettings.verticalOverflow = VerticalWrapMode.Overflow;
+                textGenerationSettings.scaleFactor = 1;
+                cacheTextGenerator.Populate(logInfos[dataIndex].condition, textGenerationSettings);
+                info.height =  cacheTextGenerator.rectExtents.height;
             }
             return info.height;
         }

@@ -9,23 +9,25 @@ namespace HFFramework
     /// <summary>
     ///  局部更新任务（适用于 短时间用update 更新的任务）
     /// </summary>
-    public class LambdaUpdateTask : Entity
+    public class LambdaUpdateTask<T> : Entity
     {
-        private Action<LambdaUpdateTask,object> update;
+        private Action<LambdaUpdateTask<T>,T> update;
 
         private UniTaskCompletionSource taskCompletionSource;
 
+        private T args;
+        
         public override void Awake()
         {
             base.Awake();
             IsNeedUpdate = true;
         }
 
-        public async virtual UniTask Wait(Action<LambdaUpdateTask, object> update, UniTaskCompletionSource taskCompletionSource,object args)
+        public async virtual UniTask Wait(Action<LambdaUpdateTask<T>, T> update, UniTaskCompletionSource taskCompletionSource,T args)
         {
             this.update = update;
             this.taskCompletionSource = taskCompletionSource;
-            this.userData = args;
+            this.args = args;
             await taskCompletionSource.Task;
         }
 
@@ -52,7 +54,7 @@ namespace HFFramework
             base.OnUpdate(deltaTime);
             if (update != null)
             {
-                update(this, userData);
+                update(this, args);
             }
         }
     }

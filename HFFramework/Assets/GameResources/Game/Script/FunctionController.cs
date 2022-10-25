@@ -203,11 +203,11 @@ namespace HFFramework.Demo
         public async void 局部刷新Task()
         {
             HFLog.C("开始局部刷新task");
-            LambdaUpdateTask task = GameFactory.CreateEntity<LambdaUpdateTask>();
+            LambdaUpdateTask<int> task = GameFactory.CreateEntity<LambdaUpdateTask<int>>();
             int a = 0;
-            await task.Wait(delegate (LambdaUpdateTask t,  object o)
+            await task.Wait(delegate (LambdaUpdateTask<int> t,  int o)
             {
-                a += (int)o;
+                a += o;
                 HFLog.C("局部刷新task " + a);
                 if (a>=100)
                 {

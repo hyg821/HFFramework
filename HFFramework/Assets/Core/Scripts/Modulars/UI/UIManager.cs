@@ -27,7 +27,7 @@ namespace HFFramework
 
         public Dictionary<int, UICanvas> canvasDic = new Dictionary<int, UICanvas>();
 
-        public Dictionary<string, UIController> controllerDic = new Dictionary<string, UIController>();
+        public Dictionary<string, UIView> controllerDic = new Dictionary<string, UIView>();
 
         void Awake()
         {
@@ -88,9 +88,9 @@ namespace HFFramework
             return uiCanvas;
         }
 
-        public async UniTask<T> GetController<T>(bool async) where T :UIController,new()
+        public async UniTask<T> GetController<T>(bool async) where T :UIView,new()
         {
-            UIController controller;
+            UIView controller;
             string type = typeof(T).Name;
             if (controllerDic.TryGetValue(type, out controller) == false)
             {
@@ -116,13 +116,13 @@ namespace HFFramework
             return controller as T;
         }
 
-        public async UniTaskVoid PreLoad<T>() where T : UIController, new()
+        public async UniTaskVoid PreLoad<T>() where T : UIView, new()
         {
             T t = await GetController<T>(false);
             t.Close();
         }
 
-        public async UniTask<T> Open<T>(bool async = false,bool animation = false,object args = null) where T : UIController, new()
+        public async UniTask<T> Open<T>(bool async = false,bool animation = false,object args = null) where T : UIView, new()
         {
             T t = await GetController<T>(async);
             t.Refresh(args);
@@ -132,7 +132,7 @@ namespace HFFramework
 
         public async UniTask Close<T>(bool animation = false)
         {
-            UIController controller;
+            UIView controller;
             string key = typeof(T).Name;
             if (controllerDic.TryGetValue(key, out controller))
             {

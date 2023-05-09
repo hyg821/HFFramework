@@ -636,6 +636,7 @@
      <Compile Include="Assets\Core\Scripts\Modulars\Main\GameFactory.cs" />
      <Compile Include="Assets\Core\Scripts\Base\Linker\HotFixLinker.cs" />
      <Compile Include="Assets\ThirdParty\Best HTTP (Pro)\BestHTTP\SecureProtocol\math\ec\custom\djb\Curve25519.cs" />
+     <Compile Include="Assets\Core\Scripts\Modulars\Asset\AssetLoader.cs" />
      <Compile Include="Assets\ThirdParty\Best HTTP (Pro)\BestHTTP\SecureProtocol\math\raw\Nat512.cs" />
      <Compile Include="Assets\ThirdParty\EnhancedScroller v2\Demos\12 Nested Scrollers\DetailCellView.cs" />
      <Compile Include="Assets\ThirdParty\Best HTTP (Pro)\BestHTTP\Extensions\KeyValuePairList.cs" />
@@ -652,7 +653,7 @@
      <Compile Include="Assets\ThirdParty\Best HTTP (Pro)\BestHTTP\SecureProtocol\crypto\PbeParametersGenerator.cs" />
      <Compile Include="Assets\ThirdParty\Best HTTP (Pro)\BestHTTP\SecureProtocol\crypto\signers\DsaDigestSigner.cs" />
      <Compile Include="Assets\ThirdParty\Best HTTP (Pro)\BestHTTP\WebSocket\WebSocketStatusCodes.cs" />
-     <Compile Include="Assets\Core\Scripts\Modulars\UI\UIController.cs" />
+     <Compile Include="Assets\Core\Scripts\Modulars\UI\UIView.cs" />
      <Compile Include="Assets\ThirdParty\Best HTTP (Pro)\BestHTTP\Decompression\Inflate.cs" />
      <Compile Include="Assets\ThirdParty\Best HTTP (Pro)\BestHTTP\PlatformSupport\IO\Directory.cs" />
      <Compile Include="Assets\ThirdParty\Best HTTP (Pro)\BestHTTP\SecureProtocol\util\collections\EnumerableProxy.cs" />
@@ -1174,7 +1175,7 @@
      <Compile Include="Assets\Core\Scripts\Modulars\Network\SocketManager.cs" />
      <Compile Include="Assets\ThirdParty\Best HTTP (Pro)\BestHTTP\SecureProtocol\crypto\digests\WhirlpoolDigest.cs" />
      <Compile Include="Assets\ThirdParty\Best HTTP (Pro)\BestHTTP\SecureProtocol\math\ec\custom\sec\SecP192R1FieldElement.cs" />
-     <Compile Include="Assets\Core\Scripts\Modulars\Asset\AssetLoader.cs" />
+     <Compile Include="Assets\Core\Scripts\Modulars\UI\UISubView.cs" />
      <None Include="Assets\ThirdParty\EnhancedScroller v2\upgrading from 1.x to 2.x.txt" />
      <None Include="Assets\Core\Scripts\Functions\CustomMesh\CustomMesh.shader" />
      <None Include="Assets\ThirdParty\TextMesh Pro\Shaders\TMPro.cginc" />

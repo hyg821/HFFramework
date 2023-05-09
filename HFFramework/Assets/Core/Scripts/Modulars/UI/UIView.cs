@@ -8,11 +8,11 @@ using Cysharp.Threading.Tasks;
 namespace HFFramework
 {
     /// <summary>
-    ///  对应UI的操作层
+    ///  每一个页面的控制层
     /// </summary>
     /// <typeparam name="V"></typeparam>
     /// <typeparam name="M"></typeparam>
-    public class UIController : UIBase 
+    public class UIView : UIBase 
     {
         private UniTaskCompletionSource showTask;
 

@@ -615,7 +615,7 @@ namespace HFFramework
         /// <summary>
         ///  释放引用计数为0的bundle
         /// </summary>
-        public void UnloadUnusedAssetBundle(bool unloadAllLoadedObjects = false,bool resourcesUnloadUnused = false)
+        public void UnloadUnusedAssetBundle(bool unloadAllLoadedObjects = true,bool resourcesUnloadUnused = false)
         {
             unusedAssetBundleList.Clear();
             foreach (var item in allAssetBundleDic)

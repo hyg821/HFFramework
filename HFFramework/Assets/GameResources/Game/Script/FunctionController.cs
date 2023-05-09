@@ -25,7 +25,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace HFFramework.Demo
 {
-    public class FunctionController : UIController
+    public class FunctionController : UIView
     {
         public TextMeshProUGUI TitleLabel;
         public Button fun0;

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace HFFramework
 {
-    public class DebugController : UIController
+    public class DebugController : UIView
     {
         public LogView logView;
         public Button closeBtn;

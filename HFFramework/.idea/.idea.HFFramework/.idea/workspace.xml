@@ -10,6 +10,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3212ae53900d409d83482ff247f5fe9a157c00/24/16a1741d/Transform.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Core/Scripts/Modulars/Asset/AssetLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Core/Scripts/Modulars/UI/UISubView.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -72,6 +73,8 @@
       <workItem from="1683640743028" duration="124000" />
       <workItem from="1683640890347" duration="25000" />
       <workItem from="1683641003089" duration="61000" />
+      <workItem from="1683641359105" duration="508000" />
+      <workItem from="1683641896728" duration="44000" />
     </task>
     <servers />
   </component>

@@ -61,27 +61,39 @@ namespace HFFramework
         public Transform transform;
 
         /// <summary>
-        ///  父element
+        /// 宿主
         /// </summary>
-        public Entity parent;
+        public Entity domain;
 
         /// <summary>
         /// 自定义数据
         /// </summary>
         public object userData;
 
+        private AssetLoader m_assetLoader;
+
+        /// <summary>
+        /// 资源加载器
+        /// </summary>
+        public AssetLoader assetLoader
+        {
+            get
+            {
+                if (m_assetLoader == null)
+                {
+                    m_assetLoader = new AssetLoader();
+                }
+
+                return m_assetLoader;
+            }
+        }
+        
         [NonSerialized]
         /// <summary>
         ///  本体entity的帮助类
         /// </summary>
         public List<Component> components = new List<Component>();
-
-        [NonSerialized]
-        /// <summary>
-        /// 子实体 通常是 有从属关系并且有显示意义的子实体存在的地方
-        /// </summary>
-        public List<Entity> childs = new List<Entity>();
-
+        
         /// <summary>
         ///  注册的消息 字典   destory会自动销毁
         /// </summary>
@@ -196,9 +208,14 @@ namespace HFFramework
 
         public async UniTask LoadResourcesAsync(string packageName, string assetName)
         {
-            GameObject prefab = await AssetManager.Instance.GetPrefabAsync(packageName, assetName);
+            GameObject prefab = await assetLoader.LoadAssetAsync<GameObject>(packageName, assetName);
             GameObject go = await GameFactory.InstantiateAsync(prefab);
             SetGameObject(go);
+        }
+
+        public void SetDomain(Entity domain)
+        {
+            this.domain = domain;
         }
 
         public void SetGameObject(GameObject value)
@@ -207,6 +224,14 @@ namespace HFFramework
             transform = gameObject.transform;
         }
 
+        public void SetParent(GameObject parent,bool worldPositionStays)
+        {
+            if (transform!=null)
+            {
+                transform.transform.SetParent(parent.transform,worldPositionStays);
+            }            
+        }
+        
         /// <summary>
         ///  寻找 子游戏物体 
         /// </summary>
@@ -266,49 +291,6 @@ namespace HFFramework
             {
                 components.Remove(component);
                 component.OnDestroy();
-            }
-        }
-
-        public void SetParent(Entity parent, bool isSetTransform = false, bool worldPositionStays = false)
-        {
-            this.parent = parent;
-            if (!parent.childs.Contains(this))
-            {
-                parent.childs.Add(this);
-                if (isSetTransform && parent.transform != null && this.transform != null)
-                {
-                    transform.SetParent(parent.transform, worldPositionStays);
-                }
-            }
-        }
-
-        public void AddChild(Entity child, bool isSetTransform = false, bool worldPositionStays = false)
-        {
-            child.SetParent(this, isSetTransform);
-        }
-
-        public T GetChild<T>() where T : Entity
-        {
-            for (int i = 0; i < childs.Count; i++)
-            {
-                Entity e = childs[i];
-                if (typeof(T) == e.GetType())
-                {
-                    return e as T;
-                }
-            }
-            return null;
-        }
-
-        public void RemoveChild(Entity child, bool destroy)
-        {
-            if (child != null)
-            {
-                childs.Remove(child);
-                if (destroy)
-                {
-                    child.Destroy();
-                }
             }
         }
 
@@ -532,16 +514,9 @@ namespace HFFramework
                 Component.OnDestroy();
             }
 
-            for (int i = childs.Count - 1; i >= 0; i--)
-            {
-                Entity child = childs[i];
-                childs.RemoveAt(i);
-                child.Destroy();
-            }
-
             binder.Clear();
 
-            parent = null;
+            domain = null;
 
             foreach (var item in messageTypeSet)
             {
@@ -557,6 +532,8 @@ namespace HFFramework
 
             GameFactory.RemoveEntity(this);
 
+            assetLoader?.Release();
+            
             instanceId = 0;
         }
 

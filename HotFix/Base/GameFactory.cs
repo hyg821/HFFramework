@@ -15,15 +15,17 @@ namespace HotFix
             return obj;
         }
 
-        private static T NewEntity<T>() where T : Entity, new()
+        private static T NewEntity<T>(Entity domain = null) where T : Entity, new()
         {
             T t = new T();
+            t.SetDomain(domain);
             return t;
         }
 
-        public static T CreateEntity<T>() where T : Entity, new()
+
+        public static T CreateEntity<T>(Entity domain = null) where T : Entity, new()
         {
-            T t = NewEntity<T>();
+            T t = NewEntity<T>(domain);
             t.Awake();
             t.Start();
             return t;
@@ -37,14 +39,11 @@ namespace HotFix
             return t;
         }
 
-        public static T CreateEntity<T>(GameObject gameObject = null, Entity parent = null, bool worldPositionStays = false) where T : Entity, new()
+        public static T CreateEntity<T>(GameObject gameObject,GameObject parent = null,bool worldPositionStays = false,Entity domain = null) where T : Entity, new()
         {
             T t = NewEntity<T>();
             t.SetGameObject(gameObject);
-            if (parent != null)
-            {
-                t.SetParent(parent, worldPositionStays);
-            }
+            t.SetParent(parent,worldPositionStays);
             t.Awake();
             t.Start();
             return t;

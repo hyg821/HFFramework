@@ -215,7 +215,7 @@ namespace HFFramework
             }
         }
 
-        private string GetAssetPath(string packageName,string assetName)
+        public string GetAssetPath(string packageName,string assetName)
         {
             return allAssetPathDic[StringToLower(packageName)][StringToLower(assetName)];
         }

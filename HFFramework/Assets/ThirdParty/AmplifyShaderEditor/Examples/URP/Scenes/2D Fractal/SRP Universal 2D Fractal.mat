@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SRP Universal 2D Fractal
   m_Shader: {fileID: 4800000, guid: 7f38971bb545b81468016358718858bc, type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -18,14 +19,30 @@ Material:
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
+    - _AlphaCutoff: 0.5
     - _Float0: 1
     - _Float1: 0.95
     - _Float2: 2.5
     - _Float3: 0.2
     - _Float4: 1
     - _MaxIter: 250
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _Scale: 4
     - _Threshold: 2
     - _ZoomBase: 0.2
@@ -33,4 +50,6 @@ Material:
     - _ZoomScale: 4
     m_Colors:
     - _Center: {r: -0.766, g: -0.1009, b: 0, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _Vector2: {r: -0.04, g: 0.77, b: 0, a: 0}
+  m_BuildTextureStacks: []

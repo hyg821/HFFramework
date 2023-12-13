@@ -1,14 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="28878067-2804-413f-83d3-2ce2f42c604d" name="Changes" comment="" />
+    <list default="true" id="28878067-2804-413f-83d3-2ce2f42c604d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.HFFramework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HFFramework/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assembly-CSharp-firstpass.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp-firstpass.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Core/Graph/UniversalRenderPipelineAsset.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Core/Graph/UniversalRenderPipelineAsset.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Core/Graph/UniversalRenderPipelineAssetRenderer.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Core/Graph/UniversalRenderPipelineAssetRenderer.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Core/Graph/UniversalRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Core/Graph/UniversalRenderPipelineGlobalSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Core/Scripts/Functions/BoxCollider/Materials/xxx.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Core/Scripts/Functions/BoxCollider/Materials/xxx.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Core/Scripts/Functions/CombinMesh/Materials/a.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Core/Scripts/Functions/CombinMesh/Materials/a.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Core/Scripts/Functions/CombinMesh/Materials/b.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Core/Scripts/Functions/CombinMesh/Materials/b.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Core/Scripts/Functions/CombinMesh/Materials/c.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Core/Scripts/Functions/CombinMesh/Materials/c.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameResources/Game/Mat[A]/mat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameResources/Game/Mat[A]/mat.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameResources/Game/Texture[A][S]/TestAtlas.spriteatlas" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameResources/Game/Texture[A][S]/TestAtlas.spriteatlas" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Common/Universal BrushedMetal.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Common/Universal BrushedMetal.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Common/Universal CalibrationFloor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Common/Universal CalibrationFloor.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Common/Universal Material Inside.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Common/Universal Material Inside.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Common/Universal Material Outside.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Common/Universal Material Outside.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Common/Universal Rubber.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Common/Universal Rubber.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/2D Fractal/SRP Universal 2D Fractal.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/2D Fractal/SRP Universal 2D Fractal.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/Coverage/SRP Universal Coverage.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/Coverage/SRP Universal Coverage.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/GlintSparkle/SRP Universal GlintSparkle.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/GlintSparkle/SRP Universal GlintSparkle.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/Omni Decal/SRP URP Omni Decal.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/Omni Decal/SRP URP Omni Decal.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/Transparent Cutout/CutoutInnerMaterial.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/Transparent Cutout/CutoutInnerMaterial.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/Transparent Cutout/CutoutOuterMaterial.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/Transparent Cutout/CutoutOuterMaterial.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/Transparent Cutout/TransparentInnerMaterial.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/Transparent Cutout/TransparentInnerMaterial.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/Transparent Cutout/TransparentOuterMaterial.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/Transparent Cutout/TransparentOuterMaterial.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/URP Reflection Probe/URP Reflection Probe BrushedMetal.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/URP Reflection Probe/URP Reflection Probe BrushedMetal.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/URP Reflection Probe/URP Reflection Probe.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Examples/URP/Scenes/URP Reflection Probe/URP Reflection Probe.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP/2DCustomLit.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP/2DCustomLit.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP/2DLit.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP/2DLit.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP/Decal.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP/Decal.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP/Lit.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP/Lit.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP/Lit.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP/Lit.shader.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP/Unlit.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/AmplifyShaderEditor/Plugins/EditorResources/Templates/URP/Unlit.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThirdParty/Demigiant/Resources/DOTweenSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThirdParty/Demigiant/Resources/DOTweenSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Logs/Packages-Update.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/Packages-Update.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/boot.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/StompyRobot.SRDebugger.Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/StompyRobot.SRDebugger.Editor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StompyRobot.SRDebugger.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/StompyRobot.SRDebugger.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StompyRobot.SRF.Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/StompyRobot.SRF.Editor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StompyRobot.SRF.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/StompyRobot.SRF.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniTask.Addressables.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UniTask.Addressables.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniTask.DOTween.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UniTask.DOTween.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniTask.Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UniTask.Editor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniTask.Linq.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UniTask.Linq.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniTask.TextMeshPro.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UniTask.TextMeshPro.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UniTask.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UniTask.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taecg.shaderReference.Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/taecg.shaderReference.Editor.csproj" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0c9183c83c1543a1bfb64f3734ed0991816200/29/41efcf87/Editor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3212ae53900d409d83482ff247f5fe9a157c00/24/16a1741d/Transform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3212ae53900d409d83482ff247f5fe9a157c00/26/8039c933/AsyncGPUReadbackRequest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3212ae53900d409d83482ff247f5fe9a157c00/62/10bed1fb/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3212ae53900d409d83482ff247f5fe9a157c00/8d/990e261e/CommandBuffer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3212ae53900d409d83482ff247f5fe9a157c00/ba/858e087c/UnityAction.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/41914444499f4996a3e6af79cf6c1fdb574b98/29/40f97274/IntPtr.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ce12dc1aa9e14b919d8c1321c95d47fb35e718/43/f1e291f5/PropertyChangedEventArgs.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de80aed0bd3646409e8bfb15c101f005e2000/5d/741db269/MemoryExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de80aed0bd3646409e8bfb15c101f005e2000/eb/602d89a9/ReadOnlySpan`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e84932cb409d42269fc72ad26f20391b532bb8/c8/c25fef35/EventArgs.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f8507cae17da4a048c26c1ad6a304248574b88/99/108cffad/EventHandler`1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Core/Scripts/Modulars/Asset/AssetLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Core/Scripts/Modulars/UI/UISubView.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -27,12 +93,13 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="D:\UnityHub\2021.3.9f1c1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="D:\UnityHub\2022.3.8f1c1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath D:\HFFramework\HFFramework -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\HFFramework\HFFramework" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -75,6 +142,23 @@
       <workItem from="1683641003089" duration="61000" />
       <workItem from="1683641359105" duration="508000" />
       <workItem from="1683641896728" duration="44000" />
+      <workItem from="1684214564889" duration="2380000" />
+      <workItem from="1694415265395" duration="264000" />
+      <workItem from="1694415717900" duration="1571000" />
+      <workItem from="1694417375844" duration="348000" />
+      <workItem from="1694512534896" duration="387000" />
+      <workItem from="1695282868687" duration="20000" />
+      <workItem from="1695282915628" duration="224000" />
+      <workItem from="1695283384274" duration="86000" />
+      <workItem from="1695283495299" duration="183000" />
+      <workItem from="1695283698105" duration="61000" />
+      <workItem from="1695283810088" duration="1090000" />
+      <workItem from="1695541772850" duration="342000" />
+      <workItem from="1697430021674" duration="691000" />
+      <workItem from="1697437269387" duration="1299000" />
+      <workItem from="1698818094507" duration="34000" />
+      <workItem from="1698818206243" duration="156000" />
+      <workItem from="1701093846803" duration="864000" />
     </task>
     <servers />
   </component>

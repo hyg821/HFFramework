@@ -435,7 +435,7 @@ Shader /*ase_name*/ "Hidden/Universal/2D Custom Lit" /*end*/
                 "LightMode" = "Picking"
             }
 
-            Cull Off
+			Cull Off
 			Blend Off
 			ZTest LEqual
 			ZWrite On

@@ -58,12 +58,12 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				false:ExcludePass:DecalMeshForwardEmissive
 				false:HidePort:DecalScreenSpaceProjector:Emission
 			Option:Support LOD CrossFade:false,true:false
-				true:SetDefine:DBufferMesh:pragma multi_compile _ LOD_FADE_CROSSFADE
-				true:SetDefine:DecalScreenSpaceMesh:pragma multi_compile _ LOD_FADE_CROSSFADE
-				true:SetDefine:DecalGBufferMesh:pragma multi_compile _ LOD_FADE_CROSSFADE
-				false:RemoveDefine:DBufferMesh:pragma multi_compile _ LOD_FADE_CROSSFADE
-				false:RemoveDefine:DecalScreenSpaceMesh:pragma multi_compile _ LOD_FADE_CROSSFADE
-				false:RemoveDefine:DecalGBufferMesh:pragma multi_compile _ LOD_FADE_CROSSFADE
+				true:SetDefine:DBufferMesh:pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+				true:SetDefine:DecalScreenSpaceMesh:pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+				true:SetDefine:DecalGBufferMesh:pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+				false:RemoveDefine:DBufferMesh:pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+				false:RemoveDefine:DecalScreenSpaceMesh:pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+				false:RemoveDefine:DecalGBufferMesh:pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
 			Option:Angle Fade:false,true:false
 				true:SetDefine:DECAL_ANGLE_FADE 1
 				true:SetShaderProperty:_DecalAngleFadeSupported,[HideInInspector] _DecalAngleFadeSupported("Decal Angle Fade Supported", Float) = 1
@@ -116,6 +116,8 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma editor_sync_compilation
 
 			#pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+			#pragma multi_compile_fragment _ _FOVEATED_RENDERING_NON_UNIFORM_RASTER
+			#pragma multi_compile _ _DECAL_LAYERS
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
@@ -126,6 +128,12 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
 			#ifdef SCENEPICKINGPASS
 			float4 _SelectionID;
+			#endif
+			#if _RENDER_PASS_ENABLED
+			#define GBUFFER3 0
+			#define GBUFFER4 1
+			FRAMEBUFFER_INPUT_HALF(GBUFFER3);
+			FRAMEBUFFER_INPUT_HALF(GBUFFER4);
 			#endif
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
@@ -156,8 +164,10 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			struct Attributes
 			{
 				float3 positionOS : POSITION;
-				/*ase_vdata:p=p*/
-				UNITY_VERTEX_INPUT_INSTANCE_ID	
+				float3 normalOS : NORMAL;
+				float4 tangentOS : TANGENT;
+				/*ase_vdata:p=p;n=n;t=t*/
+				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
 			struct PackedVaryings
@@ -263,6 +273,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
 
+				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
+				inputMesh.normalOS = float3( 0, 1, 0 );
+
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(inputMesh.positionOS.xyz);
@@ -324,6 +337,10 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				/*ase_local_var:uv2*/float2 texCoord2 = texCoord;
 				/*ase_local_var:uv3*/float2 texCoord3 = texCoord;
 
+				/*ase_local_var:wt*/float3 worldTangent = TransformObjectToWorldDir(float3(1, 0, 0));
+				/*ase_local_var:wn*/float3 worldNormal = TransformObjectToWorldDir(float3(0, 1, 0));
+				/*ase_local_var:wbt*/float3 worldBitangent = TransformObjectToWorldDir(float3(0, 0, 1));
+
 				#ifdef DECAL_ANGLE_FADE
 					half2 angleFade = half2(normalToWorld[1][3], normalToWorld[2][3]);
 
@@ -382,6 +399,8 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma multi_compile_instancing
 			#pragma editor_sync_compilation
 
+			#pragma multi_compile _ _DECAL_LAYERS
+
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 
@@ -391,6 +410,12 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
 			#ifdef SCENEPICKINGPASS
 			float4 _SelectionID;
+			#endif
+			#if _RENDER_PASS_ENABLED
+			#define GBUFFER3 0
+			#define GBUFFER4 1
+			FRAMEBUFFER_INPUT_HALF(GBUFFER3);
+			FRAMEBUFFER_INPUT_HALF(GBUFFER4);
 			#endif
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
@@ -415,7 +440,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			struct Attributes
 			{
 				float3 positionOS : POSITION;
-				/*ase_vdata:p=p*/
+				float3 normalOS : NORMAL;
+				float4 tangentOS : TANGENT;
+				/*ase_vdata:p=p;n=n;t=t*/
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -509,7 +536,10 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_SETUP_INSTANCE_ID(inputMesh);
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
-				
+
+				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
+				inputMesh.normalOS = float3( 0, 1, 0 );
+
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(inputMesh.positionOS.xyz);
@@ -585,6 +615,10 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				/*ase_local_var:uv2*/float2 texCoord2 = texCoord;
 				/*ase_local_var:uv3*/float2 texCoord3 = texCoord;
 
+				/*ase_local_var:wt*/float3 worldTangent = TransformObjectToWorldDir(float3(1, 0, 0));
+				/*ase_local_var:wn*/float3 worldNormal = TransformObjectToWorldDir(float3(0, 1, 0));
+				/*ase_local_var:wbt*/float3 worldBitangent = TransformObjectToWorldDir(float3(0, 0, 1));
+
 				/*ase_frag_code:packedInput=PackedVaryings*/
 
 				surfaceDescription.Alpha = /*ase_frag_out:Alpha;Float;0;-1;_Alpha*/1/*end*/;
@@ -628,8 +662,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
 			#pragma multi_compile_fragment _ _SHADOWS_SOFT
-			#pragma multi_compile _ _CLUSTERED_RENDERING
+			#pragma multi_compile _ _FORWARD_PLUS
 			#pragma multi_compile _DECAL_NORMAL_BLEND_LOW _DECAL_NORMAL_BLEND_MEDIUM _DECAL_NORMAL_BLEND_HIGH
+			#pragma multi_compile _ _DECAL_LAYERS
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
@@ -648,6 +683,12 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
 			#ifdef SCENEPICKINGPASS
 			float4 _SelectionID;
+			#endif
+			#if _RENDER_PASS_ENABLED
+			#define GBUFFER3 0
+			#define GBUFFER4 1
+			FRAMEBUFFER_INPUT_HALF(GBUFFER3);
+			FRAMEBUFFER_INPUT_HALF(GBUFFER4);
 			#endif
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
@@ -679,7 +720,8 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			{
 				float3 positionOS : POSITION;
 				float3 normalOS : NORMAL;
-				/*ase_vdata:p=p;n=n*/
+				float4 tangentOS : TANGENT;
+				/*ase_vdata:p=p;n=n;t=t*/
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -845,6 +887,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
 
+				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
+				inputMesh.normalOS = float3( 0, 1, 0 );
+
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(inputMesh.positionOS.xyz);
@@ -928,6 +973,10 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				/*ase_local_var:uv1*/float2 texCoord1 = texCoord;
 				/*ase_local_var:uv2*/float2 texCoord2 = texCoord;
 				/*ase_local_var:uv3*/float2 texCoord3 = texCoord;
+
+				/*ase_local_var:wt*/float3 worldTangent = TransformObjectToWorldDir(float3(1, 0, 0));
+				/*ase_local_var:wn*/float3 worldNormal = TransformObjectToWorldDir(float3(0, 1, 0));
+				/*ase_local_var:wbt*/float3 worldBitangent = TransformObjectToWorldDir(float3(0, 0, 1));
 
 				#ifdef DECAL_ANGLE_FADE
 					half2 angleFade = half2(normalToWorld[1][3], normalToWorld[2][3]);
@@ -1015,7 +1064,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
 			#pragma multi_compile_fragment _ _SHADOWS_SOFT
 			#pragma multi_compile _DECAL_NORMAL_BLEND_LOW _DECAL_NORMAL_BLEND_MEDIUM _DECAL_NORMAL_BLEND_HIGH
+			#pragma multi_compile _ _DECAL_LAYERS
 			#pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT
+			#pragma multi_compile_fragment _ _RENDER_PASS_ENABLED
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
@@ -1033,6 +1084,12 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
 			#ifdef SCENEPICKINGPASS
 			float4 _SelectionID;
+			#endif
+			#if _RENDER_PASS_ENABLED
+			#define GBUFFER3 0
+			#define GBUFFER4 1
+			FRAMEBUFFER_INPUT_HALF(GBUFFER3);
+			FRAMEBUFFER_INPUT_HALF(GBUFFER4);
 			#endif
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
@@ -1065,7 +1122,8 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			{
 				float3 positionOS : POSITION;
 				float3 normalOS : NORMAL;
-				/*ase_vdata:p=p;n=n*/
+				float4 tangentOS : TANGENT;
+				/*ase_vdata:p=p;n=n;t=t*/
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1233,6 +1291,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
 
+				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
+				inputMesh.normalOS = float3( 0, 1, 0 );
+
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 
 				float3 positionWS = TransformObjectToWorld(inputMesh.positionOS);
@@ -1306,6 +1367,10 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				/*ase_local_var:uv1*/float2 texCoord1 = texCoord;
 				/*ase_local_var:uv2*/float2 texCoord2 = texCoord;
 				/*ase_local_var:uv3*/float2 texCoord3 = texCoord;
+
+				/*ase_local_var:wt*/float3 worldTangent = TransformObjectToWorldDir(float3(1, 0, 0));
+				/*ase_local_var:wn*/float3 worldNormal = TransformObjectToWorldDir(float3(0, 1, 0));
+				/*ase_local_var:wbt*/float3 worldBitangent = TransformObjectToWorldDir(float3(0, 0, 1));
 
 				#ifdef DECAL_ANGLE_FADE
 					half2 angleFade = half2(normalToWorld[1][3], normalToWorld[2][3]);
@@ -1406,6 +1471,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma editor_sync_compilation
 
 			#pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+			#pragma multi_compile _ _DECAL_LAYERS
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
@@ -1427,6 +1493,12 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#ifdef SCENEPICKINGPASS
 			float4 _SelectionID;
 			#endif
+			#if _RENDER_PASS_ENABLED
+			#define GBUFFER3 0
+			#define GBUFFER4 1
+			FRAMEBUFFER_INPUT_HALF(GBUFFER3);
+			FRAMEBUFFER_INPUT_HALF(GBUFFER4);
+			#endif
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
@@ -1438,7 +1510,6 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DecalInput.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderVariablesDecal.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DBuffer.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/Shaders/Nature/SpeedTreeUtility.hlsl"
 
             /*ase_pragma*/
 
@@ -1503,10 +1574,10 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
 			/*ase_funcs*/
 
-            void GetSurfaceData(PackedVaryings input, SurfaceDescription surfaceDescription, half3 viewDirectionWS, uint2 positionSS, out DecalSurfaceData surfaceData)
+            void GetSurfaceData(PackedVaryings input, SurfaceDescription surfaceDescription, out DecalSurfaceData surfaceData)
             {
                 #ifdef LOD_FADE_CROSSFADE
-                    LODDitheringTransition(ComputeFadeMaskSeed(viewDirectionWS,positionSS), unity_LODFade.x);
+					LODFadeCrossFade( input.positionCS );
                 #endif
 
                 half fadeFactor = half(1.0);
@@ -1591,6 +1662,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
 
+				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
+				inputMesh.normalOS = float3( 0, 1, 0 );
+
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(inputMesh.positionOS.xyz);
@@ -1657,7 +1731,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 					surfaceDescription.MAOSAlpha = /*ase_frag_out:MAOS Alpha;Float;7;-1;_MAOSAlpha*/1/*end*/;
 				#endif
 
-				GetSurfaceData(packedInput, surfaceDescription, viewDirectionWS, (uint2)positionSS, surfaceData);
+				GetSurfaceData(packedInput, surfaceDescription, surfaceData);
 				ENCODE_INTO_DBUFFER(surfaceData, outDBuffer);
 			}
 
@@ -1685,6 +1759,8 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma multi_compile_instancing
 			#pragma editor_sync_compilation
 
+			#pragma multi_compile _ _DECAL_LAYERS
+
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 
@@ -1705,6 +1781,12 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#ifdef SCENEPICKINGPASS
 			float4 _SelectionID;
 			#endif
+			#if _RENDER_PASS_ENABLED
+			#define GBUFFER3 0
+			#define GBUFFER4 1
+			FRAMEBUFFER_INPUT_HALF(GBUFFER3);
+			FRAMEBUFFER_INPUT_HALF(GBUFFER4);
+			#endif
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
@@ -1716,7 +1798,6 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DecalInput.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderVariablesDecal.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DBuffer.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/Shaders/Nature/SpeedTreeUtility.hlsl"
 
 			/*ase_pragma*/
 
@@ -1783,10 +1864,10 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
 			/*ase_funcs*/
 
-            void GetSurfaceData(SurfaceDescription surfaceDescription, half3 viewDirectionWS, uint2 positionSS, out DecalSurfaceData surfaceData)
+            void GetSurfaceData(SurfaceDescription surfaceDescription, float4 positionCS, out DecalSurfaceData surfaceData)
             {
                 #ifdef LOD_FADE_CROSSFADE
-                    LODDitheringTransition(ComputeFadeMaskSeed(viewDirectionWS, positionSS), unity_LODFade.x);
+					LODFadeCrossFade( positionCS );
                 #endif
 
                 half fadeFactor = half(1.0);
@@ -1867,6 +1948,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
 
+				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
+				inputMesh.normalOS = float3( 0, 1, 0 );
+
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(inputMesh.positionOS.xyz);
@@ -1937,7 +2021,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 					surfaceDescription.Emission = /*ase_frag_out:Emission;Float3;8;-1;_Emission*/float3(0, 0, 0)/*end*/;
 				#endif
 
-				GetSurfaceData(surfaceDescription, viewDirectionWS, (uint2)positionSS, surfaceData);
+				GetSurfaceData(surfaceDescription, packedInput.positionCS, surfaceData);
 
 				outEmissive.rgb = surfaceData.emissive;
 				outEmissive.a = surfaceData.baseColor.a;
@@ -1976,8 +2060,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma multi_compile_fragment _ _SHADOWS_SOFT
 			#pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
 			#pragma multi_compile _ SHADOWS_SHADOWMASK
-			#pragma multi_compile _ _CLUSTERED_RENDERING
+			#pragma multi_compile _ _FORWARD_PLUS
 			#pragma multi_compile _DECAL_NORMAL_BLEND_LOW _DECAL_NORMAL_BLEND_MEDIUM _DECAL_NORMAL_BLEND_HIGH
+			#pragma multi_compile _ _DECAL_LAYERS
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
@@ -2004,6 +2089,12 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#ifdef SCENEPICKINGPASS
 			float4 _SelectionID;
 			#endif
+			#if _RENDER_PASS_ENABLED
+			#define GBUFFER3 0
+			#define GBUFFER4 1
+			FRAMEBUFFER_INPUT_HALF(GBUFFER3);
+			FRAMEBUFFER_INPUT_HALF(GBUFFER4);
+			#endif
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
@@ -2014,7 +2105,6 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DecalInput.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderVariablesDecal.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/Shaders/Nature/SpeedTreeUtility.hlsl"
 
 			/*ase_pragma*/
 
@@ -2085,10 +2175,10 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
 			/*ase_funcs*/
 
-            void GetSurfaceData(PackedVaryings input, SurfaceDescription surfaceDescription, half3 viewDirectionWS, uint2 positionSS, out DecalSurfaceData surfaceData)
+            void GetSurfaceData(PackedVaryings input, SurfaceDescription surfaceDescription, out DecalSurfaceData surfaceData)
             {
                 #ifdef LOD_FADE_CROSSFADE
-                    LODDitheringTransition(ComputeFadeMaskSeed(viewDirectionWS, positionSS), unity_LODFade.x);
+                    LODFadeCrossFade( input.positionCS );
                 #endif
 
                 half fadeFactor = half(1.0);
@@ -2232,6 +2322,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
 
+				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
+				inputMesh.normalOS = float3( 0, 1, 0 );
+
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(inputMesh.positionOS.xyz);
@@ -2322,7 +2415,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 					surfaceDescription.Emission = /*ase_frag_out:Emission;Float3;8;-1;_Emission*/float3(0, 0, 0)/*end*/;
 				#endif
 
-				GetSurfaceData(packedInput, surfaceDescription, viewDirectionWS, (uint2)positionSS, surfaceData);
+				GetSurfaceData(packedInput, surfaceDescription, surfaceData);
 
 				#ifdef DECAL_RECONSTRUCT_NORMAL
 					surfaceData.normalWS.xyz = normalize(lerp(normalWS.xyz, surfaceData.normalWS.xyz, surfaceData.normalWS.w));
@@ -2377,7 +2470,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
 			#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
 			#pragma multi_compile _DECAL_NORMAL_BLEND_LOW _DECAL_NORMAL_BLEND_MEDIUM _DECAL_NORMAL_BLEND_HIGH
+			#pragma multi_compile _ _DECAL_LAYERS
 			#pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT
+			#pragma multi_compile_fragment _ _RENDER_PASS_ENABLED
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
@@ -2404,6 +2499,12 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#ifdef SCENEPICKINGPASS
 			float4 _SelectionID;
 			#endif
+			#if _RENDER_PASS_ENABLED
+			#define GBUFFER3 0
+			#define GBUFFER4 1
+			FRAMEBUFFER_INPUT_HALF(GBUFFER3);
+			FRAMEBUFFER_INPUT_HALF(GBUFFER4);
+			#endif
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
@@ -2415,7 +2516,6 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DecalInput.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderVariablesDecal.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/Shaders/Nature/SpeedTreeUtility.hlsl"
 
 			/*ase_pragma*/
 
@@ -2486,10 +2586,10 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
 			/*ase_funcs*/
 
-            void GetSurfaceData(PackedVaryings input, SurfaceDescription surfaceDescription, half3 viewDirectionWS, uint2 positionSS, out DecalSurfaceData surfaceData)
+            void GetSurfaceData(PackedVaryings input, SurfaceDescription surfaceDescription, out DecalSurfaceData surfaceData)
             {
 				#ifdef LOD_FADE_CROSSFADE
-                    LODDitheringTransition(ComputeFadeMaskSeed(viewDirectionWS, positionSS), unity_LODFade.x);
+                    LODFadeCrossFade( input.positionCS );
                 #endif
 
                 half fadeFactor = half(1.0);
@@ -2630,6 +2730,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
 
+				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
+				inputMesh.normalOS = float3( 0, 1, 0 );
+
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(inputMesh.positionOS.xyz);
@@ -2721,7 +2824,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 					surfaceDescription.Emission = /*ase_frag_out:Emission;Float3;8;-1;_Emission*/float3(0, 0, 0)/*end*/;
 				#endif
 
-				GetSurfaceData(packedInput, surfaceDescription, viewDirectionWS, (uint2)positionSS, surfaceData);
+				GetSurfaceData(packedInput, surfaceDescription, surfaceData);
 
 				InputData inputData;
 				InitializeInputData(packedInput, positionWS, surfaceData.normalWS.xyz, viewDirectionWS, inputData);
@@ -2790,6 +2893,12 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#ifdef SCENEPICKINGPASS
 			float4 _SelectionID;
 			#endif
+			#if _RENDER_PASS_ENABLED
+			#define GBUFFER3 0
+			#define GBUFFER4 1
+			FRAMEBUFFER_INPUT_HALF(GBUFFER3);
+			FRAMEBUFFER_INPUT_HALF(GBUFFER4);
+			#endif
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
@@ -2806,7 +2915,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			struct Attributes
 			{
 				float3 positionOS : POSITION;
-				/*ase_vdata:p=p*/
+				float3 normalOS : NORMAL;
+				float4 tangentOS : TANGENT;
+				/*ase_vdata:p=p;n=n;t=t*/
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -2862,6 +2973,9 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_SETUP_INSTANCE_ID(inputMesh);
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
+
+				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
+				inputMesh.normalOS = float3( 0, 1, 0 );
 
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 

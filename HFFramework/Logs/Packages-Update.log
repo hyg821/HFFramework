@@ -64,3 +64,17 @@ Update Mode: updateDependencies
 The following packages were updated:
   com.unity.ide.rider from version 3.0.13 to 3.0.14
   com.unity.ide.visualstudio from version 2.0.14 to 2.0.15
+
+=== Wed Nov  1 13:44:11 2023
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were added:
+  com.unity.ai.navigation@1.1.4
+The following packages were updated:
+  com.unity.ide.rider from version 3.0.15 to 3.0.24
+  com.unity.ide.visualstudio from version 2.0.16 to 2.0.18
+  com.unity.memoryprofiler from version 0.7.1-preview.1 to 1.0.0
+  com.unity.render-pipelines.universal from version 12.1.7 to 14.0.8
+  com.unity.timeline from version 1.6.4 to 1.7.5

@@ -549,7 +549,7 @@ Shader /*ase_name*/ "Hidden/Universal/2D Lit" /*end*/
                 "LightMode" = "Picking"
             }
 
-            Cull Off
+			Cull Off
 
             HLSLPROGRAM
 

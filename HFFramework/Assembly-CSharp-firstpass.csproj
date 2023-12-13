@@ -42,14 +42,18 @@
   </PropertyGroup>
   <ItemGroup>
      <None Include="Assets\Plugins\UniTask\package.json" />
+     <Folder Include="Assets\Plugins\UniTask" />
+     <Folder Include="Assets\Plugins\iOS" />
+     <Folder Include="Assets\Plugins\npoi" />
+     <Folder Include="Assets\Plugins" />
      <Reference Include="UnityEngine">
-     <HintPath>D:\UnityHub\2021.3.9f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
+     <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.CoreModule">
-     <HintPath>D:\UnityHub\2021.3.9f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+     <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor">
-     <HintPath>D:\UnityHub\2021.3.9f1c1\Editor\Data\Managed\UnityEngine\UnityEditor.dll</HintPath>
+     <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEditor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

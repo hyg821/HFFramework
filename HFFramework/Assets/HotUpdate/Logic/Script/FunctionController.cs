@@ -68,7 +68,7 @@ namespace HFFramework.Demo
         public override void Awake()
         {
             base.Awake();
-            TitleLabel.text = "框架入门";
+            TitleLabel.text = "框架入门X";
             HFLog.C("页面初始化完成");
             IsNeedUpdate = true;
         }

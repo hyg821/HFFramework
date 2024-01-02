@@ -49,7 +49,6 @@
      <Compile Include="Assets\Template\EnvironmentConfig.cs" />
      <Compile Include="Assets\Template\AssetConfig.cs" />
      <None Include="Assets\Template\Template.asmdef" />
-     <None Include="Assets\Template\AssetConfig.json" />
      <Folder Include="Assets\Template" />
      <Reference Include="UnityEngine">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

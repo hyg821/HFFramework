@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 3611548679
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 19f3f6239c4986cb60bbc671e70ca1b1
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 19f3f6239c4986cb60bbc671e70ca1b1
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/GameResources/Game/Config/Export[A]/Man.txt
+- Assets/GameResources/Game/Config/Export[A]/Address.txt
+- Assets/GameResources/Game/Config/Export[A]/UI.txt
+Dependencies: []

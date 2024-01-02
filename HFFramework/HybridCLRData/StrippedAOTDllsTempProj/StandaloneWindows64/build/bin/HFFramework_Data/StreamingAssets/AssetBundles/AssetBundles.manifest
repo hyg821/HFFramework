@@ -1,0 +1,32 @@
+ManifestFileVersion: 0
+CRC: 1128731801
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: ui_prefab
+      Dependencies:
+        Dependency_0: font
+    Info_1:
+      Name: hfui
+      Dependencies: {}
+    Info_2:
+      Name: hotupdate
+      Dependencies: {}
+    Info_3:
+      Name: config
+      Dependencies: {}
+    Info_4:
+      Name: font
+      Dependencies: {}
+    Info_5:
+      Name: mat
+      Dependencies: {}
+    Info_6:
+      Name: prefab
+      Dependencies: {}
+    Info_7:
+      Name: gamestart
+      Dependencies: {}
+    Info_8:
+      Name: texture
+      Dependencies: {}

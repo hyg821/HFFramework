@@ -1,0 +1,41 @@
+
+{
+    "AssetsBundleMD5List" : [
+        {
+            "key" : "config",
+            "value" : "32a4a04e3444339a44b3de917a73c268"
+        },
+        {
+            "key" : "font",
+            "value" : "11abce07dc00d270cd82a9a471e01117"
+        },
+        {
+            "key" : "gamestart",
+            "value" : "66297799c402e1ea7f0dacf0a1d52dfb"
+        },
+        {
+            "key" : "hfui",
+            "value" : "d32b442856f693b34cbcfa6d688370fe"
+        },
+        {
+            "key" : "hotupdate",
+            "value" : "7b03c5530b13df25d73bcb00d73ac107"
+        },
+        {
+            "key" : "mat",
+            "value" : "37d1361c8ae568e389cd358124f89ec3"
+        },
+        {
+            "key" : "prefab",
+            "value" : "6d757805cd74b6a2e09f9d8b3c5a1d86"
+        },
+        {
+            "key" : "texture",
+            "value" : "12952a30f94735668aac619ecc5e0224"
+        },
+        {
+            "key" : "ui_prefab",
+            "value" : "1d6efe8af5902c599d83b803204a2113"
+        }
+    ]
+}

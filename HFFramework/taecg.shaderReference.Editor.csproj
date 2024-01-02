@@ -45,30 +45,30 @@
     <Analyzer Include="D:\UnityHub\2022.3.8f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferencePipline.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceSemantics.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceBuildInVariables.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceOther.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceMiscellaneous.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceAbout.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferencePredefinedMacros.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceUtil.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceEditorWindow.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceRenderState.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceLighting.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceMath.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceBuildInTransformation.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceTags.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceSearch.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferencePragma.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceGLSL.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferencePlatformDifferences.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceProperties.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceTransformation.cs" />
-     <Compile Include="Assets\Core\Editor\ShaderDoc\ShaderReferenceErrorDebug.cs" />
-     <Folder Include="Assets\Core\Editor\ShaderDoc" />
-     <None Include="Assets\Core\Editor\ShaderDoc\taecg.shaderReference.Editor.asmdef" />
-     <Folder Include="Assets\Core\Editor\ShaderDoc\EditorResources" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferencePragma.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceLighting.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceTransformation.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceSearch.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceUtil.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceTags.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceErrorDebug.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceOther.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceGLSL.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferencePredefinedMacros.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceAbout.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceMath.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceProperties.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceEditorWindow.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceRenderState.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceBuildInVariables.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceSemantics.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferencePipline.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferencePlatformDifferences.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceBuildInTransformation.cs" />
+     <Compile Include="Assets\Editor\ShaderDoc\ShaderReferenceMiscellaneous.cs" />
+     <Folder Include="Assets\Editor\ShaderDoc" />
+     <None Include="Assets\Editor\ShaderDoc\taecg.shaderReference.Editor.asmdef" />
+     <Folder Include="Assets\Editor\ShaderDoc\EditorResources" />
      <Reference Include="UnityEngine">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
@@ -330,11 +330,11 @@
      <Reference Include="UnityEditor.WindowsStandalone.Extensions">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Collections.LowLevel.ILSupport">
+     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.unity.collections@2.1.4\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+     </Reference>
      <Reference Include="NPOI.OpenXml4Net">
      <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OpenXml4Net.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil">
-     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.ourpalm.ilruntime@2.1.0\Plugins\ILRuntime.Mono.Cecil.dll</HintPath>
      </Reference>
      <Reference Include="DOTweenEditor">
      <HintPath>D:\HFFramework\HFFramework\Assets\ThirdParty\Demigiant\DOTween\Editor\DOTweenEditor.dll</HintPath>
@@ -345,26 +345,20 @@
      <Reference Include="DOTween">
      <HintPath>D:\HFFramework\HFFramework\Assets\ThirdParty\Demigiant\DOTween\DOTween.dll</HintPath>
      </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil.Pdb">
-     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.ourpalm.ilruntime@2.1.0\Plugins\ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+     <Reference Include="dnlib">
+     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.code-philosophy.hybridclr@51da1d4c43\Plugins\dnlib.dll</HintPath>
      </Reference>
      <Reference Include="Google.Protobuf">
      <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\Google.Protobuf.dll</HintPath>
      </Reference>
-     <Reference Include="NPOI.OOXML">
-     <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OOXML.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil.Mdb">
-     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.ourpalm.ilruntime@2.1.0\Plugins\ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
-     </Reference>
-     <Reference Include="NPOI.OpenXmlFormats">
-     <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OpenXmlFormats.dll</HintPath>
-     </Reference>
      <Reference Include="Mono.Cecil">
      <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.unity.nuget.mono-cecil@1.11.4\Mono.Cecil.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Collections.LowLevel.ILSupport">
-     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.unity.collections@2.1.4\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+     <Reference Include="NPOI.OOXML">
+     <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OOXML.dll</HintPath>
+     </Reference>
+     <Reference Include="NPOI.OpenXmlFormats">
+     <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OpenXmlFormats.dll</HintPath>
      </Reference>
      <Reference Include="nunit.framework">
      <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>

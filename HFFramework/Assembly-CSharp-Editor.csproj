@@ -57,55 +57,52 @@
     <Analyzer Include="D:\HFFramework\HFFramework\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.JobEntityGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Core\Editor\JenKins\XCodePostProcess.cs" />
-     <Compile Include="Assets\Core\Editor\HotFixLinkerEditor.cs" />
-     <Compile Include="Assets\Core\Editor\Setting\BuildConfigWindow.cs" />
-     <Compile Include="Assets\Core\Editor\APITestEditor.cs" />
-     <Compile Include="Assets\Core\Editor\ReferenceFinder\AssetTreeView.cs" />
-     <Compile Include="Assets\Core\Scripts\Attribute\Editor\SetPropertyDrawer.cs" />
-     <Compile Include="Assets\Core\Editor\ReferenceFinder\ReferenceFinderWindow.cs" />
-     <Compile Include="Assets\Core\Editor\JenKins\JenKinsBuild.cs" />
-     <Compile Include="Assets\Core\Editor\EditorHelper.cs" />
+     <Compile Include="Assets\Editor\Tools\AutoGeneratePathEditor.cs" />
+     <Compile Include="Assets\Editor\SetPropertyDrawer.cs" />
+     <Compile Include="Assets\Editor\AssetBundleTools\AssetBundleMD5.cs" />
+     <Compile Include="Assets\Editor\JenKins\XCodePostProcess.cs" />
+     <Compile Include="Assets\Editor\Setting\BuildConfigWindow.cs" />
+     <Compile Include="Assets\Editor\BuildConfigEditor.cs" />
+     <Compile Include="Assets\Editor\HotFixLinkerEditor.cs" />
+     <Compile Include="Assets\Editor\Setting\HFDefaultSceneWindow.cs" />
+     <Compile Include="Assets\Editor\ConfigTools\ConfigCreater.cs" />
+     <Compile Include="Assets\Editor\ReferenceFinder\AssetTreeView.cs" />
      <Compile Include="Assets\ThirdParty\BitmapFontImporter\Editor\BFImporter.cs" />
-     <Compile Include="Assets\Core\Editor\ConfigTools\ConfigCreater.cs" />
-     <Compile Include="Assets\Core\Editor\ConfigTools\ExcelTools.cs" />
-     <Compile Include="Assets\Core\Editor\AssetTools\HFAssetPostprocessor.cs" />
-     <Compile Include="Assets\Core\Editor\MeshRendererEditor.cs" />
-     <Compile Include="Assets\Core\Editor\AssetBundleTools\AssetBundleTools.cs" />
-     <Compile Include="Assets\Core\Editor\Setting\ProjectSetting.cs" />
-     <Compile Include="Assets\ThirdParty\ILRuntime\Editor\ILRuntimeCLRBinding.cs" />
-     <Compile Include="Assets\Core\Editor\AssetConfigEditor.cs" />
-     <Compile Include="Assets\Core\Editor\AssetBundleTools\AssetBundleWindow.cs" />
-     <Compile Include="Assets\Core\Editor\EditorRefresh.cs" />
-     <Compile Include="Assets\Core\Scripts\Inherit\CircleImage\Editor\SlicedFilledImageEditor.cs" />
-     <Compile Include="Assets\Core\Editor\AutoCompilerEditor.cs" />
-     <Compile Include="Assets\Core\Editor\Setting\HFDefaultSceneWindow.cs" />
-     <Compile Include="Assets\Core\Editor\Tools\AutoGeneratePathEditor.cs" />
+     <Compile Include="Assets\Editor\ReferenceFinder\ReferenceFinderData.cs" />
+     <Compile Include="Assets\Editor\JenKins\JenKinsBuild.cs" />
+     <Compile Include="Assets\Editor\Tools\FTPTools.cs" />
+     <Compile Include="Assets\Editor\CircleImage\SlicedFilledImageEditor.cs" />
+     <Compile Include="Assets\Editor\EditorHelper.cs" />
+     <Compile Include="Assets\Editor\EditorRefresh.cs" />
+     <Compile Include="Assets\Editor\AssetBundleTools\MD5Diff.cs" />
+     <Compile Include="Assets\Editor\AssetConfigEditor.cs" />
+     <Compile Include="Assets\Editor\ReferenceFinder\ReferenceFinderWindow.cs" />
+     <Compile Include="Assets\Editor\Setting\EnvironmentConfigEditor.cs" />
+     <Compile Include="Assets\Editor\Tools\FindReferences.cs" />
      <Compile Include="Assets\ThirdParty\BitmapFontImporter\Editor\FntParse.cs" />
-     <Compile Include="Assets\Core\Editor\Tools\FTPTools.cs" />
+     <Compile Include="Assets\Editor\AssetTools\HFAssetPostprocessor.cs" />
+     <Compile Include="Assets\Editor\AssetBundleTools\AssetBundleWindow.cs" />
+     <Compile Include="Assets\Editor\AssetBundleTools\AssetBundleTools.cs" />
      <Compile Include="Assets\ThirdParty\BitmapFontImporter\Editor\BFMenuTool.cs" />
-     <Compile Include="Assets\Core\Editor\BuildConfigEditor.cs" />
-     <Compile Include="Assets\Core\Editor\Setting\EnvironmentConfigEditor.cs" />
-     <Compile Include="Assets\Core\Editor\ReferenceFinder\ReferenceFinderData.cs" />
-     <Compile Include="Assets\Core\Editor\AssetTools\CreateAssets.cs" />
-     <Compile Include="Assets\Core\Editor\AssetTools\HFOpenAssetHandler.cs" />
-     <Compile Include="Assets\Core\Editor\Tools\FindReferences.cs" />
-     <Compile Include="Assets\Core\Editor\AssetBundleTools\AssetBundleMD5.cs" />
-     <Compile Include="Assets\Core\Editor\AssetBundleTools\MD5Diff.cs" />
-     <Folder Include="Assets\Core\Editor\ReferenceFinder" />
-     <Folder Include="Assets\Core\Scripts\Attribute\Editor" />
+     <Compile Include="Assets\Editor\APITestEditor.cs" />
+     <Compile Include="Assets\Editor\AssetTools\HFOpenAssetHandler.cs" />
+     <Compile Include="Assets\Editor\AssetTools\CreateAssets.cs" />
+     <Compile Include="Assets\Editor\AutoCompilerEditor.cs" />
+     <Compile Include="Assets\Editor\Setting\ProjectSetting.cs" />
+     <Compile Include="Assets\Editor\ConfigTools\ExcelTools.cs" />
+     <Compile Include="Assets\Editor\MeshRendererEditor.cs" />
+     <Folder Include="Assets\Editor\ReferenceFinder" />
      <Folder Include="Assets\ThirdParty\BitmapFontImporter\Editor" />
-     <Folder Include="Assets\Core\Editor\ConfigTools" />
-     <Folder Include="Assets\ThirdParty\ILRuntime\Editor" />
-     <Folder Include="Assets\Core\Editor\Setting" />
-     <Folder Include="Assets\Core\Editor" />
-     <Folder Include="Assets\Core\Editor\AssetTools" />
-     <Folder Include="Assets\Core\Editor\JenKins" />
+     <Folder Include="Assets\Editor\ConfigTools" />
+     <Folder Include="Assets\Editor\Setting" />
+     <Folder Include="Assets\Editor" />
+     <Folder Include="Assets\Editor\AssetTools" />
+     <Folder Include="Assets\Editor\JenKins" />
      <Folder Include="Assets\ThirdParty\Demigiant\DOTween\Editor" />
      <Folder Include="Assets\ThirdParty\Demigiant\DOTween\Editor\Imgs" />
-     <Folder Include="Assets\Core\Scripts\Inherit\CircleImage\Editor" />
-     <Folder Include="Assets\Core\Editor\AssetBundleTools" />
-     <Folder Include="Assets\Core\Editor\Tools" />
+     <Folder Include="Assets\Editor\CircleImage" />
+     <Folder Include="Assets\Editor\AssetBundleTools" />
+     <Folder Include="Assets\Editor\Tools" />
      <Reference Include="UnityEngine">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
@@ -367,11 +364,11 @@
      <Reference Include="UnityEditor.WindowsStandalone.Extensions">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Collections.LowLevel.ILSupport">
+     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.unity.collections@2.1.4\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+     </Reference>
      <Reference Include="NPOI.OpenXml4Net">
      <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OpenXml4Net.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil">
-     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.ourpalm.ilruntime@2.1.0\Plugins\ILRuntime.Mono.Cecil.dll</HintPath>
      </Reference>
      <Reference Include="DOTweenEditor">
      <HintPath>D:\HFFramework\HFFramework\Assets\ThirdParty\Demigiant\DOTween\Editor\DOTweenEditor.dll</HintPath>
@@ -382,26 +379,20 @@
      <Reference Include="DOTween">
      <HintPath>D:\HFFramework\HFFramework\Assets\ThirdParty\Demigiant\DOTween\DOTween.dll</HintPath>
      </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil.Pdb">
-     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.ourpalm.ilruntime@2.1.0\Plugins\ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+     <Reference Include="dnlib">
+     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.code-philosophy.hybridclr@51da1d4c43\Plugins\dnlib.dll</HintPath>
      </Reference>
      <Reference Include="Google.Protobuf">
      <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\Google.Protobuf.dll</HintPath>
      </Reference>
-     <Reference Include="NPOI.OOXML">
-     <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OOXML.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil.Mdb">
-     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.ourpalm.ilruntime@2.1.0\Plugins\ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
-     </Reference>
-     <Reference Include="NPOI.OpenXmlFormats">
-     <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OpenXmlFormats.dll</HintPath>
-     </Reference>
      <Reference Include="Mono.Cecil">
      <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.unity.nuget.mono-cecil@1.11.4\Mono.Cecil.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Collections.LowLevel.ILSupport">
-     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.unity.collections@2.1.4\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+     <Reference Include="NPOI.OOXML">
+     <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OOXML.dll</HintPath>
+     </Reference>
+     <Reference Include="NPOI.OpenXmlFormats">
+     <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OpenXmlFormats.dll</HintPath>
      </Reference>
      <Reference Include="nunit.framework">
      <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
@@ -787,6 +778,9 @@
      <Reference Include="UnityEngine.TestRunner">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
      </Reference>
+     <Reference Include="HybridCLR.Runtime">
+     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\HybridCLR.Runtime.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.RenderPipelines.Core.Runtime">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
      </Reference>
@@ -795,6 +789,9 @@
      </Reference>
      <Reference Include="Unity.Burst.Editor">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="HybridCLR.Editor">
+     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\HybridCLR.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.ScriptableBuildPipeline">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.dll</HintPath>
@@ -832,14 +829,14 @@
      <Reference Include="Unity.Collections">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Deformations">
+     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Deformations.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Collections.Editor">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Collections.Editor.dll</HintPath>
      </Reference>
      <Reference Include="PPv2URPConverters">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Deformations">
-     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Deformations.dll</HintPath>
      </Reference>
      <Reference Include="Unity.TextMeshPro">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
@@ -874,9 +871,6 @@
      <Reference Include="Unity.Burst">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
      </Reference>
-     <Reference Include="ILRuntime">
-     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\ILRuntime.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.Timeline.Editor">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
      </Reference>
@@ -889,11 +883,11 @@
      <Reference Include="UnityEditor.UI">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEngine.UI">
-     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-     </Reference>
      <Reference Include="UnityEditor.CacheServer">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\UnityEditor.CacheServer.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.UI">
+     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Serialization.Editor">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Serialization.Editor.dll</HintPath>
@@ -907,14 +901,14 @@
      <Reference Include="Unity.Timeline">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Transforms">
+     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Transforms.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Serialization">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Serialization.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Scenes.Editor">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Scenes.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Transforms">
-     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Transforms.dll</HintPath>
      </Reference>
      <Reference Include="Unity.MemoryProfiler.Editor">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.MemoryProfiler.Editor.dll</HintPath>
@@ -922,11 +916,11 @@
      <Reference Include="Unity.AI.Navigation.Updater">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.AI.Navigation.Updater.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Mathematics">
-     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.Entities.UI">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Entities.UI.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Mathematics">
+     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Entities.Editor.Properties">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Entities.Editor.Properties.dll</HintPath>
@@ -937,29 +931,29 @@
      <Reference Include="Unity.TextMeshPro.Editor">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Searcher.Editor">
-     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.AI.Navigation.Editor">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Mathematics.Extensions">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Mathematics.Extensions.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Scenes">
-     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Scenes.dll</HintPath>
+     <Reference Include="Unity.Searcher.Editor">
+     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.AssetBundleBrowser.Editor">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.AssetBundleBrowser.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Scenes">
+     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Scenes.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.ScriptableBuildPipeline.Editor">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.2D.Tilemap.Editor">
-     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.Entities.Editor">
      <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.Entities.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Tilemap.Editor">
+     <HintPath>D:\HFFramework\HFFramework\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -970,6 +964,10 @@
     <ProjectReference Include="UniTask.Addressables.csproj">
       <Project>{38b4de4b-de6a-02c8-36da-f492f5b8ab06}</Project>
       <Name>UniTask.Addressables</Name>
+    </ProjectReference>
+    <ProjectReference Include="Template.csproj">
+      <Project>{e007444c-d007-8df5-daf0-1a21c6097028}</Project>
+      <Name>Template</Name>
     </ProjectReference>
     <ProjectReference Include="StompyRobot.SRF.csproj">
       <Project>{a0c92ba2-b31d-740a-009b-3089251be8a9}</Project>
@@ -991,9 +989,21 @@
       <Project>{b00be17f-4fad-1670-8b4e-bd40d4ec29c1}</Project>
       <Name>AmplifyShaderEditor</Name>
     </ProjectReference>
+    <ProjectReference Include="LitJson.csproj">
+      <Project>{df24a8b0-b616-f40b-2f74-41caa4af310b}</Project>
+      <Name>LitJson</Name>
+    </ProjectReference>
     <ProjectReference Include="UniTask.Linq.csproj">
       <Project>{648e2e29-d7f8-a3a3-0c6a-0ea37a98a2fd}</Project>
       <Name>UniTask.Linq</Name>
+    </ProjectReference>
+    <ProjectReference Include="HotUpdate.csproj">
+      <Project>{1059f2b0-4c45-19fe-8270-5e97f58864d8}</Project>
+      <Name>HotUpdate</Name>
+    </ProjectReference>
+    <ProjectReference Include="IEnhancedScroller.csproj">
+      <Project>{887ac103-723e-bdbf-0892-a5480416cbd2}</Project>
+      <Name>IEnhancedScroller</Name>
     </ProjectReference>
     <ProjectReference Include="taecg.shaderReference.Editor.csproj">
       <Project>{1a317cd2-45c7-5b2a-235f-049fb294cc56}</Project>
@@ -1002,6 +1012,10 @@
     <ProjectReference Include="StompyRobot.SRDebugger.csproj">
       <Project>{0a77103d-74eb-0a6c-f918-c8032212ae72}</Project>
       <Name>StompyRobot.SRDebugger</Name>
+    </ProjectReference>
+    <ProjectReference Include="BestHTTP.csproj">
+      <Project>{5ef5741a-f48b-779d-0bc5-e9b884d7fb78}</Project>
+      <Name>BestHTTP</Name>
     </ProjectReference>
     <ProjectReference Include="StompyRobot.SRDebugger.Editor.csproj">
       <Project>{0dfdcb4b-26a7-3e24-e567-ccdff1513102}</Project>

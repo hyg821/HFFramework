@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 553331488
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 96c4c0cd5105a18f52f8710697ed92b3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5e762ccb57c4caaabbb5a4199ac82c23
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 96c4c0cd5105a18f52f8710697ed92b3
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/GameResources/Game/Mat[A]/mat.mat
+Dependencies: []

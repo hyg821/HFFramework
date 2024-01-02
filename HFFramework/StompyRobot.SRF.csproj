@@ -229,9 +229,6 @@
      <Reference Include="UnityEngine.SubstanceModule">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.SubstanceModule.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEngine.SubsystemsModule">
-     <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.SubsystemsModule.dll</HintPath>
-     </Reference>
      <Reference Include="UnityEngine.TLSModule">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.TLSModule.dll</HintPath>
      </Reference>
@@ -295,9 +292,6 @@
      <Reference Include="UnityEngine.VFXModule">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.VFXModule.dll</HintPath>
      </Reference>
-     <Reference Include="UnityEngine.VRModule">
-     <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.VRModule.dll</HintPath>
-     </Reference>
      <Reference Include="UnityEngine.VehiclesModule">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.VehiclesModule.dll</HintPath>
      </Reference>
@@ -309,9 +303,6 @@
      </Reference>
      <Reference Include="UnityEngine.WindModule">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.WindModule.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEngine.XRModule">
-     <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.XRModule.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\Managed\UnityEngine\UnityEditor.dll</HintPath>
@@ -370,11 +361,11 @@
      <Reference Include="UnityEditor.WindowsStandalone.Extensions">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Collections.LowLevel.ILSupport">
+     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.unity.collections@2.1.4\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+     </Reference>
      <Reference Include="NPOI.OpenXml4Net">
      <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OpenXml4Net.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil">
-     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.ourpalm.ilruntime@2.1.0\Plugins\ILRuntime.Mono.Cecil.dll</HintPath>
      </Reference>
      <Reference Include="DOTweenEditor">
      <HintPath>D:\HFFramework\HFFramework\Assets\ThirdParty\Demigiant\DOTween\Editor\DOTweenEditor.dll</HintPath>
@@ -385,26 +376,20 @@
      <Reference Include="DOTween">
      <HintPath>D:\HFFramework\HFFramework\Assets\ThirdParty\Demigiant\DOTween\DOTween.dll</HintPath>
      </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil.Pdb">
-     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.ourpalm.ilruntime@2.1.0\Plugins\ILRuntime.Mono.Cecil.Pdb.dll</HintPath>
+     <Reference Include="dnlib">
+     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.code-philosophy.hybridclr@51da1d4c43\Plugins\dnlib.dll</HintPath>
      </Reference>
      <Reference Include="Google.Protobuf">
      <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\Google.Protobuf.dll</HintPath>
      </Reference>
-     <Reference Include="NPOI.OOXML">
-     <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OOXML.dll</HintPath>
-     </Reference>
-     <Reference Include="ILRuntime.Mono.Cecil.Mdb">
-     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.ourpalm.ilruntime@2.1.0\Plugins\ILRuntime.Mono.Cecil.Mdb.dll</HintPath>
-     </Reference>
-     <Reference Include="NPOI.OpenXmlFormats">
-     <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OpenXmlFormats.dll</HintPath>
-     </Reference>
      <Reference Include="Mono.Cecil">
      <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.unity.nuget.mono-cecil@1.11.4\Mono.Cecil.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Collections.LowLevel.ILSupport">
-     <HintPath>D:\HFFramework\HFFramework\Library\PackageCache\com.unity.collections@2.1.4\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+     <Reference Include="NPOI.OOXML">
+     <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OOXML.dll</HintPath>
+     </Reference>
+     <Reference Include="NPOI.OpenXmlFormats">
+     <HintPath>D:\HFFramework\HFFramework\Assets\Plugins\npoi\NPOI.OpenXmlFormats.dll</HintPath>
      </Reference>
      <Reference Include="mscorlib">
      <HintPath>D:\UnityHub\2022.3.8f1c1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\mscorlib.dll</HintPath>

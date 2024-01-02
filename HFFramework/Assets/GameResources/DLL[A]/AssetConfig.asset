@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0873e057fee879642b1908a1d9582ccb, type: 3}
   m_Name: AssetConfig
   m_EditorClassIdentifier: 
-  assetbundleName: hotfixdll
+  assetbundleName: HotUpdate
   atlasName: 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnvironmentConfig
   m_EditorClassIdentifier: 
   AutoSetting: 1
-  Platform: 3
+  Platform: 5
   Runtime: 0
   LoadAssetPathType: 0
   RuntimeEnvironment: 0

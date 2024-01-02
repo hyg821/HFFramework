@@ -1,0 +1,28 @@
+ManifestFileVersion: 0
+CRC: 2205195215
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6f98e0cc8c5ea523a79b285e224baae8
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 6f98e0cc8c5ea523a79b285e224baae8
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/GameResources/DLL[A]/UnityEngine.AssetBundleModule.dll.bytes
+- Assets/GameResources/DLL[A]/mscorlib.dll.bytes
+- Assets/GameResources/DLL[A]/Google.Protobuf.dll.bytes
+- Assets/GameResources/DLL[A]/UniTask.dll.bytes
+- Assets/GameResources/DLL[A]/HotUpdate.dll.bytes
+- Assets/GameResources/DLL[A]/System.Core.dll.bytes
+- Assets/GameResources/DLL[A]/DOTween.dll.bytes
+- Assets/GameResources/DLL[A]/UnityEngine.CoreModule.dll.bytes
+- Assets/GameResources/DLL[A]/IEnhancedScroller.dll.bytes
+Dependencies: []

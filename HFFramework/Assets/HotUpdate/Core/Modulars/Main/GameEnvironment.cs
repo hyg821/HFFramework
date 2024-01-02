@@ -24,9 +24,6 @@ namespace  HFFramework
 
         private void Init()
         {
-            
-            Debug.LogError("mmmmmGameEnvironment.Instance" + (GameEnvironment.Instance));
-            
             config = Resources.Load<EnvironmentConfig>("EnvironmentConfig");
             Debug.Log("config == null "+(config==null));
             if (config.AutoSetting)

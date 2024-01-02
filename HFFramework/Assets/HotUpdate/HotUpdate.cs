@@ -12,43 +12,24 @@ namespace HFFramework
         {
             try
             {
-                Debug.LogError(1);
                 GameFactory.CreateSingleton<GameFactory>();
-                Debug.LogError(2);
                 GameFactory.CreateSingleton<DownLoadManager>();
-                Debug.LogError(3);
                 GameFactory.CreateSingleton<GameEnvironment>();
-                Debug.LogError(4);
                 GameFactory.CreateSingleton<PathManager>();
-                Debug.LogError(5);
                 GameFactory.CreateSingleton<AssetManager>();
-                Debug.LogError(6);
                 GameFactory.CreateSingleton<GameUtils>();
-                Debug.LogError(7);
                 GameFactory.CreateSingleton<TimerManager>();
-                Debug.LogError(8);
                 GameFactory.CreateSingleton<ObjectPoolManager>();
-                Debug.LogError(9);
                 GameFactory.CreateSingleton<GameLooper>();
-                Debug.LogError(10);
                 GameFactory.CreateSingleton<NotificationCenter>();
-                Debug.LogError(11);
                 GameFactory.CreateSingleton<SocketManager>();
-                Debug.LogError(12);
                 GameFactory.CreateSingleton<WebImageManager>();
-                Debug.LogError(13);
                 GameFactory.CreateSingleton<AudioManager>();
-                Debug.LogError(14);
                 GameFactory.CreateSingleton<UIManager>();
-                Debug.LogError(15);
                 GameFactory.CreateSingleton<InputManager>();
-                Debug.LogError(16);
                 GameFactory.CreateSingleton<GameStateChecker>();
-                Debug.LogError(17);
                 GameFactory.CreateSingleton<GameSceneManager>();
-                Debug.LogError(18);
                 GameSceneManager.Instance.ChangeScene<StartScene>();
-                Debug.LogError(19);
             }
             catch (Exception e)
             {

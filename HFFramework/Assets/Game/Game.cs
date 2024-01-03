@@ -38,6 +38,7 @@ public class Game : MonoBehaviour
     
     public string AutoGetResourcePath(string path)
     {
+        path = path.ToLower();
         string ResourceRootPath = Application.persistentDataPath + "/AssetBundles/";
         string ResourceSpareRootPath = Application.streamingAssetsPath + "/AssetBundles/";
         string newPath;

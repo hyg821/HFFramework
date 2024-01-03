@@ -25,7 +25,6 @@ namespace  HFFramework
         private void Init()
         {
             config = Resources.Load<EnvironmentConfig>("EnvironmentConfig");
-            Debug.Log("config == null "+(config==null));
             if (config.AutoSetting)
             {
                 SwitchPlatform();

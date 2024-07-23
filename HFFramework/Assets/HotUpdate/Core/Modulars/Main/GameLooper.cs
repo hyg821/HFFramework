@@ -117,7 +117,7 @@ namespace HFFramework
 
             for (int i = 0; i < fixedUpdateList.Count; i++)
             {
-                fixedUpdateList[i].OnFixedUpdate(Time.deltaTime);
+                fixedUpdateList[i].OnFixedUpdate(Time.fixedDeltaTime);
             }
         }
 
